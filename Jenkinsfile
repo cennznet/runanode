@@ -22,19 +22,19 @@ pipeline {
             }
         }
 
-        stage('Unit Tests') {
-            steps {
-                sh './scripts/run-unit-tests.sh'
-            }
-        }
+        // stage('Unit Tests') {
+        //     steps {
+        //         sh './scripts/run-unit-tests.sh'
+        //     }
+        // }
 
-        stage('Functional Tests') {
-            steps {
-                sh './scripts/run-functional-tests.sh'
-            }
-        }
+        // stage('Functional Tests') {
+        //     steps {
+        //         sh './scripts/run-functional-tests.sh'
+        //     }
+        // }
 
-        stage('Publish Docker Image') {
+        stage('Publish Image') {
             environment {
                 ACR = credentials('AzureDockerRegistry')
             }
@@ -43,7 +43,7 @@ pipeline {
             }
         }
 
-        stage('Dev - Deploy Docker Image') {
+        stage('Dev Deploy') {
             environment {
                 ENV = 'dev'
                 AWS_CLUSTER_NAME = credentials('DEV_AWS_CLUSTER_NAME')
@@ -75,7 +75,7 @@ pipeline {
         //     }
         // }
 
-        stage('UAT - Deploy Docker Image') {
+        stage('UAT Deploy') {
             environment {
                 ENV = 'uat'
                 AWS_CLUSTER_NAME = credentials('UAT_AWS_CLUSTER_NAME')
