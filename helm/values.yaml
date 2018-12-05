@@ -1,0 +1,40 @@
+namespace: template
+appName: app-skeleton
+httpPath: /app-skeleton/
+image:
+  repository: centralitycontainerregistry-on.azurecr.io/centrality/
+  name:  app-skeleton
+enableLivenessProbe: false
+readinessProbe:
+  httpGet:
+    path: /app-skeleton/api/v1/version
+    port: 1080 
+  initialDelaySeconds:
+  timeoutSeconds:
+  periodSeconds:
+livenessProbe:
+  httpGet:
+    path:
+    port:
+  initialDelaySeconds:
+  timeoutSeconds:
+  periodSeconds:
+resources:
+  requests:
+    cpu:
+    memory:
+  limits:
+    cpu:
+    memory:
+service:
+  port: 1080
+autoscaling:
+  minReplicas:
+  maxReplicas:
+  targetCPUUtilizationPercentage:
+nodeSelector: {}
+tolerations: []
+affinity: {}
+requiresInternalEndpoint: true
+envFromSecret:
+  mappings:

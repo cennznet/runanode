@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  ut:
+    build:
+      context: .
+      dockerfile: ./docker/tests/Dockerfile
+    environment:
+      - BUILD_TAG=1.0.${BUILD_NUMBER}

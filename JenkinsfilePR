@@ -1,0 +1,41 @@
+#!groovy
+pipeline {
+    agent {
+        label 'linux'
+    }
+
+    options {
+        ansiColor('xterm')
+    }
+
+    environment {
+        SERVICE_NAME = 'cennz-node-ui'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh './scripts/build.sh'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                sh './scripts/run-unit-tests.sh'
+            }
+        }
+
+        stage('Functional Tests') {
+            steps {
+                sh './scripts/run-functional-tests.sh'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline post always"
+            sh 'bash /mnt/jenkins/script/cleanup.sh'
+        }
+    }
+}
