@@ -17,40 +17,6 @@ module.exports = Merge(CommonConfig, {
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
       },
-    }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: './templates/index.nodev.html',
-    // }),
-  ],
-  // optimization: {
-  //   minimizer: [
-  //     new UglifyJsPlugin({
-  //       sourceMap: true,
-  //       parallel: true,
-  //       uglifyOptions: {
-  //         safari10: true,
-  //         compress: {
-  //           drop_console: false,
-  //         },
-  //       },
-  //     }),
-  //   ],
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       commons: {
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendors',
-  //         chunks: 'all',
-  //       },
-  //     },
-  //   },
-  //   noEmitOnErrors: true,
-  //   usedExports: true,
-  //   concatenateModules: true,
-  //   removeAvailableModules: true,
-  //   removeEmptyChunks: true,
-  //   mergeDuplicateChunks: true,
-  //   providedExports: true,
-  // },
+    })
+  ]
 });
