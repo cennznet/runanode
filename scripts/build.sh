@@ -8,4 +8,4 @@ set -ex
 IMAGE_NAME="centrality/${SERVICE_NAME}:1.0.${BUILD_NUMBER}"
 
 docker build -t "${IMAGE_NAME}" \
-  -f docker/build/Dockerfile .
+  -f Dockerfile .
