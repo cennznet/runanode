@@ -43,23 +43,23 @@ pipeline {
             }
         }
 
-        stage('Dev Deploy') {
-            environment {
-                ENV = 'dev'
-                AWS_CLUSTER_NAME = credentials('DEV_AWS_CLUSTER_NAME')
-                AWS_CLUSTER_URL = credentials('DEV_AWS_CLUSTER_URL')
-                JENKINS_AWS_K8S_CERTIFICATE = credentials('DEV_JENKINS_AWS_K8S_CERTIFICATE')
-                JENKINS_AWS_K8S_KEY = credentials('DEV_JENKINS_AWS_K8S_KEY')
-                JENKINS_AWS_K8S_CA = credentials('DEV_JENKINS_AWS_K8S_CA')
-            }
-            steps {
-                echo "Run Helm config-apply.sh"
-                sh 'SCRIPT="config" ./centrality.deploy/aws/helm/deploy.sh'
+        // stage('Dev Deploy') {
+        //     environment {
+        //         ENV = 'dev'
+        //         AWS_CLUSTER_NAME = credentials('DEV_AWS_CLUSTER_NAME')
+        //         AWS_CLUSTER_URL = credentials('DEV_AWS_CLUSTER_URL')
+        //         JENKINS_AWS_K8S_CERTIFICATE = credentials('DEV_JENKINS_AWS_K8S_CERTIFICATE')
+        //         JENKINS_AWS_K8S_KEY = credentials('DEV_JENKINS_AWS_K8S_KEY')
+        //         JENKINS_AWS_K8S_CA = credentials('DEV_JENKINS_AWS_K8S_CA')
+        //     }
+        //     steps {
+        //         echo "Run Helm config-apply.sh"
+        //         sh 'SCRIPT="config" ./centrality.deploy/aws/helm/deploy.sh'
 
-                echo "Run Helm helm-apply.sh"
-                sh './centrality.deploy/aws/helm/deploy.sh'
-            }
-        }
+        //         echo "Run Helm helm-apply.sh"
+        //         sh './centrality.deploy/aws/helm/deploy.sh'
+        //     }
+        // }
 
         // stage ('Confirm UAT deploy') {
         //     steps {
