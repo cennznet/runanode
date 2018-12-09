@@ -20,6 +20,10 @@
     }
   },
   "plugins": ["prettier"],
+  "globals": {
+    "shallow": true,
+    "var2": false
+  },
   "rules": {
     "no-nested-ternary": 0,
     "no-unused-vars": 0,

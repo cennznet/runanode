@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 
-export default class TgeAppThemeProvider extends Component {
+export default class AppThemeProvider extends Component {
   componentWillMount() {
     const { globalStyles } = this.props;
     this.stylesheet = document.createElement('style');
@@ -25,3 +26,8 @@ export default class TgeAppThemeProvider extends Component {
     return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
   }
 }
+
+AppThemeProvider.propTypes = {
+  theme: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired,
+};

@@ -6,5 +6,6 @@ pipelines:
         caches:
           - node
         script:
+          - yarn install
           - yarn eslint
           - yarn test

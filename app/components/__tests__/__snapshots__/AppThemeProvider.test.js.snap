@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppThemeProvider render should load theme 1`] = `
+<ThemeProvider
+  theme={Object {}}
+>
+  <div>
+    test
+  </div>
+</ThemeProvider>
+`;

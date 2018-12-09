@@ -42,5 +42,8 @@ dll
 main.js
 main.js.map
 package-lock.json
+
+.test_cache
+
 .idea
 npm-debug.log.*
