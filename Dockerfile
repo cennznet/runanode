@@ -5,9 +5,4 @@ COPY . ./
 
 RUN npm i npm@6.4.1 -g
 RUN npm install
-RUN npm run package
-
-#### Production image
-FROM nginx:1.13-alpine
-
-EXPOSE 8080
+# RUN npm run package
