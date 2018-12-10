@@ -32,15 +32,11 @@ node_modules
 
 # App packaged
 release
-app/dist
-app/main.prod.js
-app/main.prod.js.map
-app/style.css
-app/style.css.map
+app/renderer/dist
+app/main/main.prod.js
+app/main/main.prod.js.map
 dist
 dll
-main.js
-main.js.map
 package-lock.json
 
 .test_cache

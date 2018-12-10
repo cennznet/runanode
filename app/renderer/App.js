@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { LocalizeProvider } from 'react-localize-redux';
 
-import AppThemeProvier from '@/components/AppThemeProvider';
+import AppThemeProvier from 'renderer/components/AppThemeProvider';
 import AppRoutes from './routes';
 import store from './store';
 

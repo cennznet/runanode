@@ -21,7 +21,10 @@
       {
         "root": ["./"],
         "alias": {
-          "@": "./app"
+          "@": "./app",
+          "shared": "./app/shared",
+          "main": "./app/main",
+          "renderer": "./app/renderer"
         }
       }
     ]

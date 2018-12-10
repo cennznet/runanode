@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import types from '@/types';
+import types from 'renderer/types';
 
 const mapStateToProps = ({ testPage: { text } }) => ({ text });
 const mapDispatchToProps = dispatch => ({
