@@ -20,7 +20,7 @@ module.exports = Merge(CommonConfig, {
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${port}/`,
     'webpack/hot/only-dev-server',
-    require.resolve('../app/index'),
+    require.resolve('../app/renderer/index'),
   ],
   output: {
     publicPath: `http://localhost:${port}/dist/`,

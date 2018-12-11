@@ -4,21 +4,8 @@ const autoprefixer = require('autoprefixer');
 const { dependencies } = require('../package.json');
 
 module.exports = {
-  externals: [...Object.keys(dependencies || {})],
-
-  entry: {
-    main: path.join(__dirname, '../app/index.js'),
-  },
-  output: {
-    path: path.resolve(__dirname, '../app/dist'),
-    publicPath: '/',
-    libraryTarget: 'commonjs2',
-  },
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.scss'],
-    alias: {
-      '@': path.resolve(__dirname, '../app/'),
-    },
   },
   module: {
     rules: [
