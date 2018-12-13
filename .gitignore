@@ -40,6 +40,7 @@ dll
 package-lock.json
 
 .test_cache
+minio-data
 
 .idea
 npm-debug.log.*
