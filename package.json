@@ -2,7 +2,7 @@
   "name": "cennz-node-ui",
   "version": "0.0.2",
   "description": "CENNZ node Electron App",
-  "main": "./app/main.prod.js",
+  "main": "./app/main/main.prod.js",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-main": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.main.prod.js",
@@ -10,9 +10,10 @@
     "clean": "rimraf ./release -s",
     "dev": "cross-env START_HOT=1 yarn start-renderer-dev",
     "eslint": "eslint --ext js --ext jsx app",
-    "package": "yarn clean && yarn build && electron-builder build --publish never",
+    "release": "yarn clean && yarn build && electron-builder -mwl --publish never",
     "prestart": "yarn build",
-    "start": "cross-env NODE_ENV=production electron ./app/main.prod.js",
+    "postinstall": "electron-builder install-app-deps",
+    "start": "cross-env NODE_ENV=production electron ./app/main/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./app/main/main.dev.js",
     "start-renderer-dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.config.renderer.dev.js",
     "test": "cross-env NODE_ENV=test jest --config=jest.config.js",
@@ -118,12 +119,13 @@
   },
   "build": {
     "productName": "CENNZ-NODE",
-    "appId": "org.develar.ElectronReact",
+    "appId": "com.centrality.odin",
+    "copyright": "Copyright © 2019 Centrality",
     "files": [
-      "app/dist/",
-      "app/app.html",
-      "app/main.prod.js",
-      "app/main.prod.js.map",
+      "app/renderer/dist/",
+      "app/renderer/app.html",
+      "app/main/main.prod.js",
+      "app/main/main.prod.js.map",
       "package.json"
     ],
     "dmg": {
@@ -142,15 +144,19 @@
     },
     "win": {
       "target": [
-        "nsis",
-        "msi"
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
       ]
     },
     "linux": {
       "target": [
         "deb",
         "rpm",
-        "snap",
         "AppImage"
       ],
       "category": "Development"
@@ -189,7 +195,7 @@
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/centralitydev/cennz-node-ui.git"
   },
-  "author": "",
+  "author": "Centrality <developers@centrality.ai>",
   "license": "ISC",
   "homepage": "https://bitbucket.org/centralitydev/cennz-node-ui#readme"
 }
