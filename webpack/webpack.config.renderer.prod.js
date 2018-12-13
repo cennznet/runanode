@@ -5,6 +5,7 @@ const CommonConfig = require('./webpack.config.base.js');
 
 module.exports = Merge(CommonConfig, {
   mode: 'production',
+  entry: [require.resolve('../app/renderer/index')],
   output: {
     path: path.join(__dirname, '..', 'app/renderer/dist'),
     publicPath: './dist/',
