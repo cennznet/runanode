@@ -1,6 +1,6 @@
 {
   "name": "cennz-node-ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CENNZ node Electron App",
   "main": "./app/main/main.prod.js",
   "scripts": {
@@ -11,6 +11,8 @@
     "dev": "cross-env START_HOT=1 yarn start-renderer-dev",
     "eslint": "eslint --ext js --ext jsx app",
     "release": "yarn clean && yarn build && electron-builder -mwl --publish never",
+    "release:github": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=github --config.publish.owner=cennznet --config.publish.repo=cennz-node-release --config.publish.private=true --config.publish.releaseType=release",
+    "release:minio": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=s3 --config.publish.endpoint=http://10.9.30.50:9000 --config.publish.bucket=test-update",
     "prestart": "yarn build",
     "postinstall": "electron-builder install-app-deps",
     "start": "cross-env NODE_ENV=production electron ./app/main/main.prod.js",
@@ -117,79 +119,10 @@
     "styled-components": "^4.0.3",
     "uuid": "^3.3.2"
   },
-  "build": {
-    "productName": "CENNZ-NODE",
-    "appId": "com.centrality.odin",
-    "copyright": "Copyright © 2019 Centrality",
-    "files": [
-      "app/renderer/dist/",
-      "app/renderer/app.html",
-      "app/main/main.prod.js",
-      "app/main/main.prod.js.map",
-      "package.json"
-    ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        "deb",
-        "rpm",
-        "AppImage"
-      ],
-      "category": "Development"
-    },
-    "directories": {
-      "buildResources": "resources",
-      "output": "release"
-    }
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "cross-env NODE_ENV=development eslint --cache",
-      "prettier --ignore-path .eslintignore --single-quote --write",
-      "git add"
-    ],
-    "{*.json,.{babelrc,eslintrc,prettierrc,stylelintrc}}": [
-      "prettier --ignore-path .eslintignore --parser json --write",
-      "git add"
-    ],
-    "*.{css,scss}": [
-      "stylelint --ignore-path .eslintignore --syntax scss --fix",
-      "prettier --ignore-path .eslintignore --single-quote --write",
-      "git add"
-    ],
-    "*.{yml,md}": [
-      "prettier --ignore-path .eslintignore --single-quote --write",
-      "git add"
-    ]
   },
   "repository": {
     "type": "git",
