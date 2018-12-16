@@ -72,9 +72,11 @@ app.on('ready', async () => {
   }
   createDefaultWindow();
 
-  autoUpdater.checkForUpdates();
+  if (process.env.NODE_ENV === 'production') {
+    autoUpdater.checkForUpdates();
+  }
 });
 
-ipcMain.on('quitAndInstall', () => {
-  autoUpdater.quitAndInstall();
-});
+// ipcMain.on('quitAndInstall', () => {
+//   autoUpdater.quitAndInstall();
+// });
