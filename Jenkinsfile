@@ -85,7 +85,7 @@ pipeline {
                 JENKINS_AWS_K8S_CA = credentials('UAT_JENKINS_AWS_K8S_CA')
             }
             steps {
-              sh 'SCRIPT="deploy-website" ./centrality.deploy/static-website/static-website-apply.sh'
+              sh 'SCRIPT="copy-artifacts" ./centrality.deploy/static-website/static-website-apply.sh'
                 // echo "Run helm config-apply.sh"
                 // sh 'SCRIPT="config" ./centrality.deploy/aws/helm/deploy.sh'
 
