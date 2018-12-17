@@ -11,6 +11,8 @@ import packageJson from '../../../../package.json';
 
 const provider = new WsProvider('wss://cennz-infra.centrality.me:9944');
 
+const localProvider = new WsProvider('ws://localhost:9944');
+
 // const socket = new WebSocket('wss://cennz-infra.centrality.me:9944');
 
 // // Connection opened
@@ -41,6 +43,12 @@ new ApiPromise(provider).isReady.then(api => {
 
 new ApiRx(provider).rpc.chain.subscribeNewHead().subscribe(header => {
   console.log(`Chain is at #${header.blockNumber}`);
+});
+
+new ApiPromise(localProvider).isReady.then(api => {
+  api.rpc.chain.subscribeNewHead(header => {
+    console.log(`local block #${header}`);
+  });
 });
 
 // initialise via isReady & new with specific provider
