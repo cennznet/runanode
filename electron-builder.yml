@@ -13,18 +13,20 @@ files:
   - 'package.json'
 
 # Mac OS configuration
-#mac:
-#  icon: 'src/app/assets/images/icon.icns'
+mac:
+  #  icon: 'src/app/assets/images/icon.icns'
+  target:
+    - 'zip'
 
 # Config for OSX dmg
-dmg:
-  contents:
-    - x: 130
-      y: 220
-    - x: 410
-      y: 220
-      type: 'link'
-      path: '/Applications'
+# dmg:
+#   contents:
+#     - x: 130
+#       y: 220
+#     - x: 410
+#       y: 220
+#       type: 'link'
+#       path: '/Applications'
 
 # Windows configuration
 win:
@@ -42,8 +44,8 @@ nsis:
 linux:
   category: Development
   target:
-    - 'AppImage'
-    # - 'deb'
+    # - 'AppImage'
+    - 'deb'
     # - 'rpm'
 
 # deb:
