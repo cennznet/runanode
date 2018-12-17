@@ -25,6 +25,7 @@ const triggerActionTypes = name => {
 
 const actionTypes = {
   testPage: triggerActionTypes('test_page'),
+  getBestBlock: apiActionTypes('get_best_block'),
 };
 
 export default actionTypes;
