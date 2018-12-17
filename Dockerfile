@@ -4,4 +4,6 @@ WORKDIR /workdir
 COPY . ./
 
 RUN yarn install
-# RUN npm run package
+RUN yarn release
+
+RUN cp -rf ./release ./build
