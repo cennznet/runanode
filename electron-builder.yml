@@ -10,8 +10,6 @@ files:
   - 'app/renderer/app.html'
   - 'app/main/main.prod.js'
   - 'app/main/main.prod.js.map'
-
-extraFiles:
   - 'package.json'
 
 # Mac OS configuration

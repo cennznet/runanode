@@ -1,6 +1,6 @@
 {
   "name": "cennz-node-ui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CENNZ node Electron App",
   "main": "./app/main/main.prod.js",
   "scripts": {
