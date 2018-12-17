@@ -3,6 +3,5 @@ WORKDIR /workdir
 
 COPY . ./
 
-RUN npm i npm@6.4.1 -g
-RUN npm install
+RUN yarn install
 # RUN npm run package
