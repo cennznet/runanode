@@ -3,6 +3,8 @@ import types from 'renderer/types';
 
 const DEFAULT_STATE = {
   text: '',
+  mainNetBestBlock: 0,
+  localNetBestBlock: 0,
 };
 
 export default function testPage(state = DEFAULT_STATE, { type, payload }) {
@@ -10,6 +12,16 @@ export default function testPage(state = DEFAULT_STATE, { type, payload }) {
     case types.testPage.triggered:
       return R.merge(state, {
         text: payload.text,
+      });
+
+    case types.updateMainNetBestBlock.triggered:
+      return R.merge(state, {
+        mainNetBestBlock: payload,
+      });
+
+    case types.updateLocalNetBestBlock.triggered:
+      return R.merge(state, {
+        localNetBestBlock: payload,
       });
 
     default:
