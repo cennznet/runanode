@@ -49,7 +49,7 @@ const enhance = lifecycle({
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
       console.log(`Main Net Best block is at #${header.blockNumber}`);
       console.log(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
-      this.props.onUpdateMainNetBestBlock(header.blockNumber.words[0]);
+      this.props.onUpdateMainNetBestBlock(header.blockNumber.words[0] || header.blockNumber);
     });
 
     setInterval(() => {
