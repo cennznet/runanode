@@ -75,22 +75,12 @@ pipeline {
         //     }
         // }
 
-        stage('UAT Deploy') {
+        stage('Upload artifacts to DEV S3') {
             environment {
-                ENV = 'uat'
-                AWS_CLUSTER_NAME = credentials('UAT_AWS_CLUSTER_NAME')
-                AWS_CLUSTER_URL = credentials('UAT_AWS_CLUSTER_URL')
-                JENKINS_AWS_K8S_CERTIFICATE = credentials('UAT_JENKINS_AWS_K8S_CERTIFICATE')
-                JENKINS_AWS_K8S_KEY = credentials('UAT_JENKINS_AWS_K8S_KEY')
-                JENKINS_AWS_K8S_CA = credentials('UAT_JENKINS_AWS_K8S_CA')
+              ENV = 'dev'
             }
             steps {
               sh 'SCRIPT="copy-artifacts" ./centrality.deploy/static-website/static-website-apply.sh'
-                // echo "Run helm config-apply.sh"
-                // sh 'SCRIPT="config" ./centrality.deploy/aws/helm/deploy.sh'
-
-                // echo "Run helm helm-apply.sh"
-                // sh './centrality.deploy/aws/helm/deploy.sh'
             }
         }
 
@@ -127,10 +117,10 @@ pipeline {
         // }
     }
 
-    post {
-        always {
-            echo "Pipeline post always"
-            sh 'bash /mnt/jenkins/script/cleanup.sh'
-        }
-    }
+//    post {
+//        always {
+//            echo "Pipeline post always"
+//            sh 'bash /mnt/jenkins/script/cleanup.sh'
+//        }
+//    }
 }
