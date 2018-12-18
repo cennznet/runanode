@@ -5,6 +5,7 @@ import { hot } from 'react-hot-loader';
 import { LocalizeProvider } from 'react-localize-redux';
 
 import AppThemeProvier from 'renderer/components/AppThemeProvider';
+import theme from 'renderer/theme';
 import AppRoutes from './routes';
 import store from './store';
 
@@ -18,7 +19,7 @@ const globalStyles = `
 
 const AppWithProviders = () => (
   <Provider store={store}>
-    <AppThemeProvier theme={{}} {...{ globalStyles }}>
+    <AppThemeProvier {...{ theme, globalStyles }}>
       <LocalizeProvider store={store}>
         <Router>
           <AppRoutes />

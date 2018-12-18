@@ -1,7 +1,7 @@
 #!groovy
 pipeline {
     agent {
-        label 'linux'
+        label 'macos'
     }
 
     options {
@@ -16,9 +16,9 @@ pipeline {
     }
 
     stages {
-        stage('Build Docker Image') {
+        stage('Build artifacts') {
             steps {
-                sh './scripts/build.sh'
+                sh './scripts/build-mac.sh'
             }
         }
 
@@ -34,14 +34,14 @@ pipeline {
         //     }
         // }
 
-        stage('Publish Image') {
-            environment {
-                ACR = credentials('AzureDockerRegistry')
-            }
-            steps {
-                sh './centrality.deploy/publish.sh'
-            }
-        }
+//        stage('Publish Image') {
+//            environment {
+//                ACR = credentials('AzureDockerRegistry')
+//            }
+//            steps {
+//                sh './centrality.deploy/publish.sh'
+//            }
+//        }
 
         // stage('Dev Deploy') {
         //     environment {
@@ -85,11 +85,12 @@ pipeline {
                 JENKINS_AWS_K8S_CA = credentials('UAT_JENKINS_AWS_K8S_CA')
             }
             steps {
-                echo "Run helm config-apply.sh"
-                sh 'SCRIPT="config" ./centrality.deploy/aws/helm/deploy.sh'
+              sh 'SCRIPT="copy-artifacts" ./centrality.deploy/static-website/static-website-apply.sh'
+                // echo "Run helm config-apply.sh"
+                // sh 'SCRIPT="config" ./centrality.deploy/aws/helm/deploy.sh'
 
-                echo "Run helm helm-apply.sh"
-                sh './centrality.deploy/aws/helm/deploy.sh'
+                // echo "Run helm helm-apply.sh"
+                // sh './centrality.deploy/aws/helm/deploy.sh'
             }
         }
 
