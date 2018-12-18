@@ -25,7 +25,8 @@ const triggerActionTypes = name => {
 
 const actionTypes = {
   testPage: triggerActionTypes('test_page'),
-  getBestBlock: apiActionTypes('get_best_block'),
+  updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
+  updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
 };
 
 export default actionTypes;
