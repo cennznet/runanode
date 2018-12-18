@@ -1,6 +1,6 @@
 {
   "name": "cennz-node-ui",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "description": "CENNZ node Electron App",
   "main": "./app/main/main.prod.js",
   "scripts": {
@@ -14,7 +14,6 @@
     "release:github": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=github --config.publish.owner=cennznet --config.publish.repo=cennz-node-release --config.publish.private=true --config.publish.releaseType=release",
     "release:minio": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=s3 --config.publish.endpoint=http://10.9.30.50:9000 --config.publish.bucket=test-update",
     "prestart": "yarn build",
-    "postinstall": "electron-builder install-app-deps",
     "start": "cross-env NODE_ENV=production electron ./app/main/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./app/main/main.dev.js",
     "start-renderer-dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.config.renderer.dev.js",
