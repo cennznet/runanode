@@ -1,5 +1,6 @@
 productName: 'CennzNode'
 appId: 'com.centrality.odin'
+artifactName: 'cennz-node-ui-${version}.${ext}'
 copyright: 'Copyright © 2019 Centrality'
 
 # Package electron code into a asar archive. Set to false to debug issues.
