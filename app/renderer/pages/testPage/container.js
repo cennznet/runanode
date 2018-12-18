@@ -55,7 +55,7 @@ const enhance = lifecycle({
     setInterval(() => {
       getBestBlock(CENNZNET_NODE_1).subscribe(header => {
         console.log(`Local Net Best block is at #${header.blockNumber}`);
-        this.props.onUpdateLocalNetBestBlock(header.blockNumber.words[0]);
+        this.props.onUpdateLocalNetBestBlock(header.blockNumber.words[0] || header.blockNumber);
       });
     }, 10000);
   },
