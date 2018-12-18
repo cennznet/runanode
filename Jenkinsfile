@@ -16,9 +16,9 @@ pipeline {
     }
 
     stages {
-        stage('Build Docker Image') {
+        stage('Build artifacts') {
             steps {
-                sh './scripts/build.sh'
+                sh './scripts/build-mac.sh'
             }
         }
 
@@ -34,14 +34,14 @@ pipeline {
         //     }
         // }
 
-        stage('Publish Image') {
-            environment {
-                ACR = credentials('AzureDockerRegistry')
-            }
-            steps {
-                sh './centrality.deploy/publish.sh'
-            }
-        }
+//        stage('Publish Image') {
+//            environment {
+//                ACR = credentials('AzureDockerRegistry')
+//            }
+//            steps {
+//                sh './centrality.deploy/publish.sh'
+//            }
+//        }
 
         // stage('Dev Deploy') {
         //     environment {
