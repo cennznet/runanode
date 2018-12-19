@@ -47,18 +47,26 @@ const enhance = lifecycle({
     });
 
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
-      console.log(`Main Net Best block is at #${header.blockNumber}`);
-      console.log(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
+      // console.log(`Main Net Best block is at #${header.blockNumber}`);
+      // console.log(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
       this.props.onUpdateMainNetBestBlock(header.blockNumber.words[0] || header.blockNumber);
     });
 
     setInterval(() => {
-      getBestBlock(CENNZNET_NODE_1).subscribe(header => {
-        console.log(`Local Net Best block is at #${header.blockNumber}`);
+      getBestBlock(LOCAL_NODE).subscribe(header => {
+        // console.log(`Local Net Best block is at #${header.blockNumber}`);
         const latestLocalBlock = header.blockNumber.words[0] || header.blockNumber;
-        this.props.onUpdateLocalNetBestBlock(header.blockNumber.words[0] || header.blockNumber);
+        if (this.props.mainNetBestBlock < latestLocalBlock) {
+          console.log(
+            `The local bock #${latestLocalBlock} is larger than that of mainNet ${
+              this.props.mainNetBestBlock
+            }`
+          );
+        } else {
+          this.props.onUpdateLocalNetBestBlock(latestLocalBlock);
+        }
       });
-    }, 10000);
+    }, 15000);
   },
 });
 
