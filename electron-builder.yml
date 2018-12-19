@@ -17,7 +17,7 @@ files:
 mac:
   #  icon: 'src/app/assets/images/icon.icns'
   target:
-    - 'zip'
+    - 'pkg'
 
 # Config for OSX dmg
 # dmg:
