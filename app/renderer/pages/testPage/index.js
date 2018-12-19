@@ -73,9 +73,15 @@ const TestPage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
   const syncNodePrecentage = (localNetBestBlock / mainNetBestBlock) * 100;
   const progressPrecentage = syncNodePrecentage >= 100 ? 100 : syncNodePrecentage;
 
-  console.log(`Best block in MainNet #${mainNetBestBlock}`);
-  console.log(`Best block in Local #${localNetBestBlock}`);
-  console.log(`Sync progress in Local ${progressPrecentage.toFixed(2)}%`);
+  console.log(`
+  ===========================================    
+  Best block in MainNet #${mainNetBestBlock} 
+  ===========================================`);
+  console.log(`
+  ===========================================
+  Best block in Local #${localNetBestBlock}
+  ===========================================`);
+  console.log(`  Sync progress in Local ${progressPrecentage.toFixed(2)}%`);
   return (
     <PageContainer>
       <BrandContainer>
