@@ -37,6 +37,8 @@ const VersionContainer = styled.div`
 
 const SyncNodeContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 68vw;
   height: 100vh;
   background-color: #1e2022;
