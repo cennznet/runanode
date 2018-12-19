@@ -13,7 +13,8 @@ const globalStyles = `
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto;
-    font-size: 14px;
+    font-size: ${theme.fontSize};
+    font-family: ${theme.fontFamily};
   }
 `;
 
