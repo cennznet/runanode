@@ -53,13 +53,14 @@ const SyncNodeInformation = styled.div`
 
 const BlockNumber = styled.span`
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const SyncNodeTitle = styled.div`
   color: white;
   font-size: 1.5rem;
   margin: 1rem;
+  font-weight: 700;
 `;
 
 const TextWrapper = styled.div`
