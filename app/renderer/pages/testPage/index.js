@@ -93,15 +93,15 @@ const TestPage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
       <SyncNodeContainer>
         <SyncNodeInformation>
           <SyncNodeTitle>Local test net</SyncNodeTitle>
-          {progressPrecentage > 0 && (
-            <Line
-              percent={progressPrecentage}
-              trailColor="gray"
-              trailWidth="1"
-              strokeWidth="2"
-              strokeColor="#1130FF"
-            />
-          )}
+          {/* {progressPrecentage > 0 && ( */}
+          <Line
+            percent={progressPrecentage}
+            trailColor="gray"
+            trailWidth="1"
+            strokeWidth="2"
+            strokeColor="#1130FF"
+          />
+          {/* )} */}
           <TextWrapper>
             Mian Net Best Block :<BlockNumber>{mainNetBestBlock}</BlockNumber>
           </TextWrapper>
