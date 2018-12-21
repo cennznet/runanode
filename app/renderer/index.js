@@ -1,10 +1,12 @@
+import 'reset-css';
 import '@babel/polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import ja from 'react-intl/locale-data/ja';
-
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import App from './App';
 import '../app.global.css';
 import './scss/styles.scss';
@@ -25,6 +27,8 @@ addLocaleData([...en, ...ja]);
 const NETWORK = 'testnet';
 const isTest = false;
 
+library.add(faPlus, faCogs, faQuestionCircle, faWallet);
+
 const initializeOdin = () => {
   const api = setupApi(isTest, String(NETWORK));
   // const router = new RouterStore();
@@ -44,7 +48,6 @@ const initializeOdin = () => {
     // }),
   };
 
-
   console.log('render app');
 
   const rootElement = document.getElementById('root');
@@ -56,6 +59,6 @@ const initializeOdin = () => {
 };
 
 window.addEventListener('load', initializeOdin);
-window.addEventListener('dragover', (event) => event.preventDefault());
-window.addEventListener('drop', (event) => event.preventDefault());
+window.addEventListener('dragover', event => event.preventDefault());
+window.addEventListener('drop', event => event.preventDefault());
 console.log('render index');
