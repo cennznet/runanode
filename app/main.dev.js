@@ -41,7 +41,7 @@ export const createDefaultWindow = () => {
     height: 728
   });
 
-  window.loadURL(`file://${__dirname}/renderer/app.html`);
+  window.loadURL(`file://${__dirname}/app.html`);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
