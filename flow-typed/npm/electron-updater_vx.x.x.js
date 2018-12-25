@@ -1,4 +1,4 @@
-// flow-typed signature: c053a8f0ba61909eaf86bc465af5d9a9
+// flow-typed signature: d23571f0b41ad5934b28c6cd746b8a5f
 // flow-typed version: <<STUB>>/electron-updater_v^4.0.5/flow_v0.77.0
 
 /**
@@ -22,6 +22,10 @@ declare module 'electron-updater' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'electron-updater/out/AppAdapter' {
+  declare module.exports: any;
+}
+
 declare module 'electron-updater/out/AppImageUpdater' {
   declare module.exports: any;
 }
@@ -59,6 +63,10 @@ declare module 'electron-updater/out/differentialDownloader/multipleRangeDownloa
 }
 
 declare module 'electron-updater/out/DownloadedUpdateHelper' {
+  declare module.exports: any;
+}
+
+declare module 'electron-updater/out/ElectronAppAdapter' {
   declare module.exports: any;
 }
 
@@ -107,6 +115,9 @@ declare module 'electron-updater/out/windowsExecutableCodeSignatureVerifier' {
 }
 
 // Filename aliases
+declare module 'electron-updater/out/AppAdapter.js' {
+  declare module.exports: $Exports<'electron-updater/out/AppAdapter'>;
+}
 declare module 'electron-updater/out/AppImageUpdater.js' {
   declare module.exports: $Exports<'electron-updater/out/AppImageUpdater'>;
 }
@@ -136,6 +147,9 @@ declare module 'electron-updater/out/differentialDownloader/multipleRangeDownloa
 }
 declare module 'electron-updater/out/DownloadedUpdateHelper.js' {
   declare module.exports: $Exports<'electron-updater/out/DownloadedUpdateHelper'>;
+}
+declare module 'electron-updater/out/ElectronAppAdapter.js' {
+  declare module.exports: $Exports<'electron-updater/out/ElectronAppAdapter'>;
 }
 declare module 'electron-updater/out/electronHttpExecutor.js' {
   declare module.exports: $Exports<'electron-updater/out/electronHttpExecutor'>;
