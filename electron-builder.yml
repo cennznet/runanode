@@ -13,13 +13,28 @@ files:
   - 'app/main.prod.js.map'
   - 'package.json'
 
+extraResources:
+  - from: 'dist/cennznet-node-${os}'
+    to: 'cennznet-node'
+  - from: 'dist/launcher-config-${os}.yaml'
+    to: 'launcher-config.yaml'
+
+extraFiles:
+  - from: 'dist/cennznet-node-${os}'
+    to: 'cennznet-node/cennznet-node'
+  - from: 'dist/launcher-config-${os}.yaml'
+    to: 'cennznet-node/launcher-config.yaml'
+
 # Mac OS configuration
 mac:
   #  icon: 'src/app/icon.icns'
   target:
     #    - 'zip'
     - 'pkg'
-#    - 'dmg'
+  #    - 'dmg'
+  extendInfo:
+    ProgramArguments:
+      - LAUNCHER_CONFIG=Resources/launcher-config.yaml
 
 # Config for OSX dmg
 dmg:
