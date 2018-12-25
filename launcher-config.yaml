@@ -1,48 +1,29 @@
+nodePath: ./release/cennznet-node
+logsPrefix: ./release/Odin/logs
 walletLogging: true
 nodeArgs:
-- --tlsca
-- ${HOME}/Library/Application Support/Odin/tls/server/ca.crt
-- --tlscert
-- ${HOME}/Library/Application Support/Odin/tls/server/server.crt
-- --tlskey
-- ${HOME}/Library/Application Support/Odin/tls/server/server.key
-- --no-client-auth
-- --log-console-off
-- --update-server
-- http://localhost
-- --keyfile
-- ${HOME}/Library/Application Support/Odin/Secrets-1.0/secret.key
-- --topology
-- ${ODIN_INSTALL_DIRECTORY}/wallet-topology.yaml
-- --wallet-db-path
-- ${HOME}/Library/Application Support/Odin/Wallet-1.0
-- --update-latest-path
-- ${HOME}/Library/Application Support/Odin/installer.pkg
-- --wallet-address
-- 127.0.0.1:0
-- --update-with-package
-statePath: ${HOME}/Library/Application Support/Odin
+  - --name
+  - ken-test
+statePath: ./release/Odin
 walletPath: ${ODIN_INSTALL_DIRECTORY}/Frontend
-nodePath: ${ODIN_INSTALL_DIRECTORY}/cennznet-node
-launcherLogsPrefix: ${HOME}/Library/Application Support/Odin/Logs/pub/
+launcherLogsPrefix: ./release/Odin/Logs/pub/
 walletArgs: []
 reportServer: http://localhost:8080
-nodeDbPath: ${HOME}/Library/Application Support/Odin/DB-1.0
+nodeDbPath: ./release/Odin/DB-1.0
 updaterPath: /usr/bin/open
-workingDir: ${HOME}/Library/Application Support/Odin
+workingDir: ./release/Odin
 frontendOnlyMode: true
 nodeLogPath: null
 updaterArgs:
-- -FW
-logsPrefix: ${HOME}/Library/Application Support/Odin/Logs
+  - -FW
 configuration:
   seed: null
   filePath: ${ODIN_INSTALL_DIRECTORY}/configuration.yaml
   key: mainnet_wallet_macos64
   systemStart: null
-updateArchive: ${HOME}/Library/Application Support/Odin/installer.pkg
+updateArchive: ./release/Odin/installer.pkg
 nodeLogConfig: ${ODIN_INSTALL_DIRECTORY}/log-config-prod.yaml
 nodeTimeoutSec: 60
 updateWindowsRunner: null
-tlsPath: ${HOME}/Library/Application Support/Odin/tls
+tlsPath: ./release/Odin/tls
 x509ToolPath: ${ODIN_INSTALL_DIRECTORY}/cennznet-x509-certificates

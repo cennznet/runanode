@@ -7,10 +7,9 @@ import type { IpcReceiver, IpcSender } from '../../../common/ipc/lib/IpcChannel'
  * Subclass of IpcChannel that uses ipcMain to receive messages.
  */
 export class MainIpcChannel<Incoming, Outgoing> extends IpcChannel<Incoming, Outgoing> {
+
   async send(
-    message: Outgoing,
-    sender: IpcSender,
-    receiver: IpcReceiver = ipcMain
+    message: Outgoing, sender: IpcSender, receiver: IpcReceiver = ipcMain
   ): Promise<Incoming> {
     return super.send(message, sender, receiver);
   }
@@ -29,4 +28,6 @@ export class MainIpcChannel<Incoming, Outgoing> extends IpcChannel<Incoming, Out
   onRequest(handler: () => Promise<Outgoing>, receiver: IpcReceiver = ipcMain): void {
     super.onRequest(handler, receiver);
   }
+
 }
+

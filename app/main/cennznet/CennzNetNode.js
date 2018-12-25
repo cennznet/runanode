@@ -10,16 +10,16 @@ import type {
   FaultInjection,
   FaultInjectionIpcRequest,
   FaultInjectionIpcResponse,
-  TlsConfig,
+  TlsConfig
 } from '../../common/types/cennznet-node.types';
 import { CennzNetNodeStates } from '../../common/types/cennznet-node.types';
 import { deriveProcessNames, deriveStorageKeys, promisedCondition } from './utils';
 import { getProcess } from '../utils/processes';
 
 type Logger = {
-  debug: string => void,
-  info: string => void,
-  error: string => void,
+  debug: (string) => void,
+  info: (string) => void,
+  error: (string) => void,
 };
 
 type Actions = {
@@ -41,13 +41,13 @@ type StateTransitions = {
   onCrashed: (code: number, signal: string) => void,
   onError: (error: Error) => void,
   onUnrecoverable: () => void,
-};
+}
 
 type CennzNetNodeIpcMessage = {
   Started?: Array<any>,
   ReplyPort?: number,
   FInjects?: FaultInjectionIpcResponse,
-};
+}
 
 type NodeArgs = Array<string>;
 
@@ -228,22 +228,21 @@ export class CennzNetNode {
     const { _log } = this;
     const { nodePath, nodeArgs, startupTimeout } = config;
     const { createWriteStream } = this._actions;
+    const newNodeArgs = nodeArgs;
     this._config = config;
 
     this._startupTries++;
     this._changeToState(CennzNetNodeStates.STARTING);
-    _log.info(
-      `CennzNetNode#start: trying to start cennznet-node for the ${this._startupTries}. time.`
-    );
+    _log.info(`CennzNetNode#start: trying to start cennznet-node for the ${this._startupTries}. time.`);
 
     return new Promise((resolve, reject) => {
       const logFile = createWriteStream(config.logFilePath, { flags: 'a' });
       logFile.on('open', async () => {
         this._cennznetLogFile = logFile;
         // Spawning cennznet-node
-        const jsonArgs = JSON.stringify(nodeArgs);
+        const jsonArgs = JSON.stringify(newNodeArgs);
         _log.debug(`from path: ${nodePath} with args: ${jsonArgs}.`);
-        const node = this._spawnNode(nodePath, nodeArgs, logFile);
+        const node = this._spawnNode(nodePath, newNodeArgs, logFile);
         this._node = node;
         try {
           await promisedCondition(() => node.connected, startupTimeout);
@@ -337,9 +336,7 @@ export class CennzNetNode {
         _log.info('CennzNetNode#restart: stopping current node.');
         await this.stop();
       }
-      _log.info(
-        `CennzNetNode#restart: restarting node with previous config (isForced: ${isForced.toString()}).`
-      );
+      _log.info(`CennzNetNode#restart: restarting node with previous config (isForced: ${isForced.toString()}).`);
       await this._waitForCennzNetToExitOrKillIt();
       await this.start(_config, isForced);
     } catch (error) {
@@ -368,10 +365,9 @@ export class CennzNetNode {
     this._changeToState(CennzNetNodeStates.UPDATING);
     _log.info('CennzNetNode: waiting for node to apply update.');
     try {
-      await promisedCondition(
-        () => this._state === CennzNetNodeStates.UPDATED,
-        _config.updateTimeout
-      );
+      await promisedCondition(() => (
+        this._state === CennzNetNodeStates.UPDATED
+      ), _config.updateTimeout);
       await this._waitForNodeProcessToExit(_config.updateTimeout);
     } catch (error) {
       _log.info('CennzNetNode: did not apply update as expected. Killing it.');
@@ -400,7 +396,9 @@ export class CennzNetNode {
         return isEnabled ? hasFault : !hasFault;
       });
     } catch (error) {
-      return Promise.reject(`cennznet-node did not inject the fault "${fault}" correctly.`);
+      return Promise.reject(
+        `cennznet-node did not inject the fault "${fault}" correctly.`
+      );
     }
   };
 
@@ -419,7 +417,9 @@ export class CennzNetNode {
    * @private
    */
   _spawnNode(nodePath: string, args: NodeArgs, logFile: WriteStream) {
-    return this._actions.spawn(nodePath, args, { stdio: ['inherit', logFile, logFile, 'ipc'] });
+    return this._actions.spawn(
+      nodePath, args, { stdio: ['inherit', logFile, logFile, 'ipc'] }
+    );
   }
 
   /**
@@ -495,11 +495,7 @@ export class CennzNetNode {
       // Before proceeding with exit procedures, wait until the node is really dead.
       await this._waitForNodeProcessToExit(_config.shutdownTimeout);
     } catch (_) {
-      _log.error(
-        `CennzNetNode: sent exit code ${code} but was still running after ${
-          _config.shutdownTimeout
-        }ms. Killing it now.`
-      );
+      _log.error(`CennzNetNode: sent exit code ${code} but was still running after ${_config.shutdownTimeout}ms. Killing it now.`);
       try {
         if (_node) await this._ensureProcessIsNotRunning(_node.pid, CENNZNET_PROCESS_NAME);
       } catch (e) {
@@ -532,22 +528,14 @@ export class CennzNetNode {
     this._state = state;
     this._actions.broadcastStateChange(state);
     switch (state) {
-      case CennzNetNodeStates.STARTING:
-        return _transitionListeners.onStarting();
-      case CennzNetNodeStates.RUNNING:
-        return _transitionListeners.onRunning();
-      case CennzNetNodeStates.STOPPING:
-        return _transitionListeners.onStopping();
-      case CennzNetNodeStates.STOPPED:
-        return _transitionListeners.onStopped();
-      case CennzNetNodeStates.UPDATING:
-        return _transitionListeners.onUpdating();
-      case CennzNetNodeStates.UPDATED:
-        return _transitionListeners.onUpdated();
-      case CennzNetNodeStates.CRASHED:
-        return _transitionListeners.onCrashed(...args);
-      case CennzNetNodeStates.UNRECOVERABLE:
-        return _transitionListeners.onUnrecoverable();
+      case CennzNetNodeStates.STARTING: return _transitionListeners.onStarting();
+      case CennzNetNodeStates.RUNNING: return _transitionListeners.onRunning();
+      case CennzNetNodeStates.STOPPING: return _transitionListeners.onStopping();
+      case CennzNetNodeStates.STOPPED: return _transitionListeners.onStopped();
+      case CennzNetNodeStates.UPDATING: return _transitionListeners.onUpdating();
+      case CennzNetNodeStates.UPDATED: return _transitionListeners.onUpdated();
+      case CennzNetNodeStates.CRASHED: return _transitionListeners.onCrashed(...args);
+      case CennzNetNodeStates.UNRECOVERABLE: return _transitionListeners.onUnrecoverable();
       default:
     }
   }
@@ -562,8 +550,9 @@ export class CennzNetNode {
    * Checks if cennznet-node child_process is not running anymore
    * @returns {boolean}
    */
-  _isDead = async (): Promise<boolean> =>
-    !this._isConnected() && (await this._isNodeProcessNotRunningAnymore());
+  _isDead = async (): Promise<boolean> => (
+    !this._isConnected() && await this._isNodeProcessNotRunningAnymore()
+  );
 
   /**
    * Checks if current cennznet-node child_process is "awake" (created, connected, stateful)
@@ -574,9 +563,7 @@ export class CennzNetNode {
    * @private
    */
   _canBeStarted = async (): Promise<boolean> => {
-    if (this._isConnected()) {
-      return false;
-    }
+    if (this._isConnected()) { return false; }
     try {
       await this._ensurePreviousCennzNetNodeIsNotRunning();
       return true;
@@ -604,9 +591,7 @@ export class CennzNetNode {
   _ensureCurrentCennzNetNodeIsNotRunning = async (): Promise<void> => {
     const { _log, _node } = this;
     _log.info('CennzNetNode: checking if current cennznet-node process is still running');
-    if (_node == null) {
-      return Promise.resolve();
-    }
+    if (_node == null) { return Promise.resolve(); }
     return await this._ensureProcessIsNotRunning(_node.pid, CENNZNET_PROCESS_NAME);
   };
 
@@ -614,9 +599,7 @@ export class CennzNetNode {
     const { _log } = this;
     _log.info('CennzNetNode: checking if previous cennznet-node process is still running');
     const previousPID: ?number = await this._retrieveData(PREVIOUS_CENNZNET_PID);
-    if (previousPID == null) {
-      return Promise.resolve();
-    }
+    if (previousPID == null) { return Promise.resolve(); }
     return await this._ensureProcessIsNotRunning(previousPID, CENNZNET_PROCESS_NAME);
   };
 
@@ -628,9 +611,7 @@ export class CennzNetNode {
         _log.debug(`CennzNetNode: No previous ${processName} process is running anymore.`);
         return false;
       }
-      _log.debug(
-        `CennzNetNode: previous ${processName} process found: ${JSON.stringify(previousProcess)}`
-      );
+      _log.debug(`CennzNetNode: previous ${processName} process found: ${JSON.stringify(previousProcess)}`);
       return true;
     } catch (error) {
       return false;
@@ -650,10 +631,9 @@ export class CennzNetNode {
         this._log.info(`CennzNetNode (Windows): using "${windowsKillCmd}" to kill.`);
         this._actions.exec(windowsKillCmd);
       }
-      await promisedCondition(
-        async () => (await this._isProcessRunning(pid, name)) === false,
-        _config.killTimeout
-      );
+      await promisedCondition(async () => (
+        (await this._isProcessRunning(pid, name)) === false
+      ), _config.killTimeout);
 
       this._log.info(`CennzNetNode: successfuly killed ${name} process (PID: ${pid})`);
       return Promise.resolve();
@@ -676,7 +656,7 @@ export class CennzNetNode {
   }
 
   // stores the current port/pid on which cennznet-node or Odin is running
-  _storeData = (identifier: string, data: number): Promise<void> =>
+  _storeData = (identifier: string, data: number): Promise<void> => (
     new Promise((resolve, reject) => {
       try {
         // saves current port/pid in file system
@@ -684,15 +664,14 @@ export class CennzNetNode {
         this._log.info(`CennzNetNode: ${identifier} stored successfuly`);
         resolve();
       } catch (error) {
-        this._log.info(
-          `CennzNetNode: failed to store ${identifier}. Error: ${JSON.stringify(error)}`
-        );
+        this._log.info(`CennzNetNode: failed to store ${identifier}. Error: ${JSON.stringify(error)}`);
         reject(error);
       }
-    });
+    })
+  );
 
   // retrieves the last known port/pid on which cennznet-node or Odin was running
-  _retrieveData = (identifier: string): Promise<?number> =>
+  _retrieveData = (identifier: string): Promise<?number> => (
     new Promise((resolve, reject) => {
       try {
         // retrieves previous port/pid from file system
@@ -709,15 +688,18 @@ export class CennzNetNode {
         this._log.info(`CennzNetNode: get ${identifier} failed. Error: ${JSON.stringify(error)}`);
         reject(error);
       }
-    });
+    })
+  );
 
-  _isNodeProcessStillRunning = async (): Promise<boolean> =>
-    this._node != null && (await this._isProcessRunning(this._node.pid, CENNZNET_PROCESS_NAME));
+  _isNodeProcessStillRunning = async (): Promise<boolean> => (
+    this._node != null && await this._isProcessRunning(this._node.pid, CENNZNET_PROCESS_NAME)
+  );
 
-  _isNodeProcessNotRunningAnymore = async () => (await this._isNodeProcessStillRunning()) === false;
+  _isNodeProcessNotRunningAnymore = async () => await this._isNodeProcessStillRunning() === false;
 
-  _waitForNodeProcessToExit = async (timeout: number) =>
-    await promisedCondition(this._isNodeProcessNotRunningAnymore, timeout);
+  _waitForNodeProcessToExit = async (timeout: number) => (
+    await promisedCondition(this._isNodeProcessNotRunningAnymore, timeout)
+  );
 
   _waitForCennzNetToExitOrKillIt = async () => {
     const { _config } = this;
@@ -729,5 +711,7 @@ export class CennzNetNode {
     }
   };
 
-  _isUnrecoverable = (config: CennzNetNodeConfig) => this._startupTries >= config.startupMaxRetries;
+  _isUnrecoverable = (config: CennzNetNodeConfig) => (
+    this._startupTries >= config.startupMaxRetries
+  );
 }

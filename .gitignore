@@ -30,17 +30,23 @@ node_modules
 # OSX
 .DS_Store
 
+# flow-typed
+flow-typed/npm/*
+!flow-typed/npm/module_vx.x.x.js
+
 # App packaged
 release
-app/renderer/dist
-app/main/main.prod.js
-app/main/main.prod.js.map
+app/main.prod.js
+app/main.prod.js.map
+app/renderer.prod.js
+app/renderer.prod.js.map
+app/style.css
+app/style.css.map
 dist
 dll
-package-lock.json
-
-.test_cache
-minio-data
+main.js
+main.js.map
 
 .idea
 npm-debug.log.*
+.test_cache

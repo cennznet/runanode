@@ -17,15 +17,14 @@ import {
 import type {
   TlsConfig,
   CennzNetNodeState,
-  CennzNetStatus,
+  CennzNetStatus
 } from '../../common/types/cennznet-node.types';
 import type { LauncherConfig } from '../config';
 import {
   NODE_KILL_TIMEOUT,
   NODE_SHUTDOWN_TIMEOUT,
   NODE_STARTUP_MAX_RETRIES,
-  NODE_STARTUP_TIMEOUT,
-  NODE_UPDATE_TIMEOUT,
+  NODE_STARTUP_TIMEOUT, NODE_UPDATE_TIMEOUT
 } from '../config';
 
 const startCennzNetNode = (node: CennzNetNode, launcherConfig: Object) => {
@@ -62,41 +61,37 @@ const restartCennzNetNode = async (node: CennzNetNode) => {
  * @param mainWindow
  */
 export const setupCennzNet = (
-  launcherConfig: LauncherConfig,
-  mainWindow: BrowserWindow
+  launcherConfig: LauncherConfig, mainWindow: BrowserWindow
 ): CennzNetNode => {
-  const cennzNetNode = new CennzNetNode(
-    Logger,
-    {
-      // Dependencies on node.js apis are passed as props to ease testing
-      spawn,
-      exec,
-      readFileSync,
-      createWriteStream,
-      broadcastTlsConfig: (config: ?TlsConfig) => {
-        if (!mainWindow.isDestroyed()) cennznetTlsConfigChannel.send(config, mainWindow);
-      },
-      broadcastStateChange: (state: CennzNetNodeState) => {
-        if (!mainWindow.isDestroyed()) cennznetStateChangeChannel.send(state, mainWindow);
-      },
+
+  const cennzNetNode = new CennzNetNode(Logger, {
+    // Dependencies on node.js apis are passed as props to ease testing
+    spawn,
+    exec,
+    readFileSync,
+    createWriteStream,
+    broadcastTlsConfig: (config: ?TlsConfig) => {
+      if (!mainWindow.isDestroyed()) cennznetTlsConfigChannel.send(config, mainWindow);
     },
-    {
-      // CennzNetNode lifecycle hooks
-      onStarting: () => {},
-      onRunning: () => {},
-      onStopping: () => {},
-      onStopped: () => {},
-      onUpdating: () => {},
-      onUpdated: () => {},
-      onCrashed: code => {
-        const restartTimeout = cennzNetNode.startupTries > 0 ? 30000 : 0;
-        Logger.info(`CennzNetNode crashed with code ${code}. Restarting in ${restartTimeout}ms …`);
-        setTimeout(() => restartCennzNetNode(cennzNetNode), restartTimeout);
-      },
-      onError: () => {},
-      onUnrecoverable: () => {},
-    }
-  );
+    broadcastStateChange: (state: CennzNetNodeState) => {
+      if (!mainWindow.isDestroyed()) cennznetStateChangeChannel.send(state, mainWindow);
+    },
+  }, {
+    // CennzNetNode lifecycle hooks
+    onStarting: () => {},
+    onRunning: () => {},
+    onStopping: () => {},
+    onStopped: () => {},
+    onUpdating: () => {},
+    onUpdated: () => {},
+    onCrashed: (code) => {
+      const restartTimeout = cennzNetNode.startupTries > 0 ? 30000 : 0;
+      Logger.info(`CennzNetNode crashed with code ${code}. Restarting in ${restartTimeout}ms …`);
+      setTimeout(() => restartCennzNetNode(cennzNetNode), restartTimeout);
+    },
+    onError: () => {},
+    onUnrecoverable: () => {}
+  });
   startCennzNetNode(cennzNetNode, launcherConfig);
 
   cennznetStatusChannel.onRequest(() => {
@@ -135,7 +130,7 @@ export const setupCennzNet = (
     return cennzNetNode.restart(true); // forced restart
   });
 
-  cennznetFaultInjectionChannel.onReceive(fault => {
+  cennznetFaultInjectionChannel.onReceive((fault) => {
     Logger.info(`ipcMain: Received request to inject a fault into cennznet node: ${String(fault)}`);
     return cennzNetNode.setFault(fault);
   });

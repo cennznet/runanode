@@ -3,7 +3,7 @@ import log from 'electron-log';
 
 const prefixProcessType = (str: string) => '[main] ' + str;
 
-const logToLevel = level => (message: string) => log[level](prefixProcessType(message));
+const logToLevel = (level) => (message: string) => log[level](prefixProcessType(message));
 
 export const Logger = {
   debug: logToLevel('debug'),
