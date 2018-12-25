@@ -131,10 +131,11 @@ app.on('ready', async () => {
     await installExtensions();
   }
   mainWindow = createDefaultWindow();
-  cennzNetNode = setupCennzNet(launcherConfig, mainWindow);
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+
+  cennzNetNode = setupCennzNet(launcherConfig, mainWindow);
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
