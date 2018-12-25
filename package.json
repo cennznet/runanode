@@ -1,6 +1,6 @@
 {
   "name": "cennz-node-ui",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "CENNZ node Electron App",
   "homepage": "https://bitbucket.org/centralitydev/cennz-node-ui#readme",
   "repository": {
@@ -17,6 +17,7 @@
     "build-main": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "build-renderer": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
     "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
+    "clean": "rimraf ./release -s",
     "flow": "flow",
     "flow-typed": "rimraf flow-typed/npm && flow-typed install --overwrite || true",
     "preinstall": "node ./internals/scripts/CheckYarn.js",
@@ -34,7 +35,11 @@
     "package-win": "yarn build && electron-builder build --win --x64",
     "precommit": "lint-staged",
     "prestart": "yarn build",
-    "start": "cross-env NODE_ENV=production electron ./app/main.prod.js",
+    "release": "yarn clean && yarn build && electron-builder -mwl --publish never",
+    "release:mac": "yarn clean && yarn build && electron-builder -m --publish never",
+    "release:github": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=github --config.publish.owner=cennznet --config.publish.repo=cennz-node-release --config.publish.private=true --config.publish.releaseType=release",
+    "release:minio": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=s3 --config.publish.endpoint=http://10.9.30.50:9000 --config.publish.bucket=test-update",
+    "start": "cross-env NODE_ENV=production LAUNCHER_CONFIG=./launcher-config.yaml electron ./app/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./app/main.dev.js",
     "start-renderer-dev": "cross-env NODE_ENV=development LAUNCHER_CONFIG=./launcher-config.yaml webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 jest",
@@ -145,7 +150,7 @@
     "css-loader": "^1.0.1",
     "detect-port": "^1.3.0",
     "electron": "^3.0.13",
-    "electron-builder": "^20.34.0",
+    "electron-builder": "^20.38.2",
     "electron-devtools-installer": "^2.2.4",
     "electron-log": "^2.2.17",
     "electron-updater": "^4.0.5",
@@ -208,56 +213,6 @@
     "yarn": "^1.12.3"
   },
   "browserslist": "electron 1.6",
-  "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
-    "files": [
-      "app/dist/",
-      "app/app.html",
-      "app/main.prod.js",
-      "app/main.prod.js.map",
-      "package.json"
-    ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "win": {
-      "target": [
-        "nsis",
-        "msi"
-      ]
-    },
-    "linux": {
-      "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "AppImage"
-      ],
-      "category": "Development"
-    },
-    "directories": {
-      "buildResources": "resources",
-      "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
-      "private": false
-    }
-  },
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x",

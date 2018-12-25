@@ -1,40 +1,43 @@
 productName: 'CennzNode'
 appId: 'com.centrality.odin'
-artifactName: 'cennz-node-ui-${version}.${ext}'
+artifactName: 'cennz-node-ui-${version}-${os}-${arch}.${ext}'
 copyright: 'Copyright © 2019 Centrality'
 
 # Package electron code into a asar archive. Set to false to debug issues.
 asar: true
 
 files:
-  - 'app/renderer/dist/'
-  - 'app/renderer/app.html'
-  - 'app/main/main.prod.js'
-  - 'app/main/main.prod.js.map'
+  - 'app/dist/'
+  - 'app/app.html'
+  - 'app/main.prod.js'
+  - 'app/main.prod.js.map'
   - 'package.json'
 
 # Mac OS configuration
 mac:
-  #  icon: 'src/app/assets/images/icon.icns'
+  #  icon: 'src/app/icon.icns'
   target:
+    #    - 'zip'
     - 'pkg'
+#    - 'dmg'
 
 # Config for OSX dmg
-# dmg:
-#   contents:
-#     - x: 130
-#       y: 220
-#     - x: 410
-#       y: 220
-#       type: 'link'
-#       path: '/Applications'
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: 'link'
+      path: '/Applications'
 
 # Windows configuration
 win:
   #  icon: 'src/app/assets/images/icon.ico'
   target:
-    #- 'zip'
+    - 'zip'
     - 'nsis'
+    - 'msi'
 
 # Config for the windows installer
 nsis:
@@ -45,20 +48,22 @@ nsis:
 linux:
   category: Development
   target:
-    # - 'AppImage'
+    - 'zip'
+    #    - 'AppImage'
     - 'deb'
-    # - 'rpm'
+#    - 'rpm'
+#    - 'snap'
 
-# deb:
-#   depends:
-#     # --- Default START
-#     - gconf2
-#     - gconfg-service
-#     - libnotify4
-#     - libappindicator1
-#     - libxtst6
-#     - libnss3
-#     - libsecret-1-0 # This is needed for keytar on linux
+deb:
+  depends:
+    # --- Default START
+    - gconf2
+    - gconfg-service
+    - libnotify4
+    - libappindicator1
+    - libxtst6
+    - libnss3
+    - libsecret-1-0 # This is needed for keytar on linux
 
 directories:
   buildResources: 'resources'

@@ -20,8 +20,6 @@
 
 - Able to show sync percentage
 
-- initial project setup
-
 ## v0.0.1 (2018.12.05)
 
 #### Features
