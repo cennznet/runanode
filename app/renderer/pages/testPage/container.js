@@ -11,7 +11,7 @@ typeRegistry.register({
 });
 
 // Move to config.js later
-const CENNZNET_NODE_1 = 'ws://cennznet-node-1.centrality.me:9944';
+const CENNZNET_NODE_1 = 'ws://localhost:9944';
 const LOCAL_NODE = 'ws://localhost:9944';
 
 // const provider = new WsProvider(CENNZNET_NODE_1);

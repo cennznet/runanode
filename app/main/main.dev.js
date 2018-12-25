@@ -1,10 +1,19 @@
 /* eslint global-require: off */
+// import { setupCennzNet } from './cennznet/setup';
+// import { CennzNetNode } from './cennznet/CennzNetNode';
+// import { launcherConfig } from './config';
+
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const polyfill = require('@babel/polyfill');
 
+// const { setupCennzNet } = require('./cennznet/setup');
+// const { CennzNetNode } = require('./cennznet/CennzNetNode');
+// const { launcherConfig } = require('./config');
+
 let mainWindow = null;
+// let cennzNetNode = null;
 
 const createDefaultWindow = () => {
   mainWindow = new BrowserWindow({
@@ -30,6 +39,8 @@ const createDefaultWindow = () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  return mainWindow;
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -70,7 +81,8 @@ app.on('ready', async () => {
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
   }
-  createDefaultWindow();
+  mainWindow = createDefaultWindow();
+  // cennzNetNode = setupCennzNet(launcherConfig, mainWindow);
 
   if (process.env.NODE_ENV === 'production') {
     autoUpdater.checkForUpdates();
