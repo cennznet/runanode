@@ -5,7 +5,7 @@
     "browser": true,
     "jest": true
   },
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "prettier", "plugin:flowtype/recommended", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 8,
@@ -19,7 +19,7 @@
       "babel-module": {}
     }
   },
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "flowtype", "import", "promise", "react"],
   "globals": {
     "shallow": true,
     "var2": false
@@ -50,12 +50,7 @@
     "max-len": 0,
     "no-confusing-arrow": 0,
     "no-console": 0,
-    "no-underscore-dangle": [
-      "error",
-      {
-        "allow": ["__REDUX_DEVTOOLS_EXTENSION__", "__"]
-      }
-    ],
+    "no-underscore-dangle": 0,
     "react/destructuring-assignment": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-closing-bracket-location": 0,
@@ -74,6 +69,11 @@
         "extensions": [".js", ".jsx"]
       }
     ],
-    "react/no-danger": 0
+    "react/no-danger": 0,
+    "prefer-promise-reject-errors": 0,
+    "no-plusplus": 0,
+    "prefer-template": 0,
+    "no-return-await": 0,
+    "lines-between-class-members": 0
   }
 }
