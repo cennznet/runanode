@@ -3,11 +3,11 @@ import type {
   CennzNetNodeStorageKeys,
   NetworkNames,
   PlatformNames,
-  ProcessNames,
+  ProcessNames
 } from '../../common/types/cennznet-node.types';
 import {
   CennzNetProcessNameOptions,
-  NetworkNameOptions,
+  NetworkNameOptions
 } from '../../common/types/cennznet-node.types';
 
 export type Process = {
@@ -33,30 +33,27 @@ const checkCondition = async (
   } else if (timeWaited >= timeout) {
     reject(`Promised condition not met within ${timeout}ms.`);
   } else {
-    setTimeout(
-      () =>
-        checkCondition(condition, resolve, reject, timeout, retryEvery, timeWaited + retryEvery),
-      retryEvery
-    );
+    setTimeout(() => checkCondition(
+      condition, resolve, reject, timeout, retryEvery, timeWaited + retryEvery
+    ), retryEvery);
   }
 };
 
 export const promisedCondition = (
-  cond: Function,
-  timeout: number = 5000,
-  retryEvery: number = 1000
-): Promise<void> =>
-  new Promise((resolve, reject) => {
-    checkCondition(cond, resolve, reject, timeout, retryEvery);
-  });
+  cond: Function, timeout: number = 5000, retryEvery: number = 1000
+): Promise<void> => new Promise((resolve, reject) => {
+  checkCondition(cond, resolve, reject, timeout, retryEvery);
+});
 
-const getNetworkName = (network: NetworkNames): string =>
-  NetworkNameOptions[network] || NetworkNameOptions.development;
+const getNetworkName = (network: NetworkNames): string => (
+  NetworkNameOptions[network] || NetworkNameOptions.development
+);
 
 export const deriveStorageKeys = (network: NetworkNames): CennzNetNodeStorageKeys => ({
-  PREVIOUS_CENNZNET_PID: `${getNetworkName(network)}-PREVIOUS-CENNZNET-PID`,
+  PREVIOUS_CENNZNET_PID: `${getNetworkName(network)}-PREVIOUS-CENNZNET-PID`
 });
 
 export const deriveProcessNames = (platform: PlatformNames): ProcessNames => ({
-  CENNZNET_PROCESS_NAME: CennzNetProcessNameOptions[platform] || 'cennznet-node',
+  CENNZNET_PROCESS_NAME: CennzNetProcessNameOptions[platform] || 'cennznet-node'
 });
+

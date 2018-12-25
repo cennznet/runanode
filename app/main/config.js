@@ -11,22 +11,22 @@ const isStartedByLauncher = !!LAUNCHER_CONFIG;
 if (!isStartedByLauncher) {
   const isWindows = process.platform === 'win32';
   const dialogTitle = 'Odin improperly started!';
-  let dialogMessage;
-  if (isProd) {
-    dialogMessage = isWindows
-      ? 'Please start Odin using the icon in the Windows start menu or using Odin icon on your desktop.'
-      : 'Odin was launched without needed configuration. Please start Odin using the shortcut provided by the installer.';
-  } else {
-    dialogMessage =
-      'Odin should be started using nix-shell. Find more details here: https://github.com/input-output-hk/daedalus/blob/develop/README.md';
-  }
-  try {
-    // app may not be available at this moment so we need to use try-catch
-    dialog.showErrorBox(dialogTitle, dialogMessage);
-    app.exit(1);
-  } catch (e) {
-    throw new Error(`${dialogTitle}\n\n${dialogMessage}\n`);
-  }
+  // let dialogMessage;
+  // if (isProd) {
+  //   dialogMessage = isWindows
+  //     ? 'Please start Odin using the icon in the Windows start menu or using Odin icon on your desktop.'
+  //     : 'Odin was launched without needed configuration. Please start Odin using the shortcut provided by the installer.';
+  // } else {
+  //   dialogMessage =
+  //     'Odin should be started using nix-shell. Find more details here: https://github.com/input-output-hk/daedalus/blob/develop/README.md';
+  // }
+  // try {
+  //   // app may not be available at this moment so we need to use try-catch
+  //   dialog.showErrorBox(dialogTitle, dialogMessage);
+  //   app.exit(1);
+  // } catch (e) {
+  //   throw new Error(`${dialogTitle}\n\n${dialogMessage}\n`);
+  // }
 }
 
 /**
@@ -46,14 +46,16 @@ export type LauncherConfig = {
     filePath: string,
     key: string,
     systemStart: string,
-    seed: string,
-  },
+    seed: string
+  }
 };
 
 export const APP_NAME = 'Odin';
-export const launcherConfig: LauncherConfig = readLauncherConfig(LAUNCHER_CONFIG);
-export const appLogsFolderPath = launcherConfig.logsPrefix;
-export const pubLogsFolderPath = path.join(appLogsFolderPath, 'pub');
+export const launcherConfig: LauncherConfig = readLauncherConfig(
+  LAUNCHER_CONFIG
+);
+// export const appLogsFolderPath = launcherConfig.logsPrefix;
+// export const pubLogsFolderPath = path.join(appLogsFolderPath, 'pub');
 export const ALLOWED_LOGS = ['Odin.log'];
 export const ALLOWED_NODE_LOGS = new RegExp(/(node.json-)(\d{14}$)/);
 export const ALLOWED_LAUNCHER_LOGS = new RegExp(/(launcher-)(\d{14}$)/);

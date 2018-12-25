@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { LocalizeProvider } from 'react-localize-redux';
 
-import AppThemeProvier from 'renderer/components/AppThemeProvider';
-import theme from 'renderer/theme';
+import AppThemeProvider from './components/AppThemeProvider';
+import theme from './theme';
 import AppRoutes from './routes';
 import store from './store';
 
@@ -20,13 +20,13 @@ const globalStyles = `
 
 const AppWithProviders = () => (
   <Provider store={store}>
-    <AppThemeProvier {...{ theme, globalStyles }}>
+    <AppThemeProvider {...{ theme, globalStyles }}>
       <LocalizeProvider store={store}>
         <Router>
           <AppRoutes />
         </Router>
       </LocalizeProvider>
-    </AppThemeProvier>
+    </AppThemeProvider>
   </Provider>
 );
 
