@@ -8,6 +8,12 @@
 
 ### Improvements
 
+## v0.1.1 (2018.12.26)
+
+#### Features
+
+- Able to process launch config and out put logs on mac
+
 ## v0.0.3 (2018.12.25)
 
 #### Features

@@ -14,7 +14,7 @@ import { app, BrowserWindow, globalShortcut, Menu, dialog, shell } from 'electro
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './main/menu';
-import { Logger } from './main/utils/logging';
+import { Logger, isDev } from './main/utils/logging';
 import { setupCennzNet } from './main/cennznet/setup';
 import { CennzNetNode } from './main/cennznet/CennzNetNode';
 import { launcherConfig } from './main/config';
@@ -24,7 +24,6 @@ import {safeExitWithCode} from "./main/utils/safeExitWithCode";
 
 export default class AppUpdater {
   constructor() {
-    log.transports.file.level = 'info';
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
   }
@@ -83,10 +82,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
+if (isDev()) {
   require('electron-debug')();
 }
 
@@ -124,10 +120,7 @@ app.on('ready', async () => {
   }
 
 
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
+  if (isDev()) {
     await installExtensions();
   }
   mainWindow = createDefaultWindow();

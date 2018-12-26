@@ -1,10 +1,12 @@
-productName: 'CennzNode'
+productName: 'Odin'
 appId: 'com.centrality.odin'
-artifactName: 'cennz-node-ui-${version}-${os}-${arch}.${ext}'
+artifactName: '${name}-${version}-${os}-${arch}.${ext}'
 copyright: 'Copyright © 2019 Centrality'
 
 # Package electron code into a asar archive. Set to false to debug issues.
 asar: true
+#asarUnpack:
+#  - "**/dist/**/*"
 
 files:
   - 'app/dist/'
@@ -14,20 +16,20 @@ files:
   - 'package.json'
 
 extraResources:
-  - from: 'dist/cennznet-node-${os}'
-    to: 'cennznet-node'
-  - from: 'dist/launcher-config-${os}.yaml'
-    to: 'launcher-config.yaml'
+#  - from: 'dist/cennznet-node-${os}'
+#    to: 'cennznet-node'
+#  - from: 'dist/launcher-config-${os}.yaml'
+#    to: 'launcher-config.yaml'
 
 extraFiles:
   - from: 'dist/cennznet-node-${os}'
-    to: 'cennznet-node/cennznet-node'
+    to: 'dist/cennznet-node'
   - from: 'dist/launcher-config-${os}.yaml'
-    to: 'cennznet-node/launcher-config.yaml'
+    to: 'dist/launcher-config.yaml'
 
 # Mac OS configuration
 mac:
-  #  icon: 'src/app/icon.icns'
+  icon: 'resources/icon.icns'
   target:
     #    - 'zip'
     - 'pkg'
@@ -48,7 +50,7 @@ dmg:
 
 # Windows configuration
 win:
-  #  icon: 'src/app/assets/images/icon.ico'
+  icon: 'resources/icon.ico'
   target:
     - 'zip'
     - 'nsis'
@@ -69,16 +71,16 @@ linux:
 #    - 'rpm'
 #    - 'snap'
 
-deb:
-  depends:
-    # --- Default START
-    - gconf2
-    - gconfg-service
-    - libnotify4
-    - libappindicator1
-    - libxtst6
-    - libnss3
-    - libsecret-1-0 # This is needed for keytar on linux
+#deb:
+#  depends:
+#    # --- Default START
+#    - gconf2
+#    - gconfg-service
+#    - libnotify4
+#    - libappindicator1
+#    - libxtst6
+#    - libnss3
+#    - libsecret-1-0 # This is needed for keytar on linux
 
 directories:
   buildResources: 'resources'
