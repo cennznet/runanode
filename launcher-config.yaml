@@ -1,12 +1,14 @@
-nodePath: ./dist/cennznet-node
-logsPrefix: ./dist/Odin/logs
+nodePath: ${ODIN_DIST_DIRECTORY}/cennznet-node
+logsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
+
+
 walletLogging: true
 nodeArgs:
   - --name
   - ken-test
-statePath: ./dist/Odin
+statePath: ${ODIN_USER_DATA_DIRECTORY}/Odin
 walletPath: ${ODIN_INSTALL_DIRECTORY}/Frontend
-launcherLogsPrefix: ./dist/Odin/Logs/pub/
+launcherLogsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
 walletArgs: []
 reportServer: http://localhost:8080
 nodeDbPath: ./dist/Odin/DB-1.0

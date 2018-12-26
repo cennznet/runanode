@@ -2,7 +2,7 @@
 import { createWriteStream, readFileSync } from 'fs';
 import { spawn, exec } from 'child_process';
 import { BrowserWindow } from 'electron';
-import { Logger } from '../utils/logging';
+import { Logger, GetCennzNodeLogFileName } from '../utils/logging';
 import { prepareArgs } from './config';
 import { CennzNetNode } from './CennzNetNode';
 import {
@@ -30,7 +30,7 @@ import {
 const startCennzNetNode = (node: CennzNetNode, launcherConfig: Object) => {
   const { nodePath, tlsPath, logsPrefix } = launcherConfig;
   const nodeArgs = prepareArgs(launcherConfig);
-  const logFilePath = logsPrefix + '/cennznet-node.log';
+  const logFilePath = logsPrefix + '/' + GetCennzNodeLogFileName();
   const config = {
     nodePath,
     logFilePath,

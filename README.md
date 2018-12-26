@@ -57,3 +57,37 @@ yarn test-e2e
 export GITHUB_TOKEN=xxx
 yarn release:github
 ```
+
+## Debug/Logging for packaged app
+
+```shell
+DEBUG_PROD=true yarn package
+open release/mac/Odin.app
+tail -f ~/Library/Logs/Odin/*
+```
+
+CennzNet Node log:
+~/Library/Logs/Odin/cennznet-node.log
+
+Odin application log:
+~/Library/Logs/Odin/log.log
+
+Variable can be use in launcher-config.yaml
+ODIN_DIST_DIRECTORY=Odin.app/Contents/dist
+ODIN_LOG_DATA_DIRECTORY=~/Library/Logs/Odin
+ODIN_USER_DATA_DIRECTORY=~/Library/Application Support/Odin
+
+Packaged app structure for mac:
+
+```
+─ Odin.app
+└── Contents
+    ├── PkgInfo
+    ├── Info.plist
+    ├── Frameworks
+    ├── MacOS
+    ├── Resources
+    ├── dist
+        ├── cennznet-node
+        └── launcher-config.yaml
+```
