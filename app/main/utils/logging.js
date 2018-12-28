@@ -18,7 +18,7 @@ export const Logger = {
 
 export const GetLogDir = () => {
   return isDev() ? process.cwd() + '/dist/logs' :
-  Logger.findLogPath().replace('/log.log', '')
+  Logger.findLogPath().replace('log.log', '')
 }
 
 export const GetCennzNodeLogFileName = () => {
