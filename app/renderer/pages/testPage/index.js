@@ -4,6 +4,7 @@ import { Line } from 'rc-progress';
 import cennzNodeLogo from '../../assets/img/cennznode-logo.png';
 import withContainer from './container';
 import packageJson from '../../../../package.json';
+import { Logger } from '../../utils/logging';
 
 const PageContainer = styled.div`
   display: flex;
@@ -73,15 +74,15 @@ const TestPage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
   const syncNodePercentage = (localNetBestBlock / mainNetBestBlock) * 100;
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
 
-  console.log(`
+  Logger.info(`
   ===========================================    
   Best block in MainNet #${mainNetBestBlock} 
   ===========================================`);
-  console.log(`
+  Logger.info(`
   ===========================================
   Best block in Local #${localNetBestBlock}
   ===========================================`);
-  console.log(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
+  Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
   return (
     <PageContainer>
       <BrandContainer>

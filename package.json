@@ -1,7 +1,7 @@
 {
   "name": "Odin",
-  "version": "0.1.1",
-  "description": "CENNZ node Electron App",
+  "version": "0.1.2",
+  "description": "Odin digital wallet power by Centrality.ai",
   "homepage": "https://bitbucket.org/centralitydev/cennz-node-ui#readme",
   "repository": {
     "type": "git",

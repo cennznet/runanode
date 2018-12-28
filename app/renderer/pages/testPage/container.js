@@ -3,7 +3,9 @@ import { compose, lifecycle } from 'recompose';
 import { ApiRx, ApiPromise } from '@polkadot/api';
 import WsProvider from '@polkadot/rpc-provider/ws';
 import typeRegistry from '@polkadot/types/codec/typeRegistry';
+
 import types from '../../types';
+import { Logger } from '../../utils/logging';
 
 /** For demo, improve later */
 typeRegistry.register({
@@ -49,8 +51,8 @@ const enhance = lifecycle({
     });
 
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
-      // console.log(`Main Net Best block is at #${header.blockNumber}`);
-      // console.log(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
+      // Logger.info(`Main Net Best block is at #${header.blockNumber}`);
+      // Logger.info(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
       this.props.onUpdateMainNetBestBlock(
         header.blockNumber.words[0] || header.blockNumber
       );
@@ -58,11 +60,11 @@ const enhance = lifecycle({
 
     setInterval(() => {
       getBestBlock(LOCAL_NODE).subscribe(header => {
-        // console.log(`Local Net Best block is at #${header.blockNumber}`);
+        // Logger.info(`Local Net Best block is at #${header.blockNumber}`);
         const latestLocalBlock =
           header.blockNumber.words[0] || header.blockNumber;
         if (this.props.mainNetBestBlock < latestLocalBlock) {
-          console.log(
+          Logger.info(
             `The local bock #${latestLocalBlock} is larger than that of mainNet ${
               this.props.mainNetBestBlock
             }`
