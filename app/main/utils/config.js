@@ -5,8 +5,14 @@ import path from 'path';
 import { app } from 'electron';
 
 import type { LauncherConfig } from '../config';
-import { Logger, isDev, GetLogDir } from './logging';
+import { Logger, GetLogDir } from './logging';
 
+
+function isDev() {
+  // TODO is app running from cli or an app
+  // can check path for distPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/node_modules/electron/dist/Electron.app/Contents/dist
+  return true;
+}
 /**
  * Reads and parses the launcher config yaml file on given path.
  * @param configPath {String}
@@ -19,6 +25,12 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
   // $FlowFixMe
   const { resourcesPath } = process;
   const distPath = path.join(resourcesPath, '..', 'dist')
+  // $FlowFixMe
+  Logger.info(`process.env.NODE_ENV : ${process.env.NODE_ENV}`);
+  // $FlowFixMe
+  Logger.info(`process.env.DEBUG_PROD : ${process.env.DEBUG_PROD}`);
+  // $FlowFixMe
+  Logger.info(`isDev : ${isDev}`);
   Logger.info(`distPath: ${distPath}`);
   Logger.info(`process.resourcesPath: ${resourcesPath}`);
   Logger.info(`process.cwd(): ${process.cwd()}`);
