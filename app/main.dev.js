@@ -33,12 +33,20 @@ let mainWindow: BrowserWindow;
 let cennzNetNode: CennzNetNode;
 
 export const createDefaultWindow = () => {
+  Logger.info('createDefaultWindow');
+
   // Construct new BrowserWindow
   const window = new BrowserWindow({
     show: false,
     width: 1024,
     height: 728
   });
+
+  // if(window.process && process.versions && process.versions.electron) {
+  //   Logger.info('setting window.electronRequire');
+  //   window.electronRequire = require;
+  //   delete window.require;
+  // }
 
   window.loadURL(`file://${__dirname}/app.html`);
 
