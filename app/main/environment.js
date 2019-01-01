@@ -21,7 +21,11 @@ import {
 const CURRENT_NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
 const NETWORK = process.env.NETWORK || DEVELOPMENT;
 const REPORT_URL = process.env.REPORT_URL || STAGING_REPORT_URL;
+const port = process.env.PORT || 1212;
+const isHot = process.env.HOT === '1';
+const isDebugProd = process.env.DEBUG_PROD === 'true';
 const isDev = CURRENT_NODE_ENV === DEVELOPMENT;
+const isDevOrDebugProd = isDev || isDebugProd;
 const isTest = CURRENT_NODE_ENV === TEST;
 const isProduction = CURRENT_NODE_ENV === PRODUCTION;
 const isMainnet = CURRENT_NODE_ENV === MAINNET;
@@ -52,7 +56,11 @@ export const environment: Environment = Object.assign({}, {
   mobxDevTools: MOBX_DEV_TOOLS,
   current: CURRENT_NODE_ENV,
   reportUrl: REPORT_URL,
+  port,
+  isHot,
+  isDebugProd,
   isDev,
+  isDevOrDebugProd,
   isTest,
   isProduction,
   isMainnet,
