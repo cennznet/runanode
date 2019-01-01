@@ -27,7 +27,9 @@ export const getProcessesByName = async (processName: string): Promise<Array<Pro
   // retrieves all running processes
   const processes: Array<Process> = await psList();
   // filters running processes against previous PID
-  return processes.filter(({ name }) => processName === name);
+  const result = processes.filter(({ name }) => processName === name);
+  console.log('getProcessesByName', processName, result.length);
+  return result;
 };
 
 export const getProcess = async (processId: number, processName: string): Promise<?Process> => {

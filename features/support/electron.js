@@ -7,7 +7,7 @@ import { generateScreenshotFilePath, getTestNameFromTestFile, saveScreenshot } f
 import { refreshClient } from './helpers/app-helpers';
 
 const context = {};
-const DEFAULT_TIMEOUT = 20000;
+const DEFAULT_TIMEOUT = 40000;
 let scenariosCount = 0;
 
 const printMainProcessLogs = () => (
@@ -29,7 +29,7 @@ const startApp = async () => {
     env: Object.assign({}, process.env, {
       NODE_ENV: TEST,
     }),
-    startTimeout: DEFAULT_TIMEOUT,
+    // startTimeout: DEFAULT_TIMEOUT,
     waitTimeout: DEFAULT_TIMEOUT,
     chromeDriverLogPath: path.join(__dirname, '../../dist/logs/chrome-driver.log'),
     webdriverLogPath: path.join(__dirname, '../../dist/logs/webdriver'),
@@ -56,7 +56,7 @@ defineSupportCode(({ BeforeAll, Before, After, AfterAll, setDefaultTimeout }) =>
 
   // Make the electron app accessible in each scenario context
   Before({ timeout: DEFAULT_TIMEOUT * 2 }, async function () {
-    console.log('========= Before =========');
+    console.log('========= Before each scenario context =========');
     this.app = context.app;
     this.client = context.app.client;
     this.browserWindow = context.app.browserWindow;
@@ -70,50 +70,58 @@ defineSupportCode(({ BeforeAll, Before, After, AfterAll, setDefaultTimeout }) =>
     // Do not set 'implicit' timeout here because of this issue:
     // https://github.com/webdriverio/webdriverio/issues/974
 
+    console.log('this.client', this.client);
     // Reset backend
-    await this.client.executeAsync((done) => {
-      console.log('========= executeAsync =========');
-      const resetBackend = () => {
-        console.log('resetBackend, odin.api.ada: ', odin.api.ada)
+    // await this.client.executeAsync((done) => {
+    //   console.log('========= executeAsync =========');
+    //   const resetBackend = () => {
+    //     console.log('resetBackend, odin.api.ada: ', odin.api.ada);
+    //
+    //     // if (odin.stores.networkStatus.isConnected) {
+    //     //   odin.api.ada.testReset()
+    //     //     .then(odin.api.localStorage.reset)
+    //     //     .then(done)
+    //     //     .catch((error) => { throw error; });
+    //     // } else {
+    //     //   setTimeout(resetBackend, 60);
+    //     // }
+    //   };
+    //   resetBackend();
+    // });
 
-        if (odin.stores.networkStatus.isConnected) {
-          odin.api.ada.testReset()
-            .then(odin.api.localStorage.reset)
-            .then(done)
-            .catch((error) => { throw error; });
-        } else {
-          setTimeout(resetBackend, 60);
-        }
-      };
-      resetBackend();
-    });
-
+    console.log('refreshClient');
     // Load fresh root url with test environment for each test case
     await refreshClient(this.client);
 
+    console.log('this.client.executeAsync');
     // Ensure that frontend is synced and ready before test case
-    await this.client.executeAsync((done) => {
-      const waitUntilSyncedAndReady = () => {
-        if (odin.stores.networkStatus.isSynced) {
-          done();
-        } else {
-          setTimeout(waitUntilSyncedAndReady, 60);
-        }
-      };
-      waitUntilSyncedAndReady();
-    });
+    // await this.client.executeAsync((done) => {
+    //   const waitUntilSyncedAndReady = () => {
+    //     console.log('waitUntilSyncedAndReady: ', done);
+    //     // if (odin.stores.networkStatus.isSynced) {
+    //     //   done();
+    //     // } else {
+    //     //   setTimeout(waitUntilSyncedAndReady, 60);
+    //     // }
+    //   };
+    //   waitUntilSyncedAndReady();
+    // });
   });
 
   // this ensures that the spectron instance of the app restarts
   // after the node update acceptance test shuts it down via 'kill-process'
   // eslint-disable-next-line prefer-arrow-callback
   After({ tags: '@restartApp' }, async function () {
+    console.log('========= After @restartApp =========');
     context.app = await startApp();
   });
 
   // eslint-disable-next-line prefer-arrow-callback
   After(async function ({ sourceLocation, result }) {
     scenariosCount++;
+    console.log('========= After scenariosCount =========', scenariosCount);
+    console.log('sourceLocation', scenariosCount);
+    console.log('result', result);
     if (result.status === 'failed') {
       const testName = getTestNameFromTestFile(sourceLocation.uri);
       const file = generateScreenshotFilePath(testName);
@@ -124,6 +132,7 @@ defineSupportCode(({ BeforeAll, Before, After, AfterAll, setDefaultTimeout }) =>
 
   // eslint-disable-next-line prefer-arrow-callback
   AfterAll(async function () {
+    console.log('========= AfterAll =========');
     const allWindowsClosed = (await context.app.client.getWindowCount()) === 0;
     if (allWindowsClosed || !context.app.running) return;
     if (scenariosCount === 0) {

@@ -10,5 +10,5 @@ export const waitForOdinToExit = async (client: WebdriverClient, timeout: number
 };
 
 export const refreshClient = async (client: WebdriverClient) => {
-  await client.url(`file://${__dirname}/../../../dist/renderer/index.html`);
+  await client.url(`file://${__dirname}/../../../app/app.html`);
 };

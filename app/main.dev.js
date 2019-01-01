@@ -13,6 +13,8 @@
 import { app, BrowserWindow, globalShortcut, Menu, dialog, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { includes } from 'lodash';
+
 import MenuBuilder from './main/menu';
 import { Logger, isDev } from './main/utils/logging';
 import { setupCennzNet } from './main/cennznet/setup';
@@ -131,6 +133,9 @@ app.on('ready', async () => {
   if (isDev()) {
     await installExtensions();
   }
+  // Detect safe mode
+  // const isInSafeMode = includes(process.argv.slice(1), '--safe-mode');
+  // mainWindow = createMainWindow(isInSafeMode);
   mainWindow = createDefaultWindow();
 
   const menuBuilder = new MenuBuilder(mainWindow);
