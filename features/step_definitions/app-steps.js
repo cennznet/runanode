@@ -1,14 +1,16 @@
 // @flow
 import { Given, When, Then } from 'cucumber';
 import { expect } from 'chai';
+const assert = require('assert');
 import type { Odin } from '../support/global-types';
 import { waitUntilTextInSelector } from '../support/helpers/shared-helpers';
 import { waitForCennzNetNodeToExit } from '../support/helpers/cennznet-node-helpers';
 import { refreshClient, waitForOdinToExit } from '../support/helpers/app-helpers';
 
-declare var daedalus: Odin;
+declare var odin: Odin;
 
 Given(/^Odin is running$/, function () {
+  console.log('Odin is running', this.app.isRunning());
   expect(this.app.isRunning()).to.be.true;
 });
 
@@ -17,7 +19,9 @@ When(/^I refresh the main window$/, async function () {
 });
 
 When(/^I close the main window$/, async function () {
-  await this.client.execute(() => daedalus.stores.window.closeWindow());
+  console.log('I close the main window');
+  // TODO
+  // await this.client.execute(() => odin.stores.window.closeWindow());
 });
 
 Then(/^Odin process is not running$/, async function () {

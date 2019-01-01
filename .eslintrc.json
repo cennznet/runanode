@@ -75,6 +75,7 @@
     "prefer-template": 0,
     "no-return-await": 0,
     "lines-between-class-members": 0,
-    "flowtype/no-types-missing-file-annotation": 0
+    "flowtype/no-types-missing-file-annotation": 0,
+    "no-unused-expressions": 0
   }
 }
