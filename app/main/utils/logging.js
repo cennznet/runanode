@@ -1,8 +1,9 @@
 // @flow
 import log from 'electron-log';
 
-export const isDev = () => process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+import { environment } from '../environment';
 
+const  { isDevOrDebugProd } = environment;
 
 const prefixProcessType = (str: string) => '[main] ' + str;
 
@@ -17,7 +18,7 @@ export const Logger = {
 };
 
 export const GetLogDir = () => {
-  return isDev() ? process.cwd() + '/dist/logs' :
+  return isDevOrDebugProd ? process.cwd() + '/dist/logs' :
   Logger.findLogPath().replace('log.log', '')
 }
 
@@ -29,7 +30,7 @@ export const GetCennzNodeLogFullPath = () => {
   return GetLogDir()+'/cennznet-node.log';
 }
 
-if(isDev()) {
+if(isDevOrDebugProd) {
   log.transports.console.level = 'info';
   log.transports.file.level = 'info';
 

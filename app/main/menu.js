@@ -1,6 +1,8 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
-import { isDev } from './utils/logging';
+import { environment } from './environment';
+
+const { isDevOrDebugProd } = environment;
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -10,7 +12,7 @@ export default class MenuBuilder {
   }
 
   buildMenu() {
-    if (isDev()) {
+    if (isDevOrDebugProd) {
       this.setupDevelopmentEnvironment();
     }
 
@@ -172,7 +174,7 @@ export default class MenuBuilder {
       ]
     };
 
-    const subMenuView = isDev() ? subMenuViewDev : subMenuViewProd;
+    const subMenuView = isDevOrDebugProd ? subMenuViewDev : subMenuViewProd;
 
     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
   }
