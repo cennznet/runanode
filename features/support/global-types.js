@@ -1,13 +1,13 @@
 // @flow
-import type { Api } from '../../app/renderer/app/api';
-import type { ActionsMap } from '../../source/renderer/app/actions';
-import type { StoresMap } from '../../source/renderer/app/stores';
+import type { Api } from '../../app/renderer/api';
+// import type { ActionsMap } from '../../source/renderer/actions';
+// import type { StoresMap } from '../../source/renderer/stores';
 
 export type Odin = {
   api: Api,
   environment: Object,
-  actions: ActionsMap,
-  stores: StoresMap,
+  // actions: ActionsMap,
+  // stores: StoresMap,
   translations: Object,
   reset: Function,
 };

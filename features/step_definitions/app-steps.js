@@ -1,11 +1,12 @@
 // @flow
 import { Given, When, Then } from 'cucumber';
 import { expect } from 'chai';
-const assert = require('assert');
 import type { Odin } from '../support/global-types';
 import { waitUntilTextInSelector } from '../support/helpers/shared-helpers';
 import { waitForCennzNetNodeToExit } from '../support/helpers/cennznet-node-helpers';
 import { refreshClient, waitForOdinToExit } from '../support/helpers/app-helpers';
+
+const assert = require('assert');
 
 declare var odin: Odin;
 
@@ -18,7 +19,7 @@ When(/^I refresh the main window$/, async function () {
   await refreshClient(this.client);
 });
 
-When(/^I close the main window$/, async function () {
+When(/^I close the main window$/, async () => {
   console.log('I close the main window');
   // TODO
   // await this.client.execute(() => odin.stores.window.closeWindow());
