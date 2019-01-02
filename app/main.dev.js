@@ -13,14 +13,20 @@
 import { app, BrowserWindow, globalShortcut, Menu, dialog, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { includes } from 'lodash';
+
 import MenuBuilder from './main/menu';
-import { Logger, isDev } from './main/utils/logging';
+import { Logger } from './main/utils/logging';
 import { setupCennzNet } from './main/cennznet/setup';
 import { CennzNetNode } from './main/cennznet/CennzNetNode';
 import { launcherConfig } from './main/config';
 import {CennzNetNodeStates} from "./common/types/cennznet-node.types";
 import {acquireAppInstanceLock} from "./main/utils/app-instance-lock";
 import {safeExitWithCode} from "./main/utils/safeExitWithCode";
+import { createMainWindow } from './main/windows/mainWindow';
+import { environment } from './main/environment';
+
+const { isDevOrDebugProd } = environment;
 
 export default class AppUpdater {
   constructor() {
@@ -33,12 +39,20 @@ let mainWindow: BrowserWindow;
 let cennzNetNode: CennzNetNode;
 
 export const createDefaultWindow = () => {
+  Logger.info('createDefaultWindow');
+
   // Construct new BrowserWindow
   const window = new BrowserWindow({
     show: false,
     width: 1024,
     height: 728
   });
+
+  // if(window.process && process.versions && process.versions.electron) {
+  //   Logger.info('setting window.electronRequire');
+  //   window.electronRequire = require;
+  //   delete window.require;
+  // }
 
   window.loadURL(`file://${__dirname}/app.html`);
 
@@ -82,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (isDev()) {
+if (isDevOrDebugProd) {
   require('electron-debug')();
 }
 
@@ -120,10 +134,13 @@ app.on('ready', async () => {
   }
 
 
-  if (isDev()) {
+  if (isDevOrDebugProd) {
     await installExtensions();
   }
-  mainWindow = createDefaultWindow();
+  // Detect safe mode
+  const isInSafeMode = includes(process.argv.slice(1), '--safe-mode');
+  mainWindow = createMainWindow(isInSafeMode);
+  // mainWindow = createDefaultWindow();
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
