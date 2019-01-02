@@ -26,6 +26,7 @@ const isHot = process.env.HOT === '1';
 const isDebugProd = process.env.DEBUG_PROD === 'true';
 const isDev = CURRENT_NODE_ENV === DEVELOPMENT;
 const isDevOrDebugProd = isDev || isDebugProd;
+const isRemoteDebug = process.env.DEBUG_REMOTE === 'true';
 const isTest = CURRENT_NODE_ENV === TEST;
 const isProduction = CURRENT_NODE_ENV === PRODUCTION;
 const isMainnet = CURRENT_NODE_ENV === MAINNET;
@@ -61,6 +62,7 @@ export const environment: Environment = Object.assign({}, {
   isDebugProd,
   isDev,
   isDevOrDebugProd,
+  isRemoteDebug,
   isTest,
   isProduction,
   isMainnet,

@@ -8,6 +8,7 @@ export type Environment = {
   port: string,
   isHot: boolean,
   isDebugProd: boolean,
+  isRemoteDebug: boolean,
   isDev: boolean,
   isDevOrDebugProd: boolean,
   isTest: boolean,
