@@ -8,9 +8,6 @@ import merge from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
-import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
-
-CheckNodeEnv('production');
 
 export default merge.smart(baseConfig, {
   devtool: 'source-map',
@@ -20,12 +17,12 @@ export default merge.smart(baseConfig, {
   target: 'electron-main',
 
   entry: {
-    main: './app/main.dev',
+    preload: './app/main/preload.js',
   },
 
   output: {
     path: path.join(__dirname, '..'),
-    filename: './app/[name].prod.js'
+    filename: './app/dist/[name].js'
   },
 
   optimization: {

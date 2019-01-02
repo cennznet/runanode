@@ -91,3 +91,15 @@ Packaged app structure for mac:
         ├── cennznet-node
         └── launcher-config.yaml
 ```
+
+## Remote debug in VSCode
+
+### Main process
+Start `Debug Main Process` in VSCode
+
+### Renderer process
+Install debugger-for-chrome
+```shell
+yarn start-renderer-dev
+```
+Start `Debug Renderer Process` in VSCode

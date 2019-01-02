@@ -16,13 +16,17 @@ import log from 'electron-log';
 import { includes } from 'lodash';
 
 import MenuBuilder from './main/menu';
-import { Logger, isDev } from './main/utils/logging';
+import { Logger } from './main/utils/logging';
 import { setupCennzNet } from './main/cennznet/setup';
 import { CennzNetNode } from './main/cennznet/CennzNetNode';
 import { launcherConfig } from './main/config';
 import {CennzNetNodeStates} from "./common/types/cennznet-node.types";
 import {acquireAppInstanceLock} from "./main/utils/app-instance-lock";
 import {safeExitWithCode} from "./main/utils/safeExitWithCode";
+import { createMainWindow } from './main/windows/mainWindow';
+import { environment } from './main/environment';
+
+const { isDevOrDebugProd } = environment;
 
 export default class AppUpdater {
   constructor() {
@@ -92,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (isDev()) {
+if (isDevOrDebugProd) {
   require('electron-debug')();
 }
 
@@ -130,13 +134,13 @@ app.on('ready', async () => {
   }
 
 
-  if (isDev()) {
+  if (isDevOrDebugProd) {
     await installExtensions();
   }
   // Detect safe mode
-  // const isInSafeMode = includes(process.argv.slice(1), '--safe-mode');
-  // mainWindow = createMainWindow(isInSafeMode);
-  mainWindow = createDefaultWindow();
+  const isInSafeMode = includes(process.argv.slice(1), '--safe-mode');
+  mainWindow = createMainWindow(isInSafeMode);
+  // mainWindow = createDefaultWindow();
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
