@@ -5,12 +5,12 @@
     <!--
   unsafe-eval is require to run WASM code
   https://github.com/WebAssembly/content-security-policy/issues/7
-  TODO:ix this when wasm-eval is implemented in Chrome
--->
-    <!--<meta-->
-      <!--http-equiv="Content-Security-Policy"-->
-      <!--content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'"-->
-    <!--&gt;-->
+  TODO:fix this when wasm-eval is implemented in Chrome
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' "
+    >
+    -->
     <title>CENNZ Node</title>
     <script>
       (function() {
