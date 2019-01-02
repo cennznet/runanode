@@ -1,5 +1,5 @@
 import R from 'ramda';
-import types from 'renderer/types';
+import types from '../types';
 
 const DEFAULT_STATE = {
   text: '',

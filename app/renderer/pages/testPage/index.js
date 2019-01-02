@@ -4,6 +4,7 @@ import { Line } from 'rc-progress';
 import cennzNodeLogo from '../../assets/img/cennznode-logo.png';
 import withContainer from './container';
 import packageJson from '../../../../package.json';
+import { Logger } from '../../utils/logging';
 
 const PageContainer = styled.div`
   display: flex;
@@ -70,18 +71,18 @@ const TextWrapper = styled.div`
 `;
 
 const TestPage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
-  const syncNodePrecentage = (localNetBestBlock / mainNetBestBlock) * 100;
-  const progressPrecentage = syncNodePrecentage >= 100 ? 100 : syncNodePrecentage;
+  const syncNodePercentage = (localNetBestBlock / mainNetBestBlock) * 100;
+  const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
 
-  console.log(`
+  Logger.info(`
   ===========================================    
   Best block in MainNet #${mainNetBestBlock} 
   ===========================================`);
-  console.log(`
+  Logger.info(`
   ===========================================
   Best block in Local #${localNetBestBlock}
   ===========================================`);
-  console.log(`  Sync progress in Local ${progressPrecentage.toFixed(2)}%`);
+  Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
   return (
     <PageContainer>
       <BrandContainer>
@@ -93,9 +94,9 @@ const TestPage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
       <SyncNodeContainer>
         <SyncNodeInformation>
           <SyncNodeTitle>Local test net</SyncNodeTitle>
-          {/* {progressPrecentage > 0 && ( */}
+          {/* {progressPercentage > 0 && ( */}
           <Line
-            percent={progressPrecentage}
+            percent={progressPercentage}
             trailColor="gray"
             trailWidth="1"
             strokeWidth="2"
@@ -103,7 +104,7 @@ const TestPage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
           />
           {/* )} */}
           <TextWrapper>
-            Mian Net Best Block :<BlockNumber>{mainNetBestBlock}</BlockNumber>
+            Main Net Best Block :<BlockNumber>{mainNetBestBlock}</BlockNumber>
           </TextWrapper>
           <TextWrapper>
             Local Node Best Block :<BlockNumber>{localNetBestBlock}</BlockNumber>

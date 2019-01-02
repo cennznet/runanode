@@ -1,0 +1,31 @@
+nodePath: ${ODIN_DIST_DIRECTORY}/cennznet-node
+logsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
+
+
+walletLogging: true
+nodeArgs:
+  - --name
+  - ken-test
+statePath: ${ODIN_USER_DATA_DIRECTORY}/Odin
+walletPath: ${ODIN_INSTALL_DIRECTORY}/Frontend
+launcherLogsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
+walletArgs: []
+reportServer: http://localhost:8080
+nodeDbPath: ./dist/Odin/DB-1.0
+updaterPath: /usr/bin/open
+workingDir: ./dist/Odin
+frontendOnlyMode: true
+nodeLogPath: null
+updaterArgs:
+  - -FW
+configuration:
+  seed: null
+  filePath: ${ODIN_INSTALL_DIRECTORY}/configuration.yaml
+  key: mainnet_wallet_macos64
+  systemStart: null
+updateArchive: ./dist/Odin/installer.pkg
+nodeLogConfig: ${ODIN_INSTALL_DIRECTORY}/log-config-prod.yaml
+nodeTimeoutSec: 60
+updateWindowsRunner: null
+tlsPath: ./dist/Odin/tls
+x509ToolPath: ${ODIN_INSTALL_DIRECTORY}/cennznet-x509-certificates

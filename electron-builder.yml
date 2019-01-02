@@ -1,40 +1,60 @@
-productName: 'CennzNode'
+productName: 'Odin'
 appId: 'com.centrality.odin'
-artifactName: 'cennz-node-ui-${version}.${ext}'
+artifactName: '${name}-${version}-${os}-${arch}.${ext}'
 copyright: 'Copyright © 2019 Centrality'
 
 # Package electron code into a asar archive. Set to false to debug issues.
 asar: true
+#asarUnpack:
+#  - "**/dist/**/*"
 
 files:
-  - 'app/renderer/dist/'
-  - 'app/renderer/app.html'
-  - 'app/main/main.prod.js'
-  - 'app/main/main.prod.js.map'
+  - 'app/dist/'
+  - 'app/app.html'
+  - 'app/main.prod.js'
+  - 'app/main.prod.js.map'
   - 'package.json'
+
+extraResources:
+#  - from: 'dist/cennznet-node-${os}'
+#    to: 'cennznet-node'
+#  - from: 'dist/launcher-config-${os}.yaml'
+#    to: 'launcher-config.yaml'
+
+extraFiles:
+  - from: 'dist/cennznet-node-${os}'
+    to: 'dist/cennznet-node'
+  - from: 'dist/launcher-config-${os}.yaml'
+    to: 'dist/launcher-config.yaml'
 
 # Mac OS configuration
 mac:
-  #  icon: 'src/app/assets/images/icon.icns'
+  icon: 'resources/icon.icns'
   target:
+    #    - 'zip'
     - 'pkg'
+  #    - 'dmg'
+  extendInfo:
+    ProgramArguments:
+      - LAUNCHER_CONFIG=Resources/launcher-config.yaml
 
 # Config for OSX dmg
-# dmg:
-#   contents:
-#     - x: 130
-#       y: 220
-#     - x: 410
-#       y: 220
-#       type: 'link'
-#       path: '/Applications'
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: 'link'
+      path: '/Applications'
 
 # Windows configuration
 win:
-  #  icon: 'src/app/assets/images/icon.ico'
+  icon: 'resources/icon.ico'
   target:
-    #- 'zip'
+    - 'zip'
     - 'nsis'
+    - 'msi'
 
 # Config for the windows installer
 nsis:
@@ -44,21 +64,24 @@ nsis:
 # Linux configuration
 linux:
   category: Development
+  icon: 'resources/icons/32x32.ico'
   target:
-    # - 'AppImage'
+    - 'zip'
+    #    - 'AppImage'
     - 'deb'
-    # - 'rpm'
+#    - 'rpm'
+#    - 'snap'
 
-# deb:
-#   depends:
-#     # --- Default START
-#     - gconf2
-#     - gconfg-service
-#     - libnotify4
-#     - libappindicator1
-#     - libxtst6
-#     - libnss3
-#     - libsecret-1-0 # This is needed for keytar on linux
+#deb:
+#  depends:
+#    # --- Default START
+#    - gconf2
+#    - gconfg-service
+#    - libnotify4
+#    - libappindicator1
+#    - libxtst6
+#    - libnss3
+#    - libsecret-1-0 # This is needed for keytar on linux
 
 directories:
   buildResources: 'resources'
