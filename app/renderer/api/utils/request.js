@@ -44,6 +44,7 @@ function typedRequest<Response>(
         // Passphrase must be ommited from rest query params
         queryParams = omit(queryParams, 'passphrase'); // eslint-disable-line no-param-reassign
 
+        // $FlowFixMe
         if (size(queryParams > 1) && passphrase) {
           queryString += `&${querystring.stringify(queryParams)}`;
         }

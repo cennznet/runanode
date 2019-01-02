@@ -7,9 +7,9 @@ import { getProcessesByName } from '../../../app/main/utils/processes';
 
 declare var odin: Odin;
 
-export const getCennzNetNodeState = async (client: WebdriverClient) => (
-  (await client.execute(() => odin.stores.networkStatus.cennznetNodeState)).value
-);
+// export const getCennzNetNodeState = async (client: WebdriverClient) => (
+//   (await client.execute(() => odin.stores.networkStatus.cennznetNodeState)).value
+// );
 
 export const waitForCennzNetNodeToExit = async (client: WebdriverClient) => (
   await client.waitUntil(async () => (
