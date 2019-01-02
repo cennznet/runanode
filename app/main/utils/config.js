@@ -5,7 +5,10 @@ import path from 'path';
 import { app } from 'electron';
 
 import type { LauncherConfig } from '../config';
-import { Logger, isDev, GetLogDir } from './logging';
+import { Logger, GetLogDir } from './logging';
+import { environment } from '../environment';
+
+const { isDevOrDebugProd, isDev, isDebugProd, isTest } = environment;
 
 /**
  * Reads and parses the launcher config yaml file on given path.
@@ -19,6 +22,20 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
   // $FlowFixMe
   const { resourcesPath } = process;
   const distPath = path.join(resourcesPath, '..', 'dist')
+  // $FlowFixMe
+  Logger.info(`process.env.NODE_ENV : ${process.env.NODE_ENV}`);
+  // $FlowFixMe
+  Logger.info(`process.env.DEBUG_PROD : ${process.env.DEBUG_PROD}`);
+  // $FlowFixMe
+  Logger.info(`isDevOrDebugProd : ${isDevOrDebugProd}`);
+  // $FlowFixMe
+  Logger.info(`isDebugProd : ${isDebugProd}`);
+  // $FlowFixMe
+  Logger.info(`isDev : ${isDev}`);
+  // $FlowFixMe
+  Logger.info(`isTest : ${isTest}`);
+  // $FlowFixMe
+  Logger.info(`isDevOrDebugProd : ${isDevOrDebugProd}`);
   Logger.info(`distPath: ${distPath}`);
   Logger.info(`process.resourcesPath: ${resourcesPath}`);
   Logger.info(`process.cwd(): ${process.cwd()}`);
@@ -53,7 +70,7 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
         return process.env[b];
       }
       if (b === 'ODIN_INSTALL_DIRECTORY') {
-        const ODIN_INSTALL_DIRECTORY = isDev() ? process.cwd() : app.getAppPath();
+        const ODIN_INSTALL_DIRECTORY = isDevOrDebugProd ? process.cwd() : app.getAppPath();
         Logger.info(`ODIN_INSTALL_DIRECTORY: ${ODIN_INSTALL_DIRECTORY}`);
         return ODIN_INSTALL_DIRECTORY;
       }
@@ -63,12 +80,12 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
         return ODIN_RESOURCE_DIRECTORY;
       }
       if (b === 'ODIN_DIST_DIRECTORY') {
-        const ODIN_DIST_DIRECTORY = isDev() ? process.cwd() + '/dist' : distPath;
+        const ODIN_DIST_DIRECTORY = isDevOrDebugProd ? process.cwd() + '/dist' : distPath;
         Logger.info(`ODIN_DIST_DIRECTORY: ${ODIN_DIST_DIRECTORY}`);
         return ODIN_DIST_DIRECTORY;
       }
       if (b === 'ODIN_USER_DATA_DIRECTORY') {
-        const ODIN_USER_DATA_DIRECTORY = isDev() ? process.cwd() + '/dist/user_data': app.getPath('userData');
+        const ODIN_USER_DATA_DIRECTORY = isDevOrDebugProd ? process.cwd() + '/dist/user_data': app.getPath('userData');
         Logger.info(`ODIN_USER_DATA_DIRECTORY: ${ODIN_USER_DATA_DIRECTORY}`);
         return ODIN_USER_DATA_DIRECTORY;
       }
