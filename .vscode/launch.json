@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "runtimeArgs": [
+        "-r",
+        "@babel/register",
+        "${workspaceRoot}/app/main.dev.js"
+      ],
+      "env": {
+        "NODE_ENV": "development",
+        "LAUNCHER_CONFIG": "./launcher-config.yaml",
+        "HOT": "1"
+      },
+      "protocol": "inspector",
+      "sourceMaps": true,
+      "outFiles": [],
+      "stopOnEntry": false
+    },
+    {
+      "name": "Debug Renderer Process",
+      "type": "chrome",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "runtimeArgs": [
+        "-r",
+        "@babel/register",
+        "${workspaceRoot}/app/main.dev.js"
+      ],
+      "env": {
+        "NODE_ENV": "development",
+        "LAUNCHER_CONFIG": "./launcher-config.yaml",
+        "HOT": "1",
+        "DEBUG_REMOTE": "true"
+      },
+      "sourceMaps": true,
+      "webRoot": "${workspaceRoot}"
+    }
+  ]
+}

@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize } from 'react-localize-redux';
-import TestPage from 'renderer/pages/testPage';
-import enTranslation from 'renderer/i18n/en.json';
+import TestPage from '../pages/testPage';
+import enTranslation from '../i18n/en.json';
 
 const setupLocalize = props => {
   props.initialize({

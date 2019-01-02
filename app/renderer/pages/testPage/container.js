@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import types from 'renderer/types';
 import { ApiRx, ApiPromise } from '@polkadot/api';
 import WsProvider from '@polkadot/rpc-provider/ws';
 import typeRegistry from '@polkadot/types/codec/typeRegistry';
 
+import types from '../../types';
+import { Logger } from '../../utils/logging';
+
 /** For demo, improve later */
 typeRegistry.register({
-  AssetId: 'u32',
+  AssetId: 'u32'
 });
 
 // Move to config.js later
@@ -23,10 +25,12 @@ const getBestBlock = providerUrl => {
 };
 /** For demo, improve later */
 
-const mapStateToProps = ({ testPage: { text, mainNetBestBlock, localNetBestBlock } }) => ({
+const mapStateToProps = ({
+  testPage: { text, mainNetBestBlock, localNetBestBlock }
+}) => ({
   text,
   mainNetBestBlock,
-  localNetBestBlock,
+  localNetBestBlock
 });
 const mapDispatchToProps = dispatch => ({
   onPageLoaded: payload => {
@@ -37,27 +41,30 @@ const mapDispatchToProps = dispatch => ({
   },
   onUpdateLocalNetBestBlock: payload => {
     dispatch({ type: types.updateLocalNetBestBlock.triggered, payload });
-  },
+  }
 });
 
 const enhance = lifecycle({
   componentDidMount() {
     this.props.onPageLoaded({
-      text: 'Hello World!',
+      text: 'Hello World!'
     });
 
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
-      // console.log(`Main Net Best block is at #${header.blockNumber}`);
-      // console.log(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
-      this.props.onUpdateMainNetBestBlock(header.blockNumber.words[0] || header.blockNumber);
+      // Logger.info(`Main Net Best block is at #${header.blockNumber}`);
+      // Logger.info(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
+      this.props.onUpdateMainNetBestBlock(
+        header.blockNumber.words[0] || header.blockNumber
+      );
     });
 
     setInterval(() => {
       getBestBlock(LOCAL_NODE).subscribe(header => {
-        // console.log(`Local Net Best block is at #${header.blockNumber}`);
-        const latestLocalBlock = header.blockNumber.words[0] || header.blockNumber;
+        // Logger.info(`Local Net Best block is at #${header.blockNumber}`);
+        const latestLocalBlock =
+          header.blockNumber.words[0] || header.blockNumber;
         if (this.props.mainNetBestBlock < latestLocalBlock) {
-          console.log(
+          Logger.info(
             `The local bock #${latestLocalBlock} is larger than that of mainNet ${
               this.props.mainNetBestBlock
             }`
@@ -67,7 +74,7 @@ const enhance = lifecycle({
         }
       });
     }, 15000);
-  },
+  }
 });
 
 export default compose(
