@@ -8,7 +8,7 @@ import type { LauncherConfig } from '../config';
 import { Logger, GetLogDir } from './logging';
 import { environment } from '../environment';
 
-const { isDevOrDebugProd, isDev, isDebugProd } = environment;
+const { isDevOrDebugProd, isDev, isDebugProd, isTest } = environment;
 
 /**
  * Reads and parses the launcher config yaml file on given path.
@@ -32,6 +32,8 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
   Logger.info(`isDebugProd : ${isDebugProd}`);
   // $FlowFixMe
   Logger.info(`isDev : ${isDev}`);
+  // $FlowFixMe
+  Logger.info(`isTest : ${isTest}`);
   // $FlowFixMe
   Logger.info(`isDevOrDebugProd : ${isDevOrDebugProd}`);
   Logger.info(`distPath: ${distPath}`);

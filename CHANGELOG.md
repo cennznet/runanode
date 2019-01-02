@@ -8,6 +8,15 @@
 
 ### Improvements
 
+## v0.1.2 (2019.01.02)
+
+#### Features
+
+- Able launch remote debug in vscode for main and renderer
+- Able to run `yarn cucumber` for integration test 
+- Added preload.js script for security
+- Able to run cennnznet-node as part of the app
+
 ## v0.1.1 (2018.12.26)
 
 #### Features

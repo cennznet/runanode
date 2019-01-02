@@ -23,7 +23,7 @@ import { launcherConfig } from './main/config';
 import {CennzNetNodeStates} from "./common/types/cennznet-node.types";
 import {acquireAppInstanceLock} from "./main/utils/app-instance-lock";
 import {safeExitWithCode} from "./main/utils/safeExitWithCode";
-import { createMainWindow } from './main/windows/main';
+import { createMainWindow } from './main/windows/mainWindow';
 import { environment } from './main/environment';
 
 const { isDevOrDebugProd } = environment;

@@ -1,5 +1,6 @@
 // @flow
 import { Given, When, Then } from 'cucumber';
+// $FlowFixMe
 import { expect } from 'chai';
 import type { Odin } from '../support/global-types';
 import { waitUntilTextInSelector } from '../support/helpers/shared-helpers';
