@@ -2,8 +2,9 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize } from 'react-localize-redux';
-import TestPage from '../pages/testPage';
-import enTranslation from '../i18n/en.json';
+import TosPage from 'renderer/pages/tosPage';
+import WalletRoutes from 'renderer/routes/WalletRoutes';
+import enTranslation from 'renderer/i18n/en.json';
 
 const setupLocalize = props => {
   props.initialize({
@@ -25,8 +26,9 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/test" />} />
-        <Route exact path="/test" component={TestPage} />
+        <Route exact path="/" render={() => <Redirect to="/wallet/create" />} />
+        <Route path="/wallet" render={WalletRoutes} />
+        <Route exact path="/tos" render={TosPage} />
       </Switch>
     );
   }
