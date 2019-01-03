@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
-import cennzNodeLogo from '../../assets/img/cennznode-logo.png';
+import logoImg from '../../assets/img/cennznode-logo.png';
 import packageJson from '../../../../package.json';
 
 const Wrapper = styled.div`
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
 const Sidebar = () => (
   <Wrapper>
-    <img alt="" src={cennzNodeLogo} />
+    <img alt="" src={logoImg} />
     <div>Version: {packageJson.version}</div>
   </Wrapper>
 );
