@@ -399,7 +399,7 @@ declare interface TestCafe$TestController {
     takeElementScreenshot(selector: TestCafe$SelectorParameter,
                           path?:    string,
                           options?: TestCafe$TakeElementScreenshotOptions): TestCafe$TestControllerPromise,
-
+                          
     resizeWindow(width: number, height: number): TestCafe$TestControllerPromise,
 
     resizeWindowToFitDevice(deviceName: string, options?: TestCafe$ResizeToFitDeviceOptions): TestCafe$TestControllerPromise,
@@ -428,9 +428,9 @@ declare interface TestCafe$TestController {
     setTestSpeed(speed: number): TestCafe$TestControllerPromise,
 
     setPageLoadTimeout(duration: number): TestCafe$TestControllerPromise,
-
+    
     useRole(role: TestCafe$RoleFn): TestCafe$TestControllerPromise,
-
+    
     addRequestHooks(...hooks: Object[]): TestCafe$TestControllerPromise,
 
     removeRequestHooks(...hooks: Object[]): TestCafe$TestControllerPromise
@@ -631,7 +631,7 @@ declare class TestCafe$RequestHookClass {
     onRequest(requestEvent: Object): void,
     onResponse(responseEvent: Object): void
 }
-
+    
 declare var fixture: TestCafe$FixtureFn;
 declare var test: TestCafe$TestFn;
 
@@ -687,12 +687,11 @@ declare module 'testcafe' {
         ClientFunction(fn: Function, options?: TestCafe$ClientFunctionOptions): TestCafe$ClientFunctionFn,
 
         Role: TestCafe$RoleFn,
-        // $FlowIssue
+        
         RequestMock: TestCafe$RequestMockFn,
-        // $FlowIssue
         RequestLogger: TestCafe$RequestLoggerFn,
         RequestHook: Class<TestCafe$RequestHookClass>,
-
+        
         t: TestCafe$TestController
     };
 }

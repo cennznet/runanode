@@ -1,4 +1,4 @@
-// flow-typed signature: 50a47c9fd80507fc51dcdb3d8472ddc7
+// flow-typed signature: ce9a6c57cf034cefe37de0fcc457960d
 // flow-typed version: <<STUB>>/@fortawesome/free-solid-svg-icons_v^5.6.0/flow_v0.87.0
 
 /**
@@ -1319,6 +1319,10 @@ declare module '@fortawesome/free-solid-svg-icons/faFingerprint' {
 }
 
 declare module '@fortawesome/free-solid-svg-icons/faFire' {
+  declare module.exports: any;
+}
+
+declare module '@fortawesome/free-solid-svg-icons/faFireAlt' {
   declare module.exports: any;
 }
 
@@ -4661,6 +4665,9 @@ declare module '@fortawesome/free-solid-svg-icons/faFingerprint.js' {
 }
 declare module '@fortawesome/free-solid-svg-icons/faFire.js' {
   declare module.exports: $Exports<'@fortawesome/free-solid-svg-icons/faFire'>;
+}
+declare module '@fortawesome/free-solid-svg-icons/faFireAlt.js' {
+  declare module.exports: $Exports<'@fortawesome/free-solid-svg-icons/faFireAlt'>;
 }
 declare module '@fortawesome/free-solid-svg-icons/faFireExtinguisher.js' {
   declare module.exports: $Exports<'@fortawesome/free-solid-svg-icons/faFireExtinguisher'>;

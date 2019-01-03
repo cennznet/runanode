@@ -1,3 +1,5 @@
+import { rgba } from 'polished';
+
 /** Nuetral */
 export const N0 = '#FFFFFF';
 export const N50 = '#F8F9F9';
@@ -56,10 +58,10 @@ export const B700 = '#015094';
 export const B800 = '#003562';
 export const B900 = '#00192F';
 
-export const brandPrimary = B500;
+export const brandPrimary = rgba(17, 48, 255, 0.9);
 export const brandSecondary = Y400;
 
-export const primary = B500;
+export const primary = rgba(17, 48, 255, 0.9);
 export const secondary = Y500;
 export const success = G500;
 export const warning = Y500;

@@ -10,7 +10,7 @@ const productionPlugins = [
   // babel-preset-react-optimize
   require('@babel/plugin-transform-react-constant-elements'),
   require('@babel/plugin-transform-react-inline-elements'),
-  require('babel-plugin-transform-react-remove-prop-types')
+  require('babel-plugin-transform-react-remove-prop-types'),
 ];
 
 module.exports = api => {
@@ -24,13 +24,31 @@ module.exports = api => {
         require('@babel/preset-env'),
         {
           targets: { electron: require('electron/package.json').version },
-          useBuiltIns: 'usage'
-        }
+          useBuiltIns: 'usage',
+        },
       ],
       require('@babel/preset-flow'),
-      [require('@babel/preset-react'), { development }]
+      [require('@babel/preset-react'), { development }],
     ],
     plugins: [
+      [require('@babel/plugin-proposal-object-rest-spread'), { useBuiltIns: false }],
+      require('babel-plugin-styled-components'),
+      require('babel-plugin-polished'),
+      [require('babel-plugin-ramda'), { useES: true }],
+      [
+        require('babel-plugin-module-resolver'),
+        {
+          root: ['./'],
+          alias: {
+            app: './app',
+            shared: './app/shared',
+            main: './app/main',
+            renderer: './app/renderer',
+            components: './app/renderer/components',
+          },
+        },
+      ],
+
       // Stage 0
       require('@babel/plugin-proposal-function-bind'),
 
@@ -38,14 +56,8 @@ module.exports = api => {
       require('@babel/plugin-proposal-export-default-from'),
       require('@babel/plugin-proposal-logical-assignment-operators'),
       [require('@babel/plugin-proposal-optional-chaining'), { loose: false }],
-      [
-        require('@babel/plugin-proposal-pipeline-operator'),
-        { proposal: 'minimal' }
-      ],
-      [
-        require('@babel/plugin-proposal-nullish-coalescing-operator'),
-        { loose: false }
-      ],
+      [require('@babel/plugin-proposal-pipeline-operator'), { proposal: 'minimal' }],
+      [require('@babel/plugin-proposal-nullish-coalescing-operator'), { loose: false }],
       require('@babel/plugin-proposal-do-expressions'),
 
       // Stage 2
@@ -61,7 +73,7 @@ module.exports = api => {
       [require('@babel/plugin-proposal-class-properties'), { loose: true }],
       require('@babel/plugin-proposal-json-strings'),
 
-      ...(development ? developmentPlugins : productionPlugins)
-    ]
+      ...(development ? developmentPlugins : productionPlugins),
+    ],
   };
 };
