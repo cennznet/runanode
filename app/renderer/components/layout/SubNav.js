@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   width: 17rem;
   height: 100%;
   background-color: ${colors.N900};
+  overflow: hidden;
 `;
 
 const NavItem = styled(NavLink)`
