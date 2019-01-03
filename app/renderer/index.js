@@ -1,5 +1,4 @@
-import 'reset-css';
-import '@babel/polyfill';
+// import 'reset-css';
 import React from 'react';
 import { render } from 'react-dom';
 import { addLocaleData } from 'react-intl';
