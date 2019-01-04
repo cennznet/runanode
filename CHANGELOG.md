@@ -8,7 +8,13 @@
 
 ### Improvements
 
-## v0.2.0 (2019.01.02)
+## v0.2.1 (2019.01.04)
+
+#### Improvements
+
+- Add Styleguidist for components development
+
+## v0.2.0 (2019.01.04)
 
 #### Features
 
