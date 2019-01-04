@@ -26,7 +26,7 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/tos" />} />
+        <Route exact path="/" render={() => <Redirect to="/wallet/create" />} />
         <Route path="/wallet" render={WalletRoutes} />
         <Route exact path="/tos" render={() => <TosPage />} />
       </Switch>
