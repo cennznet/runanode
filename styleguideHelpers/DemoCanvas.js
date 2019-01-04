@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import theme from '../app/renderer/theme';
-
-const { colors } = theme;
+import theme, { colors } from '../app/renderer/theme';
 
 const DemoCanvas = styled.div`
   background-color: ${colors.N50};
@@ -10,11 +8,11 @@ const DemoCanvas = styled.div`
 `;
 
 DemoCanvas.defaultProps = {
-  theme
+  theme,
 };
 
 DemoCanvas.propTypes = {
-  theme: PropTypes.object
+  theme: PropTypes.object,
 };
 
 export default DemoCanvas;
