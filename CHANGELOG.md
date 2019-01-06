@@ -8,12 +8,9 @@
 
 ### Improvements
 
-## v0.2.2 (2019.01.07)
-
-#### Improvements
-
 - Able launch app with runtime parameter
 - Able to launch app with cennznet-node in windows
+- Add ./scripts/init.sh to init dev env
 
 ## v0.2.1 (2019.01.04)
 

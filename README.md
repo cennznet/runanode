@@ -7,6 +7,7 @@ The Electron App for CENNZ node
 ## Get Started
 
 ```shell
+./scripts/init.sh
 yarn install
 ```
 
