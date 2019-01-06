@@ -10,7 +10,8 @@ const StyledSelect = styled(ReactSelect)`
 
   .react-select__control {
     box-shadow: none;
-    border-color: ${p => p.border || p.theme.colors.N200};
+    color: ${p => p.border || p.theme.colors.N500};
+    border-color: ${p => p.border || p.theme.colors.N100};
   }
 
   .react-select__control--is-disabled {
@@ -18,19 +19,19 @@ const StyledSelect = styled(ReactSelect)`
   }
 
   .react-select__menu {
-    background-color: ${p => p.theme.colors.N100};
+    background-color: ${p => p.theme.colors.N0};
   }
 
   .react-select__option--is-focused {
-    background-color: ${p => p.theme.colors.N100};
+    background-color: ${p => p.theme.colors.N0};
   }
 
   .react-select__indicator-separator {
-    background-color: ${p => p.theme.colors.N200};
+    background-color: ${p => p.theme.colors.N100};
   }
 
   .react-select__option--is-selected {
-    background-color: ${p => p.theme.colors.N200};
+    background-color: ${p => p.theme.colors.N100};
     color: ${p => p.theme.colors.N700};
   }
 `;
