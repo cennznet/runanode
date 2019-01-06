@@ -3,6 +3,8 @@ import { readFileSync } from 'fs';
 import yamljs from 'yamljs';
 import path from 'path';
 import { app } from 'electron';
+import parseArgs from 'minimist';
+import extend from "extend";
 
 import type { LauncherConfig } from '../config';
 import { Logger, GetLogDir } from './logging';
@@ -17,6 +19,17 @@ const { isDevOrDebugProd, isDev, isDebugProd, isTest } = environment;
  */
 export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
   Logger.info(`********************************************************`);
+  const args = parseArgs(process.argv);
+  // $FlowFixMe
+  Logger.info(`args: ${JSON.stringify(args)}`);
+
+  const config = extend({
+    DEBUG_PROD: process.env.DEBUG_PROD,
+  }, parseArgs(process.argv));
+  Logger.info(`process.argv: ${JSON.stringify(process.argv)}`);
+  Logger.info(`config: ${JSON.stringify(config)}`);
+
+  Logger.info(`app.isPackaged: ${app.isPackaged}`);
   // $FlowFixMe
   Logger.info(`readLauncherConfig, configPath: ${configPath}`);
   // $FlowFixMe
@@ -70,7 +83,7 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
         return process.env[b];
       }
       if (b === 'ODIN_INSTALL_DIRECTORY') {
-        const ODIN_INSTALL_DIRECTORY = isDevOrDebugProd ? process.cwd() : app.getAppPath();
+        const ODIN_INSTALL_DIRECTORY = !app.isPackaged ? process.cwd() : app.getAppPath();
         Logger.info(`ODIN_INSTALL_DIRECTORY: ${ODIN_INSTALL_DIRECTORY}`);
         return ODIN_INSTALL_DIRECTORY;
       }
@@ -80,12 +93,12 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
         return ODIN_RESOURCE_DIRECTORY;
       }
       if (b === 'ODIN_DIST_DIRECTORY') {
-        const ODIN_DIST_DIRECTORY = isDevOrDebugProd ? process.cwd() + '/dist' : distPath;
+        const ODIN_DIST_DIRECTORY = !app.isPackaged ? process.cwd() + '/dist' : distPath;
         Logger.info(`ODIN_DIST_DIRECTORY: ${ODIN_DIST_DIRECTORY}`);
         return ODIN_DIST_DIRECTORY;
       }
       if (b === 'ODIN_USER_DATA_DIRECTORY') {
-        const ODIN_USER_DATA_DIRECTORY = isDevOrDebugProd ? process.cwd() + '/dist/user_data': app.getPath('userData');
+        const ODIN_USER_DATA_DIRECTORY = !app.isPackaged ? process.cwd() + '/dist/user_data': app.getPath('userData');
         Logger.info(`ODIN_USER_DATA_DIRECTORY: ${ODIN_USER_DATA_DIRECTORY}`);
         return ODIN_USER_DATA_DIRECTORY;
       }

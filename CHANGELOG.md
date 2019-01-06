@@ -8,6 +8,13 @@
 
 ### Improvements
 
+## v0.2.2 (2019.01.07)
+
+#### Improvements
+
+- Able launch app with runtime parameter
+- Able to launch app with cennznet-node in windows
+
 ## v0.2.1 (2019.01.04)
 
 #### Improvements

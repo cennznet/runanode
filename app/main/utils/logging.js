@@ -1,4 +1,5 @@
 // @flow
+import { app } from 'electron';
 import log from 'electron-log';
 
 import { environment } from '../environment';
@@ -18,7 +19,7 @@ export const Logger = {
 };
 
 export const GetLogDir = () => {
-  return isDevOrDebugProd ? process.cwd() + '/dist/logs' :
+  return !app.isPackaged ? process.cwd() + '/dist/logs' :
   Logger.findLogPath().replace('log.log', '')
 }
 
