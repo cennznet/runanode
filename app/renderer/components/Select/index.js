@@ -10,8 +10,12 @@ const StyledSelect = styled(ReactSelect)`
 
   .react-select__control {
     box-shadow: none;
-    color: ${p => p.border || p.theme.colors.N500};
-    border-color: ${p => p.border || p.theme.colors.N100};
+    color: ${p => p.color || p.theme.colors.N500};
+    border-color: ${p => p.borderColor || p.theme.colors.N100};
+
+    &:hover {
+      border-color: ${p => p.borderHoverColor || p.theme.colors.N100};
+    }
   }
 
   .react-select__control--is-disabled {
@@ -19,7 +23,7 @@ const StyledSelect = styled(ReactSelect)`
   }
 
   .react-select__menu {
-    background-color: ${p => p.theme.colors.N0};
+    background-color: ${p => p.backgroundColor || p.theme.colors.N0};
   }
 
   .react-select__option--is-focused {
