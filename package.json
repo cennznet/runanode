@@ -1,6 +1,6 @@
 {
   "name": "Odin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Odin digital wallet power by Centrality.ai",
   "homepage": "https://bitbucket.org/centralitydev/cennz-node-ui#readme",
   "repository": {
@@ -93,9 +93,11 @@
     "electron-unhandled": "^2.1.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "es6-error": "^4.1.1",
+    "extend": "^3.0.2",
     "formik": "^1.4.0",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
+    "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.23.0",
     "path": "0.12.7",

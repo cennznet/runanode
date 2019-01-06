@@ -55,6 +55,9 @@ win:
     - 'zip'
     - 'nsis'
     - 'msi'
+  extraFiles:
+    - from: 'dist/cennznet-node-win'
+      to: 'dist/cennznet-node.exe'
 
 # Config for the windows installer
 nsis:
