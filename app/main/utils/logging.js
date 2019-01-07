@@ -15,12 +15,11 @@ export const Logger = {
   info: logToLevel('info'),
   error: logToLevel('error'),
   warn: logToLevel('warn'),
-  findLogPath: log.transports.file.findLogPath,
 };
 
 export const GetLogDir = () => {
   return !app.isPackaged ? process.cwd() + '/dist/logs' :
-  Logger.findLogPath().replace('log.log', '')
+    log.transports.file.findLogPath.replace('log.log', '')
 }
 
 export const GetCennzNodeLogFileName = () => {
