@@ -41,7 +41,7 @@ module.exports = api => {
           root: ['./'],
           alias: {
             app: './app',
-            shared: './app/shared',
+            common: './app/common',
             main: './app/main',
             renderer: './app/renderer',
             components: './app/renderer/components',
