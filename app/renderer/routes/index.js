@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize } from 'react-localize-redux';
 import TosPage from 'renderer/pages/tosPage';
+import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import WalletRoutes from 'renderer/routes/WalletRoutes';
 import enTranslation from 'renderer/i18n/en.json';
 
@@ -26,9 +27,10 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/wallet/create" />} />
+        <Route exact path="/" render={() => <Redirect to="/chooseNetwork" />} />
         <Route path="/wallet" render={WalletRoutes} />
         <Route exact path="/tos" render={() => <TosPage />} />
+        <Route exact path="/chooseNetwork" render={() => <ChooseNetworkPage />} />
       </Switch>
     );
   }
