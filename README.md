@@ -7,6 +7,7 @@ The Electron App for CENNZ node
 ## Get Started
 
 ```shell
+./scripts/init.sh
 yarn install
 ```
 
@@ -103,3 +104,13 @@ Install debugger-for-chrome
 yarn start-renderer-dev
 ```
 Start `Debug Renderer Process` in VSCode
+
+
+## Pass args on app start
+
+Mac:
+ open -a /path-to-project/cennz-node-ui/release/mac/Odin.app --args --DEBUG_PROD=true
+
+
+Windows:
+Odin.exe --DEBUG_PROD=true

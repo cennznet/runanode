@@ -1,4 +1,5 @@
 // @flow
+import { app } from 'electron';
 import log from 'electron-log';
 
 import { environment } from '../environment';
@@ -14,12 +15,11 @@ export const Logger = {
   info: logToLevel('info'),
   error: logToLevel('error'),
   warn: logToLevel('warn'),
-  findLogPath: log.transports.file.findLogPath,
 };
 
 export const GetLogDir = () => {
-  return isDevOrDebugProd ? process.cwd() + '/dist/logs' :
-  Logger.findLogPath().replace('log.log', '')
+  return !app.isPackaged ? process.cwd() + '/dist/logs' :
+    log.transports.file.findLogPath.replace('log.log', '')
 }
 
 export const GetCennzNodeLogFileName = () => {
