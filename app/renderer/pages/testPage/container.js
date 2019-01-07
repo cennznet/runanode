@@ -13,7 +13,8 @@ typeRegistry.register({
 });
 
 // Move to config.js later
-const CENNZNET_NODE_1 = 'ws://cennznet-node-1.centrality.me:9944';
+// const CENNZNET_NODE_1 = 'ws://cennznet-node-1.centrality.me:9944';
+const CENNZNET_NODE_1 = 'ws://localhost:9944';
 const LOCAL_NODE = 'ws://localhost:9944';
 
 // const provider = new WsProvider(CENNZNET_NODE_1);
@@ -21,7 +22,7 @@ const LOCAL_NODE = 'ws://localhost:9944';
 
 const getBestBlock = providerUrl => {
   const provider = new WsProvider(providerUrl);
-  return new ApiRx(provider).rpc.chain.subscribeNewHead();
+  return new ApiRx({provider, types: {AssetId: 'u32'}}).rpc.chain.subscribeNewHead();
 };
 /** For demo, improve later */
 
@@ -32,6 +33,7 @@ const mapStateToProps = ({
   mainNetBestBlock,
   localNetBestBlock
 });
+
 const mapDispatchToProps = dispatch => ({
   onPageLoaded: payload => {
     dispatch({ type: types.testPage.triggered, payload });
@@ -50,20 +52,22 @@ const enhance = lifecycle({
       text: 'Hello World!'
     });
 
+
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
-      // Logger.info(`Main Net Best block is at #${header.blockNumber}`);
-      // Logger.info(`Main Net type is at ${typeof header.blockNumber.words[0]}`);
+      Logger.info(`Main Net Best block header: ${JSON.stringify(header)}`);
+      Logger.info(`Main Net best #${header.blockNumber} ${typeof header.blockNumber}`);
+      const latestMainNetBlock = JSON.stringify(header.blockNumber);
       this.props.onUpdateMainNetBestBlock(
-        header.blockNumber.words[0] || header.blockNumber
+        latestMainNetBlock
       );
     });
 
     setInterval(() => {
       getBestBlock(LOCAL_NODE).subscribe(header => {
-        // Logger.info(`Local Net Best block is at #${header.blockNumber}`);
-        const latestLocalBlock =
-          header.blockNumber.words[0] || header.blockNumber;
-        if (this.props.mainNetBestBlock < latestLocalBlock) {
+        Logger.info(`Local Net Best block header: ${JSON.stringify(header)}`);
+        Logger.info(`Local Net best #${header.blockNumber} ${typeof header.blockNumber}`);
+        const latestLocalBlock = JSON.stringify(header.blockNumber);
+        if (this.props.mainNetBestBlock && this.props.mainNetBestBlock < latestLocalBlock) {
           Logger.info(
             `The local bock #${latestLocalBlock} is larger than that of mainNet ${
               this.props.mainNetBestBlock
