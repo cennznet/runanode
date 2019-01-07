@@ -55,7 +55,8 @@ const enhance = lifecycle({
 
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
       Logger.info(`Main Net Best block header: ${JSON.stringify(header)}`);
-      const latestMainNetBlock = header.get("number").raw.words[0];
+      Logger.info(`Main Net best #${header.blockNumber} ${typeof header.blockNumber}`);
+      const latestMainNetBlock = JSON.stringify(header.blockNumber);
       this.props.onUpdateMainNetBestBlock(
         latestMainNetBlock
       );
@@ -64,7 +65,8 @@ const enhance = lifecycle({
     setInterval(() => {
       getBestBlock(LOCAL_NODE).subscribe(header => {
         Logger.info(`Local Net Best block header: ${JSON.stringify(header)}`);
-        const latestLocalBlock = header.get("number").raw.words[0];
+        Logger.info(`Local Net best #${header.blockNumber} ${typeof header.blockNumber}`);
+        const latestLocalBlock = JSON.stringify(header.blockNumber);
         if (this.props.mainNetBestBlock && this.props.mainNetBestBlock < latestLocalBlock) {
           Logger.info(
             `The local bock #${latestLocalBlock} is larger than that of mainNet ${
