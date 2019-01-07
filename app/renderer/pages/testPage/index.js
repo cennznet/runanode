@@ -71,7 +71,8 @@ const TextWrapper = styled.div`
 `;
 
 const TestPage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
-  const syncNodePercentage = (localNetBestBlock / mainNetBestBlock) * 100;
+  Logger.info(`TestPage: ${text}, ${mainNetBestBlock}, ${localNetBestBlock}`);
+  const syncNodePercentage = mainNetBestBlock && mainNetBestBlock > 0 ? (localNetBestBlock / mainNetBestBlock) * 100 : 0;
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
 
   Logger.info(`

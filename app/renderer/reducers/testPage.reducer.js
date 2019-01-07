@@ -8,6 +8,7 @@ const DEFAULT_STATE = {
 };
 
 export default function testPage(state = DEFAULT_STATE, { type, payload }) {
+  console.log(`testPage type: ${type}, state: ${JSON.stringify(state)}, payload: ${payload}`);
   switch (type) {
     case types.testPage.triggered:
       return R.merge(state, {
