@@ -20,7 +20,7 @@ const inputStateStyles = (
   color: ${p.color || p.theme.colors.N500};
   border: ${p.borderColor || getInputBorderColor(p)};
 
-  background-color: ${p.readOnly ? p.theme.colors.N100 : p.theme.colors.N0};
+  background-color: ${p.readOnly ? p.theme.colors.N100 : p.backgroundColor || p.theme.colors.N0};
 
   &::placeholder {
     color: ${p.theme.colors.N300};
@@ -28,7 +28,9 @@ const inputStateStyles = (
 
   &:focus {
     outline: none;
-    border: ${`1px solid ${p.readOnly ? p.theme.colors.border : styling(p).focusBorderColor}`};
+    border: ${`1px solid ${
+      p.readOnly ? p.theme.colors.border : p.focusBorderColor || styling(p).focusBorderColor
+    }`};
   }
 
   &:disabled {
