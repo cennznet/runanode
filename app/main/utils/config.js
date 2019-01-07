@@ -54,7 +54,6 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
   Logger.info(`process.cwd(): ${process.cwd()}`);
   Logger.info(`app.getAppPath(): ${app.getAppPath()}`);
   Logger.info(`app.getPath('userData'): ${app.getPath('userData')}`);
-  Logger.info(`Logger.findLogPath(): ${Logger.findLogPath()}`);
   Logger.info(`__dirname: ${__dirname}`);
 
   Logger.info(`********************************************************`);

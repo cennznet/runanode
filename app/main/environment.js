@@ -27,7 +27,7 @@ const config = extend({
   NODE_ENV: process.env.NODE_ENV,
   DEBUG_PROD: process.env.DEBUG_PROD,
 }, parseArgs(process.argv.slice(1)));
-console.log(`config: ${config}`);
+console.log(`config: ${JSON.stringify(config)}`);
 
 // environment variables
 const CURRENT_NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
