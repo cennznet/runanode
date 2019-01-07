@@ -5,9 +5,9 @@ import themeObj from 'renderer/theme';
 
 const defaultStyling = p => {
   const { colors } = p.theme;
-  return ({
-    color: colors.N500
-  });
+  return {
+    color: colors.N500,
+  };
 };
 
 const styling = p => deepAssign({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
@@ -36,7 +36,7 @@ Spinner.defaultProps = {
   thickness: '2px',
   speed: '0.7s',
   theme: themeObj,
-  themeSpace: 'spinner'
+  themeSpace: 'spinner',
 };
 
 export default Spinner;
