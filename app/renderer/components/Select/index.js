@@ -5,9 +5,6 @@ import styled from 'styled-components';
 import themeObj from '../../theme';
 
 const StyledSelect = styled(ReactSelect)`
-  margin-top: ${p => p.marginTop || '0.5rem'};
-  min-width: ${p => p.minWidth || '0'};
-
   .react-select__control {
     box-shadow: none;
     color: ${p => p.color || p.theme.colors.N500};
@@ -27,7 +24,8 @@ const StyledSelect = styled(ReactSelect)`
   }
 
   .react-select__option--is-focused {
-    background-color: ${p => p.theme.colors.N0};
+    color: ${p => p.focusColor || p.theme.colors.N800};
+    background-color: ${p => p.focusBackgroundColor || p.theme.colors.N0};
   }
 
   .react-select__indicator-separator {
@@ -35,8 +33,8 @@ const StyledSelect = styled(ReactSelect)`
   }
 
   .react-select__option--is-selected {
-    background-color: ${p => p.theme.colors.N100};
-    color: ${p => p.theme.colors.N700};
+    background-color: ${p => p.selectedBackgroundColor || p.theme.colors.N0};
+    color: ${p => p.theme.colors.N500};
   }
 `;
 
