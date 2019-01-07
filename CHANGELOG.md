@@ -11,6 +11,7 @@
 - Able launch app with runtime parameter
 - Able to launch app with cennznet-node in windows
 - Add ./scripts/init.sh to init dev env
+- Add Select, Input, Spinner components into Styleguidist
 
 ## v0.2.1 (2019.01.04)
 
