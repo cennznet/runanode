@@ -3,13 +3,12 @@ import { compose, lifecycle } from 'recompose';
 import { ApiRx, ApiPromise } from '@polkadot/api';
 import WsProvider from '@polkadot/rpc-provider/ws';
 import typeRegistry from '@polkadot/types/codec/typeRegistry';
-
+import { Logger } from 'renderer/utils/logging';
 import types from '../../types';
-import { Logger } from '../../utils/logging';
 
 /** For demo, improve later */
 typeRegistry.register({
-  AssetId: 'u32'
+  AssetId: 'u32',
 });
 
 // Move to config.js later
@@ -22,16 +21,14 @@ const LOCAL_NODE = 'ws://localhost:9944';
 
 const getBestBlock = providerUrl => {
   const provider = new WsProvider(providerUrl);
-  return new ApiRx({provider, types: {AssetId: 'u32'}}).rpc.chain.subscribeNewHead();
+  return new ApiRx({ provider, types: { AssetId: 'u32' } }).rpc.chain.subscribeNewHead();
 };
 /** For demo, improve later */
 
-const mapStateToProps = ({
-  testPage: { text, mainNetBestBlock, localNetBestBlock }
-}) => ({
+const mapStateToProps = ({ testPage: { text, mainNetBestBlock, localNetBestBlock } }) => ({
   text,
   mainNetBestBlock,
-  localNetBestBlock
+  localNetBestBlock,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -43,23 +40,20 @@ const mapDispatchToProps = dispatch => ({
   },
   onUpdateLocalNetBestBlock: payload => {
     dispatch({ type: types.updateLocalNetBestBlock.triggered, payload });
-  }
+  },
 });
 
 const enhance = lifecycle({
   componentDidMount() {
     this.props.onPageLoaded({
-      text: 'Hello World!'
+      text: 'Hello World!',
     });
-
 
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
       Logger.info(`Main Net Best block header: ${JSON.stringify(header)}`);
       Logger.info(`Main Net best #${header.blockNumber} ${typeof header.blockNumber}`);
       const latestMainNetBlock = JSON.stringify(header.blockNumber);
-      this.props.onUpdateMainNetBestBlock(
-        latestMainNetBlock
-      );
+      this.props.onUpdateMainNetBestBlock(latestMainNetBlock);
     });
 
     setInterval(() => {
@@ -78,7 +72,7 @@ const enhance = lifecycle({
         }
       });
     }, 15000);
-  }
+  },
 });
 
 export default compose(
