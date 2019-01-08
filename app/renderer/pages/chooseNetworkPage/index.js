@@ -1,20 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Route } from 'react-router-dom'
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import Select from 'components/Select';
 import Input from 'components/Input';
 import Button from 'components/Button';
 
+
+const ChooseNetworkWrapper = styled.div`
+  width: 60%;
+`;
+
 const JoinNetworkTitle = styled.div`
   color: ${colors.N0};
   font-weight: 600;
   font-size: 1.7rem;
   margin: 3rem auto;
-`;
-
-const ChooseNetworkWrapper = styled.div`
-  width: 60%;
 `;
 
 const NetworkOptionWrapper = styled.div`
@@ -78,7 +80,7 @@ export default class ChooseNetWork extends React.Component {
               )}
               <ButtonWrapper>
                 <div>
-                  <Button>Join network</Button>
+                  <Button disabled={!selectedNetwork}>Join network</Button>
                 </div>
               </ButtonWrapper>
             </ChooseNetworkWrapper>
