@@ -6,7 +6,6 @@ import en from 'react-intl/locale-data/en';
 import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
-import createHistory from 'history/createBrowserHistory';
 import App from './App';
 import '../app.global.css';
 import './scss/styles.scss';
@@ -29,13 +28,11 @@ const isTest = false;
 
 library.add(faPlus, faCogs, faQuestionCircle, faWallet);
 
-
 const initializeOdin = () => {
   const api = setupApi(isTest, String(NETWORK));
   // const router = new RouterStore();
   // const history = syncHistoryWithStore(hashHistory, router);
   // const stores = setupStores(api, actions, router);
-
 
   window.odin = {
     api,

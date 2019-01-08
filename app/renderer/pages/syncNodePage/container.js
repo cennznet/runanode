@@ -3,7 +3,7 @@ import { compose, lifecycle } from 'recompose';
 import { ApiRx, ApiPromise } from '@polkadot/api';
 import WsProvider from '@polkadot/rpc-provider/ws';
 import typeRegistry from '@polkadot/types/codec/typeRegistry';
-import { Logger } from 'utils/logging';
+import { Logger } from 'renderer/utils/logging';
 import types from '../../types';
 
 /** For demo, improve later */
