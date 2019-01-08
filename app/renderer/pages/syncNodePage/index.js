@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
+import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
-import { Logger } from '../../utils/logging';
 
 const SyncNodeWrapper = styled.div`
   width: 70%;
