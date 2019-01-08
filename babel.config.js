@@ -45,6 +45,7 @@ module.exports = api => {
             main: './app/main',
             renderer: './app/renderer',
             components: './app/renderer/components',
+            utils: './app/renderer/utils',
           },
         },
       ],

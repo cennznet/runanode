@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize } from 'react-localize-redux';
 import TosPage from 'renderer/pages/tosPage';
 import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
-import TestPage from 'renderer/pages/testPage';
+import SyncNodePage from 'renderer/pages/syncNodePage';
 import WalletRoutes from 'renderer/routes/WalletRoutes';
 import enTranslation from 'renderer/i18n/en.json';
 
@@ -28,11 +28,11 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/chooseNetwork" />} />
+        <Route exact path="/" render={() => <Redirect to="syncNode" />} />
         <Route path="/wallet" render={WalletRoutes} />
         <Route exact path="/tos" render={() => <TosPage />} />
         <Route exact path="/chooseNetwork" render={() => <ChooseNetworkPage />} />
-        <Route exact path="/sync" component={TestPage} />
+        <Route exact path="/syncNode" component={SyncNodePage} />
       </Switch>
     );
   }
