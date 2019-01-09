@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import TopBar from 'renderer/components/layout/TopBar';
+import TopBar from './TopBar';
 
 export default class TopBarContainer extends Component {
 
