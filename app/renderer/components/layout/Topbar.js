@@ -13,11 +13,19 @@ const Wrapper = styled.div`
 `;
 
 const LogoContainer = styled.div`
-  margin-left: -17px;
+  margin-left: -16px;
 `;
 
 const NetworkSectionContainer = styled.div`
   width: 100%;
+  margin-left: -66px;
+`;
+
+const TopDownContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 3rem;
 `;
 
 const LogoImg = styled.img.attrs({
@@ -41,12 +49,16 @@ const Topbar = () => (
       </LogoContainer>
     </HeaderSectionContainer>
     <NetworkSectionContainer>
-      <div>Local test net</div>
-      <div>#0123456789045678</div>
+      <TopDownContentWrapper>
+        <div>Local test net</div>
+        <div>#0123456789045678</div>
+      </TopDownContentWrapper>
     </NetworkSectionContainer>
     <HeaderSectionContainer>
-      <div>100% synced</div>
-      <div>(block height: 370,985)</div>
+      <TopDownContentWrapper>
+        <div>100% synced</div>
+        <div>(block height: 370,985)</div>
+      </TopDownContentWrapper>
     </HeaderSectionContainer>
   </Wrapper>
 );
