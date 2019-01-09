@@ -1,8 +1,7 @@
-// @flow
 import React, { Component } from 'react';
-import Layout from 'renderer/components/layout/Layout';
-import LayoutWrapper from 'renderer/components/layout/LayoutWrapper';
+import Layout from './Layout';
 import TopBarContainer from './TopBarContainer';
+import LayoutWrapper from './LayoutWrapper';
 
 export default class MainLayout extends Component {
   render() {
