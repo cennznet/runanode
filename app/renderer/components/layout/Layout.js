@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Topbar from './Topbar';
+import TopBar from './TopBar';
 import SideNav from './SideNav';
 
 const PageWrapper = styled.div`
@@ -20,7 +20,7 @@ const Content = styled.div`
 
 const Layout = ({ topbar, defaultTopbar, sidebar, defaultSidebar, children }) => (
   <PageWrapper>
-    {defaultTopbar ? <Topbar /> : topbar}
+    {defaultTopbar ? <TopBar /> : topbar}
     <ContentWrapper hasTopbar={!!topbar || !!defaultTopbar}>
       {defaultSidebar ? <SideNav /> : sidebar}
       <Content>{children}</Content>

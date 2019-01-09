@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
-import cennzNodeLogo from 'renderer/assets/img/logo.png';
+import logoImg from 'renderer/assets/img/logo.png';
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,13 +26,13 @@ const TopDownContentWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 3rem;
-  width: 200px;
+  width: 20rem;
   flex-wrap: nowrap;
 `;
 
 const LogoImg = styled.img.attrs({
-  src: cennzNodeLogo,
-  alt: 'Cennz-node logo',
+  src: logoImg,
+  alt: 'logo',
   width: '80px',
   height: '80px',
 })`
@@ -43,7 +43,7 @@ const HeaderSectionContainer = styled.div`
   flex-direction: column;
 `;
 
-const Topbar = ({networkName, blockNum, blockHeight, isSynced, syncPercentage}) => (
+const TopBar = ({networkName, blockNum, blockHeight, isSynced, syncPercentage}) => (
   <Wrapper>
     <HeaderSectionContainer>
       <LogoContainer>
@@ -65,4 +65,4 @@ const Topbar = ({networkName, blockNum, blockHeight, isSynced, syncPercentage}) 
   </Wrapper>
 );
 
-export default Topbar;
+export default TopBar;
