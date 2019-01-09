@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Topbar from './Topbar';
+import TopBar from './TopBar';
 import SideNav from './SideNav';
 
 const PageWrapper = styled.div`
@@ -10,7 +10,7 @@ const PageWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   display: flex;
-  height: ${p => (p.hasTopbar ? 'calc(100% - 80px)' : '100%')};
+  height: ${p => (p.hasTopBar ? 'calc(100% - 80px)' : '100%')};
 `;
 
 const Content = styled.div`
@@ -18,10 +18,10 @@ const Content = styled.div`
   flex: 1 auto;
 `;
 
-const Layout = ({ topbar, defaultTopbar, sidebar, defaultSidebar, children }) => (
+const Layout = ({ topBar, defaultTopBar, sidebar, defaultSidebar, children }) => (
   <PageWrapper>
-    {defaultTopbar ? <Topbar /> : topbar}
-    <ContentWrapper hasTopbar={!!topbar || !!defaultTopbar}>
+    {defaultTopBar ? <TopBar /> : topBar}
+    <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar}>
       {defaultSidebar ? <SideNav /> : sidebar}
       <Content>{children}</Content>
     </ContentWrapper>
