@@ -26,6 +26,8 @@ const TopDownContentWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 3rem;
+  width: 200px;
+  flex-wrap: nowrap;
 `;
 
 const LogoImg = styled.img.attrs({
@@ -41,7 +43,7 @@ const HeaderSectionContainer = styled.div`
   flex-direction: column;
 `;
 
-const Topbar = () => (
+const Topbar = ({networkName, blockNum, blockHeight, isSynced, syncPercentage}) => (
   <Wrapper>
     <HeaderSectionContainer>
       <LogoContainer>
@@ -50,14 +52,14 @@ const Topbar = () => (
     </HeaderSectionContainer>
     <NetworkSectionContainer>
       <TopDownContentWrapper>
-        <div>Local test net</div>
-        <div>#0123456789045678</div>
+        <div>{networkName}</div>
+        <div>#{blockNum}</div>
       </TopDownContentWrapper>
     </NetworkSectionContainer>
     <HeaderSectionContainer>
       <TopDownContentWrapper>
-        <div>100% synced</div>
-        <div>(block height: 370,985)</div>
+        <div>{isSynced ? '100% ' : syncPercentage + '% '} synced</div>
+        <div>(block height: {blockHeight})</div>
       </TopDownContentWrapper>
     </HeaderSectionContainer>
   </Wrapper>

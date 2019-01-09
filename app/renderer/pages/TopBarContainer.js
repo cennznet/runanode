@@ -5,8 +5,19 @@ import TopBar from '../components/layout/Topbar';
 export default class TopBarContainer extends Component {
 
   render() {
+    const networkName = 'Main net';
+    const isSynced = false;
+    const blockNum = 1234567890;
+    const blockHeight = blockNum; // TODO
+    const syncPercentage = 50;
     return (
-      <TopBar />
+      <TopBar
+              networkName={networkName}
+              blockNum={blockNum}
+              blockHeight={blockHeight}
+              isSynced={isSynced}
+              syncPercentage={syncPercentage}
+      />
     );
   }
 
