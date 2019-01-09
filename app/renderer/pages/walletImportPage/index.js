@@ -1,13 +1,11 @@
 import React from 'react';
-import { Layout, LayoutWrapper, MainContent } from 'components/layout';
+import { MainContent } from 'components/layout';
+import MainLayout from 'renderer/components/layout/MainLayout';
 
 const WalletImportPage = ({ subNav }) => (
-  <Layout defaultTopbar defaultSidebar>
-    <LayoutWrapper>
-      {subNav}
-      <MainContent>wallet import</MainContent>
-    </LayoutWrapper>
-  </Layout>
+  <MainLayout subNav={subNav}>
+    <MainContent>wallet import</MainContent>
+  </MainLayout>
 );
 
 export default WalletImportPage;
