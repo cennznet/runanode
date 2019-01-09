@@ -7,7 +7,7 @@ import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
 
 const SyncNodeWrapper = styled.div`
-  width: 70%;
+  width: 80%;
 `;
 
 const SyncNodeTitle = styled.div`
@@ -17,9 +17,21 @@ const SyncNodeTitle = styled.div`
   margin: 3rem auto;
 `;
 
-const SyncNodeProgressWarpper = styled.div``;
+const SyncNodeProgressWarpper = styled.div`
+  display: flex;
+`;
 
-const SyncNodeProgress = styled.div``;
+const SyncNodeProgress = styled.div`
+  width: 60%;
+`;
+
+const SyncNodeInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  margin-left: 1rem;
+`;
 
 const BlockNumber = styled.span`
   font-size: 1.2rem;
@@ -29,7 +41,6 @@ const BlockNumber = styled.span`
 const TextWrapper = styled.div`
   font-size: 1rem;
   color: white;
-  margin: 1rem auto;
 `;
 
 const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
@@ -54,22 +65,29 @@ const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
           <SyncNodeWrapper>
             <SyncNodeTitle>Main net</SyncNodeTitle>
             <SyncNodeProgressWarpper>
-              {/* {progressPercentage > 0 && ( */}
-              <Line
-                percent={progressPercentage}
-                trailColor="gray"
-                trailWidth="8"
-                strokeWidth="8"
-                strokeColor="#1130FF"
-                strokeLinecap="square"
-              />
-              {/* )} */}
-              <TextWrapper>
-                Main Net Best Block :<BlockNumber>{mainNetBestBlock}</BlockNumber>
-              </TextWrapper>
-              <TextWrapper>
-                Local Node Best Block :<BlockNumber>{localNetBestBlock}</BlockNumber>
-              </TextWrapper>
+              <SyncNodeProgress>
+                {/* {progressPercentage > 0 && ( */}
+                <Line
+                  percent={progressPercentage}
+                  trailColor={colors.N700}
+                  trailWidth="8"
+                  strokeWidth="8"
+                  strokeColor={colors.primary}
+                  strokeLinecap="butt"
+                />
+                {/* )} */}
+              </SyncNodeProgress>
+              <SyncNodeInfo>
+                <TextWrapper>
+                  <BlockNumber>
+                    {progressPercentage === 100 || progressPercentage === 0
+                      ? progressPercentage
+                      : progressPercentage.toFixed(2)}
+                  </BlockNumber>
+                  % synced
+                </TextWrapper>
+                <TextWrapper>{`${localNetBestBlock} / ${mainNetBestBlock} blocks`}</TextWrapper>
+              </SyncNodeInfo>
             </SyncNodeProgressWarpper>
           </SyncNodeWrapper>
         </MainContent>
