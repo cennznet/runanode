@@ -42,10 +42,6 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    this.props.onPageLoaded({
-      text: 'Hello World!',
-    });
-
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
       Logger.info(`Main Net Best block header: ${JSON.stringify(header)}`);
       const latestMainNetBlock = Number(header.blockNumber);
