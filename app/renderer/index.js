@@ -7,7 +7,6 @@ import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import App from './App';
-import '../app.global.css';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
 // import utils from './utils';
