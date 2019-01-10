@@ -25,6 +25,11 @@ const triggerActionTypes = name => {
 
 const actionTypes = {
   testPage: triggerActionTypes('test_page'),
+  homePageLoad: triggerActionTypes('home_page_load'),
+  walletRestorePageLoad: triggerActionTypes('wallet_restore_page_load'),
+  navigation: triggerActionTypes('navigation'),
+  acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
+  resetTermsOfUse: triggerActionTypes('reset_terms_of_use'),
   updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
   updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
 };
