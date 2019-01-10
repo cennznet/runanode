@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
 import { localizeReducer } from 'react-localize-redux';
+import history from 'renderer/history';
 
 const reducersContext = require.context('./', true, /\.reducer\.js$/);
 
@@ -15,6 +17,7 @@ reducersContext.keys().forEach(key => {
 
 const rootReducer = combineReducers({
   localize: localizeReducer,
+  router: connectRouter(history),
   ...reducers,
 });
 
