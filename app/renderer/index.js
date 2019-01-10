@@ -9,7 +9,6 @@ import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-so
 import { AppContainer } from "react-hot-loader";
 
 import App from './App';
-import '../app.global.css';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
 
