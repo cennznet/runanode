@@ -32,8 +32,7 @@ const SyncNodeInfo = styled.div`
 `;
 
 const TextWrapper = styled.div`
-  font-size: 1rem;
-  color: white;
+  color: ${colors.N0};
 `;
 
 const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
