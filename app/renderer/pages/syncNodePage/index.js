@@ -19,6 +19,8 @@ const SyncNodeProgressWarpper = styled.div`
 
 const SyncNodeProgress = styled.div`
   width: 60%;
+  border-radius: 3px;
+  border: 3px solid ${colors.primary};
 `;
 
 const SyncNodeInfo = styled.div`
@@ -27,11 +29,6 @@ const SyncNodeInfo = styled.div`
   justify-content: space-around;
 
   margin-left: 1rem;
-`;
-
-const BlockNumber = styled.span`
-  font-size: 1.2rem;
-  font-weight: 600;
 `;
 
 const TextWrapper = styled.div`
@@ -60,24 +57,21 @@ const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
           <SyncNodeTitle>Main net</SyncNodeTitle>
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
-              {/* {progressPercentage > 0 && ( */}
               <Line
                 percent={progressPercentage}
-                trailColor={colors.N700}
-                trailWidth="8"
-                strokeWidth="8"
+                trailColor="transparent"
+                trailWidth="7"
+                strokeWidth="7"
                 strokeColor={colors.primary}
-                strokeLinecap="butt"
+                strokeLinecap="square"
+                style={{ height: '100%', width: '100%' }}
               />
-              {/* )} */}
             </SyncNodeProgress>
             <SyncNodeInfo>
               <TextWrapper>
-                <BlockNumber>
-                  {progressPercentage === 100 || progressPercentage === 0
-                    ? progressPercentage
-                    : progressPercentage.toFixed(2)}
-                </BlockNumber>
+                {progressPercentage === 100 || progressPercentage === 0
+                  ? progressPercentage
+                  : progressPercentage.toFixed(2)}
                 % synced
               </TextWrapper>
               <TextWrapper>{`${localNetBestBlock} / ${mainNetBestBlock} blocks`}</TextWrapper>
