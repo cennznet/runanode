@@ -57,7 +57,7 @@ const initializeOdin = () => {
   // render(<App stores={stores} actions={actions} history={history} />, rootElement);
   render(
     <AppContainer>
-      <App/>
+      <App />
     </AppContainer>,
     rootElement);
 
@@ -75,7 +75,7 @@ if (module.hot) {
     const NextApp = require('./App').default;
     render(
       <AppContainer>
-        <NextApp/>
+        <NextApp />
       </AppContainer>,
       document.getElementById('root')
     );

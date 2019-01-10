@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import types from 'common/types/types';
+import types from 'renderer/types';
 import { Logger } from 'renderer/utils/logging';
 
 const mapStateToProps = ({ dev }) => ({ dev });

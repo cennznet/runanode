@@ -1,6 +1,6 @@
-import createChainFns from 'common/helpers/reducerHelper';
-import { setActionLoading, initialState } from 'common/helpers/uiReducer';
-import types from 'common/types/types';
+import createChainFns from 'renderer/helpers/reducerHelper';
+import { setActionLoading, initialState } from 'renderer/helpers/uiReducer';
+import types from 'renderer/types';
 
 const INITIAL_STATE = {
   ...initialState,
