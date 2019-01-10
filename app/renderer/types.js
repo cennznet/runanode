@@ -27,8 +27,8 @@ const actionTypes = {
   testPage: triggerActionTypes('test_page'),
   updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
   updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
-  nodeApiSystemName: apiActionTypes('node_api_system_name'),
-  nodeApiSystemHealth: apiActionTypes('node_api_system_health'),
+  nodeJsonRpcSystemName: apiActionTypes('node_jsonrpc_system_name'),
+  nodeJsonRpcSystemHealth: apiActionTypes('node_jsonrpc_system_health'),
 };
 
 export default actionTypes;

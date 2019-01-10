@@ -16,25 +16,25 @@ const INITIAL_STATE = {
 };
 
 
-const setNodeApiSystemName = (state, { result }) => ({
+const setNodeSystemName = (state, { result }) => ({
   ...state,
   name: result
 });
 
-const setNodeApiSystemHealth = (state, health) => ({
+const setNodeSystemHealth = (state, health) => ({
   ...state,
   health
 });
 
 const handlers = {
-  [types.nodeApiSystemName.completed]: setNodeApiSystemName,
-  [types.nodeApiSystemHealth.completed]: setNodeApiSystemHealth
+  [types.nodeJsonRpcSystemName.completed]: setNodeSystemName,
+  [types.nodeJsonRpcSystemHealth.completed]: setNodeSystemHealth
 };
 
 export default createChainFns(
   [
-    setActionLoading(types.nodeApiSystemName),
-    setActionLoading(types.nodeApiSystemHealth),
+    setActionLoading(types.nodeJsonRpcSystemName),
+    setActionLoading(types.nodeJsonRpcSystemHealth),
     handlers
   ],
   INITIAL_STATE,
