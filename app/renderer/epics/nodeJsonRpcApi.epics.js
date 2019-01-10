@@ -2,19 +2,20 @@ import { createJsonRpcAPICallEpic } from 'renderer/helpers/createAPICallEpic';
 import types from 'renderer/types';
 import urls from 'renderer/constants/urls';
 
-const nodeApiSystemNameEpic = createJsonRpcAPICallEpic({
-  type: types.nodeApiSystemName,
+const nodeJsonRpcSystemNameEpic = createJsonRpcAPICallEpic({
+  type: types.nodeJsonRpcSystemName,
   url: urls.API.JSONRPC,
   jsonRpcMethod: 'system_name',
   jsonRpcParams: [],
 });
 
-const nodeApiSystemHealthEpic = createJsonRpcAPICallEpic({
-  type: types.nodeApiSystemHealth,
+const nodeJsonRpcSystemHealthEpic = createJsonRpcAPICallEpic({
+  type: types.nodeJsonRpcSystemHealth,
   url: urls.API.JSONRPC,
   jsonRpcMethod: 'system_health',
   jsonRpcParams: [],
   mapResponse: (x) => {
+    // TODO why isSyncing=true and error with "code: 2001, message: node is not healthy"?
     if(x.response.error && x.response.error.data) {
       return ({
         code: x.response.error.code,
@@ -30,4 +31,4 @@ const nodeApiSystemHealthEpic = createJsonRpcAPICallEpic({
   }
 });
 
-export default [nodeApiSystemNameEpic, nodeApiSystemHealthEpic];
+export default [nodeJsonRpcSystemNameEpic, nodeJsonRpcSystemHealthEpic];
