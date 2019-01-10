@@ -13,11 +13,8 @@ typeRegistry.register({
 
 // Move to config.js later
 // const CENNZNET_NODE_1 = 'ws://cennznet-node-1.centrality.me:9944';
-const CENNZNET_NODE_1 = 'ws://localhost:9944';
+const CENNZNET_NODE_1 = 'ws://cennznet-node-1.centrality.me:9944';
 const LOCAL_NODE = 'ws://localhost:9944';
-
-// const provider = new WsProvider(CENNZNET_NODE_1);
-// const localProvider = new WsProvider(LOCAL_NODE);
 
 const getBestBlock = providerUrl => {
   const provider = new WsProvider(providerUrl);
@@ -45,25 +42,20 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    this.props.onPageLoaded({
-      text: 'Hello World!',
-    });
-
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
       Logger.info(`Main Net Best block header: ${JSON.stringify(header)}`);
-      Logger.info(`Main Net best #${header.blockNumber} ${typeof header.blockNumber}`);
-      const latestMainNetBlock = JSON.stringify(header.blockNumber);
+      const latestMainNetBlock = Number(header.blockNumber);
       this.props.onUpdateMainNetBestBlock(latestMainNetBlock);
     });
 
     setInterval(() => {
       getBestBlock(LOCAL_NODE).subscribe(header => {
         Logger.info(`Local Net Best block header: ${JSON.stringify(header)}`);
-        Logger.info(`Local Net best #${header.blockNumber} ${typeof header.blockNumber}`);
-        const latestLocalBlock = JSON.stringify(header.blockNumber);
+        const latestLocalBlock = Number(header.blockNumber);
+
         if (this.props.mainNetBestBlock && this.props.mainNetBestBlock < latestLocalBlock) {
           Logger.info(
-            `The local bock #${latestLocalBlock} is larger than that of mainNet ${
+            `The local best bock #${latestLocalBlock} > MainNet best block${
               this.props.mainNetBestBlock
             }`
           );
@@ -71,7 +63,7 @@ const enhance = lifecycle({
           this.props.onUpdateLocalNetBestBlock(latestLocalBlock);
         }
       });
-    }, 15000);
+    }, 5000);
   },
 });
 
