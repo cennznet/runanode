@@ -22,6 +22,6 @@ const AppWithProviders = () => (
   </Provider>
 );
 
-const App = hot(module)(AppWithProviders);
+const App = AppWithProviders;
 
 export default App;

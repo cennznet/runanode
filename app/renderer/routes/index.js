@@ -5,6 +5,7 @@ import { withLocalize } from 'react-localize-redux';
 import TosPage from 'renderer/pages/tosPage';
 import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import SyncNodePage from 'renderer/pages/syncNodePage';
+import DevPage from 'renderer/pages/devPage';
 import WalletRoutes from 'renderer/routes/WalletRoutes';
 import enTranslation from 'renderer/i18n/en.json';
 
@@ -28,11 +29,12 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/wallet/create" />} />
+        <Route exact path="/" render={() => <Redirect to="/dev" />} />
         <Route path="/wallet" render={WalletRoutes} />
         <Route exact path="/tos" render={() => <TosPage />} />
         <Route exact path="/chooseNetwork" render={() => <ChooseNetworkPage />} />
         <Route exact path="/syncNode" component={SyncNodePage} />
+        <Route exact path="/dev" component={DevPage} />
       </Switch>
     );
   }
