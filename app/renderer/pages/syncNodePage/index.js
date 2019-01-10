@@ -6,10 +6,6 @@ import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/la
 import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
 
-const SyncNodeWrapper = styled.div`
-  width: 70%;
-`;
-
 const SyncNodeTitle = styled.div`
   color: ${colors.N0};
   font-weight: 600;
@@ -17,23 +13,29 @@ const SyncNodeTitle = styled.div`
   margin: 3rem auto;
 `;
 
-const SyncNodeProgressWarpper = styled.div``;
+const SyncNodeProgressWarpper = styled.div`
+  display: flex;
+`;
 
-const SyncNodeProgress = styled.div``;
+const SyncNodeProgress = styled.div`
+  width: 60%;
+  border-radius: 3px;
+  border: 3px solid ${colors.primary};
+`;
 
-const BlockNumber = styled.span`
-  font-size: 1.2rem;
-  font-weight: 600;
+const SyncNodeInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  margin-left: 1rem;
 `;
 
 const TextWrapper = styled.div`
-  font-size: 1rem;
-  color: white;
-  margin: 1rem auto;
+  color: ${colors.N0};
 `;
 
 const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
-  Logger.info(`TestPage: ${text}, ${mainNetBestBlock}, ${localNetBestBlock}`);
   const syncNodePercentage =
     mainNetBestBlock && mainNetBestBlock > 0 ? (localNetBestBlock / mainNetBestBlock) * 100 : 0;
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
@@ -51,27 +53,29 @@ const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
     <Layout sidebar={<SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
-          <SyncNodeWrapper>
-            <SyncNodeTitle>Main net</SyncNodeTitle>
-            <SyncNodeProgressWarpper>
-              {/* {progressPercentage > 0 && ( */}
+          <SyncNodeTitle>Main net</SyncNodeTitle>
+          <SyncNodeProgressWarpper>
+            <SyncNodeProgress>
               <Line
                 percent={progressPercentage}
-                trailColor="gray"
-                trailWidth="8"
-                strokeWidth="8"
-                strokeColor="#1130FF"
+                trailColor="transparent"
+                trailWidth="7"
+                strokeWidth="7"
+                strokeColor={colors.primary}
                 strokeLinecap="square"
+                style={{ height: '100%', width: '100%' }}
               />
-              {/* )} */}
+            </SyncNodeProgress>
+            <SyncNodeInfo>
               <TextWrapper>
-                Main Net Best Block :<BlockNumber>{mainNetBestBlock}</BlockNumber>
+                {progressPercentage === 100 || progressPercentage === 0
+                  ? progressPercentage
+                  : progressPercentage.toFixed(2)}
+                % synced
               </TextWrapper>
-              <TextWrapper>
-                Local Node Best Block :<BlockNumber>{localNetBestBlock}</BlockNumber>
-              </TextWrapper>
-            </SyncNodeProgressWarpper>
-          </SyncNodeWrapper>
+              <TextWrapper>{`${localNetBestBlock} / ${mainNetBestBlock} blocks`}</TextWrapper>
+            </SyncNodeInfo>
+          </SyncNodeProgressWarpper>
         </MainContent>
       </LayoutWrapper>
     </Layout>
