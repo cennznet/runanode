@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
+import { routerMiddleware } from 'connected-react-router';
+import history from 'renderer/history';
 import { createLogger } from 'redux-logger';
 
 import rootReducer from '../reducers';
@@ -21,6 +23,8 @@ const logger = createLogger({
 if (process.env.NODE_ENV !== 'test') {
   middleware.push(logger);
 }
+
+middleware.push(routerMiddleware(history));
 
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
