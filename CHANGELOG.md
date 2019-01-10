@@ -6,12 +6,15 @@
 
 ### Fixes
 
+- fix hot reload issue
+
 ### Improvements
 
 - Able launch app with runtime parameter
 - Able to launch app with cennznet-node in windows
 - Add ./scripts/init.sh to init dev env
 - Add Select, Input, Spinner components into Styleguidist
+- able to make network request
 
 ## v0.2.1 (2019.01.04)
 
