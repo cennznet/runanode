@@ -32,6 +32,9 @@ const actionTypes = {
   resetTermsOfUse: triggerActionTypes('reset_terms_of_use'),
   updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
   updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
+
+  // nodeJsonRpc
+  nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
   nodeJsonRpcSystemVersion: apiActionTypes('node_jsonrpc_system_version'),
   nodeJsonRpcSystemChain: apiActionTypes('node_jsonrpc_system_chain'),
   nodeJsonRpcSystemName: apiActionTypes('node_jsonrpc_system_name'),

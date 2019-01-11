@@ -12,8 +12,8 @@ class TopBarContainer extends Component {
 
   render() {
     const { nodeSystem } = this.props;
-    const { chain, name, version, isSynced } = nodeSystem;
-    const networkName = `${chain} ${version}`;
+    const { chain, name, version, isSynced, health } = nodeSystem;
+    const networkName = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers})`;
     // const isSynced = false;
     const blockNum = 1234567890;
     const blockHeight = blockNum; // TODO

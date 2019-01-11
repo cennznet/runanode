@@ -1,3 +1,5 @@
+import { combineEpics } from 'redux-observable';
+import chainEpics from 'renderer/helpers/chainEpics';
 import { createJsonRpcAPICallEpic } from 'renderer/helpers/createAPICallEpic';
 import types from 'renderer/types';
 import urls from 'renderer/constants/urls';
@@ -45,4 +47,31 @@ const nodeJsonRpcSystemHealthEpic = createJsonRpcAPICallEpic({
   }
 });
 
-export default [nodeJsonRpcSystemNameEpic, nodeJsonRpcSystemHealthEpic, nodeJsonRpcSystemChainEpic, nodeJsonRpcSystemVersionEpic];
+const chainNodeJsonRpcSystemNameEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemName.requested,
+);
+
+const chainNodeJsonRpcSystemChainEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemChain.requested,
+);
+
+const chainNodeJsonRpcSystemVersionEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemVersion.requested,
+);
+
+const chainNodeJsonRpcSystemHealthEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemHealth.requested,
+);
+
+const nodeJsonRpcSystemEpic = combineEpics(
+  chainNodeJsonRpcSystemNameEpic,
+  chainNodeJsonRpcSystemChainEpic,
+  chainNodeJsonRpcSystemHealthEpic,
+  chainNodeJsonRpcSystemVersionEpic,
+);
+
+export default [nodeJsonRpcSystemNameEpic, nodeJsonRpcSystemHealthEpic, nodeJsonRpcSystemChainEpic, nodeJsonRpcSystemVersionEpic, nodeJsonRpcSystemEpic];

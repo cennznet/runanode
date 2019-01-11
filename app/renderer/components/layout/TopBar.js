@@ -26,7 +26,7 @@ const TopDownContentWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 3rem;
-  width: 20rem;
+  width: 40rem;
   flex-wrap: nowrap;
 `;
 

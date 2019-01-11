@@ -11,19 +11,7 @@ const mapStateToProps = ({ dev }) => ({ dev });
 const mapDispatchToProps = dispatch => ({
   onNetworkStatusClick: () => {
     dispatch({
-      type: types.nodeJsonRpcSystemName.requested,
-      payload: {},
-    });
-    dispatch({
-      type: types.nodeJsonRpcSystemHealth.requested,
-      payload: {},
-    });
-    dispatch({
-      type: types.nodeJsonRpcSystemChain.requested,
-      payload: {},
-    });
-    dispatch({
-      type: types.nodeJsonRpcSystemVersion.requested,
+      type: types.nodeJsonRpcSystem.requested,
       payload: {},
     });
   },
