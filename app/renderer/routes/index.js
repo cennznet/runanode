@@ -10,6 +10,7 @@ import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import SyncNodePage from 'renderer/pages/syncNodePage';
 import DevPage from 'renderer/pages/devPage';
 import WalletRoutes from 'renderer/routes/WalletRoutes';
+import ProfileRoutes from 'renderer/routes/ProfileRoutes';
 import ROUTES from 'renderer/constants/routes';
 
 const setupLocalize = props => {
@@ -33,7 +34,10 @@ class AppRoutes extends React.Component {
     return (
       <Switch>
         <Route exact path={ROUTES.ROOT} render={() => <Redirect to={ROUTES.WALLET.CREATE} />} />
+        <Redirect exact from={ROUTES.WALLET.ROOT} to={ROUTES.WALLET.CREATE} />
+        <Redirect exact from={ROUTES.PROFILE.ROOT} to={ROUTES.PROFILE.GENERAL} />
         <Route path={ROUTES.WALLET.ROOT} render={WalletRoutes} />
+        <Route path={ROUTES.PROFILE.ROOT} render={ProfileRoutes} />
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
         <Route exact path="/chooseNetwork" render={() => <ChooseNetworkPage />} />
         <Route exact path="/syncNode" component={SyncNodePage} />

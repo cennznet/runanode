@@ -5,7 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 
 const Wrapper = styled.div`
-  width: 17rem;
+  min-width: 17rem;
+  max-width: 17rem;
   height: 100%;
   background-color: ${colors.N900};
   overflow: hidden;
