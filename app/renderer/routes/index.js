@@ -8,6 +8,7 @@ import enTranslation from 'renderer/i18n/en.json';
 import TosPage from 'renderer/pages/tosPage';
 import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import SyncNodePage from 'renderer/pages/syncNodePage';
+import DevPage from 'renderer/pages/devPage';
 import WalletRoutes from 'renderer/routes/WalletRoutes';
 import ROUTES from 'renderer/constants/routes';
 
@@ -36,6 +37,7 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
         <Route exact path="/chooseNetwork" render={() => <ChooseNetworkPage />} />
         <Route exact path="/syncNode" component={SyncNodePage} />
+        <Route exact path="/dev" component={DevPage} />
       </Switch>
     );
   }
