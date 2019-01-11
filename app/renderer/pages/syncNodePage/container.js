@@ -22,21 +22,18 @@ const getBestBlock = providerUrl => {
 };
 /** For demo, improve later */
 
-const mapStateToProps = ({ testPage: { text, mainNetBestBlock, localNetBestBlock } }) => ({
-  text,
-  mainNetBestBlock,
-  localNetBestBlock,
+const mapStateToProps = ({ syncNode: { selectedNetwork, bestBlock, syncedBlock } }) => ({
+  selectedNetwork,
+  bestBlock,
+  syncedBlock,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onPageLoaded: payload => {
-    dispatch({ type: types.testPage.triggered, payload });
+  onUpdateBestBlock: payload => {
+    dispatch({ type: types.updateBestBlock.triggered, payload });
   },
-  onUpdateMainNetBestBlock: payload => {
-    dispatch({ type: types.updateMainNetBestBlock.triggered, payload });
-  },
-  onUpdateLocalNetBestBlock: payload => {
-    dispatch({ type: types.updateLocalNetBestBlock.triggered, payload });
+  onUpdateSyncedBlock: payload => {
+    dispatch({ type: types.updateSyncedBlock.triggered, payload });
   },
 });
 
@@ -45,25 +42,22 @@ const enhance = lifecycle({
     getBestBlock(CENNZNET_NODE_1).subscribe(header => {
       Logger.info(`Main Net Best block header: ${JSON.stringify(header)}`);
       const latestMainNetBlock = Number(header.blockNumber);
-      this.props.onUpdateMainNetBestBlock(latestMainNetBlock);
+      this.props.onUpdateBestBlock(latestMainNetBlock);
     });
 
     setInterval(() => {
       getBestBlock(LOCAL_NODE).subscribe(header => {
         Logger.info(`Local Net Best block header: ${JSON.stringify(header)}`);
         const latestLocalBlock = Number(header.blockNumber);
-
-        if (this.props.mainNetBestBlock && this.props.mainNetBestBlock < latestLocalBlock) {
+        if (this.props.bestBlock < latestLocalBlock) {
           Logger.info(
-            `The local best bock #${latestLocalBlock} > MainNet best block${
-              this.props.mainNetBestBlock
-            }`
+            `The local best bock #${latestLocalBlock} > MainNet best block${this.props.bestBlock}`
           );
         } else {
-          this.props.onUpdateLocalNetBestBlock(latestLocalBlock);
+          this.props.onUpdateSyncedBlock(latestLocalBlock);
         }
       });
-    }, 5000);
+    }, 10000);
   },
 });
 

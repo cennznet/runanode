@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import Select from 'components/Select';
 import Input from 'components/Input';
 import Button from 'components/Button';
-
+import withContainer from './container';
 
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
@@ -38,7 +38,7 @@ const NETWORK_OPTIONS = [
   { label: 'Main net', value: 'mainNet' },
 ];
 
-export default class ChooseNetWork extends React.Component {
+class ChooseNetWork extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectedNetwork: null };
@@ -46,6 +46,7 @@ export default class ChooseNetWork extends React.Component {
 
   render() {
     const { selectedNetwork } = this.state;
+    const { onJoinNetwork } = this.props;
     return (
       <Layout sidebar={<SimpleSidebar />}>
         <LayoutWrapper>
@@ -80,7 +81,12 @@ export default class ChooseNetWork extends React.Component {
               )}
               <ButtonWrapper>
                 <div>
-                  <Button disabled={!selectedNetwork}>Join network</Button>
+                  <Button
+                    disabled={!selectedNetwork}
+                    onClick={() => onJoinNetwork(selectedNetwork.value)}
+                  >
+                    Join network
+                  </Button>
                 </div>
               </ButtonWrapper>
             </ChooseNetworkWrapper>
@@ -90,3 +96,5 @@ export default class ChooseNetWork extends React.Component {
     );
   }
 }
+
+export default withContainer(ChooseNetWork);

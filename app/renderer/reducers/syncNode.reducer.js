@@ -3,26 +3,22 @@ import types from '../types';
 
 const DEFAULT_STATE = {
   text: '',
-  mainNetBestBlock: 0,
-  localNetBestBlock: 0,
+  selectedNetwork: null,
+  bestBlock: 0,
+  syncedBlock: 0,
 };
 
 export default function testPage(state = DEFAULT_STATE, { type, payload }) {
   console.log(`testPage type: ${type}, state: ${JSON.stringify(state)}, payload: ${payload}`);
   switch (type) {
-    case types.testPage.triggered:
+    case types.updateBestBlock.triggered:
       return R.merge(state, {
-        text: payload.text,
+        bestBlock: payload,
       });
 
-    case types.updateMainNetBestBlock.triggered:
+    case types.updateSyncedBlock.triggered:
       return R.merge(state, {
-        mainNetBestBlock: payload,
-      });
-
-    case types.updateLocalNetBestBlock.triggered:
-      return R.merge(state, {
-        localNetBestBlock: payload,
+        syncedBlock: payload,
       });
 
     default:
