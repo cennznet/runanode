@@ -1,8 +1,8 @@
 // @flow
 import type {
-  CennzNetNodeState, CennzNetStatus,
+  CennzNetNodeState, CennzNetRestartOptions, CennzNetStatus,
   FaultInjectionIpcRequest,
-  TlsConfig
+  TlsConfig,
 } from '../../common/types/cennznet-node.types';
 import { RendererIpcChannel } from './lib/RendererIpcChannel';
 import {
@@ -16,7 +16,7 @@ export const tlsConfigChannel: RendererIpcChannel<?TlsConfig, void> = (
   new RendererIpcChannel(CENNZNET_TLS_CONFIG_CHANNEL)
 );
 
-export const restartCennzNetNodeChannel: RendererIpcChannel<void, void> = (
+export const restartCennzNetNodeChannel: RendererIpcChannel<?CennzNetRestartOptions, ?CennzNetRestartOptions> = (
   new RendererIpcChannel(CENNZNET_RESTART_CHANNEL)
 );
 

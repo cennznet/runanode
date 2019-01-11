@@ -15,6 +15,9 @@
 - Add ./scripts/init.sh to init dev env
 - Add Select, Input, Spinner components into Styleguidist
 - able to make network request
+- able to restart cennznet node with options
+- Connect TopBarContainer to redux state 
+- Add more node system API
 
 ## v0.2.1 (2019.01.04)
 

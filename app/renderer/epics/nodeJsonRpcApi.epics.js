@@ -9,6 +9,20 @@ const nodeJsonRpcSystemNameEpic = createJsonRpcAPICallEpic({
   jsonRpcParams: [],
 });
 
+const nodeJsonRpcSystemChainEpic = createJsonRpcAPICallEpic({
+  type: types.nodeJsonRpcSystemChain,
+  url: urls.API.JSONRPC,
+  jsonRpcMethod: 'system_chain',
+  jsonRpcParams: [],
+});
+
+const nodeJsonRpcSystemVersionEpic = createJsonRpcAPICallEpic({
+  type: types.nodeJsonRpcSystemVersion,
+  url: urls.API.JSONRPC,
+  jsonRpcMethod: 'system_version',
+  jsonRpcParams: [],
+});
+
 const nodeJsonRpcSystemHealthEpic = createJsonRpcAPICallEpic({
   type: types.nodeJsonRpcSystemHealth,
   url: urls.API.JSONRPC,
@@ -31,4 +45,4 @@ const nodeJsonRpcSystemHealthEpic = createJsonRpcAPICallEpic({
   }
 });
 
-export default [nodeJsonRpcSystemNameEpic, nodeJsonRpcSystemHealthEpic];
+export default [nodeJsonRpcSystemNameEpic, nodeJsonRpcSystemHealthEpic, nodeJsonRpcSystemChainEpic, nodeJsonRpcSystemVersionEpic];

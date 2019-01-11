@@ -15,6 +15,15 @@ const INITIAL_STATE = {
   version: '',
 };
 
+const setNodeSystemVersion = (state, { result }) => ({
+  ...state,
+  version: result
+});
+
+const setNodeSystemChain = (state, { result }) => ({
+  ...state,
+  chain: result
+});
 
 const setNodeSystemName = (state, { result }) => ({
   ...state,
@@ -27,12 +36,16 @@ const setNodeSystemHealth = (state, health) => ({
 });
 
 const handlers = {
+  [types.nodeJsonRpcSystemVersion.completed]: setNodeSystemVersion,
+  [types.nodeJsonRpcSystemChain.completed]: setNodeSystemChain,
   [types.nodeJsonRpcSystemName.completed]: setNodeSystemName,
   [types.nodeJsonRpcSystemHealth.completed]: setNodeSystemHealth
 };
 
 export default createChainFns(
   [
+    setActionLoading(types.nodeJsonRpcSystemVersion),
+    setActionLoading(types.nodeJsonRpcSystemChain),
     setActionLoading(types.nodeJsonRpcSystemName),
     setActionLoading(types.nodeJsonRpcSystemHealth),
     handlers
