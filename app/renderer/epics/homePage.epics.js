@@ -18,7 +18,7 @@ const homePageLoadEpic = (action$, state$) =>
 
       // TODO: if (syncBlocks !== 100%) redirect to syncPage
 
-      return { type: '' };
+      return { type: types.nodeJsonRpcSystem.requested };
     })
   );
 
