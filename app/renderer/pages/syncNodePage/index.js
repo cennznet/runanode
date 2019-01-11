@@ -6,6 +6,9 @@ import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/la
 import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
 
+const store = global.electronStore;
+console.log('user selected network', store.get('SELECTED_NETWORK'));
+
 const SyncNodeTitle = styled.div`
   color: ${colors.N0};
   font-weight: 600;
@@ -35,18 +38,17 @@ const TextWrapper = styled.div`
   color: ${colors.N0};
 `;
 
-const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
-  const syncNodePercentage =
-    mainNetBestBlock && mainNetBestBlock > 0 ? (localNetBestBlock / mainNetBestBlock) * 100 : 0;
+const SyncNodePage = ({ selectedNetwork, bestBlock, syncedBlock }) => {
+  const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
 
   Logger.info(`
   ===========================================    
-  Best block in MainNet #${mainNetBestBlock} 
+  Best block in MainNet #${bestBlock} 
   ===========================================`);
   Logger.info(`
   ===========================================
-  Best block in Local #${localNetBestBlock}
+  Best block in Local #${syncedBlock}
   ===========================================`);
   Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
   return (
@@ -73,7 +75,7 @@ const SyncNodePage = ({ text, mainNetBestBlock, localNetBestBlock }) => {
                   : progressPercentage.toFixed(2)}
                 % synced
               </TextWrapper>
-              <TextWrapper>{`${localNetBestBlock} / ${mainNetBestBlock} blocks`}</TextWrapper>
+              <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
         </MainContent>

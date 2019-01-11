@@ -31,11 +31,11 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path={ROUTES.ROOT} render={() => <Redirect to={ROUTES.WALLET.CREATE} />} />
+        <Route exact path={ROUTES.ROOT} render={() => <Redirect to={ROUTES.CHOOSE_NETWORK} />} />
         <Route path={ROUTES.WALLET.ROOT} render={WalletRoutes} />
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
-        <Route exact path="/chooseNetwork" render={() => <ChooseNetworkPage />} />
-        <Route exact path="/syncNode" component={SyncNodePage} />
+        <Route exact path={ROUTES.CHOOSE_NETWORK} component={ChooseNetworkPage} />
+        <Route exact path={ROUTES.SYNC_NODE} component={SyncNodePage} />
       </Switch>
     );
   }
