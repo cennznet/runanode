@@ -13,7 +13,7 @@ const PageTitle = styled.div`
   margin: 3rem auto;
 `;
 
-const DevPage = ({ onNetworkStatusClick }) => {
+const DevPage = ({ onNetworkStatusClick, onRestartNodeClick }) => {
     return (
       <MainLayout>
         <MainContent>
@@ -21,6 +21,7 @@ const DevPage = ({ onNetworkStatusClick }) => {
             <h1>Dev Page</h1>
           </PageTitle>
           <Button onClick={onNetworkStatusClick} >Get Network Status</Button>
+          <Button onClick={onRestartNodeClick} >Restart node</Button>
         </MainContent>
       </MainLayout>
     );

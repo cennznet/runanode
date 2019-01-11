@@ -17,7 +17,7 @@ import {
 import type {
   TlsConfig,
   CennzNetNodeState,
-  CennzNetStatus
+  CennzNetStatus, CennzNetRestartOptions,
 } from '../../common/types/cennznet-node.types';
 import type { LauncherConfig } from '../config';
 import {
@@ -125,10 +125,16 @@ export const setupCennzNet = (
     return Promise.resolve();
   });
 
-  cennznetRestartChannel.onReceive(() => {
-    Logger.info('ipcMain: Received request from renderer to restart node.');
-    return cennzNetNode.restart(true); // forced restart
+  // cennznetRestartChannel.onReceive(() => {
+  //   Logger.info('ipcMain: Received request from renderer to restart node.');
+  //   return cennzNetNode.restart(true); // forced restart
+  // });
+
+  cennznetRestartChannel.onReceive((options: CennzNetRestartOptions) => {
+    Logger.info(`ipcMain: Received request from renderer to restart node. with options: ${JSON.stringify(options)}`);
+    return cennzNetNode.restartWithOptions(true, options); // forced restart
   });
+
 
   cennznetFaultInjectionChannel.onReceive((fault) => {
     Logger.info(`ipcMain: Received request to inject a fault into cennznet node: ${String(fault)}`);
