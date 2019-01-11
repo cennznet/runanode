@@ -4,9 +4,9 @@ import types from 'renderer/types';
 import {
   restartCennzNetNodeChannel,
 } from 'renderer/ipc/cennznet.ipc';
-import type { CennzNetRestartOptions } from '../../../common/types/cennznet-node.types';
+import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ dev }) => ({ dev });
+const mapStateToProps = ({ nodeSystem }) => ({ nodeSystem });
 
 const mapDispatchToProps = dispatch => ({
   onNetworkStatusClick: () => {

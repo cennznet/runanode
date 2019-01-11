@@ -43,18 +43,18 @@ const SideNav = () => (
   <Wrapper>
     <IconNav>
       <TopIcons>
-        <IconLink to="/wallet">
+        <IconLink to="/wallet/create">
           <FontAwesomeIcon icon="plus" />
         </IconLink>
-        <IconLink to="/test">
+        <IconLink to="/wallet/import">
           <FontAwesomeIcon icon="wallet" />
         </IconLink>
       </TopIcons>
       <BottomIcons>
-        <IconLink to="/test">
+        <IconLink to="/dev">
           <FontAwesomeIcon icon="cogs" />
         </IconLink>
-        <IconLink to="/test">
+        <IconLink to="/terms-of-use-acceptance">
           <FontAwesomeIcon icon="question-circle" />
         </IconLink>
       </BottomIcons>
