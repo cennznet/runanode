@@ -4,6 +4,7 @@ import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import TosContent from 'components/TosContent';
 import Button from 'components/Button';
+import withContainer from './container';
 
 const ScrollWrapper = styled.div`
   width: 100%;
@@ -33,7 +34,7 @@ const Note = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-export default class TosPage extends React.Component {
+class TosPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { locked: true };
@@ -56,6 +57,7 @@ export default class TosPage extends React.Component {
   };
 
   render() {
+    const { onAcceptTermsOfUse } = this.props;
     return (
       <Layout sidebar={<SimpleSidebar />}>
         <LayoutWrapper>
@@ -67,10 +69,14 @@ export default class TosPage extends React.Component {
               </ScrollContent>
             </ScrollWrapper>
             <Note>By clicking I Agree, you agree to our terms and conditions</Note>
-            <Button disabled={this.state.locked}>I Agree</Button>
+            <Button disabled={this.state.locked} onClick={() => onAcceptTermsOfUse()}>
+              I Agree
+            </Button>
           </MainContent>
         </LayoutWrapper>
       </Layout>
     );
   }
 }
+
+export default withContainer(TosPage);
