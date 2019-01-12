@@ -20,9 +20,12 @@ const Flex = styled.div`
   }
 `;
 
-const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, nodeSystem }) => {
+const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, nodeSystem, stream }) => {
   const { chain, name, version, health } = nodeSystem;
   const networkStatus = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers}, name:${name})`;
+
+  const { isConnected, latency, signalLevel } = stream;
+  const steamStatus = `isConnected: ${isConnected}, latency: ${latency}, signalLevel: ${signalLevel}`;
   return (
     <MainLayout>
       <MainContent>
@@ -37,6 +40,12 @@ const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, nodeSystem }) => {
         </Flex>
         <Flex>
           <Button onClick={onRestartNodeClick}>Restart node</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={onStream}>start stream</Button>
+          <div>
+            {steamStatus}
+          </div>
         </Flex>
       </MainContent>
     </MainLayout>
