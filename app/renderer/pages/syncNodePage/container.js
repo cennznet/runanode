@@ -63,7 +63,7 @@ const enhance = lifecycle({
           this.props.onUpdateLocalNetBestBlock(latestLocalBlock);
         }
       });
-    }, 5000000000000);
+    }, 5000);
   },
 });
 
