@@ -1,27 +1,14 @@
-const apiActionTypes = name => {
-  const prefix = name.toUpperCase();
-  return {
-    requested: `${prefix}_REQUESTED`,
-    completed: `${prefix}_COMPLETED`,
-    failed: `${prefix}_FAILED`,
-    cancelled: `${prefix}_CANCELLED`,
-  };
-};
+import getActionTypeCreators from 'renderer/helpers/typeCreator';
 
-const changedActionTypes = name => {
-  const prefix = name.toUpperCase();
-  return {
-    changeRequested: `${prefix}_CHANGE_REQUESTED`,
-    changed: `${prefix}_CHANGED`,
-  };
-};
+const ACTION_TYPES_NAME_SPACE = 'ODIN';
 
-const triggerActionTypes = name => {
-  const prefix = name.toUpperCase();
-  return {
-    triggered: `${prefix}_TRIGGERED`,
-  };
-};
+const {
+  apiActionTypes,
+  changedActionTypes,
+  triggerActionTypes,
+  toggledActionTypes,
+  subscriptionActionTypes
+} = getActionTypeCreators(ACTION_TYPES_NAME_SPACE);
 
 const actionTypes = {
   testPage: triggerActionTypes('test_page'),
@@ -33,12 +20,19 @@ const actionTypes = {
   updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
   updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
 
-  // nodeJsonRpc
+  /* nodeJsonRpc */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
   nodeJsonRpcSystemVersion: apiActionTypes('node_jsonrpc_system_version'),
   nodeJsonRpcSystemChain: apiActionTypes('node_jsonrpc_system_chain'),
   nodeJsonRpcSystemName: apiActionTypes('node_jsonrpc_system_name'),
   nodeJsonRpcSystemHealth: apiActionTypes('node_jsonrpc_system_health'),
+
+  /* Stream */
+  stream: apiActionTypes('stream'),
+  streamStatus: changedActionTypes('stream_status'),
+  streamPing: apiActionTypes('stream_ping'),
+  streamMessage: changedActionTypes('stream_message'),
+  streamError: changedActionTypes('stream_error'),
 };
 
 export default actionTypes;

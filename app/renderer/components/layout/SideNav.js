@@ -54,7 +54,7 @@ const SideNav = () => (
         <IconLink to="/dev">
           <FontAwesomeIcon icon="cogs" />
         </IconLink>
-        <IconLink to="/terms-of-use-acceptance">
+        <IconLink to="/syncNode">
           <FontAwesomeIcon icon="question-circle" />
         </IconLink>
       </BottomIcons>
