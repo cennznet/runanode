@@ -4,25 +4,30 @@ import { connect } from 'react-redux';
 
 import TopBar from './TopBar';
 
-const mapStateToProps = ({nodeSystem}) => ({
-  nodeSystem
+const mapStateToProps = ({nodeSystem, remoteStream, syncStream}) => ({
+  nodeSystem, remoteStream, syncStream
 });
 
 class TopBarContainer extends Component {
 
   render() {
-    const { nodeSystem } = this.props;
+    const { nodeSystem, remoteStream, syncStream } = this.props;
     const { chain, name, version, isSynced, health } = nodeSystem;
-    const networkName = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers})`;
+    const networkName = chain ? `${chain}` : 'Not connected';
     // const isSynced = false;
-    const blockNum = 1234567890;
-    const blockHeight = blockNum; // TODO
-    const syncPercentage = 50;
+
+    const { blockNum: remoteBlockNum, bps: remoteBps } = remoteStream;
+    const { blockNum: localBlockNum, bps: localBps } = syncStream;
+    const blockNum = `#${localBlockNum} / #${remoteBlockNum}`;
+    const blockSpeed = `${localBps}bps / ${remoteBps}bps`;
+
+    const percentage = remoteBlockNum > 0 ? (localBlockNum / remoteBlockNum * 100).toFixed(2) : 0 ;
+    const syncPercentage = `${percentage}%`;
     return (
       <TopBar
         networkName={networkName}
         blockNum={blockNum}
-        blockHeight={blockHeight}
+        blockSpeed={blockSpeed}
         isSynced={isSynced}
         syncPercentage={syncPercentage}
       />

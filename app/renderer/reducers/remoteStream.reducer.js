@@ -4,6 +4,9 @@ import types from 'renderer/types';
 import config from 'renderer/utils/config';
 
 const INITIAL_STATE = {
+  blockNum: 0,
+  previousBlockNum: 0,
+  bps: 0,
   isConnected: false,
   isConnecting: false,
   isAuthenticated: false,
@@ -56,10 +59,23 @@ const handlePong = (state, pointAt) => ({
   ...parseLatency(state.pingAt, pointAt),
 });
 
+const handlePongWithPayload = (state, payload) => {
+  const blockNum = payload.payload.params.result.number;
+  const previousBlockNum = state.blockNum;
+  const bps = (blockNum - previousBlockNum) / config.connectivity.latency.period * 1000;
+  return ({
+    ...state,
+    ...parseLatency(state.pingAt, Date.now()),
+    blockNum,
+    previousBlockNum,
+    bps
+  });
+};
+
 const handlers = {
   [streamStatusType.changed]: setStatus,
   [streamPingType.requested]: handlePing,
-  [streamPingType.completed]: handlePong
+  [streamPingType.completed]: handlePongWithPayload
 };
 
 export default createChainFns(handlers, INITIAL_STATE);
