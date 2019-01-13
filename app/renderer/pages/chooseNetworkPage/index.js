@@ -8,6 +8,8 @@ import Input from 'components/Input';
 import Button from 'components/Button';
 import withContainer from './container';
 
+const store = global.electronStore;
+
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
 `;
@@ -38,61 +40,52 @@ const NETWORK_OPTIONS = [
   { label: 'Main net', value: 'mainNet' },
 ];
 
-class ChooseNetWork extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedNetwork: null };
-  }
+const getSelectedNetwork = () =>
+  NETWORK_OPTIONS.find(option => option.value === store.get('SELECTED_NETWORK'));
 
-  render() {
-    const { selectedNetwork } = this.state;
-    const { onJoinNetwork, onSelectNetwork } = this.props;
-    return (
-      <Layout sidebar={<SimpleSidebar />}>
-        <LayoutWrapper>
-          <MainContent>
-            <ChooseNetworkWrapper>
-              <JoinNetworkTitle>Join network</JoinNetworkTitle>
-              <div>Choose network</div>
-              <NetworkOptionWrapper>
-                <Select
-                  value={selectedNetwork}
-                  onChange={selected => {
-                    console.log('selectNetwork: ', selected.value);
-                    this.setState({ selectedNetwork: selected });
-                    onSelectNetwork(selected.value);
-                  }}
-                  backgroundColor={colors.N800}
-                  selectedBackgroundColor={colors.N800}
-                  color={colors.N0}
-                  options={NETWORK_OPTIONS}
-                />
-              </NetworkOptionWrapper>
-              {selectedNetwork && selectedNetwork.value === 'localTestNet' && (
-                <EnterBootNodeWrapper>
-                  <div>Enter boot node</div>
-                  <Input
-                    color={colors.N0}
-                    backgroundColor="transparent"
-                    focusBorderColor={colors.N0}
-                    placeholder="#"
-                    onChange={e => console.log('input', e.target.value)}
-                  />
-                </EnterBootNodeWrapper>
-              )}
-              <ButtonWrapper>
-                <div>
-                  <Button disabled={!selectedNetwork} onClick={() => onJoinNetwork()}>
-                    Join network
-                  </Button>
-                </div>
-              </ButtonWrapper>
-            </ChooseNetworkWrapper>
-          </MainContent>
-        </LayoutWrapper>
-      </Layout>
-    );
-  }
-}
+const ChooseNetWork = ({ onJoinNetwork, onSelectNetwork }) => (
+  <Layout sidebar={<SimpleSidebar />}>
+    <LayoutWrapper>
+      <MainContent>
+        <ChooseNetworkWrapper>
+          <JoinNetworkTitle>Join network</JoinNetworkTitle>
+          <div>Choose network</div>
+          <NetworkOptionWrapper>
+            <Select
+              value={getSelectedNetwork()}
+              onChange={selected => {
+                console.log('selectNetwork: ', selected.value);
+                onSelectNetwork(selected.value);
+              }}
+              backgroundColor={colors.N800}
+              selectedBackgroundColor={colors.N800}
+              color={colors.N0}
+              options={NETWORK_OPTIONS}
+            />
+          </NetworkOptionWrapper>
+          {store.get('SELECTED_NETWORK') === 'localTestNet' && (
+            <EnterBootNodeWrapper>
+              <div>Enter boot node</div>
+              <Input
+                color={colors.N0}
+                backgroundColor="transparent"
+                focusBorderColor={colors.N0}
+                placeholder="#"
+                onChange={e => console.log('input', e.target.value)}
+              />
+            </EnterBootNodeWrapper>
+          )}
+          <ButtonWrapper>
+            <div>
+              <Button disabled={!store.get('SELECTED_NETWORK')} onClick={() => onJoinNetwork()}>
+                Join network
+              </Button>
+            </div>
+          </ButtonWrapper>
+        </ChooseNetworkWrapper>
+      </MainContent>
+    </LayoutWrapper>
+  </Layout>
+);
 
 export default withContainer(ChooseNetWork);

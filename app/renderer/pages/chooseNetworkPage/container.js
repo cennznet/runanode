@@ -5,12 +5,10 @@ import types from '../../types';
 
 const mapDispatchToProps = dispatch => ({
   onSelectNetwork: payload => {
-    console.log('join--', payload);
     dispatch({ type: types.storeSelectedNetwork.triggered, payload });
   },
 
   onJoinNetwork: payload => {
-    console.log('join--', payload);
     dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
   },
 });
