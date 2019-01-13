@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TopBar from './TopBar';
 import SideNav from './SideNav';
+import TopBarContainer from './TopBarContainer';
 
 const PageWrapper = styled.div`
   height: 100vh;
@@ -20,7 +21,7 @@ const Content = styled.div`
 
 const Layout = ({ topBar, defaultTopBar, sidebar, defaultSidebar, children }) => (
   <PageWrapper>
-    {defaultTopBar ? <TopBar /> : topBar}
+    {defaultTopBar ? <TopBarContainer /> : topBar}
     <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar}>
       {defaultSidebar ? <SideNav /> : sidebar}
       <Content>{children}</Content>

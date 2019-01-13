@@ -7,7 +7,7 @@ export default class MainLayout extends Component {
   render() {
     const { subNav } = this.props;
     return (
-      <Layout topbar={<TopBarContainer />} defaultSidebar>
+      <Layout defaultTopBar defaultSidebar>
         <LayoutWrapper>
           {subNav}
           {this.props.children}
