@@ -46,7 +46,7 @@ class ChooseNetWork extends React.Component {
 
   render() {
     const { selectedNetwork } = this.state;
-    const { onJoinNetwork } = this.props;
+    const { onJoinNetwork, onSelectNetwork } = this.props;
     return (
       <Layout sidebar={<SimpleSidebar />}>
         <LayoutWrapper>
@@ -60,6 +60,7 @@ class ChooseNetWork extends React.Component {
                   onChange={selected => {
                     console.log('selectNetwork: ', selected.value);
                     this.setState({ selectedNetwork: selected });
+                    onSelectNetwork(selected.value);
                   }}
                   backgroundColor={colors.N800}
                   selectedBackgroundColor={colors.N800}
@@ -81,10 +82,7 @@ class ChooseNetWork extends React.Component {
               )}
               <ButtonWrapper>
                 <div>
-                  <Button
-                    disabled={!selectedNetwork}
-                    onClick={() => onJoinNetwork(selectedNetwork.value)}
-                  >
+                  <Button disabled={!selectedNetwork} onClick={() => onJoinNetwork()}>
                     Join network
                   </Button>
                 </div>
