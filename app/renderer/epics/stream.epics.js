@@ -13,17 +13,17 @@ const connectStreamEpic = action$ =>
     mergeMap(() => {
       stream.connect();
 
-      const streamMessage = stream.messageSubject
-        .map(payload => ({
+      const streamMessage = stream.messageSubject.pipe(
+        map(payload => ({
           type: types.streamMessage.changed,
           payload
-        }));
+        })));
 
-      const streamStatus = stream.statusSubject
-        .map(payload => ({
+      const streamStatus = stream.statusSubject.pipe(
+        map(payload => ({
           type: types.streamStatus.changed,
           payload
-        }));
+        })));
 
       return merge(streamMessage, streamStatus)
         // .startWith({
@@ -45,10 +45,10 @@ const pingEpic = action$ =>
     filter(({ payload: { isConnected } }) => isConnected),
     take(1),
     mergeMap(() => {
-      return interval(config.connectivity.latency.period)
-        .map(() => {
+      return interval(config.connectivity.latency.period).pipe(
+        map(() => {
           return { type: types.streamPing.requested, payload: Date.now() };
-        });
+        }));
     })
   );
 
