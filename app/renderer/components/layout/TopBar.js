@@ -43,7 +43,7 @@ const HeaderSectionContainer = styled.div`
   flex-direction: column;
 `;
 
-const TopBar = ({networkName, blockNum, blockHeight, isSynced, syncPercentage}) => (
+const TopBar = ({networkName, blockNum, blockSpeed, isSynced, syncPercentage}) => (
   <Wrapper>
     <HeaderSectionContainer>
       <LogoContainer>
@@ -53,13 +53,13 @@ const TopBar = ({networkName, blockNum, blockHeight, isSynced, syncPercentage}) 
     <NetworkSectionContainer>
       <TopDownContentWrapper>
         <div>{networkName}</div>
-        <div>#{blockNum}</div>
+        <div>{blockNum}</div>
       </TopDownContentWrapper>
     </NetworkSectionContainer>
     <HeaderSectionContainer>
       <TopDownContentWrapper>
-        <div>{isSynced ? '100% ' : syncPercentage + '% '} synced</div>
-        <div>(block height: {blockHeight})</div>
+        <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
+        <div>(block speed: {blockSpeed})</div>
       </TopDownContentWrapper>
     </HeaderSectionContainer>
   </Wrapper>

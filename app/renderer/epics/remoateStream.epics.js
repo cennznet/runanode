@@ -5,6 +5,7 @@ import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { remoteStream as stream } from 'renderer/stream/stream';
+import streamTypes from '../stream/types';
 
 const streamType = types.remoteStream;
 const streamMessageType = types.remoteStreamMessage;
@@ -71,16 +72,17 @@ const pongEpic = action$ =>
   action$.pipe(
     ofType(streamPingType.requested),
     mergeMap(() => {
-      const id = stream.ping();
+      const id = stream.pingWithStreamType(streamTypes.chainSubscribeNewHead);
       if (!id) {
         return EMPTY;
       }
       return action$.pipe(
         ofType(streamMessageType.changed),
-        filter(action => (action.payload.id === id)),
+        // filter(action => (action.payload.id === id)),
+        filter(action => (action.payload.method === streamTypes.chainNewHead)),
         take(1),
-        map(() => {
-          return { type: streamPingType.completed, payload: Date.now() };
+        map((payload) => {
+          return { type: streamPingType.completed, payload };
         })
      );
     })
