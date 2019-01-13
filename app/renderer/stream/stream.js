@@ -1,13 +1,7 @@
 import { Subject } from 'rxjs/Subject';
-
+import config from 'renderer/utils/config';
 import payload from './payload';
 import streamTypes from './types';
-
-const defaultConfig = {
-  url: null,
-  reconnectInterval: 200,
-  reconnectIntervalMax: 2000
-};
 
 /**
  * @class Stream
@@ -16,7 +10,11 @@ export class Stream {
   messageSubject = new Subject();
   statusSubject = new Subject();
 
-  _config = defaultConfig;
+  _config = {
+    url: null,
+    reconnectInterval: 200,
+    reconnectIntervalMax: 2000
+  };
 
   /**
    * @type WebSocket
@@ -32,10 +30,18 @@ export class Stream {
 
   _nextId = 1;
 
-  connect(host) {
-    this._config.url = host;
+  constructor(url: string) {
+    this._config.url = url;
+  }
+
+  connect() {
     this._ensureWebSocket();
   }
+
+  // connect(host) {
+  //   this._config.url = host;
+  //   this._ensureWebSocket();
+  // }
 
   disconnect(retry = false) {
     if (!this._socket) {
@@ -111,6 +117,10 @@ export class Stream {
 
   ping() {
     return this.send(streamTypes.ping, {}, false, true);
+  }
+
+  pingWithStreamType(streamType) {
+    return this.send(streamType, {}, false, true);
   }
 
   _sendAuthenticate() {
@@ -220,8 +230,11 @@ export class Stream {
   }
 }
 
-const defaultStream = new Stream();
+const defaultStream = new Stream(config.urls.LOCAL_WS);
 export default defaultStream;
+export const localStream = defaultStream;
+export const remoteStream = new Stream(config.urls.REMOTE_WS);
+export const syncStream = new Stream(config.urls.LOCAL_WS);
 
 if (module.hot) {
   module.hot.dispose(() => {

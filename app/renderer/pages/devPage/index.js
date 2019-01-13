@@ -20,12 +20,20 @@ const Flex = styled.div`
   }
 `;
 
-const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, onChainSubscribeNewHead, nodeSystem, stream }) => {
+const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, onChainSubscribeNewHead, nodeSystem, stream, remoteStream, syncStream }) => {
   const { chain, name, version, health } = nodeSystem;
   const networkStatus = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers}, name:${name})`;
 
-  const { isConnected, latency, signalLevel } = stream;
-  const steamStatus = `isConnected: ${isConnected}, latency: ${latency}, signalLevel: ${signalLevel}`;
+  function getStreamStatus(streamState) {
+    const { isConnected, latency, signalLevel, blockNum, previousBlockNum, bps } = streamState;
+    const steamStatus = `bps: ${bps}, previousBlockNum: ${previousBlockNum}, blockNum: ${blockNum}, isConnected: ${isConnected}, latency: ${latency}, signalLevel: ${signalLevel}`;
+    return steamStatus;
+  }
+
+  const steamStatus = getStreamStatus(stream);
+  const remoteSteamStatus = getStreamStatus(remoteStream);
+  const syncSteamStatus = getStreamStatus(syncStream);
+
   return (
     <MainLayout>
       <MainContent>
@@ -45,6 +53,12 @@ const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, onChainSu
           <Button onClick={onStream}>start stream</Button>
           <div>
             {steamStatus}
+          </div>
+          <div>
+            {remoteSteamStatus}
+          </div>
+          <div>
+            {syncSteamStatus}
           </div>
         </Flex>
         <Flex>

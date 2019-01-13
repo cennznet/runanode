@@ -17,6 +17,8 @@ const config = {
   urls: {
     LOCAL_JSONRPC: `${localURL}/`,
     LOCAL_WS: `${localStreamURL}/`,
+    REMOTE_JSONRPC: `${remoteURL}/`,
+    REMOTE_WS: `${remoteStreamURL}/`,
   },
 
   connectivity: {
