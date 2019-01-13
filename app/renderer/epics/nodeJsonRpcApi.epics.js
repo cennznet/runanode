@@ -1,17 +1,33 @@
+import { combineEpics } from 'redux-observable';
+import chainEpics from 'renderer/epics/chainEpics';
 import { createJsonRpcAPICallEpic } from 'renderer/helpers/createAPICallEpic';
 import types from 'renderer/types';
-import urls from 'renderer/constants/urls';
+import config from 'renderer/utils/config';
 
 const nodeJsonRpcSystemNameEpic = createJsonRpcAPICallEpic({
   type: types.nodeJsonRpcSystemName,
-  url: urls.API.JSONRPC,
+  url: config.urls.LOCAL_JSONRPC,
   jsonRpcMethod: 'system_name',
+  jsonRpcParams: [],
+});
+
+const nodeJsonRpcSystemChainEpic = createJsonRpcAPICallEpic({
+  type: types.nodeJsonRpcSystemChain,
+  url: config.urls.LOCAL_JSONRPC,
+  jsonRpcMethod: 'system_chain',
+  jsonRpcParams: [],
+});
+
+const nodeJsonRpcSystemVersionEpic = createJsonRpcAPICallEpic({
+  type: types.nodeJsonRpcSystemVersion,
+  url: config.urls.LOCAL_JSONRPC,
+  jsonRpcMethod: 'system_version',
   jsonRpcParams: [],
 });
 
 const nodeJsonRpcSystemHealthEpic = createJsonRpcAPICallEpic({
   type: types.nodeJsonRpcSystemHealth,
-  url: urls.API.JSONRPC,
+  url: config.urls.LOCAL_JSONRPC,
   jsonRpcMethod: 'system_health',
   jsonRpcParams: [],
   mapResponse: (x) => {
@@ -31,4 +47,31 @@ const nodeJsonRpcSystemHealthEpic = createJsonRpcAPICallEpic({
   }
 });
 
-export default [nodeJsonRpcSystemNameEpic, nodeJsonRpcSystemHealthEpic];
+const chainNodeJsonRpcSystemNameEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemName.requested,
+);
+
+const chainNodeJsonRpcSystemChainEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemChain.requested,
+);
+
+const chainNodeJsonRpcSystemVersionEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemVersion.requested,
+);
+
+const chainNodeJsonRpcSystemHealthEpic = chainEpics(
+  types.nodeJsonRpcSystem.requested,
+  types.nodeJsonRpcSystemHealth.requested,
+);
+
+const nodeJsonRpcSystemEpic = combineEpics(
+  chainNodeJsonRpcSystemNameEpic,
+  chainNodeJsonRpcSystemChainEpic,
+  chainNodeJsonRpcSystemHealthEpic,
+  chainNodeJsonRpcSystemVersionEpic,
+);
+
+export default [nodeJsonRpcSystemNameEpic, nodeJsonRpcSystemHealthEpic, nodeJsonRpcSystemChainEpic, nodeJsonRpcSystemVersionEpic, nodeJsonRpcSystemEpic];

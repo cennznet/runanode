@@ -52,8 +52,8 @@ dmg:
 win:
   icon: 'resources/icon.ico'
   target:
-    - 'zip'
-    - 'nsis'
+#    - 'zip'
+#    - 'nsis'
     - 'msi'
   extraFiles:
     - from: 'dist/cennznet-node-win'

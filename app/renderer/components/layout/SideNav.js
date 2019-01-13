@@ -48,15 +48,18 @@ const SideNav = () => (
         <IconLink to={ROUTES.WALLET.ROOT}>
           <FontAwesomeIcon icon="plus" />
         </IconLink>
-        <IconLink to="/test">
+        <IconLink to="/wallet/import">
           <FontAwesomeIcon icon="wallet" />
         </IconLink>
       </TopIcons>
       <BottomIcons>
+        <IconLink to="/dev">
+          <FontAwesomeIcon icon="dev" />
+        </IconLink>
         <IconLink to={ROUTES.PROFILE.ROOT}>
           <FontAwesomeIcon icon="cogs" />
         </IconLink>
-        <IconLink to="/test">
+        <IconLink to="/syncNode">
           <FontAwesomeIcon icon="question-circle" />
         </IconLink>
       </BottomIcons>

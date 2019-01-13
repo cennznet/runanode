@@ -113,3 +113,8 @@ export type CennzNetStatus = {
   isNodeInSync: boolean,
   hasBeenConnected: boolean,
 };
+
+export type CennzNetRestartOptions = {
+  name: string,
+  chain: string
+}
