@@ -5,13 +5,15 @@ import types from 'renderer/types';
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
-  onReset: () => {
-    dispatch({ type: types.resetLocalStorage.triggered });
+  onPageLoaded: payload => {
+    dispatch({ type: types.homePageLoad.triggered, payload });
   },
 });
 
 const enhance = lifecycle({
-  componentDidMount() {},
+  componentDidMount() {
+    this.props.onPageLoaded();
+  },
 });
 
 export default compose(

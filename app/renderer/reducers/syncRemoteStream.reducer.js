@@ -4,9 +4,9 @@ import types from 'renderer/types';
 import config from 'renderer/utils/config';
 
 const INITIAL_STATE = {
-  blockNum: 0,
-  previousBlockNum: 0,
-  bps: 0,
+  blockNum: null,
+  previousBlockNum: null,
+  bps: null,
   isConnected: false,
   isConnecting: false,
   isAuthenticated: false,
@@ -42,13 +42,13 @@ const parseLatency = (pingAt, pongAt) => {
 
 const setStatus = (state, payload) => ({
   ...state,
-  ...payload
+  ...payload,
 });
 
 const handlePing = (state, pingAt) => ({
   ...state,
   pingAt,
-  pointAt: null
+  pointAt: null,
 });
 
 const handlePong = (state, pointAt) => ({
@@ -61,14 +61,14 @@ const handlePongWithPayload = (state, payload) => {
   console.log(payload);
   const blockNum = payload.number;
   const previousBlockNum = state.blockNum;
-  const bps = (blockNum - previousBlockNum) / config.connectivity.latency.period * 1000;
-  return ({
+  const bps = ((blockNum - previousBlockNum) / config.connectivity.latency.period) * 1000;
+  return {
     ...state,
     ...parseLatency(state.pingAt, Date.now()),
     blockNum,
     previousBlockNum,
-    bps
-  });
+    bps,
+  };
 };
 
 const handlers = {
