@@ -4,7 +4,7 @@ import { of, interval, merge } from 'rxjs';
 import { ofType } from 'redux-observable';
 
 import types from 'renderer/types';
-import stream from 'renderer/stream/stream';
+import { localStream as stream } from 'renderer/stream/stream';
 import streamTypes from 'renderer/stream/types';
 
 const epic = (action$, state$) =>

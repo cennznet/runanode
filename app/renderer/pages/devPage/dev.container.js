@@ -6,7 +6,7 @@ import {
 } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ nodeSystem, stream }) => ({ nodeSystem, stream });
+const mapStateToProps = ({ nodeSystem, stream, remoteStream, syncStream }) => ({ nodeSystem, stream, remoteStream, syncStream });
 
 const mapDispatchToProps = dispatch => ({
   onNetworkStatusClick: () => {
@@ -25,6 +25,14 @@ const mapDispatchToProps = dispatch => ({
   onStream: () => {
     dispatch({
       type: types.stream.requested,
+      payload: {},
+    });
+    dispatch({
+      type: types.remoteStream.requested,
+      payload: {},
+    });
+    dispatch({
+      type: types.syncStream.requested,
       payload: {},
     });
   },

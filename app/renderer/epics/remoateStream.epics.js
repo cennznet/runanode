@@ -1,27 +1,32 @@
-import { empty } from 'rxjs/observable/empty';
 import { mergeMap, tap, catchError, filter, map, take, startWith } from 'rxjs/operators';
-import { of, interval, merge } from 'rxjs';
+import { of, interval, merge, EMPTY } from 'rxjs';
 import { ofType } from 'redux-observable';
 
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
-import { localStream as stream } from 'renderer/stream/stream';
+import { remoteStream as stream } from 'renderer/stream/stream';
+
+const streamType = types.remoteStream;
+const streamMessageType = types.remoteStreamMessage;
+const streamStatusType = types.remoteStreamStatus;
+const streamPingType = types.remoteStreamPing;
 
 const connectStreamEpic = action$ =>
   action$.pipe(
-    ofType(types.stream.requested),
+    ofType(streamType.requested),
     mergeMap(() => {
+      console.log(stream);
       stream.connect();
 
       const streamMessage = stream.messageSubject
         .map(payload => ({
-          type: types.streamMessage.changed,
+          type: streamMessageType.changed,
           payload
         }));
 
       const streamStatus = stream.statusSubject
         .map(payload => ({
-          type: types.streamStatus.changed,
+          type: streamStatusType.changed,
           payload
         }));
 
@@ -32,7 +37,7 @@ const connectStreamEpic = action$ =>
         ;
     }),
     startWith({
-      type: types.stream.completed,
+      type: streamType.completed,
     })
   );
 
@@ -41,13 +46,13 @@ const connectStreamEpic = action$ =>
 // but ping while disconnected is nop anyway
 const pingEpic = action$ =>
   action$.pipe(
-    ofType(types.streamStatus.changed),
+    ofType(streamStatusType.changed),
     filter(({ payload: { isConnected } }) => isConnected),
     take(1),
     mergeMap(() => {
       return interval(config.connectivity.latency.period)
         .map(() => {
-          return { type: types.streamPing.requested, payload: Date.now() };
+          return { type: streamPingType.requested, payload: Date.now() };
         });
     })
   );
@@ -55,50 +60,30 @@ const pingEpic = action$ =>
 // send a ping immediately after connected
 const pingOnConnectEpic = action$ =>
   action$.pipe(
-    ofType(types.streamStatus.changed),
+    ofType(streamStatusType.changed),
     filter(({ payload: { isConnected } }) => isConnected),
     map(() => {
-      return { type: types.streamPing.requested, payload: Date.now() };
+      return { type: streamPingType.requested, payload: Date.now() };
     })
   );
 
 const pongEpic = action$ =>
   action$.pipe(
-    ofType(types.streamPing.requested),
+    ofType(streamPingType.requested),
     mergeMap(() => {
       const id = stream.ping();
       if (!id) {
-        return empty();
+        return EMPTY;
       }
       return action$.pipe(
-        ofType(types.streamMessage.changed),
+        ofType(streamMessageType.changed),
         filter(action => (action.payload.id === id)),
         take(1),
         map(() => {
-          return { type: types.streamPing.completed, payload: Date.now() };
+          return { type: streamPingType.completed, payload: Date.now() };
         })
-        // filter(action => (action.payload.id === id)),
-        // take(1),
-        // map(() => {
-        //   stream.disconnect();
-        //   return { type: types.streamPing.completed, payload: Date.now() };
-        // })
      );
     })
   );
-
-// const authEpic = action$ =>
-//   combineLatest(action$.ofType(types.token.completed), action$.ofType(types.stream.completed))
-//     .do(([{ payload: { accessToken } }]) => {
-//       stream.authenticate(accessToken);
-//     })
-//     .ignoreElements();
-
-// const deAuthEpic = action$ =>
-//   action$.ofType(types.resetToken.completed)
-//     .do(() => {
-//       stream.disconnect();
-//     })
-//     .ignoreElements();
 
 export default [connectStreamEpic, pingOnConnectEpic, pingEpic, pongEpic];
