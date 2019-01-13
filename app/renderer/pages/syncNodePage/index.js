@@ -6,9 +6,6 @@ import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/la
 import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
 
-const store = global.electronStore;
-console.log('user selected network', store.get('SELECTED_NETWORK'));
-
 const SyncNodeTitle = styled.div`
   color: ${colors.N0};
   font-weight: 600;
@@ -38,7 +35,9 @@ const TextWrapper = styled.div`
   color: ${colors.N0};
 `;
 
-const SyncNodePage = ({ selectedNetwork, bestBlock, syncedBlock }) => {
+const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
+  const { blockNum: bestBlock } = syncRemoteStream;
+  const { blockNum: syncedBlock } = syncStream;
   const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
 

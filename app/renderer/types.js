@@ -17,11 +17,7 @@ const actionTypes = {
   navigation: triggerActionTypes('navigation'),
   acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
   resetTermsOfUse: triggerActionTypes('reset_terms_of_use'),
-  updateBestBlock: triggerActionTypes('update_best_block'),
-  updateSyncedBlock: triggerActionTypes('update_synced_block'),
   storeSelectedNetwork: triggerActionTypes('store_selected_network'),
-  updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
-  updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
 
   /* node system */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
