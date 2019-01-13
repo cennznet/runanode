@@ -5,7 +5,6 @@ import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { remoteStream as stream } from 'renderer/stream/stream';
-import streamTypes from '../stream/types';
 
 const streamType = types.remoteStream;
 const streamMessageType = types.remoteStreamMessage;
@@ -16,30 +15,25 @@ const connectStreamEpic = action$ =>
   action$.pipe(
     ofType(streamType.requested),
     mergeMap(() => {
-      console.log(stream);
       stream.connect();
 
       const streamMessage = stream.messageSubject.pipe(
         map(payload => ({
           type: streamMessageType.changed,
-          payload
+          payload,
         })));
 
       const streamStatus = stream.statusSubject.pipe(
         map(payload => ({
           type: streamStatusType.changed,
-          payload
+          payload,
         })));
 
-      return merge(streamMessage, streamStatus)
-        // .startWith({
-        //   type: types.stream.completed
-        // })
-        ;
+      return merge(streamMessage, streamStatus);
     }),
     startWith({
       type: streamType.completed,
-    })
+    }),
   );
 
 // send ping periodically after connected
@@ -55,7 +49,7 @@ const pingEpic = action$ =>
         map(() => {
           return { type: streamPingType.requested, payload: Date.now() };
         }));
-    })
+    }),
   );
 
 // send a ping immediately after connected
@@ -65,27 +59,26 @@ const pingOnConnectEpic = action$ =>
     filter(({ payload: { isConnected } }) => isConnected),
     map(() => {
       return { type: streamPingType.requested, payload: Date.now() };
-    })
+    }),
   );
 
 const pongEpic = action$ =>
   action$.pipe(
     ofType(streamPingType.requested),
     mergeMap(() => {
-      const id = stream.pingWithStreamType(streamTypes.chainSubscribeNewHead);
+      const id = stream.ping();
       if (!id) {
         return EMPTY;
       }
       return action$.pipe(
         ofType(streamMessageType.changed),
-        // filter(action => (action.payload.id === id)),
-        filter(action => (action.payload.method === streamTypes.chainNewHead)),
+        filter(action => (action.payload.id === id)),
         take(1),
-        map((payload) => {
-          return { type: streamPingType.completed, payload };
-        })
-     );
-    })
+        map(() => {
+          return { type: streamPingType.completed, payload: Date.now() };
+        }),
+      );
+    }),
   );
 
 export default [connectStreamEpic, pingOnConnectEpic, pingEpic, pongEpic];

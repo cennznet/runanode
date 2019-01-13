@@ -16,9 +16,6 @@ const INITIAL_STATE = {
   signalLevel: null,
 };
 
-const streamStatusType = types.remoteStreamStatus;
-const streamPingType = types.remoteStreamPing;
-
 const parseLatency = (pingAt, pongAt) => {
   if (!pingAt || !pongAt) {
     return { pongAt };
@@ -72,10 +69,12 @@ const handlePongWithPayload = (state, payload) => {
   });
 };
 
+const streamStatusType = types.syncRemoteStreamStatus;
+const streamPingType = types.syncRemoteStreamPing;
 const handlers = {
   [streamStatusType.changed]: setStatus,
   [streamPingType.requested]: handlePing,
-  [streamPingType.completed]: handlePong
+  [streamPingType.completed]: handlePongWithPayload
 };
 
 export default createChainFns(handlers, INITIAL_STATE);

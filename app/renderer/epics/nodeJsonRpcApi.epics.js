@@ -1,5 +1,5 @@
 import { combineEpics } from 'redux-observable';
-import chainEpics from 'renderer/helpers/chainEpics';
+import chainEpics from 'renderer/epics/chainEpics';
 import { createJsonRpcAPICallEpic } from 'renderer/helpers/createAPICallEpic';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
