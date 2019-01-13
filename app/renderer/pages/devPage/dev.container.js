@@ -27,7 +27,13 @@ const mapDispatchToProps = dispatch => ({
       type: types.stream.requested,
       payload: {},
     });
-  }
+  },
+  onChainSubscribeNewHead: () => {
+    dispatch({
+      type: types.nodeWsChainSubscribeNewHead.requested,
+      payload: {},
+    });
+  },
 
 });
 

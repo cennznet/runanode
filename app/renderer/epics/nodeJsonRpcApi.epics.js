@@ -2,32 +2,32 @@ import { combineEpics } from 'redux-observable';
 import chainEpics from 'renderer/helpers/chainEpics';
 import { createJsonRpcAPICallEpic } from 'renderer/helpers/createAPICallEpic';
 import types from 'renderer/types';
-import urls from 'renderer/constants/urls';
+import config from 'renderer/utils/config';
 
 const nodeJsonRpcSystemNameEpic = createJsonRpcAPICallEpic({
   type: types.nodeJsonRpcSystemName,
-  url: urls.API.JSONRPC,
+  url: config.urls.LOCAL_JSONRPC,
   jsonRpcMethod: 'system_name',
   jsonRpcParams: [],
 });
 
 const nodeJsonRpcSystemChainEpic = createJsonRpcAPICallEpic({
   type: types.nodeJsonRpcSystemChain,
-  url: urls.API.JSONRPC,
+  url: config.urls.LOCAL_JSONRPC,
   jsonRpcMethod: 'system_chain',
   jsonRpcParams: [],
 });
 
 const nodeJsonRpcSystemVersionEpic = createJsonRpcAPICallEpic({
   type: types.nodeJsonRpcSystemVersion,
-  url: urls.API.JSONRPC,
+  url: config.urls.LOCAL_JSONRPC,
   jsonRpcMethod: 'system_version',
   jsonRpcParams: [],
 });
 
 const nodeJsonRpcSystemHealthEpic = createJsonRpcAPICallEpic({
   type: types.nodeJsonRpcSystemHealth,
-  url: urls.API.JSONRPC,
+  url: config.urls.LOCAL_JSONRPC,
   jsonRpcMethod: 'system_health',
   jsonRpcParams: [],
   mapResponse: (x) => {
