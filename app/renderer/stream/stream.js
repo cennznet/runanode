@@ -235,6 +235,7 @@ export default defaultStream;
 export const localStream = defaultStream;
 export const remoteStream = new Stream(config.urls.REMOTE_WS);
 export const syncStream = new Stream(config.urls.LOCAL_WS);
+export const syncRemoteStream = new Stream(config.urls.REMOTE_WS);
 
 if (module.hot) {
   module.hot.dispose(() => {

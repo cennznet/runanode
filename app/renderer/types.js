@@ -50,6 +50,13 @@ const actionTypes = {
   syncStreamMessage: changedActionTypes('sync_stream_message'),
   syncStreamError: changedActionTypes('sync_stream_error'),
 
+  /* Sync Remote Stream */
+  syncRemoteStream: apiActionTypes('sync_remote_stream'),
+  syncRemoteStreamStatus: changedActionTypes('sync_remote_stream_status'),
+  syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
+  syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
+  syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
+
 };
 
 export default actionTypes;

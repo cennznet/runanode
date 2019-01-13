@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 
 import TopBar from './TopBar';
 
-const mapStateToProps = ({nodeSystem, remoteStream, syncStream}) => ({
-  nodeSystem, remoteStream, syncStream
+const mapStateToProps = ({nodeSystem, remoteStream, syncStream, syncRemoteStream}) => ({
+  nodeSystem, remoteStream, syncStream, syncRemoteStream
 });
 
 class TopBarContainer extends Component {
 
   render() {
-    const { nodeSystem, remoteStream, syncStream } = this.props;
+    const { nodeSystem, remoteStream, syncStream, syncRemoteStream } = this.props;
     const { chain, name, version, isSynced, health } = nodeSystem;
     const networkName = chain ? `${chain}` : 'Not connected';
     // const isSynced = false;
 
-    const { blockNum: remoteBlockNum, bps: remoteBps } = remoteStream;
+    const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
     const { blockNum: localBlockNum, bps: localBps } = syncStream;
     const blockNum = `#${localBlockNum} / #${remoteBlockNum}`;
     const blockSpeed = `${localBps}bps / ${remoteBps}bps`;
