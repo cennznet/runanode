@@ -5,14 +5,13 @@ import { ofType } from 'redux-observable';
 
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
-import urls from 'renderer/constants/urls';
 import stream from 'renderer/stream/stream';
 
 const connectStreamEpic = action$ =>
   action$.pipe(
     ofType(types.stream.requested),
     mergeMap(() => {
-      stream.connect(urls.API.WS);
+      stream.connect(config.urls.LOCAL_WS);
 
       const streamMessage = stream.messageSubject
         .map(payload => ({

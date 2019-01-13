@@ -33,6 +33,8 @@ const actionTypes = {
   streamPing: apiActionTypes('stream_ping'),
   streamMessage: changedActionTypes('stream_message'),
   streamError: changedActionTypes('stream_error'),
+
+  nodeWsChainSubscribeNewHead: apiActionTypes('node_ws_chain_subscribeNewHead'),
 };
 
 export default actionTypes;

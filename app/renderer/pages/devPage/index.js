@@ -20,7 +20,7 @@ const Flex = styled.div`
   }
 `;
 
-const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, nodeSystem, stream }) => {
+const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, onChainSubscribeNewHead, nodeSystem, stream }) => {
   const { chain, name, version, health } = nodeSystem;
   const networkStatus = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers}, name:${name})`;
 
@@ -46,6 +46,9 @@ const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, nodeSyste
           <div>
             {steamStatus}
           </div>
+        </Flex>
+        <Flex>
+          <Button onClick={onChainSubscribeNewHead}>start chainSubscribeNewHead</Button>
         </Flex>
       </MainContent>
     </MainLayout>
