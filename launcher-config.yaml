@@ -1,11 +1,12 @@
 nodePath: ${ODIN_DIST_DIRECTORY}/cennznet-node
 logsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
-
-
-walletLogging: true
 nodeArgs:
   - --name
   - ken-test
+#  - --chain
+#  - ./dist/local.json
+
+walletLogging: true
 statePath: ${ODIN_USER_DATA_DIRECTORY}/Odin
 walletPath: ${ODIN_INSTALL_DIRECTORY}/Frontend
 launcherLogsPrefix: ${ODIN_LOG_DATA_DIRECTORY}

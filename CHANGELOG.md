@@ -6,6 +6,14 @@
 
 ### Fixes
 
+### Improvements
+
+## v0.2.2 (2019.01.13)
+
+### Features
+
+### Fixes
+
 - fix hot reload issue
 
 ### Improvements
@@ -17,7 +25,9 @@
 - able to make network request
 - able to restart cennznet node with options
 - Connect TopBarContainer to redux state 
-- Add more node system API
+- Add JsonRPC support
+- Add Websocket support
+- Able to display network status
 
 ## v0.2.1 (2019.01.04)
 
