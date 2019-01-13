@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors } from 'renderer/theme';
+import ROUTES from 'renderer/constants/routes';
 
+console.log('ROUTES.PROFILE.GENERAL', ROUTES.PROFILE.GENERAL);
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
@@ -43,7 +45,7 @@ const SideNav = () => (
   <Wrapper>
     <IconNav>
       <TopIcons>
-        <IconLink to="/wallet/create">
+        <IconLink to={ROUTES.WALLET.ROOT}>
           <FontAwesomeIcon icon="plus" />
         </IconLink>
         <IconLink to="/wallet/import">
@@ -52,6 +54,9 @@ const SideNav = () => (
       </TopIcons>
       <BottomIcons>
         <IconLink to="/dev">
+          <FontAwesomeIcon icon="dev" />
+        </IconLink>
+        <IconLink to={ROUTES.PROFILE.ROOT}>
           <FontAwesomeIcon icon="cogs" />
         </IconLink>
         <IconLink to="/syncNode">
