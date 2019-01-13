@@ -2,20 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Doc = styled.div`
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
   h6 {
     margin-top: 1rem;
   }
 
   p {
     line-height: 1.25rem;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
   }
 `;
 
 const TosContent = () => {
   return (
     <Doc>
-      <h6>Now led tedious shy lasting females off</h6>
+      <h2>Terms & Conditions</h2>
 
       <p>
         At ourselves direction believing do he departure. Celebrated her had sentiments understood
