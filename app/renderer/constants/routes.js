@@ -1,10 +1,10 @@
 // @flow
 export default {
   ROOT: '/',
-  PROFILE: {
-    ROOT: '/profile',
-    GENERAL: '/profile/general',
-    TERMS_OF_USE: '/profile/terms-of-use',
+  SETTINGS: {
+    ROOT: '/settings',
+    GENERAL: '/settings/general',
+    TERMS_OF_USE: '/settings/terms-of-use',
   },
   WALLET: {
     ROOT: '/wallet',
@@ -14,6 +14,6 @@ export default {
   },
   DEV: '/dev',
   TERMS_OF_USE_ACCEPTANCE: '/terms-of-use-acceptance',
-  CHOOSE_NETWORK: '/chooseNetwork',
-  SYNC_NODE: '/syncNode',
+  SYNC_NODE: '/sync-node',
+  CHOOSE_NETWORK: '/choose-network',
 };
