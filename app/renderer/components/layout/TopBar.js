@@ -12,34 +12,41 @@ const Wrapper = styled.div`
   background-color: ${colors.N1000};
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  height: 3rem;
+  background-color: ${colors.N1000};
+  flex: 1 1 auto;
+`;
+
 const LogoContainer = styled.div`
-  margin-left: -16px;
+  margin-left: -1rem;
 `;
 
 const NetworkSectionContainer = styled.div`
   width: 100%;
-  margin-left: -66px;
 `;
 
 const TopDownContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 3rem;
-  width: 40rem;
   flex-wrap: nowrap;
+  min-width: 18rem;
 `;
 
 const LogoImg = styled.img.attrs({
   src: logoImg,
   alt: 'logo',
-  width: '80px',
-  height: '80px',
 })`
+  with: 5rem;
+  height: 5rem;
 `;
 
 const HeaderSectionContainer = styled.div`
-  flex: 0 0 12em;
   flex-direction: column;
 `;
 
@@ -50,18 +57,20 @@ const TopBar = ({networkName, blockNum, blockSpeed, isSynced, syncPercentage}) =
         <LogoImg />
       </LogoContainer>
     </HeaderSectionContainer>
-    <NetworkSectionContainer>
-      <TopDownContentWrapper>
-        <div>{networkName}</div>
-        <div>{blockNum}</div>
-      </TopDownContentWrapper>
-    </NetworkSectionContainer>
-    <HeaderSectionContainer>
-      <TopDownContentWrapper>
-        <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
-        <div>(block speed: {blockSpeed})</div>
-      </TopDownContentWrapper>
-    </HeaderSectionContainer>
+    <HeaderWrapper>
+      <NetworkSectionContainer>
+        <TopDownContentWrapper>
+          <div>{networkName}</div>
+          <div>{blockNum}</div>
+        </TopDownContentWrapper>
+      </NetworkSectionContainer>
+      <HeaderSectionContainer>
+        <TopDownContentWrapper>
+          <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
+          <div>(block speed: {blockSpeed})</div>
+        </TopDownContentWrapper>
+      </HeaderSectionContainer>
+    </HeaderWrapper>
   </Wrapper>
 );
 

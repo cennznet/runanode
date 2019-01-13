@@ -46,7 +46,7 @@ const SideNav = () => (
     <IconNav>
       <TopIcons>
         <IconLink to={ROUTES.WALLET.ROOT}>
-          <FontAwesomeIcon icon="plus" />
+          <FontAwesomeIcon icon="plus"  />
         </IconLink>
         <IconLink to="/wallet/import">
           <FontAwesomeIcon icon="wallet" />
@@ -54,7 +54,7 @@ const SideNav = () => (
       </TopIcons>
       <BottomIcons>
         <IconLink to="/dev">
-          <FontAwesomeIcon icon="dev" />
+          <FontAwesomeIcon icon={["fab", "dev"]} />
         </IconLink>
         <IconLink to={ROUTES.PROFILE.ROOT}>
           <FontAwesomeIcon icon="cogs" />
