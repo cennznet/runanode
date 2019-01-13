@@ -5,12 +5,12 @@ import type { WriteStream } from 'fs';
 import { toInteger } from 'lodash';
 import { environment } from '../environment';
 import type {
-  CennzNetNodeState,
+  CennzNetNodeState, CennzNetRestartOptions,
   CennzNetStatus,
   FaultInjection,
   FaultInjectionIpcRequest,
   FaultInjectionIpcResponse,
-  TlsConfig
+  TlsConfig,
 } from '../../common/types/cennznet-node.types';
 import { CennzNetNodeStates } from '../../common/types/cennznet-node.types';
 import { deriveProcessNames, deriveStorageKeys, promisedCondition } from './utils';
@@ -344,6 +344,39 @@ export class CennzNetNode {
       this._changeToState(CennzNetNodeStates.ERRORED);
       return Promise.reject(error);
     }
+  }
+
+  /**
+   * Stops cennznet-node if necessary and starts it again with custom config.
+   *
+   * @param isForced
+   * @param options
+   * @returns {Promise<void>}
+   */
+  async restartWithOptions(isForced: boolean = false, options: CennzNetRestartOptions): Promise<void> {
+    const { _log, _config } = this;
+    const { nodeArgs } = _config;
+    _log.info(`before ${JSON.stringify(_config)}`);
+    if(options.chain) {
+      // remove existing config
+      const chainArgIndex = nodeArgs.findIndex((item) => item === '--chain');
+      if(chainArgIndex>=0) {
+        nodeArgs.splice(chainArgIndex, 2);
+      }
+      nodeArgs.push('--chain');
+      nodeArgs.push(options.chain);
+    }
+    if(options.name) {
+      // remove existing config
+      const chainArgIndex = nodeArgs.findIndex((item) => item === '--name');
+      if(chainArgIndex>=0) {
+        nodeArgs.splice(chainArgIndex, 2);
+      }
+      nodeArgs.push('--name');
+      nodeArgs.push(options.name);
+    }
+    _log.info(`after ${JSON.stringify(_config)}`);
+    return await this.restart(isForced);
   }
 
   /**

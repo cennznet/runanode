@@ -19,7 +19,7 @@ export const Logger = {
 
 export const GetLogDir = () => {
   return !app.isPackaged ? process.cwd() + '/dist/logs' :
-    log.transports.file.findLogPath.replace('log.log', '')
+    log.transports.file.findLogPath().replace('log.log', '')
 }
 
 export const GetCennzNodeLogFileName = () => {
