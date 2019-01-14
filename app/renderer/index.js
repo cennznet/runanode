@@ -6,6 +6,7 @@ import en from 'react-intl/locale-data/en';
 import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from "react-hot-loader";
 
 import App from './App';
@@ -28,7 +29,7 @@ addLocaleData([...en, ...ja]);
 const NETWORK = 'testnet';
 const isTest = false;
 
-library.add(faPlus, faCogs, faQuestionCircle, faWallet);
+library.add(faPlus, faCogs, faQuestionCircle, faWallet, faDev);
 
 const initializeOdin = () => {
   const api = setupApi(isTest, String(NETWORK));

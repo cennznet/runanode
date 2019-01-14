@@ -19,7 +19,7 @@ class TopBarContainer extends Component {
     const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
     const { blockNum: localBlockNum, bps: localBps } = syncStream;
     const blockNum = `#${localBlockNum} / #${remoteBlockNum}`;
-    const blockSpeed = `${localBps}bps / ${remoteBps}bps`;
+    const blockSpeed = `${localBps.toFixed(2)}bps / ${remoteBps.toFixed(2)}bps`;
 
     const percentage = remoteBlockNum > 0 ? (localBlockNum / remoteBlockNum * 100).toFixed(2) : 0 ;
     const syncPercentage = `${percentage}%`;

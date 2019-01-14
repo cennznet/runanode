@@ -57,7 +57,9 @@ const handlePong = (state, pointAt) => ({
 });
 
 const handlePongWithPayload = (state, payload) => {
-  const blockNum = payload.payload.params.result.number;
+  console.log('handlePongWithPayload');
+  console.log(payload);
+  const blockNum = payload.number;
   const previousBlockNum = state.blockNum;
   const bps = (blockNum - previousBlockNum) / config.connectivity.latency.period * 1000;
   return ({
@@ -69,12 +71,11 @@ const handlePongWithPayload = (state, payload) => {
   });
 };
 
-const streamStatusType = types.syncRemoteStreamStatus;
-const streamPingType = types.syncRemoteStreamPing;
 const handlers = {
-  [streamStatusType.changed]: setStatus,
-  [streamPingType.requested]: handlePing,
-  [streamPingType.completed]: handlePongWithPayload
+  [types.syncRemoteStreamStatus.changed]: setStatus,
+  [types.syncRemoteStreamPing.requested]: handlePing,
+  [types.syncRemoteStreamPing.completed]: handlePongWithPayload,
+  [types.nodeWsRemoteChainGetHeader.completed]: handlePongWithPayload,
 };
 
 export default createChainFns(handlers, INITIAL_STATE);

@@ -1,11 +1,13 @@
 import { mergeMap, tap, catchError, filter, map, take, startWith } from 'rxjs/operators';
 import { of, interval, merge, EMPTY } from 'rxjs';
 import { ofType } from 'redux-observable';
+import objectPath from "object-path";
 
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
-import { syncRemoteStream as stream } from 'renderer/stream/stream';
+import { remoteStream as stream } from 'renderer/stream/stream';
 import streamTypes from '../stream/types';
+
 
 const streamType = types.syncRemoteStream;
 const streamMessageType = types.syncRemoteStreamMessage;
@@ -19,10 +21,15 @@ const connectStreamEpic = action$ =>
       stream.connect();
 
       const streamMessage = stream.messageSubject.pipe(
-        map(payload => ({
-          type: streamMessageType.changed,
-          payload
-        })));
+        map(payload =>  {
+          console.log(`sync remote streamMessage`);
+          console.log(payload);
+          return ({
+              type: streamMessageType.changed,
+              payload
+            });
+          }
+        ));
 
       const streamStatus = stream.statusSubject.pipe(
         map(payload => ({
@@ -30,11 +37,7 @@ const connectStreamEpic = action$ =>
           payload
         })));
 
-      return merge(streamMessage, streamStatus)
-        // .startWith({
-        //   type: types.stream.completed
-        // })
-        ;
+      return merge(streamMessage, streamStatus);
     }),
     startWith({
       type: streamType.completed,
@@ -71,18 +74,17 @@ const pongEpic = action$ =>
   action$.pipe(
     ofType(streamPingType.requested),
     mergeMap(() => {
-      const id = stream.pingWithStreamType(streamTypes.chainSubscribeNewHead);
+      const id = stream.pingWithStreamType(streamTypes.chainGetHeader);
       if (!id) {
         return EMPTY;
       }
       return action$.pipe(
         ofType(streamMessageType.changed),
-        // filter(action => (action.payload.id === id)),
-        filter(action => (action.payload.method === streamTypes.chainNewHead)),
+        filter(action => (action.payload.id === id)),
         take(1),
         map((payload) => {
-          stream.disconnect();
-          return { type: streamPingType.completed, payload };
+          const result = objectPath.get(payload, 'payload.result', null);
+          return { type: streamPingType.completed, payload: result };
         })
       );
     })
