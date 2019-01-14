@@ -20,7 +20,7 @@ const Flex = styled.div`
   }
 `;
 
-const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, onChainSubscribeNewHead, nodeSystem, stream, remoteStream, syncStream, syncRemoteStream }) => {
+const DevPage = ({ onNetworkStatusClick, onGetHeaderClick, onGetRemoteHeaderClick, onRestartNodeClick, onStream, onChainSubscribeNewHead, nodeSystem, stream, remoteStream, syncStream, syncRemoteStream }) => {
   const { chain, name, version, health } = nodeSystem;
   const networkStatus = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers}, name:${name})`;
 
@@ -45,6 +45,18 @@ const DevPage = ({ onNetworkStatusClick, onRestartNodeClick, onStream, onChainSu
           <Button onClick={onNetworkStatusClick}>Get Network Status</Button>
           <div>
             {networkStatus}
+          </div>
+        </Flex>
+        <Flex>
+          <Button onClick={onGetHeaderClick}>Get Header</Button>
+          <div>
+            {syncSteamStatus}
+          </div>
+        </Flex>
+        <Flex>
+          <Button onClick={onGetRemoteHeaderClick}>Get RemoteHeader</Button>
+          <div>
+            {syncRemoteSteamStatus}
           </div>
         </Flex>
         <Flex>

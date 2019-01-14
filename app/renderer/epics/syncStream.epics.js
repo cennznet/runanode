@@ -6,6 +6,7 @@ import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { syncStream as stream } from 'renderer/stream/stream';
 import streamTypes from '../stream/types';
+import objectPath from "object-path";
 
 const streamType = types.syncStream;
 const streamMessageType = types.syncStreamMessage;
@@ -19,10 +20,14 @@ const connectStreamEpic = action$ =>
       stream.connect();
 
       const streamMessage = stream.messageSubject.pipe(
-        map(payload => ({
-          type: streamMessageType.changed,
-          payload
-        })));
+        map(payload => {
+          console.log('streamMessage changed');
+          return ({
+              type: streamMessageType.changed,
+              payload
+            });
+          }
+        ));
 
       const streamStatus = stream.statusSubject.pipe(
         map(payload => ({
@@ -71,18 +76,20 @@ const pongEpic = action$ =>
   action$.pipe(
     ofType(streamPingType.requested),
     mergeMap(() => {
-      const id = stream.pingWithStreamType(streamTypes.chainSubscribeNewHead);
+      const id = stream.pingWithStreamType(streamTypes.chainGetHeader);
       if (!id) {
         return EMPTY;
       }
       return action$.pipe(
         ofType(streamMessageType.changed),
-        // filter(action => (action.payload.id === id)),
-        filter(action => (action.payload.method === streamTypes.chainNewHead)),
+        filter(action => (action.payload.id === id)),
+        // filter(action => (action.payload.method === streamTypes.chainNewHead)),
         take(1),
         map((payload) => {
-          stream.disconnect();
-          return { type: streamPingType.completed, payload };
+          // stream.disconnect();
+          // const { result } = payload.payload;
+          const result = objectPath.get(payload, 'payload.result', null);
+          return { type: streamPingType.completed, payload: result };
         })
       );
     })

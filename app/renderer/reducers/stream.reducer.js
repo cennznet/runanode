@@ -56,7 +56,7 @@ const handlePong = (state, pointAt) => ({
 const handlers = {
   [types.streamStatus.changed]: setStatus,
   [types.streamPing.requested]: handlePing,
-  [types.streamPing.completed]: handlePong
+  [types.streamPing.completed]: handlePong,
 };
 
 export default createChainFns(handlers, INITIAL_STATE);

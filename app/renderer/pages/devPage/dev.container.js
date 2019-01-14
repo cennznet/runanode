@@ -15,6 +15,18 @@ const mapDispatchToProps = dispatch => ({
       payload: {},
     });
   },
+  onGetHeaderClick: () => {
+    dispatch({
+      type: types.nodeWsChainGetHeader.requested,
+      payload: {},
+    });
+  },
+  onGetRemoteHeaderClick: () => {
+    dispatch({
+      type: types.nodeWsRemoteChainGetHeader.requested,
+      payload: {},
+    });
+  },
   onRestartNodeClick: () => {
     const options: CennzNetRestartOptions = {
       name: 'my-custom-node',
