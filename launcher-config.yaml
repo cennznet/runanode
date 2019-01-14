@@ -3,8 +3,8 @@ logsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
 nodeArgs:
   - --name
   - ken-test
- - --chain
- - ./dist/local.json
+#  - --chain
+#  - ./dist/local.json
 
 walletLogging: true
 statePath: ${ODIN_USER_DATA_DIRECTORY}/Odin
