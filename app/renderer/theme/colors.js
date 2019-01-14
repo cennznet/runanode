@@ -69,7 +69,7 @@ export const danger = R500;
 export const info = N700;
 export const nuetral = N500;
 
-export const border = N300;
+export const border = N400;
 export const borderLight = N100;
 export const text = N700;
 export const textLight = N500;

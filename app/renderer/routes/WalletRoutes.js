@@ -1,28 +1,28 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { SubNav } from 'components/layout';
+import Route from 'renderer/components/Route';
 import WalletCreatePage from 'renderer/pages/walletCreatePage';
 import WalletImportPage from 'renderer/pages/walletImportPage';
 import WalletRestorePage from 'renderer/pages/walletRestorePage';
+import types from 'renderer/types';
+import ROUTES from 'renderer/constants/routes';
 
 const navItems = [
-  { title: 'Create wallet', link: '/wallet/create' },
-  { title: 'Import wallet', link: '/wallet/import' },
-  { title: 'Restore wallet', link: '/wallet/restore' },
+  { title: 'Create wallet', link: ROUTES.WALLET.CREATE },
+  { title: 'Import wallet', link: ROUTES.WALLET.IMPORT },
+  { title: 'Restore wallet', link: ROUTES.WALLET.RESTORE },
 ];
 
 const WalletRoutes = () => (
   <Switch>
     <Route
-      path="/wallet/create"
-      render={() => (
-        <React.Fragment>
-          <WalletCreatePage subNav={<SubNav {...{ navItems }} />} />
-        </React.Fragment>
-      )}
+      path={ROUTES.WALLET.CREATE}
+      onEntryAction={types.homePageLoad.triggered}
+      component={props => <WalletCreatePage subNav={<SubNav {...{ navItems }} />} {...props} />}
     />
     <Route
-      path="/wallet/import"
+      path={ROUTES.WALLET.IMPORT}
       render={() => (
         <React.Fragment>
           <WalletImportPage subNav={<SubNav {...{ navItems }} />} />
@@ -30,12 +30,9 @@ const WalletRoutes = () => (
       )}
     />
     <Route
-      path="/wallet/restore"
-      render={() => (
-        <React.Fragment>
-          <WalletRestorePage subNav={<SubNav {...{ navItems }} />} />
-        </React.Fragment>
-      )}
+      path={ROUTES.WALLET.RESTORE}
+      onEntryAction={types.walletRestorePageLoad.triggered}
+      component={props => <WalletRestorePage subNav={<SubNav {...{ navItems }} />} {...props} />}
     />
   </Switch>
 );

@@ -1,8 +1,8 @@
 // @flow
 import type {
-  CennzNetNodeState, CennzNetStatus,
+  CennzNetNodeState, CennzNetRestartOptions, CennzNetStatus,
   FaultInjectionIpcRequest,
-  TlsConfig
+  TlsConfig,
 } from '../../common/types/cennznet-node.types';
 import { MainIpcChannel } from './lib/MainIpcChannel';
 import {
@@ -16,7 +16,7 @@ import {
 
 // IpcChannel<Incoming, Outgoing>
 
-export const cennznetRestartChannel: MainIpcChannel<void, void> = (
+export const cennznetRestartChannel: MainIpcChannel<?CennzNetRestartOptions, ?CennzNetRestartOptions> = (
   new MainIpcChannel(CENNZNET_RESTART_CHANNEL)
 );
 
