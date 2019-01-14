@@ -28,6 +28,8 @@ const actionTypes = {
   nodeJsonRpcSystemHealth: apiActionTypes('node_jsonrpc_system_health'),
 
   nodeWsChainSubscribeNewHead: apiActionTypes('node_ws_chain_subscribeNewHead'),
+  nodeWsChainGetHeader: apiActionTypes('node_ws_chain_getHeader'),
+  nodeWsRemoteChainGetHeader: apiActionTypes('node_ws_remote_chain_getHeader'),
 
   /* Stream */
   stream: apiActionTypes('stream'),
