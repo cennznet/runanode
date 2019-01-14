@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { colors } from 'renderer/theme';
 import TopBar from './TopBar';
 import SideNav from './SideNav';
 import TopBarContainer from './TopBarContainer';
@@ -15,7 +16,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Content = styled.div`
-  background: blue;
+  background: ${colors.N800};
   flex: 1 auto;
 `;
 

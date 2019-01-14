@@ -9,6 +9,7 @@ type StorageKeys = {
 const storageKeys = {
   TERMS_OF_USE_ACCEPTANCE: 'TERMS_OF_USE_ACCEPTANCE',
   SELECTED_NETWORK: 'SELECTED_NETWORK',
+  REMEMBER_SELECTED_NETWORK: 'REMEMBER_SELECTED_NETWORK',
 };
 
 export const getTermsOfUseAcceptance = (): Promise<boolean> =>
@@ -42,23 +43,53 @@ export const unsetTermsOfUseAcceptance = (): Promise<void> =>
     }
   });
 
-export const reset = async () => {
-  await unsetTermsOfUseAcceptance();
-};
+export const getRememberSelectedNetwork = (): Promise<boolean> =>
+  new Promise((resolve, reject) => {
+    try {
+      const Acceptance = store.get(storageKeys.REMEMBER_SELECTED_NETWORK);
+      console.log('Acceptance', Acceptance);
+      if (typeof Acceptance === 'undefined') {
+        resolve(true);
+      }
 
-/** Sync Node */
-export const getSelectedNetwork = (): Promise<boolean> =>
+      resolve(Acceptance);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+
+export const setRememberSelectedNetwork = (ifRemember: boolean): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      store.set(storageKeys.REMEMBER_SELECTED_NETWORK, ifRemember);
+      resolve();
+    } catch (error) {
+      return reject(error);
+    }
+  });
+
+export const unsetRememberSelectedNetwork = (): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      store.delete(storageKeys.REMEMBER_SELECTED_NETWORK);
+      resolve();
+    } catch (error) {
+      return reject(error);
+    }
+  });
+
+export const getSelectedNetwork = (): Promise<string> =>
   new Promise((resolve, reject) => {
     try {
       const selectedNetwork = store.get(storageKeys.SELECTED_NETWORK);
-      if (!selectedNetwork) return resolve(null);
+      if (!selectedNetwork) return resolve('');
       resolve(selectedNetwork);
     } catch (error) {
       return reject(error);
     }
   });
 
-export const setSelectedNetwork = (payload): Promise<void> =>
+export const setSelectedNetwork = (payload: string): Promise<void> =>
   new Promise((resolve, reject) => {
     try {
       store.set(storageKeys.SELECTED_NETWORK, payload);
@@ -67,3 +98,8 @@ export const setSelectedNetwork = (payload): Promise<void> =>
       return reject(error);
     }
   });
+
+export const reset = async () => {
+  await unsetTermsOfUseAcceptance();
+  await unsetRememberSelectedNetwork();
+};

@@ -4,10 +4,10 @@ import Button from 'components/Button';
 import MainLayout from 'renderer/components/layout/MainLayout';
 import withContainer from './container';
 
-const WalletRestorePage = ({ subNav, onResetTermsOfUse }) => (
+const WalletRestorePage = ({ subNav, onReset }) => (
   <MainLayout subNav={subNav}>
     <MainContent>
-      <Button onClick={() => onResetTermsOfUse()}>Reset ToS</Button>
+      <Button onClick={() => onReset()}>Reset ToS</Button>
     </MainContent>
   </MainLayout>
 );

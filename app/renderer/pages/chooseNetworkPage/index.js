@@ -8,9 +8,7 @@ import Button from 'components/Button';
 import FileUploader from 'components/FileUploader';
 import withContainer from './container';
 
-const ChooseNetworkWrapper = styled.div`
-  width: 60%;
-`;
+const ChooseNetworkWrapper = styled.div``;
 
 const JoinNetworkTitle = styled.div`
   color: ${colors.N0};
