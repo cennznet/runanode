@@ -7,7 +7,7 @@ const {
   changedActionTypes,
   triggerActionTypes,
   toggledActionTypes,
-  subscriptionActionTypes
+  subscriptionActionTypes,
 } = getActionTypeCreators(ACTION_TYPES_NAME_SPACE);
 
 const actionTypes = {
@@ -17,8 +17,7 @@ const actionTypes = {
   navigation: triggerActionTypes('navigation'),
   acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
   resetTermsOfUse: triggerActionTypes('reset_terms_of_use'),
-  updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
-  updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
+  storeSelectedNetwork: triggerActionTypes('store_selected_network'),
 
   /* node system */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
@@ -44,7 +43,6 @@ const actionTypes = {
   syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
-
 };
 
 export default actionTypes;

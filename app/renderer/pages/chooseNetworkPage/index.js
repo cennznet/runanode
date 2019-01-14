@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import Select from 'components/Select';
 import Input from 'components/Input';
 import Button from 'components/Button';
-
+import withContainer from './container';
 
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
@@ -38,55 +38,52 @@ const NETWORK_OPTIONS = [
   { label: 'Main net', value: 'mainNet' },
 ];
 
-export default class ChooseNetWork extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedNetwork: null };
-  }
+const ChooseNetWork = ({ onJoinNetwork, selectedNetwork, setSelectedNetwork }) => (
+  <Layout sidebar={<SimpleSidebar />}>
+    <LayoutWrapper>
+      <MainContent>
+        <ChooseNetworkWrapper>
+          <JoinNetworkTitle>Join network</JoinNetworkTitle>
+          <div>Choose network</div>
+          <NetworkOptionWrapper>
+            <Select
+              value={selectedNetwork}
+              onChange={selected => {
+                console.log('selectNetwork: ', selected.value);
+                setSelectedNetwork(selected);
+              }}
+              backgroundColor={colors.N800}
+              selectedBackgroundColor={colors.N800}
+              color={colors.N0}
+              options={NETWORK_OPTIONS}
+            />
+          </NetworkOptionWrapper>
+          {selectedNetwork && selectedNetwork.value === 'localTestNet' && (
+            <EnterBootNodeWrapper>
+              <div>Enter boot node</div>
+              <Input
+                color={colors.N0}
+                backgroundColor="transparent"
+                focusBorderColor={colors.N0}
+                placeholder="#"
+                onChange={e => console.log('input', e.target.value)}
+              />
+            </EnterBootNodeWrapper>
+          )}
+          <ButtonWrapper>
+            <div>
+              <Button
+                disabled={!selectedNetwork}
+                onClick={() => onJoinNetwork(selectedNetwork.value)}
+              >
+                Join network
+              </Button>
+            </div>
+          </ButtonWrapper>
+        </ChooseNetworkWrapper>
+      </MainContent>
+    </LayoutWrapper>
+  </Layout>
+);
 
-  render() {
-    const { selectedNetwork } = this.state;
-    return (
-      <Layout sidebar={<SimpleSidebar />}>
-        <LayoutWrapper>
-          <MainContent>
-            <ChooseNetworkWrapper>
-              <JoinNetworkTitle>Join network</JoinNetworkTitle>
-              <div>Choose network</div>
-              <NetworkOptionWrapper>
-                <Select
-                  value={selectedNetwork}
-                  onChange={selected => {
-                    console.log('selectNetwork: ', selected.value);
-                    this.setState({ selectedNetwork: selected });
-                  }}
-                  backgroundColor={colors.N800}
-                  selectedBackgroundColor={colors.N800}
-                  color={colors.N0}
-                  options={NETWORK_OPTIONS}
-                />
-              </NetworkOptionWrapper>
-              {selectedNetwork && selectedNetwork.value === 'localTestNet' && (
-                <EnterBootNodeWrapper>
-                  <div>Enter boot node</div>
-                  <Input
-                    color={colors.N0}
-                    backgroundColor="transparent"
-                    focusBorderColor={colors.N0}
-                    placeholder="#"
-                    onChange={e => console.log('input', e.target.value)}
-                  />
-                </EnterBootNodeWrapper>
-              )}
-              <ButtonWrapper>
-                <div>
-                  <Button disabled={!selectedNetwork}>Join network</Button>
-                </div>
-              </ButtonWrapper>
-            </ChooseNetworkWrapper>
-          </MainContent>
-        </LayoutWrapper>
-      </Layout>
-    );
-  }
-}
+export default withContainer(ChooseNetWork);
