@@ -13,14 +13,14 @@ const mapStateToProps = ({ syncStream, syncRemoteStream }) => ({
 
 const mapDispatchToProps = dispatch => ({
   // Hanle with the detailed network option in next PR
-  onSyncRemoteStrem: () => {
+  onSyncRemoteStream: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
       payload: {},
     });
   },
 
-  onSyncStrem: () => {
+  onSyncStream: () => {
     dispatch({
       type: types.syncStream.requested,
       payload: {},
@@ -30,8 +30,8 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    this.props.onSyncStrem();
-    this.props.onSyncRemoteStrem();
+    this.props.onSyncStream();
+    this.props.onSyncRemoteStream();
   },
 });
 
