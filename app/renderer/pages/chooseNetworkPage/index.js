@@ -46,7 +46,8 @@ const NETWORK_OPTIONS = [
 ];
 
 const ChooseNetWork = ({ onJoinNetwork, selectedNetwork, setSelectedNetwork }) => (
-  <Layout sidebar={<SimpleSidebar />}>
+  // <Layout sidebar={<SimpleSidebar />}>
+  <Layout defaultSidebar>
     <LayoutWrapper>
       <MainContent>
         <ChooseNetworkWrapper>

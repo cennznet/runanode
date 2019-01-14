@@ -42,8 +42,8 @@ const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
 
   Logger.info(`
-  ===========================================    
-  Best block in MainNet #${bestBlock} 
+  ===========================================
+  Best block in MainNet #${bestBlock}
   ===========================================`);
   Logger.info(`
   ===========================================
@@ -51,7 +51,8 @@ const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
   ===========================================`);
   Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
   return (
-    <Layout sidebar={<SimpleSidebar />}>
+    // <Layout sidebar={<SimpleSidebar />}>
+    <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
           <SyncNodeTitle>Main net</SyncNodeTitle>
