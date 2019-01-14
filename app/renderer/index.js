@@ -6,10 +6,12 @@ import en from 'react-intl/locale-data/en';
 import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { AppContainer } from "react-hot-loader";
+
 import App from './App';
-import '../app.global.css';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
+
 // import utils from './utils';
 // import translations from './i18n/translations';
 
@@ -52,7 +54,11 @@ const initializeOdin = () => {
   const rootElement = document.getElementById('root');
   if (!rootElement) throw new Error('No #root element found.');
   // render(<App stores={stores} actions={actions} history={history} />, rootElement);
-  render(<App />, rootElement);
+  render(
+    <AppContainer>
+      <App />
+    </AppContainer>,
+    rootElement);
 
   // render(<App />, document.getElementById('root'));
 };
@@ -61,3 +67,16 @@ window.addEventListener('load', initializeOdin);
 window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 console.log('render index');
+
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    // eslint-disable-next-line global-require
+    const NextApp = require('./App').default;
+    render(
+      <AppContainer>
+        <NextApp />
+      </AppContainer>,
+      document.getElementById('root')
+    );
+  });
+}
