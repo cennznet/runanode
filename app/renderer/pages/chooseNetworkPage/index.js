@@ -8,8 +8,6 @@ import Input from 'components/Input';
 import Button from 'components/Button';
 import withContainer from './container';
 
-const store = global.electronStore;
-
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
 `;
@@ -40,10 +38,7 @@ const NETWORK_OPTIONS = [
   { label: 'Main net', value: 'mainNet' },
 ];
 
-const getSelectedNetwork = () =>
-  NETWORK_OPTIONS.find(option => option.value === store.get('SELECTED_NETWORK'));
-
-const ChooseNetWork = ({ onJoinNetwork, onSelectNetwork }) => (
+const ChooseNetWork = ({ onJoinNetwork, selectedNetwork, setSelectedNetwork }) => (
   <Layout sidebar={<SimpleSidebar />}>
     <LayoutWrapper>
       <MainContent>
@@ -52,10 +47,10 @@ const ChooseNetWork = ({ onJoinNetwork, onSelectNetwork }) => (
           <div>Choose network</div>
           <NetworkOptionWrapper>
             <Select
-              value={getSelectedNetwork()}
+              value={selectedNetwork}
               onChange={selected => {
                 console.log('selectNetwork: ', selected.value);
-                onSelectNetwork(selected.value);
+                setSelectedNetwork(selected);
               }}
               backgroundColor={colors.N800}
               selectedBackgroundColor={colors.N800}
@@ -63,7 +58,7 @@ const ChooseNetWork = ({ onJoinNetwork, onSelectNetwork }) => (
               options={NETWORK_OPTIONS}
             />
           </NetworkOptionWrapper>
-          {store.get('SELECTED_NETWORK') === 'localTestNet' && (
+          {selectedNetwork && selectedNetwork.value === 'localTestNet' && (
             <EnterBootNodeWrapper>
               <div>Enter boot node</div>
               <Input
@@ -77,7 +72,10 @@ const ChooseNetWork = ({ onJoinNetwork, onSelectNetwork }) => (
           )}
           <ButtonWrapper>
             <div>
-              <Button disabled={!store.get('SELECTED_NETWORK')} onClick={() => onJoinNetwork()}>
+              <Button
+                disabled={!selectedNetwork}
+                onClick={() => onJoinNetwork(selectedNetwork.value)}
+              >
                 Join network
               </Button>
             </div>
