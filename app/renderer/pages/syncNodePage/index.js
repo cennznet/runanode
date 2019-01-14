@@ -1,8 +1,10 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
+import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
 
@@ -40,6 +42,10 @@ const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
   const { blockNum: syncedBlock } = syncStream;
   const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
+
+  if (progressPercentage === 100) {
+    return <Redirect to={ROUTES.ROOT} />;
+  }
 
   Logger.info(`
   ===========================================
