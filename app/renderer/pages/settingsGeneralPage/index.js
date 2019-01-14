@@ -5,6 +5,7 @@ import MainLayout from 'renderer/components/layout/MainLayout';
 import Toggle from 'components/Toggle';
 import { colors } from 'renderer/theme';
 import packageJson from '../../../../package.json';
+import withContainer from './container';
 
 const PageHeading = styled.div`
   font-size: 1.5rem;
@@ -25,7 +26,7 @@ const Text = styled.div`
   margin-right: 2rem;
 `;
 
-const ProfileGeneralPage = ({ subNav }) => (
+const SettingsGeneralPage = ({ subNav, rememberNetwork, onToggleRememberNetwork }) => (
   <MainLayout subNav={subNav}>
     <MainContent>
       <PageHeading>General</PageHeading>
@@ -36,11 +37,17 @@ const ProfileGeneralPage = ({ subNav }) => (
             Remember my network preference, so I donnot need to choose network everytime I open the
             app
           </Text>
-          <Toggle defaultChecked onChange={e => {}} />
+          <Toggle
+            defaultChecked={rememberNetwork}
+            onChange={e => {
+              console.log('rememberNetwork', rememberNetwork);
+              onToggleRememberNetwork(!rememberNetwork);
+            }}
+          />
         </ListItem>
       </List>
     </MainContent>
   </MainLayout>
 );
 
-export default ProfileGeneralPage;
+export default withContainer(SettingsGeneralPage);

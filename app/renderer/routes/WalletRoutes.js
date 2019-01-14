@@ -18,7 +18,6 @@ const WalletRoutes = () => (
   <Switch>
     <Route
       path={ROUTES.WALLET.CREATE}
-      onEntryAction={types.homePageLoad.triggered}
       component={props => <WalletCreatePage subNav={<SubNav {...{ navItems }} />} {...props} />}
     />
     <Route
@@ -31,7 +30,6 @@ const WalletRoutes = () => (
     />
     <Route
       path={ROUTES.WALLET.RESTORE}
-      onEntryAction={types.walletRestorePageLoad.triggered}
       component={props => <WalletRestorePage subNav={<SubNav {...{ navItems }} />} {...props} />}
     />
   </Switch>
