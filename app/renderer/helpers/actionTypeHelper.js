@@ -1,4 +1,4 @@
-import { syncStream, syncRemoteStream } from '../stream/stream';
+import { localStream, remoteStream } from '../stream/stream';
 import types from '../types';
 
 export const isRemoteAction = (action) => {
@@ -8,9 +8,9 @@ export const isRemoteAction = (action) => {
 
 export const getStream = (action) => {
   if (isRemoteAction(action)) {
-    return syncRemoteStream;
+    return remoteStream;
   }
-  return syncStream;
+  return localStream;
 };
 
 export const getStreamMessageChangedType = (action) => {
