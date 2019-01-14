@@ -1,51 +1,46 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import Button from 'components/Button';
+import Input from 'components/Input';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
-class FileUploader extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      files: [],
-    };
-  }
+const FileUploader = ({
+  onDrop,
+  onCancel,
+  inputValue,
+  backgroundColor,
+  borderColor,
+  placeholder,
+  uploaderStyles,
+  acceptTypes,
+  ...dropZoneProps
+}) => (
+  <Dropzone accept={acceptTypes} onDrop={onDrop} onFileDialogCancel={onCancel} {...dropZoneProps}>
+    {({ getRootProps, getInputProps }) => (
+      <div>
+        <input {...getInputProps()} />
+        <Input
+          borderColor={borderColor}
+          backgroundColor={backgroundColor}
+          value={inputValue || ''}
+          placeholder={placeholder || 'Please upload file'}
+          onChange={() => null}
+          {...uploaderStyles}
+          suffix={
+            <Button
+              inputSuffix
+              {...getRootProps({ refKey: 'innerRef' })}
+              iconAfter={<FontAwesomeIcon icon={faUpload} onClick={() => null} />}
+            >
+              Upload
+            </Button>
+          }
+        />
+      </div>
+    )}
+  </Dropzone>
+);
 
-  onDrop = files => {
-    this.setState({ files });
-  };
-
-  onCancel = () => {
-    this.setState({
-      files: [],
-    });
-  };
-
-  render() {
-    // const files = this.state.files.map(file => (
-    //   <li key={file.name}>
-    //     {file.name} - {file.size} bytes
-    //   </li>
-    // ));
-
-    const files =
-      (this.state.files[0] && `${this.state.files[0].name} - ${this.state.files[0].size} bytes`) ||
-      '';
-
-    return (
-      <section>
-        <Dropzone onDrop={this.onDrop} onFileDialogCancel={this.onCancel}>
-          {({ getRootProps, getInputProps }) => (
-            <div>
-              <input {...getInputProps()} />
-
-              <input value={files} type="text" readOnly />
-              <button type="button" {...getRootProps()}>
-                Drop files here, or click to select files
-              </button>
-            </div>
-          )}
-        </Dropzone>
-      </section>
-    );
-  }
-}
 export default FileUploader;

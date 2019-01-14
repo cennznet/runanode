@@ -6,6 +6,7 @@ import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/la
 import Select from 'components/Select';
 import Input from 'components/Input';
 import Button from 'components/Button';
+import FileUploader from 'components/FileUploader';
 import withContainer from './container';
 
 const ChooseNetworkWrapper = styled.div`
@@ -23,8 +24,17 @@ const NetworkOptionWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-const EnterBootNodeWrapper = styled.div`
-  margin: 1rem 0;
+const UploadFileWrapper = styled.div`
+  margin: 1.5rem 0 1rem;
+`;
+
+const UploaderWrapper = styled.div`
+  margin: 1rem 0 0.5rem;
+`;
+
+const FileAcceptNotice = styled.div`
+  font-size: 0.8rem;
+  color: ${colors.N300};
 `;
 
 const ButtonWrapper = styled.div`
@@ -59,17 +69,29 @@ const ChooseNetWork = ({ onJoinNetwork, selectedNetwork, setSelectedNetwork }) =
             />
           </NetworkOptionWrapper>
           {selectedNetwork && selectedNetwork.value === 'localTestNet' && (
-            <EnterBootNodeWrapper>
-              <div>Enter boot node</div>
-              <Input
+            <UploadFileWrapper>
+              <div>Upload chain setting file</div>
+              <UploaderWrapper>
+                <FileUploader
+                  backgroundColor="transparent"
+                  borderColor={colors.N0}
+                  focusBorderColor={colors.N0}
+                  acceptTypes="./json"
+                  // TODO: store the path and insert into command
+                  onDrop={file => console.log('uploaded file:', file)}
+                />
+              </UploaderWrapper>
+              <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
+              {/* <Input
                 color={colors.N0}
                 backgroundColor="transparent"
                 focusBorderColor={colors.N0}
                 placeholder="#"
                 onChange={e => console.log('input', e.target.value)}
-              />
-            </EnterBootNodeWrapper>
+              /> */}
+            </UploadFileWrapper>
           )}
+
           <ButtonWrapper>
             <div>
               <Button
