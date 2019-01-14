@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import Select from 'components/Select';
-import Input from 'components/Input';
 import Button from 'components/Button';
 import FileUploader from 'components/FileUploader';
 import withContainer from './container';
@@ -82,13 +81,6 @@ const ChooseNetWork = ({ onJoinNetwork, selectedNetwork, setSelectedNetwork }) =
                 />
               </UploaderWrapper>
               <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
-              {/* <Input
-                color={colors.N0}
-                backgroundColor="transparent"
-                focusBorderColor={colors.N0}
-                placeholder="#"
-                onChange={e => console.log('input', e.target.value)}
-              /> */}
             </UploadFileWrapper>
           )}
 
