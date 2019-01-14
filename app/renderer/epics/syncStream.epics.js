@@ -36,11 +36,7 @@ const connectStreamEpic = action$ =>
           payload
         })));
 
-      return merge(streamMessage, streamStatus)
-        // .startWith({
-        //   type: types.stream.completed
-        // })
-        ;
+      return merge(streamMessage, streamStatus);
     }),
     startWith({
       type: streamType.completed,
@@ -84,11 +80,8 @@ const pongEpic = action$ =>
       return action$.pipe(
         ofType(streamMessageType.changed),
         filter(action => (action.payload.id === id)),
-        // filter(action => (action.payload.method === streamTypes.chainNewHead)),
         take(1),
         map((payload) => {
-          // stream.disconnect();
-          // const { result } = payload.payload;
           const result = objectPath.get(payload, 'payload.result', null);
           return { type: streamPingType.completed, payload: result };
         })
