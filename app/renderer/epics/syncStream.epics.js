@@ -1,12 +1,13 @@
 import { mergeMap, tap, catchError, filter, map, take, startWith } from 'rxjs/operators';
 import { of, interval, merge, EMPTY } from 'rxjs';
 import { ofType } from 'redux-observable';
+import objectPath from "object-path";
 
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
-import { syncStream as stream } from 'renderer/stream/stream';
+import { localStream as stream } from 'renderer/stream/stream';
 import streamTypes from '../stream/types';
-import objectPath from "object-path";
+
 
 const streamType = types.syncStream;
 const streamMessageType = types.syncStreamMessage;

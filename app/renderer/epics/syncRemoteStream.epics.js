@@ -5,7 +5,7 @@ import objectPath from "object-path";
 
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
-import { syncRemoteStream as stream } from 'renderer/stream/stream';
+import { remoteStream as stream } from 'renderer/stream/stream';
 import streamTypes from '../stream/types';
 
 
