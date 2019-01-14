@@ -33,14 +33,12 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path={ROUTES.ROOT} render={() => <Redirect to={ROUTES.WALLET.CREATE} />} />
-        <Redirect exact from={ROUTES.WALLET.ROOT} to={ROUTES.WALLET.CREATE} />
-        <Redirect exact from={ROUTES.PROFILE.ROOT} to={ROUTES.PROFILE.GENERAL} />
+        <Route exact path={ROUTES.ROOT} render={() => <Redirect to={ROUTES.CHOOSE_NETWORK} />} />
         <Route path={ROUTES.WALLET.ROOT} render={WalletRoutes} />
         <Route path={ROUTES.PROFILE.ROOT} render={ProfileRoutes} />
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
-        <Route exact path="/chooseNetwork" render={() => <ChooseNetworkPage />} />
-        <Route exact path="/syncNode" component={SyncNodePage} />
+        <Route exact path={ROUTES.CHOOSE_NETWORK} component={ChooseNetworkPage} />
+        <Route exact path={ROUTES.SYNC_NODE} component={SyncNodePage} />
         <Route exact path="/dev" component={DevPage} />
       </Switch>
     );
