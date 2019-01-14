@@ -1,19 +1,20 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose, withState } from 'recompose';
 import ROUTES from 'renderer/constants/routes';
 import types from '../../types';
 
 const mapDispatchToProps = dispatch => ({
-  onSelectNetwork: payload => {
-    dispatch({ type: types.storeSelectedNetwork.triggered, payload });
-  },
-
   onJoinNetwork: payload => {
-    dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
+    dispatch({ type: types.storeSelectedNetwork.triggered, payload });
   },
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
+const enhance = withState('selectedNetwork', 'setSelectedNetwork', null);
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  enhance
 );

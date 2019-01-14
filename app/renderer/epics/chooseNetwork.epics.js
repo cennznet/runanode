@@ -8,10 +8,10 @@ import { setSelectedNetwork } from 'renderer/api/utils/storage';
 const storeSelectedNetworkEpic = action$ =>
   action$.pipe(
     ofType(types.storeSelectedNetwork.triggered),
-    tap(async ({ payload }) => {
+    mergeMap(async ({ payload }) => {
       await setSelectedNetwork(payload);
-    }),
-    mergeMap(() => EMPTY)
+      return { type: types.navigation.triggered, payload: ROUTES.SYNC_NODE };
+    })
   );
 
 export default [storeSelectedNetworkEpic];
