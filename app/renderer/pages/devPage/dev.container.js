@@ -4,10 +4,8 @@ import types from 'renderer/types';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ nodeSystem, stream, remoteStream, syncStream, syncRemoteStream }) => ({
+const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
   nodeSystem,
-  stream,
-  remoteStream,
   syncStream,
   syncRemoteStream,
 });
@@ -19,6 +17,18 @@ const mapDispatchToProps = dispatch => ({
       payload: {},
     });
   },
+  onGetHeaderClick: () => {
+    dispatch({
+      type: types.nodeWsChainGetHeader.requested,
+      payload: {},
+    });
+  },
+  onGetRemoteHeaderClick: () => {
+    dispatch({
+      type: types.nodeWsRemoteChainGetHeader.requested,
+      payload: {},
+    });
+  },
   onRestartNodeClick: () => {
     const options: CennzNetRestartOptions = {
       name: 'my-custom-node',
@@ -27,14 +37,6 @@ const mapDispatchToProps = dispatch => ({
     restartCennzNetNodeChannel.send(options);
   },
   onStream: () => {
-    dispatch({
-      type: types.stream.requested,
-      payload: {},
-    });
-    dispatch({
-      type: types.remoteStream.requested,
-      payload: {},
-    });
     dispatch({
       type: types.syncStream.requested,
       payload: {},

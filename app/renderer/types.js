@@ -27,20 +27,8 @@ const actionTypes = {
   nodeJsonRpcSystemHealth: apiActionTypes('node_jsonrpc_system_health'),
 
   nodeWsChainSubscribeNewHead: apiActionTypes('node_ws_chain_subscribeNewHead'),
-
-  /* Stream */
-  stream: apiActionTypes('stream'),
-  streamStatus: changedActionTypes('stream_status'),
-  streamPing: apiActionTypes('stream_ping'),
-  streamMessage: changedActionTypes('stream_message'),
-  streamError: changedActionTypes('stream_error'),
-
-  /* Remote Stream */
-  remoteStream: apiActionTypes('remote_stream'),
-  remoteStreamStatus: changedActionTypes('remote_stream_status'),
-  remoteStreamPing: apiActionTypes('remote_stream_ping'),
-  remoteStreamMessage: changedActionTypes('remote_stream_message'),
-  remoteStreamError: changedActionTypes('remote_stream_error'),
+  nodeWsChainGetHeader: apiActionTypes('node_ws_chain_getHeader'),
+  nodeWsRemoteChainGetHeader: apiActionTypes('node_ws_remote_chain_getHeader'),
 
   /* Sync Stream */
   syncStream: apiActionTypes('sync_stream'),

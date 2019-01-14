@@ -83,7 +83,6 @@ const handlers = {
   [types.nodeJsonRpcSystemChain.completed]: setNodeSystemChain,
   [types.nodeJsonRpcSystemName.completed]: setNodeSystemName,
   [types.nodeJsonRpcSystemHealth.completed]: setNodeSystemHealth,
-  [types.streamMessage.changed]: setNodeSystemStateFromPayload,
 };
 
 export default createChainFns(

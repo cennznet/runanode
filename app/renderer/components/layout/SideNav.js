@@ -54,7 +54,7 @@ const SideNav = () => (
       </TopIcons>
       <BottomIcons>
         <IconLink to="/dev">
-          <FontAwesomeIcon icon="dev" />
+          <FontAwesomeIcon icon={["fab", "dev"]} />
         </IconLink>
         <IconLink to={ROUTES.PROFILE.ROOT}>
           <FontAwesomeIcon icon="cogs" />
