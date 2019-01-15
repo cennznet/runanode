@@ -1,8 +1,11 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
+import { PageHeading } from 'components';
+import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
 
@@ -41,9 +44,13 @@ const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
   const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
   const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
 
+  if (progressPercentage === 100) {
+    return <Redirect to={ROUTES.ROOT} />;
+  }
+
   Logger.info(`
-  ===========================================    
-  Best block in MainNet #${bestBlock} 
+  ===========================================
+  Best block in MainNet #${bestBlock}
   ===========================================`);
   Logger.info(`
   ===========================================
@@ -51,10 +58,11 @@ const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
   ===========================================`);
   Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
   return (
-    <Layout sidebar={<SimpleSidebar />}>
+    // <Layout sidebar={<SimpleSidebar />}>
+    <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
-          <SyncNodeTitle>Main net</SyncNodeTitle>
+          <PageHeading>Main net</PageHeading>
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
               <Line
