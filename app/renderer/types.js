@@ -21,7 +21,7 @@ const actionTypes = {
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
   toggleRememberNetwork: apiActionTypes('toggle_remember_network'),
   getRememberNetwork: apiActionTypes('get_remember_network'),
-
+  getSelectedNetwork: apiActionTypes('get_selected_network'),
   updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
   updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
 
