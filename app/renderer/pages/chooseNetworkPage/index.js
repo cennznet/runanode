@@ -3,19 +3,11 @@ import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
-import Select from 'components/Select';
-import Button from 'components/Button';
-import FileUploader from 'components/FileUploader';
+import { Button, FileUploader, Select, PageHeading } from 'components';
+
 import withContainer from './container';
 
 const ChooseNetworkWrapper = styled.div``;
-
-const JoinNetworkTitle = styled.div`
-  color: ${colors.N0};
-  font-weight: 600;
-  font-size: 1.7rem;
-  margin: 3rem auto;
-`;
 
 const NetworkOptionWrapper = styled.div`
   margin: 1rem 0;
@@ -51,7 +43,7 @@ const ChooseNetWork = ({ onJoinNetwork, selectedNetwork, setSelectedNetwork }) =
     <LayoutWrapper>
       <MainContent>
         <ChooseNetworkWrapper>
-          <JoinNetworkTitle>Join network</JoinNetworkTitle>
+          <PageHeading>Join network</PageHeading>
           <div>Choose network</div>
           <NetworkOptionWrapper>
             <Select
