@@ -10,6 +10,8 @@ const storageKeys = {
   TERMS_OF_USE_ACCEPTANCE: 'TERMS_OF_USE_ACCEPTANCE',
   SELECTED_NETWORK: 'SELECTED_NETWORK',
   REMEMBER_SELECTED_NETWORK: 'REMEMBER_SELECTED_NETWORK',
+  LOCAL_FILE_PATH: 'LOCAL_FILE_PATH',
+  UPLOADED_FILE_INFO: ' UPLOADED_FILE_INFO',
 };
 
 export const getTermsOfUseAcceptance = (): Promise<boolean> =>
@@ -109,8 +111,40 @@ export const unsetSelectedNetwork = (): Promise<void> =>
     }
   });
 
+export const getUploadedFileInfo = (): Promise<string> =>
+  new Promise((resolve, reject) => {
+    try {
+      const uploadedFileInfo = store.get(storageKeys.UPLOADED_FILE_INFO);
+      if (!uploadedFileInfo) return resolve('');
+      resolve(uploadedFileInfo);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+
+export const setUploadedFileInfo = (payload: string): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      store.set(storageKeys.UPLOADED_FILE_INFO, payload);
+      resolve();
+    } catch (error) {
+      return reject(error);
+    }
+  });
+
+export const unsetUploadedFileInfo = (): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      store.delete(storageKeys.UPLOADED_FILE_INFO);
+      resolve();
+    } catch (error) {
+      return reject(error);
+    }
+  });
+
 export const reset = async () => {
   await unsetTermsOfUseAcceptance();
   await unsetRememberSelectedNetwork();
   await unsetSelectedNetwork();
+  await unsetUploadedFileInfo();
 };

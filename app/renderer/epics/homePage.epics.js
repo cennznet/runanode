@@ -24,9 +24,9 @@ const homePageLoadEpic = (action$, state$) =>
         }
 
         if (syncPercentage < 1) {
-          if (isNetworkRemembered) {
-            return { type: types.navigation.triggered, payload: ROUTES.SYNC_NODE };
-          }
+          // if (isNetworkRemembered) {
+          //   return { type: types.navigation.triggered, payload: ROUTES.SYNC_NODE };
+          // }
           return { type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK };
         }
       }
