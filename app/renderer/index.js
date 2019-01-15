@@ -9,9 +9,13 @@ import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-so
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from "react-hot-loader";
 
+import types from './types';
+import store from './store';
 import App from './App';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
+
+store.dispatch({ type: types.init.triggered });
 
 // import utils from './utils';
 // import translations from './i18n/translations';
@@ -50,24 +54,19 @@ const initializeOdin = () => {
     // }),
   };
 
-  console.log('render app');
-
   const rootElement = document.getElementById('root');
   if (!rootElement) throw new Error('No #root element found.');
-  // render(<App stores={stores} actions={actions} history={history} />, rootElement);
   render(
     <AppContainer>
       <App />
     </AppContainer>,
-    rootElement);
-
-  // render(<App />, document.getElementById('root'));
+    rootElement
+  );
 };
 
 window.addEventListener('load', initializeOdin);
 window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
-console.log('render index');
 
 if (module.hot) {
   module.hot.accept('./App', () => {

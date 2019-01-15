@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import TosContent from 'components/TosContent';
-import Button from 'components/Button';
+import { Button, PageHeading } from 'components';
 import withContainer from './container';
 
 const ScrollWrapper = styled.div`
@@ -64,6 +64,7 @@ class TosPage extends React.Component {
           <MainContent>
             <ScrollWrapper>
               <ScrollContent>
+                <PageHeading>Terms & Conditions</PageHeading>
                 <TosContent />
                 <div ref={this.scrollObserver} />
               </ScrollContent>

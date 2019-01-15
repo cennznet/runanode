@@ -46,7 +46,10 @@ const Toggle = styled(CustomToggle)`
       }
 
       .react-toggle-thumb {
-        left: 20px;
+        width: 16px;
+        height: 16px;
+        top: 2px;
+        left: 22px;
         border-color: #fff;
       }
     }
