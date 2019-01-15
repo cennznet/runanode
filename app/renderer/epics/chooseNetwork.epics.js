@@ -16,25 +16,31 @@ const storeNetworkOptionEpic = action$ =>
     })
   );
 
-const setSelectedNetworkEpic = chainEpics(
+const chainNavigationAfterStore = chainEpics(
   types.storeNetworkOption.completed,
-  types.getSelectedNetwork.requested
+  types.navigation.triggered,
+  ROUTES.SYNC_NODE
 );
 
-const setUploadedFileInfoEpic = chainEpics(
-  types.storeNetworkOption.completed,
-  types.getUploadedFileInfo.requested
-);
+// const setSelectedNetworkEpic = chainEpics(
+//   types.storeNetworkOption.completed,
+//   types.getSelectedNetwork.requested
+// );
 
-const chainNavigationAfterStore = action$ =>
-  zip(
-    action$.ofType(types.storeNetworkOption.completed),
-    action$.ofType(types.getSelectedNetwork.completed)
-  ).pipe(map(() => ({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE })));
+// const setUploadedFileInfoEpic = chainEpics(
+//   types.storeNetworkOption.completed,
+//   types.getUploadedFileInfo.requested
+// );
+
+// const chainNavigationAfterStore = action$ =>
+//   zip(
+//     action$.ofType(types.storeNetworkOption.completed),
+//     action$.ofType(types.getSelectedNetwork.completed)
+//   ).pipe(map(() => ({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE })));
 
 export default [
   storeNetworkOptionEpic,
-  setSelectedNetworkEpic,
-  setUploadedFileInfoEpic,
+  // setSelectedNetworkEpic,
+  // setUploadedFileInfoEpic,
   chainNavigationAfterStore,
 ];
