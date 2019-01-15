@@ -16,6 +16,9 @@ const initEpic = action$ =>
         },
         {
           type: types.getRememberNetwork.requested,
+        },
+        {
+          type: types.getSelectedNetwork.requested,
         }
       );
     })

@@ -3,6 +3,7 @@ import types from '../types';
 
 const DEFAULT_STATE = {
   rememberNetwork: null,
+  selectedNetwork: null,
 };
 
 export default function settings(state = DEFAULT_STATE, { type, payload }) {
@@ -14,6 +15,10 @@ export default function settings(state = DEFAULT_STATE, { type, payload }) {
     case types.toggleRememberNetwork.completed:
       return R.merge(state, {
         rememberNetwork: payload,
+      });
+    case types.getSelectedNetwork.completed:
+      return R.merge(state, {
+        selectedNetwork: payload,
       });
     default:
       return state;
