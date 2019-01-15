@@ -99,7 +99,18 @@ export const setSelectedNetwork = (payload: string): Promise<void> =>
     }
   });
 
+export const unsetSelectedNetwork = (): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      store.delete(storageKeys.SELECTED_NETWORK);
+      resolve();
+    } catch (error) {
+      return reject(error);
+    }
+  });
+
 export const reset = async () => {
   await unsetTermsOfUseAcceptance();
   await unsetRememberSelectedNetwork();
+  await unsetSelectedNetwork();
 };

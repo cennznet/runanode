@@ -5,10 +5,12 @@ import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import {
   setTermsOfUseAcceptance,
-  reset,
   getTermsOfUseAcceptance,
   getRememberSelectedNetwork,
   setRememberSelectedNetwork,
+  getSelectedNetwork,
+  unsetSelectedNetwork,
+  reset,
 } from 'renderer/api/utils/storage';
 
 const acceptTermsOfUseEpic = action$ =>
@@ -33,6 +35,12 @@ const toggleRememberNetworkEpic = action$ =>
   action$.pipe(
     ofType(types.toggleRememberNetwork.requested),
     mergeMap(async ({ payload }) => {
+      const notToRememberNetwork = payload === false;
+
+      if (notToRememberNetwork) {
+        await unsetSelectedNetwork();
+      }
+
       await setRememberSelectedNetwork(payload);
       const getRememberNetwork = await getRememberSelectedNetwork();
       return { type: types.toggleRememberNetwork.completed, payload: getRememberNetwork };
@@ -48,9 +56,19 @@ const getRememberNetworkEpic = action$ =>
     })
   );
 
+const getSelectedNetworkEpic = action$ =>
+  action$.pipe(
+    ofType(types.getSelectedNetwork.requested),
+    mergeMap(async () => {
+      const selectedNetwork = await getSelectedNetwork();
+      return { type: types.getSelectedNetwork.completed, payload: selectedNetwork };
+    })
+  );
+
 export default [
   acceptTermsOfUseEpic,
   resetLocalStorageEpic,
   toggleRememberNetworkEpic,
   getRememberNetworkEpic,
+  getSelectedNetworkEpic,
 ];
