@@ -11,6 +11,7 @@ import {
   getSelectedNetwork,
   unsetSelectedNetwork,
   reset,
+  getUploadedFileInfo,
 } from 'renderer/api/utils/storage';
 
 const acceptTermsOfUseEpic = action$ =>
@@ -65,10 +66,21 @@ const getSelectedNetworkEpic = action$ =>
     })
   );
 
+const getUploadedFileInfoEpic = action$ =>
+  action$.pipe(
+    ofType(types.getUploadedFileInfo.requested),
+    mergeMap(async () => {
+      const uploadedFileInfo = await getUploadedFileInfo();
+      console.log('***getUploadedFileInfoEpic', uploadedFileInfo);
+      return { type: types.getUploadedFileInfo.completed, payload: uploadedFileInfo };
+    })
+  );
+
 export default [
   acceptTermsOfUseEpic,
   resetLocalStorageEpic,
   toggleRememberNetworkEpic,
   getRememberNetworkEpic,
   getSelectedNetworkEpic,
+  getUploadedFileInfoEpic,
 ];
