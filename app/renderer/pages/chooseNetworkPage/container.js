@@ -9,12 +9,14 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const enhance = withState('selectedNetwork', 'setSelectedNetwork', null);
+const selectedNetworkState = withState('selectedNetwork', 'setSelectedNetwork', null);
+const uploadedFileState = withState('uploadedFile', 'setUploadedFile', null);
 
 export default compose(
   connect(
     null,
     mapDispatchToProps
   ),
-  enhance
+  selectedNetworkState,
+  uploadedFileState
 );

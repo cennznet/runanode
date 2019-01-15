@@ -2,6 +2,7 @@ const localURL = 'http://localhost:9933';
 const remoteURL = 'http://10.9.30.55:9933';
 const localStreamURL = 'ws://localhost:9944';
 const remoteStreamURL = 'ws://10.9.30.55:9944';
+// const remoteStreamURL = 'ws://cennznet-node-1.centrality.me:9944';
 const env = 'dev';
 
 const config = {
@@ -36,14 +37,14 @@ const config = {
         weak: {
           level: 1,
           latency: [300, Infinity],
-        }
-      }
-    }
+        },
+      },
+    },
   },
 
   pollingInterval: {
     blockHeight: 10 * 1000, // 10s
-  }
+  },
 };
 
 export default config;
