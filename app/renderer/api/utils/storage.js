@@ -115,7 +115,6 @@ export const getUploadedFileInfo = (): Promise<string> =>
   new Promise((resolve, reject) => {
     try {
       const uploadedFileInfo = store.get(storageKeys.UPLOADED_FILE_INFO);
-      console.log('****uploadedFileInfoInstore', uploadedFileInfo);
       if (!uploadedFileInfo) return resolve('');
       resolve(uploadedFileInfo);
     } catch (error) {

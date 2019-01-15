@@ -11,8 +11,7 @@ const storeNetworkOptionEpic = action$ =>
     ofType(types.storeNetworkOption.requested),
     mergeMap(async ({ payload: { selectedNetwork, uploadedFileInfo } }) => {
       await setSelectedNetwork(selectedNetwork);
-      await setUploadedFileInfo(uploadedFileInfo.path); // TODO: Optimize
-      console.log('***storeNetworkOptionEpic', uploadedFileInfo);
+      uploadedFileInfo && (await setUploadedFileInfo(uploadedFileInfo.path)); // TODO: Optimize
       return { type: types.storeNetworkOption.completed };
     })
   );
