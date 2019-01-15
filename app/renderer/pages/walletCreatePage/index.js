@@ -1,11 +1,14 @@
 import React from 'react';
-import { MainContent } from 'components/layout';
-import MainLayout from 'renderer/components/layout/MainLayout';
+import { MainContent, MainLayout } from 'components/layout';
+import { PageHeading } from 'components';
+import withContainer from './container';
 
 const WalletCreatePage = ({ subNav }) => (
   <MainLayout subNav={subNav}>
-    <MainContent>wallet create</MainContent>
+    <MainContent>
+      <PageHeading>Create walllet</PageHeading>
+    </MainContent>
   </MainLayout>
 );
 
-export default WalletCreatePage;
+export default withContainer(WalletCreatePage);

@@ -11,13 +11,19 @@ const {
 } = getActionTypeCreators(ACTION_TYPES_NAME_SPACE);
 
 const actionTypes = {
+  init: triggerActionTypes('init'),
   testPage: triggerActionTypes('test_page'),
   homePageLoad: triggerActionTypes('home_page_load'),
   walletRestorePageLoad: triggerActionTypes('wallet_restore_page_load'),
   navigation: triggerActionTypes('navigation'),
   acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
-  resetTermsOfUse: triggerActionTypes('reset_terms_of_use'),
   storeSelectedNetwork: triggerActionTypes('store_selected_network'),
+  resetLocalStorage: triggerActionTypes('reset_local_storage'),
+  toggleRememberNetwork: apiActionTypes('toggle_remember_network'),
+  getRememberNetwork: apiActionTypes('get_remember_network'),
+  getSelectedNetwork: apiActionTypes('get_selected_network'),
+  updateMainNetBestBlock: triggerActionTypes('update_main_net_best_block'),
+  updateLocalNetBestBlock: triggerActionTypes('update_local_net_best_block'),
 
   /* node system */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),

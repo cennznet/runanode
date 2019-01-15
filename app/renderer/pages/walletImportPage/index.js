@@ -1,10 +1,12 @@
 import React from 'react';
-import { MainContent } from 'components/layout';
-import MainLayout from 'renderer/components/layout/MainLayout';
+import { MainContent, MainLayout } from 'components/layout';
+import { PageHeading } from 'components';
 
 const WalletImportPage = ({ subNav }) => (
   <MainLayout subNav={subNav}>
-    <MainContent>wallet import</MainContent>
+    <MainContent>
+      <PageHeading>Import wallet</PageHeading>
+    </MainContent>
   </MainLayout>
 );
 

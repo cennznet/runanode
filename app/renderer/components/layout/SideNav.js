@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
 
-console.log('ROUTES.PROFILE.GENERAL', ROUTES.PROFILE.GENERAL);
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
@@ -56,7 +55,7 @@ const SideNav = () => (
         <IconLink to="/dev">
           <FontAwesomeIcon icon={["fab", "dev"]} />
         </IconLink>
-        <IconLink to={ROUTES.PROFILE.ROOT}>
+        <IconLink to={ROUTES.SETTINGS.ROOT}>
           <FontAwesomeIcon icon="cogs" />
         </IconLink>
         <IconLink to="/syncNode">
