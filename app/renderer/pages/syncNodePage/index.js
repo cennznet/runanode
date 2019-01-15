@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
+import { PageHeading } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
@@ -61,7 +62,7 @@ const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
     <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
-          <SyncNodeTitle>Main net</SyncNodeTitle>
+          <PageHeading>Main net</PageHeading>
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
               <Line

@@ -1,16 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MainContent } from 'components/layout';
-import MainLayout from 'renderer/components/layout/MainLayout';
-import Toggle from 'components/Toggle';
+import { MainContent, MainLayout } from 'components/layout';
+import { Toggle, PageHeading } from 'components';
 import { colors } from 'renderer/theme';
 import packageJson from '../../../../package.json';
 import withContainer from './container';
-
-const PageHeading = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
 
 const List = styled.div``;
 
@@ -29,7 +23,7 @@ const Text = styled.div`
 const SettingsGeneralPage = ({ subNav, rememberNetwork, onToggleRememberNetwork }) => (
   <MainLayout subNav={subNav}>
     <MainContent>
-      <PageHeading>General</PageHeading>
+      <PageHeading marginBottom="0">General</PageHeading>
       <List>
         <ListItem>CENNZNode version {packageJson.version}</ListItem>
         <ListItem>
