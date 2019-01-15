@@ -13,13 +13,21 @@ const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
 const mapDispatchToProps = dispatch => ({
   onNetworkStatusClick: () => {
     dispatch({
-      type: types.nodeJsonRpcSystem.requested,
+      type: types.nodeWsSystemChainPolling.requested,
       payload: {},
     });
+    // dispatch({
+    //   type: types.nodeJsonRpcSystem.requested,
+    //   payload: {},
+    // });
   },
   onGetHeaderClick: () => {
+    // dispatch({
+    //   type: types.nodeWsChainGetHeader.requested,
+    //   payload: {},
+    // });
     dispatch({
-      type: types.nodeWsChainGetHeader.requested,
+      type: types.nodeWsChainGetHeaderPolling.requested,
       payload: {},
     });
   },

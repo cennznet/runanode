@@ -19,14 +19,19 @@ const actionTypes = {
   resetTermsOfUse: triggerActionTypes('reset_terms_of_use'),
   storeSelectedNetwork: triggerActionTypes('store_selected_network'),
 
-  /* node system */
+  /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
   nodeJsonRpcSystemVersion: apiActionTypes('node_jsonrpc_system_version'),
   nodeJsonRpcSystemChain: apiActionTypes('node_jsonrpc_system_chain'),
   nodeJsonRpcSystemName: apiActionTypes('node_jsonrpc_system_name'),
   nodeJsonRpcSystemHealth: apiActionTypes('node_jsonrpc_system_health'),
 
+  nodeWsSystemChain: apiActionTypes('node_ws_system_chain'),
+  nodeWsSystemChainPolling: apiActionTypes('node_ws_system_chain_polling'),
+
+  /* chain apis */
   nodeWsChainSubscribeNewHead: apiActionTypes('node_ws_chain_subscribeNewHead'),
+  nodeWsChainGetHeaderPolling: apiActionTypes('node_ws_chain_getHeader_polling'),
   nodeWsChainGetHeader: apiActionTypes('node_ws_chain_getHeader'),
   nodeWsRemoteChainGetHeader: apiActionTypes('node_ws_remote_chain_getHeader'),
 
