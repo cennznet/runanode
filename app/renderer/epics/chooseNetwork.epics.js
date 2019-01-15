@@ -26,12 +26,11 @@ const setUploadedFileInfoEpic = chainEpics(
   types.getUploadedFileInfo.requested
 );
 
-// TODO: Optimize
-const chainNavigationAfterStore = chainEpics(
-  types.getSelectedNetwork.completed,
-  types.navigation.triggered,
-  ROUTES.SYNC_NODE
-);
+const chainNavigationAfterStore = action$ =>
+  zip(
+    action$.ofType(types.storeNetworkOption.completed),
+    action$.ofType(types.getSelectedNetwork.completed)
+  ).pipe(map(() => ({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE })));
 
 export default [
   storeNetworkOptionEpic,
