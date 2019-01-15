@@ -58,23 +58,28 @@ const setNodeSystemHealth = (state, health) => ({
   health
 });
 
-const setNodeSystemStateFromPayload = (state, payload) => {
-  const { health } = INITIAL_STATE;
+const handleChainGetHeader = (state, payload) => {
+  const { localNode } = INITIAL_STATE;
+  console.log('handleChainGetHeader');
+  console.log(payload);
 
-  if(payload.error && payload.error.data) {
-    health.code = payload.error.code;
-    health.message = payload.error.message;
-    health.isSyncing = payload.error.data.is_syncing;
-    health.peers = payload.error.data.peers;
-  }
-
-  if(payload.result) {
-    health.isSyncing = payload.result.is_syncing ? payload.result.is_syncing : health.isSyncing;
-    health.peers = payload.result.peers ? payload.result.peers : health.peers;;
-  }
+  localNode.bestBlock = payload.number;
   return {
     ...state,
-    health,
+    localNode,
+  };
+};
+
+const handleSystemChain = (state, payload) => {
+  const { localNode } = INITIAL_STATE;
+  console.log('handleSystemChain');
+  console.log(payload);
+
+  localNode.chain = payload.result;
+  return {
+    ...state,
+    chain: localNode.chain,
+    localNode,
   };
 };
 
@@ -83,6 +88,8 @@ const handlers = {
   [types.nodeJsonRpcSystemChain.completed]: setNodeSystemChain,
   [types.nodeJsonRpcSystemName.completed]: setNodeSystemName,
   [types.nodeJsonRpcSystemHealth.completed]: setNodeSystemHealth,
+  [types.nodeWsChainGetHeader.completed]: handleChainGetHeader,
+  [types.nodeWsSystemChain.completed]: handleSystemChain,
 };
 
 export default createChainFns(
