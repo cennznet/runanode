@@ -5,9 +5,6 @@ import types from 'renderer/types';
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
-  onReset: () => {
-    dispatch({ type: types.resetLocalStorage.triggered });
-  },
 });
 
 const enhance = lifecycle({

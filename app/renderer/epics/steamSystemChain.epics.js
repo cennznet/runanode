@@ -1,5 +1,16 @@
 import objectPath from 'object-path';
-import { mergeMap, tap, catchError, filter, map, take, startWith, withLatestFrom } from 'rxjs/operators';
+import {
+  mergeMap,
+  tap,
+  catchError,
+  filter,
+  map,
+  take,
+  startWith,
+  withLatestFrom,
+  takeUntil,
+  takeWhile,
+} from 'rxjs/operators';
 import { of, interval, merge, EMPTY } from 'rxjs';
 import { ofType } from 'redux-observable';
 
@@ -32,7 +43,7 @@ const epic = (action$, state$) =>
     ),
   );
 
-const pollingEpic = action$ =>
+const pollingEpic = (action$, state$) =>
   action$.pipe(
     ofType(types.nodeWsSystemChainPolling.requested),
     // take(1),
@@ -41,7 +52,11 @@ const pollingEpic = action$ =>
       return interval(config.connectivity.latency.period).pipe(
         map(() => {
           return { type: types.nodeWsSystemChain.requested, payload: {}};
-        }));
+        }),
+        // takeWhile(
+        //   () => state$.value.syncStream.isConnected
+        // ),
+        );
     })
   );
 

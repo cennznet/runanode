@@ -8,6 +8,13 @@
 
 ### Improvements
 
+# v0.2.3 (2019.01.16)
+
+### Improvements
+- ready for demo
+- able to switch network via UI
+- basic screen flow
+
 ## v0.2.2 (2019.01.13)
 
 ### Features

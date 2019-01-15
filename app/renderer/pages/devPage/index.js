@@ -20,7 +20,7 @@ const Flex = styled.div`
   }
 `;
 
-const DevPage = ({ onNetworkStatusClick, onGetHeaderClick, onGetRemoteHeaderClick, onRestartNodeClick, onStream, onChainSubscribeNewHead, nodeSystem, syncStream, syncRemoteStream }) => {
+const DevPage = ({ onResetLocalStorage, onNetworkStatusClick, onGetHeaderClick, onGetRemoteHeaderClick, onRestartNodeClick, onStream, onStreamStop, onChainSubscribeNewHead, onNavToChooseNetwork, nodeSystem, syncStream, syncRemoteStream }) => {
   const { chain, name, version, health } = nodeSystem;
   const networkStatus = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers}, name:${name})`;
 
@@ -62,6 +62,7 @@ const DevPage = ({ onNetworkStatusClick, onGetHeaderClick, onGetRemoteHeaderClic
         </Flex>
         <Flex>
           <Button onClick={onStream}>start stream</Button>
+          <Button onClick={onStreamStop}>stop stream(WIP)</Button>
           <div>
             {syncSteamStatus}
           </div>
@@ -71,6 +72,12 @@ const DevPage = ({ onNetworkStatusClick, onGetHeaderClick, onGetRemoteHeaderClic
         </Flex>
         <Flex>
           <Button onClick={onChainSubscribeNewHead}>start chainSubscribeNewHead</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={onNavToChooseNetwork}>Nav to ChooseNetwork</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onResetLocalStorage()}>Reset Local Storage</Button>
         </Flex>
       </MainContent>
     </MainLayout>
