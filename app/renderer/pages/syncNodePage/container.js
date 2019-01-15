@@ -40,8 +40,6 @@ const mapDispatchToProps = dispatch => ({
 const enhance = lifecycle({
   componentDidMount() {
     const { selectedNetwork, uploadedFileInfo } = this.props.settings;
-    console.log('syncNode page:', selectedNetwork);
-    console.log('syncNode page:', uploadedFileInfo);
 
     if (selectedNetwork === 'localTestNet') {
       this.props.onSyncLocalTestnet(uploadedFileInfo);

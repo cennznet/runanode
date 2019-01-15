@@ -71,7 +71,6 @@ const getUploadedFileInfoEpic = action$ =>
     ofType(types.getUploadedFileInfo.requested),
     mergeMap(async () => {
       const uploadedFileInfo = await getUploadedFileInfo();
-      console.log('***getUploadedFileInfoEpic', uploadedFileInfo);
       return { type: types.getUploadedFileInfo.completed, payload: uploadedFileInfo };
     })
   );

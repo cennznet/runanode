@@ -61,7 +61,8 @@ const ChooseNetWork = ({
   Logger.info(`**Uploaded File: ${singleFile && singleFile.path}`);
 
   return (
-    <Layout sidebar={<SimpleSidebar />}>
+    // <Layout sidebar={<SimpleSidebar />}>
+    <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
           <ChooseNetworkWrapper>
