@@ -34,7 +34,7 @@ const SettingsGeneralPage = ({ subNav, rememberNetwork, onToggleRememberNetwork 
         <ListItem>CENNZNode version {packageJson.version}</ListItem>
         <ListItem>
           <Text>
-            Remember my network preference, so I donnot need to choose network everytime I open the
+            Remember my network preference, so I do not need to choose network everytime I open the
             app
           </Text>
           <Toggle
