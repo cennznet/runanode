@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MainContent } from 'components/layout';
-import MainLayout from 'renderer/components/layout/MainLayout';
-import TosContent from 'components/TosContent';
+import { MainContent, MainLayout } from 'components/layout';
+import { TosContent, PageHeading } from 'components';
 import { colors } from 'renderer/theme';
 
 const ScrollWrapper = styled.div`
@@ -31,6 +30,7 @@ const ScrollContent = styled.div`
 const SettingsTosPage = ({ subNav }) => (
   <MainLayout subNav={subNav}>
     <MainContent>
+      <PageHeading>Terms & Conditions</PageHeading>
       <ScrollWrapper>
         <ScrollContent>
           <TosContent />
