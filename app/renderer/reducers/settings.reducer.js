@@ -25,7 +25,11 @@ export default function settings(state = DEFAULT_STATE, { type, payload }) {
       return R.merge(state, {
         uploadedFileInfo: payload,
       });
-
+    case types.storeNetworkOption.requested:
+      return R.merge(state, {
+        selectedNetwork: payload.selectedNetwork,
+        uploadedFileInfo: payload.uploadedFileInfo && payload.uploadedFileInfo.path,
+      });
     default:
       return state;
   }
