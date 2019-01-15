@@ -1,29 +1,30 @@
 import React, { PureComponent } from 'react';
 import { Route as ReactRoute } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { compose, lifecycle } from 'recompose';
 
-class EntryActionEmmiter extends PureComponent {
-  componentDidMount() {
-    const { match, onEntryAction, dispatch } = this.props;
-    dispatch({ type: onEntryAction, payload: match });
+const mapStateToProps = ({ syncStream, syncRemoteStream }) => ({
+  hasBlockNumbers: syncStream.blockNum !== null && syncRemoteStream.blockNum !== null,
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+const enhance = lifecycle({
+  componentDidMount() {},
+});
+
+const RouteComponent = ({ hasBlockNumbers, ...rest }) => {
+  if (!hasBlockNumbers) {
+    return <div>syncing...</div>;
   }
-  render() {
-    const { component: Component, match } = this.props;
-    return Component ? <Component match={match} /> : <div />;
-  }
-}
 
-const EntryActionEmmiterContainer = connect()(EntryActionEmmiter);
-const Route = ({ onEntryAction, component, ...rest }) =>
-  onEntryAction ? (
-    <ReactRoute
-      render={({ match }) => (
-        <EntryActionEmmiterContainer key={onEntryAction} {...{ onEntryAction, match, component }} />
-      )}
-      {...rest}
-    />
-  ) : (
-    <ReactRoute component={component} {...rest} />
-  );
+  return <ReactRoute {...rest} />;
+};
 
-export default Route;
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  enhance
+)(RouteComponent);

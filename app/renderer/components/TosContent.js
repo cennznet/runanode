@@ -20,8 +20,6 @@ const Doc = styled.div`
 const TosContent = () => {
   return (
     <Doc>
-      <h2>Terms & Conditions</h2>
-
       <p>
         At ourselves direction believing do he departure. Celebrated her had sentiments understood
         are projection set. Possession ye no mr unaffected remarkably at. Wrote house in never fruit

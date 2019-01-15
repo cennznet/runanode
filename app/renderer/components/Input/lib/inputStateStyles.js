@@ -18,7 +18,7 @@ const inputStateStyles = (
   }
 ) => `
   color: ${p.color || p.theme.colors.N500};
-  border: ${p.borderColor || getInputBorderColor(p)};
+  border: ${`1px solid ${p.borderColor}` || getInputBorderColor(p)};
 
   background-color: ${p.readOnly ? p.theme.colors.N100 : p.backgroundColor || p.theme.colors.N0};
 
