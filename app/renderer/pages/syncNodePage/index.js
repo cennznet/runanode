@@ -44,8 +44,8 @@ const networkOptionMapping = {
   mainNet: 'Main net',
 };
 
-const SyncNodePage = ({ syncStream, syncRemoteStream, settings }) => {
-  const { selectedNetwork, uploadedFileInfo } = settings;
+const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
+  const { SELECTED_NETWORK:selectedNetwork, GENESIS_CONFIG_FILE_PATH: uploadedFileInfo } = localStorage;
   const { blockNum: bestBlock } = syncRemoteStream;
   const { blockNum: syncedBlock } = syncStream;
   const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;

@@ -14,19 +14,15 @@ const actionTypes = {
   init: triggerActionTypes('init'),
   testPage: triggerActionTypes('test_page'),
   homePageLoad: triggerActionTypes('home_page_load'),
-  walletRestorePageLoad: triggerActionTypes('wallet_restore_page_load'),
   navigation: triggerActionTypes('navigation'),
-  acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
-  // storeSelectedNetwork: triggerActionTypes('store_selected_network'),
+
+  /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
-  toggleRememberNetwork: apiActionTypes('toggle_remember_network'),
-  getRememberNetwork: apiActionTypes('get_remember_network'),
-  getSelectedNetwork: apiActionTypes('get_selected_network'),
-  // getLocalFilePath: apiActionTypes('get_local_file_path'),
-  // storeLocalFilePath: triggerActionTypes('store_local_file_path'),
-  getUploadedFileInfo: apiActionTypes('get_uploaded_file_info'),
-  storeUploadedFileInfo: triggerActionTypes('store_uploaded_file_info'),
-  storeNetworkOption: apiActionTypes('store_network_option'),
+  acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
+  storeNetworkOption: triggerActionTypes('store_network_option'),
+  setStorage: apiActionTypes('set_storage'),
+  getStorage: apiActionTypes('get_storage'),
+  clearStorage: apiActionTypes('clear_storage'),
 
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),

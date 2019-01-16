@@ -2,6 +2,7 @@ import { EMPTY, from, of } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
+import { storageKeys } from 'renderer/api/utils/storage';
 
 const initEpic = action$ =>
   action$.pipe(
@@ -15,10 +16,20 @@ const initEpic = action$ =>
           type: types.syncRemoteStream.requested,
         },
         {
-          type: types.getRememberNetwork.requested,
+          type: types.getStorage.requested,
+          payload: { key: storageKeys.TERMS_OF_USE_ACCEPTANCE },
         },
         {
-          type: types.getSelectedNetwork.requested,
+          type: types.getStorage.requested,
+          payload: { key: storageKeys.REMEMBER_NETWORK },
+        },
+        {
+          type: types.getStorage.requested,
+          payload: { key: storageKeys.SELECTED_NETWORK },
+        },
+        {
+          type: types.getStorage.requested,
+          payload: { key: storageKeys.GENESIS_CONFIG_FILE_PATH },
         },
         {
           type: types.nodeWsSystemChainPolling.requested,

@@ -32,10 +32,10 @@ const SettingsGeneralPage = ({ subNav, rememberNetwork, onToggleRememberNetwork 
             app
           </Text>
           <Toggle
-            defaultChecked={rememberNetwork}
+            defaultChecked={rememberNetwork === null ? true : rememberNetwork}
             onChange={e => {
               console.log('rememberNetwork', rememberNetwork);
-              onToggleRememberNetwork(!rememberNetwork);
+              onToggleRememberNetwork(rememberNetwork === null ? false : !rememberNetwork);
             }}
           />
         </ListItem>
