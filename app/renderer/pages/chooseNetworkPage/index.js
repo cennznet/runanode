@@ -4,10 +4,19 @@ import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import { Button, FileUploader, Select, PageHeading } from 'components';
-
+import { Logger } from 'renderer/utils/logging';
 import withContainer from './container';
 
-const ChooseNetworkWrapper = styled.div``;
+const ChooseNetworkWrapper = styled.div`
+  width: 60%;
+`;
+
+const JoinNetworkTitle = styled.div`
+  color: ${colors.N0};
+  font-weight: 600;
+  font-size: 1.7rem;
+  margin: 3rem auto;
+`;
 
 const NetworkOptionWrapper = styled.div`
   margin: 1rem 0;
@@ -37,58 +46,80 @@ const NETWORK_OPTIONS = [
   { label: 'Main net', value: 'mainNet' },
 ];
 
-const ChooseNetWork = ({ onJoinNetwork, selectedNetwork, setSelectedNetwork }) => (
-  // <Layout sidebar={<SimpleSidebar />}>
-  <Layout defaultSidebar>
-    <LayoutWrapper>
-      <MainContent>
-        <ChooseNetworkWrapper>
-          <PageHeading>Join network</PageHeading>
-          <div>Choose network</div>
-          <NetworkOptionWrapper>
-            <Select
-              value={selectedNetwork}
-              onChange={selected => {
-                console.log('selectNetwork: ', selected.value);
-                setSelectedNetwork(selected);
-              }}
-              backgroundColor={colors.N800}
-              selectedBackgroundColor={colors.N800}
-              color={colors.N0}
-              options={NETWORK_OPTIONS}
-            />
-          </NetworkOptionWrapper>
-          {selectedNetwork && selectedNetwork.value === 'localTestNet' && (
-            <UploadFileWrapper>
-              <div>Upload chain setting file</div>
-              <UploaderWrapper>
-                <FileUploader
-                  backgroundColor="transparent"
-                  borderColor={colors.N0}
-                  focusBorderColor={colors.N0}
-                  acceptTypes="./json"
-                  // TODO: store the path and insert into command
-                  onDrop={file => console.log('uploaded file:', file)}
-                />
-              </UploaderWrapper>
-              <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
-            </UploadFileWrapper>
-          )}
+const ChooseNetWork = ({
+  onJoinNetwork,
+  selectedNetwork,
+  setSelectedNetwork,
+  uploadedFile,
+  setUploadedFile,
+}) => {
+  const selectedLocalNetwork = selectedNetwork && selectedNetwork.value === 'localTestNet';
+  const canJoinLocalNetwork = selectedLocalNetwork && uploadedFile;
+  const canJoinNetwork = canJoinLocalNetwork || (selectedNetwork && !selectedLocalNetwork);
 
-          <ButtonWrapper>
-            <div>
-              <Button
-                disabled={!selectedNetwork}
-                onClick={() => onJoinNetwork(selectedNetwork.value)}
-              >
-                Join network
-              </Button>
-            </div>
-          </ButtonWrapper>
-        </ChooseNetworkWrapper>
-      </MainContent>
-    </LayoutWrapper>
-  </Layout>
-);
+  const singleFile = uploadedFile && uploadedFile[uploadedFile.length - 1];
+  Logger.info(`**Uploaded File: ${singleFile && singleFile.path}`);
+
+  return (
+    // <Layout sidebar={<SimpleSidebar />}>
+    <Layout defaultSidebar>
+      <LayoutWrapper>
+        <MainContent>
+          <ChooseNetworkWrapper>
+            <JoinNetworkTitle>Join network</JoinNetworkTitle>
+            <div>Choose network</div>
+            <NetworkOptionWrapper>
+              <Select
+                value={selectedNetwork}
+                onChange={selected => {
+                  console.log('selectNetwork: ', selected.value);
+                  setSelectedNetwork(selected);
+                }}
+                backgroundColor={colors.N800}
+                selectedBackgroundColor={colors.N800}
+                color={colors.N0}
+                options={NETWORK_OPTIONS}
+              />
+            </NetworkOptionWrapper>
+            {selectedLocalNetwork && (
+              <UploadFileWrapper>
+                <div>Upload chain setting file</div>
+                <UploaderWrapper>
+                  <FileUploader
+                    value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
+                    backgroundColor="transparent"
+                    borderColor={colors.N0}
+                    focusBorderColor={colors.N0}
+                    acceptTypes=".json"
+                    onDrop={file => {
+                      setUploadedFile(file);
+                    }}
+                  />
+                </UploaderWrapper>
+                <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
+              </UploadFileWrapper>
+            )}
+
+            <ButtonWrapper>
+              <div>
+                <Button
+                  disabled={!canJoinNetwork}
+                  onClick={() =>
+                    onJoinNetwork({
+                      selectedNetwork: selectedNetwork.value,
+                      uploadedFileInfo: singleFile,
+                    })
+                  }
+                >
+                  Join network
+                </Button>
+              </div>
+            </ButtonWrapper>
+          </ChooseNetworkWrapper>
+        </MainContent>
+      </LayoutWrapper>
+    </Layout>
+  );
+};
 
 export default withContainer(ChooseNetWork);
