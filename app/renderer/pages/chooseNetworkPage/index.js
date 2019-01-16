@@ -43,9 +43,9 @@ const ButtonWrapper = styled.div`
 `;
 
 const NETWORK_OPTIONS = [
-  { label: 'CENNZNet DEV', value: NetworkNameOptions.cennznet_dev },
-  { label: 'CENNZNet UAT', value: NetworkNameOptions.cennznet_uat },
-  { label: 'Local test net', value: NetworkNameOptions.localTestNet },
+  { label: 'CENNZNet DEV', value: NetworkNameOptions.CENNZNET_DEV },
+  { label: 'CENNZNet UAT', value: NetworkNameOptions.CENNZNET_UAT },
+  { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
 ];
 
 const ChooseNetWork = ({

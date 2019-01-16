@@ -7,7 +7,7 @@ export type TlsConfig = {
 };
 
 export type NetworkNames = (
-  'mainnet' | 'staging' | 'testnet' | 'development' | 'cennznet_dev' | 'cennznet_uat' | 'localTestNet' | string
+  'mainnet' | 'staging' | 'testnet' | 'development' | 'cennznet-dev' | 'cennznet-uat' | 'local-testnet' | string
 );
 
 export type PlatformNames = (
@@ -19,9 +19,9 @@ export const NetworkNameOptions = {
   staging: 'staging',
   testnet: 'testnet',
   development: 'development',
-  cennznet_dev: 'cennznet-dev',
-  cennznet_uat: 'cennznet-uat',
-  localTestNet: 'localTestNet'
+  CENNZNET_DEV: 'cennznet-dev',
+  CENNZNET_UAT: 'cennznet-uat',
+  LOCAL_TESTNET: 'local-testnet'
 };
 
 export type CennzNetNodeState = (
