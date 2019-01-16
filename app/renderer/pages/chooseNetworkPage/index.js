@@ -5,7 +5,6 @@ import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import { Button, FileUploader, Select, PageHeading } from 'components';
 import { Logger } from 'renderer/utils/logging';
-
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 
@@ -55,7 +54,8 @@ const ChooseNetWork = ({
   uploadedFile,
   setUploadedFile,
 }) => {
-  const selectedLocalNetwork = selectedNetwork && selectedNetwork.value === 'localTestNet';
+  const selectedLocalNetwork =
+    selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET;
   const canJoinLocalNetwork = selectedLocalNetwork && uploadedFile;
   const canJoinNetwork = canJoinLocalNetwork || (selectedNetwork && !selectedLocalNetwork);
 
@@ -74,7 +74,6 @@ const ChooseNetWork = ({
               <Select
                 value={selectedNetwork}
                 onChange={selected => {
-                  console.log('selectNetwork: ', selected.value);
                   setSelectedNetwork(selected);
                 }}
                 backgroundColor={colors.N800}

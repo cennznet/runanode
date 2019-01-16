@@ -5,7 +5,7 @@ import types from '../../types';
 
 const mapDispatchToProps = dispatch => ({
   onJoinNetwork: payload => {
-    dispatch({ type: types.storeNetworkOption.requested, payload });
+    dispatch({ type: types.storeNetworkOption.triggered, payload });
   },
   onPageLoad: () => {
     // dispatch({
