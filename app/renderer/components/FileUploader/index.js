@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const FileUploader = ({
   onDrop,
   onCancel,
-  inputValue,
+  value: inputValue,
   backgroundColor,
   borderColor,
   placeholder,

@@ -38,7 +38,14 @@ const TextWrapper = styled.div`
   color: ${colors.N0};
 `;
 
-const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
+const networkOptionMapping = {
+  globalTestNet: 'Global test net',
+  localTestNet: 'Local test net',
+  mainNet: 'Main net',
+};
+
+const SyncNodePage = ({ syncStream, syncRemoteStream, settings }) => {
+  const { selectedNetwork, uploadedFileInfo } = settings;
   const { blockNum: bestBlock } = syncRemoteStream;
   const { blockNum: syncedBlock } = syncStream;
   const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
@@ -62,7 +69,9 @@ const SyncNodePage = ({ syncStream, syncRemoteStream }) => {
     <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
-          <PageHeading>Main net</PageHeading>
+          <PageHeading>
+            {selectedNetwork ? networkOptionMapping[selectedNetwork] : 'Main net'}
+          </PageHeading>
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
               <Line
