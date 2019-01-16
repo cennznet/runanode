@@ -3,10 +3,11 @@ import { compose, lifecycle } from 'recompose';
 import { ApiRx, ApiPromise } from '@polkadot/api';
 import WsProvider from '@polkadot/rpc-provider/ws';
 import typeRegistry from '@polkadot/types/codec/typeRegistry';
+
 import { Logger } from 'renderer/utils/logging';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
-import types from '../../types';
-import { NetworkNameOptions } from '../../../common/types/cennznet-node.types';
+import types from 'renderer/types';
+import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 
 const mapStateToProps = ({ syncStream, syncRemoteStream, settings }) => ({
   syncStream,
@@ -41,7 +42,7 @@ const enhance = lifecycle({
   componentDidMount() {
     const { selectedNetwork, uploadedFileInfo } = this.props.settings;
 
-    if (selectedNetwork === NetworkNameOptions.localTestNet) {
+    if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET) {
       this.props.onSelectNetworkt(uploadedFileInfo);
     } else {
       this.props.onSelectNetworkt(selectedNetwork);
