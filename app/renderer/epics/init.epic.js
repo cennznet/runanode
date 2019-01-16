@@ -11,9 +11,11 @@ const initEpic = action$ =>
       return of(
         {
           type: types.syncStream.requested,
+          payload: { command: 'START' },
         },
         {
           type: types.syncRemoteStream.requested,
+          payload: { command: 'START' },
         },
         {
           type: types.getStorage.requested,
