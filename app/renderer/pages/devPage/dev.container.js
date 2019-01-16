@@ -3,6 +3,7 @@ import types from 'renderer/types';
 
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
+import ROUTES from 'renderer/constants/routes';
 
 const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
   nodeSystem,
@@ -13,13 +14,21 @@ const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
 const mapDispatchToProps = dispatch => ({
   onNetworkStatusClick: () => {
     dispatch({
-      type: types.nodeJsonRpcSystem.requested,
+      type: types.nodeWsSystemChainPolling.requested,
       payload: {},
     });
+    // dispatch({
+    //   type: types.nodeJsonRpcSystem.requested,
+    //   payload: {},
+    // });
   },
   onGetHeaderClick: () => {
+    // dispatch({
+    //   type: types.nodeWsChainGetHeader.requested,
+    //   payload: {},
+    // });
     dispatch({
-      type: types.nodeWsChainGetHeader.requested,
+      type: types.nodeWsChainGetHeaderPolling.requested,
       payload: {},
     });
   },
@@ -46,11 +55,24 @@ const mapDispatchToProps = dispatch => ({
       payload: {},
     });
   },
+  onStreamStop: () => {
+    // dispatch({
+    //   type: types.streamStop.requested,
+    //   payload: {},
+    // });
+  },
   onChainSubscribeNewHead: () => {
     dispatch({
       type: types.nodeWsChainSubscribeNewHead.requested,
       payload: {},
     });
+  },
+  onNavToChooseNetwork: () => {
+    dispatch({type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK});
+    dispatch({ type: types.resetLocalStorage.triggered });
+  },
+  onResetLocalStorage: () => {
+    dispatch({ type: types.resetLocalStorage.triggered });
   },
 });
 

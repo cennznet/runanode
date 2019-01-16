@@ -8,9 +8,21 @@
 
 ### Improvements
 
-## v0.2.2 (2019.01.13)
+# v0.2.4 (2019.01.16)
 
-### Features
+### Improvements
+- new logo
+- change default remote URL to dev
+- able to use `yarn package-win`
+
+# v0.2.3 (2019.01.16)
+
+### Improvements
+- ready for demo
+- able to switch network via UI
+- basic screen flow
+
+## v0.2.2 (2019.01.13)
 
 ### Fixes
 
