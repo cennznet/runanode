@@ -9,10 +9,10 @@ import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import types from 'renderer/types';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ syncStream, syncRemoteStream, settings }) => ({
+const mapStateToProps = ({ syncStream, syncRemoteStream, localStorage }) => ({
   syncStream,
   syncRemoteStream,
-  settings,
+  localStorage,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -40,12 +40,12 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    const { selectedNetwork, uploadedFileInfo } = this.props.settings;
+    const { selectedNetwork, uploadedFileInfo } = this.props.localStorage;
 
     if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET) {
-      this.props.onSelectNetworkt(uploadedFileInfo);
+      this.props.onSelectNetworkt(this.props.localStorage.GENESIS_CONFIG_FILE_PATH);
     } else {
-      this.props.onSelectNetworkt(selectedNetwork);
+      this.props.onSelectNetworkt(this.props.localStorage.SELECTED_NETWORK);
     }
     // this.props.onSyncStream();
     // this.props.onSyncRemoteStream();
