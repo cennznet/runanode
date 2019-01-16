@@ -41,25 +41,33 @@ const mapDispatchToProps = dispatch => ({
   onRestartNodeClick: () => {
     const options: CennzNetRestartOptions = {
       name: 'my-custom-node',
-      chain: '/Users/cherryliang/Work/cennz-node-ui/dist/local.json',
+      chain: '/Users/benxgao/hackathon/cennz-node-ui/dist/local.json',
     };
     restartCennzNetNodeChannel.send(options);
   },
-  onStream: () => {
+  onStreamStart: () => {
     dispatch({
       type: types.syncStream.requested,
-      payload: {},
+      payload: { command: 'START' },
     });
+  },
+  onRemoteStreamStart: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
-      payload: {},
+      payload: { command: 'START' },
     });
   },
   onStreamStop: () => {
-    // dispatch({
-    //   type: types.streamStop.requested,
-    //   payload: {},
-    // });
+    dispatch({
+      type: types.syncStream.requested,
+      payload: { command: 'STOP' },
+    });
+  },
+  onRemoteStreamStop: () => {
+    dispatch({
+      type: types.syncRemoteStream.requested,
+      payload: { command: 'STOP' },
+    });
   },
   onChainSubscribeNewHead: () => {
     dispatch({
@@ -68,7 +76,7 @@ const mapDispatchToProps = dispatch => ({
     });
   },
   onNavToChooseNetwork: () => {
-    dispatch({type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK});
+    dispatch({ type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK });
     dispatch({ type: types.resetLocalStorage.triggered });
   },
   onResetLocalStorage: () => {

@@ -46,6 +46,7 @@ const actionTypes = {
   syncStreamPing: apiActionTypes('sync_stream_ping'),
   syncStreamMessage: changedActionTypes('sync_stream_message'),
   syncStreamError: changedActionTypes('sync_stream_error'),
+  syncStreamStop: triggerActionTypes('sync_stream_stop'),
 
   /* Sync Remote Stream */
   syncRemoteStream: apiActionTypes('sync_remote_stream'),
@@ -53,8 +54,7 @@ const actionTypes = {
   syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
-
-  // streamStop: apiActionTypes('stream_stop'),
+  syncRemoteStreamStop: triggerActionTypes('sync_remote_stream_stop'),
 };
 
 export default actionTypes;

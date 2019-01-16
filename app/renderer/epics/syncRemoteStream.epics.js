@@ -1,13 +1,21 @@
-import { mergeMap, tap, catchError, filter, map, take, startWith, takeUntil, takeWhile } from 'rxjs/operators';
 import { of, interval, merge, EMPTY } from 'rxjs';
+import {
+  mergeMap,
+  switchMap,
+  catchError,
+  filter,
+  map,
+  take,
+  startWith,
+  concat,
+} from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import objectPath from "object-path";
+import objectPath from 'object-path';
 
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { remoteStream as stream } from 'renderer/stream/stream';
 import streamTypes from '../stream/types';
-
 
 const streamType = types.syncRemoteStream;
 const streamMessageType = types.syncRemoteStreamMessage;
@@ -17,60 +25,47 @@ const streamPingType = types.syncRemoteStreamPing;
 const connectStreamEpic = action$ =>
   action$.pipe(
     ofType(streamType.requested),
-    mergeMap(() => {
-      stream.connect();
+    switchMap(({ payload }) => {
+      if (payload.command === 'START') {
+        console.log('START STREAM');
 
-      const streamMessage = stream.messageSubject.pipe(
-        map(payload =>  {
-          console.log(`sync remote streamMessage`);
-          console.log(payload);
-          return ({
+        stream.connect();
+
+        const streamMessage = stream.messageSubject.pipe(
+          map(message => {
+            console.log('stream.connect streamMessage', message);
+            return {
               type: streamMessageType.changed,
-              payload
-            });
-          }
-        ));
+              payload: message,
+            };
+          })
+        );
 
-      const streamStatus = stream.statusSubject.pipe(
-        map(payload => ({
-          type: streamStatusType.changed,
-          payload
-        })));
+        const streamStatus = stream.statusSubject.pipe(
+          mergeMap(status => {
+            console.log('stream.connect streamStatus', status);
+            if (status.isConnected) {
+              return interval(config.connectivity.latency.period).pipe(
+                map(() => {
+                  console.log('streamStatus.changed INTERVAL');
+                  return { type: streamPingType.requested, payload: Date.now() };
+                })
+              );
+            }
 
-      return merge(streamMessage, streamStatus);
-    }),
-    startWith({
-      type: streamType.completed,
-    })
-  );
+            return EMPTY;
+          })
+        );
 
-// send ping periodically after connected
-// currently it doesn't stop/pause after disconnected
-// but ping while disconnected is nop anyway
-const pingEpic = (action$, state$) =>
-  action$.pipe(
-    ofType(streamStatusType.changed),
-    filter(({ payload: { isConnected } }) => isConnected),
-    take(1),
-    mergeMap(() => {
-      return interval(config.connectivity.latency.period).pipe(
-        map(() => {
-          return { type: streamPingType.requested, payload: Date.now() };
-        }),
-        // takeWhile(
-        //   () => state$.value.syncStream.isConnected
-        // ),
-      );
-    })
-  );
+        return merge(streamMessage, streamStatus);
+      }
 
-// send a ping immediately after connected
-const pingOnConnectEpic = action$ =>
-  action$.pipe(
-    ofType(streamStatusType.changed),
-    filter(({ payload: { isConnected } }) => isConnected),
-    map(() => {
-      return { type: streamPingType.requested, payload: Date.now() };
+      if (payload.command === 'STOP') {
+        console.log('STOP STREAM');
+        console.log('local stream.disconnect()');
+        stream.disconnect();
+        return EMPTY;
+      }
     })
   );
 
@@ -84,9 +79,9 @@ const pongEpic = action$ =>
       }
       return action$.pipe(
         ofType(streamMessageType.changed),
-        filter(action => (action.payload.id === id)),
+        filter(action => action.payload.id === id),
         take(1),
-        map((payload) => {
+        map(payload => {
           const result = objectPath.get(payload, 'payload.result', null);
           return { type: streamPingType.completed, payload: result };
         })
@@ -94,14 +89,4 @@ const pongEpic = action$ =>
     })
   );
 
-
-// const stpStreamEpic = action$ =>
-//   action$.pipe(
-//     ofType(types.streamStop.requested),
-//     mergeMap(() => {
-//       stream.disconnect();
-//       return EMPTY;
-//     })
-//   );
-
-export default [connectStreamEpic, pingOnConnectEpic, pingEpic, pongEpic];
+export default [connectStreamEpic, pongEpic];

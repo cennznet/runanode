@@ -20,14 +20,14 @@ const mapDispatchToProps = dispatch => ({
   onSyncRemoteStream: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
-      payload: {},
+      payload: { command: 'START' },
     });
   },
 
   onSyncStream: () => {
     dispatch({
       type: types.syncStream.requested,
-      payload: {},
+      payload: { command: 'START' },
     });
   },
   onSelectNetworkt: chain => {

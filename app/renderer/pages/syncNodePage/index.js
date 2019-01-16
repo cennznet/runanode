@@ -55,15 +55,6 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
     return <Redirect to={ROUTES.ROOT} />;
   }
 
-  Logger.info(`
-  ===========================================
-  Best block in MainNet #${bestBlock}
-  ===========================================`);
-  Logger.info(`
-  ===========================================
-  Best block in Local #${syncedBlock}
-  ===========================================`);
-  Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
   return (
     // <Layout sidebar={<SimpleSidebar />}>
     <Layout defaultSidebar>
