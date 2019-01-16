@@ -5,6 +5,8 @@ import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import { Button, FileUploader, Select, PageHeading } from 'components';
 import { Logger } from 'renderer/utils/logging';
+
+import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 
 const ChooseNetworkWrapper = styled.div`
@@ -41,9 +43,9 @@ const ButtonWrapper = styled.div`
 `;
 
 const NETWORK_OPTIONS = [
-  { label: 'Global test net', value: 'globalTestNet' },
-  { label: 'Local test net', value: 'localTestNet' },
-  { label: 'Main net', value: 'mainNet' },
+  { label: 'CENNZNet DEV', value: NetworkNameOptions.CENNZNET_DEV },
+  { label: 'CENNZNet UAT', value: NetworkNameOptions.CENNZNET_UAT },
+  { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
 ];
 
 const ChooseNetWork = ({

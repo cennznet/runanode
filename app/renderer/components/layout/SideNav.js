@@ -44,7 +44,7 @@ const SideNav = () => (
   <Wrapper>
     <IconNav>
       <TopIcons>
-        <IconLink to={ROUTES.WALLET.ROOT}>
+        <IconLink to={ROUTES.WALLET.CREATE}>
           <FontAwesomeIcon icon="plus" />
         </IconLink>
         <IconLink to="/wallet/import">

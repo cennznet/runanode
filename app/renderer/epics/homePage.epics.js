@@ -23,12 +23,12 @@ const homePageLoadEpic = (action$, state$) =>
           return { type: types.navigation.triggered, payload: ROUTES.TERMS_OF_USE_ACCEPTANCE };
         }
 
-        if (syncPercentage < 1) {
-          // if (isNetworkRemembered) {
-          //   return { type: types.navigation.triggered, payload: ROUTES.SYNC_NODE };
-          // }
-          return { type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK };
-        }
+        // if (syncPercentage < 1) {
+        //   // if (isNetworkRemembered) {
+        //   //   return { type: types.navigation.triggered, payload: ROUTES.SYNC_NODE };
+        //   // }
+        //   return { type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK };
+        // }
       }
 
       return { type: '' };

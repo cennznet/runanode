@@ -7,7 +7,6 @@ const WalletRestorePage = ({ subNav, onReset }) => (
   <MainLayout subNav={subNav}>
     <MainContent>
       <PageHeading>Restore wallet</PageHeading>
-      <Button onClick={() => onReset()}>Reset ToS</Button>
     </MainContent>
   </MainLayout>
 );

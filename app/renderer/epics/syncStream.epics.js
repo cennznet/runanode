@@ -1,4 +1,4 @@
-import { mergeMap, tap, catchError, filter, map, take, startWith } from 'rxjs/operators';
+import { mergeMap, tap, catchError, filter, map, take, startWith, takeWhile } from 'rxjs/operators';
 import { of, interval, merge, EMPTY } from 'rxjs';
 import { ofType } from 'redux-observable';
 import objectPath from "object-path";
@@ -18,6 +18,7 @@ const connectStreamEpic = action$ =>
   action$.pipe(
     ofType(streamType.requested),
     mergeMap(() => {
+      console.log('types.syncStream requested');
       stream.connect();
 
       const streamMessage = stream.messageSubject.pipe(
@@ -46,7 +47,7 @@ const connectStreamEpic = action$ =>
 // send ping periodically after connected
 // currently it doesn't stop/pause after disconnected
 // but ping while disconnected is nop anyway
-const pingEpic = action$ =>
+const pingEpic = (action$, state$) =>
   action$.pipe(
     ofType(streamStatusType.changed),
     filter(({ payload: { isConnected } }) => isConnected),
@@ -55,7 +56,11 @@ const pingEpic = action$ =>
       return interval(config.connectivity.latency.period).pipe(
         map(() => {
           return { type: streamPingType.requested, payload: Date.now() };
-        }));
+        }),
+        // takeWhile(
+        //   () => state$.value.syncStream.isConnected
+        // ),
+      );
     })
   );
 
@@ -88,5 +93,14 @@ const pongEpic = action$ =>
       );
     })
   );
+
+// const stpStreamEpic = action$ =>
+//   action$.pipe(
+//     ofType(types.streamStop.requested),
+//     mergeMap(() => {
+//       stream.disconnect();
+//       return EMPTY;
+//     })
+//   );
 
 export default [connectStreamEpic, pingOnConnectEpic, pingEpic, pongEpic];
