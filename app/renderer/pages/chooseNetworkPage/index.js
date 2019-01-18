@@ -41,26 +41,32 @@ const ButtonWrapper = styled.div`
   flex-direction: row-reverse;
 `;
 
-const NETWORK_OPTIONS = [
+export const NETWORK_OPTIONS = [
   { label: 'CENNZNet DEV', value: NetworkNameOptions.CENNZNET_DEV },
   { label: 'CENNZNet UAT', value: NetworkNameOptions.CENNZNET_UAT },
   { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
 ];
 
+export const getNetworkOptionPair = value => NETWORK_OPTIONS.find(option => option.value === value);
+
 const ChooseNetWork = ({
+  onSelectNetwork,
+  onUploadGenesisFile,
   onJoinNetwork,
   selectedNetwork,
-  setSelectedNetwork,
   uploadedFile,
   setUploadedFile,
 }) => {
-  const selectedLocalNetwork =
-    selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET;
+  const selectedLocalNetwork = selectedNetwork === NetworkNameOptions.LOCAL_TESTNET;
   const canJoinLocalNetwork = selectedLocalNetwork && uploadedFile;
   const canJoinNetwork = canJoinLocalNetwork || (selectedNetwork && !selectedLocalNetwork);
 
-  const singleFile = uploadedFile && uploadedFile[uploadedFile.length - 1];
-  Logger.info(`**Uploaded File: ${singleFile && singleFile.path}`);
+  const storeGenesisFile = file => {
+    if (file[0]) {
+      console.log('files', file[0]);
+      onUploadGenesisFile(file[0]);
+    }
+  };
 
   return (
     // <Layout sidebar={<SimpleSidebar />}>
@@ -72,9 +78,10 @@ const ChooseNetWork = ({
             <div>Choose network</div>
             <NetworkOptionWrapper>
               <Select
-                value={selectedNetwork}
+                value={getNetworkOptionPair(selectedNetwork)}
                 onChange={selected => {
-                  setSelectedNetwork(selected);
+                  console.log('selected value', selected);
+                  onSelectNetwork(selected.value);
                 }}
                 backgroundColor={colors.N800}
                 selectedBackgroundColor={colors.N800}
@@ -87,13 +94,13 @@ const ChooseNetWork = ({
                 <div>Upload chain setting file</div>
                 <UploaderWrapper>
                   <FileUploader
-                    value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
+                    // value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
                     backgroundColor="transparent"
                     borderColor={colors.N0}
                     focusBorderColor={colors.N0}
                     acceptTypes=".json"
                     onDrop={file => {
-                      setUploadedFile(file);
+                      storeGenesisFile(file);
                     }}
                   />
                 </UploaderWrapper>
@@ -103,15 +110,7 @@ const ChooseNetWork = ({
 
             <ButtonWrapper>
               <div>
-                <Button
-                  disabled={!canJoinNetwork}
-                  onClick={() =>
-                    onJoinNetwork({
-                      selectedNetwork: selectedNetwork.value,
-                      uploadedFileInfo: singleFile,
-                    })
-                  }
-                >
+                <Button disabled={!canJoinNetwork} onClick={() => onJoinNetwork()}>
                   Join network
                 </Button>
               </div>

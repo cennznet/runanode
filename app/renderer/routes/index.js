@@ -9,6 +9,7 @@ import TosPage from 'renderer/pages/tosPage';
 import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import SyncNodePage from 'renderer/pages/syncNodePage';
 import DevPage from 'renderer/pages/devPage';
+import HomePage from 'renderer/pages/homePage';
 import WalletRoutes from 'renderer/routes/WalletRoutes';
 import SettingsRoutes from 'renderer/routes/SettingsRoutes';
 import ROUTES from 'renderer/constants/routes';
@@ -33,7 +34,7 @@ class AppRoutes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path={ROUTES.ROOT} render={() => <Redirect to={ROUTES.WALLET.CREATE} />} />
+        <Route exact path={ROUTES.ROOT} component={HomePage} />
         <Redirect exact from={ROUTES.WALLET.ROOT} to={ROUTES.WALLET.CREATE} />
         <Redirect exact from={ROUTES.SETTINGS.ROOT} to={ROUTES.SETTINGS.GENERAL} />
         <Route path={ROUTES.WALLET.ROOT} render={WalletRoutes} />

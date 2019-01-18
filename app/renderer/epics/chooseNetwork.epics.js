@@ -9,20 +9,26 @@ import chainEpics from 'renderer/epics/chainEpics';
 const storeNetworkOptionEpic = action$ =>
   action$.pipe(
     ofType(types.storeNetworkOption.triggered),
-    mergeMap(({ payload: { selectedNetwork, uploadedFileInfo } }) => {
-      return of(
-        {
-          type: types.setStorage.requested,
-          payload: { key: storageKeys.SELECTED_NETWORK, value: selectedNetwork },
-        },
-        uploadedFileInfo
-          ? {
-              type: types.setStorage.requested,
-              payload: { key: storageKeys.GENESIS_CONFIG_FILE_PATH, value: uploadedFileInfo.path },
-            }
-          : EMPTY
-      ).pipe(concat(of({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE })));
+    mergeMap(({ payload }) => {
+      return of({
+        type: types.setStorage.requested,
+        payload: { key: storageKeys.SELECTED_NETWORK, value: payload },
+      });
     })
   );
 
-export default [storeNetworkOptionEpic];
+const storeUploadedGenesisFileEpic = action$ =>
+  action$.pipe(
+    ofType(types.storeUploadedGenesisInfo.triggered),
+    mergeMap(({ payload: { path, name, size } }) => {
+      return of({
+        type: types.setStorage.requested,
+        payload: {
+          key: storageKeys.GENESIS_CONFIG_FILE_PATH,
+          value: { path, name, size },
+        },
+      });
+    })
+  );
+
+export default [storeNetworkOptionEpic, storeUploadedGenesisFileEpic];
