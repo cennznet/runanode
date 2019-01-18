@@ -1,35 +1,40 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle, withState } from 'recompose';
 import ROUTES from 'renderer/constants/routes';
+import { storageKeys } from 'renderer/api/utils/storage';
 import types from '../../types';
 
+// const { SELECTED_NETWORK: select, GENESIS_CONFIG_FILE_PATH } = storageKeys;
+
+const selectedNetwork = storageKeys.SELECTED_NETWORK;
+
+const mapStateToProps = ({ localStorage }) => ({
+  selectedNetwork: localStorage[storageKeys.SELECTED_NETWORK],
+});
+
 const mapDispatchToProps = dispatch => ({
-  onJoinNetwork: payload => {
+  onSelectNetwork: payload => {
     dispatch({ type: types.storeNetworkOption.triggered, payload });
   },
-  onPageLoad: () => {
-    // dispatch({
-    //   type: types.streamStop.requested,
-    //   payload: {},
-    // });
+  onUploadGenesisFile: payload => {
+    dispatch({ type: types.storeUploadedGenesisInfo.triggered, payload });
+  },
+  onJoinNetwork: () => {
+    dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
   },
 });
 
-const selectedNetworkState = withState('selectedNetwork', 'setSelectedNetwork', null);
 const uploadedFileState = withState('uploadedFile', 'setUploadedFile', null);
 
 const enhance = lifecycle({
-  componentDidMount() {
-    this.props.onPageLoad();
-  },
+  componentDidMount() {},
 });
 
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   ),
-  selectedNetworkState,
   uploadedFileState,
   enhance
 );

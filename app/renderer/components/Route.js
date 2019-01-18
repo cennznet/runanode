@@ -14,9 +14,9 @@ const enhance = lifecycle({
 });
 
 const RouteComponent = ({ hasBlockNumbers, ...rest }) => {
-  if (!hasBlockNumbers) {
-    return <div>syncing...</div>;
-  }
+  // if (!hasBlockNumbers) {
+  //   return <div>syncing...</div>;
+  // }
 
   return <ReactRoute {...rest} />;
 };

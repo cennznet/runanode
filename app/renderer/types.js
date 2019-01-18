@@ -20,6 +20,7 @@ const actionTypes = {
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
   acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
   storeNetworkOption: triggerActionTypes('store_network_option'),
+  storeUploadedGenesisInfo: triggerActionTypes('store_upload_genesis_file_info'),
   setStorage: apiActionTypes('set_storage'),
   getStorage: apiActionTypes('get_storage'),
   clearStorage: apiActionTypes('clear_storage'),

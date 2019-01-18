@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 
 import TopBar from './TopBar';
 
-const mapStateToProps = ({nodeSystem, remoteStream, syncStream, syncRemoteStream}) => ({
-  nodeSystem, remoteStream, syncStream, syncRemoteStream
+const mapStateToProps = ({ nodeSystem, remoteStream, syncStream, syncRemoteStream }) => ({
+  nodeSystem,
+  remoteStream,
+  syncStream,
+  syncRemoteStream,
 });
 
 class TopBarContainer extends Component {
-
   render() {
     const { nodeSystem, remoteStream, syncStream, syncRemoteStream } = this.props;
     const { chain, name, version, isSynced, health } = nodeSystem;
@@ -19,9 +21,10 @@ class TopBarContainer extends Component {
     const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
     const { blockNum: localBlockNum, bps: localBps } = syncStream;
     const blockNum = `#${localBlockNum} / #${remoteBlockNum}`;
-    const blockSpeed = `${localBps.toFixed(2)}bps / ${remoteBps.toFixed(2)}bps`;
+    const blockSpeed =
+      localBps && remoteBps ? `${localBps.toFixed(2)}bps / ${remoteBps.toFixed(2)}bps` : '0 bps';
 
-    const percentage = remoteBlockNum > 0 ? (localBlockNum / remoteBlockNum * 100).toFixed(2) : 0 ;
+    const percentage = remoteBlockNum > 0 ? ((localBlockNum / remoteBlockNum) * 100).toFixed(2) : 0;
     const syncPercentage = `${percentage}%`;
     return (
       <TopBar
@@ -33,7 +36,6 @@ class TopBarContainer extends Component {
       />
     );
   }
-
 }
 
 export default connect(mapStateToProps)(TopBarContainer);
