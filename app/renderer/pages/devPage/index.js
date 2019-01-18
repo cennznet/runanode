@@ -20,9 +20,26 @@ const Flex = styled.div`
   }
 `;
 
-const DevPage = ({ onResetLocalStorage, onNetworkStatusClick, onGetHeaderClick, onGetRemoteHeaderClick, onRestartNodeClick, onStream, onStreamStop, onChainSubscribeNewHead, onNavToChooseNetwork, nodeSystem, syncStream, syncRemoteStream }) => {
+const DevPage = ({
+  onResetLocalStorage,
+  onNetworkStatusClick,
+  onGetHeaderClick,
+  onGetRemoteHeaderClick,
+  onRestartNodeClick,
+  onStreamStart,
+  onRemoteStreamStart,
+  onStreamStop,
+  onRemoteStreamStop,
+  onChainSubscribeNewHead,
+  onNavToChooseNetwork,
+  nodeSystem,
+  syncStream,
+  syncRemoteStream,
+}) => {
   const { chain, name, version, health } = nodeSystem;
-  const networkStatus = `${chain} ${version} (status:${health.message}, sync:${health.isSyncing}, peers:${health.peers}, name:${name})`;
+  const networkStatus = `${chain} ${version} (status:${health.message}, sync:${
+    health.isSyncing
+  }, peers:${health.peers}, name:${name})`;
 
   function getStreamStatus(streamState) {
     const { isConnected, latency, signalLevel, blockNum, previousBlockNum, bps } = streamState;
@@ -41,34 +58,28 @@ const DevPage = ({ onResetLocalStorage, onNetworkStatusClick, onGetHeaderClick, 
         </PageTitle>
         <Flex>
           <Button onClick={onNetworkStatusClick}>Get Network Status</Button>
-          <div>
-            {networkStatus}
-          </div>
+          <div>{networkStatus}</div>
         </Flex>
         <Flex>
           <Button onClick={onGetHeaderClick}>Get Header</Button>
-          <div>
-            {syncSteamStatus}
-          </div>
+          <div>{syncSteamStatus}</div>
         </Flex>
         <Flex>
           <Button onClick={onGetRemoteHeaderClick}>Get RemoteHeader</Button>
-          <div>
-            {syncRemoteSteamStatus}
-          </div>
+          <div>{syncRemoteSteamStatus}</div>
         </Flex>
         <Flex>
           <Button onClick={onRestartNodeClick}>Restart node</Button>
         </Flex>
         <Flex>
-          <Button onClick={onStream}>start stream</Button>
-          <Button onClick={onStreamStop}>stop stream(WIP)</Button>
-          <div>
-            {syncSteamStatus}
-          </div>
-          <div>
-            {syncRemoteSteamStatus}
-          </div>
+          <Button onClick={onStreamStart}>Start stream</Button>
+          <Button onClick={onRemoteStreamStart}>Start remote stream</Button>
+          <Button onClick={onStreamStop}>Stop stream</Button>
+          <Button onClick={onRemoteStreamStop}>Stop remote stream</Button>
+        </Flex>
+        <Flex>
+          <div>{syncSteamStatus}</div>
+          <div>{syncRemoteSteamStatus}</div>
         </Flex>
         <Flex>
           <Button onClick={onChainSubscribeNewHead}>start chainSubscribeNewHead</Button>
