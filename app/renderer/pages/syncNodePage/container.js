@@ -16,20 +16,6 @@ const mapStateToProps = ({ syncStream, syncRemoteStream, localStorage }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // Handle with the detailed network option in next PR
-  onSyncRemoteStream: () => {
-    dispatch({
-      type: types.syncRemoteStream.requested,
-      payload: { command: 'START' },
-    });
-  },
-
-  onSyncStream: () => {
-    dispatch({
-      type: types.syncStream.requested,
-      payload: { command: 'START' },
-    });
-  },
   onSelectNetworkt: chain => {
     const options: CennzNetRestartOptions = {
       chain,
@@ -47,8 +33,6 @@ const enhance = lifecycle({
     } else {
       this.props.onSelectNetworkt(this.props.localStorage.SELECTED_NETWORK);
     }
-    // this.props.onSyncStream();
-    // this.props.onSyncRemoteStream();
   },
 });
 

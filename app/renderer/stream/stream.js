@@ -55,15 +55,12 @@ export class Stream {
 
     this._socket = null;
 
-    console.log('disconnect this._socket', this._socket);
-
     this._updateStatus(false, retry, false);
   }
 
   send(type, data, requireAuth, immediately) {
     const id = this._nextId;
     this._nextId += 1;
-    // this._ensureWebSocket();
     if (!immediately && this._messageQueue.length) {
       // ensure message sent order
       this._queueMessage({ id, type, data, requireAuth });
@@ -175,7 +172,6 @@ export class Stream {
   }
 
   _ensureWebSocket() {
-    console.log('_ensureWebSocket', this._socket);
     if (this._socket) {
       if (this._socket.url === this._config.url) {
         return;
@@ -228,7 +224,6 @@ export class Stream {
   };
 
   _updateStatus(isConnected, isConnecting, isAuthenticated) {
-    console.log('_updateStatus isConnected', isConnected);
     this._isConnected = isConnected;
     this._isConnecting = isConnecting;
     this._isAuthenticated = isAuthenticated;

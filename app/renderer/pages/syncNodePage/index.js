@@ -45,7 +45,10 @@ const networkOptionMapping = {
 };
 
 const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
-  const { SELECTED_NETWORK:selectedNetwork, GENESIS_CONFIG_FILE_PATH: uploadedFileInfo } = localStorage;
+  const {
+    SELECTED_NETWORK: selectedNetwork,
+    GENESIS_CONFIG_FILE_PATH: uploadedFileInfo,
+  } = localStorage;
   const { blockNum: bestBlock } = syncRemoteStream;
   const { blockNum: syncedBlock } = syncStream;
   const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
@@ -54,6 +57,16 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
   if (progressPercentage === 100) {
     return <Redirect to={ROUTES.ROOT} />;
   }
+
+  Logger.info(`
+  ===========================================
+  Best block in MainNet #${bestBlock}
+  ===========================================`);
+  Logger.info(`
+  ===========================================
+  Best block in Local #${syncedBlock}
+  ===========================================`);
+  Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
 
   return (
     // <Layout sidebar={<SimpleSidebar />}>
