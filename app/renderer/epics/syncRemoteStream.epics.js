@@ -11,7 +11,7 @@ import {
 } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import R from 'ramda';
-
+import sreamConstants from 'renderer/constants/stream';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { remoteStream as stream } from 'renderer/stream/stream';
@@ -49,12 +49,12 @@ const connectStreamEpic = action$ =>
   action$.pipe(
     ofType(streamType.requested),
     switchMap(({ payload }) => {
-      if (payload.command === 'START') {
+      if (payload.command === sreamConstants.CONNECT) {
         stream.connect();
         return merge(messageSubject$, statusSubject$);
       }
 
-      if (payload.command === 'STOP') {
+      if (payload.command === sreamConstants.DISCONNECT) {
         stream.disconnect();
         return EMPTY;
       }

@@ -5,6 +5,7 @@ import R from 'ramda';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { localStream as stream } from 'renderer/stream/stream';
+import sreamConstants from 'renderer/constants/stream';
 import streamTypes from '../stream/types';
 
 const streamType = types.syncStream;
@@ -39,12 +40,12 @@ const connectStreamEpic = action$ =>
   action$.pipe(
     ofType(streamType.requested),
     switchMap(({ payload }) => {
-      if (payload.command === 'START') {
+      if (payload.command === sreamConstants.CONNECT) {
         stream.connect();
         return merge(messageSubject$, statusSubject$);
       }
 
-      if (payload.command === 'STOP') {
+      if (payload.command === sreamConstants.DISCONNECT) {
         stream.disconnect();
         return EMPTY;
       }

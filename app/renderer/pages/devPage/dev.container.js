@@ -4,6 +4,7 @@ import types from 'renderer/types';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';
+import sreamConstants from 'renderer/constants/stream';
 
 const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
   nodeSystem,
@@ -48,25 +49,25 @@ const mapDispatchToProps = dispatch => ({
   onStreamStart: () => {
     dispatch({
       type: types.syncStream.requested,
-      payload: { command: 'START' },
+      payload: { command: sreamConstants.CONNECT },
     });
   },
   onRemoteStreamStart: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
-      payload: { command: 'START' },
+      payload: { command: sreamConstants.CONNECT },
     });
   },
   onStreamStop: () => {
     dispatch({
       type: types.syncStream.requested,
-      payload: { command: 'STOP' },
+      payload: { command: sreamConstants.DISCONNECT },
     });
   },
   onRemoteStreamStop: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
-      payload: { command: 'STOP' },
+      payload: { command: sreamConstants.DISCONNECT },
     });
   },
   onChainSubscribeNewHead: () => {
