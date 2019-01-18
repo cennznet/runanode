@@ -1,17 +1,7 @@
 import { of, interval, merge, EMPTY } from 'rxjs';
-import {
-  mergeMap,
-  switchMap,
-  catchError,
-  filter,
-  map,
-  take,
-  startWith,
-  concat,
-} from 'rxjs/operators';
+import { catchError, concat, filter, map, mergeMap, switchMap, take } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import objectPath from 'object-path';
-
+import R from 'ramda';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { localStream as stream } from 'renderer/stream/stream';
@@ -22,59 +12,50 @@ const streamMessageType = types.syncStreamMessage;
 const streamStatusType = types.syncStreamStatus;
 const streamPingType = types.syncStreamPing;
 
+const messageSubject$ = stream.messageSubject.pipe(
+  map(message => {
+    return {
+      type: streamMessageType.changed,
+      payload: message,
+    };
+  })
+);
+
+const statusSubject$ = stream.statusSubject.pipe(
+  mergeMap(status => {
+    if (status.isConnected) {
+      return interval(config.connectivity.latency.period).pipe(
+        map(() => {
+          return { type: streamPingType.requested, payload: Date.now() };
+        })
+      );
+    }
+
+    return EMPTY;
+  })
+);
+
 const connectStreamEpic = action$ =>
   action$.pipe(
     ofType(streamType.requested),
     switchMap(({ payload }) => {
       if (payload.command === 'START') {
-        console.log('START STREAM');
-
         stream.connect();
-
-        const streamMessage = stream.messageSubject.pipe(
-          map(message => {
-            console.log('stream.connect streamMessage', message);
-            return {
-              type: streamMessageType.changed,
-              payload: message,
-            };
-          })
-        );
-
-        const streamStatus = stream.statusSubject.pipe(
-          mergeMap(status => {
-            console.log('stream.connect streamStatus', status);
-            if (status.isConnected) {
-              return interval(config.connectivity.latency.period).pipe(
-                map(() => {
-                  console.log('streamStatus.changed INTERVAL');
-                  return { type: streamPingType.requested, payload: Date.now() };
-                })
-              );
-            }
-
-            return EMPTY;
-          })
-        );
-
-        return merge(streamMessage, streamStatus);
+        return merge(messageSubject$, statusSubject$);
       }
 
       if (payload.command === 'STOP') {
-        console.log('STOP STREAM');
-        console.log('local stream.disconnect()');
         stream.disconnect();
         return EMPTY;
       }
     })
   );
 
-const pongEpic = action$ =>
+const streamPingEpic = action$ =>
   action$.pipe(
     ofType(streamPingType.requested),
     mergeMap(() => {
       const id = stream.pingWithStreamType(streamTypes.chainGetHeader);
-      console.log('streamPing.requested', id);
 
       if (!id) {
         return EMPTY;
@@ -82,13 +63,12 @@ const pongEpic = action$ =>
       return action$.pipe(
         ofType(streamMessageType.changed),
         filter(action => action.payload.id === id),
-        take(1),
-        map(payload => {
-          const result = objectPath.get(payload, 'payload.result', null);
+        map(({ payload }) => {
+          const result = R.pathOr(null, ['result'], payload);
           return { type: streamPingType.completed, payload: result };
         })
       );
     })
   );
 
-export default [connectStreamEpic, pongEpic];
+export default [connectStreamEpic, streamPingEpic];
