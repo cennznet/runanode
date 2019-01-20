@@ -4,12 +4,9 @@ import ROUTES from 'renderer/constants/routes';
 import { storageKeys } from 'renderer/api/utils/storage';
 import types from '../../types';
 
-// const { SELECTED_NETWORK: select, GENESIS_CONFIG_FILE_PATH } = storageKeys;
-
-const selectedNetwork = storageKeys.SELECTED_NETWORK;
-
 const mapStateToProps = ({ localStorage }) => ({
   selectedNetwork: localStorage[storageKeys.SELECTED_NETWORK],
+  genesisConfigFile: localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -24,17 +21,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const uploadedFileState = withState('uploadedFile', 'setUploadedFile', null);
-
-const enhance = lifecycle({
-  componentDidMount() {},
-});
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  uploadedFileState,
-  enhance
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 );

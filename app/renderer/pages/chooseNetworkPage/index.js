@@ -54,11 +54,10 @@ const ChooseNetWork = ({
   onUploadGenesisFile,
   onJoinNetwork,
   selectedNetwork,
-  uploadedFile,
-  setUploadedFile,
+  genesisConfigFile,
 }) => {
   const selectedLocalNetwork = selectedNetwork === NetworkNameOptions.LOCAL_TESTNET;
-  const canJoinLocalNetwork = selectedLocalNetwork && uploadedFile;
+  const canJoinLocalNetwork = selectedLocalNetwork && genesisConfigFile;
   const canJoinNetwork = canJoinLocalNetwork || (selectedNetwork && !selectedLocalNetwork);
 
   const storeGenesisFile = file => {
@@ -94,7 +93,11 @@ const ChooseNetWork = ({
                 <div>Upload chain setting file</div>
                 <UploaderWrapper>
                   <FileUploader
-                    // value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
+                    value={
+                      genesisConfigFile
+                        ? `${genesisConfigFile.name} - ${genesisConfigFile.size} bytes`
+                        : null
+                    }
                     backgroundColor="transparent"
                     borderColor={colors.N0}
                     focusBorderColor={colors.N0}
