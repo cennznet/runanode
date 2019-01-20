@@ -24,7 +24,7 @@ const storeUploadedGenesisFileEpic = action$ =>
       return of({
         type: types.setStorage.requested,
         payload: {
-          key: storageKeys.GENESIS_CONFIG_FILE_PATH,
+          key: storageKeys.GENESIS_CONFIG_FILE_INFO,
           value: { path, name, size },
         },
       });
