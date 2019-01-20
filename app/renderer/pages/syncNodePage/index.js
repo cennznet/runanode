@@ -69,6 +69,7 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
   Best block in Local #${syncedBlock}
   ===========================================`);
   Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
+
   return (
     // <Layout sidebar={<SimpleSidebar />}>
     <Layout defaultSidebar>
