@@ -1,107 +1,84 @@
-import { mergeMap, tap, catchError, filter, map, take, startWith, takeUntil, takeWhile } from 'rxjs/operators';
 import { of, interval, merge, EMPTY } from 'rxjs';
+import {
+  mergeMap,
+  switchMap,
+  catchError,
+  filter,
+  map,
+  take,
+  startWith,
+  concat,
+} from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import objectPath from "object-path";
-
+import R from 'ramda';
+import sreamConstants from 'renderer/constants/stream';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 import { remoteStream as stream } from 'renderer/stream/stream';
 import streamTypes from '../stream/types';
-
 
 const streamType = types.syncRemoteStream;
 const streamMessageType = types.syncRemoteStreamMessage;
 const streamStatusType = types.syncRemoteStreamStatus;
 const streamPingType = types.syncRemoteStreamPing;
 
-const connectStreamEpic = action$ =>
-  action$.pipe(
-    ofType(streamType.requested),
-    mergeMap(() => {
-      stream.connect();
+const messageSubject$ = stream.messageSubject.pipe(
+  map(message => {
+    return {
+      type: streamMessageType.changed,
+      payload: message,
+    };
+  })
+);
 
-      const streamMessage = stream.messageSubject.pipe(
-        map(payload =>  {
-          console.log(`sync remote streamMessage`);
-          console.log(payload);
-          return ({
-              type: streamMessageType.changed,
-              payload
-            });
-          }
-        ));
-
-      const streamStatus = stream.statusSubject.pipe(
-        map(payload => ({
-          type: streamStatusType.changed,
-          payload
-        })));
-
-      return merge(streamMessage, streamStatus);
-    }),
-    startWith({
-      type: streamType.completed,
-    })
-  );
-
-// send ping periodically after connected
-// currently it doesn't stop/pause after disconnected
-// but ping while disconnected is nop anyway
-const pingEpic = (action$, state$) =>
-  action$.pipe(
-    ofType(streamStatusType.changed),
-    filter(({ payload: { isConnected } }) => isConnected),
-    take(1),
-    mergeMap(() => {
+const statusSubject$ = stream.statusSubject.pipe(
+  mergeMap(status => {
+    if (status.isConnected) {
       return interval(config.connectivity.latency.period).pipe(
         map(() => {
           return { type: streamPingType.requested, payload: Date.now() };
-        }),
-        // takeWhile(
-        //   () => state$.value.syncStream.isConnected
-        // ),
+        })
       );
-    })
-  );
+    }
 
-// send a ping immediately after connected
-const pingOnConnectEpic = action$ =>
+    return EMPTY;
+  })
+);
+
+const connectStreamEpic = action$ =>
   action$.pipe(
-    ofType(streamStatusType.changed),
-    filter(({ payload: { isConnected } }) => isConnected),
-    map(() => {
-      return { type: streamPingType.requested, payload: Date.now() };
+    ofType(streamType.requested),
+    switchMap(({ payload }) => {
+      if (payload.command === sreamConstants.CONNECT) {
+        stream.connect();
+        return merge(messageSubject$, statusSubject$);
+      }
+
+      if (payload.command === sreamConstants.DISCONNECT) {
+        stream.disconnect();
+        return EMPTY;
+      }
     })
   );
 
-const pongEpic = action$ =>
+const streamPingEpic = action$ =>
   action$.pipe(
     ofType(streamPingType.requested),
     mergeMap(() => {
       const id = stream.pingWithStreamType(streamTypes.chainGetHeader);
+
       if (!id) {
         return EMPTY;
       }
       return action$.pipe(
         ofType(streamMessageType.changed),
-        filter(action => (action.payload.id === id)),
-        take(1),
-        map((payload) => {
-          const result = objectPath.get(payload, 'payload.result', null);
+        filter(action => action.payload.id === id),
+        map(({ payload }) => {
+          const result = R.pathOr(null, ['result'], payload);
           return { type: streamPingType.completed, payload: result };
         })
       );
     })
   );
 
-
-// const stpStreamEpic = action$ =>
-//   action$.pipe(
-//     ofType(types.streamStop.requested),
-//     mergeMap(() => {
-//       stream.disconnect();
-//       return EMPTY;
-//     })
-//   );
-
-export default [connectStreamEpic, pingOnConnectEpic, pingEpic, pongEpic];
+export default [connectStreamEpic, streamPingEpic];

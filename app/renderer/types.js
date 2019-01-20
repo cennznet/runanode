@@ -54,8 +54,6 @@ const actionTypes = {
   syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
-
-  // streamStop: apiActionTypes('stream_stop'),
 };
 
 export default actionTypes;

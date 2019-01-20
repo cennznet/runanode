@@ -57,8 +57,6 @@ const handlePong = (state, pointAt) => ({
 });
 
 const handlePongWithPayload = (state, payload) => {
-  console.log('handlePongWithPayload');
-  console.log(payload);
   const blockNum = payload.number;
   const previousBlockNum = state.blockNum;
   const bps = ((blockNum - previousBlockNum) / config.connectivity.latency.period) * 1000;

@@ -4,6 +4,7 @@ import types from 'renderer/types';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';
+import sreamConstants from 'renderer/constants/stream';
 
 const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
   nodeSystem,
@@ -41,25 +42,33 @@ const mapDispatchToProps = dispatch => ({
   onRestartNodeClick: () => {
     const options: CennzNetRestartOptions = {
       name: 'my-custom-node',
-      chain: '/Users/cherryliang/Work/cennz-node-ui/dist/local.json',
+      chain: '/Users/benxgao/hackathon/cennz-node-ui/dist/local.json',
     };
     restartCennzNetNodeChannel.send(options);
   },
-  onStream: () => {
+  onStreamStart: () => {
     dispatch({
       type: types.syncStream.requested,
-      payload: {},
+      payload: { command: sreamConstants.CONNECT },
     });
+  },
+  onRemoteStreamStart: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
-      payload: {},
+      payload: { command: sreamConstants.CONNECT },
     });
   },
   onStreamStop: () => {
-    // dispatch({
-    //   type: types.streamStop.requested,
-    //   payload: {},
-    // });
+    dispatch({
+      type: types.syncStream.requested,
+      payload: { command: sreamConstants.DISCONNECT },
+    });
+  },
+  onRemoteStreamStop: () => {
+    dispatch({
+      type: types.syncRemoteStream.requested,
+      payload: { command: sreamConstants.DISCONNECT },
+    });
   },
   onChainSubscribeNewHead: () => {
     dispatch({
@@ -68,7 +77,7 @@ const mapDispatchToProps = dispatch => ({
     });
   },
   onNavToChooseNetwork: () => {
-    dispatch({type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK});
+    dispatch({ type: types.navigation.triggered, payload: ROUTES.CHOOSE_NETWORK });
     dispatch({ type: types.resetLocalStorage.triggered });
   },
   onResetLocalStorage: () => {
