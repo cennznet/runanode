@@ -62,7 +62,6 @@ const ChooseNetWork = ({
 
   const storeGenesisFile = file => {
     if (file[0]) {
-      console.log('files', file[0]);
       onUploadGenesisFile(file[0]);
     }
   };
@@ -79,7 +78,7 @@ const ChooseNetWork = ({
               <Select
                 value={getNetworkOptionPair(selectedNetwork)}
                 onChange={selected => {
-                  console.log('selected value', selected);
+                  Logger.info('selected value', selected);
                   onSelectNetwork(selected.value);
                 }}
                 backgroundColor={colors.N800}
