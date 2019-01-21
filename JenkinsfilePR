@@ -1,41 +1,28 @@
 #!groovy
 pipeline {
-    agent {
-        label 'linux'
-    }
+  agent {
+    label 'linux'
+  }
 
-    options {
-        ansiColor('xterm')
-    }
+  options {
+    ansiColor('xterm')
+  }
 
-    environment {
-        SERVICE_NAME = 'cennz-node-ui'
-    }
+  environment {
+    SERVICE_NAME = 'cennz-node-ui'
+    AWS_ACCESS_KEY = credentials('TF_AWS_ACCESS_KEY')
+    AWS_SECRET_KEY = credentials('TF_AWS_SECRET_KEY')
+    NAMESPACE = 'cennz-node-ui'
+    SSH_RSA_FILE_PATH = credentials('jenkins-ssh-key')
+    GEMFURY_TOKEN = credentials('GEMFURY_TOKEN')
+    GEMFURY_URL = credentials('GEMFURY_MIRROR_URL')
+  }
 
-    stages {
-        stage('Test') {
-            steps {
-                sh './scripts/test.sh'
-            }
-        }
-
-//        stage('Unit Tests') {
-//            steps {
-//                sh './scripts/run-unit-tests.sh'
-//            }
-//        }
-//
-//        stage('Functional Tests') {
-//            steps {
-//                sh './scripts/run-functional-tests.sh'
-//            }
-//        }
+  stages {
+    stage('Test') {
+      steps {
+        sh './scripts/test.sh'
+      }
     }
-
-    post {
-//        always {
-//            echo "Pipeline post always"
-//            sh 'bash /mnt/jenkins/script/cleanup.sh'
-//        }
-    }
+  }
 }
