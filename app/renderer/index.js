@@ -7,7 +7,7 @@ import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
-import { AppContainer } from "react-hot-loader";
+import { AppContainer } from 'react-hot-loader';
 
 import types from './types';
 import store from './store';
@@ -15,6 +15,7 @@ import App from './App';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
 
+// store.dispatch({ type: types.resetLocalStorage.triggered });
 store.dispatch({ type: types.init.triggered });
 
 // import utils from './utils';

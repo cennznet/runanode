@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import sreamConstants from 'renderer/constants/stream';
-import { storageKeys } from 'renderer/api/utils/storage';
+import { storageKeys, getStorage } from 'renderer/api/utils/storage';
 
 const initEpic = action$ =>
   action$.pipe(
@@ -32,7 +32,7 @@ const initEpic = action$ =>
         },
         {
           type: types.getStorage.requested,
-          payload: { key: storageKeys.GENESIS_CONFIG_FILE_PATH },
+          payload: { key: storageKeys.GENESIS_CONFIG_FILE_INFO },
         },
         {
           type: types.nodeWsSystemChainPolling.requested,
