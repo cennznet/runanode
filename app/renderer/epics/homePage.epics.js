@@ -14,13 +14,13 @@ const homePageLoadEpic = (action$, state$) =>
       const isNetworkRemembered = await getStorage(storageKeys.REMEMBER_NETWORK);
       const selectedNetwork = await getStorage(storageKeys.SELECTED_NETWORK);
       const genesisConfigFileInfo = await getStorage(storageKeys.GENESIS_CONFIG_FILE_INFO);
-      const genesisConfigFilePath = genesisConfigFileInfo.path;
+      const genesisConfigFilePath = genesisConfigFileInfo && genesisConfigFileInfo.path;
 
       if (!isTosAccepted) {
         return { type: types.navigation.triggered, payload: ROUTES.TERMS_OF_USE_ACCEPTANCE };
       }
 
-      if (selectedNetwork) {
+      if (isNetworkRemembered && selectedNetwork) {
         if (
           (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) ||
           selectedNetwork !== NetworkNameOptions.LOCAL_TESTNET

@@ -50,21 +50,19 @@ export const NETWORK_OPTIONS = [
 export const getNetworkOptionPair = value => NETWORK_OPTIONS.find(option => option.value === value);
 
 const ChooseNetWork = ({
-  onSelectNetwork,
-  onUploadGenesisFile,
-  onJoinNetwork,
   selectedNetwork,
-  genesisConfigFile,
+  setSelectedNetwork,
+  genesisFile,
+  setUpGenesisFile,
+  onJoinNetwork,
 }) => {
-  const selectedLocalNetwork = selectedNetwork === NetworkNameOptions.LOCAL_TESTNET;
-  const canJoinLocalNetwork = selectedLocalNetwork && genesisConfigFile;
+  const selectedLocalNetwork =
+    selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET;
+  const canJoinLocalNetwork = selectedLocalNetwork && genesisFile;
   const canJoinNetwork = canJoinLocalNetwork || (selectedNetwork && !selectedLocalNetwork);
 
-  const storeGenesisFile = file => {
-    if (file[0]) {
-      onUploadGenesisFile(file[0]);
-    }
-  };
+  const singleFile = genesisFile && genesisFile[genesisFile.length - 1];
+  Logger.info(`**Uploaded File: ${singleFile && singleFile.path}`);
 
   return (
     // <Layout sidebar={<SimpleSidebar />}>
@@ -79,7 +77,7 @@ const ChooseNetWork = ({
                 value={getNetworkOptionPair(selectedNetwork)}
                 onChange={selected => {
                   Logger.info('selected value', selected);
-                  onSelectNetwork(selected.value);
+                  setSelectedNetwork(selected);
                 }}
                 backgroundColor={colors.N800}
                 selectedBackgroundColor={colors.N800}
@@ -92,17 +90,13 @@ const ChooseNetWork = ({
                 <div>Upload chain setting file</div>
                 <UploaderWrapper>
                   <FileUploader
-                    value={
-                      genesisConfigFile
-                        ? `${genesisConfigFile.name} - ${genesisConfigFile.size} bytes`
-                        : null
-                    }
+                    value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
                     backgroundColor="transparent"
                     borderColor={colors.N0}
                     focusBorderColor={colors.N0}
                     acceptTypes=".json"
                     onDrop={file => {
-                      storeGenesisFile(file);
+                      setUpGenesisFile(file);
                     }}
                   />
                 </UploaderWrapper>
@@ -112,7 +106,15 @@ const ChooseNetWork = ({
 
             <ButtonWrapper>
               <div>
-                <Button disabled={!canJoinNetwork} onClick={() => onJoinNetwork()}>
+                <Button
+                  disabled={!canJoinNetwork}
+                  onClick={() =>
+                    onJoinNetwork({
+                      selectedNetwork: selectedNetwork.value,
+                      genesisFile: singleFile,
+                    })
+                  }
+                >
                   Join network
                 </Button>
               </div>
