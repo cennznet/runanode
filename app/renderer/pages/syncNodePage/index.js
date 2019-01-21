@@ -7,6 +7,7 @@ import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/la
 import { PageHeading } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
+import { getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
 import withContainer from './container';
 
 const SyncNodeTitle = styled.div`
@@ -45,10 +46,10 @@ const networkOptionMapping = {
 };
 
 const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
-  const {
-    SELECTED_NETWORK: selectedNetwork,
-    GENESIS_CONFIG_FILE_PATH: uploadedFileInfo,
-  } = localStorage;
+  console.log('localStorage', localStorage);
+  const { SELECTED_NETWORK: selectedNetwork } = localStorage;
+
+  const networkOption = getNetworkOptionPair(selectedNetwork);
   const { blockNum: bestBlock } = syncRemoteStream;
   const { blockNum: syncedBlock } = syncStream;
   const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
@@ -73,9 +74,11 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
     <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
-          <PageHeading>
-            {selectedNetwork ? networkOptionMapping[selectedNetwork] : 'Main net'}
-          </PageHeading>
+          <SyncNodeTitle>
+            {getNetworkOptionPair(selectedNetwork)
+              ? getNetworkOptionPair(selectedNetwork).label
+              : 'Main net'}
+          </SyncNodeTitle>
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
               <Line

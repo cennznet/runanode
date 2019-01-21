@@ -41,25 +41,27 @@ const ButtonWrapper = styled.div`
   flex-direction: row-reverse;
 `;
 
-const NETWORK_OPTIONS = [
+export const NETWORK_OPTIONS = [
   { label: 'CENNZNet DEV', value: NetworkNameOptions.CENNZNET_DEV },
   { label: 'CENNZNet UAT', value: NetworkNameOptions.CENNZNET_UAT },
   { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
 ];
 
+export const getNetworkOptionPair = value => NETWORK_OPTIONS.find(option => option.value === value);
+
 const ChooseNetWork = ({
-  onJoinNetwork,
   selectedNetwork,
   setSelectedNetwork,
-  uploadedFile,
-  setUploadedFile,
+  genesisFile,
+  setUpGenesisFile,
+  onJoinNetwork,
 }) => {
   const selectedLocalNetwork =
     selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET;
-  const canJoinLocalNetwork = selectedLocalNetwork && uploadedFile;
+  const canJoinLocalNetwork = selectedLocalNetwork && genesisFile;
   const canJoinNetwork = canJoinLocalNetwork || (selectedNetwork && !selectedLocalNetwork);
 
-  const singleFile = uploadedFile && uploadedFile[uploadedFile.length - 1];
+  const singleFile = genesisFile && genesisFile[genesisFile.length - 1];
   Logger.info(`**Uploaded File: ${singleFile && singleFile.path}`);
 
   return (
@@ -72,8 +74,9 @@ const ChooseNetWork = ({
             <div>Choose network</div>
             <NetworkOptionWrapper>
               <Select
-                value={selectedNetwork}
+                value={getNetworkOptionPair(selectedNetwork)}
                 onChange={selected => {
+                  Logger.info('selected value', selected);
                   setSelectedNetwork(selected);
                 }}
                 backgroundColor={colors.N800}
@@ -93,7 +96,7 @@ const ChooseNetWork = ({
                     focusBorderColor={colors.N0}
                     acceptTypes=".json"
                     onDrop={file => {
-                      setUploadedFile(file);
+                      setUpGenesisFile(file);
                     }}
                   />
                 </UploaderWrapper>
@@ -108,7 +111,7 @@ const ChooseNetWork = ({
                   onClick={() =>
                     onJoinNetwork({
                       selectedNetwork: selectedNetwork.value,
-                      uploadedFileInfo: singleFile,
+                      genesisFile: singleFile,
                     })
                   }
                 >
