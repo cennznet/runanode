@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    this.props.onPageLoaded();
+    // this.props.onPageLoaded();
   },
 });
 

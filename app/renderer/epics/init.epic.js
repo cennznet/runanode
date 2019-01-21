@@ -2,7 +2,8 @@ import { EMPTY, from, of } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
-import { storageKeys } from 'renderer/api/utils/storage';
+import sreamConstants from 'renderer/constants/stream';
+import { storageKeys, getStorage } from 'renderer/api/utils/storage';
 
 const initEpic = action$ =>
   action$.pipe(
@@ -11,9 +12,11 @@ const initEpic = action$ =>
       return of(
         {
           type: types.syncStream.requested,
+          payload: { command: sreamConstants.CONNECT },
         },
         {
           type: types.syncRemoteStream.requested,
+          payload: { command: sreamConstants.CONNECT },
         },
         {
           type: types.getStorage.requested,
@@ -29,7 +32,7 @@ const initEpic = action$ =>
         },
         {
           type: types.getStorage.requested,
-          payload: { key: storageKeys.GENESIS_CONFIG_FILE_PATH },
+          payload: { key: storageKeys.GENESIS_CONFIG_FILE_INFO },
         },
         {
           type: types.nodeWsSystemChainPolling.requested,
