@@ -25,7 +25,7 @@ GH_REPO="$GH_API/repos/$owner/$repo"
 GH_TAGS="$GH_REPO/releases/tags/$tag"
 AUTH="Authorization: token $GITHUB_API_TOKEN"
 WGET_ARGS="--content-disposition --auth-no-challenge --no-cookie"
-CURL_ARGS="-o $output"
+CURL_ARGS="-o $output -LJO#"
 
 # Validate token.
 curl -o /dev/null -sH "$AUTH" $GH_REPO || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
