@@ -4,13 +4,19 @@
 
 ### Features
 
+- Start up process
+  (initial Node start && root route control)
+
 ### Fixes
 
 ### Improvements
 
+- networkOptions && genesisFile data storage
+
 # v0.2.4 (2019.01.16)
 
 ### Improvements
+
 - new logo
 - change default remote URL to dev
 - able to use `yarn package-win`
@@ -18,6 +24,7 @@
 # v0.2.3 (2019.01.16)
 
 ### Improvements
+
 - ready for demo
 - able to switch network via UI
 - basic screen flow
@@ -36,7 +43,7 @@
 - Add Select, Input, Spinner components into Styleguidist
 - able to make network request
 - able to restart cennznet node with options
-- Connect TopBarContainer to redux state 
+- Connect TopBarContainer to redux state
 - Add JsonRPC support
 - Add Websocket support
 - Able to display network status

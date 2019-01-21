@@ -15,6 +15,22 @@ const mapStateToProps = ({ syncStream, syncRemoteStream, localStorage }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  onDisconnectStream: () => {
+    dispatch(
+      {
+        type: types.syncStream.requested,
+        payload: { command: sreamConstants.DISCONNECT },
+      },
+      {
+        type: types.syncRemoteStream.requested,
+        payload: { command: sreamConstants.DISCONNECT },
+      },
+      {
+        type: types.nodeWsSystemChainPolling.requested,
+      }
+    );
+  },
+
   onSyncLocalNetwork: chain => {
     const options: CennzNetRestartOptions = {
       chain,
@@ -47,22 +63,28 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const enhance = lifecycle({
+  componentWillMount() {
+    const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
+    if (selectedNetwork !== NetworkNameOptions.CENNZNET_DEV) {
+      this.props.onDisconnectStream();
+    }
+  },
+
   componentDidMount() {
     const { localStorage } = this.props;
     const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
     const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
     const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
 
-    if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET) {
+    if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
       this.props.onSyncLocalNetwork(genesisConfigFilePath);
     } else {
-      this.props.onSyncRemoteNwtwork(this.props.localStorage.SELECTED_NETWORK);
+      this.props.onSyncRemoteNwtwork();
     }
   },
 
   // TODO: time out err controller - progress bar red
   componentDidUpdate() {
-    console.log('SyncNodePage ComponentDid update');
     const { blockNum: localBestBlock } = this.props.syncStream;
     const { blockNum: remoteBestBlock } = this.props.syncRemoteStream;
     if (localBestBlock && localBestBlock) {
