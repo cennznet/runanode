@@ -19,6 +19,6 @@ npm -v
 npm install -g yarn
 yarn -v
 
-yarn install --registry $GEMFURY_URL
+npm install --registry $GEMFURY_URL
 yarn lint
 yarn test
