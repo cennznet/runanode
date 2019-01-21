@@ -21,6 +21,6 @@ yarn -v
 
 sed -i -e  's/<your_auth_token>/'"$GEMFURY_TOKEN"'/g' ./.npmrc
 cat ./.npmrc
-yarn install --registry $GEMFURY_URL
+yarn install
 yarn lint
 yarn test
