@@ -87,8 +87,8 @@ const enhance = lifecycle({
   componentDidUpdate() {
     const { blockNum: localBestBlock } = this.props.syncStream;
     const { blockNum: remoteBestBlock } = this.props.syncRemoteStream;
-    if (localBestBlock && localBestBlock) {
-      const syncPercentage = localBestBlock / localBestBlock;
+    if (localBestBlock !== null && remoteBestBlock !== null) {
+      const syncPercentage = localBestBlock / remoteBestBlock;
       if (syncPercentage >= 1) {
         this.props.navigateToCreateWallet();
       }
