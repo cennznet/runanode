@@ -10,18 +10,19 @@ const mapStateToProps = ({ localStorage }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSelectNetwork: payload => {
+  onJoinNetwork: payload => {
     dispatch({ type: types.storeNetworkOption.triggered, payload });
-  },
-  onUploadGenesisFile: payload => {
-    dispatch({ type: types.storeUploadedGenesisInfo.triggered, payload });
-  },
-  onJoinNetwork: () => {
-    dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+const selectedNetworkState = withState('selectedNetwork', 'setSelectedNetwork', null);
+const genesisFileState = withState('genesisFile', 'setUpGenesisFile', null);
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  selectedNetworkState,
+  genesisFileState
 );

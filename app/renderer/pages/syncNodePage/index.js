@@ -47,10 +47,7 @@ const networkOptionMapping = {
 
 const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
   console.log('localStorage', localStorage);
-  const {
-    SELECTED_NETWORK: selectedNetwork,
-    GENESIS_CONFIG_FILE_INFO: uploadedFileInfo,
-  } = localStorage;
+  const { SELECTED_NETWORK: selectedNetwork } = localStorage;
 
   const networkOption = getNetworkOptionPair(selectedNetwork);
   const { blockNum: bestBlock } = syncRemoteStream;

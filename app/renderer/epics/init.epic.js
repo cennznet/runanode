@@ -32,7 +32,7 @@ const initEpic = action$ =>
         },
         {
           type: types.getStorage.requested,
-          payload: { key: storageKeys.GENESIS_CONFIG_FILE_PATH },
+          payload: { key: storageKeys.GENESIS_CONFIG_FILE_INFO },
         },
         {
           type: types.nodeWsSystemChainPolling.requested,
