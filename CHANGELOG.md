@@ -6,6 +6,7 @@
 
 - Start up process
   (initial Node start && root route control)
+- SyncNode page navigation after 100% synced
 
 ### Fixes
 
