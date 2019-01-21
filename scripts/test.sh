@@ -19,8 +19,9 @@ npm -v
 npm install -g yarn
 yarn -v
 
+npm login --registry=$GEMFURY_URL
 npm config set always-auth true
 yarn config set always-auth true
-yarn install --registry $GEMFURY_URL
+yarn install
 yarn lint
 yarn test
