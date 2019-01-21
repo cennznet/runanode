@@ -13,7 +13,7 @@ export class Stream {
   _config = {
     url: null,
     reconnectInterval: 200,
-    reconnectIntervalMax: 2000
+    reconnectIntervalMax: 2000,
   };
 
   /**
@@ -61,8 +61,8 @@ export class Stream {
   send(type, data, requireAuth, immediately) {
     const id = this._nextId;
     this._nextId += 1;
-    this._ensureWebSocket();
-    if (!immediately && this._messageQueue.length) { // ensure message sent order
+    if (!immediately && this._messageQueue.length) {
+      // ensure message sent order
       this._queueMessage({ id, type, data, requireAuth });
       this._sendNextInQueue();
       return id;
@@ -105,7 +105,9 @@ export class Stream {
 
   subscribe(type, data, requireAuth) {
     this._subscriptions[type] = {
-      type, data, requireAuth
+      type,
+      data,
+      requireAuth,
     };
     this.send(type, data, requireAuth);
   }
@@ -194,9 +196,9 @@ export class Stream {
       this.send(sub.type, sub.data, sub.requireAuth);
     }
     this._sendNextInQueue();
-  }
+  };
 
-  _handleMessage = (message) => {
+  _handleMessage = message => {
     try {
       const { data } = message;
       const streamPayload = JSON.parse(data);
@@ -206,17 +208,20 @@ export class Stream {
       // eslint-disable-next-line no-console
       console.warn(error);
     }
-  }
+  };
 
   _handleError = () => {
     this.disconnect(true);
 
     this._retryCount += 1;
-    const wait = Math.min(this._retryCount * this._config.reconnectInterval, this._config.reconnectIntervalMax);
+    const wait = Math.min(
+      this._retryCount * this._config.reconnectInterval,
+      this._config.reconnectIntervalMax
+    );
     setTimeout(() => {
       this._ensureWebSocket();
     }, wait);
-  }
+  };
 
   _updateStatus(isConnected, isConnecting, isAuthenticated) {
     this._isConnected = isConnected;
@@ -225,7 +230,7 @@ export class Stream {
     this.statusSubject.next({
       isConnected,
       isConnecting,
-      isAuthenticated
+      isAuthenticated,
     });
   }
 }

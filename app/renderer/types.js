@@ -20,6 +20,7 @@ const actionTypes = {
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
   acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
   storeNetworkOption: triggerActionTypes('store_network_option'),
+  storeUploadedGenesisInfo: triggerActionTypes('store_upload_genesis_file_info'),
   setStorage: apiActionTypes('set_storage'),
   getStorage: apiActionTypes('get_storage'),
   clearStorage: apiActionTypes('clear_storage'),
@@ -53,8 +54,6 @@ const actionTypes = {
   syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
-
-  // streamStop: apiActionTypes('stream_stop'),
 };
 
 export default actionTypes;
