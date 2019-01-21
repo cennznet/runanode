@@ -10,7 +10,7 @@ const getStorageEpic = action$ =>
     ofType(types.getStorage.requested),
     mergeMap(async ({ payload }) => {
       const value = await getStorage(payload.key);
-      return { type: types.setStorage.completed, payload: { key: payload.key, value } };
+      return { type: types.getStorage.completed, payload: { key: payload.key, value } };
     })
   );
 

@@ -5,13 +5,22 @@ import Spinner from 'components/Spinner';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import withContainer from './container';
 
-const HomePage = () => {
+const SpinnerWrapper = styled.div`
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
+
+const HomePage = ({ hasBlockNumbers }) => {
   return (
     // <Layout sidebar={<SimpleSidebar />}>
     <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
-          <Spinner />
+          <SpinnerWrapper>
+            <Spinner size="2.5rem" />
+          </SpinnerWrapper>
         </MainContent>
       </LayoutWrapper>
     </Layout>

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize } from 'react-localize-redux';
-import Route from 'renderer/components/Route';
 import types from 'renderer/types';
 import enTranslation from 'renderer/i18n/en.json';
 import TosPage from 'renderer/pages/tosPage';
