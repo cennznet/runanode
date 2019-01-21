@@ -1,7 +1,7 @@
 #!groovy
 pipeline {
     agent {
-        label 'macos'
+      label 'linux'
     }
 
     options {
@@ -16,9 +16,9 @@ pipeline {
     }
 
     stages {
-        stage('Build artifacts') {
+        stage('Test') {
             steps {
-                sh './scripts/build-mac.sh'
+                sh './scripts/test.sh'
             }
         }
 
@@ -75,14 +75,14 @@ pipeline {
         //     }
         // }
 
-        stage('Upload artifacts to DEV S3') {
-            environment {
-              ENV = 'dev'
-            }
-            steps {
-              sh 'SCRIPT="copy-artifacts" ./centrality.deploy/static-website/static-website-apply.sh'
-            }
-        }
+//        stage('Upload artifacts to DEV S3') {
+//            environment {
+//              ENV = 'dev'
+//            }
+//            steps {
+//              sh 'SCRIPT="copy-artifacts" ./centrality.deploy/static-website/static-website-apply.sh'
+//            }
+//        }
 
         // stage ('Confirm Prod deploy') {
         //     steps {

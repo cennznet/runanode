@@ -20,10 +20,5 @@ npm install -g yarn
 yarn -v
 
 yarn install
-yarn release
-
-rm -rf ./build
-rm -rf ./release/linux-unpacked
-rm -rf ./release/win-unpacked
-rm -rf ./release/mac
-cp -rf ./release ./build
+yarn lint
+yarn test
