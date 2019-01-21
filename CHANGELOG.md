@@ -13,6 +13,7 @@
 - integrated cennznet-api
 - make yarn install works with gemfury
 - enable PR build with Jenkins
+- Add Google Analytics
 
 ### Fixes
 
