@@ -3472,7 +3472,7 @@ ccount@^1.0.0:
   resolved "https://registry.yarnpkg.com/ccount/-/ccount-1.0.3.tgz#f1cec43f332e2ea5a569fd46f9f5bde4e6102aff"
   integrity sha512-Jt9tIBkRc9POUof7QA/VwWd+58fKkEEfI+/t1/eOlxKM7ZhrczNzMFefge7Ai+39y1pR/pP6cI19guHy3FSLmw==
 
-cennznet-api@^0.4.0:
+cennznet-api@0.4.0:
   version "0.4.0"
   resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-api/cennznet-api-0.4.0#c468fac35f9a0d7143c0ae8a8720bc747c6e8df7"
   integrity sha1-xGj6w1+aDXFDwK6KhyC8dHxujfc=
