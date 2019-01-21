@@ -1,8 +1,5 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import { ApiRx, ApiPromise } from '@polkadot/api';
-import WsProvider from '@polkadot/rpc-provider/ws';
-import typeRegistry from '@polkadot/types/codec/typeRegistry';
 
 import { Logger } from 'renderer/utils/logging';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
