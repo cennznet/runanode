@@ -13,29 +13,29 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Test') {
             steps {
-                sh './scripts/build.sh'
+                sh './scripts/test.sh'
             }
         }
 
-        stage('Unit Tests') {
-            steps {
-                sh './scripts/run-unit-tests.sh'
-            }
-        }
-
-        stage('Functional Tests') {
-            steps {
-                sh './scripts/run-functional-tests.sh'
-            }
-        }
+//        stage('Unit Tests') {
+//            steps {
+//                sh './scripts/run-unit-tests.sh'
+//            }
+//        }
+//
+//        stage('Functional Tests') {
+//            steps {
+//                sh './scripts/run-functional-tests.sh'
+//            }
+//        }
     }
 
     post {
-        always {
-            echo "Pipeline post always"
-            sh 'bash /mnt/jenkins/script/cleanup.sh'
-        }
+//        always {
+//            echo "Pipeline post always"
+//            sh 'bash /mnt/jenkins/script/cleanup.sh'
+//        }
     }
 }
