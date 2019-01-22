@@ -7,6 +7,4 @@ rm -rf ./app/main.prod.js*
 rm -rf ./dll
 rm -rf ./release
 rm -rf ./node_modules
-
 yarn install
-./scripts/init.sh
