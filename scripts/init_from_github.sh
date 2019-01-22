@@ -3,14 +3,14 @@
 set -ex
 
 export GITHUB_TOKEN='cd09e55577c587dbd942c4036117dd5bdbbec245'
-export RELEASE_VERSION='0.1.6'
+export RELEASE_VERSION='0.2.5'
 
 
 rm -rf ./dist
 mkdir -p ./dist/logs
 
 ./scripts/github-release-get.sh cennznet-node-mac-$RELEASE_VERSION ./dist/cennznet-node-mac
-./scripts/github-release-get.sh $TAG cennznet-node-win-$RELEASE_VERSION.exe ./dist/cennznet-node-win
+./scripts/github-release-get.sh cennznet-node-win-$RELEASE_VERSION.exe ./dist/cennznet-node-win
 ./scripts/github-release-get.sh cennznet-node-linux-$RELEASE_VERSION ./dist/cennznet-node-linux
 
 wget -O ./dist/launcher-config-win.yaml http://cennz-node-ui.s3.amazonaws.com/launcher-config-win.yaml

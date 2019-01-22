@@ -1,8 +1,8 @@
 nodePath: ${ODIN_DIST_DIRECTORY}/cennznet-node
 logsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
 nodeArgs:
-  - --name
-  - ken-test
+#  - --name
+#  - Odin-test
 #  - --chain
 #  - ./dist/local.json
 

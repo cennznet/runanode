@@ -7,6 +7,9 @@
 - Start up process
   (initial Node start && root route control)
 - SyncNode page navigation after 100% synced
+- able to handle hex blockNum
+- add clean.sh to fix console undefine issue
+- able to set default node args, default node name is Odin-USERNAME
 
 ### Fixes
 
