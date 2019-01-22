@@ -1,4 +1,7 @@
 // @flow
+import os from 'os';
+
+import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import type { LauncherConfig } from '../config';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -18,17 +21,17 @@ export const ensureXDGDataIsSet = () => {
  * @private
  */
 export const prepareArgs = (config: LauncherConfig) => {
-  const args: Array<string> = Array.from(config.nodeArgs);
-  // if (config.reportServer) args.push('--report-server', config.reportServer);
-  // if (config.nodeDbPath) args.push('--db-path', config.nodeDbPath);
-  // if (config.nodeLogConfig) args.push('--log-config', config.nodeLogConfig);
-  // if (config.logsPrefix) args.push('--logs-prefix', config.logsPrefix);
-  // if (config.configuration) {
-  //   if (config.configuration.filePath) args.push('--configuration-file', config.configuration.filePath);
-  //   if (config.configuration.key) args.push('--configuration-key', config.configuration.key);
-  //   if (config.configuration.systemStart) args.push('--system-start', config.configuration.systemStart);
-  //   if (config.configuration.seed) args.push('--configuration-seed', config.configuration.seed);
-  // }
-  // if (isDev) args.push('--wallet-doc-address', '127.0.0.1:8091');
+  const args: Array<string> = config.nodeArgs ?  Array.from(config.nodeArgs): [];
+  // default node name
+  const nameArgIndex = args.findIndex((item) => item === '--name');
+  if(nameArgIndex<0) {
+    args.push('--name', "Odin-"+os.userInfo().username);
+  }
+
+  // default chain
+  const chainArgIndex = args.findIndex((item) => item === '--chain');
+  if(chainArgIndex<0) {
+    args.push('--chain', NetworkNameOptions.CENNZNET_UAT);
+  }
   return args;
 };
