@@ -9,6 +9,15 @@ const ModalContent = styled.div`
   padding: 1rem;
 `;
 
+const ModalFooterWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  padding: 1rem;
+  border-top: ${p => `1px solid ${colors.N500}`};
+`;
+
 const Modal = ({
   isOpen,
   onOpenModal,
@@ -16,7 +25,7 @@ const Modal = ({
   styles,
   children,
   className,
-  footer,
+  footerComp,
   ...restFooterProps
 }) => {
   const contentClassName = `${className}__content`;
@@ -32,7 +41,7 @@ const Modal = ({
       ariaHideApp={false}
     >
       <ModalContent>{children}</ModalContent>
-      {footer && <ModalFooter {...restFooterProps} />}
+      {footerComp && <ModalFooterWrapper>{footerComp}</ModalFooterWrapper>}
     </ReactModal>
   );
 };
@@ -57,7 +66,7 @@ const StyledModal = styled(Modal)`
     min-height: ${p => p.minWith || '25vh'};
     background-color: ${p => p.backgroundColor || '#040c40'};
     box-shadow: ${p => p.boxShadow || `0 2px 4px 0 ${colors.N900}`};
-    color: ${p => p.color || 'white'};
+    color: ${p => p.color || colors.N0};
     display: flex;
     flex-direction: column;
     justify-content: space-between;
