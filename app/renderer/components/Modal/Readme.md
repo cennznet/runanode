@@ -4,7 +4,7 @@ initialState = { isOpen: false };
   <Button onClick={() => setState({ isOpen: true })}>Open Modal</Button>
   <Modal
     isOpen={state.isOpen}
-    footerComp={
+    footer={
       <Button color="warning" onClick={() => setState({ isOpen: false })}>
         Close
       </Button>

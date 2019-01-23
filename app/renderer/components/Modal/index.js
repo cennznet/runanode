@@ -25,7 +25,7 @@ const Modal = ({
   styles,
   children,
   className,
-  footerComp,
+  footer,
   ...restFooterProps
 }) => {
   const contentClassName = `${className}__content`;
@@ -41,7 +41,7 @@ const Modal = ({
       ariaHideApp={false}
     >
       <ModalContent>{children}</ModalContent>
-      {footerComp && <ModalFooterWrapper>{footerComp}</ModalFooterWrapper>}
+      {footer && <ModalFooterWrapper>{footer}</ModalFooterWrapper>}
     </ReactModal>
   );
 };
