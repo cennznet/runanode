@@ -8,6 +8,7 @@ const feature = {
 const prodConfig = {
   feature,
   // prod specific config comes here...
+  gaTrackId: 'UA-132910586-1',
 };
 
 export default R.mergeDeepRight(commonConfig, prodConfig);
