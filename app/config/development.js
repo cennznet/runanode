@@ -8,6 +8,7 @@ const feature = {
 const devConfig = {
   feature,
   // dev specific config comes here...
+  gaTrackId: 'UA-132943388-1',
 };
 
 export default R.mergeDeepRight(commonConfig, devConfig);
