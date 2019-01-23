@@ -1,10 +1,12 @@
 import { EMPTY, from, of, zip } from 'rxjs';
-import { mergeMap, map, concat } from 'rxjs/operators';
+import { mergeMap, map, concat, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys } from 'renderer/api/utils/storage';
 import chainEpics from 'renderer/epics/chainEpics';
+import sreamConstants from 'renderer/constants/stream';
+import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 
 const filterGenesisFile = file => {
   if (!file) {
@@ -31,14 +33,58 @@ const storeNetworkOptionEpic = action$ =>
             value: filterGenesisFile(genesisFile),
           },
         }
+      ).pipe(concat(of({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE })));
+    })
+  );
+
+const switchNetworkChain = chainEpics(
+  types.switchNetwork.triggered,
+  types.stopStream.requested,
+  payload => payload
+);
+
+const stopStreamEpic = action$ =>
+  action$.pipe(
+    ofType(types.stopStream.requested),
+    mergeMap(({ payload }) => {
+      return of(
+        {
+          type: types.syncStream.requested,
+          payload: { command: sreamConstants.DISCONNECT },
+        },
+        {
+          type: types.syncRemoteStream.requested,
+          payload: { command: sreamConstants.DISCONNECT },
+        },
+        {
+          type: types.stopStream.completed,
+          payload,
+        }
       );
     })
   );
 
-const navigationAfterStorageChian = chainEpics(
-  types.setStorage.completed,
-  types.navigation.triggered,
-  ROUTES.SYNC_NODE
+const restartNodeWithNetworkChain = chainEpics(
+  types.stopStream.completed,
+  types.restartNode.triggered,
+  payload => payload
 );
 
-export default [storeNetworkOptionEpic, navigationAfterStorageChian];
+const restartNodeEpic = action$ =>
+  action$.pipe(
+    ofType(types.restartNode.triggered),
+    tap(({ payload }) => {
+      console.log('restart Node', payload);
+      const options: CennzNetRestartOptions = payload;
+      restartCennzNetNodeChannel.send(options);
+    }),
+    mergeMap(() => EMPTY)
+  );
+
+export default [
+  storeNetworkOptionEpic,
+  switchNetworkChain,
+  stopStreamEpic,
+  restartNodeWithNetworkChain,
+  restartNodeEpic,
+];
