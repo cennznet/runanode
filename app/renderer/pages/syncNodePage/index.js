@@ -52,12 +52,13 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
   const networkOption = getNetworkOptionPair(selectedNetwork);
   const { blockNum: bestBlock } = syncRemoteStream;
   const { blockNum: syncedBlock } = syncStream;
-  const syncNodePercentage = bestBlock && bestBlock > 0 ? (syncedBlock / bestBlock) * 100 : 0;
-  const progressPercentage = syncNodePercentage >= 100 ? 100 : syncNodePercentage;
-
-  if (progressPercentage === 100) {
-    return <Redirect to={ROUTES.ROOT} />;
-  }
+  const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
+  const syncNodePercentage =
+    syncNodeProgress >= 0.995 && syncNodeProgress < 1
+      ? 99
+      : syncNodeProgress >= 1
+      ? 100
+      : (syncNodeProgress * 100).toFixed(2);
 
   Logger.info(`
   ===========================================
@@ -67,7 +68,7 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
   ===========================================
   Best block in Local #${syncedBlock}
   ===========================================`);
-  Logger.info(`  Sync progress in Local ${progressPercentage.toFixed(2)}%`);
+  Logger.info(`  Sync progress in Local ${syncNodePercentage}%`);
 
   return (
     // <Layout sidebar={<SimpleSidebar />}>
@@ -82,7 +83,7 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
               <Line
-                percent={progressPercentage}
+                percent={syncNodePercentage}
                 trailColor="transparent"
                 trailWidth="7"
                 strokeWidth="7"
@@ -92,12 +93,7 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
               />
             </SyncNodeProgress>
             <SyncNodeInfo>
-              <TextWrapper>
-                {progressPercentage === 100 || progressPercentage === 0
-                  ? progressPercentage
-                  : progressPercentage.toFixed(2)}
-                % synced
-              </TextWrapper>
+              <TextWrapper>{syncNodePercentage}% synced</TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
