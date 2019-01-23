@@ -19,6 +19,7 @@ npm -v
 npm install -g yarn
 yarn -v
 
+cp ./.npmrc.template ./.npmrc
 sed -i -e  's/<your_auth_token>/'"$GEMFURY_TOKEN"'/g' ./.npmrc
 cat ./.npmrc
 yarn install
