@@ -8,7 +8,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
-
+import 'electron-cookies'; // For GA writes clientId to cookie to recognize existing users
+import setupGoogleAnalytics from './ga';
 import types from './types';
 import store from './store';
 import App from './App';
@@ -41,6 +42,7 @@ const initializeOdin = () => {
   // const router = new RouterStore();
   // const history = syncHistoryWithStore(hashHistory, router);
   // const stores = setupStores(api, actions, router);
+  setupGoogleAnalytics();
 
   window.odin = {
     api,

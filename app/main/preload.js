@@ -2,10 +2,7 @@
 import os from 'os';
 import _https from 'https';
 import _http from 'http';
-import {
-  ipcRenderer as _ipcRenderer,
-  remote as _remote
-} from 'electron';
+import { ipcRenderer as _ipcRenderer, remote as _remote } from 'electron';
 import _electronLog from 'electron-log';
 import ElectronStore from 'electron-store';
 import { environment } from './environment';
@@ -14,9 +11,7 @@ const { isDev } = environment;
 const _process = process;
 const _electronStore = new ElectronStore();
 
-console.log('preload.js');
 process.once('loaded', () => {
-  console.log('process.once');
   Object.assign(global, {
     Buffer,
     dialog: {
@@ -56,7 +51,7 @@ process.once('loaded', () => {
     // $FlowFixMe
     global.spectronRequire = __non_webpack_require__; // eslint-disable-line
   }
-  if(!isDev) {
+  if (!isDev) {
     // ESLint will warn about any use of eval(), even this one
     // eslint-disable-next-line
     global.eval = () => {

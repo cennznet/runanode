@@ -1040,6 +1040,16 @@
     ip-regex "^3.0.0"
     moment "^2.23.0"
 
+"@redux-beacon/google-analytics@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@redux-beacon/google-analytics/-/google-analytics-1.2.0.tgz#922baf2ed03fb100ec14a08d510a4a0980c2c4dd"
+  integrity sha512-xraKpWpSs3nnQ5+pk8YXnjaV+zzNlZyBRrhfp05/+OygOrMnTqQRuS5Vq8KUK3HDZmY6jvwLSTsyNRNEypS0/w==
+
+"@redux-beacon/logger@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@redux-beacon/logger/-/logger-1.0.0.tgz#8b2939f236b9f2640d8b043b8486eea72926afe8"
+  integrity sha512-/WTYDLJPYaA+JUKs7E0xNrn2NRLQKBIYvaA9vfx6Ig5ZiwnrycUYeiNP9L1DTyawtC+mlrvm5fB87u21hJceFg==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -1695,6 +1705,11 @@ array-flatten@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
+
+array-flatten@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-2.1.1.tgz#426bb9da84090c1838d812c8150af20a8331e296"
+  integrity sha1-Qmu52oQJDBg42BLIFQryCoMx4pY=
 
 array-flatten@^2.1.0:
   version "2.1.2"
@@ -5306,6 +5321,13 @@ electron-connect@0.6.3:
     lodash "^4.17.4"
     tree-kill "^1.1.0"
     ws "^3.1.0"
+
+electron-cookies@heap/electron-cookies:
+  version "2.0.0"
+  resolved "https://codeload.github.com/heap/electron-cookies/tar.gz/7ae1025f9b3b46745041108f4c527f678afc9502"
+  dependencies:
+    tough-cookie "^2.3.4"
+    tough-cookie-web-storage-store "^1.0.0"
 
 electron-debug@^2.0.0:
   version "2.0.0"
@@ -9511,7 +9533,7 @@ lodash@4.17.10:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
   integrity sha512-UejweD1pDoXu+AD825lWwp4ZGtSwgnpZxb3JDViD7StjQz+Nb/6l093lx4OQ0foGWNRoc19mWy7BzL+UAK2iVg==
 
-"lodash@4.6.1 || ^4.16.1", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.8.0, lodash@~4.17.10:
+"lodash@4.6.1 || ^4.16.1", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1, lodash@^4.8.0, lodash@~4.17.10:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -12680,6 +12702,13 @@ redent@^2.0.0:
     indent-string "^3.0.0"
     strip-indent "^2.0.0"
 
+redux-beacon@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/redux-beacon/-/redux-beacon-2.0.5.tgz#1aa1db7c4544a31e8df91676adca2e7277b08cc6"
+  integrity sha512-h2XCqu72+TWz2HHUDKSgp3y4OlnnmMsp9EOfdI5+BWNcch/kxaJbm+rt3SSqjOPdP9CL3aqSISZ4VD4Ev85xcw==
+  dependencies:
+    array-flatten "2.1.1"
+
 redux-logger@^3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
@@ -15000,6 +15029,13 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+tough-cookie-web-storage-store@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tough-cookie-web-storage-store/-/tough-cookie-web-storage-store-1.0.0.tgz#8021fce24290bf0b6151e491d7312343451d390d"
+  integrity sha1-gCH84kKQvwthUeSR1zEjQ0UdOQ0=
+  dependencies:
+    lodash "^4.6.1"
 
 tough-cookie@2.3.3:
   version "2.3.3"
