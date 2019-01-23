@@ -3,11 +3,22 @@ import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 
 const MainContent = styled.div`
-  flex: 1 auto;
-  background-color: ${colors.N800};
-  padding: 3rem;
-  min-width: 40rem;
+  display: ${p => (p.display === 'flex' ? 'flex' : 'block')};
+  flex-direction: ${p => (p.display === 'flex' ? 'column' : 'none')};
+  justify-content: ${p => (p.display === 'flex' ? 'space-between' : 'none')};
+  margin: 0 auto;
+  background-color: transparent;
+  padding: 3rem 0 0 3rem;
+  min-width: 50rem;
   max-width: 50rem;
+
+  .content {
+    flex: 1 auto;
+  }
 `;
+
+MainContent.defaultProps = {
+  display: 'block',
+};
 
 export default MainContent;

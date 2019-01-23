@@ -25,6 +25,7 @@
 - rename ./npmrc to ./npmrc.template
 - upgrade cennznet-api and cennznet-wallet to 0.5.2
 - disable redux-log by default
+- Change page layout and color themes
 
 # v0.2.4 (2019.01.16)
 

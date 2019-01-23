@@ -2,9 +2,9 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import { SubNav } from 'components/layout';
 import Route from 'renderer/components/Route';
-import WalletCreatePage from 'renderer/pages/walletCreatePage';
-import WalletImportPage from 'renderer/pages/walletImportPage';
-import WalletRestorePage from 'renderer/pages/walletRestorePage';
+import WalletCreatePage from 'renderer/pages/wallet/landingPage';
+import WalletImportPage from 'renderer/pages/wallet/connect/importPage';
+import WalletRestorePage from 'renderer/pages/wallet/connect/restorePage';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 

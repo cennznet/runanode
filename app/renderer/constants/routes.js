@@ -8,9 +8,9 @@ export default {
   },
   WALLET: {
     ROOT: '/wallet',
+    LIST: '/wallet/list',
     CREATE: '/wallet/create',
-    IMPORT: '/wallet/import',
-    RESTORE: '/wallet/restore',
+    CONNECT: '/wallet/connect',
   },
   DEV: '/dev',
   TERMS_OF_USE_ACCEPTANCE: '/terms-of-use-acceptance',

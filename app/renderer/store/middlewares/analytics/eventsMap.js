@@ -7,7 +7,7 @@ const trackStreamConnect = trackEvent(action => {
       category: 'stream',
       action: 'connection',
       label: 'connect',
-      value: STREAM.CONNECT,
+      value: 1,
     };
   }
 
@@ -16,7 +16,7 @@ const trackStreamConnect = trackEvent(action => {
       category: 'stream',
       action: 'connection',
       label: 'disconnect',
-      value: STREAM.CONNECT,
+      value: 0,
     };
   }
 });

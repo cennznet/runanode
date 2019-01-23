@@ -4,8 +4,7 @@ import types from 'renderer/types';
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
 const enhance = lifecycle({
   componentDidMount() {},

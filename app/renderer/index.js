@@ -5,7 +5,13 @@ import { addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faCogs, faQuestionCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faPlus,
+  faCogs,
+  faQuestionCircle,
+  faWallet,
+} from '@fortawesome/free-solid-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
 import 'electron-cookies'; // For GA writes clientId to cookie to recognize existing users
@@ -32,7 +38,10 @@ addLocaleData([...en, ...ja]);
 // const { NODE_ENV, NETWORK } = environment;
 // const isTest = NODE_ENV === 'test';
 
-library.add(faPlus, faCogs, faQuestionCircle, faWallet, faDev);
+const NETWORK = 'testnet';
+const isTest = false;
+
+library.add(faArrowLeft, faPlus, faCogs, faQuestionCircle, faWallet, faDev);
 
 const initializeOdin = () => {
   const api = setupApi();
