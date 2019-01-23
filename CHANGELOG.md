@@ -7,12 +7,22 @@
 - Start up process
   (initial Node start && root route control)
 - SyncNode page navigation after 100% synced
+- able to handle hex blockNum
+- add clean.sh to fix console undefine issue
+- able to set default node args, default node name is Odin-USERNAME
+- integrated cennznet-api
+- make yarn install works with gemfury
+- enable PR build with Jenkins
+- Add Google Analytics
 
 ### Fixes
 
 ### Improvements
 
 - networkOptions && genesisFile data storage
+- default dev tools open on the right side
+- rename ./npmrc to ./npmrc.template
+- upgrade cennznet-api and cennznet-wallet to 0.5.2
 
 # v0.2.4 (2019.01.16)
 

@@ -25,6 +25,11 @@ const actionTypes = {
   getStorage: apiActionTypes('get_storage'),
   clearStorage: apiActionTypes('clear_storage'),
 
+  /* Network */
+  switchNetwork: triggerActionTypes('switch_network'),
+  stopStream: apiActionTypes('stop_stream'),
+  restartNode: triggerActionTypes('restart_network'),
+
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
   nodeJsonRpcSystemVersion: apiActionTypes('node_jsonrpc_system_version'),
