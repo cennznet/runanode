@@ -32,26 +32,27 @@ function typedRequest<Response>(
     let queryString = '';
     if (queryParams && size(queryParams) > 0) {
       // Handle passphrase
-      if (has(queryParams, 'passphrase')) {
-        const passphrase = get(queryParams, 'passphrase');
-
-        // If passphrase is present it must be encrypted and included in options.path
-        if (passphrase) {
-          const encryptedPassphrase = encryptPassphrase(passphrase);
-          queryString = `?passphrase=${encryptedPassphrase}`;
-        }
-
-        // Passphrase must be ommited from rest query params
-        queryParams = omit(queryParams, 'passphrase'); // eslint-disable-line no-param-reassign
-
-        // $FlowFixMe
-        if (size(queryParams > 1) && passphrase) {
-          queryString += `&${querystring.stringify(queryParams)}`;
-        }
-      } else {
-        queryString = `?${querystring.stringify(queryParams)}`;
-      }
-
+      queryString = `?${querystring.stringify(queryParams)}`;
+      // if (has(queryParams, 'passphrase')) {
+      //   const passphrase = get(queryParams, 'passphrase');
+      //
+      //   // If passphrase is present it must be encrypted and included in options.path
+      //   if (passphrase) {
+      //     const encryptedPassphrase = encryptPassphrase(passphrase);
+      //     queryString = `?passphrase=${encryptedPassphrase}`;
+      //   }
+      //
+      //   // Passphrase must be ommited from rest query params
+      //   queryParams = omit(queryParams, 'passphrase'); // eslint-disable-line no-param-reassign
+      //
+      //   // $FlowFixMe
+      //   if (size(queryParams > 1) && passphrase) {
+      //     queryString += `&${querystring.stringify(queryParams)}`;
+      //   }
+      // } else {
+      //   queryString = `?${querystring.stringify(queryParams)}`;
+      // }
+      //
       if (queryString) options.path += queryString;
     }
 
@@ -60,13 +61,20 @@ function typedRequest<Response>(
       hasRequestBody = true;
       requestBody = JSON.stringify(rawBodyParams);
       options.headers = {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
+        // 'accept-encoding': 'gzip, deflate',
+        // 'cache-control': 'no-cache',
+        // 'User-Agent': 'PostmanRuntime/7.6.0',
         'Content-Length': getContentLength(requestBody),
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json; charset=utf-8',
       };
     }
 
-    const httpsRequest = global.https.request(options);
+    console.log('https request options');
+    console.log(options);
+    console.log(requestBody);
+    const httpsRequest = global.http.request(options);
     if (hasRequestBody) {
       httpsRequest.write(requestBody);
     }
@@ -78,10 +86,13 @@ function typedRequest<Response>(
       response.on('error', (error) => reject(error));
       // Resolve JSON results and handle backend errors
       response.on('end', () => {
+
         try {
           // When deleting a wallet, the API does not return any data in body
           // even if it was successful
           const { statusCode, statusMessage } = response;
+          console.log(statusCode);
+          console.log(statusMessage);
 
           if (!body && statusCode >= 200 && statusCode <= 206) {
             // adds status and data properties so JSON.parse doesn't throw an error
@@ -102,20 +113,24 @@ function typedRequest<Response>(
           }
 
           const parsedBody = JSON.parse(body);
-          const status = get(parsedBody, 'status', false);
-          if (status) {
-            if (status === 'success') {
-              resolve(returnMeta ? parsedBody : parsedBody.data);
-            } else if (status === 'error' || status === 'fail') {
-              reject(parsedBody);
-            } else {
-              // TODO: find a way to record this case and report to the backend team
-              reject(new Error('Unknown response from backend.'));
-            }
-          } else {
-            // TODO: find a way to record this case and report to the backend team
-            reject(new Error('Unknown response from backend.'));
+          console.log(parsedBody);
+          if(statusCode === 200) {
+            resolve(returnMeta ? parsedBody : parsedBody);
           }
+          // const status = get(parsedBody, 'status', false);
+          // if (status) {
+          //   if (status === 'success') {
+          //     resolve(returnMeta ? parsedBody : parsedBody.data);
+          //   } else if (status === 'error' || status === 'fail') {
+          //     reject(parsedBody);
+          //   } else {
+          //     // TODO: find a way to record this case and report to the backend team
+          //     reject(new Error('Unknown response from backend.'));
+          //   }
+          // } else {
+          //   // TODO: find a way to record this case and report to the backend team
+          //   reject(new Error('Unknown response from backend.'));
+          // }
         } catch (error) {
           // Handle internal server errors (e.g. HTTP 500 - 'Something went wrong')
           reject(new Error(error));

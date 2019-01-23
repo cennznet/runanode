@@ -60,9 +60,6 @@ const setNodeSystemHealth = (state, health) => ({
 
 const handleChainGetHeader = (state, payload) => {
   const { localNode } = INITIAL_STATE;
-  console.log('handleChainGetHeader');
-  console.log(payload);
-
   localNode.bestBlock = payload.number;
   return {
     ...state,
@@ -72,9 +69,6 @@ const handleChainGetHeader = (state, payload) => {
 
 const handleSystemChain = (state, payload) => {
   const { localNode } = INITIAL_STATE;
-  console.log('handleSystemChain');
-  console.log(payload);
-
   localNode.chain = payload.result;
   return {
     ...state,

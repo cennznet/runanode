@@ -5,6 +5,7 @@ import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';
 import sreamConstants from 'renderer/constants/stream';
+import { Logger } from 'renderer/utils/logging';
 
 const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
   nodeSystem,
@@ -14,14 +15,15 @@ const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
 
 const mapDispatchToProps = dispatch => ({
   onNetworkStatusClick: () => {
-    dispatch({
-      type: types.nodeWsSystemChainPolling.requested,
-      payload: {},
-    });
+    Logger.debug('onNetworkStatusClick debug');
     // dispatch({
-    //   type: types.nodeJsonRpcSystem.requested,
+    //   type: types.nodeWsSystemChainPolling.requested,
     //   payload: {},
     // });
+    dispatch({
+      type: types.nodeJsonRpcSystem.requested,
+      payload: {},
+    });
   },
   onGetHeaderClick: () => {
     // dispatch({
