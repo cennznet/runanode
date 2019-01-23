@@ -15,43 +15,8 @@ const mapStateToProps = ({ syncStream, syncRemoteStream, localStorage }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onDisconnectStream: () => {
-    dispatch(
-      {
-        type: types.syncStream.requested,
-        payload: { command: sreamConstants.DISCONNECT },
-      },
-      {
-        type: types.syncRemoteStream.requested,
-        payload: { command: sreamConstants.DISCONNECT },
-      },
-      {
-        type: types.nodeWsSystemChainPolling.requested,
-      }
-    );
-  },
-
-  onSyncLocalNetwork: chain => {
-    const options: CennzNetRestartOptions = {
-      chain,
-    };
-    restartCennzNetNodeChannel.send(options);
-  },
-
-  onSyncRemoteNwtwork: () => {
-    dispatch(
-      {
-        type: types.syncStream.requested,
-        payload: { command: sreamConstants.CONNECT },
-      },
-      {
-        type: types.syncRemoteStream.requested,
-        payload: { command: sreamConstants.CONNECT },
-      },
-      {
-        type: types.nodeWsSystemChainPolling.requested,
-      }
-    );
+  onRestartNode: payload => {
+    dispatch({ type: types.switchNetwork.triggered, payload });
   },
 
   navigateToCreateWallet: () => {
@@ -63,13 +28,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const enhance = lifecycle({
-  componentWillMount() {
-    const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
-    if (selectedNetwork !== NetworkNameOptions.CENNZNET_DEV) {
-      this.props.onDisconnectStream();
-    }
-  },
-
   componentDidMount() {
     const { localStorage } = this.props;
     const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
@@ -77,14 +35,38 @@ const enhance = lifecycle({
     const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
 
     if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
-      this.props.onSyncLocalNetwork(genesisConfigFilePath);
+      this.props.onRestartNode({ chian: genesisConfigFilePath });
     } else {
-      this.props.onSyncRemoteNwtwork();
+      this.props.onRestartNode({ chain: selectedNetwork });
     }
+    // Not disconnet and restart when it is default network
   },
 
   // TODO: time out err controller - progress bar red
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    /**
+     * Nomally, syncNode page just happen at the beginning app start
+     * For current dev page, remove when remove dev page
+     */
+    const { localStorage: prevLocalStorage } = prevProps;
+    const prevSelectedNetwork = prevLocalStorage[storageKeys.SELECTED_NETWORK];
+    const prevGenesisConfigFile = prevLocalStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
+    const prevGenesisConfigFilePath = prevGenesisConfigFile && prevGenesisConfigFile.path;
+
+    const { localStorage } = this.props;
+    const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
+    const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
+    const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
+
+    if (prevSelectedNetwork !== selectedNetwork) {
+      if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
+        this.props.onRestartNode({ chian: genesisConfigFilePath });
+      } else {
+        this.props.onRestartNode({ chain: selectedNetwork });
+      }
+    }
+
+    /** Precentage */
     const { blockNum: localBestBlock } = this.props.syncStream;
     const { blockNum: remoteBestBlock } = this.props.syncRemoteStream;
     if (localBestBlock !== null && remoteBestBlock !== null) {
