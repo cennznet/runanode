@@ -1,4 +1,12 @@
 // @flow
+export type SystemHealth = {
+  result: {
+    is_syncing: boolean,
+    peers: number,
+    should_have_peers: boolean
+  }
+};
+
 export type NodeInfo = {
   syncProgress: {
     quantity: number,

@@ -2,7 +2,6 @@ import { localStream, remoteStream } from '../stream/stream';
 import types from '../types';
 
 export const isRemoteAction = (action) => {
-  console.log(`isRemoteAction: ${JSON.stringify(action)}`);
   return action.type.startsWith('ODIN_NODE_WS_REMOTE');
 };
 

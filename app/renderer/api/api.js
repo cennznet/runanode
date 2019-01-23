@@ -1,7 +1,12 @@
 // @flow
+import { SimpleKeyring, Wallet } from 'cennznet-wallet';
 import { split, get } from 'lodash';
 // import { action } from 'mobx';
 // import BigNumber from 'bignumber.js';
+
+import {
+  generateMnemonic
+} from 'renderer/utils/crypto';
 
 // domains
 // import Wallet from '../domains/Wallet';
@@ -20,7 +25,7 @@ import { split, get } from 'lodash';
 
 // Nodes requests
 // import { applyNodeUpdate } from './nodes/requests/applyNodeUpdate';
-import { getNodeInfo } from './nodes/requests/getNodeInfo';
+import { getSystemHealth } from './nodes/requests/getSystemHealth';
 // import { getNextNodeUpdate } from './nodes/requests/getNextNodeUpdate';
 // import { postponeNodeUpdate } from './nodes/requests/postponeNodeUpdate';
 
@@ -47,7 +52,7 @@ import { getNodeInfo } from './nodes/requests/getNodeInfo';
 import { awaitUpdateChannel, cennznetFaultInjectionChannel } from '../ipc/cennznet.ipc';
 // import patchAdaApi from './utils/patchAdaApi';
 // import { isValidMnemonic } from '../../../common/crypto/decrypt';
-// import { utcStringToDate, encryptPassphrase } from './utils';
+import { utcStringToDate, encryptPassphrase } from './utils';
 import { Logger } from '../utils/logging';
 // import {
 //   isValidRedemptionKey,
@@ -90,11 +95,12 @@ import type {
 
 // Nodes Types
 import type {
+  SystemHealth,
   NodeInfo,
   NodeSoftware,
   GetNetworkStatusResponse
 } from './nodes/types';
-import type { NodeQueryParams } from './nodes/requests/getNodeInfo';
+import type { NodeQueryParams } from './nodes/requests/getSystemHealth';
 
 // Transactions Types
 // import type { RedeemAdaParams } from './transactions/requests/redeemAda';
@@ -109,20 +115,9 @@ import type { NodeQueryParams } from './nodes/requests/getNodeInfo';
 // } from './transactions/types';
 
 // Wallets Types
-// import type {
-//   AdaWallet,
-//   AdaWallets,
-//   CreateWalletRequest,
-//   DeleteWalletRequest,
-//   RestoreWalletRequest,
-//   UpdateSpendingPasswordRequest,
-//   ExportWalletToFileRequest,
-//   GetWalletCertificateRecoveryPhraseRequest,
-//   GetWalletRecoveryPhraseFromCertificateRequest,
-//   ImportWalletFromKeyRequest,
-//   ImportWalletFromFileRequest,
-//   UpdateWalletRequest
-// } from './wallets/types';
+import type {
+  CennznetWallet
+} from './wallets/types';
 
 // Common errors
 import {
@@ -152,6 +147,7 @@ import {
 import type { FaultInjectionIpcRequest } from '../../common/types/cennznet-node.types';
 import { stringifyData, stringifyError } from '../../common/utils/logging';
 
+
 export default class CennzApi {
 
   config: RequestConfig;
@@ -164,6 +160,37 @@ export default class CennzApi {
   setRequestConfig(config: RequestConfig) {
     this.config = config;
   }
+
+  createWallet = async (request: CreateWalletRequest): Promise<Wallet> => {
+    Logger.debug('CennznetApi::createWallet called');
+
+    try {
+      const mnemonic = generateMnemonic().split(' ');
+      console.log('mnemonic');
+      console.log(mnemonic);
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      const keyring = new SimpleKeyring();
+      await keyring.addFromMnemonic(request.mnemonic)
+      await wallet.addKeyring(keyring);
+      Logger.debug('CennznetApi::createWallet success');
+    } catch (error) {
+      Logger.error('CennznetApi::createWallet error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+
+    // const { name, mnemonic, spendingPassword: passwordString } = request;
+    // const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
+    // try {
+    //   const wallet: CennznetWallet = await createWallet(this.config, { walletInitData });
+    //   Logger.debug('CennznetApi::createWallet success');
+    //   return _createWalletFromServerData(wallet);
+    // } catch (error) {
+    //   Logger.error('AdaApi::createWallet error: ' + stringifyError(error));
+    //   throw new GenericApiError();
+    // }
+  };
+
 
   // getWallets = async (): Promise<Array<Wallet>> => {
   //   Logger.debug('AdaApi::getWallets called');
@@ -737,35 +764,35 @@ export default class CennzApi {
     queryParams?: NodeQueryParams
   ): Promise<GetNetworkStatusResponse> => {
     const isForceNTPCheck = !!queryParams;
-    const loggerText = `AdaApi::getNetworkStatus${isForceNTPCheck ? ' (FORCE-NTP-CHECK)' : ''}`;
+    const loggerText = `CennznetApi::getNetworkStatus${isForceNTPCheck ? ' (FORCE-NTP-CHECK)' : ''}`;
     Logger.debug(`${loggerText} called`);
     try {
-      const status: NodeInfo = await getNodeInfo(this.config, queryParams);
+      const status: SystemHealth = await getSystemHealth(this.config, queryParams);
       Logger.debug(`${loggerText} success: ${stringifyData(status)}`);
-
-      const {
-        blockchainHeight,
-        subscriptionStatus,
-        syncProgress,
-        localBlockchainHeight,
-        localTimeInformation,
-      } = status;
-
-      // extract relevant data before sending to NetworkStatusStore
-      return {
-        subscriptionStatus,
-        syncProgress: syncProgress.quantity,
-        blockchainHeight: get(blockchainHeight, 'quantity', 0),
-        localBlockchainHeight: localBlockchainHeight.quantity,
-        localTimeDifference: get(localTimeInformation, 'differenceFromNtpServer.quantity', null),
-      };
+    //
+    //   const {
+    //     blockchainHeight,
+    //     subscriptionStatus,
+    //     syncProgress,
+    //     localBlockchainHeight,
+    //     localTimeInformation,
+    //   } = status;
+    //
+    //   // extract relevant data before sending to NetworkStatusStore
+    //   return {
+    //     subscriptionStatus,
+    //     syncProgress: syncProgress.quantity,
+    //     blockchainHeight: get(blockchainHeight, 'quantity', 0),
+    //     localBlockchainHeight: localBlockchainHeight.quantity,
+    //     localTimeDifference: get(localTimeInformation, 'differenceFromNtpServer.quantity', null),
+    //   };
     } catch (error) {
       Logger.error(`${loggerText} error: ${stringifyError(error)}`);
       throw new GenericApiError(error);
     }
   };
 
-  setCardanoNodeFault = async (fault: FaultInjectionIpcRequest) => {
+  setCennznetNodeFault = async (fault: FaultInjectionIpcRequest) => {
     await cennznetFaultInjectionChannel.send(fault);
   };
 

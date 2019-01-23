@@ -85,6 +85,7 @@
     "@polkadot/rpc-provider": "0.40.16",
     "@polkadot/storage": "0.40.16",
     "@polkadot/types": "0.40.16",
+    "bip39": "^2.5.0",
     "blakejs": "^1.1.0",
     "cennznet-api": "0.5.2",
     "cennznet-wallet": "0.5.2",
@@ -106,6 +107,7 @@
     "mkdirp": "^0.5.1",
     "moment": "^2.23.0",
     "path": "0.12.7",
+    "pbkdf2": "^3.0.17",
     "polished": "^2.3.1",
     "prop-types": "^15.6.2",
     "ps-list": "5.0.0",
@@ -131,9 +133,11 @@
     "reset-css": "^4.0.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
+    "safe-buffer": "^5.1.2",
     "source-map-support": "^0.5.9",
     "styled-components": "^4.0.3",
     "styled-props": "^1.1.2",
+    "unorm": "^1.4.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
