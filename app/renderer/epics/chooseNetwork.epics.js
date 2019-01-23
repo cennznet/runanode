@@ -74,11 +74,24 @@ const restartNodeEpic = action$ =>
   action$.pipe(
     ofType(types.restartNode.triggered),
     tap(({ payload }) => {
-      console.log('restart Node', payload);
       const options: CennzNetRestartOptions = payload;
       restartCennzNetNodeChannel.send(options);
     }),
-    mergeMap(() => EMPTY)
+    mergeMap(() =>
+      of(
+        {
+          type: types.syncStream.requested,
+          payload: { command: sreamConstants.CONNECT },
+        },
+        {
+          type: types.syncRemoteStream.requested,
+          payload: { command: sreamConstants.CONNECT },
+        },
+        {
+          type: types.nodeWsSystemChainPolling.requested,
+        }
+      )
+    )
   );
 
 export default [

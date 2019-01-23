@@ -36,11 +36,9 @@ const enhance = lifecycle({
 
     if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
       this.props.onRestartNode({ chian: genesisConfigFilePath });
+    } else {
+      this.props.onRestartNode({ chain: selectedNetwork });
     }
-    if (selectedNetwork === NetworkNameOptions.CENNZNET_UAT) {
-      this.props.onRestartNode({ name: NetworkNameOptions.CENNZNET_UAT });
-    }
-
     // Not disconnet and restart when it is default network
   },
 
@@ -48,7 +46,7 @@ const enhance = lifecycle({
   componentDidUpdate(prevProps) {
     /**
      * Nomally, syncNode page just happen at the beginning app start
-     * For current dev page, remove when ready for production
+     * For current dev page, remove when remove dev page
      */
     const { localStorage: prevLocalStorage } = prevProps;
     const prevSelectedNetwork = prevLocalStorage[storageKeys.SELECTED_NETWORK];
@@ -63,9 +61,9 @@ const enhance = lifecycle({
     if (prevSelectedNetwork !== selectedNetwork) {
       if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
         this.props.onRestartNode({ chian: genesisConfigFilePath });
+      } else {
+        this.props.onRestartNode({ chain: selectedNetwork });
       }
-
-      this.props.onRestartNode({ name: selectedNetwork });
     }
 
     /** Precentage */
