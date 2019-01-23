@@ -5,5 +5,6 @@ import Spinner from 'components/Spinner';
 import Toggle from 'components/Toggle';
 import TosContent from 'components/TosContent';
 import PageHeading from 'components/PageHeading';
+import PageFooter from 'components/PageFooter';
 
-export { Button, FileUploader, Select, Spinner, Toggle, TosContent, PageHeading };
+export { Button, FileUploader, Select, Spinner, Toggle, TosContent, PageHeading, PageFooter };
