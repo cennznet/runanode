@@ -16,4 +16,4 @@ const SeedPhraseQuizPage = ({ moveToStep }) => (
   </React.Fragment>
 );
 
-export default withContainer(SeedPhraseQuizPage);
+export default SeedPhraseQuizPage;

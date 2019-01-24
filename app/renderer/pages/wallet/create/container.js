@@ -14,11 +14,13 @@ const enhance = compose(
     componentDidMount() {},
   }),
   withStateHandlers(
-    ({ initStep = STEPS.NAME_INPUT }) => ({
+    ({ initStep = STEPS.NAME_INPUT, initMnemonic = '' }) => ({
       step: initStep,
+      mnemonicString: initMnemonic,
     }),
     {
       moveToStep: () => val => ({ step: val }),
+      setMnemonicString: () => val => ({ mnemonicString: val }),
     }
   )
 );
