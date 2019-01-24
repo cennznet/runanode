@@ -36,7 +36,7 @@ const initEpic = action$ =>
         },
         {
           type: types.getStorage.requested,
-          payload: { key: storageKeys.WALLET },
+          payload: { key: storageKeys.WALLETS },
         },
         {
           type: types.nodeWsSystemChainPolling.requested,
