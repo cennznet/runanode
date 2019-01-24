@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   min-width: 17rem;
   max-width: 17rem;
   height: 100%;
-  background-color: ${colors.N900};
+  background-color: ${colors.V900};
   overflow: hidden;
 `;
 

@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 1rem;
   height: 3rem;
-  background-color: ${colors.N1000};
+  background-color: ${colors.V800};
 `;
 
 const HeaderWrapper = styled.div`
@@ -18,7 +18,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   padding: 1rem;
   height: 3rem;
-  background-color: ${colors.N1000};
+  background-color: ${colors.V800};
   flex: 1 1 auto;
 `;
 
@@ -50,7 +50,7 @@ const HeaderSectionContainer = styled.div`
   flex-direction: column;
 `;
 
-const TopBar = ({networkName, blockNum, blockSpeed, isSynced, syncPercentage}) => (
+const TopBar = ({ networkName, blockNum, blockSpeed, isSynced, syncPercentage }) => (
   <Wrapper>
     <HeaderSectionContainer>
       <LogoContainer>

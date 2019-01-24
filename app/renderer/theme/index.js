@@ -17,6 +17,7 @@ const theme = {
     'Helvetica Neue',
     sans-serif
   `,
+  pageGradient: 'linear-gradient(180deg, #0B1E73 0%, #040C40 100%)',
   zIndex: {
     overlay: 20,
     above: 10,
