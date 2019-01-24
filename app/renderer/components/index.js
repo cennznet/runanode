@@ -7,6 +7,7 @@ import TosContent from 'components/TosContent';
 import PageHeading from 'components/PageHeading';
 import PageFooter from 'components/PageFooter';
 import Input from 'components/Input';
+import Modal from 'components/Modal';
 
 export {
   Input,
@@ -18,4 +19,5 @@ export {
   TosContent,
   PageHeading,
   PageFooter,
+  Modal,
 };
