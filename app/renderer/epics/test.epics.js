@@ -4,7 +4,7 @@ import { ofType } from 'redux-observable';
 import { Wallet } from "cennznet-wallet";
 
 import types from '../types';
-import { storageKeys } from '../api/utils/storage';
+import { getStorage, storageKeys } from '../api/utils/storage';
 
 const testPageEpic = action$ =>
   action$.pipe(
@@ -16,12 +16,16 @@ const createWalletEpic = action$ =>
   action$.pipe(
     ofType(types.walletCreate.triggered),
     mergeMap(async () => {
-      console.log('createWalletEpic');
+      let wallets = await getStorage(storageKeys.WALLETS);
+      if(wallets === null){
+        wallets = [];
+      }
       const mnemonic = window.odin.api.cennz.createMnemonic({num: 24});
       const wallet = await window.odin.api.cennz.createWallet({ name: 'test wallet', mnemonic, passphrase: 'password'});
+      wallets.push(wallet);
       return {
         type: types.setStorage.requested,
-        payload: { key: storageKeys.WALLET, value: wallet },
+        payload: { key: storageKeys.WALLETS, value: wallets },
       };
     })
   );

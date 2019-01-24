@@ -117,6 +117,7 @@
     "ps-list": "5.0.0",
     "qs": "^6.6.0",
     "ramda": "^0.26.1",
+    "rc-checkbox": "2.1.6",
     "rc-progress": "^2.2.6",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

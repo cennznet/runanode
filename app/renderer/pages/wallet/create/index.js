@@ -8,27 +8,13 @@ import SeedPhraseQuizPage from './seedPhraseQuizPage';
 import { STEPS } from './constants';
 
 const WalletCreatePage = props => {
-  const { step, moveToStep } = props;
+  const { step, moveToStep, setMnemonicString } = props;
   return (
     // <MainLayout withoutSidebar>
     <MainLayout>
       <MainContent display="flex">
-        {step === STEPS.NAME_INPUT && (
-          <NameInputPage
-            {...props}
-            onClick={() => {
-              moveToStep(STEPS.SEED_PHRASE);
-            }}
-          />
-        )}
-        {step === STEPS.SEED_PHRASE && (
-          <SeedPhrasePage
-            {...props}
-            onClick={() => {
-              moveToStep(STEPS.SEED_PHRASE_QUIZ);
-            }}
-          />
-        )}
+        {step === STEPS.NAME_INPUT && <NameInputPage {...props} />}
+        {step === STEPS.SEED_PHRASE && <SeedPhrasePage {...props} />}
         {step === STEPS.SEED_PHRASE_QUIZ && <SeedPhraseQuizPage {...props} />}
       </MainContent>
     </MainLayout>
