@@ -36,10 +36,14 @@ const buttonBgColor = (p, styling) => {
 
 const buttonBorder = (p, styling) => {
   if (p.outline && !p.disabled) {
-    return `1px solid ${styledProps(styling.color, 'color')(p)}`;
+    return `2px solid ${styledProps(styling.borderColor, 'color')(p)}`;
   }
 
-  return 0;
+  if (p.disabled) {
+    return 0;
+  }
+
+  return `2px solid ${styledProps(styling.borderColor, 'color')(p)}`;
 };
 
 const hoverBgColor = (p, styling) => {
@@ -79,22 +83,24 @@ const hoverBorderColor = (p, styling) => {
     return 0;
   }
 
-  if (p.outline) {
-    return `1px solid ${styledProps(styling.hoverColor, 'color')(p)}`;
-  }
-
-  return 0;
+  return `2px solid ${styledProps(styling.hoverBorderColor, 'color')(p)}`;
 };
 
 const buttonStyles = props => {
-  const styling = deepAssign({},
-    defaultStyling(props.theme), props.theme[props.themeSpace], props.themeStyles
+  const styling = deepAssign(
+    {},
+    defaultStyling(props.theme),
+    props.theme[props.themeSpace],
+    props.themeStyles
   );
 
-  const p = Object.assign({
-    color: 'primary',
-    size: 'md'
-  }, props);
+  const p = Object.assign(
+    {
+      color: 'primary',
+      size: 'md',
+    },
+    props
+  );
 
   return `
     align-items: center;

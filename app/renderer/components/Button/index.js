@@ -73,7 +73,15 @@ Button.defaultProps = {
 Button.propTypes = {
   block: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.string]).isRequired,
-  color: PropTypes.oneOf(['primary', 'info', 'success', 'warning', 'danger', 'nuetral']),
+  color: PropTypes.oneOf([
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'nuetral',
+  ]),
   disabled: PropTypes.bool,
   flat: PropTypes.bool,
   loading: PropTypes.bool,

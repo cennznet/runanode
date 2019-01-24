@@ -40,7 +40,6 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.ROOT} component={HomePage} />
         <Redirect exact from={ROUTES.SETTINGS.ROOT} to={ROUTES.SETTINGS.GENERAL} />
         <Route exact from={ROUTES.WALLET.ROOT} component={WalletRootPage} />
-        {/* <Route path={ROUTES.WALLET.DETAILS} render={WalletRootPage} /> */}
         <Route path={`${ROUTES.WALLET.DETAILS}/:id`} component={WalletDetailsPage} />
         <Route exact path={ROUTES.WALLET.LANDING} component={WalletLandingPage} />
         <Route exact path={ROUTES.WALLET.CREATE} component={WalletCreatePage} />

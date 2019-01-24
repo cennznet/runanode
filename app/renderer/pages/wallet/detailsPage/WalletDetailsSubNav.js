@@ -29,7 +29,7 @@ const WalletDetailsSubNav = ({ wallets }) => {
       {...{ navItems }}
       footer={
         <SubNavFooter>
-          <Button onClick={() => history.push(ROUTES.WALLET.LANDING)} outline block>
+          <Button color="secondary" onClick={() => history.push(ROUTES.WALLET.LANDING)} block>
             <ButtonText>Add wallet</ButtonText>
             <FontAwesomeIcon icon="plus" />
           </Button>
