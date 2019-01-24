@@ -3,7 +3,6 @@ import ReactModal from 'react-modal';
 import Button from 'components/Button';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
-import ModalFooter from './lib/modalFooter';
 
 const ModalContent = styled.div`
   padding: 1rem;
@@ -26,7 +25,7 @@ const Modal = ({
   children,
   className,
   footer,
-  ...restFooterProps
+  ...restProps
 }) => {
   const contentClassName = `${className}__content`;
   const overlayClassName = `${className}__overlay`;
@@ -39,6 +38,7 @@ const Modal = ({
       className={contentClassName}
       overlayClassName={overlayClassName}
       ariaHideApp={false}
+      {...restProps}
     >
       <ModalContent>{children}</ModalContent>
       {footer && <ModalFooterWrapper>{footer}</ModalFooterWrapper>}
@@ -53,7 +53,7 @@ const StyledModal = styled(Modal)`
     left: 0px;
     right: 0px;
     bottom: 0px;
-    background-color: ${p => p.overlayBgColor || 'rgba(255, 255, 255, 0.55)'};
+    background-color: ${p => p.overlayBgColor};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,10 +62,10 @@ const StyledModal = styled(Modal)`
   &__content {
     position: absolute;
     border-radius: 3px;
-    min-width: ${p => p.minWith || '50vw'};
-    min-height: ${p => p.minWith || '25vh'};
-    background-color: ${p => p.backgroundColor || '#040c40'};
-    box-shadow: ${p => p.boxShadow || `0 2px 4px 0 ${colors.N900}`};
+    min-width: ${p => p.minWidth};
+    min-height: ${p => p.minHeight};
+    background-color: ${p => p.backgroundColor || 'red'};
+    box-shadow: ${p => p.boxShadow};
     color: ${p => p.color || colors.N0};
     display: flex;
     flex-direction: column;
@@ -76,5 +76,13 @@ const StyledModal = styled(Modal)`
     }
   }
 `;
+
+StyledModal.defaultProps = {
+  minWidth: '50vw',
+  minHeight: '25vh',
+  backgroundColor: '#040C40',
+  boxShadow: `0 2px 4px 0 ${colors.N900}`,
+  overlayBgColor: 'rgba(255, 255, 255, 0.55)',
+};
 
 export default StyledModal;
