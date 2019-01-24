@@ -31,6 +31,6 @@ const BackLink = ({ to, children }) => {
   );
 };
 
-const StartOverLink = () => <BackLink to={ROUTES.WALLET.ROOT}>Start over</BackLink>;
+const StartOverLink = () => <BackLink to={ROUTES.WALLET.LANDING}>Start over</BackLink>;
 
 export default StartOverLink;
