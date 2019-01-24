@@ -14,13 +14,15 @@ const enhance = compose(
     componentDidMount() {},
   }),
   withStateHandlers(
-    ({ initStep = STEPS.NAME_INPUT, initMnemonic = '' }) => ({
+    ({ initStep = STEPS.NAME_INPUT, initMnemonic = '', initWalletName = '' }) => ({
       step: initStep,
       mnemonicString: initMnemonic,
+      walletName: initWalletName,
     }),
     {
       moveToStep: () => val => ({ step: val }),
       setMnemonicString: () => val => ({ mnemonicString: val }),
+      setWalletName: () => val => ({ walletName: val }),
     }
   )
 );
