@@ -12,6 +12,7 @@ const SubHeading = styled.div`
   font-size: 14px;
   font-weight: 400;
   margin-top: 14px;
+  line-height: 1.2rem;
 `;
 
 const PageHeading = ({ subHeading, children }) => {
