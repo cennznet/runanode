@@ -87,6 +87,7 @@
     "@polkadot/types": "0.40.16",
     "@redux-beacon/google-analytics": "^1.2.0",
     "@redux-beacon/logger": "^1.0.0",
+    "bignumber.js": "^8.0.2",
     "bip39": "^2.5.0",
     "blakejs": "^1.1.0",
     "cennznet-api": "0.5.2",

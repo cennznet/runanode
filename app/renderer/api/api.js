@@ -1,91 +1,15 @@
 // @flow
+import _ from 'lodash';
 import { SimpleKeyring, Wallet } from 'cennznet-wallet';
-import { split, get } from 'lodash';
-// import { action } from 'mobx';
-// import BigNumber from 'bignumber.js';
+import uuid from 'uuid/v4';
+import BigNumber from 'bignumber.js';
 
-import {
-  generateMnemonic
-} from 'renderer/utils/crypto';
-
-// domains
-// import Wallet from '../domains/Wallet';
-// import { WalletTransaction, transactionTypes } from '../domains/WalletTransaction';
-// import WalletAddress from '../domains/WalletAddress';
-
-// Accounts requests
-// import { getAccounts } from './accounts/requests/getAccounts';
-
-// Addresses requests
-// import { getAddress } from './addresses/requests/getAddress';
-// import { createAddress } from './addresses/requests/createAddress';
-
-// Common requests
-// import { sendBugReport } from './common/requests/sendBugReport';
-
-// Nodes requests
-// import { applyNodeUpdate } from './nodes/requests/applyNodeUpdate';
+import {generateMnemonic } from 'renderer/utils/crypto';
+import { storageKeys, getStorage } from 'renderer/api/utils/storage';
+import type { FaultInjectionIpcRequest } from 'common/types/cennznet-node.types';
+import { stringifyData, stringifyError } from 'common/utils/logging';
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
-// import { getNextNodeUpdate } from './nodes/requests/getNextNodeUpdate';
-// import { postponeNodeUpdate } from './nodes/requests/postponeNodeUpdate';
-
-// Transactions requests
-// import { getTransactionFee } from './transactions/requests/getTransactionFee';
-// import { getTransactionHistory } from './transactions/requests/getTransactionHistory';
-// import { createTransaction } from './transactions/requests/createTransaction';
-// import { redeemAda } from './transactions/requests/redeemAda';
-// import { redeemPaperVendedAda } from './transactions/requests/redeemPaperVendedAda';
-
-// Wallets requests
-// import { resetWalletState } from './wallets/requests/resetWalletState';
-// import { changeSpendingPassword } from './wallets/requests/changeSpendingPassword';
-// import { deleteWallet } from './wallets/requests/deleteWallet';
-// import { exportWalletAsJSON } from './wallets/requests/exportWalletAsJSON';
-// import { importWalletAsJSON } from './wallets/requests/importWalletAsJSON';
-// import { getWallets } from './wallets/requests/getWallets';
-// import { importWalletAsKey } from './wallets/requests/importWalletAsKey';
-// import { createWallet } from './wallets/requests/createWallet';
-// import { restoreWallet } from './wallets/requests/restoreWallet';
-// import { updateWallet } from './wallets/requests/updateWallet';
-
-// utility functions
-import { awaitUpdateChannel, cennznetFaultInjectionChannel } from '../ipc/cennznet.ipc';
-// import patchAdaApi from './utils/patchAdaApi';
-// import { isValidMnemonic } from '../../../common/crypto/decrypt';
-import { utcStringToDate, encryptPassphrase } from './utils';
 import { Logger } from '../utils/logging';
-// import {
-//   isValidRedemptionKey,
-//   isValidPaperVendRedemptionKey
-// } from '../utils/redemption-key-validation';
-// import {
-//   unscrambleMnemonics,
-//   scrambleMnemonics,
-//   generateAccountMnemonics,
-//   generateAdditionalMnemonics
-// } from './utils/mnemonics';
-
-// config constants
-// import {
-//   LOVELACES_PER_ADA,
-//   MAX_TRANSACTIONS_PER_PAGE
-// } from '../config/numbersConfig';
-// import {
-//   ADA_CERTIFICATE_MNEMONIC_LENGTH,
-//   ADA_REDEMPTION_PASSPHRASE_LENGTH,
-//   WALLET_RECOVERY_PHRASE_WORD_COUNT
-// } from '../config/cryptoConfig';
-
-// Accounts types
-// import type { Accounts } from './accounts/types';
-
-// Addresses Types
-// import type {
-//   Address,
-//   GetAddressesRequest,
-//   CreateAddressRequest,
-//   GetAddressesResponse
-// } from './addresses/types';
 
 // Common Types
 import type {
@@ -102,22 +26,12 @@ import type {
 } from './nodes/types';
 import type { NodeQueryParams } from './nodes/requests/getSystemHealth';
 
-// Transactions Types
-// import type { RedeemAdaParams } from './transactions/requests/redeemAda';
-// import type { RedeemPaperVendedAdaParams } from './transactions/requests/redeemPaperVendedAda';
-// import type {
-//   Transaction,
-//   Transactions,
-//   TransactionFee,
-//   TransactionRequest,
-//   GetTransactionsRequest,
-//   GetTransactionsResponse
-// } from './transactions/types';
-
 // Wallets Types
 import type {
-  CennznetWallet
+  CreateMnemonicRequest, CreateWalletRequest
 } from './wallets/types';
+
+import CennznetWallet from './wallets/CennznetWallet';
 
 // Common errors
 import {
@@ -128,24 +42,6 @@ import {
   ForbiddenMnemonicError
 } from './common/errors';
 
-// Wallets errors
-// import {
-//   WalletAlreadyRestoredError,
-//   WalletAlreadyImportedError,
-//   WalletFileImportError
-// } from './wallets/errors';
-
-// Transactions errors
-// import {
-//   CanNotCalculateTransactionFeesError,
-//   NotAllowedToSendMoneyToRedeemAddressError,
-//   NotEnoughFundsForTransactionFeesError,
-//   NotEnoughFundsForTransactionError,
-//   NotEnoughMoneyToSendError,
-//   RedeemAdaError
-// } from './transactions/errors';
-import type { FaultInjectionIpcRequest } from '../../common/types/cennznet-node.types';
-import { stringifyData, stringifyError } from '../../common/utils/logging';
 
 
 export default class CennzApi {
@@ -161,34 +57,33 @@ export default class CennzApi {
     this.config = config;
   }
 
-  createWallet = async (request: CreateWalletRequest): Promise<Wallet> => {
-    Logger.debug('CennznetApi::createWallet called');
+  createMnemonic = (request: CreateMnemonicRequest): Promise<String> => {
+    const mnemonic = generateMnemonic(request.num).split(' ');
+    return _.map(mnemonic).join(', ');
+  };
 
+  createWallet = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::createWallet called');
     try {
-      const mnemonic = generateMnemonic().split(' ');
-      console.log('mnemonic');
-      console.log(mnemonic);
       const wallet = new Wallet();
       await wallet.createNewVault(request.passphrase);
       const keyring = new SimpleKeyring();
       await keyring.addFromMnemonic(request.mnemonic)
       await wallet.addKeyring(keyring);
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        amount: new BigNumber(0),
+        hasPassword: request.passphrase !== null,
+        wallet
+      });
       Logger.debug('CennznetApi::createWallet success');
+      return cennznetWallet;
     } catch (error) {
       Logger.error('CennznetApi::createWallet error: ' + stringifyError(error));
       throw new GenericApiError();
     }
-
-    // const { name, mnemonic, spendingPassword: passwordString } = request;
-    // const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-    // try {
-    //   const wallet: CennznetWallet = await createWallet(this.config, { walletInitData });
-    //   Logger.debug('CennznetApi::createWallet success');
-    //   return _createWalletFromServerData(wallet);
-    // } catch (error) {
-    //   Logger.error('AdaApi::createWallet error: ' + stringifyError(error));
-    //   throw new GenericApiError();
-    // }
   };
 
 
@@ -760,108 +655,20 @@ export default class CennzApi {
   //   }
   // };
 
-  getNetworkStatus = async (
+  getSystemHealth = async (
     queryParams?: NodeQueryParams
-  ): Promise<GetNetworkStatusResponse> => {
-    const isForceNTPCheck = !!queryParams;
-    const loggerText = `CennznetApi::getNetworkStatus${isForceNTPCheck ? ' (FORCE-NTP-CHECK)' : ''}`;
+  ): Promise<SystemHealth> => {
+    const loggerText = `CennznetApi::getSystemHealth`;
     Logger.debug(`${loggerText} called`);
     try {
       const status: SystemHealth = await getSystemHealth(this.config, queryParams);
       Logger.debug(`${loggerText} success: ${stringifyData(status)}`);
-    //
-    //   const {
-    //     blockchainHeight,
-    //     subscriptionStatus,
-    //     syncProgress,
-    //     localBlockchainHeight,
-    //     localTimeInformation,
-    //   } = status;
-    //
-    //   // extract relevant data before sending to NetworkStatusStore
-    //   return {
-    //     subscriptionStatus,
-    //     syncProgress: syncProgress.quantity,
-    //     blockchainHeight: get(blockchainHeight, 'quantity', 0),
-    //     localBlockchainHeight: localBlockchainHeight.quantity,
-    //     localTimeDifference: get(localTimeInformation, 'differenceFromNtpServer.quantity', null),
-    //   };
+      return status;
     } catch (error) {
       Logger.error(`${loggerText} error: ${stringifyError(error)}`);
       throw new GenericApiError(error);
     }
   };
 
-  setCennznetNodeFault = async (fault: FaultInjectionIpcRequest) => {
-    await cennznetFaultInjectionChannel.send(fault);
-  };
-
-  // No implementation here but can be overwritten
-  getLocalTimeDifference: Function;
-  setLocalTimeDifference: Function;
-  setNextUpdate: Function;
 
 }
-
-// ========== TRANSFORM SERVER DATA INTO FRONTEND MODELS =========
-
-// const _createWalletFromServerData = action(
-//   'AdaApi::_createWalletFromServerData', (data: AdaWallet) => {
-//     const {
-//       id, balance, name, assuranceLevel,
-//       hasSpendingPassword, spendingPasswordLastUpdate,
-//       syncState,
-//     } = data;
-//
-//     return new Wallet({
-//       id,
-//       amount: new BigNumber(balance).dividedBy(LOVELACES_PER_ADA),
-//       name,
-//       assurance: assuranceLevel,
-//       hasPassword: hasSpendingPassword,
-//       passwordUpdateDate: new Date(`${spendingPasswordLastUpdate}Z`),
-//       syncState,
-//     });
-//   }
-// );
-
-// const _createAddressFromServerData = action(
-//   'AdaApi::_createAddressFromServerData',
-//   (address: Address) => new WalletAddress(address)
-// );
-
-// const _conditionToTxState = (condition: string) => {
-//   switch (condition) {
-//     case 'applying':
-//     case 'creating': return 'pending';
-//     case 'wontApply': return 'failed';
-//     default: return 'ok';
-//     // Others V0: CPtxInBlocks && CPtxNotTracked
-//     // Others V1: "inNewestBlocks" "persisted" "creating"
-//   }
-// };
-
-// const _createTransactionFromServerData = action(
-//   'AdaApi::_createTransactionFromServerData', (data: Transaction) => {
-//     const { id, direction, amount, confirmations, creationTime, inputs, outputs, status } = data;
-//     return new WalletTransaction({
-//       id,
-//       title: direction === 'outgoing' ? 'Ada sent' : 'Ada received',
-//       type: direction === 'outgoing' ? transactionTypes.EXPEND : transactionTypes.INCOME,
-//       amount: new BigNumber(direction === 'outgoing' ? (amount * -1) : amount).dividedBy(LOVELACES_PER_ADA),
-//       date: utcStringToDate(creationTime),
-//       description: '',
-//       numberOfConfirmations: confirmations,
-//       addresses: {
-//         from: inputs.map(({ address }) => address),
-//         to: outputs.map(({ address }) => address),
-//       },
-//       state: _conditionToTxState(status.tag),
-//     });
-//   }
-// );
-
-// const _createTransactionFeeFromServerData = action(
-//   'AdaApi::_createTransactionFeeFromServerData', (data: TransactionFee) =>
-//     new BigNumber(data.estimatedAmount).dividedBy(LOVELACES_PER_ADA)
-// );

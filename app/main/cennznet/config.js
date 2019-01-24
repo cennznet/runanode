@@ -25,7 +25,7 @@ export const prepareArgs = (config: LauncherConfig) => {
   // default node name
   const nameArgIndex = args.findIndex((item) => item === '--name');
   if(nameArgIndex<0) {
-    args.push('--name', "Odin-"+os.userInfo().username);
+    args.push('--name', "❤️Odin-"+os.userInfo().username);
   }
 
   // default chain

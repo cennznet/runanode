@@ -14,6 +14,7 @@ import { app, BrowserWindow, globalShortcut, Menu, dialog, shell } from 'electro
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { includes } from 'lodash';
+import os from "os";
 
 import mainErrorHandler from 'main/utils/mainErrorHandler';
 import { setupLogging } from 'main/utils/setupLogging';
@@ -27,7 +28,6 @@ import {acquireAppInstanceLock} from "./main/utils/app-instance-lock";
 import {safeExitWithCode} from "./main/utils/safeExitWithCode";
 import { createMainWindow } from './main/windows/mainWindow';
 import { environment } from './main/environment';
-import os from "os";
 
 const { isDevOrDebugProd, buildLabel } = environment;
 

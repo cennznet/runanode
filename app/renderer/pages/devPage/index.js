@@ -32,6 +32,7 @@ const DevPage = ({
   onRemoteStreamStop,
   onChainSubscribeNewHead,
   onNavToChooseNetwork,
+  onWalletCreate,
   nodeSystem,
   syncStream,
   syncRemoteStream,
@@ -89,6 +90,9 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={() => onResetLocalStorage()}>Reset Local Storage</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onWalletCreate()}>Create Wallet</Button>
         </Flex>
       </MainContent>
     </MainLayout>

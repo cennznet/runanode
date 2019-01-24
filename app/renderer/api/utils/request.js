@@ -71,16 +71,13 @@ function typedRequest<Response>(
       };
     }
 
-    console.log('https request options');
-    console.log(options);
-    console.log(requestBody);
     const httpsRequest = global.http.request(options);
     if (hasRequestBody) {
       httpsRequest.write(requestBody);
     }
     httpsRequest.on('response', (response) => {
       let body = '';
-      // Cardano-sl returns chunked requests, so we need to concat them
+      // app returns chunked requests, so we need to concat them
       response.on('data', (chunk) => (body += chunk));
       // Reject errors
       response.on('error', (error) => reject(error));
@@ -91,9 +88,6 @@ function typedRequest<Response>(
           // When deleting a wallet, the API does not return any data in body
           // even if it was successful
           const { statusCode, statusMessage } = response;
-          console.log(statusCode);
-          console.log(statusMessage);
-
           if (!body && statusCode >= 200 && statusCode <= 206) {
             // adds status and data properties so JSON.parse doesn't throw an error
             body = `{
@@ -101,7 +95,7 @@ function typedRequest<Response>(
               "data": "statusCode: ${statusCode} -- statusMessage: ${statusMessage}"
             }`;
           } else if (
-            options.path === '/api/internal/next-update' &&
+            options.path === '/api/internal/next-update' && // TODO CENNZNETNode api for the next update?
             statusCode === 404
           ) {
             // when nextAdaUpdate receives a 404, it isn't an error
@@ -113,24 +107,9 @@ function typedRequest<Response>(
           }
 
           const parsedBody = JSON.parse(body);
-          console.log(parsedBody);
           if(statusCode === 200) {
             resolve(returnMeta ? parsedBody : parsedBody);
           }
-          // const status = get(parsedBody, 'status', false);
-          // if (status) {
-          //   if (status === 'success') {
-          //     resolve(returnMeta ? parsedBody : parsedBody.data);
-          //   } else if (status === 'error' || status === 'fail') {
-          //     reject(parsedBody);
-          //   } else {
-          //     // TODO: find a way to record this case and report to the backend team
-          //     reject(new Error('Unknown response from backend.'));
-          //   }
-          // } else {
-          //   // TODO: find a way to record this case and report to the backend team
-          //   reject(new Error('Unknown response from backend.'));
-          // }
         } catch (error) {
           // Handle internal server errors (e.g. HTTP 500 - 'Something went wrong')
           reject(new Error(error));
