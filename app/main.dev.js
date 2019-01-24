@@ -14,7 +14,10 @@ import { app, BrowserWindow, globalShortcut, Menu, dialog, shell } from 'electro
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { includes } from 'lodash';
+import os from "os";
 
+import mainErrorHandler from 'main/utils/mainErrorHandler';
+import { setupLogging } from 'main/utils/setupLogging';
 import MenuBuilder from './main/menu';
 import { Logger } from './main/utils/logging';
 import { setupCennzNet } from './main/cennznet/setup';
@@ -26,7 +29,7 @@ import {safeExitWithCode} from "./main/utils/safeExitWithCode";
 import { createMainWindow } from './main/windows/mainWindow';
 import { environment } from './main/environment';
 
-const { isDevOrDebugProd } = environment;
+const { isDevOrDebugProd, buildLabel } = environment;
 
 export default class AppUpdater {
   constructor() {
@@ -123,6 +126,15 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', async () => {
+  setupLogging();
+  mainErrorHandler();
+
+  Logger.info(`========== Odin is starting at ${new Date().toString()} ==========`);
+
+  Logger.info(`!!! ${buildLabel} is running on ${os.platform()} version ${os.release()}
+            with CPU: ${JSON.stringify(os.cpus(), null, 2)} with
+            ${JSON.stringify(os.totalmem(), null, 2)} total RAM !!!`);
+
   // Make sure this is the only App instance running per cluster before doing anything else
   try {
     await acquireAppInstanceLock();

@@ -7,14 +7,14 @@ export type NodeQueryParams = {
   force_ntp_check: boolean,
 };
 
-export const getNodeInfo = (
+export const getSystemHealth = (
   config: RequestConfig,
   queryParams?: NodeQueryParams,
 ): Promise<NodeInfo> => (
   request({
     hostname: 'localhost',
-    method: 'GET',
-    path: '/api/v1/node-info',
+    method: 'POST',
+    path: '/',
     ...config,
-  }, queryParams)
+  }, queryParams, { "jsonrpc": "2.0", "method":"system_health", "params":[], "id": 1 })
 );

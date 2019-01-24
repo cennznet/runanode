@@ -14,6 +14,11 @@ const config = {
     remoteStreamURL,
   },
 
+  app: {
+    LOG_REDUX: false,
+    PAPER_WALLET_WRITTEN_WORDS_COUNT: 9,
+  },
+
   urls: {
     LOCAL_JSONRPC: `${localURL}/`,
     LOCAL_WS: `${localStreamURL}/`,
