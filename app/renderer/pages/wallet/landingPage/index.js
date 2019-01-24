@@ -75,7 +75,7 @@ const WalletLandingPage = () => (
           <MethodInfo>
             <MethodTitle>Create</MethodTitle>
             <MethodDesc>
-              Don't have a wallet or want a new one? Create one and start managing your tokens.
+              Don&apos;t have a wallet or want a new one? Create one and start managing your tokens.
             </MethodDesc>
           </MethodInfo>
         </GenerateWalletMethods>
