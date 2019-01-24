@@ -34,7 +34,7 @@ const IconNav = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 5rem;
-  background-color: ${colors.N1000};
+  background-color: ${colors.V900};
 `;
 
 const TopIcons = styled.div``;
@@ -44,16 +44,13 @@ const SideNav = () => (
   <Wrapper>
     <IconNav>
       <TopIcons>
-        <IconLink to={ROUTES.WALLET.CREATE}>
-          <FontAwesomeIcon icon="plus" />
-        </IconLink>
-        <IconLink to="/wallet/import">
+        <IconLink to={ROUTES.WALLET.ROOT}>
           <FontAwesomeIcon icon="wallet" />
         </IconLink>
       </TopIcons>
       <BottomIcons>
         <IconLink to="/dev">
-          <FontAwesomeIcon icon={["fab", "dev"]} />
+          <FontAwesomeIcon icon={['fab', 'dev']} />
         </IconLink>
         <IconLink to={ROUTES.SETTINGS.ROOT}>
           <FontAwesomeIcon icon="cogs" />
