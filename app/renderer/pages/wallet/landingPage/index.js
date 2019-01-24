@@ -74,7 +74,7 @@ const WalletLandingPage = () => (
           <MethodInfo>
             <MethodTitle>Create</MethodTitle>
             <MethodDesc>
-              Don't have a wallet or want a new one? Create one and start managing your tokens
+              Don't have a wallet or want a new one? Create one and start managing your tokens.
             </MethodDesc>
           </MethodInfo>
         </GenerateWalletMethods>
@@ -87,7 +87,8 @@ const WalletLandingPage = () => (
           <MethodInfo>
             <MethodTitle>Connect</MethodTitle>
             <MethodDesc>
-              Don't have a wallet or want a new one? Create one and start managing your tokens
+              Already have a wallet? Connect your existing wallet using your private key or seed
+              phrase.
             </MethodDesc>
           </MethodInfo>
         </GenerateWalletMethods>
