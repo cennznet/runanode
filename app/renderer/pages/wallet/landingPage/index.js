@@ -55,6 +55,7 @@ const MethodTitle = styled.div`
 const MethodDesc = styled.div`
   margin: 1rem 0.5rem;
   text-align: center;
+  line-height: 1.2rem;
 `;
 
 const WalletLandingPage = () => (
