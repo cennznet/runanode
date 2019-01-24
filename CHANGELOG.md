@@ -14,6 +14,7 @@
 - make yarn install works with gemfury
 - enable PR build with Jenkins
 - Add Google Analytics
+- able to create wallet from DEV page, sync to redux state and electron-storage
 
 ### Fixes
 
@@ -23,6 +24,7 @@
 - default dev tools open on the right side
 - rename ./npmrc to ./npmrc.template
 - upgrade cennznet-api and cennznet-wallet to 0.5.2
+- disable redux-log by default
 
 # v0.2.4 (2019.01.16)
 

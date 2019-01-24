@@ -1,10 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { routerMiddleware } from 'connected-react-router';
+
+import config from 'renderer/utils/config';
 import history from 'renderer/history';
 import { createLogger } from 'redux-logger';
 import gaMiddleware from './middlewares/analytics';
-
 import rootReducer from '../reducers';
 import epics from '../epics';
 
@@ -14,14 +15,13 @@ const middleware = [];
 const epicMiddleware = createEpicMiddleware();
 middleware.push(epicMiddleware);
 
-// Logging Middleware
-const logger = createLogger({
-  level: 'info',
-  collapsed: true,
-});
-
 // Skip redux logs in console during the tests
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test' && config.app.LOG_REDUX) {
+  // Logging Middleware
+  const logger = createLogger({
+    level: 'info',
+    collapsed: true
+  });
   middleware.push(logger);
 }
 

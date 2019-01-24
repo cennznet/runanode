@@ -32,13 +32,10 @@ addLocaleData([...en, ...ja]);
 // const { NODE_ENV, NETWORK } = environment;
 // const isTest = NODE_ENV === 'test';
 
-const NETWORK = 'testnet';
-const isTest = false;
-
 library.add(faPlus, faCogs, faQuestionCircle, faWallet, faDev);
 
 const initializeOdin = () => {
-  const api = setupApi(isTest, String(NETWORK));
+  const api = setupApi();
   // const router = new RouterStore();
   // const history = syncHistoryWithStore(hashHistory, router);
   // const stores = setupStores(api, actions, router);
