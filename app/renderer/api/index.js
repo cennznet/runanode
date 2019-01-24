@@ -7,12 +7,11 @@ export type Api = {
   // localStorage: LocalStorageApi,
 };
 
-export const setupApi = (isTest: boolean, network: string): Api => ({
+export const setupApi = (isTest: ?boolean = false): Api => ({
   cennz: new CennzApi(isTest, {
     port: 9933,
     // ca: Uint8Array.from([]),
     // key: Uint8Array.from([]),
     // cert: Uint8Array.from([]),
   }),
-  // localStorage: new LocalStorageApi(network),
 });

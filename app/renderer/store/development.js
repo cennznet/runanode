@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { routerMiddleware } from 'connected-react-router';
+
+import config from 'renderer/utils/config';
 import history from 'renderer/history';
 import { createLogger } from 'redux-logger';
 import gaMiddleware from './middlewares/analytics';
-
-import config from 'renderer/utils/config';
 import rootReducer from '../reducers';
 import epics from '../epics';
 

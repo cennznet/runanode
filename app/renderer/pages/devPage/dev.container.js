@@ -85,6 +85,9 @@ const mapDispatchToProps = dispatch => ({
   onResetLocalStorage: () => {
     dispatch({ type: types.resetLocalStorage.triggered });
   },
+  onWalletCreate: () => {
+    dispatch({ type: types.walletCreate.triggered });
+  },
 });
 
 export default connect(
