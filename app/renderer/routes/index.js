@@ -10,9 +10,10 @@ import SyncNodePage from 'renderer/pages/syncNodePage';
 import DevPage from 'renderer/pages/devPage';
 import HomePage from 'renderer/pages/homePage';
 import WalletLandingPage from 'renderer/pages/wallet/landingPage';
-import WalletListPage from 'renderer/pages/wallet/listPage';
+import WalletDetailsPage from 'renderer/pages/wallet/detailsPage';
 import WalletCreatePage from 'renderer/pages/wallet/create';
 import WalletConnectPage from 'renderer/pages/wallet/connect';
+import WalletRootPage from 'renderer/pages/wallet/rootPage';
 import SettingsRoutes from 'renderer/routes/SettingsRoutes';
 import ROUTES from 'renderer/constants/routes';
 
@@ -38,8 +39,10 @@ class AppRoutes extends React.Component {
       <Switch>
         <Route exact path={ROUTES.ROOT} component={HomePage} />
         <Redirect exact from={ROUTES.SETTINGS.ROOT} to={ROUTES.SETTINGS.GENERAL} />
-        <Route exact path={ROUTES.WALLET.ROOT} component={WalletLandingPage} />
-        <Route exact path={ROUTES.WALLET.LIST} component={WalletListPage} />
+        <Route exact from={ROUTES.WALLET.ROOT} component={WalletRootPage} />
+        {/* <Route path={ROUTES.WALLET.DETAILS} render={WalletRootPage} /> */}
+        <Route path={`${ROUTES.WALLET.DETAILS}/:id`} component={WalletDetailsPage} />
+        <Route exact path={ROUTES.WALLET.LANDING} component={WalletLandingPage} />
         <Route exact path={ROUTES.WALLET.CREATE} component={WalletCreatePage} />
         <Route exact path={ROUTES.WALLET.CONNECT} component={WalletConnectPage} />
         <Route path={ROUTES.SETTINGS.ROOT} render={SettingsRoutes} />
