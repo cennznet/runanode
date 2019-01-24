@@ -15,6 +15,7 @@
 - enable PR build with Jenkins
 - Add Google Analytics
 - able to create wallet from DEV page, sync to redux state and electron-storage
+- Add checkbox component
 
 ### Fixes
 
