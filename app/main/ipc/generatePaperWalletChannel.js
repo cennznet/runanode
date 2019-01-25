@@ -16,12 +16,12 @@ import { stringifyError } from '../../common/utils/logging';
 
 const { resourcesPath } = process;
 const distAssetsPath = path.join(resourcesPath, '..', 'dist/assets')
-let paperWalletFontPath = path.join(distAssetsPath,'app/common/assets/pdf/paper-wallet-certificate-font.ttf');
-let paperWalletPage1Path = path.join(distAssetsPath,'app/common/assets/pdf/paper-wallet-certificate-page-1.png');
-let paperWalletPage1PathTestnet = path.join(distAssetsPath,'app/common/assets/pdf/paper-wallet-certificate-page-1-testnet.png');
-let paperWalletPage2Path = path.join(distAssetsPath,'app/common/assets/pdf/paper-wallet-certificate-page-2.png');
-let paperWalletPage2PathTestnet = path.join(distAssetsPath,'app/common/assets/pdf/paper-wallet-certificate-page-2-testnet.png');
-let paperWalletCertificateBgPath = path.join(distAssetsPath,'app/common/assets/pdf/paper-wallet-certificate-background.png');
+let paperWalletFontPath = path.join(distAssetsPath,'paper-wallet-certificate-font.ttf');
+let paperWalletPage1Path = path.join(distAssetsPath,'paper-wallet-certificate-page-1.png');
+let paperWalletPage1PathTestnet = path.join(distAssetsPath,'paper-wallet-certificate-page-1-testnet.png');
+let paperWalletPage2Path = path.join(distAssetsPath,'paper-wallet-certificate-page-2.png');
+let paperWalletPage2PathTestnet = path.join(distAssetsPath,'paper-wallet-certificate-page-2-testnet.png');
+let paperWalletCertificateBgPath = path.join(distAssetsPath,'paper-wallet-certificate-background.png');
 
 if(!app.isPackaged) {
   paperWalletFontPath = '../../../app/common/assets/pdf/paper-wallet-certificate-font.ttf';
@@ -43,12 +43,13 @@ export const handlePaperWalletRequests = () => {
   generatePaperWalletChannel.onReceive((request: GeneratePaperWalletRendererRequest) => (
     new Promise((resolve, reject) => {
       Logger.info('handlePaperWalletRequests');
+      Logger.info(__dirname);
       // Prepare params
       const { address, mnemonics, buildLabel, filePath, isMainnet, messages } = request;
 
       // Helpers
       const printMnemonic = (index) => `${index + 1}. ${mnemonics[index]}`;
-      const readAssetSync = (p) => fs.readFileSync(__dirname.startsWith('/') ? path.join(__dirname, p) : p);
+      const readAssetSync = (p: string) => fs.readFileSync(p.startsWith('..') ? path.join(__dirname, p) : p);
 
       // Generate QR image for wallet address
       const qrCodeImage = qr.imageSync(address, {
