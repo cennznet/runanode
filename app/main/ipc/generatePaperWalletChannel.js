@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import PDFDocument from 'pdfkit';
 import qr from 'qr-image';
+import { app } from 'electron';
 
 import { Logger } from 'main/utils/logging';
 import { MainIpcChannel } from './lib/MainIpcChannel';
@@ -14,16 +15,16 @@ import type {
 import { stringifyError } from '../../common/utils/logging';
 import { environment } from '../environment';
 
-const  { isDev } = environment;
+const { resourcesPath } = process;
 
-let paperWalletFontPath = '../../../Resources/app/common/assets/pdf/paper-wallet-certificate-font.ttf';
-let paperWalletPage1Path = '../../../Resources/app/common/assets/pdf/paper-wallet-certificate-page-1.png';
-let paperWalletPage1PathTestnet = '../../../Resources/app/common/assets/pdf/paper-wallet-certificate-page-1-testnet.png';
-let paperWalletPage2Path = '../../../Resources/app/common/assets/pdf/paper-wallet-certificate-page-2.png';
-let paperWalletPage2PathTestnet = '../../../Resources/app/common/assets/pdf/paper-wallet-certificate-page-2-testnet.png';
-let paperWalletCertificateBgPath = '../../../Resources/app/common/assets/pdf/paper-wallet-certificate-background.png';
+let paperWalletFontPath = path.join(resourcesPath,'app/common/assets/pdf/paper-wallet-certificate-font.ttf');
+let paperWalletPage1Path = path.join(resourcesPath,'app/common/assets/pdf/paper-wallet-certificate-page-1.png');
+let paperWalletPage1PathTestnet = path.join(resourcesPath,'app/common/assets/pdf/paper-wallet-certificate-page-1-testnet.png');
+let paperWalletPage2Path = path.join(resourcesPath,'app/common/assets/pdf/paper-wallet-certificate-page-2.png');
+let paperWalletPage2PathTestnet = path.join(resourcesPath,'app/common/assets/pdf/paper-wallet-certificate-page-2-testnet.png');
+let paperWalletCertificateBgPath = path.join(resourcesPath,'app/common/assets/pdf/paper-wallet-certificate-background.png');
 
-if(isDev) {
+if(!app.isPackaged) {
   paperWalletFontPath = '../../../app/common/assets/pdf/paper-wallet-certificate-font.ttf';
   paperWalletPage1Path = '../../../app/common/assets/pdf/paper-wallet-certificate-page-1.png';
   paperWalletPage1PathTestnet = '../../../app/common/assets/pdf/paper-wallet-certificate-page-1-testnet.png';
