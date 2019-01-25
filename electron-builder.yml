@@ -25,13 +25,13 @@ files:
 #    to: 'launcher-config.yaml'
 
 extraFiles:
+  - from: 'app/common/assets/pdf'
+    to: 'dist/assets'
+    filter: ['**/*']
   - from: 'dist/cennznet-node-${os}'
     to: 'dist/cennznet-node'
   - from: 'dist/launcher-config-${os}.yaml'
     to: 'dist/launcher-config.yaml'
-  - from: 'app/common/assets/pdf'
-    to: 'dist/assets'
-    filter: ['**/*']
 
 # Mac OS configuration
 mac:
