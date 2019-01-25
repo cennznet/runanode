@@ -16,6 +16,9 @@ files:
   - 'package.json'
 
 extraResources:
+  - from: 'app/common/assets/pdf'
+    to: 'app/common/assets/pdf'
+    filter: ['**/*']
 #  - from: 'dist/cennznet-node-${os}'
 #    to: 'cennznet-node'
 #  - from: 'dist/launcher-config-${os}.yaml'
@@ -33,7 +36,7 @@ mac:
   target:
     #    - 'zip'
     - 'pkg'
-  #    - 'dmg'
+    - 'dmg'
   extendInfo:
     ProgramArguments:
       - LAUNCHER_CONFIG=Resources/launcher-config.yaml

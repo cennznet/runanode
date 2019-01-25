@@ -8,7 +8,7 @@ import type { BrowserWindow } from 'electron';
 // import loadAsset from './load-asset';
 // import getGpuStatus from './get-gpu-status';
 // import { handleReportRequests } from './reportRequestChannel';
-// import { handlePaperWalletRequests } from './generatePaperWalletChannel';
+import { handlePaperWalletRequests } from './generatePaperWalletChannel';
 // import { openExternalUrlChannel } from './open-external-url';
 
 export default (window: BrowserWindow) => {
@@ -20,6 +20,6 @@ export default (window: BrowserWindow) => {
   // loadAsset();
   // getGpuStatus();
   // handleReportRequests();
-  // handlePaperWalletRequests();
+  handlePaperWalletRequests();
   // openExternalUrlChannel;
 };
