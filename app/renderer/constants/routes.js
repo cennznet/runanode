@@ -8,7 +8,8 @@ export default {
   },
   WALLET: {
     ROOT: '/wallet',
-    LIST: '/wallet/list',
+    DETAILS: '/wallet/details',
+    LANDING: '/wallet/landing',
     CREATE: '/wallet/create',
     CONNECT: '/wallet/connect',
   },

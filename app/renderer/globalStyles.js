@@ -12,7 +12,7 @@ const globalStyles = `
     font-size: ${theme.fontSize};
     font-family: ${theme.fontFamily};
     color: ${colors.N0};
-    background-color: ${colors.N1000};
+    background-color: ${colors.V800};
   }
 `;
 

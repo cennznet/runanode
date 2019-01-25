@@ -1,6 +1,7 @@
 ```jsx
 <DemoFlex>
   <Button>Primary</Button>
+  <Button color="secondary">Secondary</Button>
   <Button color="warning">Warning</Button>
   <Button color="danger">Danger</Button>
   <Button color="info">Info</Button>
