@@ -5,9 +5,13 @@ import { NavLink } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-width: 17rem;
   max-width: 17rem;
   height: 100%;
+  font-weight: 500;
   background-color: ${colors.V900};
   overflow: hidden;
 `;
@@ -31,13 +35,16 @@ const NavItem = styled(NavLink)`
   }
 `;
 
-const SubNav = ({ navItems }) => (
+const SubNav = ({ navItems, footer }) => (
   <Wrapper>
-    {navItems.map(item => (
-      <NavItem key={uuid()} to={item.link}>
-        {item.title}
-      </NavItem>
-    ))}
+    <div>
+      {navItems.map(item => (
+        <NavItem key={uuid()} to={item.link}>
+          {item.title}
+        </NavItem>
+      ))}
+    </div>
+    {footer}
   </Wrapper>
 );
 

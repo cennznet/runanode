@@ -64,7 +64,9 @@ const StyledModal = styled(Modal)`
     border-radius: 3px;
     min-width: ${p => p.minWidth};
     min-height: ${p => p.minHeight};
-    background-color: ${p => p.backgroundColor || 'red'};
+    max-width: ${p => p.maxWidth};
+    max-height: ${p => p.maxHeight};
+    background-color: ${p => p.backgroundColor};
     box-shadow: ${p => p.boxShadow};
     color: ${p => p.color || colors.N0};
     display: flex;
@@ -80,6 +82,8 @@ const StyledModal = styled(Modal)`
 StyledModal.defaultProps = {
   minWidth: '50vw',
   minHeight: '25vh',
+  maxWidth: '65vw',
+  maxHeight: '40vh',
   backgroundColor: '#040C40',
   boxShadow: `0 2px 4px 0 ${colors.N900}`,
   overlayBgColor: 'rgba(255, 255, 255, 0.55)',

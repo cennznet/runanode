@@ -15,6 +15,8 @@
 - enable PR build with Jenkins
 - Add Google Analytics
 - able to create wallet from DEV page, sync to redux state and electron-storage
+- Add checkbox component
+- Add wallet details page
 - able to generate pdf
 
 ### Fixes
@@ -27,6 +29,8 @@
 - upgrade cennznet-api and cennznet-wallet to 0.5.2
 - disable redux-log by default
 - Change page layout and color themes
+- support multiple wallets
+- Refine secodary button
 
 # v0.2.4 (2019.01.16)
 

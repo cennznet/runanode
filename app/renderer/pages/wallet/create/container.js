@@ -6,21 +6,33 @@ import { STEPS } from './constants';
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
-  onPageLoaded: payload => {},
+  onCreateWallet: payload => {
+    dispatch({ type: types.walletCreate.requested, payload });
+  },
 });
 
 const enhance = compose(
   lifecycle({
     componentDidMount() {},
   }),
+  withState('isStoreWarningModalOpen', 'setStoreWarningModalOpen', false),
   withStateHandlers(
-    ({ initStep = STEPS.NAME_INPUT, initMnemonic = '' }) => ({
+    ({
+      initStep = STEPS.NAME_INPUT,
+      initMnemonic = '',
+      initWalletName = '',
+      initIsOpenPenPrepareModal = false,
+    }) => ({
       step: initStep,
       mnemonicString: initMnemonic,
+      walletName: initWalletName,
+      isOpenPenPrepareModal: initIsOpenPenPrepareModal,
     }),
     {
       moveToStep: () => val => ({ step: val }),
       setMnemonicString: () => val => ({ mnemonicString: val }),
+      setWalletName: () => val => ({ walletName: val }),
+      setIsOpenPenPrepareModal: () => val => ({ isOpenPenPrepareModal: val }),
     }
   )
 );

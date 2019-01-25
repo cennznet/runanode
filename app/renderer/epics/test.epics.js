@@ -1,10 +1,10 @@
 import { EMPTY, from, of } from 'rxjs';
 import { concat, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { Wallet } from "cennznet-wallet";
+import { Wallet } from 'cennznet-wallet';
 
 import types from '../types';
-import { storageKeys } from '../api/utils/storage';
+import { getStorage, storageKeys } from '../api/utils/storage';
 import { Logger } from '../utils/logging';
 import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 import ROUTES from '../constants/routes';
