@@ -62,7 +62,7 @@ export const B900 = '#00192F';
 export const V100 = '#725EFF';
 export const V200 = '#725EFF';
 export const V300 = '#725EFF';
-export const V400 = '#725EFF';
+export const V400 = '#725EFF80';
 export const V500 = '#1130FF';
 export const V600 = '#0000CA';
 export const V700 = '#08187F';
@@ -73,10 +73,10 @@ export const brandPrimary = rgba(17, 48, 255, 0.9);
 export const brandSecondary = Y400;
 
 export const primary = rgba(17, 48, 255, 0.9);
-export const secondary = Y500;
-export const success = G500;
-export const warning = Y500;
-export const danger = R500;
+export const secondary = V800;
+export const success = G400;
+export const warning = Y400;
+export const danger = R400;
 export const info = N700;
 export const nuetral = N500;
 

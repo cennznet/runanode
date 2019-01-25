@@ -11,6 +11,8 @@ import {
   faCogs,
   faQuestionCircle,
   faWallet,
+  faPlug,
+  faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
@@ -41,7 +43,16 @@ addLocaleData([...en, ...ja]);
 const NETWORK = 'testnet';
 const isTest = false;
 
-library.add(faArrowLeft, faPlus, faCogs, faQuestionCircle, faWallet, faDev);
+library.add(
+  faArrowLeft,
+  faPlus,
+  faCogs,
+  faQuestionCircle,
+  faWallet,
+  faDev,
+  faPlug,
+  faExclamationCircle
+);
 
 const initializeOdin = () => {
   const api = setupApi();
