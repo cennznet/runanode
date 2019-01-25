@@ -16,7 +16,7 @@ const actionTypes = {
   homePageLoad: triggerActionTypes('home_page_load'),
   navigation: triggerActionTypes('navigation'),
 
-  walletCreate: triggerActionTypes('wallet_create'),
+  walletCreate: apiActionTypes('wallet_create'),
 
   /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),

@@ -6,13 +6,16 @@ import { STEPS } from './constants';
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
-  onPageLoaded: payload => {},
+  onCreateWallet: payload => {
+    dispatch({ type: types.walletCreate.requested, payload });
+  },
 });
 
 const enhance = compose(
   lifecycle({
     componentDidMount() {},
   }),
+  withState('isStoreWarningModalOpen', 'setStoreWarningModalOpen', false),
   withStateHandlers(
     ({ initStep = STEPS.NAME_INPUT, initMnemonic = '' }) => ({
       step: initStep,
