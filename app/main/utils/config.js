@@ -75,7 +75,7 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
 [2018-12-26 21:40:56.865] [info] [main] ODIN_USER_DATA_DIRECTORY: /Users/kenhuang/Library/Application Support/Odin
 [2018-12-26 21:40:56.866] [info] [main] ODIN_INSTALL_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources/app.asar
 */
-  const inputYaml = configPath ? readFileSync(configPath, 'utf8') : readFileSync(distPath+"/launcher-config.yaml" , 'utf8');
+  const inputYaml = configPath ? readFileSync(configPath, 'utf8') : readFileSync(path.join(distPath,"launcher-config.yaml") , 'utf8');
   const finalYaml = inputYaml.replace(/\${([^}]+)}/g,
     (a, b) => {
       if (process.env[b]) {
