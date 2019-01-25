@@ -76,6 +76,12 @@ export default {
         test: /\.svg$/,
         use: ['raw-loader'],
       },
+      {
+        test: /(pdfkit|linebreak|fontkit|unicode|brotli|png-js).*\.js$/,
+        use: {
+          loader: 'transform-loader?brfs',
+        }
+      },
     ],
   },
 

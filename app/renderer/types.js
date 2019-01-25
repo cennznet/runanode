@@ -17,6 +17,7 @@ const actionTypes = {
   navigation: triggerActionTypes('navigation'),
 
   walletCreate: triggerActionTypes('wallet_create'),
+  walletPaperGenerate: triggerActionTypes('wallet_paper_generate'),
 
   /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
