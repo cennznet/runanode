@@ -6,5 +6,18 @@ import Toggle from 'components/Toggle';
 import TosContent from 'components/TosContent';
 import PageHeading from 'components/PageHeading';
 import PageFooter from 'components/PageFooter';
+import Input from 'components/Input';
+import Modal from 'components/Modal';
 
-export { Button, FileUploader, Select, Spinner, Toggle, TosContent, PageHeading, PageFooter };
+export {
+  Input,
+  Button,
+  FileUploader,
+  Select,
+  Spinner,
+  Toggle,
+  TosContent,
+  PageHeading,
+  PageFooter,
+  Modal,
+};
