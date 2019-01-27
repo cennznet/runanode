@@ -18,6 +18,7 @@
 - Add checkbox component
 - Add wallet details page
 - able to generate pdf
+- fix static link issue for cennznet-node windows and mac build
 
 ### Fixes
 
