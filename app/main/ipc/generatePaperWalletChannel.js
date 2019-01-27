@@ -16,7 +16,7 @@ import { stringifyError } from '../../common/utils/logging';
 
 const { resourcesPath } = process;
 const distAssetsPath = path.join(resourcesPath, '..', 'dist/assets')
-let paperWalletFontPath = path.join(distAssetsPath,'paper-wallet-certificate-font.ttf');
+// let paperWalletFontPath = path.join(distAssetsPath,'paper-wallet-certificate-font.ttf');
 let paperWalletPage1Path = path.join(distAssetsPath,'paper-wallet-certificate-page-1.png');
 let paperWalletPage1PathTestnet = path.join(distAssetsPath,'paper-wallet-certificate-page-1-testnet.png');
 let paperWalletPage2Path = path.join(distAssetsPath,'paper-wallet-certificate-page-2.png');
@@ -24,7 +24,7 @@ let paperWalletPage2PathTestnet = path.join(distAssetsPath,'paper-wallet-certifi
 let paperWalletCertificateBgPath = path.join(distAssetsPath,'paper-wallet-certificate-background.png');
 
 if(!app.isPackaged) {
-  paperWalletFontPath = '../../../app/common/assets/pdf/paper-wallet-certificate-font.ttf';
+  // paperWalletFontPath = '../../../app/common/assets/pdf/paper-wallet-certificate-font.ttf';
   paperWalletPage1Path = '../../../app/common/assets/pdf/paper-wallet-certificate-page-1.png';
   paperWalletPage1PathTestnet = '../../../app/common/assets/pdf/paper-wallet-certificate-page-1-testnet.png';
   paperWalletPage2Path = '../../../app/common/assets/pdf/paper-wallet-certificate-page-2.png';
