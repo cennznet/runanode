@@ -26,7 +26,7 @@ if (process.env.NODE_ENV !== 'test' && config.app.LOG_REDUX) {
 }
 
 middleware.push(routerMiddleware(history));
-middleware.push(gaMiddleware({ logger: true }));
+middleware.push(gaMiddleware({ logger: config.app.LOG_GA }));
 
 const composedEnhancers = compose(
   applyMiddleware(...middleware),

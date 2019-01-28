@@ -33,6 +33,7 @@ const DevPage = ({
   onChainSubscribeNewHead,
   onNavToChooseNetwork,
   onWalletCreate,
+  onWalletPaperGenerate,
   nodeSystem,
   syncStream,
   syncRemoteStream,
@@ -93,6 +94,9 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={() => onWalletCreate()}>Create Wallet</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onWalletPaperGenerate()}>Create Paper Wallet</Button>
         </Flex>
       </MainContent>
     </MainLayout>

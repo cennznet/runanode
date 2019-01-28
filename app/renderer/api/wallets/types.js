@@ -15,3 +15,11 @@ export type CreateWalletRequest = {
 export type CreateMnemonicRequest = {
   num: number,
 };
+
+export type GeneratePaperRequest = {
+  mnemonic: string,
+  address: string,
+  name: string,
+  isMainnet: boolean,
+  networkName: ?string,
+};
