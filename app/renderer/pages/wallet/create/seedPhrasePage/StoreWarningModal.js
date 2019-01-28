@@ -12,6 +12,7 @@ const StoreWarningModal = ({
   isStoreWarningModalOpen,
   setStoreWarningModalOpen,
   onCreateWallet,
+  walletName,
   mnemonicString,
   walletName,
 }) => {
