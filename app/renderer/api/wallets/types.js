@@ -15,3 +15,8 @@ export type CreateWalletRequest = {
 export type CreateMnemonicRequest = {
   num: number,
 };
+
+export type GeneratePaperRequest = {
+  mnemonic: string,
+  isMainnet: boolean,
+};

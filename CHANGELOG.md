@@ -4,6 +4,14 @@
 
 ### Features
 
+### Fixes
+
+### Improvements
+
+# v0.3.0 (2019.01.27)
+
+### Features
+
 - Start up process
   (initial Node start && root route control)
 - SyncNode page navigation after 100% synced
@@ -18,9 +26,10 @@
 - Add checkbox component
 - Add wallet details page
 - able to generate pdf
-- fix static link issue for cennznet-node windows and mac build
 
 ### Fixes
+
+- fix static link issue for cennznet-node windows and mac build
 
 ### Improvements
 
@@ -31,7 +40,7 @@
 - disable redux-log by default
 - Change page layout and color themes
 - support multiple wallets
-- Refine secodary button
+- Refine secondary button
 
 # v0.2.4 (2019.01.16)
 
