@@ -61,6 +61,7 @@ const NameInputPage = ({
               Go back
             </Button>
             <Button
+              style={{marginLeft: '0.5rem'}}
               warning
               onClick={() => {
                 const mnemonic = window.odin.api.cennz.createMnemonic({ num: 12 });
