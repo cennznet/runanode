@@ -23,7 +23,7 @@ const WalletDetailsPage = ({ wallets, match }) => {
   return (
     <MainLayout subNav={<WalletDetailsSubNav {...{ wallets }} />}>
       <MainContent display="flex">
-        <PageHeading subHeading={`Public address: ${wallet.id}`}>{wallet.name}</PageHeading>
+        <PageHeading subHeading={`Id: ${wallet.id}`}>{wallet.name}</PageHeading>
         <div className="content">.</div>
       </MainContent>
     </MainLayout>
