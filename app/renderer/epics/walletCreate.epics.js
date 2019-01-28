@@ -16,7 +16,7 @@ const createWalletEpic = action$ =>
         wallets = [];
       }
       const wallet = await window.odin.api.cennz.createWallet({
-        name: name || 'test wallet',
+        name,
         mnemonic,
         passphrase: passphrase || '',
       });
