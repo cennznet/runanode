@@ -12,6 +12,7 @@ const StoreWarningModal = ({
   isStoreWarningModalOpen,
   setStoreWarningModalOpen,
   onCreateWallet,
+  walletName,
   mnemonicString,
 }) => {
   return (
@@ -25,6 +26,7 @@ const StoreWarningModal = ({
           <Button
             onClick={() => {
               onCreateWallet({
+                name: walletName,
                 mnemonic: mnemonicString,
               });
               setStoreWarningModalOpen(false);
