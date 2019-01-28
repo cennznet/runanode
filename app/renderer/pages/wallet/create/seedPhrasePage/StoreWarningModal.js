@@ -24,6 +24,7 @@ const StoreWarningModal = ({
             Go back
           </Button>
           <Button
+            style={{marginLeft: '0.5rem'}}
             onClick={() => {
               onCreateWallet({
                 name: walletName,
