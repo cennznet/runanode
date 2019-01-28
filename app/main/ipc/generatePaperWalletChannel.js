@@ -45,7 +45,7 @@ export const handlePaperWalletRequests = () => {
       Logger.info('handlePaperWalletRequests');
       Logger.info(__dirname);
       // Prepare params
-      const { address, mnemonics, buildLabel, filePath, isMainnet, messages } = request;
+      const { address, mnemonics, buildLabel, filePath, isMainnet, messages, networkName } = request;
 
       // Helpers
       const printMnemonic = (index) => `${index + 1}. ${mnemonics[index]}`;
@@ -58,7 +58,7 @@ export const handlePaperWalletRequests = () => {
         ec_level: 'L',
         margin: 0
       });
-      const textColor = '#3b5c9b';
+      const textColor = '#040C40';
       const width = 595.28;
       const height = 841.98;
       const doc = new PDFDocument({
@@ -80,8 +80,8 @@ export const handlePaperWalletRequests = () => {
         // doc.font(fontBuffer);
 
         // background images
-        const backgroundUri = readAssetSync(paperWalletCertificateBgPath);
-        doc.image(backgroundUri, 0, 0, { fit: [width, height] });
+        // const backgroundUri = readAssetSync(paperWalletCertificateBgPath);
+        // doc.image(backgroundUri, 0, 0, { fit: [width, height] });
 
         // first page
         const page1Uri = readAssetSync(
@@ -89,6 +89,18 @@ export const handlePaperWalletRequests = () => {
         );
 
         doc.image(page1Uri, 0, 0, { fit: [width, height] });
+
+        // network name
+        doc.fillColor('#FFFFFF');
+        let networkLabel = networkName;
+        if(!networkName) {
+          networkLabel = isMainnet ? 'Main Net' : 'Test Net';
+        }
+        doc.fontSize(8).text(networkLabel, 210, 244, {
+          width: 270,
+          align: 'center'
+        });
+
         doc.rotate(180, { origin: [width / 2, height / 2] });
         doc.fillColor(textColor);
         doc.fontSize(10).text(messages.walletAddressLabel, 0, 160, {
@@ -111,42 +123,44 @@ export const handlePaperWalletRequests = () => {
           isMainnet ? paperWalletPage2Path : paperWalletPage2PathTestnet
         );
         doc.image(page2Uri, 0, 0, { fit: [width, height] });
-        doc.rotate(180, { origin: [width / 2, height / 2] });
+        // doc.rotate(180, { origin: [width / 2, height / 2] });
+        const revertY = 400;
+        const mnemonicY = 40;
         doc.fillColor(textColor);
-        doc.fontSize(10).text(messages.recoveryPhraseLabel, 0, 535, {
+        doc.fontSize(10).text(messages.recoveryPhraseLabel, 0, 535-revertY, {
           width: 595,
           align: 'center'
         });
 
         // mnemonics
         doc.fontSize(7);
-        doc.text(printMnemonic(0), 168, 560);
-        doc.text(printMnemonic(1), 212, 560);
-        doc.text(printMnemonic(2), 256, 560);
-        doc.text(printMnemonic(3), 300, 560);
-        doc.text(printMnemonic(4), 344, 560);
-        doc.text(printMnemonic(5), 388, 560);
+        doc.text(printMnemonic(0), 168, 560-revertY+mnemonicY);
+        doc.text(printMnemonic(1), 212, 560-revertY+mnemonicY);
+        doc.text(printMnemonic(2), 256, 560-revertY+mnemonicY);
+        doc.text(printMnemonic(3), 300, 560-revertY+mnemonicY);
+        doc.text(printMnemonic(4), 344, 560-revertY+mnemonicY);
+        doc.text(printMnemonic(5), 388, 560-revertY+mnemonicY);
 
-        doc.text(printMnemonic(6), 168, 581);
-        doc.text(printMnemonic(7), 212, 581);
-        doc.text(printMnemonic(8), 256, 581);
-        doc.text(printMnemonic(9), 300, 581);
-        doc.text(printMnemonic(10), 344, 581);
-        doc.text(printMnemonic(11), 388, 581);
+        doc.text(printMnemonic(6), 168, 581-revertY+mnemonicY);
+        doc.text(printMnemonic(7), 212, 581-revertY+mnemonicY);
+        doc.text(printMnemonic(8), 256, 581-revertY+mnemonicY);
+        doc.text(printMnemonic(9), 300, 581-revertY+mnemonicY);
+        doc.text(printMnemonic(10), 344, 581-revertY+mnemonicY);
+        doc.text(printMnemonic(11), 388, 581-revertY+mnemonicY);
 
-        doc.text(printMnemonic(12), 168, 602);
-        doc.text(printMnemonic(13), 212, 602);
-        doc.text(printMnemonic(14), 256, 602);
-        doc.text(printMnemonic(15), 300, 602);
-        doc.text(printMnemonic(16), 344, 602);
-        doc.text(printMnemonic(17), 388, 602);
+        // doc.text(printMnemonic(12), 168, 602-revertY+mnemonicY);
+        // doc.text(printMnemonic(13), 212, 602-revertY+mnemonicY);
+        // doc.text(printMnemonic(14), 256, 602-revertY+mnemonicY);
+        // doc.text(printMnemonic(15), 300, 602-revertY+mnemonicY);
+        // doc.text(printMnemonic(16), 344, 602-revertY+mnemonicY);
+        // doc.text(printMnemonic(17), 388, 602-revertY+mnemonicY);
 
-        doc.fontSize(7).text(buildLabel, (width - 270) / 2, 705, {
+        doc.fontSize(7).text(buildLabel, (width - 270) / 2, 705-revertY, {
           width: 270,
           align: 'left'
         });
 
-        doc.rotate(-180, { origin: [width / 2, height / 2] });
+        // doc.rotate(-180, { origin: [width / 2, height / 2] });
       } catch (error) {
         Logger.info('handlePaperWalletRequests fail');
         Logger.info(stringifyError(error));

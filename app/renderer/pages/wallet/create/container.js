@@ -3,7 +3,9 @@ import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import types from 'renderer/types';
 import { STEPS } from './constants';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ nodeSystem }) => ({
+  nodeSystem,
+});
 
 const mapDispatchToProps = dispatch => ({
   onCreateWallet: payload => {

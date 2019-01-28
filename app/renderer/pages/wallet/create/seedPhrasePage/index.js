@@ -10,20 +10,20 @@ import StoreSeedPhraseModal from './StoreWarningModal';
 
 const ButtonPanelContainer = styled.div`
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
-  margin-top: -6rem;
-  padding: 1rem;
-  height: 1rem;
-  flex: 1 1 auto;
+  padding-bottom: 1rem;
 `;
 
 const SeedPhrasePage = props => {
   const {
     mnemonicString,
+    walletName,
     onCreateWallet,
     isStoreWarningModalOpen,
     setStoreWarningModalOpen,
+    nodeSystem,
   } = props;
   return (
     <React.Fragment>
@@ -31,11 +31,17 @@ const SeedPhrasePage = props => {
         Store your seed phrase offline
       </PageHeading>
       <ButtonPanelContainer>
-        <Button onClick={() => console.log('click')}>12 Words</Button>
-        <Button onClick={() => console.log('click')}>English</Button>
-        <Button color="secondary" onClick={() => window.odin.api.cennz.generatePaperWallet({'mnemonic': mnemonicString})}>
+        <Button
+          color="secondary"
+          onClick={() => window.odin.api.cennz.generatePaperWallet({
+            'mnemonic': mnemonicString,
+            'address': 'Wallet address', // TODO
+            'name': walletName,
+            'networkName': nodeSystem.chain,
+            'isMainnet': true,
+        })}>
           Download
-          <FontAwesomeIcon icon="download" />
+          <FontAwesomeIcon style={{marginLeft: '0.5rem'}} icon="download" />
         </Button>
       </ButtonPanelContainer>
       <div className="content">

@@ -13,6 +13,7 @@ const StoreWarningModal = ({
   setStoreWarningModalOpen,
   onCreateWallet,
   mnemonicString,
+  walletName,
 }) => {
   return (
     <Modal
@@ -25,7 +26,9 @@ const StoreWarningModal = ({
           <Button
             onClick={() => {
               onCreateWallet({
+                name: walletName,
                 mnemonic: mnemonicString,
+                passphrase: '', // TODO, download seed phase might require wallet address info
               });
               setStoreWarningModalOpen(false);
             }}
