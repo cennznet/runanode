@@ -39,6 +39,9 @@ import {
   ForbiddenMnemonicError
 } from './common/errors';
 import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
+import { environment } from '../../main/environment';
+
+const { buildLabel } = environment;
 
 export default class CennzApi {
 
@@ -72,16 +75,17 @@ export default class CennzApi {
     if (!filePath) return;
 
     await generatePaperWalletChannel.send({
-      address: 'address',
+      address: request.address,
       filePath,
-        mnemonics: request.mnemonic.split(' '),
+      mnemonics: request.mnemonic.split(', '),
       isMainnet: true,
-      buildLabel: 'buildLabel',
+      networkName: request.networkName,
+      buildLabel,
       messages: {
-        walletAddressLabel: 'walletAddressLabel',
-        recoveryPhraseLabel: 'recoveryPhraseLabel',
-        infoTitle: 'infoTitle',
-        infoAuthor: 'infoAuthor',
+        walletAddressLabel: request.name,
+        recoveryPhraseLabel: 'SEED PHRASE',
+        infoTitle: 'Paper Wallet',
+        infoAuthor: 'Odin',
       }
     });
 

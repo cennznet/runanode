@@ -18,5 +18,8 @@ export type CreateMnemonicRequest = {
 
 export type GeneratePaperRequest = {
   mnemonic: string,
+  address: string,
+  name: string,
   isMainnet: boolean,
+  networkName: ?string,
 };
