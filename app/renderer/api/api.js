@@ -25,7 +25,7 @@ import type { NodeQueryParams } from './nodes/requests/getSystemHealth';
 
 // Wallets Types
 import type {
-  CreateMnemonicRequest, CreateWalletRequest
+  CreateMnemonicRequest, CreateWalletRequest, GeneratePaperRequest,
 } from './wallets/types';
 
 import CennznetWallet from './wallets/CennznetWallet';
@@ -38,6 +38,10 @@ import {
   InvalidMnemonicError,
   ForbiddenMnemonicError
 } from './common/errors';
+import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
+import { environment } from '../../main/environment';
+
+const { buildLabel } = environment;
 
 export default class CennzApi {
 
@@ -56,6 +60,37 @@ export default class CennzApi {
     const mnemonic = generateMnemonic(request.num).split(' ');
     return _.map(mnemonic).join(', ');
   };
+
+  generatePaperWallet = async (request: GeneratePaperRequest): Promise<String> => {
+    Logger.debug('CennznetApi::generatePaperWallet called');
+    const filePath = global.dialog.showSaveDialog({
+      defaultPath: 'paper-wallet-certificate.pdf',
+      filters: [{
+        name: 'paper-wallet-certificate',
+        extensions: ['pdf'],
+      }],
+    });
+
+    // if cancel button is clicked or path is empty
+    if (!filePath) return;
+
+    await generatePaperWalletChannel.send({
+      address: request.address,
+      filePath,
+      mnemonics: request.mnemonic.split(', '),
+      isMainnet: true,
+      networkName: request.networkName,
+      buildLabel,
+      messages: {
+        walletAddressLabel: request.name,
+        recoveryPhraseLabel: 'SEED PHRASE',
+        infoTitle: 'Paper Wallet',
+        infoAuthor: 'Odin',
+      }
+    });
+
+    return filePath;
+  }
 
   createWallet = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
     Logger.debug('CennznetApi::createWallet called');

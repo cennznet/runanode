@@ -24,10 +24,12 @@ const StoreWarningModal = ({
             Go back
           </Button>
           <Button
+            style={{marginLeft: '0.5rem'}}
             onClick={() => {
               onCreateWallet({
                 name: walletName,
                 mnemonic: mnemonicString,
+                passphrase: '', // TODO, download seed phase might require wallet address info
               });
               setStoreWarningModalOpen(false);
             }}

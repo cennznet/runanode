@@ -109,8 +109,7 @@ Start `Debug Renderer Process` in VSCode
 ## Pass args on app start
 
 Mac:
- open -a /path-to-project/cennz-node-ui/release/mac/Odin.app --args --DEBUG_PROD=true
-
+ open ./release/mac/Odin.app --args --DEBUG_PROD=true
 
 Windows:
 Odin.exe --DEBUG_PROD=true

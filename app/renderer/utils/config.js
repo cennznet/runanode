@@ -16,6 +16,7 @@ const config = {
 
   app: {
     LOG_REDUX: false,
+    LOG_GA: false,
     PAPER_WALLET_WRITTEN_WORDS_COUNT: 9,
   },
 

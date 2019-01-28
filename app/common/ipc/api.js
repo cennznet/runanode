@@ -8,7 +8,7 @@
 //   ReportRequestHttpOptions,
 //   ReportRequestPayload
 // } from '../types/report-request.types';
-// import type { GeneratePaperWalletParams } from '../types/paper-wallet-request.types';
+import type { GeneratePaperWalletParams } from '../types/paper-wallet-request.types';
 
 /**
  * Channel for loading an base64 encoded asset from within the `source/renderer` folder
@@ -37,7 +37,7 @@ export type ReportRequestMainResponse = void;
  * Channel to generate and save a paper wallet certificate
  */
 export const GeneratePaperWalletChannelName = 'GeneratePaperWalletChannel';
-// export type GeneratePaperWalletRendererRequest = GeneratePaperWalletParams;
+export type GeneratePaperWalletRendererRequest = GeneratePaperWalletParams;
 export type GeneratePaperWalletMainResponse = void;
 
 // CennzNetNode ipc channels

@@ -11,6 +11,7 @@ import {
   faCogs,
   faQuestionCircle,
   faWallet,
+  faDownload,
   faPlug,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -49,6 +50,7 @@ library.add(
   faCogs,
   faQuestionCircle,
   faWallet,
+  faDownload,
   faDev,
   faPlug,
   faExclamationCircle
