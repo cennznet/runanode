@@ -14,7 +14,6 @@ const StoreWarningModal = ({
   onCreateWallet,
   walletName,
   mnemonicString,
-  walletName,
 }) => {
   return (
     <Modal
