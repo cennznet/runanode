@@ -14,7 +14,13 @@ const mapStateToProps = ({ nodeSystem, remoteStream, syncStream, syncRemoteStrea
 class TopBarContainer extends Component {
   render() {
     const { nodeSystem, remoteStream, syncStream, syncRemoteStream } = this.props;
-    const { chain, name, version, isSynced, health } = nodeSystem;
+    const {
+      localNode: { chain },
+      name,
+      version,
+      isSynced,
+      health,
+    } = nodeSystem;
     const networkName = chain ? `${chain}` : 'Not connected';
     // const isSynced = false;
 

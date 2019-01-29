@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, PageHeading, PageFooter } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
-import styled from "styled-components";
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { STEPS } from '../constants';
@@ -33,15 +33,18 @@ const SeedPhrasePage = props => {
       <ButtonPanelContainer>
         <Button
           color="secondary"
-          onClick={() => window.odin.api.cennz.generatePaperWallet({
-            'mnemonic': mnemonicString,
-            'address': 'Wallet address', // TODO
-            'name': walletName,
-            'networkName': nodeSystem.chain,
-            'isMainnet': true,
-        })}>
+          onClick={() =>
+            window.odin.api.cennz.generatePaperWallet({
+              mnemonic: mnemonicString,
+              address: 'Wallet address', // TODO
+              name: walletName,
+              networkName: nodeSystem.localNode.chain,
+              isMainnet: true,
+            })
+          }
+        >
           Download
-          <FontAwesomeIcon style={{marginLeft: '0.5rem'}} icon="download" />
+          <FontAwesomeIcon style={{ marginLeft: '0.5rem' }} icon="download" />
         </Button>
       </ButtonPanelContainer>
       <div className="content">
