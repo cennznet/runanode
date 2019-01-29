@@ -12,19 +12,14 @@ import WalletDetailsSubNav from './WalletDetailsSubNav';
 const WalletDetailsPage = ({ wallets, match }) => {
   const walletId = match.params.id;
   const wallet = R.find(R.propEq('id', walletId))(wallets);
-
-  const navItems =
-    wallets &&
-    wallets.map(x => ({
-      title: x.name,
-      link: `${ROUTES.WALLET.DETAILS}/${x.id}`,
-    }));
+  const publicWalletAddress = wallet.wallet && Object.keys(wallet.wallet._accountKeyringMap)[0];
 
   return (
     <MainLayout subNav={<WalletDetailsSubNav {...{ wallets }} />}>
       <MainContent display="flex">
-        <PageHeading subHeading={`Id: ${wallet.id}`}>{wallet.name}</PageHeading>
-        <div className="content">.</div>
+        <PageHeading subHeading={`Public Address: ${publicWalletAddress}`}>
+          {wallet.name}
+        </PageHeading>
       </MainContent>
     </MainLayout>
   );
