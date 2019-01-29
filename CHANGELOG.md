@@ -8,6 +8,8 @@
 
 ### Improvements
 
+- Refactor reducer
+
 # v0.3.0 (2019.01.27)
 
 ### Features
