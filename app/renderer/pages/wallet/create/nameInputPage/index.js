@@ -16,7 +16,7 @@ const NameInputPage = ({ setWalletName, walletName, setIsOpenPenPrepareModal, ..
   return (
     <React.Fragment>
       <div>
-        <PageHeading subHeading="">Name your wallet</PageHeading>
+        <PageHeading>Name your wallet</PageHeading>
         <InputTitle>Wallet name</InputTitle>
         <Input
           backgroundColor={colors.V400}
