@@ -50,7 +50,6 @@ const pollingEpic = (action$, state$) =>
     ofType(types.nodeWsSystemChainPolling.requested),
     // take(1),
     mergeMap(() => {
-      console.log('nodeWsSystemChainPolling interval');
       return interval(config.connectivity.latency.period).pipe(
         map(() => {
           return { type: types.nodeWsSystemChain.requested, payload: {} };
