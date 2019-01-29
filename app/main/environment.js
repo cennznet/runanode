@@ -17,17 +17,18 @@ import {
   STAGING_REPORT_URL,
   TEST,
   TESTNET,
-  WINDOWS
+  WINDOWS,
 } from '../common/types/environment.types';
-
 
 // Configuration
 //
-const config = extend({
-  NODE_ENV: process.env.NODE_ENV,
-  DEBUG_PROD: process.env.DEBUG_PROD,
-}, parseArgs(process.argv.slice(1)));
-console.log(`config: ${JSON.stringify(config)}`);
+const config = extend(
+  {
+    NODE_ENV: process.env.NODE_ENV,
+    DEBUG_PROD: process.env.DEBUG_PROD,
+  },
+  parseArgs(process.argv.slice(1))
+);
 
 // environment variables
 const CURRENT_NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
@@ -35,7 +36,7 @@ const NETWORK = process.env.NETWORK || DEVELOPMENT;
 const REPORT_URL = process.env.REPORT_URL || STAGING_REPORT_URL;
 const port = process.env.PORT || 1212;
 const isHot = process.env.HOT === '1';
-const isDebugProd = config.DEBUG_PROD === 'true' ;
+const isDebugProd = config.DEBUG_PROD === 'true';
 const isDev = CURRENT_NODE_ENV === DEVELOPMENT;
 const isDevOrDebugProd = isDev || isDebugProd;
 const isRemoteDebug = process.env.DEBUG_REMOTE === 'true';
@@ -63,32 +64,36 @@ const isWindows = PLATFORM === WINDOWS;
 const isLinux = PLATFORM === LINUX;
 
 // compose environment
-export const environment: Environment = Object.assign({}, {
-  network: NETWORK,
-  apiVersion: API_VERSION,
-  mobxDevTools: MOBX_DEV_TOOLS,
-  current: CURRENT_NODE_ENV,
-  reportUrl: REPORT_URL,
-  port,
-  isHot,
-  isDebugProd,
-  isDev,
-  isDevOrDebugProd,
-  isRemoteDebug,
-  isTest,
-  isProduction,
-  isMainnet,
-  isStaging,
-  isTestnet,
-  isWatchMode,
-  build: BUILD,
-  buildNumber: BUILD_NUMBER,
-  buildLabel: BUILD_LABEL,
-  platform: PLATFORM,
-  os: OS,
-  installerVersion: INSTALLER_VERSION,
-  version,
-  isWindows,
-  isMacOS,
-  isLinux
-}, process.env);
+export const environment: Environment = Object.assign(
+  {},
+  {
+    network: NETWORK,
+    apiVersion: API_VERSION,
+    mobxDevTools: MOBX_DEV_TOOLS,
+    current: CURRENT_NODE_ENV,
+    reportUrl: REPORT_URL,
+    port,
+    isHot,
+    isDebugProd,
+    isDev,
+    isDevOrDebugProd,
+    isRemoteDebug,
+    isTest,
+    isProduction,
+    isMainnet,
+    isStaging,
+    isTestnet,
+    isWatchMode,
+    build: BUILD,
+    buildNumber: BUILD_NUMBER,
+    buildLabel: BUILD_LABEL,
+    platform: PLATFORM,
+    os: OS,
+    installerVersion: INSTALLER_VERSION,
+    version,
+    isWindows,
+    isMacOS,
+    isLinux,
+  },
+  process.env
+);
