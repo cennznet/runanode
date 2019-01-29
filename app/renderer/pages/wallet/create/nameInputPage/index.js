@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { STEPS } from '../constants';
-import PrepareWarningModal from './prepareWarningModal';
+import PrepareWarningModal from './PrepareWarningModal';
 
 const InputTitle = styled.div`
   font-size: 16px;

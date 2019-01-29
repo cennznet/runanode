@@ -33,7 +33,7 @@ const PrepareWarningModal = ({
         </Button>
         <Button
           style={{ marginLeft: '0.5rem' }}
-          warning
+          color="warning"
           onClick={() => {
             const mnemonic = window.odin.api.cennz.createMnemonic({ num: 12 });
             setMnemonicString(mnemonic);
