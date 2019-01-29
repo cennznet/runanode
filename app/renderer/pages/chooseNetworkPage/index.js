@@ -79,13 +79,6 @@ const ChooseNetWork = ({
                   Logger.info('selected value', selected);
                   setSelectedNetwork(selected);
                 }}
-                backgroundColor={colors.V800}
-                color={colors.N0}
-                selectedFontWeight="bolder"
-                selectedBackgroundColor="transparent"
-                selectedColor={colors.N0}
-                focusBackgroundColor={colors.V500}
-                focusColor={colors.N0}
                 options={NETWORK_OPTIONS}
               />
             </NetworkOptionWrapper>
