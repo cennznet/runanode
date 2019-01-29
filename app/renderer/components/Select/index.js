@@ -34,7 +34,8 @@ const StyledSelect = styled(ReactSelect)`
 
   .react-select__option--is-selected {
     background-color: ${p => p.selectedBackgroundColor || p.theme.colors.N0};
-    color: ${p => p.theme.colors.N500};
+    color: ${p => p.selectedColor || p.theme.colors.N500};
+    font-weight: ${p => p.selectedFontWeight || 'normal'};
   }
 `;
 

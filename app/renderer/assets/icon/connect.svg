@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="76px" height="60px" viewBox="0 0 76 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Container/Create-wallet/No-wallet" transform="translate(-762.000000, -357.000000)" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="3">
+            <g id="Group-3" transform="translate(760.000000, 356.000000)">
+                <circle id="Oval-4-Copy-3" cx="68" cy="50" r="8"></circle>
+                <circle id="Oval-4" transform="translate(11.494910, 11.355425) rotate(64.000000) translate(-11.494910, -11.355425) " cx="11.4949096" cy="11.3554251" r="8"></circle>
+                <circle id="Oval-4-Copy" transform="translate(55.731620, 15.369585) rotate(64.000000) translate(-55.731620, -15.369585) " cx="55.7316198" cy="15.3695846" r="8"></circle>
+                <circle id="Oval-4-Copy-2" transform="translate(28.547281, 50.880311) rotate(64.000000) translate(-28.547281, -50.880311) " cx="28.5472809" cy="50.8803114" r="8"></circle>
+                <g id="Group-2" transform="translate(36.637759, 24.125982) rotate(64.000000) translate(-36.637759, -24.125982) translate(21.137759, 9.125982)">
+                    <path d="M16.25,18.4509206 L16.25,0.450920581" id="Path-4"></path>
+                    <path d="M16.25,18.4509206 L0.81475309,27.7112204" id="Path-4"></path>
+                    <path d="M16.25,18.4509206 L30.5918212,29.3280602" id="Path-4"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
