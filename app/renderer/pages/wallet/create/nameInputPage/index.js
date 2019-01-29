@@ -4,8 +4,8 @@ import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import GetReadyWarningModal from './GetReadyWarningModal';
 import { STEPS } from '../constants';
-import PrepareWarningModal from './PrepareWarningModal';
 
 const InputTitle = styled.div`
   font-size: 16px;
@@ -32,7 +32,7 @@ const NameInputPage = ({ setWalletName, walletName, setIsOpenPenPrepareModal, ..
           Next
         </Button>
       </PageFooter>
-      <PrepareWarningModal setIsOpenPenPrepareModal={setIsOpenPenPrepareModal} {...otherProps} />
+      <GetReadyWarningModal setIsOpenPenPrepareModal={setIsOpenPenPrepareModal} {...otherProps} />
     </React.Fragment>
   );
 };
