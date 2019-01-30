@@ -10,6 +10,7 @@
 
 - Refactor reducer
 - able to detect app state and able to show spinner on exit
+- Single page seed phase PDF design
 
 # v0.3.0 (2019.01.27)
 
