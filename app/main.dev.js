@@ -14,7 +14,7 @@ import { app, BrowserWindow, globalShortcut, Menu, dialog, shell } from 'electro
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { includes } from 'lodash';
-import os from "os";
+import os from 'os';
 
 import mainErrorHandler from 'main/utils/mainErrorHandler';
 import { setupLogging } from 'main/utils/setupLogging';
@@ -23,9 +23,9 @@ import { Logger } from './main/utils/logging';
 import { setupCennzNet } from './main/cennznet/setup';
 import { CennzNetNode } from './main/cennznet/CennzNetNode';
 import { launcherConfig } from './main/config';
-import {CennzNetNodeStates} from "./common/types/cennznet-node.types";
-import {acquireAppInstanceLock} from "./main/utils/app-instance-lock";
-import {safeExitWithCode} from "./main/utils/safeExitWithCode";
+import { CennzNetNodeStates } from './common/types/cennznet-node.types';
+import { acquireAppInstanceLock } from './main/utils/app-instance-lock';
+import { safeExitWithCode } from './main/utils/safeExitWithCode';
 import { createMainWindow } from './main/windows/mainWindow';
 import { environment } from './main/environment';
 
@@ -48,7 +48,7 @@ export const createDefaultWindow = () => {
   const window = new BrowserWindow({
     show: false,
     width: 1024,
-    height: 728
+    height: 728,
   });
 
   // if(window.process && process.versions && process.versions.electron) {
@@ -93,7 +93,6 @@ const safeExit = async () => {
   }
 };
 
-
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -110,7 +109,7 @@ const installExtensions = async () => {
 
   return Promise.all(
     extensions.map(name => installer.default(installer[name], forceDownload))
-  ).catch(console.log);
+  ).catch(console.error);
 };
 
 /**
@@ -145,7 +144,6 @@ app.on('ready', async () => {
     app.exit(1);
   }
 
-
   if (isDevOrDebugProd) {
     await installExtensions();
   }
@@ -163,7 +161,7 @@ app.on('ready', async () => {
   // eslint-disable-next-line
   new AppUpdater();
 
-  mainWindow.on('close', async (event) => {
+  mainWindow.on('close', async event => {
     Logger.info('mainWindow received <close> event. Safe exiting Odin now.');
     event.preventDefault();
     await safeExit();
@@ -182,7 +180,7 @@ app.on('ready', async () => {
   });
 
   // Wait for controlled cennznet-node shutdown before quitting the app
-  app.on('before-quit', async (event) => {
+  app.on('before-quit', async event => {
     Logger.info('app received <before-quit> event. Safe exiting Odin now.');
     event.preventDefault(); // prevent Odin from quitting immediately
     await safeExit();

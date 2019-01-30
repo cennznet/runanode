@@ -19,16 +19,13 @@ export const getProcessById = async (processId: number): Promise<Process> => {
   return matches.length > 0 ? matches[0] : Promise.reject();
 };
 
-export const getProcessName = async (processId: number) => (
-  (await getProcessById(processId)).name
-);
+export const getProcessName = async (processId: number) => (await getProcessById(processId)).name;
 
 export const getProcessesByName = async (processName: string): Promise<Array<Process>> => {
   // retrieves all running processes
   const processes: Array<Process> = await psList();
   // filters running processes against previous PID
   const result = processes.filter(({ name }) => processName === name);
-  console.log('getProcessesByName', processName, result.length);
   return result;
 };
 
@@ -37,9 +34,9 @@ export const getProcess = async (processId: number, processName: string): Promis
     // retrieves all running processes
     const runningProcesses: Array<Process> = await psList();
     // filters running processes against given pid
-    const matchingProcesses: Array<Process> = runningProcesses.filter(({ pid }) => (
-      pid === processId
-    ));
+    const matchingProcesses: Array<Process> = runningProcesses.filter(
+      ({ pid }) => pid === processId
+    );
     // no processes exist with a matching PID
     if (!matchingProcesses.length) return null;
     // Return first matching process if names match
