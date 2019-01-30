@@ -23,3 +23,7 @@ export type GeneratePaperRequest = {
   isMainnet: boolean,
   networkName: ?string,
 };
+
+export type GetWalletAddressRequest = {
+  accountKeyringMap: object,
+};
