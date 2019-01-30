@@ -110,6 +110,7 @@ export type FaultInjectionIpcResponse = Array<FaultInjection>;
 export type FaultInjectionIpcRequest = [FaultInjection, boolean];
 
 export type CennzNetStatus = {
+  isNodeSafeExisting: boolean,
   isNodeResponding: boolean,
   isNodeSubscribed: boolean,
   isNodeSyncing: boolean,

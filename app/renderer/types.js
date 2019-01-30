@@ -29,6 +29,8 @@ const actionTypes = {
   clearStorage: apiActionTypes('clear_storage'),
 
   /* Network */
+  networkStateChange: triggerActionTypes('network_state_change'),
+  cenznetStatusChange: triggerActionTypes('cennznet_status_change'),
   switchNetwork: triggerActionTypes('switch_network'),
   stopStream: apiActionTypes('stop_stream'),
   restartNode: triggerActionTypes('restart_network'),

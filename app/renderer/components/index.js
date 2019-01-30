@@ -6,11 +6,13 @@ import Toggle from 'components/Toggle';
 import TosContent from 'components/TosContent';
 import PageHeading from 'components/PageHeading';
 import PageFooter from 'components/PageFooter';
+import Checkbox from 'components/Checkbox';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
 export {
   Input,
+  Checkbox,
   Button,
   FileUploader,
   Select,

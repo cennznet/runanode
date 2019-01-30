@@ -37,6 +37,7 @@ const DevPage = ({
   nodeSystem,
   syncStream,
   syncRemoteStream,
+  networkStatusStore,
 }) => {
   const {
     localNode: { chain },
@@ -44,7 +45,7 @@ const DevPage = ({
     version,
     health,
   } = nodeSystem;
-  const networkStatus = `${chain} ${version} (status:${health.message}, sync:${
+  const networkStatusLabel = `${chain} ${version} (status:${health.message}, sync:${
     health.isSyncing
   }, peers:${health.peers}, name:${name})`;
 
@@ -65,7 +66,7 @@ const DevPage = ({
         </PageTitle>
         <Flex>
           <Button onClick={onNetworkStatusClick}>Get Network Status</Button>
-          <div>{networkStatus}</div>
+          <div>{networkStatusLabel}</div>
         </Flex>
         <Flex>
           <Button onClick={onGetHeaderClick}>Get Header</Button>
@@ -77,6 +78,7 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={onRestartNodeClick}>Restart node</Button>
+          <div>{JSON.stringify(networkStatusStore)}</div>
         </Flex>
         <Flex>
           <Button onClick={onStreamStart}>Start stream</Button>
