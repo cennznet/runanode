@@ -104,7 +104,7 @@
     "enzyme-adapter-react-16": "^1.7.1",
     "es6-error": "^4.1.1",
     "extend": "^3.0.2",
-    "formik": "^1.4.0",
+    "formik": "^1.4.3",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
     "minimist": "^1.2.0",

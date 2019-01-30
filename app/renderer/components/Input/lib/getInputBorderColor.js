@@ -1,10 +1,13 @@
 import themeObj from 'renderer/theme';
 
-const getInputBorderColor = ({ disabled, valid, touched, theme = themeObj }) => {
-  if (!disabled && valid === false && touched) {
-    return `1px solid ${theme.colors.danger} !important`;
+const getInputBorderColor = ({ valid, theme = themeObj }) => {
+  if (valid === true) {
+    return `1px solid ${theme.colors.success}`;
   }
-  return `1px solid ${theme.colors.border}`;
+  if (valid === false) {
+    return `1px solid ${theme.colors.danger}`;
+  }
+  return `1px solid ${theme.colors.V400}`;
 };
 
 export default getInputBorderColor;

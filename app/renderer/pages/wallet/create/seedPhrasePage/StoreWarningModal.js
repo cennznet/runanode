@@ -3,18 +3,13 @@ import { Button, PageHeading, Modal } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { STEPS } from '../constants';
 
 const ButtonGroup = styled.div`
   display: flex;
 `;
 
-const StoreWarningModal = ({
-  isStoreWarningModalOpen,
-  setStoreWarningModalOpen,
-  onCreateWallet,
-  walletName,
-  mnemonicString,
-}) => {
+const StoreWarningModal = ({ isStoreWarningModalOpen, setStoreWarningModalOpen, moveToStep }) => {
   return (
     <Modal
       isOpen={isStoreWarningModalOpen}
@@ -24,14 +19,10 @@ const StoreWarningModal = ({
             Go back
           </Button>
           <Button
-            style={{marginLeft: '0.5rem'}}
+            style={{ marginLeft: '0.5rem' }}
             onClick={() => {
-              onCreateWallet({
-                name: walletName,
-                mnemonic: mnemonicString,
-                passphrase: '', // TODO, download seed phase might require wallet address info
-              });
               setStoreWarningModalOpen(false);
+              moveToStep(STEPS.SEED_PHRASE_CONFRIM);
             }}
           >
             Yes
