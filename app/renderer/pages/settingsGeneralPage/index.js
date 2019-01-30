@@ -34,7 +34,6 @@ const SettingsGeneralPage = ({ subNav, rememberNetwork, onToggleRememberNetwork 
           <Toggle
             defaultChecked={rememberNetwork === null ? true : rememberNetwork}
             onChange={e => {
-              console.log('rememberNetwork', rememberNetwork);
               onToggleRememberNetwork(rememberNetwork === null ? false : !rememberNetwork);
             }}
           />

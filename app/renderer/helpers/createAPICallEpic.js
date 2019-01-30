@@ -13,18 +13,18 @@ import { DEFAULT_HEADER } from './apiHelper';
 const defaultAjax = (options, store) => ajax(options);
 
 const defaultMiddleware = (mapRequest, mapResponse, makeHeaders) => ({
-                                                                       body,
-                                                                       url,
-                                                                       headers,
-                                                                       response,
-                                                                     }) => {
+  body,
+  url,
+  headers,
+  response,
+}) => {
   return {
     body: mapRequest ? mapRequest(body) : body,
     url,
     headers: typeof makeHeaders === 'function' ? makeHeaders(body) : makeHeaders || headers,
     response: response.then(
       ({ ajaxResponse }) => (mapResponse ? mapResponse(ajaxResponse, body) : ajaxResponse.response),
-      ({ ajaxResponse }) => Promise.reject(ajaxResponse.response),
+      ({ ajaxResponse }) => Promise.reject(ajaxResponse.response)
     ),
   };
 };
@@ -71,23 +71,23 @@ const defaultMiddleware = (mapRequest, mapResponse, makeHeaders) => ({
   }} options
  */
 const createAPICallEpic = ({
-                             type,
-                             url,
+  type,
+  url,
 
-                             withCredentials = undefined,
+  withCredentials = undefined,
 
-                             mapRequest,
-                             mapResponse,
+  mapRequest,
+  mapResponse,
 
-                             method = 'POST',
-                             headers = undefined, // NULL will not trigger default args
-                             query = false,
-                             responseType = 'json',
+  method = 'POST',
+  headers = undefined, // NULL will not trigger default args
+  query = false,
+  responseType = 'json',
 
-                             doAjax = defaultAjax,
+  doAjax = defaultAjax,
 
-                             middlewares = [],
-                           }) => {
+  middlewares = [],
+}) => {
   // eslint-disable-next-line
   middlewares = [defaultMiddleware(mapRequest, mapResponse, headers), ...middlewares];
 
@@ -131,7 +131,7 @@ const createAPICallEpic = ({
               Promise.reject({
                 payload: errResp,
                 ajaxResponse,
-              }),
+              })
           );
         };
         request.response = request.response.then(handler, handler);
@@ -175,61 +175,50 @@ const createAPICallEpic = ({
         // }
 
         const { request, deferred, responsePromise } = createRequest(payload, store);
-        return doAjax(request, store)
-          .pipe(
-            tap(xhr => deferred.resolve({ ajaxResponse: xhr })),
-            mergeMap((xhr) => {
-              const promise = responsePromise
-                .then(data => {
-                    // if (data.ajaxResponse
-                    //   && data.ajaxResponse.response
-                    //   && data.ajaxResponse.response.jsonrpc
-                    //   && data.ajaxResponse.response.error) {
-                    //   // check jsonrpc response
-                    //   return ({
-                    //     type: type.failed,
-                    //     payload: data.payload,
-                    //     meta: xhr,
-                    //     error: true,
-                    //   });
-                    // }
-                    return (
-                      {
-                        type: type.completed,
-                        payload: data.payload,
-                        meta: xhr,
-                      }
-                    );
-
-                  },
-                )
-                .catch(data => ({
-                  type: type.failed,
+        return doAjax(request, store).pipe(
+          tap(xhr => deferred.resolve({ ajaxResponse: xhr })),
+          mergeMap(xhr => {
+            const promise = responsePromise
+              .then(data => {
+                // if (data.ajaxResponse
+                //   && data.ajaxResponse.response
+                //   && data.ajaxResponse.response.jsonrpc
+                //   && data.ajaxResponse.response.error) {
+                //   // check jsonrpc response
+                //   return ({
+                //     type: type.failed,
+                //     payload: data.payload,
+                //     meta: xhr,
+                //     error: true,
+                //   });
+                // }
+                return {
+                  type: type.completed,
                   payload: data.payload,
                   meta: xhr,
-                  error: true,
-                }))
-              ;
-              return from(promise);
-            }),
-            catchError((err, caught) => {
-              const { xhr } = err;
-              console.log('catchError');
-              console.log(err);
-              console.log(caught);
-              console.log(xhr);
-              deferred.reject({ ajaxResponse: xhr });
-              // return of(xhr);
-              return of({
+                };
+              })
+              .catch(data => ({
                 type: type.failed,
-                payload: null,
+                payload: data.payload,
                 meta: xhr,
                 error: true,
-              });
-            }),
-          )
-          ;
-      }),
+              }));
+            return from(promise);
+          }),
+          catchError((err, caught) => {
+            const { xhr } = err;
+            deferred.reject({ ajaxResponse: xhr });
+            // return of(xhr);
+            return of({
+              type: type.failed,
+              payload: null,
+              meta: xhr,
+              error: true,
+            });
+          })
+        );
+      })
     );
 };
 
@@ -246,12 +235,16 @@ const createAPICallEpic = ({
 
 // export const createAuthorizedAPICallEpic = withMiddleware(createAPICallEpic, authorizedMiddleware);
 
-
-export const withJsonRpcMiddleware = (base) => options =>
+export const withJsonRpcMiddleware = base => options =>
   base({
     ...options,
     method: 'POST',
-    mapRequest: () => ({ jsonrpc: "2.0", method: options.jsonRpcMethod, params:options.jsonRpcParams, id: 1 }),
+    mapRequest: () => ({
+      jsonrpc: '2.0',
+      method: options.jsonRpcMethod,
+      params: options.jsonRpcParams,
+      id: 1,
+    }),
   });
 
 export const createJsonRpcAPICallEpic = withJsonRpcMiddleware(createAPICallEpic);

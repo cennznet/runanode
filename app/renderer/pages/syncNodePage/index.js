@@ -46,7 +46,6 @@ const networkOptionMapping = {
 };
 
 const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
-  console.log('localStorage', localStorage);
   const { SELECTED_NETWORK: selectedNetwork } = localStorage;
 
   const networkOption = getNetworkOptionPair(selectedNetwork);
