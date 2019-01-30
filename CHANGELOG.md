@@ -10,6 +10,8 @@
 
 - Refactor reducer
 - able to detect app state and able to show spinner on exit
+- Single page seed phase PDF design
+- Added download seed phrase confirm modal
 
 # v0.3.0 (2019.01.27)
 
