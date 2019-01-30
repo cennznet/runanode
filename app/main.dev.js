@@ -88,8 +88,6 @@ const safeExit = async () => {
     cennzNetNode.saveStatus(Object.assign(cennzNetNode.status?cennzNetNode.status:{},{
       isNodeSafeExisting: true
     }));
-    console.log(cennznetStatusChannel);
-    console.log(cennzNetNode.status);
     await cennznetStatusChannel.send(cennzNetNode.status, mainWindow);
     Logger.info(`Odin:safeExit: cennzNetNode.status ${cennzNetNode.status}`);
 
