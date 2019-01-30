@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MainContent, MainLayout } from 'components/layout';
+import SVGInline from 'react-svg-inline';
 import { Button, PageHeading } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import connectIcon from 'renderer/assets/icon/connect.svg';
+import plusIcon from 'renderer/assets/icon/plus.svg';
 import withContainer from './container';
 
 const GenWallteMethodsWrapper = styled.div`
@@ -58,6 +60,18 @@ const MethodDesc = styled.div`
   line-height: 1.2rem;
 `;
 
+const PlusIcon = styled(SVGInline).attrs({
+  svg: plusIcon,
+})`
+  width: auto;
+`;
+
+const ConnectIcon = styled(SVGInline).attrs({
+  svg: connectIcon,
+})`
+  width: auto;
+`;
+
 const WalletLandingPage = () => (
   // <MainLayout withoutSidebar>
   <MainLayout>
@@ -69,7 +83,7 @@ const WalletLandingPage = () => (
         <GenerateWalletMethods>
           <GalleryBox to={ROUTES.WALLET.CREATE}>
             <div>
-              <FontAwesomeIcon icon="plus" size="5x" color="white" />
+              <PlusIcon />
             </div>
           </GalleryBox>
           <MethodInfo>
@@ -82,7 +96,7 @@ const WalletLandingPage = () => (
         <GenerateWalletMethods>
           <GalleryBox to={ROUTES.WALLET.CONNECT}>
             <div>
-              <FontAwesomeIcon icon="plug" size="5x" color="white" />
+              <ConnectIcon />
             </div>
           </GalleryBox>
           <MethodInfo>
