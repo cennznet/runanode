@@ -38,7 +38,12 @@ const DevPage = ({
   syncStream,
   syncRemoteStream,
 }) => {
-  const { chain, name, version, health } = nodeSystem;
+  const {
+    localNode: { chain },
+    name,
+    version,
+    health,
+  } = nodeSystem;
   const networkStatus = `${chain} ${version} (status:${health.message}, sync:${
     health.isSyncing
   }, peers:${health.peers}, name:${name})`;
