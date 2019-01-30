@@ -8,6 +8,7 @@
 
 ### Improvements
 
+- Refactor reducer
 - able to detect app state and able to show spinner on exit
 
 # v0.3.0 (2019.01.27)

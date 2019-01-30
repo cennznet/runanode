@@ -3,7 +3,7 @@ import createChainFns from 'renderer/helpers/reducerHelper';
 import types from 'renderer/types';
 import config from 'renderer/utils/config';
 
-const INITIAL_STATE = {
+const DEFAULT_STATE = {
   blockNum: null,
   previousBlockNum: null,
   bps: null,
@@ -40,42 +40,41 @@ const parseLatency = (pingAt, pongAt) => {
   return { pongAt, latency };
 };
 
-const setStatus = (state, payload) => ({
-  ...state,
-  ...payload,
-});
+export default function localStorage(state = DEFAULT_STATE, { type, payload }) {
+  switch (type) {
+    case types.syncStreamStatus.changed:
+      return {
+        ...state,
+        ...payload,
+      };
 
-const handlePing = (state, pingAt) => ({
-  ...state,
-  pingAt,
-  pointAt: null,
-});
-
-const handlePong = (state, pointAt) => ({
-  ...state,
-  ...parseLatency(state.pingAt, pointAt),
-});
-
-const handlePongWithPayload = (state, payload) => {
-  const blockNum = parseInt(payload.number, 16);
-  const previousBlockNum = state.blockNum;
-  const bps = ((blockNum - previousBlockNum) / config.connectivity.latency.period) * 1000;
-  return {
-    ...state,
-    ...parseLatency(state.pingAt, Date.now()),
-    blockNum,
-    previousBlockNum,
-    bps,
-  };
-};
-
-const streamStatusType = types.syncStreamStatus;
-const streamPingType = types.syncStreamPing;
-const handlers = {
-  [streamStatusType.changed]: setStatus,
-  [streamPingType.requested]: handlePing,
-  [streamPingType.completed]: handlePongWithPayload,
-  [types.nodeWsChainGetHeader.completed]: handlePongWithPayload,
-};
-
-export default createChainFns(handlers, INITIAL_STATE);
+    case types.syncStreamPing.requested:
+      return {
+        ...state,
+        pingAt: payload,
+        pointAt: null,
+      };
+    case types.syncStreamPing.completed:
+      return {
+        ...state,
+        ...parseLatency(state.pingAt, Date.now()),
+        blockNum: parseInt(payload.number, 16),
+        previousBlockNum: state.blockNum,
+        bps:
+          ((parseInt(payload.number, 16) - state.blockNum) / config.connectivity.latency.period) *
+          1000,
+      };
+    case types.nodeWsChainGetHeader.completed:
+      return {
+        ...state,
+        ...parseLatency(state.pingAt, Date.now()),
+        blockNum: parseInt(payload.number, 16),
+        previousBlockNum: state.blockNum,
+        bps:
+          ((parseInt(payload.number, 16) - state.blockNum) / config.connectivity.latency.period) *
+          1000,
+      };
+    default:
+      return state;
+  }
+}

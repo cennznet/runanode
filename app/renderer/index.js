@@ -12,7 +12,6 @@ import {
   faQuestionCircle,
   faWallet,
   faDownload,
-  faPlug,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
@@ -52,7 +51,6 @@ library.add(
   faWallet,
   faDownload,
   faDev,
-  faPlug,
   faExclamationCircle
 );
 
