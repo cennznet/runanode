@@ -1,5 +1,5 @@
 import { EMPTY, from, of } from 'rxjs';
-import { concat, mergeMap } from 'rxjs/operators';
+import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
 import ROUTES from 'renderer/constants/routes';
@@ -36,15 +36,18 @@ const walletCreateCompletedEpic = action$ =>
       return of({
         type: types.setStorage.requested,
         payload: { key: storageKeys.WALLETS, value: payload.wallets },
-      }).pipe(
-        concat(
-          of({
-            type: types.navigation.triggered,
-            payload: ROUTES.WALLET.ROOT,
-          })
-        )
-      );
+      });
     })
   );
 
-export default [createWalletEpic, walletCreateCompletedEpic];
+// To ensure page redirection emitted after wallets storage being completed
+const pageRedirectionAfterWalletCreatedEpic = action$ =>
+  action$.ofType(types.setStorage.completed).pipe(
+    filter(({ payload }) => payload.key === storageKeys.WALLETS),
+    mapTo({
+      type: types.navigation.triggered,
+      payload: ROUTES.WALLET.ROOT,
+    })
+  );
+
+export default [createWalletEpic, walletCreateCompletedEpic, pageRedirectionAfterWalletCreatedEpic];
