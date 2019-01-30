@@ -55,4 +55,4 @@ const pageRedirectionAfterWalletCreatedEpic = action$ =>
     })
   );
 
-export default [createWalletEpic, walletCreateCompletedEpic, pageRedirectionAfterWalletCreatedEpic];
+export default [createWalletEpic, storeWalletEpic, pageRedirectionAfterWalletCreatedEpic];
