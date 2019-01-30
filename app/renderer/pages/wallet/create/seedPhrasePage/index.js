@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { STEPS } from '../constants';
 import SeedPhraseList from './SeedPhraseList';
 import StoreSeedPhraseModal from './StoreWarningModal';
+import SeedPhraseDownloadModal from './SeedPhraseDownloadModal';
 
 const ButtonPanelContainer = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const SeedPhrasePage = props => {
     isStoreWarningModalOpen,
     setStoreWarningModalOpen,
     nodeSystem,
+    setSeedPhaseDownloadModalOpen,
   } = props;
   return (
     <React.Fragment>
@@ -33,14 +35,9 @@ const SeedPhrasePage = props => {
       <ButtonPanelContainer>
         <Button
           color="secondary"
-          onClick={() =>
-            window.odin.api.cennz.generatePaperWallet({
-              mnemonic: mnemonicString,
-              address: 'Wallet address', // TODO
-              name: walletName,
-              networkName: nodeSystem.localNode.chain,
-              isMainnet: true,
-            })
+          onClick={() => {
+            setSeedPhaseDownloadModalOpen(true);
+            }
           }
         >
           Download
@@ -55,6 +52,7 @@ const SeedPhrasePage = props => {
         <Button onClick={() => setStoreWarningModalOpen(true)}>Next</Button>
       </PageFooter>
       <StoreSeedPhraseModal {...props} />
+      <SeedPhraseDownloadModal {...props} />
     </React.Fragment>
   );
 };
