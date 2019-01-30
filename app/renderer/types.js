@@ -11,6 +11,7 @@ const {
 } = getActionTypeCreators(ACTION_TYPES_NAME_SPACE);
 
 const actionTypes = {
+  empty: triggerActionTypes('empty'),
   init: triggerActionTypes('init'),
   testPage: triggerActionTypes('test_page'),
   homePageLoad: triggerActionTypes('home_page_load'),
@@ -18,6 +19,7 @@ const actionTypes = {
 
   walletCreate: apiActionTypes('wallet_create'),
   walletPaperGenerate: triggerActionTypes('wallet_paper_generate'),
+  walletPaperGenerateTest: triggerActionTypes('wallet_paper_generate_test'),
 
   /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),

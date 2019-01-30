@@ -1,4 +1,4 @@
-import { EMPTY, from, of } from 'rxjs';
+import { EMPTY, from, of, empty } from 'rxjs';
 import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
@@ -6,6 +6,8 @@ import ROUTES from 'renderer/constants/routes';
 import chainEpics from 'renderer/epics/chainEpics';
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
+import { Logger } from '../utils/logging';
+import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 
 const createWalletEpic = action$ =>
   action$.pipe(
@@ -55,4 +57,70 @@ const pageRedirectionAfterWalletCreatedEpic = action$ =>
     })
   );
 
-export default [createWalletEpic, storeWalletEpic, pageRedirectionAfterWalletCreatedEpic];
+const walletPaperGenerateEpic = action$ =>
+  action$.pipe(
+    ofType(types.walletPaperGenerate.triggered),
+    mergeMap(async ({ payload }) => {
+      // Logger.debug(`walletPaperGenerateEpic, payload: ${JSON.stringify(payload)}`);
+      // console.log(`walletPaperGenerateEpic, payload: ${JSON.stringify(payload)}`);
+      // const filePath = global.dialog.showSaveDialog({
+      //   defaultPath: 'paper-wallet-certificate.pdf',
+      //   filters: [{
+      //     name: 'paper-wallet-certificate',
+      //     extensions: ['pdf'],
+      //   }],
+      // });
+      //
+      // console.log(`walletPaperGenerateEpic, filePath: ${filePath}`);
+      // // if cancel button is clicked or path is empty
+      // if (!filePath) return EMPTY;
+      //
+      // const savedFilePath = await window.odin.api.cennz.generatePaperWallet({
+      //   mnemonic: payload.mnemonic,
+      //   address: payload.address,
+      //   name: payload.walletName,
+      //   networkName: payload.networkName,
+      //   isMainnet: payload.isMainnet,
+      // });
+      // console.log(`walletPaperGenerateEpic finish, savedPDFPath: ${savedFilePath}`);
+      // Logger.debug(`walletPaperGenerateEpic finish, savedPDFPath: ${savedFilePath}`);
+      // return {
+      //   type: types.empty.triggered,
+      // };
+
+      Logger.info('walletPaperGenerateEpic');
+
+      const filePath = global.dialog.showSaveDialog({
+        defaultPath: 'paper-wallet-certificate.pdf',
+        filters: [{
+          name: 'paper-wallet-certificate',
+          extensions: ['pdf'],
+        }],
+      });
+
+      Logger.info(`walletPaperGenerateEpic filePath: ${filePath} `);
+
+      // if cancel button is clicked or path is empty
+      if (!filePath) return EMPTY;
+
+      await generatePaperWalletChannel.send({
+        address: 'address',
+        filePath,
+        mnemonics: 'mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics'.split(' '),
+        isMainnet: true,
+        buildLabel: 'buildLabel',
+        messages: {
+          walletAddressLabel: 'walletAddressLabel',
+          recoveryPhraseLabel: 'recoveryPhraseLabel',
+          infoTitle: 'infoTitle',
+          infoAuthor: 'infoAuthor',
+        }
+      });
+      Logger.info('walletPaperGenerateEpic finish');
+      return {
+        type: types.empty.triggered,
+      };
+    })
+  );
+
+export default [createWalletEpic, storeWalletEpic, pageRedirectionAfterWalletCreatedEpic, walletPaperGenerateEpic];

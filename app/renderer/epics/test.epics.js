@@ -1,4 +1,4 @@
-import { EMPTY, from, of } from 'rxjs';
+import { EMPTY, from, of, empty } from 'rxjs';
 import { concat, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
@@ -29,9 +29,9 @@ const walletCreateEpic = action$ =>
     })
   );
 
-const walletPaperGenerateEpic = action$ =>
+const walletPaperGenerateTestEpic = action$ =>
   action$.pipe(
-    ofType(types.walletPaperGenerate.triggered),
+    ofType(types.walletPaperGenerateTest.triggered),
     mergeMap(async () => {
       Logger.info('walletPaperGenerateEpic');
 
@@ -43,8 +43,10 @@ const walletPaperGenerateEpic = action$ =>
         }],
       });
 
+      Logger.info(`walletPaperGenerateEpic filePath: ${filePath} `);
+
       // if cancel button is clicked or path is empty
-      if (!filePath) return;
+      if (!filePath) return EMPTY;
 
       await generatePaperWalletChannel.send({
         address: 'address',
@@ -61,10 +63,9 @@ const walletPaperGenerateEpic = action$ =>
       });
       Logger.info('walletPaperGenerateEpic finish');
       return {
-        type: types.navigation.triggered,
-        payload: ROUTES.DEV
+        type: types.empty.triggered,
       };
     })
   );
 
-export default [testPageEpic, walletCreateEpic, walletPaperGenerateEpic];
+export default [testPageEpic, walletCreateEpic, walletPaperGenerateTestEpic];

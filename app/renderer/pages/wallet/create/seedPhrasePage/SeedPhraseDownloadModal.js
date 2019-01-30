@@ -14,7 +14,7 @@ const StoreWarningModal = ({
   setSeedPhaseDownloadModalOpen,
   isSeedPhaseDownloadModalConfirmCheck,
   setSeedPhaseDownloadModalConfirmCheck,
-  onCreateWallet,
+  onCreatePaperWallet,
   walletName,
   mnemonicString,
   nodeSystem,
@@ -33,7 +33,7 @@ const StoreWarningModal = ({
               color="warning"
               style={{ marginLeft: '0.5rem' }}
               onClick={() => {
-                window.odin.api.cennz.generatePaperWallet({
+                onCreatePaperWallet({
                   mnemonic: mnemonicString,
                   address: 'Wallet address', // TODO
                   name: walletName,
