@@ -18,6 +18,7 @@ const enhance = compose(
     componentDidMount() {},
   }),
   withState('isStoreWarningModalOpen', 'setStoreWarningModalOpen', false),
+  withState('isSeedPhaseDownloadModalOpen', 'setSeedPhaseDownloadModalOpen', false),
   withStateHandlers(
     ({
       initStep = STEPS.NAME_INPUT,
