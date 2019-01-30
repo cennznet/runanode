@@ -38,11 +38,12 @@ const NavItem = styled(NavLink)`
 const SubNav = ({ navItems, footer }) => (
   <Wrapper>
     <div>
-      {navItems.map(item => (
-        <NavItem key={uuid()} to={item.link}>
-          {item.title}
-        </NavItem>
-      ))}
+      {navItems &&
+        navItems.map(item => (
+          <NavItem key={uuid()} to={item.link}>
+            {item.title}
+          </NavItem>
+        ))}
     </div>
     {footer}
   </Wrapper>

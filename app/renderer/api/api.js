@@ -4,28 +4,24 @@ import { SimpleKeyring, Wallet } from 'cennznet-wallet';
 import uuid from 'uuid/v4';
 import BigNumber from 'bignumber.js';
 
-import {generateMnemonic } from 'renderer/utils/crypto';
+import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
 
 // Common Types
-import type {
-  RequestConfig,
-} from './common/types';
+import type { RequestConfig } from './common/types';
 
 // Nodes Types
-import type {
-  SystemHealth,
-  NodeInfo,
-  NodeSoftware,
-  GetNetworkStatusResponse
-} from './nodes/types';
+import type { SystemHealth, NodeInfo, NodeSoftware, GetNetworkStatusResponse } from './nodes/types';
 import type { NodeQueryParams } from './nodes/requests/getSystemHealth';
 
 // Wallets Types
 import type {
-  CreateMnemonicRequest, CreateWalletRequest, GeneratePaperRequest,
+  CreateMnemonicRequest,
+  CreateWalletRequest,
+  GeneratePaperRequest,
+  GetWalletAddressRequest,
 } from './wallets/types';
 
 import CennznetWallet from './wallets/CennznetWallet';
@@ -36,7 +32,7 @@ import {
   IncorrectSpendingPasswordError,
   ReportRequestError,
   InvalidMnemonicError,
-  ForbiddenMnemonicError
+  ForbiddenMnemonicError,
 } from './common/errors';
 import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 import { environment } from '../../main/environment';
@@ -44,7 +40,6 @@ import { environment } from '../../main/environment';
 const { buildLabel } = environment;
 
 export default class CennzApi {
-
   config: RequestConfig;
 
   constructor(isTest: boolean, config: RequestConfig) {
@@ -65,10 +60,12 @@ export default class CennzApi {
     Logger.debug('CennznetApi::generatePaperWallet called');
     const filePath = global.dialog.showSaveDialog({
       defaultPath: 'paper-wallet-certificate.pdf',
-      filters: [{
-        name: 'paper-wallet-certificate',
-        extensions: ['pdf'],
-      }],
+      filters: [
+        {
+          name: 'paper-wallet-certificate',
+          extensions: ['pdf'],
+        },
+      ],
     });
 
     // if cancel button is clicked or path is empty
@@ -86,11 +83,11 @@ export default class CennzApi {
         recoveryPhraseLabel: 'SEED PHRASE',
         infoTitle: 'Paper Wallet',
         infoAuthor: 'Odin',
-      }
+      },
     });
 
     return filePath;
-  }
+  };
 
   createWallet = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
     Logger.debug('CennznetApi::createWallet called');
@@ -98,7 +95,7 @@ export default class CennzApi {
       const wallet = new Wallet();
       await wallet.createNewVault(request.passphrase);
       const keyring = new SimpleKeyring();
-      await keyring.addFromMnemonic(request.mnemonic)
+      await keyring.addFromMnemonic(request.mnemonic);
       await wallet.addKeyring(keyring);
 
       const cennznetWallet = new CennznetWallet({
@@ -106,7 +103,7 @@ export default class CennzApi {
         name: request.name,
         amount: new BigNumber(0),
         hasPassword: request.passphrase !== null,
-        wallet
+        wallet,
       });
       Logger.debug('CennznetApi::createWallet success');
       return cennznetWallet;
@@ -116,9 +113,19 @@ export default class CennzApi {
     }
   };
 
-  getSystemHealth = async (
-    queryParams?: NodeQueryParams
-  ): Promise<SystemHealth> => {
+  getWalletAddress = async (request: GetWalletAddressRequest): Promise<string[]> => {
+    Logger.debug('CennznetApi::getWalletAddress called');
+    try {
+      const walletAddress = Object.keys(request.accountKeyringMap);
+      Logger.debug(`CennznetApi::getWalletAddress success: ${walletAddress}`);
+      return walletAddress;
+    } catch (error) {
+      Logger.error('CennznetApi::getWalletAddress error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  getSystemHealth = async (queryParams?: NodeQueryParams): Promise<SystemHealth> => {
     const loggerText = `CennznetApi::getSystemHealth`;
     Logger.debug(`${loggerText} called`);
     try {
@@ -130,6 +137,4 @@ export default class CennzApi {
       throw new GenericApiError(error);
     }
   };
-
-
 }

@@ -3,6 +3,7 @@ import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
 import ROUTES from 'renderer/constants/routes';
+import chainEpics from 'renderer/epics/chainEpics';
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
 
@@ -20,6 +21,10 @@ const createWalletEpic = action$ =>
         mnemonic,
         passphrase: passphrase || '',
       });
+      const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
+      const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
+      wallet.wallet.walletAddress = walletAddress;
+
       wallets.push(wallet);
 
       return {
@@ -29,13 +34,13 @@ const createWalletEpic = action$ =>
     })
   );
 
-const walletCreateCompletedEpic = action$ =>
+const storeWalletEpic = action$ =>
   action$.pipe(
     ofType(types.walletCreate.completed),
-    mergeMap(({ payload }) => {
+    mergeMap(({ payload: { wallets } }) => {
       return of({
         type: types.setStorage.requested,
-        payload: { key: storageKeys.WALLETS, value: payload.wallets },
+        payload: { key: storageKeys.WALLETS, value: wallets },
       });
     })
   );
@@ -50,4 +55,4 @@ const pageRedirectionAfterWalletCreatedEpic = action$ =>
     })
   );
 
-export default [createWalletEpic, walletCreateCompletedEpic, pageRedirectionAfterWalletCreatedEpic];
+export default [createWalletEpic, storeWalletEpic, pageRedirectionAfterWalletCreatedEpic];
