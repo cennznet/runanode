@@ -22,8 +22,6 @@ const FileUploader = ({
       <div>
         <input {...getInputProps()} />
         <Input
-          borderColor={borderColor}
-          backgroundColor={backgroundColor}
           value={inputValue || ''}
           placeholder={placeholder || 'Please upload file'}
           onChange={() => null}

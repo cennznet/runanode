@@ -18,13 +18,7 @@ const NameInputPage = ({ setWalletName, walletName, setIsOpenPenPrepareModal, ..
       <div>
         <PageHeading>Name your wallet</PageHeading>
         <InputTitle>Wallet name</InputTitle>
-        <Input
-          backgroundColor={colors.V400}
-          borderColor="transparent"
-          color={colors.N0}
-          height="3rem"
-          onChange={e => setWalletName(e.target.value)}
-        />
+        <Input onChange={e => setWalletName(e.target.value)} />
       </div>
       <PageFooter>
         <StartOverLink />
