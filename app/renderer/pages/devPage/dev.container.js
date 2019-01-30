@@ -6,11 +6,13 @@ import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';
 import sreamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
+import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
+const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, networkStatusStore }) => ({
   nodeSystem,
   syncStream,
   syncRemoteStream,
+  networkStatusStore,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -43,8 +45,7 @@ const mapDispatchToProps = dispatch => ({
   },
   onRestartNodeClick: () => {
     const options: CennzNetRestartOptions = {
-      name: 'my-custom-node',
-      chain: '/Users/benxgao/hackathon/cennz-node-ui/dist/local.json',
+      chain: NetworkNameOptions.CENNZNET_UAT,
     };
     restartCennzNetNodeChannel.send(options);
   },

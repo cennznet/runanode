@@ -3,7 +3,11 @@ import Store from 'electron-store';
 import type { ChildProcess, spawn, exec } from 'child_process';
 import type { WriteStream } from 'fs';
 import { toInteger } from 'lodash';
+import waitPort from 'wait-port';
+
+import appConfig from 'renderer/utils/config';
 import { environment } from '../environment';
+
 import type {
   CennzNetNodeState, CennzNetRestartOptions,
   CennzNetStatus,
@@ -247,11 +251,45 @@ export class CennzNetNode {
         try {
           await promisedCondition(() => node.connected, startupTimeout);
           // Setup livecycle event handlers
-          node.on('message', this._handleCennzNetNodeMessage);
+
           node.on('exit', this._handleCennzNetNodeExit);
           node.on('error', this._handleCennzNetNodeError);
-          // Request cennznet-node to reply with port
-          node.send({ QueryPort: [] });
+
+          // No IPC between Electron App and cennznet-node atm
+          // https://stackoverflow.com/questions/27683266/how-do-you-do-interprocess-communication-ipc-in-rust
+          // https://medium.com/@NorbertdeLangen/communicating-between-nodejs-processes-4e68be42b917
+          // node.on('message', this._handleCennzNetNodeMessage);
+          // // Request cennznet-node to reply with port
+          // node.send({ QueryPort: [] });
+
+          // check app restart status
+          // wait for few seconds and check the port is ready to connect
+          const params = {
+            host: appConfig.app.CENNZ_NODE_HOST,
+            port: appConfig.app.CENNZ_NODE_WS_PORT,
+            timeout: appConfig.pollingInterval.restartCheck,
+          };
+          setTimeout(() => {
+            waitPort(params)
+              .then((open) => {
+                if (open) {
+                  _log.info('The port is now open!');
+                  _log.info(this._state);
+                  if (this._state === CennzNetNodeStates.STARTING) {
+                    this._changeToState(CennzNetNodeStates.RUNNING);
+                    // Reset the startup tries when we managed to get the node running
+                    this._startupTries = 0;
+                  }
+                } else {
+                  _log.info('The port did not open before the timeout...');
+                }
+              })
+              .catch((err) => {
+                _log.error(`An unknown error occurred while waiting for the port: ${err}`);
+              });
+          }, appConfig.pollingInterval.restartCheck);
+
+
           _log.info(`CennzNetNode#start: cennznet-node child process spawned with PID ${node.pid}`);
           resolve();
         } catch (_) {
