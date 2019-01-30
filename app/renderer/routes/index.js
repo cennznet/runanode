@@ -9,6 +9,7 @@ import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import SyncNodePage from 'renderer/pages/syncNodePage';
 import DevPage from 'renderer/pages/devPage';
 import HomePage from 'renderer/pages/homePage';
+import WaitPage from 'renderer/pages/waitPage';
 import WalletLandingPage from 'renderer/pages/wallet/landingPage';
 import WalletDetailsPage from 'renderer/pages/wallet/detailsPage';
 import WalletCreatePage from 'renderer/pages/wallet/create';
@@ -38,6 +39,7 @@ class AppRoutes extends React.Component {
     return (
       <Switch>
         <Route exact path={ROUTES.ROOT} component={HomePage} />
+        <Route exact path={ROUTES.WAIT} component={WaitPage} />
         <Redirect exact from={ROUTES.SETTINGS.ROOT} to={ROUTES.SETTINGS.GENERAL} />
         <Route exact from={ROUTES.WALLET.ROOT} component={WalletRootPage} />
         <Route path={`${ROUTES.WALLET.DETAILS}/:id`} component={WalletDetailsPage} />

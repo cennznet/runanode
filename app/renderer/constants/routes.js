@@ -1,6 +1,7 @@
 // @flow
 export default {
   ROOT: '/',
+  WAIT: '/wait',
   SETTINGS: {
     ROOT: '/settings',
     GENERAL: '/settings/general',

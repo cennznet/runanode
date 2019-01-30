@@ -15,6 +15,9 @@ const config = {
   },
 
   app: {
+    CENNZ_NODE_HOST: 'localhost',
+    CENNZ_NODE_HTTP_PORT: 9944,
+    CENNZ_NODE_WS_PORT: 9933,
     LOG_REDUX: false,
     LOG_GA: false,
     PAPER_WALLET_WRITTEN_WORDS_COUNT: 9,
@@ -48,7 +51,8 @@ const config = {
   },
 
   pollingInterval: {
-    blockHeight: 10 * 1000, // 10s
+    restartCheck: 5 * 1000,
+    blockHeight: 5 * 1000, // 5s
   },
 };
 
