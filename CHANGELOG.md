@@ -8,6 +8,10 @@
 
 ### Improvements
 
+# v0.3.1 (2019.01.31)
+
+### Improvements
+
 - Refactor reducer
 - able to detect app state and able to show spinner on exit
 - Single page seed phase PDF design
