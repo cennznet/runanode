@@ -12,7 +12,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.walletCreate.requested, payload });
   },
   onCreatePaperWallet: payload => {
-    console.log(`onCreatePaperWallet, ${JSON.stringify(payload)}`)
     dispatch({ type: types.walletPaperGenerate.requested, payload });
   },
 });

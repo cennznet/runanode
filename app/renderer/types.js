@@ -11,7 +11,6 @@ const {
 } = getActionTypeCreators(ACTION_TYPES_NAME_SPACE);
 
 const actionTypes = {
-  empty: triggerActionTypes('empty'),
   init: triggerActionTypes('init'),
   testPage: triggerActionTypes('test_page'),
   homePageLoad: triggerActionTypes('home_page_load'),
