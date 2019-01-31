@@ -1,4 +1,4 @@
-import { EMPTY, from, of } from 'rxjs';
+import { EMPTY, from, of, empty } from 'rxjs';
 import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
@@ -6,6 +6,8 @@ import ROUTES from 'renderer/constants/routes';
 import chainEpics from 'renderer/epics/chainEpics';
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
+import { Logger } from '../utils/logging';
+import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 
 const createWalletEpic = action$ =>
   action$.pipe(
@@ -55,4 +57,23 @@ const pageRedirectionAfterWalletCreatedEpic = action$ =>
     })
   );
 
-export default [createWalletEpic, storeWalletEpic, pageRedirectionAfterWalletCreatedEpic];
+const walletPaperGenerateEpic = action$ =>
+  action$.pipe(
+    ofType(types.walletPaperGenerate.requested),
+    mergeMap(async ({ payload }) => {
+      Logger.debug(`walletPaperGenerateEpic, payload: ${JSON.stringify(payload)}`);
+      const savedFilePath = await window.odin.api.cennz.generatePaperWallet({
+        mnemonic: payload.mnemonic,
+        address: payload.address,
+        name: payload.name,
+        networkName: payload.networkName,
+        isMainnet: payload.isMainnet,
+      });
+      Logger.debug(`walletPaperGenerateEpic finish, savedPDFPath: ${savedFilePath}`);
+      return {
+        type: types.walletPaperGenerate.completed,
+      };
+    })
+  );
+
+export default [createWalletEpic, storeWalletEpic, pageRedirectionAfterWalletCreatedEpic, walletPaperGenerateEpic];
