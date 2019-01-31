@@ -15,6 +15,7 @@ const StyledSelect = styled(ReactSelect)`
   }
 
   .react-select__menu {
+    border: 1px solid ${p => p.borderColor};
     background-color: ${p => p.backgroundColor};
   }
 
