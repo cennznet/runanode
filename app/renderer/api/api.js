@@ -68,6 +68,8 @@ export default class CennzApi {
       ],
     });
 
+    if (!filePath) return;
+
     await generatePaperWalletChannel.send({
       address: request.address,
       filePath,
