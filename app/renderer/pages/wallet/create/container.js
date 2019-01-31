@@ -11,6 +11,9 @@ const mapDispatchToProps = dispatch => ({
   onCreateWallet: payload => {
     dispatch({ type: types.walletCreate.requested, payload });
   },
+  onCreatePaperWallet: payload => {
+    dispatch({ type: types.walletPaperGenerate.requested, payload });
+  },
 });
 
 const enhance = compose(

@@ -68,7 +68,6 @@ export default class CennzApi {
       ],
     });
 
-    // if cancel button is clicked or path is empty
     if (!filePath) return;
 
     await generatePaperWalletChannel.send({

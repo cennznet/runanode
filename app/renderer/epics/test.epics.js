@@ -1,4 +1,4 @@
-import { EMPTY, from, of } from 'rxjs';
+import { EMPTY, from, of, empty } from 'rxjs';
 import { concat, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
@@ -29,42 +29,4 @@ const walletCreateEpic = action$ =>
     })
   );
 
-const walletPaperGenerateEpic = action$ =>
-  action$.pipe(
-    ofType(types.walletPaperGenerate.triggered),
-    mergeMap(async () => {
-      Logger.info('walletPaperGenerateEpic');
-
-      const filePath = global.dialog.showSaveDialog({
-        defaultPath: 'paper-wallet-certificate.pdf',
-        filters: [{
-          name: 'paper-wallet-certificate',
-          extensions: ['pdf'],
-        }],
-      });
-
-      // if cancel button is clicked or path is empty
-      if (!filePath) return;
-
-      await generatePaperWalletChannel.send({
-        address: 'address',
-        filePath,
-        mnemonics: 'mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics'.split(' '),
-        isMainnet: true,
-        buildLabel: 'buildLabel',
-        messages: {
-          walletAddressLabel: 'walletAddressLabel',
-          recoveryPhraseLabel: 'recoveryPhraseLabel',
-          infoTitle: 'infoTitle',
-          infoAuthor: 'infoAuthor',
-        }
-      });
-      Logger.info('walletPaperGenerateEpic finish');
-      return {
-        type: types.navigation.triggered,
-        payload: ROUTES.DEV
-      };
-    })
-  );
-
-export default [testPageEpic, walletCreateEpic, walletPaperGenerateEpic];
+export default [testPageEpic, walletCreateEpic];
