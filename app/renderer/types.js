@@ -18,8 +18,8 @@ const actionTypes = {
   navigation: triggerActionTypes('navigation'),
 
   walletCreate: apiActionTypes('wallet_create'),
-  walletPaperGenerate: triggerActionTypes('wallet_paper_generate'),
-  walletPaperGenerateTest: triggerActionTypes('wallet_paper_generate_test'),
+  walletPaperGenerate: apiActionTypes('wallet_paper_generate'),
+  walletPaperGenerateTest: apiActionTypes('wallet_paper_generate_test'),
 
   /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),

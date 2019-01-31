@@ -31,7 +31,7 @@ const walletCreateEpic = action$ =>
 
 const walletPaperGenerateTestEpic = action$ =>
   action$.pipe(
-    ofType(types.walletPaperGenerateTest.triggered),
+    ofType(types.walletPaperGenerateTest.requested),
     mergeMap(async () => {
       Logger.info('walletPaperGenerateEpic');
 
