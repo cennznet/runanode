@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/logo.png';
+import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
+import { Input } from 'components/layout';
 
 const Wrapper = styled.div`
   display: flex;
