@@ -65,7 +65,7 @@ const walletPaperGenerateEpic = action$ =>
       const savedFilePath = await window.odin.api.cennz.generatePaperWallet({
         mnemonic: payload.mnemonic,
         address: payload.address,
-        name: payload.walletName,
+        name: payload.name,
         networkName: payload.networkName,
         isMainnet: payload.isMainnet,
       });

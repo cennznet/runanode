@@ -103,7 +103,17 @@ const DevPage = ({
           <Button onClick={() => onWalletCreate()}>Create Wallet</Button>
         </Flex>
         <Flex>
-          <Button onClick={() => onWalletPaperGenerate()}>Create Paper Wallet</Button>
+          <Button onClick={() =>
+            onWalletPaperGenerate({
+                mnemonic: 'abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde',
+                address: 'Wallet address',
+                name: 'Wallet Name',
+                networkName: 'Network Name',
+                isMainnet: true,
+              },
+            )}>
+            Create Paper Wallet
+          </Button>
         </Flex>
       </MainContent>
     </MainLayout>

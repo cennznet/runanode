@@ -89,8 +89,8 @@ const mapDispatchToProps = dispatch => ({
   onWalletCreate: () => {
     dispatch({ type: types.walletCreate.triggered });
   },
-  onWalletPaperGenerate: () => {
-    dispatch({ type: types.walletPaperGenerateTest.requested });
+  onWalletPaperGenerate: ( payload ) => {
+    dispatch({ type: types.walletPaperGenerate.requested, payload });
   },
 });
 
