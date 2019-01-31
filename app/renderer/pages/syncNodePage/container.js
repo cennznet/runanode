@@ -33,39 +33,15 @@ const enhance = lifecycle({
     const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
     const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
     const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
-
     if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
       this.props.onRestartNode({ chian: genesisConfigFilePath });
     } else {
       this.props.onRestartNode({ chain: selectedNetwork });
     }
-    // Not disconnet and restart when it is default network
   },
 
   // TODO: time out err controller - progress bar red
   componentDidUpdate(prevProps) {
-    /**
-     * Nomally, syncNode page just happen at the beginning app start
-     * For current dev page, remove when remove dev page
-     */
-    const { localStorage: prevLocalStorage } = prevProps;
-    const prevSelectedNetwork = prevLocalStorage[storageKeys.SELECTED_NETWORK];
-    const prevGenesisConfigFile = prevLocalStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
-    const prevGenesisConfigFilePath = prevGenesisConfigFile && prevGenesisConfigFile.path;
-
-    const { localStorage } = this.props;
-    const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
-    const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
-    const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
-
-    if (prevSelectedNetwork !== selectedNetwork) {
-      if (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
-        this.props.onRestartNode({ chian: genesisConfigFilePath });
-      } else {
-        this.props.onRestartNode({ chain: selectedNetwork });
-      }
-    }
-
     /** Precentage */
     const { blockNum: localBestBlock } = this.props.syncStream;
     const { blockNum: remoteBestBlock } = this.props.syncRemoteStream;
