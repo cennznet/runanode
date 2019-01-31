@@ -29,43 +29,4 @@ const walletCreateEpic = action$ =>
     })
   );
 
-const walletPaperGenerateTestEpic = action$ =>
-  action$.pipe(
-    ofType(types.walletPaperGenerateTest.requested),
-    mergeMap(async () => {
-      Logger.info('walletPaperGenerateEpic');
-
-      const filePath = global.dialog.showSaveDialog({
-        defaultPath: 'paper-wallet-certificate.pdf',
-        filters: [{
-          name: 'paper-wallet-certificate',
-          extensions: ['pdf'],
-        }],
-      });
-
-      Logger.info(`walletPaperGenerateEpic filePath: ${filePath} `);
-
-      // if cancel button is clicked or path is empty
-      if (!filePath) return EMPTY;
-
-      await generatePaperWalletChannel.send({
-        address: 'address',
-        filePath,
-        mnemonics: 'mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics mnemonics'.split(' '),
-        isMainnet: true,
-        buildLabel: 'buildLabel',
-        messages: {
-          walletAddressLabel: 'walletAddressLabel',
-          recoveryPhraseLabel: 'recoveryPhraseLabel',
-          infoTitle: 'infoTitle',
-          infoAuthor: 'infoAuthor',
-        }
-      });
-      Logger.info('walletPaperGenerateEpic finish');
-      return {
-        type: types.empty.triggered,
-      };
-    })
-  );
-
-export default [testPageEpic, walletCreateEpic, walletPaperGenerateTestEpic];
+export default [testPageEpic, walletCreateEpic];
