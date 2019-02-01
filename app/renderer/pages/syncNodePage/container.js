@@ -31,14 +31,18 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    const { localStorage } = this.props;
+    const { localStorage, onRestartNode } = this.props;
     const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
     const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
     const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
-    if (selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) {
-      this.props.onRestartNode({ chian: genesisConfigFilePath });
+    if (selectedNetwork && selectedNetwork.value) {
+      const targetChain =
+        selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath
+          ? genesisConfigFilePath
+          : selectedNetwork.value;
+      onRestartNode({ chain: targetChain });
     } else {
-      this.props.onRestartNode({ chain: selectedNetwork.value });
+      onRestartNode();
     }
   },
 
