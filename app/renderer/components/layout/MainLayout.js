@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Layout from './Layout';
 
-import TopBarContainer from './TopBarContainer';
+import TopBarContainer from './TopBar/TopBarContainer';
 import LayoutWrapper from './LayoutWrapper';
 
 const ContentWrapper = styled.div`
