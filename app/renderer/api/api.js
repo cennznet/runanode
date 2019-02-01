@@ -1,8 +1,10 @@
 // @flow
 import _ from 'lodash';
 import { SimpleKeyring, Wallet } from 'cennznet-wallet';
+import { Api } from 'cennznet-api';
 import uuid from 'uuid/v4';
 import BigNumber from 'bignumber.js';
+import {u32, Balance} from '@polkadot/types';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
@@ -41,10 +43,15 @@ const { buildLabel } = environment;
 
 export default class CennzApi {
   config: RequestConfig;
+  api: Api;
 
-  constructor(isTest: boolean, config: RequestConfig) {
+  constructor(config: RequestConfig) {
     this.setRequestConfig(config);
-    // if (isTest) patchAdaApi(this);
+    Api.create({
+      provider: 'ws://localhost:9944',
+    }).then((api) => {
+      this.api = api;
+    });
   }
 
   setRequestConfig(config: RequestConfig) {
@@ -136,4 +143,93 @@ export default class CennzApi {
       throw new GenericApiError(error);
     }
   };
+
+  genericAssetNextAssetId = async (): Promise<u32> => {
+    Logger.debug('CennznetApi::getNextAssetId called');
+    try {
+      const nextAssetId = await this.api.query.genericAsset.nextAssetId();
+      Logger.debug(`CennznetApi::getNextAssetId nextAssetId: ${nextAssetId}`);
+      return nextAssetId;
+    } catch (error) {
+      Logger.error('CennznetApi::getNextAssetId error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * The free balance of a given asset under an account.
+   * @param assetId
+   * @param walletAddress
+   * @returns {Promise<number>}
+   */
+  genericAssetFreeBalance = async (assetId: number, walletAddress: string): Promise<Balance> => {
+    Logger.debug('CennznetApi::genericAssetFreeBalance called');
+    try {
+      const freeBalance = await this.api.query.genericAsset.freeBalance(assetId, walletAddress);
+      Logger.debug(`CennznetApi::genericAssetFreeBalance freeBalance: ${freeBalance}`);
+      return freeBalance;
+    } catch (error) {
+      Logger.error('CennznetApi::genericAssetFreeBalance error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * The reserved balance of a given asset under an account.
+   * @param assetId
+   * @param walletAddress
+   * @returns {Promise<number>}
+   */
+  genericAssetReservedBalance = async (assetId: number, walletAddress: string): Promise<Balance> => {
+    Logger.debug('CennznetApi::genericAssetReservedBalance called');
+    try {
+      const reservedBalance = await this.api.query.genericAsset.reservedBalanc(assetId, walletAddress);
+      Logger.debug(`CennznetApi::genericAssetReservedBalance freeBalance: ${reservedBalance}`);
+      return reservedBalance;
+    } catch (error) {
+      Logger.error('CennznetApi::genericAssetReservedBalance error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * Total supply of a given asset.
+   * @param assetId
+   * @returns {Promise<number>}
+   */
+  genericAssetTotalSupply = async (assetId: number): Promise<Balance> => {
+    Logger.debug('CennznetApi::genericAssetTotalSupply called');
+    try {
+      const totalSupply = await this.api.query.genericAsset.totalSupply(assetId);
+      Logger.debug(`CennznetApi::genericAssetTotalSupply freeBalance: ${totalSupply}`);
+      return totalSupply;
+    } catch (error) {
+      Logger.error('CennznetApi::genericAssetTotalSupply error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   *
+   * @param assetId
+   * @param toWalletAddress
+   * @param fromWalletAddress
+   * @param amount
+   * @param wallet
+   * @returns {Promise<Hash>}
+   */
+  genericAssetTransfer = async (assetId: number, toWalletAddress: string, fromWalletAddress: string, amount: BigNumber, wallet): Promise<Object> => {
+    Logger.debug('CennznetApi::genericAssetTransfer called');
+    try {
+      this.api.setSigner(wallet);
+      const tx = await this.api.tx.genericAsset.transfer(assetId, fromWalletAddress, amount).send({from: toWalletAddress});
+      this.api.setSigner(null);
+      Logger.debug(`CennznetApi::genericAssetTransfer tx: ${tx}`);
+      return tx;
+    } catch (error) {
+      Logger.error('CennznetApi::genericAssetTransfer error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  }
+
 }

@@ -8,7 +8,7 @@ export type Api = {
 };
 
 export const setupApi = (isTest: ?boolean = false): Api => ({
-  cennz: new CennzApi(isTest, {
+  cennz: new CennzApi({
     port: 9933,
     // ca: Uint8Array.from([]),
     // key: Uint8Array.from([]),
