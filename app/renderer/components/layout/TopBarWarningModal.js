@@ -3,7 +3,7 @@ import { Button, PageHeading, Modal } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { STEPS } from '../constants';
+import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 
 const ModalWarningWrapper = styled.div`
   display: flex;
@@ -18,7 +18,13 @@ const ButtonGroup = styled.div`
   display: flex;
 `;
 
-const SwitchNetworkWarningModal = ({ isOpenNetworkWarningModal, setIsOpenNetworkWarningModal }) => (
+const SwitchNetworkWarningModal = ({
+  isOpenNetworkWarningModal,
+  setIsOpenNetworkWarningModal,
+  selectedNetwork,
+  setIsOpenUploadGenesisModal,
+  onSwitchNetwork,
+}) => (
   <Modal
     isOpen={isOpenNetworkWarningModal}
     footer={
@@ -30,7 +36,13 @@ const SwitchNetworkWarningModal = ({ isOpenNetworkWarningModal, setIsOpenNetwork
           style={{ marginLeft: '0.5rem' }}
           color="warning"
           onClick={() => {
-            console.log('Yes');
+            console.log('selectedNetworkInModal', selectedNetwork);
+            setIsOpenNetworkWarningModal(false);
+            if (selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET) {
+              setIsOpenUploadGenesisModal(true);
+            } else {
+              onSwitchNetwork({ selectedNetwork });
+            }
           }}
         >
           Yes

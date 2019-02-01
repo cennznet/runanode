@@ -4,6 +4,9 @@ import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/logo.png';
 import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
 import { Select } from 'components';
+import SwitchNetworkWarningModal from './TopBarWarningModal';
+import UploadGenesisFileModal from './UploadGenesisModal';
+import withContainer from './TopBarContainer';
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,42 +56,70 @@ const HeaderSectionContainer = styled.div`
 `;
 
 const TopBar = ({
-  networkName,
-  blockNum,
-  blockSpeed,
-  isSynced,
-  syncPercentage,
-  onSwitchNetwork,
-}) => (
-  <Wrapper>
-    <HeaderSectionContainer>
-      <LogoContainer>
-        <LogoImg />
-      </LogoContainer>
-    </HeaderSectionContainer>
-    <HeaderWrapper>
-      <NetworkSectionContainer>
-        <TopDownContentWrapper minWidth="12rem">
-          <Select
-            fontWeight="600"
-            fontSize="16px"
-            borderColor="transparent"
-            value={getNetworkOptionPair(networkName, 'label')}
-            onChange={selectedNetwork => {
-              onSwitchNetwork({ selectedNetwork });
-            }}
-            options={NETWORK_OPTIONS}
-          />
-        </TopDownContentWrapper>
-      </NetworkSectionContainer>
-      <HeaderSectionContainer>
-        <TopDownContentWrapper>
-          <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
-          <div>(block speed: {blockSpeed})</div>
-        </TopDownContentWrapper>
-      </HeaderSectionContainer>
-    </HeaderWrapper>
-  </Wrapper>
-);
+  nodeSystem,
+  remoteStream,
+  syncStream,
+  syncRemoteStream,
+  setIsOpenNetworkWarningModal,
+  setSelectedNetwork,
+  ...otherProps
+}) => {
+  const {
+    localNode: { chain },
+    name,
+    version,
+    isSynced,
+    health,
+  } = nodeSystem;
+  const networkName = chain ? `${chain}` : 'Not connected';
+  // const isSynced = false;
 
-export default TopBar;
+  const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
+  const { blockNum: localBlockNum, bps: localBps } = syncStream;
+  const blockNum = `#${localBlockNum} / #${remoteBlockNum}`;
+  const blockSpeed =
+    localBps && remoteBps ? `${localBps.toFixed(2)}bps / ${remoteBps.toFixed(2)}bps` : '0 bps';
+
+  const percentage = remoteBlockNum > 0 ? ((localBlockNum / remoteBlockNum) * 100).toFixed(2) : 0;
+  const syncPercentage = `${percentage}%`;
+
+  return (
+    <Wrapper>
+      <HeaderSectionContainer>
+        <LogoContainer>
+          <LogoImg />
+        </LogoContainer>
+      </HeaderSectionContainer>
+      <HeaderWrapper>
+        <NetworkSectionContainer>
+          <TopDownContentWrapper minWidth="12rem">
+            <Select
+              fontWeight="600"
+              fontSize="16px"
+              borderColor="transparent"
+              value={getNetworkOptionPair(networkName, 'label')}
+              onChange={selected => {
+                setIsOpenNetworkWarningModal(true);
+                setSelectedNetwork(selected);
+              }}
+              options={NETWORK_OPTIONS}
+            />
+          </TopDownContentWrapper>
+        </NetworkSectionContainer>
+        <HeaderSectionContainer>
+          <TopDownContentWrapper>
+            <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
+            <div>(block speed: {blockSpeed})</div>
+          </TopDownContentWrapper>
+        </HeaderSectionContainer>
+      </HeaderWrapper>
+      <SwitchNetworkWarningModal
+        setIsOpenNetworkWarningModal={setIsOpenNetworkWarningModal}
+        {...otherProps}
+      />
+      <UploadGenesisFileModal {...otherProps} />
+    </Wrapper>
+  );
+};
+
+export default withContainer(TopBar);
