@@ -70,6 +70,9 @@ const TopBar = ({
       <NetworkSectionContainer>
         <TopDownContentWrapper minWidth="12rem">
           <Select
+            fontWeight="600"
+            fontSize="16px"
+            borderColor="transparent"
             value={getNetworkOptionPair(networkName, 'label')}
             onChange={selectedNetwork => {
               onSwitchNetwork({ selectedNetwork });
