@@ -18,7 +18,8 @@ const ButtonGroup = styled.div`
 `;
 
 const UploadFileWrapper = styled.div`
-  margin: 1.5rem 0 1rem;
+  margin: 1rem 0;
+  width: 100%;
 `;
 
 const UploaderWrapper = styled.div`
@@ -33,6 +34,7 @@ const FileAcceptNotice = styled.div`
 const UploadGenesisModal = ({
   isUploadGenesisModal,
   setIsOpenUploadGenesisModal,
+  selectedNetwork,
   genesisFile,
   setUpGenesisFile,
 }) => {

@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = compose(
   withState('isOpenNetworkWarningModal', 'setIsOpenNetworkWarningModal', false),
-  withState('isUploadGenesisModal', 'setIsOpenUploadGenesisModal', false),
+  withState('isUploadGenesisModal', 'setIsOpenUploadGenesisModal', true),
   withState('selectedNetwork', 'setSelectedNetwork', null)
 );
 
