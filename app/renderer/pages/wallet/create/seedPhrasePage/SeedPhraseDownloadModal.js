@@ -3,7 +3,7 @@ import { Button, PageHeading, Modal, Checkbox } from 'components';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 const ButtonGroup = styled.div`
   display: flex;
@@ -14,10 +14,10 @@ const StoreWarningModal = ({
   setSeedPhaseDownloadModalOpen,
   isSeedPhaseDownloadModalConfirmCheck,
   setSeedPhaseDownloadModalConfirmCheck,
-  onCreateWallet,
+  onCreatePaperWallet,
   walletName,
   mnemonicString,
-  nodeSystem,
+  networkName,
 }) => {
   return (
     <Modal
@@ -33,11 +33,11 @@ const StoreWarningModal = ({
               color="warning"
               style={{ marginLeft: '0.5rem' }}
               onClick={() => {
-                window.odin.api.cennz.generatePaperWallet({
+                onCreatePaperWallet({
                   mnemonic: mnemonicString,
                   address: 'Wallet address', // TODO
                   name: walletName,
-                  networkName: nodeSystem.localNode.chain,
+                  networkName,
                   isMainnet: true,
                 });
                 setSeedPhaseDownloadModalOpen(false);
@@ -66,7 +66,7 @@ const StoreWarningModal = ({
 };
 
 const enhance = compose(
-  withState('isSeedPhaseDownloadModalConfirmCheck', 'setSeedPhaseDownloadModalConfirmCheck', false),
+  withState('isSeedPhaseDownloadModalConfirmCheck', 'setSeedPhaseDownloadModalConfirmCheck', false)
 );
 
 export default enhance(StoreWarningModal);
