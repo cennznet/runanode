@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import types from 'renderer/types';
+import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
 import TopBar from './TopBar';
 
 const mapStateToProps = ({ nodeSystem, remoteStream, syncStream, syncRemoteStream }) => ({
@@ -11,9 +12,15 @@ const mapStateToProps = ({ nodeSystem, remoteStream, syncStream, syncRemoteStrea
   syncRemoteStream,
 });
 
+const mapDispatchToProps = dispatch => ({
+  onSwitchNetwork: payload => {
+    dispatch({ type: types.storeNetworkOption.triggered, payload });
+  },
+});
+
 class TopBarContainer extends Component {
   render() {
-    const { nodeSystem, remoteStream, syncStream, syncRemoteStream } = this.props;
+    const { nodeSystem, remoteStream, syncStream, syncRemoteStream, onSwitchNetwork } = this.props;
     const {
       localNode: { chain },
       name,
@@ -23,6 +30,8 @@ class TopBarContainer extends Component {
     } = nodeSystem;
     const networkName = chain ? `${chain}` : 'Not connected';
     // const isSynced = false;
+    console.log('networkName', networkName);
+    console.log('netWorkOptionLabel', NETWORK_OPTIONS.find(option => console.log(option.label)));
 
     const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
     const { blockNum: localBlockNum, bps: localBps } = syncStream;
@@ -39,9 +48,13 @@ class TopBarContainer extends Component {
         blockSpeed={blockSpeed}
         isSynced={isSynced}
         syncPercentage={syncPercentage}
+        onSwitchNetwork={onSwitchNetwork}
       />
     );
   }
 }
 
-export default connect(mapStateToProps)(TopBarContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopBarContainer);

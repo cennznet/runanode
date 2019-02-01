@@ -47,7 +47,12 @@ export const NETWORK_OPTIONS = [
   { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
 ];
 
-export const getNetworkOptionPair = value => NETWORK_OPTIONS.find(option => option.value === value);
+export const getNetworkOptionPair = (value, param) => {
+  console.log('value', value);
+  console.log('param', param);
+  console.log('getNetworkOptionPair', NETWORK_OPTIONS.find(option => option[param] === value));
+  return NETWORK_OPTIONS.find(option => option[param] === value);
+};
 
 const ChooseNetWork = ({
   selectedNetwork,
@@ -74,7 +79,7 @@ const ChooseNetWork = ({
             <div>Choose network</div>
             <NetworkOptionWrapper>
               <Select
-                value={getNetworkOptionPair(selectedNetwork)}
+                value={selectedNetwork}
                 onChange={selected => {
                   Logger.info('selected value', selected);
                   setSelectedNetwork(selected);
