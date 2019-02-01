@@ -37,6 +37,7 @@ const UploadGenesisModal = ({
   selectedNetwork,
   genesisFile,
   setUpGenesisFile,
+  onSwitchNetwork,
 }) => {
   const singleFile = genesisFile && genesisFile[genesisFile.length - 1];
 
@@ -50,12 +51,12 @@ const UploadGenesisModal = ({
           </Button>
           <Button
             style={{ marginLeft: '0.5rem' }}
-            color="warning"
             onClick={() => {
-              console.log('Yes');
+              setIsOpenUploadGenesisModal(false);
+              onSwitchNetwork({ selectedNetwork, genesisFile: singleFile });
             }}
           >
-            Yes
+            Start syncing
           </Button>
         </ButtonGroup>
       }
