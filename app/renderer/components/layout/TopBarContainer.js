@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import types from 'renderer/types';
-import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
 import TopBar from './TopBar';
 
 const mapStateToProps = ({ nodeSystem, remoteStream, syncStream, syncRemoteStream }) => ({
@@ -30,8 +29,6 @@ class TopBarContainer extends Component {
     } = nodeSystem;
     const networkName = chain ? `${chain}` : 'Not connected';
     // const isSynced = false;
-    console.log('networkName', networkName);
-    console.log('netWorkOptionLabel', NETWORK_OPTIONS.find(option => console.log(option.label)));
 
     const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
     const { blockNum: localBlockNum, bps: localBps } = syncStream;

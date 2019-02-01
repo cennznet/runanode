@@ -70,10 +70,9 @@ const TopBar = ({
       <NetworkSectionContainer>
         <TopDownContentWrapper minWidth="12rem">
           <Select
-            value={NETWORK_OPTIONS.find(option => option.label === networkName)}
-            onChange={selected => {
-              console.log('selected value', selected);
-              onSwitchNetwork(selected.value);
+            value={getNetworkOptionPair(networkName, 'label')}
+            onChange={selectedNetwork => {
+              onSwitchNetwork({ selectedNetwork });
             }}
             options={NETWORK_OPTIONS}
           />

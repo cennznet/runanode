@@ -7,8 +7,16 @@ import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/la
 import { PageHeading } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
-import { getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
+import { storageKeys } from 'renderer/api/utils/storage';
+import Spinner from 'components/Spinner';
 import withContainer from './container';
+
+const SpinnerWrapper = styled.div`
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
 
 const SyncNodeTitle = styled.div`
   color: ${colors.N0};
@@ -45,10 +53,25 @@ const networkOptionMapping = {
   mainNet: 'Main net',
 };
 
-const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
-  const { SELECTED_NETWORK: selectedNetwork } = localStorage;
+const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }) => {
+  const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
+  const { localNode } = nodeSystem;
+  const { chain } = localNode;
+  const isNetworkSwitched = selectedNetwork && selectedNetwork.label === chain;
+  if (!isNetworkSwitched) {
+    return (
+      <Layout defaultSidebar>
+        <LayoutWrapper>
+          <MainContent>
+            <SpinnerWrapper>
+              <Spinner size="2.5rem" />
+            </SpinnerWrapper>
+          </MainContent>
+        </LayoutWrapper>
+      </Layout>
+    );
+  }
 
-  const networkOption = getNetworkOptionPair(selectedNetwork);
   const { blockNum: bestBlock } = syncRemoteStream;
   const { blockNum: syncedBlock } = syncStream;
   const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
@@ -74,11 +97,7 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
     <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
-          <SyncNodeTitle>
-            {getNetworkOptionPair(selectedNetwork)
-              ? getNetworkOptionPair(selectedNetwork).label
-              : 'Main net'}
-          </SyncNodeTitle>
+          <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
               <Line
