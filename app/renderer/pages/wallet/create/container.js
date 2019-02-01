@@ -3,8 +3,12 @@ import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import types from 'renderer/types';
 import { STEPS } from './constants';
 
-const mapStateToProps = ({ nodeSystem }) => ({
-  nodeSystem,
+const mapStateToProps = ({
+  nodeSystem: {
+    localNode: { chain },
+  },
+}) => ({
+  networkName: chain,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -4,7 +4,7 @@ import { Button, PageHeading } from 'components';
 import withContainer from './container';
 import NameInputPage from './nameInputPage';
 import SeedPhrasePage from './seedPhrasePage';
-import SeedPhraseQuizPage from './seedPhraseQuizPage';
+import SeedPhraseConfirmPage from './seedPhraseConfirmPage';
 import { STEPS } from './constants';
 
 const WalletCreatePage = props => {
@@ -15,7 +15,7 @@ const WalletCreatePage = props => {
       <MainContent display="flex">
         {step === STEPS.NAME_INPUT && <NameInputPage {...props} />}
         {step === STEPS.SEED_PHRASE && <SeedPhrasePage {...props} />}
-        {step === STEPS.SEED_PHRASE_QUIZ && <SeedPhraseQuizPage {...props} />}
+        {step === STEPS.SEED_PHRASE_CONFRIM && <SeedPhraseConfirmPage {...props} />}
       </MainContent>
     </MainLayout>
   );
