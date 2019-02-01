@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/logo.png';
 import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
-import { Input } from 'components/layout';
+import { Select } from 'components';
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ const LogoContainer = styled.div`
 `;
 
 const NetworkSectionContainer = styled.div`
-  width: 100%;
+  max-width: 50%;
 `;
 
 const TopDownContentWrapper = styled.div`
@@ -37,7 +37,7 @@ const TopDownContentWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: nowrap;
-  min-width: 18rem;
+  min-width: ${p => p.minWidth || '18rem'};
 `;
 
 const LogoImg = styled.img.attrs({
@@ -52,7 +52,14 @@ const HeaderSectionContainer = styled.div`
   flex-direction: column;
 `;
 
-const TopBar = ({ networkName, blockNum, blockSpeed, isSynced, syncPercentage }) => (
+const TopBar = ({
+  networkName,
+  blockNum,
+  blockSpeed,
+  isSynced,
+  syncPercentage,
+  onSwitchNetwork,
+}) => (
   <Wrapper>
     <HeaderSectionContainer>
       <LogoContainer>
@@ -61,9 +68,15 @@ const TopBar = ({ networkName, blockNum, blockSpeed, isSynced, syncPercentage })
     </HeaderSectionContainer>
     <HeaderWrapper>
       <NetworkSectionContainer>
-        <TopDownContentWrapper>
-          <div>{networkName}</div>
-          <div>{blockNum}</div>
+        <TopDownContentWrapper minWidth="12rem">
+          <Select
+            value={NETWORK_OPTIONS.find(option => option.label === networkName)}
+            onChange={selected => {
+              console.log('selected value', selected);
+              onSwitchNetwork(selected.value);
+            }}
+            options={NETWORK_OPTIONS}
+          />
         </TopDownContentWrapper>
       </NetworkSectionContainer>
       <HeaderSectionContainer>
