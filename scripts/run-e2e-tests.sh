@@ -27,4 +27,4 @@ yarn lint
 yarn test
 
 ./scripts/init.sh
-yarn cucumber
+yarn cucumber:rebuild
