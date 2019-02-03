@@ -41,13 +41,16 @@ const ButtonWrapper = styled.div`
   flex-direction: row-reverse;
 `;
 
+// TODO: Keep label the same as loaclNode-chain
+// TODO: Find a place to place variable
 export const NETWORK_OPTIONS = [
-  { label: 'CENNZNet DEV', value: NetworkNameOptions.CENNZNET_DEV },
-  { label: 'CENNZNet UAT', value: NetworkNameOptions.CENNZNET_UAT },
+  { label: 'CENNZnet DEV', value: NetworkNameOptions.CENNZNET_DEV },
+  { label: 'CENNZnet UAT', value: NetworkNameOptions.CENNZNET_UAT },
   { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
 ];
 
-export const getNetworkOptionPair = value => NETWORK_OPTIONS.find(option => option.value === value);
+export const getNetworkOptionPair = (value, param = 'value') =>
+  NETWORK_OPTIONS.find(option => option[param] === value);
 
 const ChooseNetWork = ({
   selectedNetwork,
@@ -74,7 +77,7 @@ const ChooseNetWork = ({
             <div>Choose network</div>
             <NetworkOptionWrapper>
               <Select
-                value={getNetworkOptionPair(selectedNetwork)}
+                value={selectedNetwork}
                 onChange={selected => {
                   Logger.info('selected value', selected);
                   setSelectedNetwork(selected);
@@ -107,7 +110,7 @@ const ChooseNetWork = ({
                   disabled={!canJoinNetwork}
                   onClick={() =>
                     onJoinNetwork({
-                      selectedNetwork: selectedNetwork.value,
+                      selectedNetwork,
                       genesisFile: singleFile,
                     })
                   }
