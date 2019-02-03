@@ -3,10 +3,44 @@ const webpackConfig = require('./configs/webpack.config.styleguide');
 
 module.exports = {
   title: 'ODIN UI',
+  theme: {
+    color: {
+      link: '#FFFFFF',
+      linkHover: '#CCCCCC',
+    },
+  },
   styles: {
+    Heading: {
+      heading: {
+        color: '#FFFFFF',
+      },
+    },
+    Logo: {
+      logo: {
+        color: '#FFFFFF',
+      },
+    },
     StyleGuide: {
       '@global body': {
+        color: '#FFFFFF',
         fontFamily: 'Helvetica',
+      },
+      root: {
+        background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
+        color: '#FFFFFF',
+      },
+      sidebar: {
+        background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
+      },
+    },
+    Pathline: {
+      pathline: {
+        color: '#FFFFFF',
+      },
+    },
+    TabButton: {
+      button: {
+        color: '#FFFFFF',
       },
     },
   },
