@@ -41,6 +41,7 @@ StyledSelect.defaultProps = {
   theme: themeObj,
   themeSpace: 'select',
 
+  fontSize: '14px',
   backgroundColor: colors.V800,
   color: colors.N0,
   selectedFontWeight: 'bolder',
