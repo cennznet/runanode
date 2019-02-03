@@ -26,5 +26,5 @@ yarn install
 yarn lint
 yarn test
 
-./script/init.sh
+./scripts/init.sh
 yarn cucumber
