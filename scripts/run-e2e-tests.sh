@@ -25,4 +25,6 @@ cat ./.npmrc
 yarn install
 yarn lint
 yarn test
+
+./script/init.sh
 yarn cucumber
