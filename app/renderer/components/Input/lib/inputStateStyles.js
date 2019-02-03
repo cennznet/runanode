@@ -3,27 +3,16 @@ import theme from 'renderer/theme';
 
 import getInputBorderColor from './getInputBorderColor';
 
-const defaultStyling = p => {
-  const { colors } = p.theme;
-  return {
-    color: colors.N0,
-    focusBorderColor: colors.V500,
-    backgroundColor: colors.V400,
-  };
-};
-
-const styling = p => deepAssign({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
-
 const inputStateStyles = (
   p = {
     theme,
     themeSpace: 'input',
   }
 ) => `
-  color: ${styling(p).color};
+  color: ${p.styles.color};
   border: ${getInputBorderColor(p)};
 
-  background-color: ${p.readOnly ? p.theme.colors.N100 : styling(p).backgroundColor};
+  background-color: ${p.readOnly ? p.theme.colors.N100 : p.styles.backgroundColor};
 
   &::placeholder {
     color: ${p.theme.colors.N200};
@@ -31,7 +20,7 @@ const inputStateStyles = (
 
   &:focus {
     outline: none;
-    border: ${`1px solid ${p.readOnly ? p.theme.colors.border : styling(p).focusBorderColor}`};
+    border: ${`1px solid ${p.readOnly ? p.theme.colors.border : p.styles.focusBorderColor}`};
   }
 
   &:disabled {
