@@ -3,10 +3,51 @@ const webpackConfig = require('./configs/webpack.config.styleguide');
 
 module.exports = {
   title: 'ODIN UI',
+  theme: {
+    color: {
+      link: '#FFFFFF',
+      linkHover: '#CCCCCC',
+    },
+  },
   styles: {
+    Heading: {
+      heading: {
+        color: '#FFFFFF',
+      },
+    },
+    Logo: {
+      logo: {
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+      },
+    },
     StyleGuide: {
       '@global body': {
+        color: '#FFFFFF',
         fontFamily: 'Helvetica',
+      },
+      root: {
+        background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
+        color: '#FFFFFF',
+      },
+      sidebar: {
+        background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
+        border: 0,
+      },
+    },
+    Pathline: {
+      pathline: {
+        color: '#FFFFFF',
+      },
+    },
+    TabButton: {
+      button: {
+        color: '#FFFFFF',
+      },
+    },
+    Playground: {
+      preview: {
+        border: '1px solid #1130FF',
       },
     },
   },
@@ -15,6 +56,7 @@ module.exports = {
     '**/app/renderer/components/**/lib/**/*.{js,jsx}',
     '**/app/renderer/components/Button/buttonStyles.js',
     '**/app/renderer/components/Button/defaultStyling.js',
+    '**/app/renderer/components/Table/tableExpander.js',
   ],
   require: [
     path.join(__dirname, `styleguideHelpers/sass/reset.scss`),
