@@ -18,6 +18,7 @@ module.exports = {
     Logo: {
       logo: {
         color: '#FFFFFF',
+        fontWeight: 'bold',
       },
     },
     StyleGuide: {
@@ -31,6 +32,7 @@ module.exports = {
       },
       sidebar: {
         background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
+        border: 0,
       },
     },
     Pathline: {
@@ -43,12 +45,18 @@ module.exports = {
         color: '#FFFFFF',
       },
     },
+    Playground: {
+      preview: {
+        border: '1px solid #1130FF',
+      },
+    },
   },
   skipComponentsWithoutExample: true,
   ignore: [
     '**/app/renderer/components/**/lib/**/*.{js,jsx}',
     '**/app/renderer/components/Button/buttonStyles.js',
     '**/app/renderer/components/Button/defaultStyling.js',
+    '**/app/renderer/components/Table/tableExpander.js',
   ],
   require: [
     path.join(__dirname, `styleguideHelpers/sass/reset.scss`),
