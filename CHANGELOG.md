@@ -8,6 +8,7 @@
 - fix cucumber not able to start issue
 
 ### Improvements
+- able to run `yarn cucumber` test in CI
 
 # v0.3.1 (2019.01.31)
 
