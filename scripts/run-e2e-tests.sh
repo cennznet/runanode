@@ -27,4 +27,5 @@ yarn lint
 yarn test
 
 ./scripts/init.sh
+yarn build-preload-dev
 yarn cucumber:rebuild
