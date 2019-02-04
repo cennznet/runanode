@@ -10448,6 +10448,11 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
+namor@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/namor/-/namor-1.1.1.tgz#989b964c80094caece8adccac3c7f5de742b4034"
+  integrity sha512-mFYVwBF5ENt96DAdYzNrFTvdNv+F57HSjH1KEfKUQlyHEW09F9A767m36wTdXtFErG6LXq6GcyXMNnZCUS2m9w==
+
 nan@^2.10.0, nan@^2.11.0, nan@^2.2.1, nan@^2.9.2:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
@@ -12816,6 +12821,13 @@ react-svg-inline@2.1.1:
   dependencies:
     classnames "^2.2.1"
     prop-types "^15.5.8"
+
+react-table@6.9.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.9.0.tgz#de8190a1a3f32c5fa46697a6a6c640e984670f5d"
+  integrity sha512-sATtBTyXlQlqSaPayDv66e5JAS8zv1BmaCAm7UT8VzDD9Cvei90Lgx2Cn0HdGMh7BGDNUiVTSGRaNAzejs/Ohg==
+  dependencies:
+    classnames "^2.2.5"
 
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.7.0:
   version "16.7.0"
