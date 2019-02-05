@@ -83,6 +83,7 @@ export const nuetral = N500;
 export const border = N400;
 export const borderLight = N100;
 export const text = N0;
+export const textMuted = rgba(255, 255, 255, 0.7);
 export const textHover = N200;
 export const link = B500;
 export const linkHover = B600;

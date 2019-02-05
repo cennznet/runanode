@@ -124,6 +124,7 @@
     "ramda": "^0.26.1",
     "rc-checkbox": "^2.1.6",
     "rc-progress": "^2.2.6",
+    "rc-tabs": "9.6.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-dropzone": "^8.0.3",

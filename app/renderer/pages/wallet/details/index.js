@@ -8,7 +8,7 @@ import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import ROUTES from 'renderer/constants/routes';
 import withContainer from './container';
 import WalletDetailsSubNav from './WalletDetailsSubNav';
-import AccountPage from './accountPage';
+import AccountDetails from './AccountDetails';
 
 const WalletDetailsPage = ({ wallets, match }) => {
   if (!wallets) {
@@ -33,7 +33,7 @@ const WalletDetailsPage = ({ wallets, match }) => {
   return (
     <MainLayout subNav={<WalletDetailsSubNav {...{ wallets }} />}>
       <MainContent display="flex">
-        <AccountPage {...{ wallet }} />
+        <AccountDetails {...{ wallet }} />
       </MainContent>
     </MainLayout>
   );
