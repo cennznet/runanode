@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter, Tabs, TabPane } from 'components';
+import PortfolioSection from './PortfolioSection';
+import ReceiveSection from './ReceiveSection';
 
 const AccountDetails = ({ wallet }) => {
   const publicWalletAddress =
@@ -14,14 +16,17 @@ const AccountDetails = ({ wallet }) => {
       <PageHeading subHeading={`Public Address: ${publicWalletAddress[0]}`}>
         {wallet.name}
       </PageHeading>
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Portfolio" key="1">
-          <div>tab 1</div>
-        </TabPane>
-        <TabPane tab="Receive" key="2">
-          <div>tab 2</div>
-        </TabPane>
-      </Tabs>
+      <div className="content">
+        <Tabs defaultActiveKey="1" styles={{ maxHeight: '730px' }}>
+          <TabPane tab="Portfolio" key="1">
+            <PortfolioSection />
+          </TabPane>
+          <TabPane tab="Receive" key="2">
+            <ReceiveSection />
+          </TabPane>
+        </Tabs>
+      </div>
+      <PageFooter blank />
     </React.Fragment>
   );
 };
