@@ -12,7 +12,8 @@ const StyledTabs = styled(RcTabs)`
 
     .rc-tabs-bar {
       user-select: none;
-      border-bottom: 0;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
       .rc-tabs-nav-container {
         line-height: 2.5;
@@ -30,7 +31,7 @@ const StyledTabs = styled(RcTabs)`
       }
 
       .rc-tabs-nav {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        border-bottom: 0;
       }
 
       .rc-tabs-ink-bar {
