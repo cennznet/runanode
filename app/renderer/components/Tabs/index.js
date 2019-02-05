@@ -7,12 +7,12 @@ import ScrollableInkTabBar from 'rc-tabs/lib/ScrollableInkTabBar';
 import { colors } from 'renderer/theme';
 
 const StyledTabs = styled(RcTabs)`
-  &.rc-tabs-top {
+  &.rc-tabs {
+    max-height: ${p => p.styles.maxHeight};
     border-bottom: 0;
 
     .rc-tabs-bar {
       user-select: none;
-      margin-bottom: 2rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
       .rc-tabs-nav-container {
@@ -51,5 +51,11 @@ const Tabs = ({ children, ...props }) => (
     {children}
   </StyledTabs>
 );
+
+Tabs.defaultProps = {
+  styles: {
+    maxHeight: '100%',
+  },
+};
 
 export default Tabs;

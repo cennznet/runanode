@@ -6,6 +6,7 @@ import Input from 'components/Input';
 import Modal from 'components/Modal';
 import PageFooter from 'components/PageFooter';
 import PageHeading from 'components/PageHeading';
+import Scrollable from 'components/Scrollable';
 import Select from 'components/Select';
 import Spinner from 'components/Spinner';
 import Table from 'components/Table';
@@ -24,6 +25,7 @@ export {
   Modal,
   PageFooter,
   PageHeading,
+  Scrollable,
   Select,
   Spinner,
   Table,
