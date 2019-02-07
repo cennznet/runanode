@@ -1,15 +1,18 @@
 // @flow
+import { Store } from 'redux';
+
 import type { Api } from '../../app/renderer/api';
 // import type { ActionsMap } from '../../source/renderer/actions';
 // import type { StoresMap } from '../../source/renderer/stores';
 
 export type Odin = {
   api: Api,
-  environment: Object,
+  store: Store,
+  // environment: Object,
   // actions: ActionsMap,
   // stores: StoresMap,
-  translations: Object,
-  reset: Function,
+  // translations: Object,
+  // reset: Function,
 };
 
 export type WebdriverExecuteResult<T> = { value: T };

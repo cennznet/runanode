@@ -32,7 +32,7 @@ const config = {
 
   connectivity: {
     latency: {
-      period: 1000 * 10,
+      period: 5 * 1000,
       signalLevel: {
         full: {
           level: 3,
