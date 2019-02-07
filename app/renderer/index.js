@@ -63,6 +63,7 @@ const initializeOdin = () => {
 
   window.odin = {
     api,
+    store,
     // environment,
     // actions,
     // utils,
