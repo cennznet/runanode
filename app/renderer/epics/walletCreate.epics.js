@@ -28,11 +28,8 @@ const createWalletEpic = action$ =>
       const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
       wallet.wallet.walletAddress = walletAddress;
 
-      // TODO sync data epic
-      // await wallet.syncData();
+      // sync wallet data
       const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
-
-
       wallets.push(syncedWallet);
 
       return {
