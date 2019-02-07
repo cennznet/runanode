@@ -36,7 +36,6 @@ const SwitchNetworkWarningModal = ({
           style={{ marginLeft: '0.5rem' }}
           color="warning"
           onClick={() => {
-            console.log('selectedNetworkInModal', selectedNetwork);
             setIsOpenNetworkWarningModal(false);
             if (selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET) {
               setIsOpenUploadGenesisModal(true);

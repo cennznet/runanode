@@ -1,4 +1,5 @@
 import React from 'react';
+import R from 'ramda';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SubNav, CollapsibleMenu } from 'components/layout';
@@ -29,10 +30,13 @@ const WalletDetailsSubNav = ({ wallets }) => {
   const menuList = wallets.map(wallet => {
     return {
       title: wallet.name,
-      navItems: Object.keys(wallet.wallet._accountKeyringMap).map(publicAddress => ({
-        label: 'Account name', // TODO: Grab it dynamically
-        link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${publicAddress}`,
-      })),
+      navItems: Object.keys(wallet.accounts).map(address => {
+        const account = wallet.accounts[address];
+        return {
+          label: account.name || account.address,
+          link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
+        };
+      }),
     };
   });
 

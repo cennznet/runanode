@@ -35,12 +35,15 @@ const NetworkSectionContainer = styled.div`
   max-width: 50%;
 `;
 
+const NetworkSectionWrapper = styled.div`
+  min-width: 12rem;
+`;
+
 const TopDownContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: nowrap;
-  min-width: ${p => p.minWidth || '18rem'};
 `;
 
 const LogoImg = styled.img.attrs({
@@ -92,7 +95,7 @@ const TopBar = ({
       </HeaderSectionContainer>
       <HeaderWrapper>
         <NetworkSectionContainer>
-          <TopDownContentWrapper minWidth="12rem">
+          <NetworkSectionWrapper>
             <Select
               fontWeight="600"
               fontSize="16px"
@@ -104,7 +107,7 @@ const TopBar = ({
               }}
               options={NETWORK_OPTIONS}
             />
-          </TopDownContentWrapper>
+          </NetworkSectionWrapper>
         </NetworkSectionContainer>
         <HeaderSectionContainer>
           <TopDownContentWrapper>
