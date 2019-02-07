@@ -4,6 +4,8 @@
 
 ### Features
 
+- Add tabs and scrallable components
+
 ### Fixes
 
 ### Improvements

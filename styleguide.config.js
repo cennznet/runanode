@@ -45,6 +45,11 @@ module.exports = {
         color: '#FFFFFF',
       },
     },
+    TableOfContents: {
+      input: {
+        backgroundColor: 'transparent',
+      },
+    },
     Playground: {
       preview: {
         border: '1px solid #1130FF',
@@ -57,6 +62,7 @@ module.exports = {
     '**/app/renderer/components/Button/buttonStyles.js',
     '**/app/renderer/components/Button/defaultStyling.js',
     '**/app/renderer/components/Table/tableExpander.js',
+    '**/app/renderer/components/Tabs/TabPane.js',
   ],
   require: [
     path.join(__dirname, `styleguideHelpers/sass/reset.scss`),
