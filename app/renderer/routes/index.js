@@ -42,7 +42,10 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.WAIT} component={WaitPage} />
         <Redirect exact from={ROUTES.SETTINGS.ROOT} to={ROUTES.SETTINGS.GENERAL} />
         <Route exact from={ROUTES.WALLET.ROOT} component={WalletRootPage} />
-        <Route path={`${ROUTES.WALLET.DETAILS}/:id`} component={WalletDetailsPage} />
+        <Route
+          path={`${ROUTES.WALLET.ROOT}/:walletId/accounts/:accountPublicAddress`}
+          component={WalletDetailsPage}
+        />
         <Route exact path={ROUTES.WALLET.LANDING} component={WalletLandingPage} />
         <Route exact path={ROUTES.WALLET.CREATE} component={WalletCreatePage} />
         <Route exact path={ROUTES.WALLET.CONNECT} component={WalletConnectPage} />
