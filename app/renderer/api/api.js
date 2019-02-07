@@ -109,7 +109,7 @@ export default class CennzApi {
       const resultWallet = wallet;
       const walletAddresses = window.odin.api.cennz.getWalletAddresses(resultWallet);
 
-
+      // fetch default data
       console.log(`walletAddresses: ${walletAddresses}`);
       const defaultAccountPublicAddress = walletAddresses[0];
       resultWallet.defaultAccountPublicAddress = defaultAccountPublicAddress;
@@ -124,7 +124,6 @@ export default class CennzApi {
       // const stakingTokenTotalSupply = await window.odin.api.cennz.genericAssetTotalSupply(0);
       // this.stakingTokenTotalSupply = stakingTokenTotalSupply.toString(10);
       // console.log(`this.stakingTokenTotalSupply: ${this.stakingTokenTotalSupply}`);
-
 
       const spendingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdInBN.spendingToken, resultWallet.defaultAccountPublicAddress);
       resultWallet.spendingTokenFreeBalance = spendingTokenFreeBalance.toString(10);
@@ -207,7 +206,6 @@ export default class CennzApi {
   };
 
   /**
-   * @deprecated
    * @param request
    * @returns {Promise<*|Array<string>>}
    */
