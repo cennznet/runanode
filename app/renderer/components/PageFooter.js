@@ -8,11 +8,11 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 5rem;
-  border-top: 1px solid ${rgba(255, 255, 255, 0.3)};
+  border-top: ${p => (p.blank ? 0 : `1px solid ${rgba(255, 255, 255, 0.3)}`)};
 `;
 
-const PageFooter = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
+const PageFooter = ({ blank, children }) => {
+  return <Wrapper {...{ blank }}>{children}</Wrapper>;
 };
 
 export default PageFooter;
