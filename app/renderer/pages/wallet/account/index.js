@@ -13,7 +13,6 @@ import AccountDetails from './AccountDetails';
 const WalletDetailsPage = ({ wallets, match }) => {
   const { walletId, accountPublicAddress } = match.params;
   const wallet = R.find(R.propEq('id', walletId))(wallets);
-
   return (
     <MainLayout subNav={<WalletDetailsSubNav {...{ wallets }} />}>
       <MainContent display="flex">

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import { Accordion } from 'react-sanfona';
 import { NavLink } from 'react-router-dom';
+import { ellipsis } from 'polished';
 import { colors } from 'renderer/theme';
 import AccordionItem from './AccordionItem';
 import AccordionItemTitle from './AccordionItemTitle';
@@ -10,12 +11,12 @@ import AccordionItemBody from './AccordionItemBody';
 
 const NavItem = styled(NavLink)`
   display: block;
-  width: 100%;
   height: 3rem;
   line-height: 3rem;
   padding-left: 1rem;
   color: ${colors.textMuted};
   text-decoration: none;
+  overflow: hidden;
   cursor: pointer;
 
   &.active {
@@ -26,6 +27,10 @@ const NavItem = styled(NavLink)`
   &:hover:not(.active) {
     background-color: ${colors.V500};
   }
+`;
+
+const Label = styled.div`
+  ${ellipsis('192px')}
 `;
 
 const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
@@ -41,7 +46,7 @@ const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
                   navItems.map(navItem => {
                     return (
                       <NavItem as={!isInsideRouter && 'div'} key={uuid()} to={navItem.link}>
-                        {navItem.label}
+                        <Label>{navItem.label}</Label>
                       </NavItem>
                     );
                   })}

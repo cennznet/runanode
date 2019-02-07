@@ -11,7 +11,7 @@ import DevPage from 'renderer/pages/devPage';
 import HomePage from 'renderer/pages/homePage';
 import WaitPage from 'renderer/pages/waitPage';
 import WalletLandingPage from 'renderer/pages/wallet/landingPage';
-import WalletDetailsPage from 'renderer/pages/wallet/details';
+import WalletAccountPage from 'renderer/pages/wallet/account';
 import WalletCreatePage from 'renderer/pages/wallet/create';
 import WalletConnectPage from 'renderer/pages/wallet/connect';
 import WalletRootPage from 'renderer/pages/wallet/rootPage';
@@ -44,7 +44,7 @@ class AppRoutes extends React.Component {
         <Route exact from={ROUTES.WALLET.ROOT} component={WalletRootPage} />
         <Route
           path={`${ROUTES.WALLET.ROOT}/:walletId/accounts/:accountPublicAddress`}
-          component={WalletDetailsPage}
+          component={WalletAccountPage}
         />
         <Route exact path={ROUTES.WALLET.LANDING} component={WalletLandingPage} />
         <Route exact path={ROUTES.WALLET.CREATE} component={WalletCreatePage} />
