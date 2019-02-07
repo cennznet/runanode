@@ -6,8 +6,11 @@
 
 ### Fixes
 - fix cucumber not able to start issue
+- able to check cennznet-node process in tests
 
 ### Improvements
+- able to run `yarn cucumber` test in CI
+- update refresh rate to 5s
 
 # v0.3.1 (2019.01.31)
 

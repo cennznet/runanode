@@ -210,7 +210,6 @@ export default class CennzApi {
   };
 
   /**
-   *
    * @param assetId
    * @param toWalletAddress
    * @param fromWalletAddress

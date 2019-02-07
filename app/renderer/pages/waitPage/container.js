@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle, withState } from 'recompose';
 
-const mapStateToProps = () => ({
+const mapStateToProps = ({networkStatusStore}) => ({
+  networkStatusStore
 });
 
 const mapDispatchToProps = dispatch => ({
