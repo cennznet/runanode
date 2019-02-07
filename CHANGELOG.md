@@ -5,12 +5,15 @@
 ### Features
 
 - Add tabs and scrallable components
+- new data structure to store Wallets -> Accounts -> Assets
 
 ### Fixes
+
 - fix cucumber not able to start issue
 - able to check cennznet-node process in tests
 
 ### Improvements
+
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
 
