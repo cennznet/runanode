@@ -7,7 +7,7 @@ const defaultStyling = p => {
   const { colors } = p.theme;
   return {
     color: colors.N0,
-    focusBorderColor: colors.V500,
+    focusBorderColor: getInputBorderColor(p),
     backgroundColor: colors.V400,
   };
 };
