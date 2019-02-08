@@ -17,15 +17,15 @@ const IconLink = styled(NavLink)`
   justify-content: center;
   height: 5rem;
   font-size: 1rem;
-  color: ${colors.N0};
+  color: ${colors.textMuted};
   text-decoration: none;
 
   &.active {
-    background-color: ${colors.primary};
+    color: ${colors.N0};
   }
 
   &:hover:not(.active) {
-    background-color: ${colors.N900};
+    background-color: ${colors.V500};
   }
 `;
 

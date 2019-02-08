@@ -7,14 +7,11 @@ import { PageHeading, PageFooter, Tabs, TabPane } from 'components';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';
 
-const AccountDetails = ({ wallet }) => {
-  const publicWalletAddress =
-    wallet.wallet.walltAddress || Object.keys(wallet.wallet._accountKeyringMap);
-
+const AccountDetails = ({ accountPublicAddress }) => {
   return (
     <React.Fragment>
-      <PageHeading subHeading={`Public Address: ${publicWalletAddress[0]}`}>
-        {wallet.name}
+      <PageHeading subHeading={`Public Address: ${accountPublicAddress}`}>
+        Account name here...
       </PageHeading>
       <div className="content">
         <Tabs defaultActiveKey="1" styles={{ maxHeight: '730px' }}>

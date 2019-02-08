@@ -25,6 +25,7 @@ module.exports = {
       '@global body': {
         color: '#FFFFFF',
         fontFamily: 'Helvetica',
+        fontSize: '14px',
       },
       root: {
         background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
@@ -56,6 +57,9 @@ module.exports = {
       },
     },
   },
+  compilerConfig: {
+    transforms: { templateString: false },
+  },
   skipComponentsWithoutExample: true,
   ignore: [
     '**/app/renderer/components/**/lib/**/*.{js,jsx}',
@@ -63,6 +67,7 @@ module.exports = {
     '**/app/renderer/components/Button/defaultStyling.js',
     '**/app/renderer/components/Table/tableExpander.js',
     '**/app/renderer/components/Tabs/TabPane.js',
+    '**/app/renderer/components/layout/SubNav/CollapsibleMenu/*.js',
   ],
   require: [
     path.join(__dirname, `styleguideHelpers/sass/reset.scss`),
