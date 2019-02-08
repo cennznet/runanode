@@ -18,16 +18,19 @@ const createWalletEpic = action$ =>
       if (wallets === null) {
         wallets = [];
       }
-      const wallet = await window.odin.api.cennz.createWallet({
+      const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
         name,
         mnemonic,
         passphrase: passphrase || '',
       });
+
       const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
       const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
       wallet.wallet.walletAddress = walletAddress;
 
-      wallets.push(wallet);
+      // sync wallet data
+      const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
+      wallets.push(syncedWallet);
 
       return {
         type: types.walletCreate.completed,
