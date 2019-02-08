@@ -173,12 +173,15 @@ export default class CennzApi {
     Logger.debug('CennznetApi::getCennznetWalletAsset called');
     try {
       const freeBalance = await window.odin.api.cennz.genericAssetFreeBalance(assetId, walletAddress);
+      const reservedBalance = new BN('0', 10);
+      const totalBalance = freeBalance.add(reservedBalance);
       const asset = new CennznetWalletAsset({
         assetId,
         address: walletAddress,
         name: PreDefinedAssetIdName[assetId],
         freeBalance,
-        reservedBalance: null, // TODO
+        reservedBalance,
+        totalBalance,
       });
       return asset;
     } catch (error) {
@@ -273,12 +276,12 @@ export default class CennzApi {
    * @param walletAddress
    * @returns {Promise<number>}
    */
-  genericAssetFreeBalance = async (assetId: BN, walletAddress: string): Promise<Balance> => {
+  genericAssetFreeBalance = async (assetId: BN, walletAddress: string): Promise<BN> => {
     Logger.debug('CennznetApi::genericAssetFreeBalance called');
     try {
       const freeBalance = await this.api.query.genericAsset.freeBalance(assetId, walletAddress);
-      Logger.debug(`CennznetApi::genericAssetFreeBalance freeBalance: ${freeBalance}`);
-      return freeBalance;
+      Logger.debug(`CennznetApi::genericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`);
+      return new BN(freeBalance.toString(10), 10);
     } catch (error) {
       Logger.error('CennznetApi::genericAssetFreeBalance error: ' + stringifyError(error));
       throw new GenericApiError();

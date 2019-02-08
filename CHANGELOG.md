@@ -6,6 +6,7 @@
 
 - Add tabs and scrallable components
 - new data structure to store Wallets -> Accounts -> Assets
+- Able to display balance in Account detail page
 
 ### Fixes
 
