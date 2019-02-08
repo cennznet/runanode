@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ReceiveSection = () => {
+const ReceiveSection = ({ account }) => {
   return <div>receive section</div>;
 };
 

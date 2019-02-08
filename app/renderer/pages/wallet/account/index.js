@@ -16,7 +16,7 @@ const WalletDetailsPage = ({ wallets, match }) => {
   return (
     <MainLayout subNav={<WalletDetailsSubNav {...{ wallets }} />}>
       <MainContent display="flex">
-        <AccountDetails {...{ accountPublicAddress }} />
+        <AccountDetails account={wallet.accounts[accountPublicAddress]} />
       </MainContent>
     </MainLayout>
   );
