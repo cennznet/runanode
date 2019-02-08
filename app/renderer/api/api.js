@@ -40,9 +40,8 @@ import {
 import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 import { environment } from '../../main/environment';
 import {
-  PreDefinedAssetId,
-  PreDefinedAssetIdInBN,
-  PreDefinedAssetIdName,
+  PreDefinedAssetIdObj,
+  PreDefinedAssetIdName, CustomTokenAssetId,
 } from '../../common/types/cennznet-node.types';
 import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
@@ -115,7 +114,7 @@ export default class CennzApi {
       resultWallet.defaultAccountPublicAddress = defaultAccountPublicAddress;
       console.log(`resultWallet.defaultAccountPublicAddress: ${resultWallet.defaultAccountPublicAddress}`);
 
-      const stakingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdInBN.stakingToken, resultWallet.defaultAccountPublicAddress);
+      const stakingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdObj.STAKING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
       resultWallet.stakingTokenFreeBalance = stakingTokenFreeBalance.toString(10);
       console.log(`resultWallet.stakingTokenFreeBalance: ${resultWallet.stakingTokenFreeBalance}`);
       // const stakingTokenReservedBalance = await window.odin.api.cennz.genericAssetReservedBalance(0, this.defaultAccountPublicAddress);
@@ -125,7 +124,7 @@ export default class CennzApi {
       // this.stakingTokenTotalSupply = stakingTokenTotalSupply.toString(10);
       // console.log(`this.stakingTokenTotalSupply: ${this.stakingTokenTotalSupply}`);
 
-      const spendingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdInBN.spendingToken, resultWallet.defaultAccountPublicAddress);
+      const spendingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdObj.SPENDING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
       resultWallet.spendingTokenFreeBalance = spendingTokenFreeBalance.toString(10);
       console.log(`resultWallet.spendingTokenFreeBalance: ${resultWallet.spendingTokenFreeBalance}`);
 
@@ -140,14 +139,20 @@ export default class CennzApi {
 
         const assets = new Map();
         // eslint-disable-next-line no-await-in-loop
-        const stakingTokenAsset = await this.getCennznetWalletAsset(PreDefinedAssetIdInBN.stakingToken, walletAddress);
-        assets[PreDefinedAssetIdInBN.stakingToken] = stakingTokenAsset;
+        const stakingTokenAsset = await this.getCennznetWalletAsset(PreDefinedAssetIdObj.STAKING_TOKEN.BN, walletAddress);
+        assets[PreDefinedAssetIdObj.STAKING_TOKEN.BN] = stakingTokenAsset;
 
         // eslint-disable-next-line no-await-in-loop
-        const spendingTokenAsset = await this.getCennznetWalletAsset(PreDefinedAssetIdInBN.spendingToken, walletAddress);
-        assets[PreDefinedAssetIdInBN.spendingToken] = spendingTokenAsset;
+        const spendingTokenAsset = await this.getCennznetWalletAsset(PreDefinedAssetIdObj.SPENDING_TOKEN.BN, walletAddress);
+        assets[PreDefinedAssetIdObj.SPENDING_TOKEN.BN] = spendingTokenAsset;
 
-        // TODO base on nextAssetId fetch all custom token
+        // TODO base on nextAssetId fetch all custom token ?
+        for(const customToken of CustomTokenAssetId) {
+          const customTokenAssetIdAsBN = new BN(customToken, 10);
+          // eslint-disable-next-line no-await-in-loop
+          const customTokenAsset = await this.getCennznetWalletAsset(customTokenAssetIdAsBN, walletAddress);
+          assets[customTokenAssetIdAsBN] = customTokenAsset;
+        }
 
         const account = new CennznetWalletAccount({
           address: walletAddress,
@@ -167,15 +172,15 @@ export default class CennzApi {
   getCennznetWalletAsset = async (assetId: BN, walletAddress: String): Promise<CennznetWalletAsset> => {
     Logger.debug('CennznetApi::getCennznetWalletAsset called');
     try {
-      const balance = await window.odin.api.cennz.genericAssetFreeBalance(assetId, walletAddress);
-      const tokenAsset = new CennznetWalletAsset({
+      const freeBalance = await window.odin.api.cennz.genericAssetFreeBalance(assetId, walletAddress);
+      const asset = new CennznetWalletAsset({
         assetId,
         address: walletAddress,
-        name: assetId === PreDefinedAssetId.stakingToken ? 'Staking Token' : 'Spending Token', // ?PreDefinedAssetIdName.stakingToken, // TODO fix mapping
-        freeBalance: balance,
+        name: PreDefinedAssetIdName[assetId],
+        freeBalance,
         reservedBalance: null, // TODO
       });
-      return tokenAsset;
+      return asset;
     } catch (error) {
       Logger.error('CennznetApi::getCennznetWalletAsset error: ' + stringifyError(error));
       throw new GenericApiError();

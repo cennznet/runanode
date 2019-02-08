@@ -7,15 +7,17 @@ export const PreDefinedAssetId = {
   reserveTokenStart: '1000000',
 };
 
+export const CustomTokenAssetId = ['100'];
+
 export const PreDefinedAssetIdName = {
-  stakingToken: 'Stake Token',
-  spendingToken: 'Spending Token',
+  '0': 'Stake Token',
+  '10': 'Spending Token',
+  '100': 'Sylo Token',
 };
 
-export const PreDefinedAssetIdInBN = {
-  stakingToken: new BN(PreDefinedAssetId.stakingToken, 10),
-  spendingToken: new BN(PreDefinedAssetId.spendingToken, 10),
-  reserveTokenStart: new BN(PreDefinedAssetId.reserveTokenStart, 10),
+export const PreDefinedAssetIdObj = {
+  STAKING_TOKEN: { ID: PreDefinedAssetId.stakingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], BN: new BN(PreDefinedAssetId.stakingToken, 10)},
+  SPENDING_TOKEN: { ID: PreDefinedAssetId.spendingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], BN: new BN(PreDefinedAssetId.spendingToken, 10)},
 };
 
 export type TlsConfig = {
