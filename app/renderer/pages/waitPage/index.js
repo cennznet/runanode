@@ -11,13 +11,14 @@ const SpinnerWrapper = styled.div`
   display: flex;
 `;
 
-const WaitPage = () => {
+const WaitPage = ({networkStatusStore}) => {
   return (
     <Layout defaultSidebar>
       <LayoutWrapper>
         <MainContent>
           <SpinnerWrapper>
             <Spinner size="2.5rem" />
+            {networkStatusStore.state}...
           </SpinnerWrapper>
         </MainContent>
       </LayoutWrapper>

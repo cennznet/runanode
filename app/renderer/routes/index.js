@@ -11,7 +11,7 @@ import DevPage from 'renderer/pages/devPage';
 import HomePage from 'renderer/pages/homePage';
 import WaitPage from 'renderer/pages/waitPage';
 import WalletLandingPage from 'renderer/pages/wallet/landingPage';
-import WalletDetailsPage from 'renderer/pages/wallet/detailsPage';
+import WalletDetailsPage from 'renderer/pages/wallet/details';
 import WalletCreatePage from 'renderer/pages/wallet/create';
 import WalletConnectPage from 'renderer/pages/wallet/connect';
 import WalletRootPage from 'renderer/pages/wallet/rootPage';
