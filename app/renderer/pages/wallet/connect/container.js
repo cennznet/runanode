@@ -26,11 +26,10 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {},
   }),
-  withState('isStoreWarningModalOpen', 'setStoreWarningModalOpen', false),
-  withState('isSeedPhaseDownloadModalOpen', 'setSeedPhaseDownloadModalOpen', false),
+
   withStateHandlers(
     ({
-      initStep = STEPS.NAME_INPUT,
+      initStep = STEPS.SEED_PHRASE_RECOVER,
       initMnemonic = '',
       initWalletName = '',
       initIsOpenPenPrepareModal = false,
