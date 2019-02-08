@@ -7,19 +7,19 @@ import { PageHeading, PageFooter, Tabs, TabPane } from 'components';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';
 
-const AccountDetails = ({ accountPublicAddress }) => {
+const AccountDetails = ({ account }) => {
   return (
     <React.Fragment>
-      <PageHeading subHeading={`Public Address: ${accountPublicAddress}`}>
+      <PageHeading subHeading={`Public Address: ${account.address}`}>
         Account name here...
       </PageHeading>
       <div className="content">
         <Tabs defaultActiveKey="1" styles={{ maxHeight: '730px' }}>
           <TabPane tab="Portfolio" key="1">
-            <PortfolioSection />
+            <PortfolioSection {...{ account }} />
           </TabPane>
           <TabPane tab="Receive" key="2">
-            <ReceiveSection />
+            <ReceiveSection {...{ account }} />
           </TabPane>
         </Tabs>
       </div>

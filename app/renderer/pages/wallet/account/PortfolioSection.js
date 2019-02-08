@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PortfolioSection = () => {
+const PortfolioSection = ({ account }) => {
   return <div>Portfolio section</div>;
 };
 
