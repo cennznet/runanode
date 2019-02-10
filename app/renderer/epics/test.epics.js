@@ -21,7 +21,7 @@ const walletCreateEpic = action$ =>
     mergeMap(async () => {
       Logger.info('walletCreateEpic');
       const mnemonic = window.odin.api.cennz.createMnemonic({num: 24});
-      const wallet = await window.odin.api.cennz.createWallet({ name: 'test wallet', mnemonic, passphrase: 'password'});
+      const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({ name: 'test wallet', mnemonic, passphrase: 'password'});
       return {
         type: types.setStorage.requested,
         payload: { key: storageKeys.WALLET, value: wallet },
