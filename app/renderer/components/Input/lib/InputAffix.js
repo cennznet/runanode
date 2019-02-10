@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from 'components/Spinner';
+import Tick from './Tick';
+import Cross from './Cross';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -23,7 +25,15 @@ const SuffixWrapper = styled(ContentWrapper)`
   right: 0;
 `;
 
-const SuffixContent = ({ suffix }) => {
+const SuffixContent = ({ suffix, valid }) => {
+  if (valid === true) {
+    return <Tick />;
+  }
+
+  if (valid === false) {
+    return <Cross />;
+  }
+
   if (suffix === 'spinner') {
     return <Spinner size="1rem" />;
   }
@@ -31,9 +41,9 @@ const SuffixContent = ({ suffix }) => {
   return suffix;
 };
 
-const Suffix = ({ suffix }) => (
+const Suffix = ({ suffix, valid }) => (
   <SuffixWrapper>
-    <SuffixContent {...{ suffix }} />
+    <SuffixContent {...{ suffix, valid }} />
   </SuffixWrapper>
 );
 
@@ -45,9 +55,9 @@ const AffixWrapper = styled.div`
 `;
 
 const InputAffix = ({ children, ...otherProps }) => {
-  const { prefix, suffix } = otherProps;
+  const { prefix, suffix, valid } = otherProps;
 
-  if (!(prefix || suffix)) {
+  if (!(prefix || suffix || typeof valid === 'boolean')) {
     return children;
   }
 
@@ -55,7 +65,7 @@ const InputAffix = ({ children, ...otherProps }) => {
     <AffixWrapper>
       {prefix && <Prefix {...{ prefix }} />}
       {children}
-      {suffix && <Suffix {...{ suffix }} />}
+      {(suffix || typeof valid === 'boolean') && <Suffix {...{ suffix, valid }} />}
     </AffixWrapper>
   );
 };
