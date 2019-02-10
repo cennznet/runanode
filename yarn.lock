@@ -3609,29 +3609,29 @@ ccount@^1.0.0:
   resolved "https://registry.yarnpkg.com/ccount/-/ccount-1.0.3.tgz#f1cec43f332e2ea5a569fd46f9f5bde4e6102aff"
   integrity sha512-Jt9tIBkRc9POUof7QA/VwWd+58fKkEEfI+/t1/eOlxKM7ZhrczNzMFefge7Ai+39y1pR/pP6cI19guHy3FSLmw==
 
-cennznet-api@0.5.6:
-  version "0.5.6"
-  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-api/cennznet-api-0.5.6#e06bf4cc02448c84ff85fcac98e114d515c5affd"
-  integrity sha1-4Gv0zAJEjIT/hfysmOEU1RXFr/0=
+cennznet-api@0.5.8:
+  version "0.5.8"
+  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-api/cennznet-api-0.5.8#3b39f36490f8ea463c9bbfb7cec10e8c5957a3fa"
+  integrity sha1-OznzZJD46kY8m7+3zsEOjFlXo/o=
   dependencies:
-    cennznet-runtime-types "^0.5.6"
-    cennznet-types "^0.5.6"
+    cennznet-runtime-types "^0.5.8"
+    cennznet-types "^0.5.8"
     eventemitter3 "^3.1.0"
 
-cennznet-runtime-types@^0.5.6:
-  version "0.5.7"
-  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-runtime-types/cennznet-runtime-types-0.5.7#e56d5c39901da94fc0bebabc09884d369b99e5e1"
-  integrity sha1-5W1cOZAdqU/Avrq8CYhNNpuZ5eE=
+cennznet-runtime-types@^0.5.8:
+  version "0.5.8"
+  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-runtime-types/cennznet-runtime-types-0.5.8#e664d705e83675d948094737625a1031435768ad"
+  integrity sha1-5mTXBeg2ddlICUc3YloQMUNXaK0=
 
-cennznet-types@^0.5.6:
-  version "0.5.7"
-  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-types/cennznet-types-0.5.7#d01c9b8c757617e5305cb8b7a8a4f34fff14907f"
-  integrity sha1-0BybjHV2F+UwXLi3qKTzT/8UkH8=
+cennznet-types@^0.5.8:
+  version "0.5.8"
+  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-types/cennznet-types-0.5.8#30a600222132a538a8465a98a032cf23b071cd40"
+  integrity sha1-MKYAIiEypTioRlqYoDLPI7BxzUA=
 
-cennznet-wallet@0.5.6:
-  version "0.5.6"
-  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-wallet/cennznet-wallet-0.5.6#5849b809912366647a823157b0a8107efbe7b1ba"
-  integrity sha1-WEm4CZEjZmR6gjFXsKgQfvvnsbo=
+cennznet-wallet@0.5.8:
+  version "0.5.8"
+  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-wallet/cennznet-wallet-0.5.8#328e02a23bf25366817fe3b369d634a54cd7b727"
+  integrity sha1-Mo4CojvyU2aBf+OzadY0pUzXtyc=
   dependencies:
     "@polkadot/keyring" "^0.33.33"
     hdkey "^1.1.0"
