@@ -30,7 +30,7 @@ const ColorPalette = ({ title, colorShades }) => {
       <Title>{title}</Title>
       {colorShades.map(color => {
         return (
-          <ColorItem key={color.code} {...{ color }}>
+          <ColorItem key={color.name} {...{ color }}>
             <NameSpan>{color.name}</NameSpan>
             <span>{color.code}</span>
           </ColorItem>
