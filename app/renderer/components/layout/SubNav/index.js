@@ -14,11 +14,12 @@ const Wrapper = styled.div`
   font-weight: 500;
   background-color: ${colors.V900};
   overflow: hidden;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5), 4px 0 8px 0 rgba(0, 0, 0, 0.14);
 `;
 
 const SubNav = ({ navItems, children, footer, ...props }) => (
   <Wrapper {...props}>
-    <Scrollable styles={{ height: 'calc(100% - 1rem)' }}>{children}</Scrollable>
+    <Scrollable styles={{ height: '100%' }}>{children}</Scrollable>
     {footer}
   </Wrapper>
 );

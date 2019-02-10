@@ -44,7 +44,7 @@ module.exports = {
         fontSize: '14px',
       },
       '@global .CodeMirror': {
-        background: '#2D2D2D !important',
+        background: '#040C40 !important',
         color: '#FFFFFF !important',
         lineHeight: '1.5',
       },
