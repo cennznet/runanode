@@ -11,29 +11,12 @@ import WalletDetailsSubNav from './WalletDetailsSubNav';
 import AccountDetails from './AccountDetails';
 
 const WalletDetailsPage = ({ wallets, match }) => {
-  if (!wallets) {
-    return (
-      <MainLayout>
-        <MainContent display="flex">
-          <PageHeading>No wallet Yet...</PageHeading>
-        </MainContent>
-      </MainLayout>
-    );
-  }
-  const walletId = match.params.id;
+  const { walletId, accountPublicAddress } = match.params;
   const wallet = R.find(R.propEq('id', walletId))(wallets);
-  /**
-   * TODO:
-   * - Remove the sceond megthod after remove wallet feature ready
-   * - List public address dynamic
-   *  */
-  const publicWalletAddress =
-    wallet.wallet.walltAddress || Object.keys(wallet.wallet._accountKeyringMap);
-
   return (
     <MainLayout subNav={<WalletDetailsSubNav {...{ wallets }} />}>
       <MainContent display="flex">
-        <AccountDetails {...{ wallet }} />
+        <AccountDetails account={wallet.accounts[accountPublicAddress]} />
       </MainContent>
     </MainLayout>
   );

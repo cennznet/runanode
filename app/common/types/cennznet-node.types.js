@@ -1,4 +1,25 @@
 // @flow
+import BN from 'bn.js';
+
+export const PreDefinedAssetId = {
+  stakingToken: '0',
+  spendingToken: '10',
+  reserveTokenStart: '1000000',
+};
+
+export const CustomTokenAssetId = ['100'];
+
+export const PreDefinedAssetIdName = {
+  '0': 'Stake Token',
+  '10': 'Spending Token',
+  '100': 'Sylo Token',
+};
+
+export const PreDefinedAssetIdObj = {
+  STAKING_TOKEN: { ID: PreDefinedAssetId.stakingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], BN: new BN(PreDefinedAssetId.stakingToken, 10)},
+  SPENDING_TOKEN: { ID: PreDefinedAssetId.spendingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], BN: new BN(PreDefinedAssetId.spendingToken, 10)},
+};
+
 export type TlsConfig = {
   port: number,
   ca: Uint8Array,
