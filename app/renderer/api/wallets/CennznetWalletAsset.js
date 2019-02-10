@@ -1,11 +1,9 @@
 // @flow
 import BN from 'bn.js';
-import jdenticon from "jdenticon";
 
 export default class CennznetWalletAsset {
   assetId: BN;
   address: string;
-  iconBase64: string;
   name: string;
   freeBalance: BN;
   reservedBalance: BN;
@@ -19,7 +17,6 @@ export default class CennznetWalletAsset {
     reservedBalance: BN,
     totalBalance: BN,
   }) {
-    this.iconBase64 = jdenticon.toPng(data.assetId.toString(10),200).toString('base64');
     Object.assign(this, data);
   }
 

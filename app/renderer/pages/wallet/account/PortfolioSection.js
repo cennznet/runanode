@@ -1,7 +1,8 @@
 import React from 'react';
+import jdenticon from "jdenticon";
+
 import Table from '../../../components/Table';
 
-const util = require('../../../../../styleguideHelpers/tableDataUtil');
 const { colors } = require('../../../theme');
 
 const PortfolioSection = ({ account }) => {
@@ -12,9 +13,9 @@ const PortfolioSection = ({ account }) => {
     columns={[
       {
         Header: '',
-        accessor: 'iconBase64',
+        accessor: 'assetId',
         Cell: row => (
-          <img alt="" src={`data:image/png;base64, ${row.value}`} width="100rem"/>
+          <img alt="" src={`data:image/png;base64, ${jdenticon.toPng(row.value.toString(10),200).toString('base64')}`} width="100rem"/>
         ),
       },
       {
