@@ -8,17 +8,9 @@ const button = (
     Submit
   </Button>
 );
-<Input suffix={button} />;
-```
-
-```jsx
-<Input suffix="spinner" />
-```
-
-```jsx
-<Input placeholder="Disabled" disabled />
-```
-
-```jsx
-<Input value="Readonly" readOnly />
+<DemoFlex justifyContent="space-between">
+  <Input suffix={button} />
+  <Input suffix="spinner" />
+  <Input placeholder="Disabled" disabled />
+</DemoFlex>;
 ```

@@ -5,6 +5,8 @@ import theme from '../app/renderer/theme';
 const DemoFlex = styled.div`
   display: flex;
   justify-content: ${p => p.justifyContent};
+  max-width: 50rem;
+  flex-wrap: wrap;
 
   & > * {
     margin-right: 1rem;
