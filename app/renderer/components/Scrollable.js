@@ -22,7 +22,7 @@ const ScrollWrapper = styled.div`
 `;
 
 const ScrollContent = styled.div`
-  max-height: ${p => `calc(${p.styles.height} - 16px)`};
+  max-height: ${p => `calc(100% - 16px)`};
   overflow-y: auto;
   padding: 0.5rem 0;
 
