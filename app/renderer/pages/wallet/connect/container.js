@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import types from 'renderer/types';
-import { STEPS } from './constants';
+import { STEPS, WALLETTYPE } from './constants';
 
 const mapStateToProps = ({
   nodeSystem: {
@@ -30,20 +30,20 @@ const enhance = compose(
   withStateHandlers(
     ({
       initStep = STEPS.SEED_PHRASE_RECOVER,
+      initRecoverWalletType = WALLETTYPE.HDWALLET,
       initMnemonic = '',
       initWalletName = '',
-      initIsOpenPenPrepareModal = false,
     }) => ({
       step: initStep,
       mnemonicString: initMnemonic,
+      recoverWalletType: initRecoverWalletType,
       walletName: initWalletName,
-      isOpenPenPrepareModal: initIsOpenPenPrepareModal,
     }),
     {
       moveToStep: () => val => ({ step: val }),
       setMnemonicString: () => val => ({ mnemonicString: val }),
       setWalletName: () => val => ({ walletName: val }),
-      setIsOpenPenPrepareModal: () => val => ({ isOpenPenPrepareModal: val }),
+      setRecoverWalletType: () => val => ({ recoverWalletType: val }),
     }
   )
 );
