@@ -29,6 +29,12 @@ const IconLink = styled(NavLink)`
   }
 `;
 
+const IconText = styled.div`
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 12px;
+`;
+
 const IconNav = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,24 +45,36 @@ const IconNav = styled.div`
 
 const TopIcons = styled.div``;
 const BottomIcons = styled.div``;
+const IconWrapper = styled.div`
+  text-align: center;
+`;
 
 const SideNav = () => (
   <Wrapper>
     <IconNav>
       <TopIcons>
         <IconLink to={ROUTES.WALLET.ROOT}>
-          <FontAwesomeIcon icon="wallet" />
+          <IconWrapper>
+            <FontAwesomeIcon icon="wallet" />
+            <IconText>Wallet</IconText>
+          </IconWrapper>
+        </IconLink>
+        <IconLink to={ROUTES.SETTINGS.ROOT}>
+          <IconWrapper>
+            <FontAwesomeIcon icon="cogs" />
+            <IconText>Settings</IconText>
+          </IconWrapper>
         </IconLink>
       </TopIcons>
       <BottomIcons>
         <IconLink to="/dev">
           <FontAwesomeIcon icon={['fab', 'dev']} />
         </IconLink>
-        <IconLink to={ROUTES.SETTINGS.ROOT}>
-          <FontAwesomeIcon icon="cogs" />
-        </IconLink>
         <IconLink to="/syncNode">
-          <FontAwesomeIcon icon="question-circle" />
+          <IconWrapper>
+            <FontAwesomeIcon icon="question-circle" />
+            <IconText>FAQ</IconText>
+          </IconWrapper>
         </IconLink>
       </BottomIcons>
     </IconNav>

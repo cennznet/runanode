@@ -7,12 +7,14 @@ import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
-  faPlus,
   faCogs,
-  faQuestionCircle,
-  faWallet,
+  faCopy,
   faDownload,
   faExclamationCircle,
+  faExclamationTriangle,
+  faPlus,
+  faQuestionCircle,
+  faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
@@ -45,13 +47,15 @@ const isTest = false;
 
 library.add(
   faArrowLeft,
-  faPlus,
   faCogs,
-  faQuestionCircle,
-  faWallet,
-  faDownload,
+  faCopy,
   faDev,
-  faExclamationCircle
+  faDownload,
+  faExclamationCircle,
+  faExclamationTriangle,
+  faPlus,
+  faQuestionCircle,
+  faWallet
 );
 
 const initializeOdin = () => {
