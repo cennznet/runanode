@@ -1,5 +1,8 @@
 ```jsx
-<Input prepend="prepend" append="append" prefix="prefix" suffix="suffix" />
+<DemoFlex>
+  <Input prepend="prepend" append="append" prefix="prefix" suffix="suffix" />
+  <Input placeholder="Normal input" />
+</DemoFlex>
 ```
 
 ```jsx
@@ -11,6 +14,7 @@ const button = (
 <DemoFlex justifyContent="space-between">
   <Input suffix={button} />
   <Input suffix="spinner" />
-  <Input placeholder="Disabled" disabled />
+  <Input valid />
+  <Input valid={false} />
 </DemoFlex>;
 ```
