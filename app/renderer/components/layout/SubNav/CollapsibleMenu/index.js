@@ -29,27 +29,36 @@ const NavItem = styled(NavLink)`
   }
 `;
 
-const Label = styled.div`
-  ${ellipsis('192px')}
-`;
+const Ellipsis = ({ children }) => {
+  const formattedText =
+    children.length > 17
+      ? children.substr(0, 12) + ' ... ' + children.substr(children.length - 5, children.length)
+      : children;
+  return <span>{formattedText}</span>;
+};
 
 const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
   return (
     <Accordion>
       {menuList &&
         menuList.map((menu, i) => {
-          const { title, navItems } = menu;
+          const { title, isTitleHighlight, tail, navItems, additionalItem } = menu;
           return (
-            <AccordionItem key={uuid()} title={AccordionItemTitle({ title })} expanded={i === 0}>
+            <AccordionItem
+              key={uuid()}
+              title={AccordionItemTitle({ title, isTitleHighlight, tail })}
+              expanded={i === 0}
+            >
               <AccordionItemBody>
                 {navItems &&
                   navItems.map(navItem => {
                     return (
                       <NavItem as={!isInsideRouter && 'div'} key={uuid()} to={navItem.link}>
-                        <Label>{navItem.label}</Label>
+                        <Ellipsis title={navItem.label}>{navItem.label}</Ellipsis>
                       </NavItem>
                     );
                   })}
+                {additionalItem}
               </AccordionItemBody>
             </AccordionItem>
           );

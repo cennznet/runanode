@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Translate } from 'react-localize-redux';
+import { ellipsis } from 'polished';
 import defaultTheme, { colors } from 'renderer/theme';
 
 const Title = styled.div`
@@ -14,6 +15,11 @@ const Title = styled.div`
   height: 5rem;
   padding: 0 1rem;
   user-select: none;
+
+  &:hover {
+    background-color: ${colors.primary};
+    color: ${colors.N0};
+  }
 `;
 
 Title.defaultProps = {
@@ -21,12 +27,9 @@ Title.defaultProps = {
 };
 
 const TitleHeading = styled.div`
-  font-weight: 500;
-
-  .react-sanfona-item-expanded & {
-    font-weight: 600;
-    color: ${colors.N0};
-  }
+  font-weight: ${p => (p.isTitleHighlight ? 600 : 500)};
+  color: ${p => (p.isTitleHighlight ? colors.N0 : colors.textMuted)};
+  ${ellipsis('180px')}
 `;
 
 const TitleTail = styled.div`
@@ -40,17 +43,20 @@ const StatusInfo = styled.div`
   align-items: center;
 `;
 
-const AccordionItemTitle = ({ title }) => {
+const defaultTail = <div className="react-sanfona-item__chevron" />;
+
+const AccordionItemTitle = ({ title, isTitleHighlight, tail }) => {
+  const [isHovered, setHovered] = useState(false);
   return (
-    <Title>
-      <TitleHeading>{title}</TitleHeading>
-      <TitleTail>
-        <div className="react-sanfona-item__chevron" />
-      </TitleTail>
+    <Title onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+      <TitleHeading {...{ title, isTitleHighlight }}>{title}</TitleHeading>
+      <TitleTail>{isHovered ? defaultTail : tail || defaultTail}</TitleTail>
     </Title>
   );
 };
 
-AccordionItemTitle.propTypes = {};
+AccordionItemTitle.defaultProps = {
+  isTitleHighlight: false,
+};
 
 export default AccordionItemTitle;
