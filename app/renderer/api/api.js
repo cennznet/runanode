@@ -58,6 +58,10 @@ export default class CennzApi {
       provider: 'ws://localhost:9944',
     }).then((api) => {
       this.api = api;
+      Logger.info('CennznetApi::constructor api is ready to use');
+    }).catch((error) => {
+      Logger.error('CennznetApi::constructor error: ' + stringifyError(error));
+      throw new GenericApiError();
     });
   }
 
@@ -193,7 +197,7 @@ export default class CennzApi {
       Logger.error('CennznetApi::getCennznetWalletAsset error: ' + stringifyError(error));
       throw new GenericApiError();
     }
-  }
+  };
 
   createWalletWithSimpleKeyRing = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
     Logger.debug('CennznetApi::createWalletWithSimpleKeyRing called');

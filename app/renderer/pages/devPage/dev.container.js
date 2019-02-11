@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.resetLocalStorage.triggered });
   },
   onWalletCreate: () => {
-    dispatch({ type: types.walletCreate.triggered });
+    dispatch({ type: types.walletCreate.requested });
   },
   onWalletPaperGenerate: ( payload ) => {
     dispatch({ type: types.walletPaperGenerate.requested, payload });

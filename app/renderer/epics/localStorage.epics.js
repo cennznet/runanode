@@ -81,6 +81,7 @@ const syncWalletDataEpic = action$ =>
         const myWalletIndex = wallets.findIndex(x => x.id === payload.id);
         console.log(`myWalletIndex: ${myWalletIndex}`);
         const syncedWallet = await window.odin.api.cennz.syncWalletData(myWallet);
+        console.log(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
         wallets[myWalletIndex] = syncedWallet;
       }
       // const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
@@ -98,7 +99,7 @@ const syncWalletDataEpic = action$ =>
       // wallets.push(syncedWallet);
       // return EMPTY;
       return {
-        type: types.walletCreate.completed,
+        type: types.syncWalletData.completed,
         payload: { wallets },
       };
     })
