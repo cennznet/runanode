@@ -12,6 +12,7 @@ const Label = styled.label`
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 
   input {
     width: 10rem;

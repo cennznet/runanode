@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeading, PageFooter, Form } from 'components';
+import { Button, PageHeading, PageFooter, Form, Radio } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,13 +8,29 @@ import WordField from 'renderer/pages/wallet/WordField';
 import { seedPhraseFields } from './utils';
 import { STEPS, WALLETTYPE } from '../constants';
 
-const SeedPhraseExplain = styled.div`
-  display: flex;
+const ReocveryOptionWrapper = styled.div`
+  flex-direction: column;
+  padding: 1rem 0 2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 `;
 
-const ChooseRecoverType = styled.div`
+const ReocveryOptionExplain = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+const RadioGroup = styled.div`
   display: flex;
   margin: 1rem auto;
+
+  label {
+    margin-right: 1rem;
+  }
+`;
+
+const SeedPhraseExplain = styled.div`
+  display: flex;
+  margin: 2rem auto 1rem;
 `;
 
 const InputGroup = styled.div`
@@ -50,12 +66,27 @@ const seedPhraseRecoverPage = ({
     <React.Fragment>
       <PageHeading>Connect your existing wallet</PageHeading>
       <div>
-        <ChooseRecoverType>
-          <Button flat onClick={() => console.log('HDKeyring')}>
-            HDKeyring
-          </Button>
-          <Button onClick={() => console.log('SimpleKeyring')}>SimpleKeyring</Button>
-        </ChooseRecoverType>
+        <ReocveryOptionWrapper>
+          <ReocveryOptionExplain>
+            Choose the type of the wallet you want to connect to{' '}
+          </ReocveryOptionExplain>
+          <RadioGroup>
+            <Radio
+              selected={recoverWalletType}
+              value={WALLETTYPE.HDWALLET}
+              onChange={() => setRecoverWalletType(WALLETTYPE.HDWALLET)}
+            >
+              HD Wallet
+            </Radio>
+            <Radio
+              selected={recoverWalletType}
+              value={WALLETTYPE.SIMPLEWALLET}
+              onChange={() => setRecoverWalletType(WALLETTYPE.SIMPLEWALLET)}
+            >
+              Simple Wallet
+            </Radio>
+          </RadioGroup>
+        </ReocveryOptionWrapper>
         <SeedPhraseExplain>
           <div>Enter your recovery seed phrase</div>
           <FontAwesomeIcon style={{ marginLeft: '0.5rem' }} icon="question-circle" />
@@ -82,7 +113,7 @@ const seedPhraseRecoverPage = ({
               </InputGroup>
               <PageFooter>
                 <StartOverLink />
-                <Button type="submit" color="primary">
+                <Button type="submit" color="primary" disabled={!isValid}>
                   Next
                 </Button>
               </PageFooter>
@@ -95,5 +126,3 @@ const seedPhraseRecoverPage = ({
 };
 
 export default seedPhraseRecoverPage;
-// disabled={!isValid}
-// : 'stone,more,endorse,silent,pluck,insect,obtain,chalk,grid,pass,season,truck',

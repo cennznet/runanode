@@ -18,6 +18,7 @@ import TabPane from 'components/Tabs/TabPane';
 import Toggle from 'components/Toggle';
 import Tooltip from 'components/Tooltip';
 import TosContent from 'components/TosContent';
+import Radio from 'components/Radio';
 
 export {
   Box,
@@ -40,4 +41,5 @@ export {
   Toggle,
   Tooltip,
   TosContent,
+  Radio,
 };
