@@ -6,6 +6,8 @@ import uuid from 'uuid/v4';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import {u32, Balance, AccountId} from '@polkadot/types';
+import * as util from '@polkadot/util';
+import { Keyring } from '@polkadot/keyring';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
@@ -47,6 +49,35 @@ import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
 
 const { buildLabel } = environment;
+
+// Generate toy keys from name, toy keys is only for play or tests
+const toyKeyringFromNames = (names: string[]) => {
+  console.log('toyKeyringFromNames:');
+  console.log(util);
+
+  const seeds = names.map(name => util.stringToU8a(name.padEnd(32, ' ')));
+  const keyring: any = new Keyring();
+  seeds.forEach((seed, index) => {
+    const key = keyring.addFromSeed(seed);
+    keyring[names[index].toLowerCase()] = key;
+  });
+  return keyring;
+};
+
+const toyKeyring = toyKeyringFromNames([
+  'Alice',
+  'Bob',
+  'Charlie',
+  'Dave',
+  'Eve',
+  'Ferdie',
+  'Andrea',
+  'Brooke',
+  'Courtney',
+  'Drew',
+  'Emily',
+  'Frank'
+]);
 
 export default class CennzApi {
   config: RequestConfig;
@@ -118,7 +149,7 @@ export default class CennzApi {
       resultWallet.defaultAccountPublicAddress = defaultAccountPublicAddress;
       console.log(`resultWallet.defaultAccountPublicAddress: ${resultWallet.defaultAccountPublicAddress}`);
 
-      const stakingTokenFreeBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(PreDefinedAssetIdObj.STAKING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
+      const stakingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdObj.STAKING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
       resultWallet.stakingTokenFreeBalance = stakingTokenFreeBalance.toString(10);
       console.log(`resultWallet.stakingTokenFreeBalance: ${resultWallet.stakingTokenFreeBalance}`);
       // const stakingTokenReservedBalance = await window.odin.api.cennz.genericAssetReservedBalance(0, this.defaultAccountPublicAddress);
@@ -128,11 +159,11 @@ export default class CennzApi {
       // this.stakingTokenTotalSupply = stakingTokenTotalSupply.toString(10);
       // console.log(`this.stakingTokenTotalSupply: ${this.stakingTokenTotalSupply}`);
 
-      const spendingTokenFreeBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(PreDefinedAssetIdObj.SPENDING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
+      const spendingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdObj.SPENDING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
       resultWallet.spendingTokenFreeBalance = spendingTokenFreeBalance.toString(10);
       console.log(`resultWallet.spendingTokenFreeBalance: ${resultWallet.spendingTokenFreeBalance}`);
 
-      const genericAssetNextAssetId = await window.odin.api.cennz.getGenericAssetNextAssetId();
+      const genericAssetNextAssetId = await window.odin.api.cennz.genericAssetNextAssetId();
       resultWallet.genericAssetNextAssetId = genericAssetNextAssetId.toString(10);
       console.log(`resultWallet.genericAssetNextAssetId: ${resultWallet.genericAssetNextAssetId}`);
 
@@ -348,24 +379,35 @@ export default class CennzApi {
     }
   };
 
+
   /**
    * @param assetId
-   * @param toWalletAddress
    * @param fromWalletAddress
+   * @param toWalletAddress
    * @param amount
    * @param wallet
    * @returns {Promise<Object>}
    */
-  doGenericAssetTransfer = async (assetId: BN, toWalletAddress: string, fromWalletAddress: string, amount: BN, wallet): Promise<Object> => {
+  doGenericAssetTransfer = async (assetId: BN,  fromWalletAddress: string, toWalletAddress: string, amount: BN, wallet): Promise<Object> => {
     Logger.debug('CennznetApi::doGenericAssetTransfer called');
     try {
-      this.api.setSigner(wallet);
+      await this.api.setSigner(wallet);
       const tx = await this.api.tx.genericAsset.transfer(assetId, fromWalletAddress, amount).send({from: toWalletAddress});
-      this.api.setSigner(null);
-      Logger.debug(`CennznetApi::doGenericAssetTransfer tx: ${tx}`);
+      // this.api.setSigner(null);
+      // const tx = await new Promise(resolve => {
+      //   let submittableExtrinsic = this.api.tx.genericAsset.transfer(assetId, toWalletAddress, amount);
+      //   debugger;
+      //   submittableExtrinsic.signAndSend(toyKeyring.bob, res => {
+      //     if (res.status.type === 'Finalised') {
+      //       console.log('tx finalized');
+      //       resolve();
+      //     }
+      //   });
+      // });
+      Logger.debug(`CennznetApi::genericAssetTransfer tx: ${tx}`);
       return tx;
     } catch (error) {
-      Logger.error('CennznetApi::doGenericAssetTransfer error: ' + stringifyError(error));
+      Logger.error('CennznetApi::genericAssetTransfer error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   }
