@@ -50,16 +50,16 @@ const seedPhraseRecoverPage = ({
     <React.Fragment>
       <PageHeading>Connect your existing wallet</PageHeading>
       <div>
-        <SeedPhraseExplain>
-          <div>Enter your recovery seed phrase</div>
-          <FontAwesomeIcon style={{ marginLeft: '0.5rem' }} icon="question-circle" />
-        </SeedPhraseExplain>
         <ChooseRecoverType>
           <Button flat onClick={() => console.log('HDKeyring')}>
             HDKeyring
           </Button>
           <Button onClick={() => console.log('SimpleKeyring')}>SimpleKeyring</Button>
         </ChooseRecoverType>
+        <SeedPhraseExplain>
+          <div>Enter your recovery seed phrase</div>
+          <FontAwesomeIcon style={{ marginLeft: '0.5rem' }} icon="question-circle" />
+        </SeedPhraseExplain>
       </div>
       <Formik
         initialValues={{}}
