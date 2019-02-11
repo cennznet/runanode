@@ -16,6 +16,7 @@
 
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
+- Improved styleguide
 
 # v0.3.1 (2019.01.31)
 
