@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
 import { seedPhraseFields } from './utils';
-import { STEPS } from '../constants';
+import { STEPS, WALLETTYPE } from '../constants';
 
 const SeedPhraseExplain = styled.div`
   display: flex;
@@ -23,7 +23,29 @@ const InputGroup = styled.div`
   flex-wrap: wrap;
 `;
 
-const seedPhraseRecoverPage = ({ onValidateSKRWallet, setMnemonic, moveToStep }) => {
+const seedPhraseRecoverPage = ({
+  onValidateSKRWallet,
+  setMnemonic,
+  moveToStep,
+  recoverWalletType,
+  setRecoverWalletType,
+  onValidateHDKRWallet,
+}) => {
+  const onSubmitAction = async values => {
+    const mnemonic = Object.values(values).join();
+    setMnemonic(mnemonic);
+
+    let checkedWallet = null;
+    if (recoverWalletType === WALLETTYPE.HDWALLET) {
+      checkedWallet = await onValidateHDKRWallet({ mnemonic });
+    } else {
+      checkedWallet = await onValidateSKRWallet({ mnemonic });
+    }
+    const { wallet } = checkedWallet;
+    if (wallet) {
+      moveToStep(STEPS.NAME_INPUT);
+    }
+  };
   return (
     <React.Fragment>
       <PageHeading>Connect your existing wallet</PageHeading>
@@ -33,21 +55,15 @@ const seedPhraseRecoverPage = ({ onValidateSKRWallet, setMnemonic, moveToStep })
           <FontAwesomeIcon style={{ marginLeft: '0.5rem' }} icon="question-circle" />
         </SeedPhraseExplain>
         <ChooseRecoverType>
-          <Button onClick={() => console.log('HDKeyring')}>HDKeyring</Button>
+          <Button flat onClick={() => console.log('HDKeyring')}>
+            HDKeyring
+          </Button>
           <Button onClick={() => console.log('SimpleKeyring')}>SimpleKeyring</Button>
         </ChooseRecoverType>
       </div>
       <Formik
         initialValues={{}}
-        onSubmit={async values => {
-          const mnemonic = Object.values(values).join();
-          setMnemonic(mnemonic);
-          const validateResult = await onValidateSKRWallet({ mnemonic });
-          const { wallet } = validateResult;
-          if (wallet) {
-            moveToStep(STEPS.NAME_INPUT);
-          }
-        }}
+        onSubmit={values => onSubmitAction(values)}
         render={({ handleSubmit, ...formProps }) => {
           const { isValid } = formProps;
           return (

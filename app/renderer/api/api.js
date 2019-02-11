@@ -267,6 +267,8 @@ export default class CennzApi {
       const keyring = new HDKeyring(request.mnemonic);
       wallet.createNewVaultAndRestore(request.passphrase, [keyring]);
       const backup = await wallet.export(request.passphrase);
+      console.log('backup', backup);
+      console.log('wallet', wallet);
 
       const cennznetWallet = new CennznetWallet({
         id: uuid(),
