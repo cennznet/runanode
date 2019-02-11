@@ -10,7 +10,7 @@ import ReceiveSection from './ReceiveSection';
 const AccountDetails = ({ account }) => {
   return (
     <React.Fragment>
-      <PageHeading subHeading={`Public Address: ${account.address}`}>
+      <PageHeading subHeading={`Public Address: ${account.address}, Free Balance: ${account.freeBalance}`}>
         Account name here...
       </PageHeading>
       <div className="content">

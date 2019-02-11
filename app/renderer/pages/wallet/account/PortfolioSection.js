@@ -6,6 +6,8 @@ import Table from '../../../components/Table';
 const { colors } = require('../../../theme');
 
 const PortfolioSection = ({ account }) => {
+  console.log('PortfolioSection');
+  console.log(account);
   return <Table
     data={account && account.assets ? Object.values(account.assets) : [{}]}
     page={0}
