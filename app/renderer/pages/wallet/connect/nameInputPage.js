@@ -19,8 +19,6 @@ const NameInputPage = ({
       <NameInput
         existingWallets={existingWallets}
         onSubmit={value => {
-          console.log('onSubmitValue', value);
-          console.log('recoverWalletType', recoverWalletType);
           recoverWalletType === WALLETTYPE.HDWALLET
             ? onCreateHDKRWallet({
                 name: value,
