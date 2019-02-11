@@ -56,7 +56,7 @@ const navItems = [
 ];
 
 <DemoFlex justifyContent="space-between">
-  <DemoSubNav footer={<Button>Add wallet</Button>}>
+  <DemoSubNav footer={<Button circle>+</Button>}>
     <CollapsibleMenu menuList={menuList} isInsideRouter={false} />
   </DemoSubNav>
   <DemoSubNav>
