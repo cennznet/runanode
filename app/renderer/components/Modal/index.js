@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import Button from 'components/Button';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { colors } from 'renderer/theme';
 
 const ModalContent = styled.div`
@@ -87,7 +85,7 @@ StyledModal.defaultProps = {
   maxHeight: '40vh',
   backgroundColor: '#040C40',
   boxShadow: `0 2px 4px 0 ${colors.N900}`,
-  overlayBgColor: rgba(colors.N800, 0.7),
+  overlayBgColor: 'rgba(54, 58, 61, 0.7)',
 };
 
 export default StyledModal;
