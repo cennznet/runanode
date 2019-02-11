@@ -17,6 +17,7 @@
 
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
+- upgrade to Rimu CENNZNETNode
 
 # v0.3.1 (2019.01.31)
 
