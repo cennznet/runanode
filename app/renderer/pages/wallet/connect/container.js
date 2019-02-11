@@ -8,8 +8,25 @@ const mapStateToProps = ({ localStorage: { WALLETS } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onCreateWallet: payload => {
-    dispatch({ type: types.walletCreate.requested, payload });
+  onCreateSKRWallet: payload => {
+    dispatch({ type: types.walletCreatWithSKR.requested, payload });
+  },
+
+  onCreateHDKRWallet: payload => {
+    dispatch({ type: types.walletRestoreWithHDKR.requested, payload });
+  },
+
+  onValidateHDKRWallet: async payload => {
+    try {
+      const wallet = await window.odin.api.cennz.restoreWallet({
+        mnemonic: payload,
+        passphrase: '',
+      });
+
+      return { wallet };
+    } catch (error) {
+      return { checkWalletError: 'Invalid seed phrase' };
+    }
   },
 
   onValidateSKRWallet: async payload => {
@@ -18,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
         mnemonic: payload,
         passphrase: '',
       });
-      console.log('wallet', wallet);
+
       return { wallet };
     } catch (error) {
       return { checkWalletError: 'Invalid seed phrase' };

@@ -15,7 +15,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => ({
   onCreateWallet: payload => {
-    dispatch({ type: types.walletCreate.requested, payload });
+    dispatch({ type: types.walletCreatWithSKR.requested, payload });
   },
   onCreatePaperWallet: payload => {
     dispatch({ type: types.walletPaperGenerate.requested, payload });
