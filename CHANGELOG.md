@@ -6,6 +6,7 @@
 
 - Add tabs and scrallable components
 - new data structure to store Wallets -> Accounts -> Assets
+- Connect wallet with both HDKeyring and SimpleKeyring
 
 ### Fixes
 
