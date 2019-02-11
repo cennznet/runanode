@@ -4,6 +4,7 @@ import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys, getStorage, setStorage, clearStorage } from 'renderer/api/utils/storage';
+import { Logger } from 'renderer/utils/logging';
 
 const getStorageEpic = action$ =>
   action$.pipe(
@@ -69,7 +70,7 @@ const syncWalletDataEpic = action$ =>
   action$.pipe(
     ofType(types.syncWalletData.requested),
     mergeMap(async ({ payload }) => {
-      console.log(`syncWalletDataEpic`);
+      Logger.debug(`syncWalletDataEpic`);
       let wallets = await getStorage(storageKeys.WALLETS);
       if (wallets === null) {
         wallets = [];
@@ -77,27 +78,13 @@ const syncWalletDataEpic = action$ =>
 
       const myWallet = wallets.find(x => x.id === payload.id);
       if(myWallet) {
-        console.log(`myWallet: ${myWallet}`);
+        Logger.debug(`myWallet: ${myWallet}`);
         const myWalletIndex = wallets.findIndex(x => x.id === payload.id);
-        console.log(`myWalletIndex: ${myWalletIndex}`);
+        Logger.debug(`myWalletIndex: ${myWalletIndex}`);
         const syncedWallet = await window.odin.api.cennz.syncWalletData(myWallet);
-        console.log(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
+        Logger.debug(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
         wallets[myWalletIndex] = syncedWallet;
       }
-      // const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
-      //   name,
-      //   mnemonic,
-      //   passphrase: passphrase || '',
-      // });
-      //
-      // const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
-      // const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      // wallet.wallet.walletAddress = walletAddress;
-      //
-      // // sync wallet data
-      // const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
-      // wallets.push(syncedWallet);
-      // return EMPTY;
       return {
         type: types.syncWalletData.completed,
         payload: { wallets },
