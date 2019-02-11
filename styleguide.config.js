@@ -94,6 +94,7 @@ module.exports = {
     '**/app/renderer/components/Button/defaultStyling.js',
     '**/app/renderer/components/Table/tableExpander.js',
     '**/app/renderer/components/Tabs/TabPane.js',
+    '**/app/renderer/components/cssIcons/index.js',
     '**/app/renderer/components/layout/SubNav/CollapsibleMenu/*.js',
   ],
   require: [
