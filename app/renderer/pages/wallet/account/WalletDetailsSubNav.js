@@ -1,5 +1,6 @@
 import React from 'react';
 import R from 'ramda';
+import uuid from 'uuid/v4';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SubNav, CollapsibleMenu } from 'components/layout';
@@ -7,29 +8,41 @@ import { Button } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import history from 'renderer/history';
 
-const SubNavFooter = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 2rem;
-`;
+const tooltipId = uuid();
 
-const ButtonText = styled.div`
-  margin-right: 0.5rem;
-`;
-
-const footer = (
-  <SubNavFooter>
-    <Button color="secondary" onClick={() => history.push(ROUTES.WALLET.LANDING)} block>
-      <ButtonText>Add wallet</ButtonText>
-      <FontAwesomeIcon icon="plus" />
-    </Button>
-  </SubNavFooter>
+const IconPlus = () => (
+  <FontAwesomeIcon icon="plus" style={{ marginLeft: '0.5rem', width: '14px', height: '14px' }} />
 );
 
-const WalletDetailsSubNav = ({ wallets }) => {
+const footer = (
+  <Button onClick={() => history.push(ROUTES.WALLET.LANDING)} block>
+    <span>Add wallet</span>
+    <IconPlus />
+  </Button>
+);
+
+const AddAccountButtonWrapper = styled.div`
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const additionalItem = (
+  <AddAccountButtonWrapper>
+    <Button color="secondary" size="lg" block>
+      <span>Add account</span>
+      <IconPlus />
+    </Button>
+  </AddAccountButtonWrapper>
+);
+
+const WalletDetailsSubNav = ({ wallets, currentWallet }) => {
   const menuList = wallets.map(wallet => {
     return {
       title: wallet.name,
+      isTitleHighlight: wallet.id === currentWallet.id,
+      tail: `(${Object.keys(wallet.accounts).length})`,
       navItems: Object.keys(wallet.accounts).map(address => {
         const account = wallet.accounts[address];
         return {
@@ -37,6 +50,7 @@ const WalletDetailsSubNav = ({ wallets }) => {
           link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
         };
       }),
+      additionalItem,
     };
   });
 

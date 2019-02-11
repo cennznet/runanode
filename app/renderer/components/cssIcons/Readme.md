@@ -1,5 +1,0 @@
-```jsx
-<DemoFlex>
-  <IconPlus />
-</DemoFlex>
-```

@@ -36,14 +36,14 @@ const buttonBgColor = (p, styling) => {
 
 const buttonBorder = (p, styling) => {
   if (p.outline && !p.disabled) {
-    return `2px solid ${styledProps(styling.borderColor, 'color')(p)}`;
+    return `1px solid ${styledProps(styling.borderColor, 'color')(p)}`;
   }
 
   if (p.disabled) {
     return 0;
   }
 
-  return `2px solid ${styledProps(styling.borderColor, 'color')(p)}`;
+  return `1px solid ${styledProps(styling.borderColor, 'color')(p)}`;
 };
 
 const hoverBgColor = (p, styling) => {
@@ -83,7 +83,7 @@ const hoverBorderColor = (p, styling) => {
     return 0;
   }
 
-  return `2px solid ${styledProps(styling.hoverBorderColor, 'color')(p)}`;
+  return `1px solid ${styledProps(styling.hoverBorderColor, 'color')(p)}`;
 };
 
 const buttonStyles = props => {
