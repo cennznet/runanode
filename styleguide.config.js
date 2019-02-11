@@ -7,9 +7,25 @@ module.exports = {
     color: {
       link: '#FFFFFF',
       linkHover: '#CCCCCC',
+
+      codeBracket: '#e2777a',
+      codeComment: '#999',
+      codeDeleted: '#f8c555',
+      codeFunction: '#f08d49',
+      codeInserted: '#690',
+      codeKeyword: '#cc99cd',
+      codeOperator: '#67cdcc',
+      codeProperty: '#f8c555',
+      codePunctuation: '#ccc',
+      codeString: '#690',
+      codeTag: '#e2777a',
+      codeVariable: '#7ec699',
     },
   },
   styles: {
+    Editor: {
+      root: {},
+    },
     Heading: {
       heading: {
         color: '#FFFFFF',
@@ -26,6 +42,17 @@ module.exports = {
         color: '#FFFFFF',
         fontFamily: 'Helvetica',
         fontSize: '14px',
+      },
+      '@global .CodeMirror': {
+        background: '#040C40 !important',
+        color: '#FFFFFF !important',
+        lineHeight: '1.5',
+      },
+      '@global .cm-tag': {
+        color: '#e2777a !important',
+      },
+      '@global .cm-bracket': {
+        color: '#e2777a !important',
       },
       root: {
         background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
@@ -67,6 +94,7 @@ module.exports = {
     '**/app/renderer/components/Button/defaultStyling.js',
     '**/app/renderer/components/Table/tableExpander.js',
     '**/app/renderer/components/Tabs/TabPane.js',
+    '**/app/renderer/components/cssIcons/index.js',
     '**/app/renderer/components/layout/SubNav/CollapsibleMenu/*.js',
   ],
   require: [

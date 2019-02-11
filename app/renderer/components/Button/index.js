@@ -55,6 +55,7 @@ const Button = styled(CustomButton)``;
 
 Button.defaultProps = {
   block: false,
+  circle: false,
   color: 'primary',
   disabled: false,
   flat: false,
@@ -64,14 +65,15 @@ Button.defaultProps = {
   loading: false,
   outline: false,
   size: 'md',
-  type: 'button',
   theme: defaultTheme,
   themeSpace: 'button',
   themeStyles: {},
+  type: 'button',
 };
 
 Button.propTypes = {
   block: PropTypes.bool,
+  circle: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.string]).isRequired,
   color: PropTypes.oneOf([
     'primary',
@@ -84,10 +86,10 @@ Button.propTypes = {
   ]),
   disabled: PropTypes.bool,
   flat: PropTypes.bool,
-  loading: PropTypes.bool,
   iconAfter: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   iconBefore: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   inputSuffix: PropTypes.bool,
+  loading: PropTypes.bool,
   outline: PropTypes.bool,
   size: PropTypes.string,
   type: PropTypes.string,

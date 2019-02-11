@@ -1,5 +1,8 @@
 ```jsx
-<Input prepend="prepend" append="append" prefix="prefix" suffix="suffix" />
+<DemoFlex>
+  <Input prepend="prepend" append="append" prefix="prefix" suffix="suffix" />
+  <Input placeholder="Normal input" />
+</DemoFlex>
 ```
 
 ```jsx
@@ -8,17 +11,10 @@ const button = (
     Submit
   </Button>
 );
-<Input suffix={button} />;
-```
-
-```jsx
-<Input suffix="spinner" />
-```
-
-```jsx
-<Input placeholder="Disabled" disabled />
-```
-
-```jsx
-<Input value="Readonly" readOnly />
+<DemoFlex justifyContent="space-between">
+  <Input suffix={button} />
+  <Input suffix="spinner" />
+  <Input valid />
+  <Input valid={false} />
+</DemoFlex>;
 ```
