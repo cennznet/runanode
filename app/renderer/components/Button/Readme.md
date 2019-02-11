@@ -11,6 +11,18 @@
 
 ```jsx
 <DemoFlex>
+  <Button circle size="sm" outline color="success">
+    X
+  </Button>
+  <Button circle>X</Button>
+  <Button circle size="lg" color="warning">
+    X
+  </Button>
+</DemoFlex>
+```
+
+```jsx
+<DemoFlex>
   <Button outline>Primary</Button>
   <Button color="warning" outline>
     Warning
