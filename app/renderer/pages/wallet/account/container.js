@@ -27,36 +27,36 @@ const enhance = compose(
       const { onSyncWalletData, match, wallets } = this.props;
       const { walletId, accountPublicAddress } = match.params;
       const wallet = R.find(R.propEq('id', walletId))(wallets);
-      onSyncWalletData({ wallet });
+      onSyncWalletData({ id: walletId, wallet });
     },
 
-    shouldComponentUpdate(nextProps, nextState) {
-      console.log('shouldComponentUpdate');
-      // console.log(`nextProps: ${nextProps}`);
-      // console.log(nextProps);
-      // console.log(`this.props: ${this.props}`);
-      // console.log(this.props);
-
-      console.log(isEqual(this.props.wallets,nextProps.wallets));
-      console.log(this.props.wallets === nextProps.wallets);
-      console.log(this.props.wallets);
-      console.log(nextProps.wallets);
-      // if(nextProps && nextProps.match) {
-      //   const nextMatchWalletId = nextProps.match.params.walletId;
-      //   const wallet = R.find(R.propEq('id', walletId))(wallets);
-      //   const account = wallet.accounts[accountPublicAddress];
-      //   console.log(`walletId: ${walletId}`);
-      //   console.log(`nextMatchWalletId: ${nextMatchWalletId}`);
-      //   if (walletId !== nextMatchWalletId) {
-      //     onSyncWalletData({ wallet });
-      //     return true
-      //   } else {
-      //     return false;
-      //   }
-      // }
-      return !isEqual(this.props.wallets,nextProps.wallets);
-
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //   console.log('shouldComponentUpdate');
+    //   // console.log(`nextProps: ${nextProps}`);
+    //   // console.log(nextProps);
+    //   // console.log(`this.props: ${this.props}`);
+    //   // console.log(this.props);
+    //
+    //   console.log(isEqual(this.props.wallets,nextProps.wallets));
+    //   console.log(this.props.wallets === nextProps.wallets);
+    //   console.log(this.props.wallets);
+    //   console.log(nextProps.wallets);
+    //   // if(nextProps && nextProps.match) {
+    //   //   const nextMatchWalletId = nextProps.match.params.walletId;
+    //   //   const wallet = R.find(R.propEq('id', walletId))(wallets);
+    //   //   const account = wallet.accounts[accountPublicAddress];
+    //   //   console.log(`walletId: ${walletId}`);
+    //   //   console.log(`nextMatchWalletId: ${nextMatchWalletId}`);
+    //   //   if (walletId !== nextMatchWalletId) {
+    //   //     onSyncWalletData({ wallet });
+    //   //     return true
+    //   //   } else {
+    //   //     return false;
+    //   //   }
+    //   // }
+    //   return !isEqual(this.props.wallets,nextProps.wallets);
+    //
+    // }
   })
 );
 
