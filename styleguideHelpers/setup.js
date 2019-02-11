@@ -7,6 +7,8 @@ import { TabPane } from '../app/renderer/components';
 import CollapsibleMenu from '../app/renderer/components/layout/SubNav/CollapsibleMenu';
 import SimpleMenu from '../app/renderer/components/layout/SubNav/SimpleMenu';
 
+import { IconPlus } from '../app/renderer/components/cssIcons';
+
 global.styled = styled;
 global.ColorPalette = ColorPalette;
 global.DemoCanvas = DemoCanvas;
@@ -15,3 +17,4 @@ global.DemoFlex = DemoFlex;
 global.TabPane = TabPane;
 global.CollapsibleMenu = CollapsibleMenu;
 global.SimpleMenu = SimpleMenu;
+global.IconPlus = IconPlus;
