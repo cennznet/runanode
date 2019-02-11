@@ -9,7 +9,7 @@ const defaultStyling = theme => {
       md: theme.fontSize,
       lg: theme.fontSizeLg,
     },
-    height: {
+    size: {
       sm: '1.5rem',
       md: '2rem',
       lg: '2.5rem',

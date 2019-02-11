@@ -4,10 +4,16 @@ initialState = { isOpen: false };
   <Button onClick={() => setState({ isOpen: true })}>Open Modal</Button>
   <Modal
     isOpen={state.isOpen}
+    onRequestClose={() => setState({ isOpen: false })}
     footer={
-      <Button color="warning" onClick={() => setState({ isOpen: false })}>
-        Close
-      </Button>
+      <div style={{ display: 'flex' }}>
+        <Button color="nuetral" onClick={() => setState({ isOpen: false })}>
+          Close
+        </Button>
+        <Button style={{ marginLeft: '0.5rem' }} onClick={() => setState({ isOpen: false })}>
+          Next
+        </Button>
+      </div>
     }
   >
     This is the example modal
