@@ -1,11 +1,11 @@
 // @flow
 import _ from 'lodash';
-import { SimpleKeyring, Wallet } from 'cennznet-wallet';
+import { SimpleKeyring, Wallet, HDKeyring } from 'cennznet-wallet';
 import { Api } from 'cennznet-api';
 import uuid from 'uuid/v4';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
-import {u32, Balance, AccountId} from '@polkadot/types';
+import { u32, Balance, AccountId } from '@polkadot/types';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
@@ -41,7 +41,8 @@ import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 import { environment } from '../../main/environment';
 import {
   PreDefinedAssetIdObj,
-  PreDefinedAssetIdName, CustomTokenAssetId,
+  PreDefinedAssetIdName,
+  CustomTokenAssetId,
 } from '../../common/types/cennznet-node.types';
 import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
@@ -56,7 +57,7 @@ export default class CennzApi {
     this.setRequestConfig(config);
     Api.create({
       provider: 'ws://localhost:9944',
-    }).then((api) => {
+    }).then(api => {
       this.api = api;
     });
   }
@@ -112,9 +113,14 @@ export default class CennzApi {
       console.log(`walletAddresses: ${walletAddresses}`);
       const defaultAccountPublicAddress = walletAddresses[0];
       resultWallet.defaultAccountPublicAddress = defaultAccountPublicAddress;
-      console.log(`resultWallet.defaultAccountPublicAddress: ${resultWallet.defaultAccountPublicAddress}`);
+      console.log(
+        `resultWallet.defaultAccountPublicAddress: ${resultWallet.defaultAccountPublicAddress}`
+      );
 
-      const stakingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdObj.STAKING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
+      const stakingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(
+        PreDefinedAssetIdObj.STAKING_TOKEN.BN,
+        resultWallet.defaultAccountPublicAddress
+      );
       resultWallet.stakingTokenFreeBalance = stakingTokenFreeBalance.toString(10);
       console.log(`resultWallet.stakingTokenFreeBalance: ${resultWallet.stakingTokenFreeBalance}`);
       // const stakingTokenReservedBalance = await window.odin.api.cennz.genericAssetReservedBalance(0, this.defaultAccountPublicAddress);
@@ -124,9 +130,14 @@ export default class CennzApi {
       // this.stakingTokenTotalSupply = stakingTokenTotalSupply.toString(10);
       // console.log(`this.stakingTokenTotalSupply: ${this.stakingTokenTotalSupply}`);
 
-      const spendingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(PreDefinedAssetIdObj.SPENDING_TOKEN.BN, resultWallet.defaultAccountPublicAddress);
+      const spendingTokenFreeBalance = await window.odin.api.cennz.genericAssetFreeBalance(
+        PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
+        resultWallet.defaultAccountPublicAddress
+      );
       resultWallet.spendingTokenFreeBalance = spendingTokenFreeBalance.toString(10);
-      console.log(`resultWallet.spendingTokenFreeBalance: ${resultWallet.spendingTokenFreeBalance}`);
+      console.log(
+        `resultWallet.spendingTokenFreeBalance: ${resultWallet.spendingTokenFreeBalance}`
+      );
 
       const genericAssetNextAssetId = await window.odin.api.cennz.genericAssetNextAssetId();
       resultWallet.genericAssetNextAssetId = genericAssetNextAssetId.toString(10);
@@ -134,23 +145,32 @@ export default class CennzApi {
 
       // extract data from wallet to accounts
       const accounts = new Map();
-      for(const walletAddress of walletAddresses) {
+      for (const walletAddress of walletAddresses) {
         console.log(`walletAddress: ${walletAddress}`);
 
         const assets = new Map();
         // eslint-disable-next-line no-await-in-loop
-        const stakingTokenAsset = await this.getCennznetWalletAsset(PreDefinedAssetIdObj.STAKING_TOKEN.BN, walletAddress);
+        const stakingTokenAsset = await this.getCennznetWalletAsset(
+          PreDefinedAssetIdObj.STAKING_TOKEN.BN,
+          walletAddress
+        );
         assets[PreDefinedAssetIdObj.STAKING_TOKEN.BN] = stakingTokenAsset;
 
         // eslint-disable-next-line no-await-in-loop
-        const spendingTokenAsset = await this.getCennznetWalletAsset(PreDefinedAssetIdObj.SPENDING_TOKEN.BN, walletAddress);
+        const spendingTokenAsset = await this.getCennznetWalletAsset(
+          PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
+          walletAddress
+        );
         assets[PreDefinedAssetIdObj.SPENDING_TOKEN.BN] = spendingTokenAsset;
 
         // TODO base on nextAssetId fetch all custom token ?
-        for(const customToken of CustomTokenAssetId) {
+        for (const customToken of CustomTokenAssetId) {
           const customTokenAssetIdAsBN = new BN(customToken, 10);
           // eslint-disable-next-line no-await-in-loop
-          const customTokenAsset = await this.getCennznetWalletAsset(customTokenAssetIdAsBN, walletAddress);
+          const customTokenAsset = await this.getCennznetWalletAsset(
+            customTokenAssetIdAsBN,
+            walletAddress
+          );
           assets[customTokenAssetIdAsBN] = customTokenAsset;
         }
 
@@ -169,10 +189,16 @@ export default class CennzApi {
     }
   };
 
-  getCennznetWalletAsset = async (assetId: BN, walletAddress: String): Promise<CennznetWalletAsset> => {
+  getCennznetWalletAsset = async (
+    assetId: BN,
+    walletAddress: String
+  ): Promise<CennznetWalletAsset> => {
     Logger.debug('CennznetApi::getCennznetWalletAsset called');
     try {
-      const freeBalance = await window.odin.api.cennz.genericAssetFreeBalance(assetId, walletAddress);
+      const freeBalance = await window.odin.api.cennz.genericAssetFreeBalance(
+        assetId,
+        walletAddress
+      );
       const asset = new CennznetWalletAsset({
         assetId,
         address: walletAddress,
@@ -185,7 +211,7 @@ export default class CennzApi {
       Logger.error('CennznetApi::getCennznetWalletAsset error: ' + stringifyError(error));
       throw new GenericApiError();
     }
-  }
+  };
 
   createWalletWithSimpleKeyRing = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
     Logger.debug('CennznetApi::createWalletWithSimpleKeyRing called');
@@ -195,6 +221,7 @@ export default class CennzApi {
       const keyring = new SimpleKeyring();
       await keyring.addFromMnemonic(request.mnemonic);
       await wallet.addKeyring(keyring);
+      const backup = await wallet.export(request.passphrase);
 
       const cennznetWallet = new CennznetWallet({
         id: uuid(),
@@ -206,6 +233,51 @@ export default class CennzApi {
       return cennznetWallet;
     } catch (error) {
       Logger.error('CennznetApi::createWalletWithSimpleKeyRing error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  createWalletWithHDKeyRing = async (request: CreateHDKRWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::createWalletWithHDKeyRing called');
+    try {
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      await wallet.addAccount();
+      const backup = await wallet.export(request.passphrase);
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        hasPassword: request.passphrase !== null,
+        wallet,
+      });
+      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      return cennznetWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  restoreWallet = async (request: RestoreHDKRWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::restoreWalletWithHDKeyRing called');
+    try {
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      const keyring = new HDKeyring(request.mnemonic);
+      wallet.createNewVaultAndRestore(request.passphrase, [keyring]);
+      const backup = await wallet.export(request.passphrase);
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        hasPassword: request.passphrase !== null,
+        wallet,
+      });
+      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      return cennznetWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -294,7 +366,10 @@ export default class CennzApi {
   genericAssetReservedBalance = async (assetId: BN, walletAddress: string): Promise<Balance> => {
     Logger.debug('CennznetApi::genericAssetReservedBalance called');
     try {
-      const reservedBalance = await this.api.query.genericAsset.reservedBalance(assetId, walletAddress);
+      const reservedBalance = await this.api.query.genericAsset.reservedBalance(
+        assetId,
+        walletAddress
+      );
       Logger.debug(`CennznetApi::genericAssetReservedBalance freeBalance: ${reservedBalance}`);
       return reservedBalance;
     } catch (error) {
@@ -328,11 +403,19 @@ export default class CennzApi {
    * @param wallet
    * @returns {Promise<Object>}
    */
-  genericAssetTransfer = async (assetId: BN, toWalletAddress: string, fromWalletAddress: string, amount: BN, wallet): Promise<Object> => {
+  genericAssetTransfer = async (
+    assetId: BN,
+    toWalletAddress: string,
+    fromWalletAddress: string,
+    amount: BN,
+    wallet
+  ): Promise<Object> => {
     Logger.debug('CennznetApi::genericAssetTransfer called');
     try {
       this.api.setSigner(wallet);
-      const tx = await this.api.tx.genericAsset.transfer(assetId, fromWalletAddress, amount).send({from: toWalletAddress});
+      const tx = await this.api.tx.genericAsset
+        .transfer(assetId, fromWalletAddress, amount)
+        .send({ from: toWalletAddress });
       this.api.setSigner(null);
       Logger.debug(`CennznetApi::genericAssetTransfer tx: ${tx}`);
       return tx;
@@ -340,6 +423,5 @@ export default class CennzApi {
       Logger.error('CennznetApi::genericAssetTransfer error: ' + stringifyError(error));
       throw new GenericApiError();
     }
-  }
-
+  };
 }

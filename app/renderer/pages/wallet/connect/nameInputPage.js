@@ -5,10 +5,10 @@ import NameInput from 'renderer/pages/wallet/NameInput';
 
 const NameInputPage = ({
   existingWallets,
-  setWalletName,
+  onCreateWallet,
   walletName,
-  setIsOpenPenPrepareModal,
-  ...otherProps
+  setWalletName,
+  mnemonic,
 }) => {
   return (
     <React.Fragment>
@@ -17,7 +17,11 @@ const NameInputPage = ({
         existingWallets={existingWallets}
         onSubmit={value => {
           console.log('onSubmitValue', value);
-          setWalletName(value);
+          onCreateWallet({
+            name: walletName,
+            mnemonic,
+            passphrase: '', // TODO: Grab value from users input
+          });
         }}
       />
     </React.Fragment>

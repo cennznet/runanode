@@ -3,13 +3,7 @@ import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import types from 'renderer/types';
 import { STEPS, WALLETTYPE } from './constants';
 
-const mapStateToProps = ({
-  nodeSystem: {
-    localNode: { chain },
-  },
-  localStorage: { WALLETS },
-}) => ({
-  networkName: chain,
+const mapStateToProps = ({ localStorage: { WALLETS } }) => ({
   existingWallets: WALLETS,
 });
 
@@ -17,8 +11,18 @@ const mapDispatchToProps = dispatch => ({
   onCreateWallet: payload => {
     dispatch({ type: types.walletCreate.requested, payload });
   },
-  onCreatePaperWallet: payload => {
-    dispatch({ type: types.walletPaperGenerate.requested, payload });
+
+  onValidateSKRWallet: async payload => {
+    try {
+      const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
+        mnemonic: payload,
+        passphrase: '',
+      });
+      console.log('wallet', wallet);
+      return { wallet };
+    } catch (error) {
+      return { checkWalletError: 'Invalid seed phrase' };
+    }
   },
 });
 
@@ -35,15 +39,15 @@ const enhance = compose(
       initWalletName = '',
     }) => ({
       step: initStep,
-      mnemonicString: initMnemonic,
       recoverWalletType: initRecoverWalletType,
       walletName: initWalletName,
+      mnemonic: initMnemonic,
     }),
     {
       moveToStep: () => val => ({ step: val }),
-      setMnemonicString: () => val => ({ mnemonicString: val }),
       setWalletName: () => val => ({ walletName: val }),
       setRecoverWalletType: () => val => ({ recoverWalletType: val }),
+      setMnemonic: () => val => ({ mnemonic: val }),
     }
   )
 );
