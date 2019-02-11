@@ -65,4 +65,43 @@ const resetLocalStorageEpic = action$ =>
     })
   );
 
-export default [getStorageEpic, setStorageEpic, clearStorageEpic, resetLocalStorageEpic];
+const syncWalletDataEpic = action$ =>
+  action$.pipe(
+    ofType(types.syncWalletData.requested),
+    mergeMap(async ({ payload }) => {
+      console.log(`syncWalletDataEpic`);
+      let wallets = await getStorage(storageKeys.WALLETS);
+      if (wallets === null) {
+        wallets = [];
+      }
+
+      const myWallet = wallets.find(x => x.id === payload.id);
+      if(myWallet) {
+        console.log(`myWallet: ${myWallet}`);
+        const myWalletIndex = wallets.findIndex(x => x.id === payload.id);
+        console.log(`myWalletIndex: ${myWalletIndex}`);
+        const syncedWallet = await window.odin.api.cennz.syncWalletData(myWallet);
+        wallets[myWalletIndex] = syncedWallet;
+      }
+      // const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
+      //   name,
+      //   mnemonic,
+      //   passphrase: passphrase || '',
+      // });
+      //
+      // const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
+      // const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
+      // wallet.wallet.walletAddress = walletAddress;
+      //
+      // // sync wallet data
+      // const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
+      // wallets.push(syncedWallet);
+      // return EMPTY;
+      return {
+        type: types.walletCreate.completed,
+        payload: { wallets },
+      };
+    })
+  );
+
+export default [getStorageEpic, setStorageEpic, clearStorageEpic, resetLocalStorageEpic, syncWalletDataEpic];
