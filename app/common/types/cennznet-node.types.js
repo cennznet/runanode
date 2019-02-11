@@ -32,6 +32,9 @@ export type NetworkNames =
   | 'staging'
   | 'testnet'
   | 'development'
+  | 'dev'
+  | 'kauri' | 'kauri-latest'
+  | 'rimu' | 'rimu-latest'
   | 'cennznet-dev'
   | 'cennznet-uat'
   | 'local-testnet'
@@ -44,6 +47,10 @@ export const NetworkNameOptions = {
   staging: 'staging',
   testnet: 'testnet',
   development: 'development',
+  CENNZNET_KAURI: 'kauri',
+  CENNZNET_KAURI_LATEST: 'kauri-latest',
+  CENNZNET_RIMU: 'rimu',
+  CENNZNET_RIMU_LATEST: 'rimu-latest',
   CENNZNET_DEV: 'cennznet-dev',
   CENNZNET_UAT: 'cennznet-uat',
   LOCAL_TESTNET: 'local-testnet',

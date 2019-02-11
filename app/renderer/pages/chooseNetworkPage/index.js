@@ -44,9 +44,11 @@ const ButtonWrapper = styled.div`
 // TODO: Keep label the same as loaclNode-chain
 // TODO: Find a place to place variable
 export const NETWORK_OPTIONS = [
-  { label: 'CENNZnet DEV', value: NetworkNameOptions.CENNZNET_DEV },
-  { label: 'CENNZnet UAT', value: NetworkNameOptions.CENNZNET_UAT },
-  { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
+  // { label: 'CENNZnet DEV(OLD)', value: NetworkNameOptions.CENNZNET_DEV },
+  // { label: 'CENNZnet UAT(OLD)', value: NetworkNameOptions.CENNZNET_UAT },
+  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
+  { label: 'CENNZnet RIMU(UAT)', value: NetworkNameOptions.CENNZNET_RIMU },// TODO should we add *-latest runtime option?
+  { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET }, // TODO hide for non-DEV mode
 ];
 
 export const getNetworkOptionPair = (value, param = 'value') =>

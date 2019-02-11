@@ -1,10 +1,13 @@
 import React from 'react';
+import BN from 'bn.js';
+
 import Button from 'components/Button';
 import { MainContent } from 'components/layout';
 import MainLayout from 'renderer/components/layout/MainLayout';
 import styled from 'styled-components';
 import * as colors from '../../theme/colors';
 import withContainer from './dev.container';
+
 
 const PageTitle = styled.div`
   color: ${colors.N0};
@@ -38,6 +41,7 @@ const DevPage = ({
   syncStream,
   syncRemoteStream,
   networkStatusStore,
+  onTransfer,
 }) => {
   const {
     localNode: { chain },
@@ -114,6 +118,25 @@ const DevPage = ({
             )}>
             Create Paper Wallet
           </Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onTransfer({
+            assetId: new BN('0', 10),
+            fromAddress: '5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE',
+            toAddress: '5F1XzAhQGNcapqm666QNU2cMUnj9DRAKB6vGXoVTkxWMLhPs',
+            amount: new BN('13', 10),
+            wallet: window.odin.store.getState().localStorage.WALLETS[0].wallet,
+          })}>
+            Transfer
+          </Button>
+          {/*From Address(BOB):*/}
+          {/*<input placeholder="" value="5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE"/>*/}
+          {/*To Address:*/}
+          {/*<input placeholder="" />*/}
+          {/*Token Type(Stake token):*/}
+          {/*<input placeholder="0" />*/}
+          {/*Amount:*/}
+          {/*<input placeholder="" />*/}
         </Flex>
       </MainContent>
     </MainLayout>
