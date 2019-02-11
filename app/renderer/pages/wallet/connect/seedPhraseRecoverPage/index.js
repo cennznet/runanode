@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
 import { seedPhraseFields } from './utils';
+import { STEPS } from '../constants';
 
 const SeedPhraseExplain = styled.div`
   display: flex;
@@ -22,16 +23,7 @@ const InputGroup = styled.div`
   flex-wrap: wrap;
 `;
 
-const seedPhraseRecoverPage = props => {
-  const {
-    mnemonicString,
-    walletName,
-    onCreateWallet,
-    isStoreWarningModalOpen,
-    setStoreWarningModalOpen,
-    nodeSystem,
-    setSeedPhaseDownloadModalOpen,
-  } = props;
+const seedPhraseRecoverPage = ({ onValidateSKRWallet, setMnemonic, moveToStep }) => {
   return (
     <React.Fragment>
       <PageHeading>Connect your existing wallet</PageHeading>
@@ -47,7 +39,15 @@ const seedPhraseRecoverPage = props => {
       </div>
       <Formik
         initialValues={{}}
-        onSubmit={value => console.log(value)}
+        onSubmit={async values => {
+          const mnemonic = Object.values(values).join();
+          setMnemonic(mnemonic);
+          const validateResult = await onValidateSKRWallet({ mnemonic });
+          const { wallet } = validateResult;
+          if (wallet) {
+            moveToStep(STEPS.NAME_INPUT);
+          }
+        }}
         render={({ handleSubmit, ...formProps }) => {
           const { isValid } = formProps;
           return (
@@ -66,7 +66,7 @@ const seedPhraseRecoverPage = props => {
               </InputGroup>
               <PageFooter>
                 <StartOverLink />
-                <Button type="submit" color="primary" disabled={!isValid}>
+                <Button type="submit" color="primary">
                   Next
                 </Button>
               </PageFooter>
@@ -79,3 +79,5 @@ const seedPhraseRecoverPage = props => {
 };
 
 export default seedPhraseRecoverPage;
+// disabled={!isValid}
+// : 'stone,more,endorse,silent,pluck,insect,obtain,chalk,grid,pass,season,truck',
