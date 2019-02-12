@@ -244,8 +244,6 @@ export default class CennzApi {
       await wallet.createNewVault(request.passphrase);
       await wallet.addAccount();
       const backup = await wallet.export(request.passphrase);
-      console.log(`createWalletWithHDKeyRing - wallet`, wallet);
-      console.log(`createWalletWithHDKeyRing - backup`, backup);
 
       const cennznetWallet = new CennznetWallet({
         id: uuid(),
@@ -263,7 +261,6 @@ export default class CennzApi {
 
   restoreWallet = async (request: RestoreHDKRWalletRequest): Promise<CennznetWallet> => {
     Logger.debug('CennznetApi::restoreWalletWithHDKeyRing called');
-    console.log('request.mnemonic', request.mnemonic);
     try {
       const wallet = new Wallet();
       await wallet.createNewVault(request.passphrase);
@@ -271,8 +268,6 @@ export default class CennzApi {
       wallet.createNewVaultAndRestore(request.passphrase, [keyring]);
       await wallet.addAccount();
       const backup = await wallet.export(request.passphrase);
-      console.log(`restoreWallet - wallet`, wallet);
-      console.log(`restoreWallet - backup`, backup);
 
       const cennznetWallet = new CennznetWallet({
         id: uuid(),
