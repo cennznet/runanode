@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import ColorPalette from './ColorPalette';
 import DemoCanvas from './DemoCanvas';
 import DemoSquare from './DemoSquare';
 import DemoFlex from './DemoFlex';
@@ -7,6 +10,9 @@ import CollapsibleMenu from '../app/renderer/components/layout/SubNav/Collapsibl
 import SimpleMenu from '../app/renderer/components/layout/SubNav/SimpleMenu';
 
 global.styled = styled;
+global.FontAwesomeIcon = FontAwesomeIcon;
+
+global.ColorPalette = ColorPalette;
 global.DemoCanvas = DemoCanvas;
 global.DemoSquare = DemoSquare;
 global.DemoFlex = DemoFlex;

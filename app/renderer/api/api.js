@@ -1,12 +1,12 @@
 // @flow
 import _ from 'lodash';
-import { SimpleKeyring, Wallet } from 'cennznet-wallet';
+import { SimpleKeyring, Wallet, HDKeyring } from 'cennznet-wallet';
 import { GenericAsset } from 'cennznet-generic-asset';
 import { Api } from 'cennznet-api';
 import uuid from 'uuid/v4';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
-import {u32, Balance, AccountId} from '@polkadot/types';
+import { u32, Balance, AccountId } from '@polkadot/types';
 import * as util from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring';
 
@@ -44,7 +44,8 @@ import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 import { environment } from '../../main/environment';
 import {
   PreDefinedAssetIdObj,
-  PreDefinedAssetIdName, CustomTokenAssetId,
+  PreDefinedAssetIdName,
+  CustomTokenAssetId,
 } from '../../common/types/cennznet-node.types';
 import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
@@ -233,6 +234,7 @@ export default class CennzApi {
       const keyring = new SimpleKeyring();
       await keyring.addFromMnemonic(request.mnemonic);
       await wallet.addKeyring(keyring);
+      const backup = await wallet.export(request.passphrase);
 
       const cennznetWallet = new CennznetWallet({
         id: uuid(),
@@ -244,6 +246,52 @@ export default class CennzApi {
       return cennznetWallet;
     } catch (error) {
       Logger.error('CennznetApi::createWalletWithSimpleKeyRing error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  createWalletWithHDKeyRing = async (request: CreateHDKRWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::createWalletWithHDKeyRing called');
+    try {
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      await wallet.addAccount();
+      const backup = await wallet.export(request.passphrase);
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        hasPassword: request.passphrase !== null,
+        wallet,
+      });
+      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      return cennznetWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  restoreWallet = async (request: RestoreHDKRWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::restoreWalletWithHDKeyRing called');
+    try {
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      const keyring = new HDKeyring({ mnemonic: request.mnemonic });
+      wallet.createNewVaultAndRestore(request.passphrase, [keyring]);
+      await wallet.addAccount();
+      const backup = await wallet.export(request.passphrase);
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        hasPassword: request.passphrase !== null,
+        wallet,
+      });
+      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      return cennznetWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -391,6 +439,5 @@ export default class CennzApi {
       Logger.error('CennznetApi::genericAssetTransfer error: ' + stringifyError(error));
       throw new GenericApiError();
     }
-  }
-
+  };
 }

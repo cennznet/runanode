@@ -2,10 +2,22 @@
 <DemoFlex>
   <Button>Primary</Button>
   <Button color="secondary">Secondary</Button>
+  <Button color="success">Success</Button>
   <Button color="warning">Warning</Button>
   <Button color="danger">Danger</Button>
-  <Button color="info">Info</Button>
   <Button disabled>Disabled</Button>
+</DemoFlex>
+```
+
+```jsx
+<DemoFlex>
+  <Button circle size="sm" outline color="success">
+    X
+  </Button>
+  <Button circle>X</Button>
+  <Button circle size="lg" color="warning">
+    X
+  </Button>
 </DemoFlex>
 ```
 
@@ -70,9 +82,6 @@
 
 ```jsx
 <DemoFlex>
-  <Button flat>Cancel</Button>
-  <Button block disabled>
-    I am a disabled block button
-  </Button>
+  <Button block>Block button</Button>
 </DemoFlex>
 ```

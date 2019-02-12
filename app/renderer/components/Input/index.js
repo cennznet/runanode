@@ -12,15 +12,10 @@ const InputWrapper = styled.div`
 `;
 
 const renderWithAffix = props => {
-  const { children, prefix, suffix } = props;
+  const { children, prefix, suffix, valid } = props;
+
   return (
-    <Fragment>
-      {prefix || suffix ? (
-        <InputAffix {...{ prefix, suffix }}>{children || <InputCore {...props} />}</InputAffix>
-      ) : (
-        <Fragment>{children || <InputCore {...props} />}</Fragment>
-      )}
-    </Fragment>
+    <InputAffix {...{ prefix, suffix, valid }}>{children || <InputCore {...props} />}</InputAffix>
   );
 };
 
