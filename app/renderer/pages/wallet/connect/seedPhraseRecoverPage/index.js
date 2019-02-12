@@ -5,13 +5,14 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
+import { colors } from 'renderer/theme';
 import { recoverySeedPhrases } from './utils';
 import { STEPS, WALLETTYPE } from '../constants';
 
 const ReocveryOptionWrapper = styled.div`
   flex-direction: column;
   padding: 1.5rem auto;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 0.8px solid rgba(255, 255, 255, 0.3);
 `;
 
 const ReocveryOptionTitle = styled.div`
@@ -21,6 +22,7 @@ const ReocveryOptionTitle = styled.div`
 
 const ReocveryOptionExplain = styled.div`
   margin: 0.5rem auto;
+  color: ${colors.textMuted};
 `;
 
 const RadioGroup = styled.div`
