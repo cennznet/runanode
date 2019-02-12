@@ -100,7 +100,7 @@ const seedPhraseRecoverPage = ({
         </ReocveryOptionWrapper>
         <SeedPhraseExplain>
           <div>Enter your recovery seed phrase</div>
-          <Hint tooltip={{}}>
+          <Hint tooltip={{ styles: { maxWidth: '25rem' } }}>
             <React.Fragment>
               <p>
                 The seed phrase is a set of words that allows you get access to funds of your
