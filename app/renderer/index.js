@@ -54,8 +54,9 @@ library.add(
   faExclamationCircle
 );
 
-const initializeOdin = () => {
+const initializeOdin = async () => {
   const api = setupApi();
+  await api.cennz.initCennzetApi();
   // const router = new RouterStore();
   // const history = syncHistoryWithStore(hashHistory, router);
   // const stores = setupStores(api, actions, router);

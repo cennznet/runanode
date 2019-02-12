@@ -85,10 +85,12 @@ const syncWalletDataEpic = action$ =>
         Logger.debug(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
         wallets[myWalletIndex] = syncedWallet;
       }
-      return {
-        type: types.syncWalletData.completed,
-        payload: { wallets },
-      };
+      return (
+        {
+          type: types.setStorage.requested,
+          payload: { key: storageKeys.WALLETS, value: wallets },
+        }
+      );
     })
   );
 

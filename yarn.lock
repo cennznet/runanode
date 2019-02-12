@@ -3623,6 +3623,15 @@ cennznet-api@0.6.0:
     cennznet-types "^0.6.0"
     eventemitter3 "^3.1.0"
 
+cennznet-generic-asset@^0.1.5:
+  version "0.1.5"
+  resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-generic-asset/cennznet-generic-asset-0.1.5#6c49226e2500af2f021e7f65b24fca17f2f1cf7c"
+  integrity sha1-bEkibiUAry8CHn9lsk/KF/Lxz3w=
+  dependencies:
+    "@polkadot/keyring" "^0.33.36"
+    "@polkadot/util" "^0.33.36"
+    "@polkadot/util-crypto" "^0.33.36"
+
 cennznet-runtime-types@^0.6.0:
   version "0.6.0"
   resolved "https://npm-proxy.fury.io/centrality/~/d/cennznet-runtime-types/cennznet-runtime-types-0.6.0#990b0c5e61dcd636693d3555a7837adc8a6c5271"
