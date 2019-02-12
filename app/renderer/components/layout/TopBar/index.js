@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import SVGInline from 'react-svg-inline';
 import { colors } from 'renderer/theme';
-import logoImg from 'renderer/assets/img/logo.png';
+import logoImg from 'renderer/assets/img/centrality-logo.svg';
 import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
 import { Select } from 'components';
 import SwitchNetworkWarningModal from './TopBarWarningModal';
@@ -27,35 +28,12 @@ const HeaderWrapper = styled.div`
   flex: 1 1 auto;
 `;
 
-const LogoContainer = styled.div`
-  margin-left: -1rem;
-`;
-
 const NetworkSectionContainer = styled.div`
   max-width: 50%;
 `;
 
 const NetworkSectionWrapper = styled.div`
   min-width: 12rem;
-`;
-
-const TopDownContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-`;
-
-const LogoImg = styled.img.attrs({
-  src: logoImg,
-  alt: 'logo',
-})`
-  with: 5rem;
-  height: 5rem;
-`;
-
-const HeaderSectionContainer = styled.div`
-  flex-direction: column;
 `;
 
 const TopBar = ({
@@ -88,11 +66,7 @@ const TopBar = ({
 
   return (
     <Wrapper>
-      <HeaderSectionContainer>
-        <LogoContainer>
-          <LogoImg />
-        </LogoContainer>
-      </HeaderSectionContainer>
+      <SVGInline svg={logoImg} />
       <HeaderWrapper>
         <NetworkSectionContainer>
           <NetworkSectionWrapper>
@@ -109,12 +83,10 @@ const TopBar = ({
             />
           </NetworkSectionWrapper>
         </NetworkSectionContainer>
-        <HeaderSectionContainer>
-          <TopDownContentWrapper>
-            <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
-            <div>(block speed: {blockSpeed})</div>
-          </TopDownContentWrapper>
-        </HeaderSectionContainer>
+        <div>
+          <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
+          <div>(block speed: {blockSpeed})</div>
+        </div>
       </HeaderWrapper>
       <SwitchNetworkWarningModal
         setIsOpenNetworkWarningModal={setIsOpenNetworkWarningModal}
