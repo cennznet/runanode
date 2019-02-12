@@ -34,7 +34,9 @@ const PortfolioSection = ({ account }) => {
             Reserved
           </div>
         ),
-        accessor: 'reservedBalance',
+        // accessor: 'reservedBalance',
+        id: 'reservedBalance',
+        accessor: d => d.reservedBalance.toString,
         Cell: row => {
           return (
             <div
@@ -61,7 +63,7 @@ const PortfolioSection = ({ account }) => {
           </div>
         ),
         id: 'freeBalance',
-        accessor: d => d.freeBalance,
+        accessor: d => d.freeBalance.toString,
         Cell: row => {
           return (
             <div
@@ -87,7 +89,8 @@ const PortfolioSection = ({ account }) => {
             Total balance
           </div>
         ),
-        accessor: 'totalBalance',
+        id: 'totalBalance',
+        accessor: d => d.totalBalance.toString,
         Cell: row => {
           return (
             <div
