@@ -29,7 +29,7 @@ export const createMainWindow = (isInSafeMode) => {
       enableRemoteModule: isTest,
       devTools: !(isDev && isRemoteDebug), // set devTools: false when is remote debug
       // preload: path.join(__dirname, '../../dist/preload.js')
-      preload: path.join(__dirname, isDev ? '../../dist/preload.js' : './dist/preload.js')
+      preload: path.join(__dirname, isDev ? '../../dist/preload.js' : './dist/preload.prod.js')
     }
   };
 
