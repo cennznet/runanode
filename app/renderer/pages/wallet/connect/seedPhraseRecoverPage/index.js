@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeading, PageFooter, Form, Radio } from 'components';
+import { Button, PageHeading, PageFooter, Form, Radio, Hint } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,21 +10,25 @@ import { STEPS, WALLETTYPE } from '../constants';
 
 const ReocveryOptionWrapper = styled.div`
   flex-direction: column;
-  padding: 1rem 0 2rem 0;
+  padding: 1.5rem auto;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 `;
 
-const ReocveryOptionExplain = styled.div`
+const ReocveryOptionTitle = styled.div`
   font-size: 16px;
   font-weight: 600;
 `;
 
+const ReocveryOptionExplain = styled.div`
+  margin: 0.5rem auto;
+`;
+
 const RadioGroup = styled.div`
   display: flex;
-  margin: 1rem auto;
+  margin: 2rem auto;
 
   label {
-    margin-right: 1rem;
+    width: 50%;
   }
 `;
 
@@ -71,16 +75,19 @@ const seedPhraseRecoverPage = ({
       <PageHeading>Connect your existing wallet</PageHeading>
       <div>
         <ReocveryOptionWrapper>
-          <ReocveryOptionExplain>
+          <ReocveryOptionTitle>
             Choose the type of the wallet you want to connect to
-          </ReocveryOptionExplain>
+          </ReocveryOptionTitle>
           <RadioGroup>
             <Radio
               selected={recoverWalletType}
               value={WALLETTYPE.HDWALLET}
               onChange={() => setRecoverWalletType(WALLETTYPE.HDWALLET)}
             >
-              HD Wallet
+              <div>HD Wallet</div>
+              <ReocveryOptionExplain>
+                Choose this one if you created it on CENNZNode
+              </ReocveryOptionExplain>
             </Radio>
             <Radio
               selected={recoverWalletType}
