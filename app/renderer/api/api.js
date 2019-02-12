@@ -53,9 +53,6 @@ const { buildLabel } = environment;
 
 // Generate toy keys from name, toy keys is only for play or tests
 const toyKeyringFromNames = (names: string[]) => {
-  console.log('toyKeyringFromNames:');
-  console.log(util);
-
   const seeds = names.map(name => util.stringToU8a(name.padEnd(32, ' ')));
   const keyring: any = new Keyring();
   seeds.forEach((seed, index) => {
