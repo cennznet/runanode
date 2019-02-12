@@ -24,6 +24,7 @@ const TextField = ({
   form, // Formik prop - { touched, errors }, also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   labelText,
   placeholder,
+  noTickShow,
 }) => {
   const { name, value, onChange, onBlur } = field;
   const { touched, errors } = form;
@@ -35,7 +36,7 @@ const TextField = ({
       <Input
         value={value || ''}
         {...{ placeholder, name, onChange, onBlur }}
-        valid={fieldTouched ? !fieldError : null}
+        valid={fieldTouched ? (noTickShow && !fieldError ? null : !fieldError) : null}
       />
     </Wrapper>
   );
