@@ -1,6 +1,6 @@
-const seedPhraseFields = Array.from(Array(12), (_, x) => ({
+const recoverySeedPhrases = Array.from(Array(12), (_, x) => ({
   index: x + 1,
-  name: `seedphrase-${x}`,
+  name: `recovery-seedphrase-${x}`,
 }));
 
-export { seedPhraseFields };
+export { recoverySeedPhrases };

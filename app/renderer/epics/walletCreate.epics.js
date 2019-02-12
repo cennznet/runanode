@@ -14,6 +14,7 @@ const createWalletWithSKREpic = action$ =>
     ofType(types.walletCreatWithSKR.requested),
     mergeMap(async ({ payload }) => {
       const { name, mnemonic, passphrase } = payload;
+      console.log('createWalletWithSKREpic', payload);
       let wallets = await getStorage(storageKeys.WALLETS);
       if (wallets === null) {
         wallets = [];
@@ -87,6 +88,7 @@ const restoreHDKRWalletEpic = action$ =>
   action$.pipe(
     ofType(types.walletRestoreWithHDKR.requested),
     mergeMap(async ({ payload }) => {
+      console.log('restoreHDKRWalletEpic', payload);
       const { name, mnemonic, passphrase } = payload;
       let wallets = await getStorage(storageKeys.WALLETS);
       if (wallets === null) {
