@@ -7,13 +7,15 @@ const mapStateToProps = ({
   nodeSystem: {
     localNode: { chain },
   },
+  localStorage: { WALLETS },
 }) => ({
   networkName: chain,
+  existingWallets: WALLETS,
 });
 
 const mapDispatchToProps = dispatch => ({
   onCreateWallet: payload => {
-    dispatch({ type: types.walletCreate.requested, payload });
+    dispatch({ type: types.walletCreatWithSKR.requested, payload });
   },
   onCreatePaperWallet: payload => {
     dispatch({ type: types.walletPaperGenerate.requested, payload });
