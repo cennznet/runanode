@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
-import { seedPhraseFields } from './utils';
+import { recoverySeedPhrases } from './utils';
 import { STEPS, WALLETTYPE } from '../constants';
 
 const ReocveryOptionWrapper = styled.div`
@@ -48,14 +48,18 @@ const seedPhraseRecoverPage = ({
   onValidateHDKRWallet,
 }) => {
   const onSubmitAction = async values => {
-    const mnemonic = Object.values(values).join();
-    setMnemonic(mnemonic);
-
     let checkedWallet = null;
     if (recoverWalletType === WALLETTYPE.HDWALLET) {
-      checkedWallet = await onValidateHDKRWallet({ mnemonic });
+      const mnemonic = Object.values(values).join(' ');
+      setMnemonic(mnemonic);
+      checkedWallet = await onValidateHDKRWallet(mnemonic);
     } else {
-      checkedWallet = await onValidateSKRWallet({ mnemonic });
+      // TODO:
+      // change this when tidy up the wallet creation flow
+      // api.createMnemonic
+      const mnemonic = Object.values(values).join(', ');
+      setMnemonic(mnemonic);
+      checkedWallet = await onValidateSKRWallet(mnemonic);
     }
     const { wallet } = checkedWallet;
     if (wallet) {
@@ -68,7 +72,7 @@ const seedPhraseRecoverPage = ({
       <div>
         <ReocveryOptionWrapper>
           <ReocveryOptionExplain>
-            Choose the type of the wallet you want to connect to{' '}
+            Choose the type of the wallet you want to connect to
           </ReocveryOptionExplain>
           <RadioGroup>
             <Radio
@@ -100,11 +104,11 @@ const seedPhraseRecoverPage = ({
           return (
             <Form onSubmit={handleSubmit}>
               <InputGroup>
-                {seedPhraseFields.map(seedPhraseField => (
+                {recoverySeedPhrases.map(seedPhrase => (
                   <Field
-                    key={seedPhraseField.name}
-                    name={seedPhraseField.name}
-                    labelText={seedPhraseField.index}
+                    key={seedPhrase.name}
+                    name={seedPhrase.name}
+                    labelText={seedPhrase.index}
                     placeholder="Enter word"
                     validate={values => !values && 'The field can not be null'}
                     component={WordField}
