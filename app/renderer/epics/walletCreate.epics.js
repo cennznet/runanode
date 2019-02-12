@@ -49,7 +49,7 @@ const storeWalletEpic = action$ =>
     mergeMap(({ payload: { wallets } }) => {
       return of({
         type: types.setStorage.requested,
-        payload: { key: storageKeys.WALLETS, value: wallets },
+        payload: { key: storageKeys.WALLETS, value: wallets, redirect: true },
       });
     })
   );
