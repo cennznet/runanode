@@ -4,6 +4,14 @@
 
 ### Features
 
+### Fixes
+
+### Improvements
+
+# v0.4.1 (2019.02.12)
+
+### Features
+
 - Add tabs and scrallable components
 - new data structure to store Wallets -> Accounts -> Assets
 - Connect wallet with both HDKeyring and SimpleKeyring

@@ -16,22 +16,22 @@ import { stringifyError } from '../../common/utils/logging';
 
 const { resourcesPath } = process;
 const distAssetsPath = path.join(resourcesPath, '..', 'dist/assets')
-// let paperWalletFontPath = path.join(distAssetsPath,'paper-wallet-certificate-font.ttf');
-let paperWalletPage1Path = path.join(distAssetsPath,'paper-wallet-certificate-page-1.png');
-let paperWalletPage1PathTestnet = path.join(distAssetsPath,'paper-wallet-certificate-page-1-testnet.png');
-let paperWalletPage2Path = path.join(distAssetsPath,'paper-wallet-certificate-page-2.png');
-let paperWalletPage2PathTestnet = path.join(distAssetsPath,'paper-wallet-certificate-page-2-testnet.png');
-let paperWalletCertificateBgPath = path.join(distAssetsPath,'paper-wallet-certificate-background.png');
-let paperWalletPageSinglePath = path.join(distAssetsPath,'paper-wallet-certificate-page-single.png');
+// let paperWalletFontPath = path.join(distAssetsPath,'paper-wallet-font.ttf');
+let paperWalletPage1Path = path.join(distAssetsPath,'paper-wallet-page-1.png');
+let paperWalletPage1PathTestnet = path.join(distAssetsPath,'paper-wallet-page-1-testnet.png');
+let paperWalletPage2Path = path.join(distAssetsPath,'paper-wallet-page-2.png');
+let paperWalletPage2PathTestnet = path.join(distAssetsPath,'paper-wallet-page-2-testnet.png');
+let paperWalletCertificateBgPath = path.join(distAssetsPath,'paper-wallet-background.png');
+let paperWalletPageSinglePath = path.join(distAssetsPath,'paper-wallet-page-single.png');
 
 if(!app.isPackaged) {
-  // paperWalletFontPath = '../../../app/common/assets/pdf/paper-wallet-certificate-font.ttf';
-  paperWalletPage1Path = '../../../app/common/assets/pdf/paper-wallet-certificate-page-1.png';
-  paperWalletPage1PathTestnet = '../../../app/common/assets/pdf/paper-wallet-certificate-page-1-testnet.png';
-  paperWalletPage2Path = '../../../app/common/assets/pdf/paper-wallet-certificate-page-2.png';
-  paperWalletPage2PathTestnet = '../../../app/common/assets/pdf/paper-wallet-certificate-page-2-testnet.png';
-  paperWalletCertificateBgPath = '../../../app/common/assets/pdf/paper-wallet-certificate-background.png';
-  paperWalletPageSinglePath = '../../../app/common/assets/pdf/paper-wallet-certificate-page-single.png';
+  // paperWalletFontPath = '../../../app/common/assets/pdf/paper-wallet-font.ttf';
+  paperWalletPage1Path = '../../../app/common/assets/pdf/paper-wallet-page-1.png';
+  paperWalletPage1PathTestnet = '../../../app/common/assets/pdf/paper-wallet-page-1-testnet.png';
+  paperWalletPage2Path = '../../../app/common/assets/pdf/paper-wallet-page-2.png';
+  paperWalletPage2PathTestnet = '../../../app/common/assets/pdf/paper-wallet-page-2-testnet.png';
+  paperWalletCertificateBgPath = '../../../app/common/assets/pdf/paper-wallet-background.png';
+  paperWalletPageSinglePath = '../../../app/common/assets/pdf/paper-wallet-page-single.png';
 }
 
 export const generatePaperWalletChannel: (
