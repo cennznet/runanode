@@ -1,21 +1,22 @@
 import React from 'react';
-
 import { MainContent, MainLayout } from 'components/layout';
-import { Button, PageHeading, PageFooter } from 'components';
-import StartOverLink from 'renderer/pages/wallet/StartOverLink';
+import { Button, PageHeading } from 'components';
+import withContainer from './container';
+import NameInputPage from './nameInputPage';
+import SeedPhraseRecoverPage from './seedPhraseRecoverPage';
+import { STEPS } from './constants';
 
-const WalletImportPage = () => (
-  // <MainLayout withoutSidebar>
-  <MainLayout>
-    <MainContent display="flex">
-      <PageHeading subHeading="This is sub heading">Connect walllet</PageHeading>
-      <div className="content">content</div>
-      <PageFooter>
-        <StartOverLink />
-        <Button>Next</Button>
-      </PageFooter>
-    </MainContent>
-  </MainLayout>
-);
+const WalletConnectPage = props => {
+  const { step, moveToStep, setMnemonicString } = props;
+  return (
+    // <MainLayout withoutSidebar>
+    <MainLayout>
+      <MainContent display="flex">
+        {step === STEPS.SEED_PHRASE_RECOVER && <SeedPhraseRecoverPage {...props} />}
+        {step === STEPS.NAME_INPUT && <NameInputPage {...props} />}
+      </MainContent>
+    </MainLayout>
+  );
+};
 
-export default WalletImportPage;
+export default withContainer(WalletConnectPage);

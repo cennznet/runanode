@@ -6,7 +6,7 @@ import { Formik, Field } from 'formik';
 import { Button, Form, Input, PageHeading, PageFooter } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import ROUTES from 'renderer/constants/routes';
-import WordField from './WordField';
+import WordField from 'renderer/pages/wallet/WordField';
 
 import { getQuizList } from './utils';
 

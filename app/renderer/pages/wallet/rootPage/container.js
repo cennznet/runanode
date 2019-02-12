@@ -16,7 +16,7 @@ const enhance = compose(
     componentDidMount() {
       const storedWallets = this.props.localStorage[storageKeys.WALLETS];
       const hasWallet = storedWallets && storedWallets.length > 0;
-      const firstWallet = storedWallets[0];
+      const firstWallet = hasWallet && storedWallets[0];
 
       const nextRoute = hasWallet
         ? `${ROUTES.WALLET.ROOT}/${firstWallet.id}/accounts/${Object.keys(firstWallet.accounts)[0]}`

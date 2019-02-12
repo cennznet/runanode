@@ -17,7 +17,7 @@ const Subheading = ({ account }) => {
 };
 
 const AccountDetails = ({ account }) => {
-  return (
+  return account ? (
     <React.Fragment>
       <PageHeading subHeading={<Subheading {...{ account }} />}>Account name here...</PageHeading>
       <div className="content">
@@ -32,6 +32,8 @@ const AccountDetails = ({ account }) => {
       </div>
       <PageFooter blank />
     </React.Fragment>
+  ) : (
+    <PageHeading subHeading="There is no accessible account"> Wallet account </PageHeading>
   );
 };
 
