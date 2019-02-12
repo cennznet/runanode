@@ -49,7 +49,7 @@ const storeWalletEpic = action$ =>
     mergeMap(({ payload: { wallets } }) => {
       return of({
         type: types.setStorage.requested,
-        payload: { key: storageKeys.WALLETS, value: wallets },
+        payload: { key: storageKeys.WALLETS, value: wallets, redirect: true },
       });
     })
   );
@@ -57,7 +57,7 @@ const storeWalletEpic = action$ =>
 // To ensure page redirection emitted after wallets storage being completed
 const pageRedirectionAfterWalletCreatedEpic = action$ =>
   action$.ofType(types.setStorage.completed).pipe(
-    filter(({ payload }) => payload.key === storageKeys.WALLETS),
+    filter(({ payload }) => payload.key === storageKeys.WALLETS && payload.redirect),
     mapTo({
       type: types.navigation.triggered,
       payload: ROUTES.WALLET.ROOT,

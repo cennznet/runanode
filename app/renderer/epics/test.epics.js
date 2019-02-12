@@ -17,7 +17,7 @@ const testPageEpic = action$ =>
 
 const walletCreateEpic = action$ =>
   action$.pipe(
-    ofType(types.walletCreate.triggered),
+    ofType(types.walletCreate.requested),
     mergeMap(async () => {
       Logger.info('walletCreateEpic');
       const mnemonic = window.odin.api.cennz.createMnemonic({num: 24});

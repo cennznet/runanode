@@ -31,7 +31,7 @@ export const prepareArgs = (config: LauncherConfig) => {
   // default chain
   const chainArgIndex = args.findIndex((item) => item === '--chain');
   if(chainArgIndex<0) {
-    args.push('--chain', NetworkNameOptions.CENNZNET_UAT);
+    args.push('--chain', NetworkNameOptions.CENNZNET_RIMU);
   }
   return args;
 };

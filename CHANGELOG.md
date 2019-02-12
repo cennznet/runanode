@@ -7,6 +7,7 @@
 - Add tabs and scrallable components
 - new data structure to store Wallets -> Accounts -> Assets
 - Connect wallet with both HDKeyring and SimpleKeyring
+- Able to display balance in Account detail page
 
 ### Fixes
 
@@ -18,6 +19,7 @@
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
 - Improved styleguide
+- upgrade to Rimu CENNZNETNode
 
 # v0.3.1 (2019.01.31)
 

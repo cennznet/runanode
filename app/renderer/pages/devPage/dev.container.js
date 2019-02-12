@@ -87,10 +87,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.resetLocalStorage.triggered });
   },
   onWalletCreate: () => {
-    dispatch({ type: types.walletCreate.triggered });
+    dispatch({ type: types.walletCreate.requested });
   },
   onWalletPaperGenerate: ( payload ) => {
     dispatch({ type: types.walletPaperGenerate.requested, payload });
+  },
+  onTransfer: ( payload ) => {
+    console.log(`onTransfer: ${payload}`);
+    window.odin.api.cennz.doGenericAssetTransfer(payload.assetId, payload.fromWalletAddress, payload.toAddress, payload.amoumt, payload.wallet);
   },
 });
 
