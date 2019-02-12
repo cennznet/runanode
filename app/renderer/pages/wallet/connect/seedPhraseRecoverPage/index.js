@@ -112,6 +112,7 @@ const seedPhraseRecoverPage = ({
                     placeholder="Enter word"
                     validate={values => !values && 'The field can not be null'}
                     component={WordField}
+                    noTickShow
                   />
                 ))}
               </InputGroup>
