@@ -1,4 +1,6 @@
 ```jsx
+const { faPlus } = require('@fortawesome/free-solid-svg-icons/faPlus');
+
 const DemoSubNav = styled(SubNav)`
   height: 20rem;
 `;
@@ -56,7 +58,13 @@ const navItems = [
 ];
 
 <DemoFlex justifyContent="space-between">
-  <DemoSubNav>
+  <DemoSubNav
+    footer={
+      <Button circle>
+        <FontAwesomeIcon style={{ width: '14px', height: '14px' }} icon={faPlus} />
+      </Button>
+    }
+  >
     <CollapsibleMenu menuList={menuList} isInsideRouter={false} />
   </DemoSubNav>
   <DemoSubNav>

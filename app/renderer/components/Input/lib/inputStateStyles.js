@@ -20,7 +20,7 @@ const inputStateStyles = (
 
   &:focus {
     outline: none;
-    border: ${`1px solid ${p.readOnly ? p.theme.colors.border : p.styles.focusBorderColor}`};
+    border: ${`1px solid ${p.readOnly ? p.theme.colors.border : getInputBorderColor(p)}`};
   }
 
   &:disabled {

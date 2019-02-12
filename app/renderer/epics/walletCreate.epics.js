@@ -9,9 +9,9 @@ import { getStorage, storageKeys } from '../api/utils/storage';
 import { Logger } from '../utils/logging';
 import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 
-const createWalletEpic = action$ =>
+const createWalletWithSKREpic = action$ =>
   action$.pipe(
-    ofType(types.walletCreate.requested),
+    ofType(types.walletCreatWithSKR.requested),
     mergeMap(async ({ payload }) => {
       const { name, mnemonic, passphrase } = payload;
       let wallets = await getStorage(storageKeys.WALLETS);
@@ -33,7 +33,7 @@ const createWalletEpic = action$ =>
       wallets.push(syncedWallet);
 
       return {
-        type: types.walletCreate.completed,
+        type: types.walletCreatWithSKR.completed,
         payload: { wallets },
       };
     })
@@ -41,7 +41,11 @@ const createWalletEpic = action$ =>
 
 const storeWalletEpic = action$ =>
   action$.pipe(
-    ofType(types.walletCreate.completed),
+    filter(
+      action =>
+        action.type === types.walletCreatWithSKR.completed ||
+        action.type === types.walletRestoreWithHDKR.completed
+    ),
     mergeMap(({ payload: { wallets } }) => {
       return of({
         type: types.setStorage.requested,
@@ -79,4 +83,40 @@ const walletPaperGenerateEpic = action$ =>
     })
   );
 
-export default [createWalletEpic, storeWalletEpic, pageRedirectionAfterWalletCreatedEpic, walletPaperGenerateEpic];
+const restoreHDKRWalletEpic = action$ =>
+  action$.pipe(
+    ofType(types.walletRestoreWithHDKR.requested),
+    mergeMap(async ({ payload }) => {
+      const { name, mnemonic, passphrase } = payload;
+      let wallets = await getStorage(storageKeys.WALLETS);
+      if (wallets === null) {
+        wallets = [];
+      }
+      const wallet = await window.odin.api.cennz.restoreWallet({
+        name,
+        mnemonic,
+        passphrase: passphrase || '',
+      });
+
+      const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
+      const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
+      wallet.wallet.walletAddress = walletAddress;
+
+      // sync wallet data
+      const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
+      wallets.push(syncedWallet);
+
+      return {
+        type: types.walletRestoreWithHDKR.completed,
+        payload: { wallets },
+      };
+    })
+  );
+
+export default [
+  createWalletWithSKREpic,
+  storeWalletEpic,
+  pageRedirectionAfterWalletCreatedEpic,
+  walletPaperGenerateEpic,
+  restoreHDKRWalletEpic,
+];

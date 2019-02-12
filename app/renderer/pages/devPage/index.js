@@ -107,16 +107,43 @@ const DevPage = ({
           <Button onClick={() => onWalletCreate()}>Create Wallet</Button>
         </Flex>
         <Flex>
-          <Button onClick={() =>
-            onWalletPaperGenerate({
-                mnemonic: 'abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde',
+          <Button
+            onClick={() =>
+              onWalletPaperGenerate({
+                mnemonic:
+                  'abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde',
                 address: 'Wallet address',
                 name: 'Wallet Name',
                 networkName: 'Network Name',
                 isMainnet: true,
-              },
-            )}>
+              })
+            }
+          >
             Create Paper Wallet
+          </Button>
+        </Flex>
+        <Flex>
+          <Button
+            onClick={() =>
+              window.odin.api.cennz.createWalletWithHDKeyRing({
+                passphrase: '',
+              })
+            }
+          >
+            Create HD Wallet
+          </Button>
+        </Flex>
+        <Flex>
+          <Button
+            onClick={() =>
+              window.odin.api.cennz.restoreWallet({
+                mnemonic:
+                  'dove pull aerobic reason husband electric egg ceiling castle swear tank proud',
+                passphrase: '',
+              })
+            }
+          >
+            Restore HD Wallet
           </Button>
         </Flex>
         <Flex>
