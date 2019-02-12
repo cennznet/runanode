@@ -7,6 +7,7 @@ const Tooltip = styled(ReactTooltip)`
     font-size: 12px;
     color: ${colors.N0};
     min-width: ${p => p.styles.minWidth};
+    max-width: ${p => p.styles.maxWidth};
     padding: 0.5rem;
     opacity: 1;
     transform: none;
@@ -35,6 +36,7 @@ Tooltip.defaultProps = {
   effect: 'solid',
   styles: {
     minWidth: '0',
+    maxWidth: '25rem',
   },
 };
 
