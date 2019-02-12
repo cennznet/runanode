@@ -24,11 +24,25 @@ const enhance = compose(
     componentDidMount() {
       Logger.debug('componentDidMount');
       Logger.debug(this.props);
+
+      // sync wallet data on page load
       const { onSyncWalletData, match, wallets } = this.props;
       const { walletId, accountPublicAddress } = match.params;
       const wallet = R.find(R.propEq('id', walletId))(wallets);
       onSyncWalletData({ id: walletId, wallet });
     },
+
+    componentDidUpdate(prevProps) {
+
+      // sync wallet data when nav to different account
+      if (this.props.match.params.walletId !== prevProps.match.params.walletId) {
+        Logger.debug('sync wallet data on different wallet Id');
+        const { onSyncWalletData, match, wallets } = this.props;
+        const { walletId, accountPublicAddress } = match.params;
+        const wallet = R.find(R.propEq('id', walletId))(wallets);
+        onSyncWalletData({ id: walletId, wallet });
+      }
+    }
   })
 );
 

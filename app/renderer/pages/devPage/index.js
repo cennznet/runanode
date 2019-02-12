@@ -129,14 +129,6 @@ const DevPage = ({
           })}>
             Transfer
           </Button>
-          {/*From Address(BOB):*/}
-          {/*<input placeholder="" value="5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE"/>*/}
-          {/*To Address:*/}
-          {/*<input placeholder="" />*/}
-          {/*Token Type(Stake token):*/}
-          {/*<input placeholder="0" />*/}
-          {/*Amount:*/}
-          {/*<input placeholder="" />*/}
         </Flex>
       </MainContent>
     </MainLayout>
