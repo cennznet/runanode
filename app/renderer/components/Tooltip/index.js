@@ -36,7 +36,6 @@ Tooltip.defaultProps = {
   effect: 'solid',
   styles: {
     minWidth: '0',
-    maxWidth: '25rem',
   },
 };
 

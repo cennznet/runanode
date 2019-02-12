@@ -142,6 +142,7 @@
     "react-select": "^2.2.0",
     "react-svg-inline": "2.1.1",
     "react-table": "^6.9.0",
+    "react-toastify": "4.5.2",
     "react-toggle": "^4.0.2",
     "react-tooltip": "^3.9.2",
     "recompose": "^0.30.0",
