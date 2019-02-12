@@ -26,7 +26,7 @@ import App from './App';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
 
-store.dispatch({ type: types.resetLocalStorage.triggered });
+// store.dispatch({ type: types.resetLocalStorage.triggered });
 store.dispatch({ type: types.init.triggered });
 
 // import utils from './utils';
@@ -58,8 +58,9 @@ library.add(
   faWallet
 );
 
-const initializeOdin = () => {
+const initializeOdin = async () => {
   const api = setupApi();
+  await api.cennz.initCennzetApi();
   // const router = new RouterStore();
   // const history = syncHistoryWithStore(hashHistory, router);
   // const stores = setupStores(api, actions, router);

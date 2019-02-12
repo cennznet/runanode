@@ -4,6 +4,7 @@ import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys, getStorage, setStorage, clearStorage } from 'renderer/api/utils/storage';
+import { Logger } from 'renderer/utils/logging';
 
 const getStorageEpic = action$ =>
   action$.pipe(

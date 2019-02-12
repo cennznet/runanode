@@ -4,6 +4,7 @@ import CennznetWalletAsset from './CennznetWalletAsset';
 
 export default class CennznetWalletAccount {
   address: string;
+  freeBalance: BN;
   assets: Map<BN, CennznetWalletAsset>;
 
   constructor(data: {
