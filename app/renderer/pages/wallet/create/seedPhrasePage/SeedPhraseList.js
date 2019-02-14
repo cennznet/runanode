@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
+import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 
 import { colors } from 'renderer/theme';
 
@@ -33,7 +34,7 @@ const Word = ({ index, children }) => {
 
 const SeedPhraseList = ({ mnemonicString }) => (
   <Wrapper>
-    {mnemonicString.split(' ').map((word, i) => (
+    {mnemonicString.split(MNEMONIC_RULE).map((word, i) => (
       <Word key={uuid()} index={i + 1}>
         {word}
       </Word>
