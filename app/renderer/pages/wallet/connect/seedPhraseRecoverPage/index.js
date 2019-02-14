@@ -63,7 +63,7 @@ const seedPhraseRecoverPage = ({
       // TODO:
       // change this when tidy up the wallet creation flow
       // api.createMnemonic
-      const mnemonic = Object.values(values).join(', ');
+      const mnemonic = Object.values(values).join(' ');
       setMnemonic(mnemonic);
       checkedWallet = await onValidateSKRWallet(mnemonic);
     }

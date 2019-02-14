@@ -15,10 +15,16 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => ({
   onCreateWallet: payload => {
-    dispatch({ type: types.walletCreatWithSKR.requested, payload });
+    console.log('onCreateWallet - payload', payload);
+    return window.odin.api.cennz.createWalletWithHDKeyRing(payload);
   },
+
   onCreatePaperWallet: payload => {
     dispatch({ type: types.walletPaperGenerate.requested, payload });
+  },
+
+  onCompleteWalletCreation: payload => {
+    dispatch({ type: types.walletCreatWithHDKR.requested, payload });
   },
 });
 
@@ -34,17 +40,26 @@ const enhance = compose(
       initMnemonic = '',
       initWalletName = '',
       initIsOpenPenPrepareModal = false,
+      initError = null,
+      initWallet = null,
     }) => ({
       step: initStep,
       mnemonicString: initMnemonic,
       walletName: initWalletName,
       isOpenPenPrepareModal: initIsOpenPenPrepareModal,
+      error: initError,
+      wallet: initWallet,
     }),
     {
       moveToStep: () => val => ({ step: val }),
       setMnemonicString: () => val => ({ mnemonicString: val }),
-      setWalletName: () => val => ({ walletName: val }),
+      setWalletName: () => val => {
+        console.log('setWalletName');
+        return { walletName: val };
+      },
       setIsOpenPenPrepareModal: () => val => ({ isOpenPenPrepareModal: val }),
+      setError: () => val => ({ error: val }),
+      setWallet: () => val => ({ wallet: val }),
     }
   )
 );
