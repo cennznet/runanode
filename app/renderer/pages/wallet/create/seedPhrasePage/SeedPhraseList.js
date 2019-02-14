@@ -33,7 +33,7 @@ const Word = ({ index, children }) => {
 
 const SeedPhraseList = ({ mnemonicString }) => (
   <Wrapper>
-    {mnemonicString.split(', ').map((word, i) => (
+    {mnemonicString.split(' ').map((word, i) => (
       <Word key={uuid()} index={i + 1}>
         {word}
       </Word>

@@ -21,7 +21,11 @@ const NameInputPage = ({
           setIsOpenPenPrepareModal(true);
         }}
       />
-      <GetReadyWarningModal setIsOpenPenPrepareModal={setIsOpenPenPrepareModal} {...otherProps} />
+      <GetReadyWarningModal
+        walletName={walletName}
+        setIsOpenPenPrepareModal={setIsOpenPenPrepareModal}
+        {...otherProps}
+      />
     </React.Fragment>
   );
 };

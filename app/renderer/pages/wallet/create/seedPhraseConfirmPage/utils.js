@@ -14,7 +14,7 @@ const shuffleArray = array => {
 
 export const getQuizList = mnemonicString => {
   return shuffleArray(
-    mnemonicString.split(', ').map((str, i) => {
+    mnemonicString.split(' ').map((str, i) => {
       return {
         name: uuid(),
         index: i + 1,
