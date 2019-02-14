@@ -29,7 +29,6 @@ const GetReadyWarningModal = ({
   setWallet,
 }) => {
   const onClickButton = async () => {
-    console.log('walletName', walletName);
     const wallet = await onCreateWallet({
       name: walletName,
       passphrase: '',

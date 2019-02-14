@@ -12,6 +12,7 @@ import { Keyring } from '@polkadot/keyring';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
+import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
 
@@ -113,7 +114,7 @@ export default class CennzApi {
     await generatePaperWalletChannel.send({
       address: request.address,
       filePath,
-      mnemonics: request.mnemonic.split(' '),
+      mnemonics: request.mnemonic.split(MNEMONIC_RULE),
       isMainnet: true,
       networkName: request.networkName,
       buildLabel,
@@ -313,8 +314,6 @@ export default class CennzApi {
       wallet.createNewVaultAndRestore(request.passphrase, [keyring]);
       await wallet.addAccount();
       const backup = await wallet.export(request.passphrase);
-      console.log('RestoreHDKRWalletRequest', wallet);
-      console.log('RestoreHDKRWalletRequest - backup', backup);
 
       const cennznetWallet = new CennznetWallet({
         id: uuid(),
