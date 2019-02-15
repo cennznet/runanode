@@ -287,8 +287,6 @@ export default class CennzApi {
       await wallet.addAccount();
       const exportedWallet = await wallet.export(request.passphrase);
       const mnemonic = exportedWallet && exportedWallet[0].data.mnemonic;
-      console.log('createWalletWithHDKeyRing', wallet);
-      console.log('createWalletWithHDKeyRing - backup', exportedWallet);
 
       const cennznetWallet = new CennznetWallet({
         id: uuid(),
