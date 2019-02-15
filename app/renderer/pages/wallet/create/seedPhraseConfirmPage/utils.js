@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4';
+import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 
 const shuffleArray = array => {
   let counter = array.length;
@@ -14,7 +15,7 @@ const shuffleArray = array => {
 
 export const getQuizList = mnemonicString => {
   return shuffleArray(
-    mnemonicString.split(', ').map((str, i) => {
+    mnemonicString.split(MNEMONIC_RULE).map((str, i) => {
       return {
         name: uuid(),
         index: i + 1,
