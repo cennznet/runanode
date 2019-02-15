@@ -1,7 +1,7 @@
 const localURL = 'http://localhost:9933';
 const remoteURL = 'http://cennznet-node-0.centrality.cloud:9933';
 const localStreamURL = 'ws://localhost:9944';
-const remoteStreamURL = 'ws://cennznet-node-0.centrality.cloud:9944';
+const remoteStreamURL = 'wss://cennznet-node-0.centrality.cloud:9944';
 const env = 'dev';
 
 const config = {

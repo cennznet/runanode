@@ -31,6 +31,7 @@ const actionTypes = {
   getStorage: apiActionTypes('get_storage'),
   clearStorage: apiActionTypes('clear_storage'),
   syncWalletData: apiActionTypes('sync_wallet_data'),
+  transfer: apiActionTypes('transfer'),
 
   /* Network */
   networkStateChange: triggerActionTypes('network_state_change'),
