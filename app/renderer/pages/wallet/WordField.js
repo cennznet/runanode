@@ -30,11 +30,12 @@ const TextField = ({
   const { touched, errors } = form;
   const fieldError = R.path(R.split('.')(name))(errors);
   const fieldTouched = R.path(R.split('.')(name))(touched);
+  const recomposedValue = value && value.toLowerCase().trim();
   return (
     <Wrapper>
       {labelText && <Label htmlFor={name}>{labelText}</Label>}
       <Input
-        value={value || ''}
+        value={recomposedValue || ''}
         {...{ placeholder, name, onChange, onBlur }}
         valid={fieldTouched ? (noTickShow && !fieldError ? null : !fieldError) : null}
       />
