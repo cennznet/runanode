@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
 import { colors } from 'renderer/theme';
+import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 import { recoverySeedPhrases } from './utils';
 import { STEPS, WALLETTYPE } from '../constants';
 
@@ -53,18 +54,14 @@ const seedPhraseRecoverPage = ({
   setRecoverWalletType,
   onValidateHDKRWallet,
 }) => {
-  const onSubmitAction = async values => {
+  const onSubmitAction = async mnemonicInput => {
+    const mnemonic = Object.values(mnemonicInput).join(MNEMONIC_RULE);
+    setMnemonic(mnemonic);
     let checkedWallet = null;
+
     if (recoverWalletType === WALLETTYPE.HDWALLET) {
-      const mnemonic = Object.values(values).join(' ');
-      setMnemonic(mnemonic);
       checkedWallet = await onValidateHDKRWallet(mnemonic);
     } else {
-      // TODO:
-      // change this when tidy up the wallet creation flow
-      // api.createMnemonic
-      const mnemonic = Object.values(values).join(', ');
-      setMnemonic(mnemonic);
       checkedWallet = await onValidateSKRWallet(mnemonic);
     }
     const { wallet } = checkedWallet;

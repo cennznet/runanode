@@ -1,7 +1,5 @@
 // @flow
-import {
-  generateMnemonic
-} from 'renderer/utils/crypto';
+import { generateMnemonic } from 'renderer/utils/crypto';
 import config from 'renderer/utils/config';
 
 type MnemonicsParams = {
@@ -21,11 +19,8 @@ type MnemonicsParams = {
 //   scramblePaperWalletMnemonic(passphrase, scrambledInput)
 // );
 
-export const generateAccountMnemonics = (): Array<string> => (
-  generateMnemonic().split(' ')
-);
+export const generateAccountMnemonics = (): Array<string> => generateMnemonic().split(' ');
 
 // eslint-disable-next-line
-export const generateAdditionalMnemonics = (): Array<string> => (
-  generateMnemonic(config.app.PAPER_WALLET_WRITTEN_WORDS_COUNT).split(' ')
-);
+export const generateAdditionalMnemonics = (): Array<string> =>
+  generateMnemonic(config.app.PAPER_WALLET_WRITTEN_WORDS_COUNT).split(' ');

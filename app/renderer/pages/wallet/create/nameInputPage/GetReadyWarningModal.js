@@ -23,45 +23,64 @@ const GetReadyWarningModal = ({
   setIsOpenPenPrepareModal,
   setMnemonicString,
   moveToStep,
-}) => (
-  <Modal
-    isOpen={isOpenPenPrepareModal}
-    footer={
-      <ButtonGroup>
-        <Button flat color="nuetral" onClick={() => setIsOpenPenPrepareModal(false)}>
-          Go back
-        </Button>
-        <Button
-          style={{ marginLeft: '0.5rem' }}
-          color="warning"
-          onClick={() => {
-            const mnemonic = window.odin.api.cennz.createMnemonic({ num: 12 });
-            setMnemonicString(mnemonic);
-            setIsOpenPenPrepareModal(false);
-            moveToStep(STEPS.SEED_PHRASE);
-          }}
-        >
-          I am prepared
-        </Button>
-      </ButtonGroup>
+  setError,
+  onCreateWallet,
+  walletName,
+  setWallet,
+}) => {
+  const onClickButton = async () => {
+    const wallet = await onCreateWallet({
+      name: walletName,
+      passphrase: '',
+    });
+
+    setIsOpenPenPrepareModal(false);
+
+    if (wallet && wallet.id) {
+      const { mnemonic } = wallet;
+      setError(null);
+      setMnemonicString(mnemonic);
+
+      wallet.mnemonic = undefined; // Use delete cause slow performance
+      setWallet(wallet);
+      moveToStep(STEPS.SEED_PHRASE);
+    } else {
+      // TODO: Failed toaster and err field display
+      setError('Failed to create wallet, please try again');
     }
-  >
-    <PageHeading>Please prepare a pen and paper</PageHeading>
-    <ModalWarningWrapper>
-      <div>
-        <FontAwesomeIcon icon="exclamation-circle" size="sm" color={colors.warning} />
-      </div>
-      <ModalWarningDetails>
+  };
+
+  return (
+    <Modal
+      isOpen={isOpenPenPrepareModal}
+      footer={
+        <ButtonGroup>
+          <Button flat color="nuetral" onClick={() => setIsOpenPenPrepareModal(false)}>
+            Go back
+          </Button>
+          <Button style={{ marginLeft: '0.5rem' }} color="warning" onClick={() => onClickButton()}>
+            I am prepared
+          </Button>
+        </ButtonGroup>
+      }
+    >
+      <PageHeading>Please prepare a pen and paper</PageHeading>
+      <ModalWarningWrapper>
         <div>
-          In the next step, CENNZ node will generate a random seed phrase. It is essential that you
-          write this down and store it somewhere securely, like in a safe or safety deposit box. If
-          you lose access to your wallet, this seed phrase is the only way to recover yours funds.
-          Your seed phrase will only display once.
+          <FontAwesomeIcon icon="exclamation-circle" size="sm" color={colors.warning} />
         </div>
-        <div>For more information on how to keep your seed phrase safe click here</div>
-      </ModalWarningDetails>
-    </ModalWarningWrapper>
-  </Modal>
-);
+        <ModalWarningDetails>
+          <div>
+            In the next step, CENNZ node will generate a random seed phrase. It is essential that
+            you write this down and store it somewhere securely, like in a safe or safety deposit
+            box. If you lose access to your wallet, this seed phrase is the only way to recover
+            yours funds. Your seed phrase will only display once.
+          </div>
+          <div>For more information on how to keep your seed phrase safe click here</div>
+        </ModalWarningDetails>
+      </ModalWarningWrapper>
+    </Modal>
+  );
+};
 
 export default GetReadyWarningModal;

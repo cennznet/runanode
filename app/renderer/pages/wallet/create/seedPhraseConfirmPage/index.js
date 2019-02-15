@@ -17,16 +17,8 @@ const InputGroup = styled.div`
 `;
 
 const SeedPhraseQuizPage = props => {
-  const { onCreateWallet, walletName, mnemonicString } = props;
-  const quizList = getQuizList(mnemonicString);
-
-  const onSubmit = (values, actions) => {
-    onCreateWallet({
-      name: walletName,
-      mnemonic: mnemonicString,
-      passphrase: '', // TODO: Grab value from users input
-    });
-  };
+  const { mnemonicString, onCompleteWalletCreation, wallet } = props;
+  const quizList = mnemonicString && getQuizList(mnemonicString);
 
   return (
     <React.Fragment>
@@ -35,7 +27,7 @@ const SeedPhraseQuizPage = props => {
       </PageHeading>
       <Formik
         initialValues={{}}
-        {...{ onSubmit }}
+        onSubmit={() => onCompleteWalletCreation(wallet)}
         render={({ handleSubmit, ...formProps }) => {
           const { isValid } = formProps;
           return (

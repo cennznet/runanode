@@ -26,7 +26,7 @@ const createWalletWithSKREpic = action$ =>
 
       const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
       const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      wallet.wallet.walletAddress = walletAddress;
+      wallet.walletAddress = walletAddress;
 
       // sync wallet data
       const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
@@ -44,7 +44,8 @@ const storeWalletEpic = action$ =>
     filter(
       action =>
         action.type === types.walletCreatWithSKR.completed ||
-        action.type === types.walletRestoreWithHDKR.completed
+        action.type === types.walletRestoreWithHDKR.completed ||
+        action.type === types.walletCreatWithHDKR.completed
     ),
     mergeMap(({ payload: { wallets } }) => {
       return of({
@@ -100,7 +101,7 @@ const restoreHDKRWalletEpic = action$ =>
 
       const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
       const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      wallet.wallet.walletAddress = walletAddress;
+      wallet.walletAddress = walletAddress;
 
       // sync wallet data
       const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
@@ -113,10 +114,35 @@ const restoreHDKRWalletEpic = action$ =>
     })
   );
 
+const createHDKRWalletEpic = action$ =>
+  action$.pipe(
+    ofType(types.walletCreatWithHDKR.requested),
+    mergeMap(async ({ payload }) => {
+      const wallet = payload;
+      let wallets = await getStorage(storageKeys.WALLETS);
+      if (wallets === null) {
+        wallets = [];
+      }
+      const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
+      const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
+      wallet.walletAddress = walletAddress;
+
+      // sync wallet data
+      const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
+      wallets.push(syncedWallet);
+
+      return {
+        type: types.walletCreatWithHDKR.completed,
+        payload: { wallets },
+      };
+    })
+  );
+
 export default [
   createWalletWithSKREpic,
   storeWalletEpic,
   pageRedirectionAfterWalletCreatedEpic,
   walletPaperGenerateEpic,
   restoreHDKRWalletEpic,
+  createHDKRWalletEpic,
 ];
