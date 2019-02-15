@@ -3,6 +3,8 @@
 # vNext
 
 ### Features
+- able to send tx
+- add Yup validations for send tx
 
 ### Fixes
 

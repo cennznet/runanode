@@ -17,6 +17,11 @@ const mapDispatchToProps = dispatch => ({
     Logger.debug('onSyncWalletData');
     dispatch({ type: types.syncWalletData.requested, payload });
   },
+
+  onTransfer: payload => {
+    Logger.debug('onTransfer');
+    dispatch({ type: types.transfer.requested, payload });
+  }
 });
 
 const enhance = compose(

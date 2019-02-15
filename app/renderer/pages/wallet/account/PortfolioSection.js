@@ -9,13 +9,13 @@ const PortfolioSection = ({ account }) => {
   return <Table
     data={account && account.assets ? Object.values(account.assets) : [{}]}
     page={0}
-    pageSize={10}
+    pageSize={100}
     columns={[
       {
         Header: '',
         accessor: 'assetId',
         Cell: row => (
-          <img alt="" src={`data:image/png;base64, ${jdenticon.toPng(row.value.toString(10),200).toString('base64')}`} width="100rem"/>
+          <img alt="" src={`data:image/png;base64, ${jdenticon.toPng(row.value.toString(10),200).toString('base64')}`} width="50rem" />
         ),
       },
       {

@@ -160,7 +160,8 @@
     "transform-loader": "^0.2.4",
     "unorm": "^1.4.1",
     "uuid": "^3.3.2",
-    "wait-port": "^0.2.2"
+    "wait-port": "^0.2.2",
+    "yup": "^0.26.10"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

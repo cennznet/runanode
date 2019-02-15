@@ -394,7 +394,6 @@ export default class CennzApi {
     Logger.debug('CennznetApi::getGenericAssetFreeBalance called');
     try {
       const freeBalance = await this.ga.getFreeBalance(assetId, walletAddress);
-      console.log(freeBalance);
       Logger.debug(
         `CennznetApi::getGenericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`
       );
@@ -446,37 +445,39 @@ export default class CennzApi {
    * @param toWalletAddress
    * @param amount
    * @param wallet
-   * @returns {Promise<Object>}
+   * @returns {Promise<Hash>}
    */
-  doGenericAssetTransfer = async (
-    assetId: BN,
-    fromWalletAddress: string,
-    toWalletAddress: string,
-    amount: BN,
-    wallet
-  ): Promise<Object> => {
+  doGenericAssetTransfer = async (assetId: BN,  fromWalletAddress: string, toWalletAddress: string, amount: BN, wallet: CennznetWallet): Promise<Hash> => {
     Logger.debug('CennznetApi::doGenericAssetTransfer called');
+    Logger.debug(`assetId: ${assetId.toString(10)}, amount: ${amount.toString(10)}, fromWalletAddress: ${fromWalletAddress}, toWalletAddress: ${toWalletAddress}`);
     try {
-      await this.api.setSigner(wallet);
-      const tx = await this.ga
-        .transfer(assetId, fromWalletAddress, amount)
-        .send({ from: toWalletAddress });
-      // const tx = await this.api.tx.genericAsset.transfer(assetId, fromWalletAddress, amount).send({from: toWalletAddress});
-      // this.api.setSigner(null);
-      // const tx = await new Promise(resolve => {
-      //   let submittableExtrinsic = this.api.tx.genericAsset.transfer(assetId, toWalletAddress, amount);
-      //   debugger;
-      //   submittableExtrinsic.signAndSend(toyKeyring.bob, res => {
-      //     if (res.status.type === 'Finalised') {
-      //       console.log('tx finalized');
-      //       resolve();
-      //     }
-      //   });
+
+      // reload wallet object
+      const originalWallet = new Wallet({
+        vault: wallet.wallet.vault,
+        keyringTypes: [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
+      });
+      await originalWallet.unlock('');
+      Logger.debug('unlock');
+
+      this.api.setSigner(originalWallet);
+      Logger.debug('setSigner');
+
+      // const tx = await this.ga.transfer(assetId, toWalletAddress, amount).send({from: fromWalletAddress}, async (status) => {
+      //   console.log('transfer status');
+      //   console.log(status);
+      //   if (status.type === 'Finalised' && status.events !== undefined) {
+      //     console.log('success');
+      //     const balance: BN = await this.ga.getFreeBalance(assetId, toWalletAddress);
+      //     console.log('balance');
+      //     console.log(balance);
+      //   }s
       // });
-      Logger.debug(`CennznetApi::genericAssetTransfer tx: ${tx}`);
-      return tx;
+      const txHash = await this.ga.transfer(assetId, toWalletAddress, amount).send({from: fromWalletAddress});
+      Logger.debug(`CennznetApi::doGenericAssetTransfer txHash ${txHash}`);
+      return txHash;
     } catch (error) {
-      Logger.error('CennznetApi::genericAssetTransfer error: ' + stringifyError(error));
+      Logger.error('CennznetApi::doGenericAssetTransfer error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
