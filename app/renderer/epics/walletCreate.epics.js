@@ -26,7 +26,7 @@ const createWalletWithSKREpic = action$ =>
 
       const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
       const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      wallet.wallet.walletAddress = walletAddress;
+      wallet.walletAddress = walletAddress;
 
       // sync wallet data
       const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
@@ -101,7 +101,7 @@ const restoreHDKRWalletEpic = action$ =>
 
       const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
       const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      wallet.wallet.walletAddress = walletAddress;
+      wallet.walletAddress = walletAddress;
 
       // sync wallet data
       const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
@@ -125,7 +125,7 @@ const createHDKRWalletEpic = action$ =>
       }
       const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
       const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      wallet.wallet.walletAddress = walletAddress;
+      wallet.walletAddress = walletAddress;
 
       // sync wallet data
       const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
