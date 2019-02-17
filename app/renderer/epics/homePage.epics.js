@@ -20,10 +20,6 @@ const homePageLoadEpic = (action$, state$) =>
         return { type: types.navigation.triggered, payload: ROUTES.TERMS_OF_USE_ACCEPTANCE };
       }
 
-
-      console.log('homePageLoadEpic');
-      console.log(isNetworkRemembered);
-      console.log(selectedNetwork);
       if (isNetworkRemembered && selectedNetwork) {
         if (
           (selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) ||
