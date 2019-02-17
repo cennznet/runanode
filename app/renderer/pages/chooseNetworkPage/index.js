@@ -51,8 +51,9 @@ export const NETWORK_OPTIONS = [
   { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET }, // TODO hide for non-DEV mode
 ];
 
-export const getNetworkOptionPair = (value, param = 'value') =>
-  NETWORK_OPTIONS.find(option => option[param] === value);
+export const getNetworkOptionPair = (value, param = 'value') => {
+  return NETWORK_OPTIONS.find(option => option[param] === value);
+};
 
 const ChooseNetWork = ({
   selectedNetwork,

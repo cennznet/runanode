@@ -7,6 +7,7 @@
 - add Yup validations for send tx
 
 ### Fixes
+- fix switch network issues
 
 ### Improvements
 

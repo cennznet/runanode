@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
+
+import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import { PageHeading } from 'components';
 import ROUTES from 'renderer/constants/routes';
@@ -10,6 +12,7 @@ import { Logger } from 'renderer/utils/logging';
 import { storageKeys } from 'renderer/api/utils/storage';
 import Spinner from 'components/Spinner';
 import withContainer from './container';
+
 
 const SpinnerWrapper = styled.div`
   height: 100%;
@@ -57,7 +60,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
   const { localNode } = nodeSystem;
   const { chain } = localNode;
-  const isNetworkSwitched = selectedNetwork && selectedNetwork.label === chain;
+  const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
   if (!isNetworkSwitched) {
     return (
       <Layout defaultSidebar>

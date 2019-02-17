@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
+
+import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/centrality-logo.svg';
 import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
@@ -74,7 +76,7 @@ const TopBar = ({
               fontWeight="600"
               fontSize="16px"
               borderColor="transparent"
-              value={getNetworkOptionPair(networkName, 'label')}
+              value={getNetworkOptionPair(NetworkNameMapping[networkName], 'value')}
               onChange={selected => {
                 setIsOpenNetworkWarningModal(true);
                 setSelectedNetwork(selected);
