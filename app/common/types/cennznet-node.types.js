@@ -15,6 +15,12 @@ export const PreDefinedAssetIdName = {
   '100': 'Sylo Token',
 };
 
+// Network option to network name mapping, check cennznet-node chain_spec.rs cennznet_dev_config_latest and cennznet_uat_config_latest
+export const NetworkNameMapping = {
+  'Rimu CENNZnet': 'rimu',
+  'Kauri CENNZnet': 'kauri',
+};
+
 export const PreDefinedAssetIdObj = {
   STAKING_TOKEN: { ID: PreDefinedAssetId.stakingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], BN: new BN(PreDefinedAssetId.stakingToken, 10)},
   SPENDING_TOKEN: { ID: PreDefinedAssetId.spendingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], BN: new BN(PreDefinedAssetId.spendingToken, 10)},

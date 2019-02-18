@@ -7,6 +7,9 @@ import { Button, FileUploader, Select, PageHeading } from 'components';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import withContainer from './container';
+import { environment } from '../../../main/environment';
+
+const  { isDevOrDebugProd } = environment;
 
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
@@ -48,11 +51,15 @@ export const NETWORK_OPTIONS = [
   // { label: 'CENNZnet UAT(OLD)', value: NetworkNameOptions.CENNZNET_UAT },
   { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
   { label: 'CENNZnet RIMU(UAT)', value: NetworkNameOptions.CENNZNET_RIMU },// TODO should we add *-latest runtime option?
-  { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET }, // TODO hide for non-DEV mode
 ];
 
-export const getNetworkOptionPair = (value, param = 'value') =>
-  NETWORK_OPTIONS.find(option => option[param] === value);
+if(isDevOrDebugProd) {
+  NETWORK_OPTIONS.push({ label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET });
+}
+
+export const getNetworkOptionPair = (value, param = 'value') => {
+  return NETWORK_OPTIONS.find(option => option[param] === value);
+};
 
 const ChooseNetWork = ({
   selectedNetwork,
