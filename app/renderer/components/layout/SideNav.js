@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
+import { environment } from '../../../main/environment';
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,36 +51,43 @@ const IconWrapper = styled.div`
   text-align: center;
 `;
 
-const SideNav = () => (
-  <Wrapper>
-    <IconNav>
-      <TopIcons>
-        <IconLink to={ROUTES.WALLET.ROOT}>
-          <IconWrapper>
-            <FontAwesomeIcon icon="wallet" />
-            <IconText>Wallet</IconText>
-          </IconWrapper>
-        </IconLink>
-        <IconLink to={ROUTES.SETTINGS.ROOT}>
-          <IconWrapper>
-            <FontAwesomeIcon icon="cogs" />
-            <IconText>Settings</IconText>
-          </IconWrapper>
-        </IconLink>
-      </TopIcons>
-      <BottomIcons>
-        <IconLink to="/dev">
-          <FontAwesomeIcon icon={['fab', 'dev']} />
-        </IconLink>
-        <IconLink to="/syncNode">
-          <IconWrapper>
-            <FontAwesomeIcon icon="question-circle" />
-            <IconText>FAQ</IconText>
-          </IconWrapper>
-        </IconLink>
-      </BottomIcons>
-    </IconNav>
-  </Wrapper>
-);
+const SideNav = () => {
+  const  { isDevOrDebugProd } = environment;
+  return (
+    <Wrapper>
+      <IconNav>
+        <TopIcons>
+          <IconLink to={ROUTES.WALLET.ROOT}>
+            <IconWrapper>
+              <FontAwesomeIcon icon="wallet" />
+              <IconText>Wallet</IconText>
+            </IconWrapper>
+          </IconLink>
+          <IconLink to={ROUTES.SETTINGS.ROOT}>
+            <IconWrapper>
+              <FontAwesomeIcon icon="cogs" />
+              <IconText>Settings</IconText>
+            </IconWrapper>
+          </IconLink>
+        </TopIcons>
+        <BottomIcons>
+          {isDevOrDebugProd ?
+            <IconLink to="/dev">
+              <FontAwesomeIcon icon={['fab', 'dev']} />
+            </IconLink>
+            :
+            <div />
+          }
+          <IconLink to={ROUTES.TERMS_OF_USE_ACCEPTANCE}>
+            <IconWrapper>
+              <FontAwesomeIcon icon="question-circle" />
+              <IconText>FAQ</IconText>
+            </IconWrapper>
+          </IconLink>
+        </BottomIcons>
+      </IconNav>
+    </Wrapper>
+  );
+}
 
 export default SideNav;

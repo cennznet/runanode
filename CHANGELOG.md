@@ -7,8 +7,10 @@
 - add Yup validations for send tx
 
 ### Fixes
+- fix switch network issues
 
 ### Improvements
+- Make 'Local test net' optional
 
 # v0.4.1 (2019.02.12)
 
