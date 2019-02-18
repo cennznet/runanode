@@ -3,6 +3,7 @@ import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
 import ROUTES from 'renderer/constants/routes';
+import { walletType } from 'renderer/constants/wallet';
 import chainEpics from 'renderer/epics/chainEpics';
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
@@ -12,6 +13,12 @@ import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 const recomposeWallet = async (actionType, payload) => {
   const wallet = payload;
 
+  if (actionType === 'walletCreatWithSKR') {
+    wallet.type = walletType.SIMPLEWALLET;
+  } else {
+    wallet.type = walletType.HDWALLET;
+  }
+
   const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
   const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
   wallet.walletAddress = walletAddress;
@@ -19,6 +26,7 @@ const recomposeWallet = async (actionType, payload) => {
   // sync wallet data
   const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
 
+  // store new wallet into storage
   let wallets = await getStorage(storageKeys.WALLETS);
   if (wallets === null) {
     wallets = [];

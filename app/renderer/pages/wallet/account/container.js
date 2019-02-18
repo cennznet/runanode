@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import R from 'ramda';
 
-
 import types from 'renderer/types';
 import { storageKeys } from 'renderer/api/utils/storage';
 import history from 'renderer/history';
@@ -21,7 +20,11 @@ const mapDispatchToProps = dispatch => ({
   onTransfer: payload => {
     Logger.debug('onTransfer');
     dispatch({ type: types.transfer.requested, payload });
-  }
+  },
+
+  onAddAccount: payload => {
+    dispatch({ type: types.addAccount.requested, payload });
+  },
 });
 
 const enhance = compose(
@@ -38,7 +41,6 @@ const enhance = compose(
     },
 
     componentDidUpdate(prevProps) {
-
       // sync wallet data when nav to different account
       if (this.props.match.params.walletId !== prevProps.match.params.walletId) {
         Logger.debug('sync wallet data on different wallet Id');
@@ -47,7 +49,7 @@ const enhance = compose(
         const wallet = R.find(R.propEq('id', walletId))(wallets);
         onSyncWalletData({ id: walletId, wallet });
       }
-    }
+    },
   })
 );
 
