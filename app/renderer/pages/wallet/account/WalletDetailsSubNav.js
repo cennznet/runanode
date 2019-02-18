@@ -7,6 +7,7 @@ import { SubNav, CollapsibleMenu } from 'components/layout';
 import { Button } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import history from 'renderer/history';
+import { walletType } from 'renderer/constants/wallet';
 
 const tooltipId = uuid();
 
@@ -41,6 +42,7 @@ const WalletDetailsSubNav = ({ wallets, currentWallet }) => {
   const menuList = wallets.map(wallet => {
     return {
       title: wallet.name,
+      type: wallet.type,
       isTitleHighlight: wallet.id === currentWallet.id,
       tail: `(${Object.keys(wallet.accounts).length})`,
       navItems: Object.keys(wallet.accounts).map(address => {
@@ -50,7 +52,7 @@ const WalletDetailsSubNav = ({ wallets, currentWallet }) => {
           link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
         };
       }),
-      additionalItem,
+      additionalItem: wallet.type !== walletType.SIMPLEWALLET && additionalItem,
     };
   });
 
