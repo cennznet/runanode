@@ -5,11 +5,12 @@ import BN from 'bn.js';
 import * as Yup from 'yup';
 
 import {Button, Form, PageHeading, PageFooter, Select} from 'components';
-import StartOverLink from '../StartOverLink';
-import SelectField from '../SelectField';
-import TextField from '../TextField';
-import { PreDefinedAssetId, PreDefinedAssetIdName } from '../../../../common/types/cennznet-node.types';
-
+import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
+import StartOverLink from 'renderer/pages/wallet/StartOverLink';
+import SelectField from 'renderer/pages/wallet/SelectField';
+import TextField from 'renderer/pages/wallet/TextField';
+import TransferConfirmModal from './TransferConfirmModal';
+import TransferSentModal from './TransferSentModal';
 
 const InputGroup = styled.div`
   display: flex;
@@ -17,7 +18,12 @@ const InputGroup = styled.div`
   justify-content: space-between;
 `;
 
-const TransferSection = ({ account, onTransfer, currentWallet }) => {
+const TransferSection = ({ account, onTransfer, currentWallet, transaction }) => {
+
+  const [isTransferConfirmModalOpen, setTransferConfirmModalOpen] = useState(false);
+  const [isTransferSentModalOpen, setTransferSentModalOpen] = useState(false);
+  const [getSendTxPayload, setSendTxPayload] = useState({});
+
   const onSubmit = (values, actions) => {
     const payload = {
       ...values,
@@ -25,7 +31,9 @@ const TransferSection = ({ account, onTransfer, currentWallet }) => {
       fromAddress: account.address,
       assetId: values.assetId.value,
     };
-    onTransfer(payload);
+    // onTransfer(payload); //TODO
+    setSendTxPayload(payload);
+    setTransferConfirmModalOpen(true);
     actions.resetForm();
   };
 
@@ -103,9 +111,12 @@ const TransferSection = ({ account, onTransfer, currentWallet }) => {
                 </Button>
               </PageFooter>
             </Form>
+
           );
         }}
       />
+      <TransferConfirmModal {...{isTransferConfirmModalOpen, setTransferConfirmModalOpen, setTransferSentModalOpen, getSendTxPayload, onTransfer}} />
+      <TransferSentModal {...{isTransferSentModalOpen, setTransferSentModalOpen, getSendTxPayload, transaction}} />
     </React.Fragment>
   );
 };

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, withState } from 'recompose';
 import R from 'ramda';
 
 
@@ -9,7 +9,10 @@ import history from 'renderer/history';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
 
-const mapStateToProps = ({ localStorage }) => ({ wallets: localStorage[storageKeys.WALLETS] });
+const mapStateToProps = ({ localStorage, transaction }) => ({
+  wallets: localStorage[storageKeys.WALLETS],
+  transaction,
+});
 
 const mapDispatchToProps = dispatch => ({
   onPageLoaded: payload => {},
@@ -48,7 +51,9 @@ const enhance = compose(
         onSyncWalletData({ id: walletId, wallet });
       }
     }
-  })
+  }),
+  // withState('isTransferConfirmModalOpen', 'setTransferConfirmModalOpen', false),
+  withState('isTransferSentModalOpen', 'setTransferSentModalOpen', false),
 );
 
 export default compose(
