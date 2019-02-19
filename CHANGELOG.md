@@ -20,6 +20,7 @@
 - new data structure to store Wallets -> Accounts -> Assets
 - Connect wallet with both HDKeyring and SimpleKeyring
 - Able to display balance in Account detail page
+- Add send tx confirmation flow
 
 ### Fixes
 
