@@ -6,10 +6,12 @@ import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
 import { environment } from '../../../main/environment';
 
+const { isDevOrDebugProd } = environment;
+
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
-  width: 5rem;
+  utilwidth: 5rem;
 `;
 
 const IconLink = styled(NavLink)`
@@ -52,7 +54,6 @@ const IconWrapper = styled.div`
 `;
 
 const SideNav = () => {
-  const  { isDevOrDebugProd } = environment;
   return (
     <Wrapper>
       <IconNav>
@@ -71,13 +72,11 @@ const SideNav = () => {
           </IconLink>
         </TopIcons>
         <BottomIcons>
-          {isDevOrDebugProd ?
+          {isDevOrDebugProd && (
             <IconLink to="/dev">
               <FontAwesomeIcon icon={['fab', 'dev']} />
             </IconLink>
-            :
-            <div />
-          }
+          )}
           <IconLink to={ROUTES.TERMS_OF_USE_ACCEPTANCE}>
             <IconWrapper>
               <FontAwesomeIcon icon="question-circle" />
@@ -88,6 +87,6 @@ const SideNav = () => {
       </IconNav>
     </Wrapper>
   );
-}
+};
 
 export default SideNav;

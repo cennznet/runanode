@@ -1,7 +1,7 @@
 import createChainFns from 'renderer/helpers/reducerHelper';
 
 import types from 'renderer/types';
-import config from 'renderer/utils/config';
+import config from 'app/config';
 
 const DEFAULT_STATE = {
   blockNum: null,
@@ -26,7 +26,7 @@ const parseLatency = (pingAt, pongAt) => {
     return {};
   }
 
-  const { full, medium, weak } = config.connectivity.latency.signalLevel;
+  const { full, medium, weak } = config.webSocket.latency.signalLevel;
   const level = [full, medium, weak].find(l => latency >= l.latency[0] && latency < l.latency[1]);
 
   if (level) {
@@ -59,7 +59,7 @@ export default function localStorage(state = DEFAULT_STATE, { type, payload }) {
         blockNum: parseInt(payload.number, 16),
         previousBlockNum: state.blockNum,
         bps:
-          ((parseInt(payload.number, 16) - state.blockNum) / config.connectivity.latency.period) *
+          ((parseInt(payload.number, 16) - state.blockNum) / config.webSocket.latency.period) *
           1000,
       };
 
@@ -70,7 +70,7 @@ export default function localStorage(state = DEFAULT_STATE, { type, payload }) {
         blockNum: parseInt(payload.number, 16),
         previousBlockNum: state.blockNum,
         bps:
-          ((parseInt(payload.number, 16) - state.blockNum) / config.connectivity.latency.period) *
+          ((parseInt(payload.number, 16) - state.blockNum) / config.webSocket.latency.period) *
           1000,
       };
 
