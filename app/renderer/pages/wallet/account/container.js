@@ -52,8 +52,6 @@ const enhance = compose(
       }
     }
   }),
-  // withState('isTransferConfirmModalOpen', 'setTransferConfirmModalOpen', false),
-  withState('isTransferSentModalOpen', 'setTransferSentModalOpen', false),
 );
 
 export default compose(
