@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 
 const ModalContent = styled.div`
-  padding: 1rem;
+  padding: 2rem;
 `;
 
 const ModalFooterWrapper = styled.div`
