@@ -3,6 +3,14 @@
 # vNext
 
 ### Features
+
+### Fixes
+
+### Improvements
+
+# v0.5.0 (2019.02.20)
+
+### Features
 - able to send tx
 - add Yup validations for send tx
 
@@ -16,7 +24,7 @@
 
 ### Features
 
-- Add tabs and scrallable components
+- Add tabs and scrollable components
 - new data structure to store Wallets -> Accounts -> Assets
 - Connect wallet with both HDKeyring and SimpleKeyring
 - Able to display balance in Account detail page
