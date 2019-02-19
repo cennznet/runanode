@@ -45,6 +45,7 @@ const transferEpic = action$ =>
       const { toAddress, fromAddress, wallet } = payload;
       const amount = new BN(payload.amount, 10);
       const txHash = await window.odin.api.cennz.doGenericAssetTransfer(assetId, fromAddress, toAddress, amount, wallet);
+      Logger.info(`txHash: ${txHash}`);
       if(txHash) {
         return (
           {

@@ -6,7 +6,7 @@ import { MainContent, MainLayout } from 'components/layout';
 import { Clipboard, PageHeading, PageFooter, Tabs, TabPane } from 'components';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';
-import TransferSection from './TransferSection';
+import TransferSection from './transferSectionPage';
 
 const Subheading = ({ account }) => {
   return (
@@ -17,7 +17,7 @@ const Subheading = ({ account }) => {
   );
 };
 
-const AccountDetails = ({ account, onTransfer, currentWallet }) => {
+const AccountDetails = ({ account, onTransfer, currentWallet, transaction }) => {
   return account ? (
     <React.Fragment>
       <PageHeading subHeading={<Subheading {...{ account }} />}>Account name here...</PageHeading>
@@ -30,7 +30,7 @@ const AccountDetails = ({ account, onTransfer, currentWallet }) => {
             <ReceiveSection {...{ account }} />
           </TabPane>
           <TabPane tab="Send" key="3" >
-            <TransferSection {...{ account, onTransfer, currentWallet }} />
+            <TransferSection {...{ account, onTransfer, currentWallet, transaction }} />
           </TabPane>
         </Tabs>
       </div>
