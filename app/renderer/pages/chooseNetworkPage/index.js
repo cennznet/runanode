@@ -49,8 +49,8 @@ const ButtonWrapper = styled.div`
 export const NETWORK_OPTIONS = [
   // { label: 'CENNZnet DEV(OLD)', value: NetworkNameOptions.CENNZNET_DEV },
   // { label: 'CENNZnet UAT(OLD)', value: NetworkNameOptions.CENNZNET_UAT },
-  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
   { label: 'CENNZnet RIMU(UAT)', value: NetworkNameOptions.CENNZNET_RIMU },// TODO should we add *-latest runtime option?
+  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
 ];
 
 if(isDevOrDebugProd) {
