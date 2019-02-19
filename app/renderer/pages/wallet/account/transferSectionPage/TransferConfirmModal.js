@@ -53,6 +53,14 @@ const Data = styled.div`
   overflow: hidden;
 `;
 
+const DataSend = styled.div`
+  display: flex;
+  align-items: center;
+  height: 4rem;
+  padding-left: 1rem;
+  font-size: 16px;
+`;
+
 const Label = styled.label`
   flex: 1 auto;
   margin: 0.5rem 0.5rem 0 0;
@@ -71,9 +79,9 @@ const SendTxConfirmForm = (payload) => {
         <Label>Send</Label>
       </Wrapper>
       <WrapperBg>
-        <Data>
+        <DataSend>
           {sendValue}
-        </Data>
+        </DataSend>
       </WrapperBg>
 
       <Wrapper>
@@ -98,8 +106,6 @@ const SendTxConfirmForm = (payload) => {
 
 const TransferConfirmModal = ({ isTransferConfirmModalOpen, setTransferConfirmModalOpen, setTransferSentModalOpen, getSendTxPayload, onTransfer }) => {
   const payload = getSendTxPayload;
-  console.log('TransferConfirmModal');
-  console.log(payload);
   return (
     <Modal
       isOpen={isTransferConfirmModalOpen}
