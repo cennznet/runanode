@@ -31,7 +31,6 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
       fromAddress: account.address,
       assetId: values.assetId.value,
     };
-    // onTransfer(payload); //TODO
     setSendTxPayload(payload);
     setTransferConfirmModalOpen(true);
     actions.resetForm();
