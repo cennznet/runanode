@@ -10,8 +10,8 @@ export const PreDefinedAssetId = {
 export const CustomTokenAssetId = ['100'];
 
 export const PreDefinedAssetIdName = {
-  '0': 'Stake Token',
-  '10': 'Spending Token',
+  '0': 'CENNZ(Stake Token)',
+  '10': 'CPAY(Spending Token)',
   '100': 'Sylo Token',
 };
 
