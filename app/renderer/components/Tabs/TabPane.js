@@ -7,11 +7,17 @@ const StyledPane = styled(RcTabPane)`
   padding-top: 2rem;
 `;
 
-const TabPane = ({ children, styles, ...props }) => (
+const TabPane = ({ children, styles, withScrollable, ...props }) => (
   <StyledPane {...props}>
-    <Scrollable styles={{ height: styles.scrollHeight }} gradientBottom>
-      {children}
-    </Scrollable>
+    {
+      withScrollable ?
+        <Scrollable styles={{ height: styles.scrollHeight }} gradientBottom>
+          {children}
+        </Scrollable>
+        :
+        children
+    }
+
   </StyledPane>
 );
 
@@ -19,6 +25,7 @@ TabPane.defaultProps = {
   styles: {
     scrollHeight: '80vh',
   },
+  withScrollable: false,
 };
 
 export default TabPane;

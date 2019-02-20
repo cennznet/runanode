@@ -15,7 +15,7 @@ const WalletCreatePage = props => {
       <MainContent display="flex">
         {step === STEPS.NAME_INPUT && <NameInputPage {...props} />}
         {step === STEPS.SEED_PHRASE && <SeedPhrasePage {...props} />}
-        {step === STEPS.SEED_PHRASE_CONFRIM && <SeedPhraseConfirmPage {...props} />}
+        {step === STEPS.SEED_PHRASE_CONFIRM && <SeedPhraseConfirmPage {...props} />}
       </MainContent>
     </MainLayout>
   );

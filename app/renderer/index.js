@@ -1,4 +1,5 @@
 // import 'reset-css';
+import { shell } from 'electron';
 import React from 'react';
 import { render } from 'react-dom';
 import { addLocaleData } from 'react-intl';
@@ -15,10 +16,14 @@ import {
   faPlus,
   faQuestionCircle,
   faWallet,
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
 import 'electron-cookies'; // For GA writes clientId to cookie to recognize existing users
+
+import { Logger } from 'renderer/utils/logging';
 import setupGoogleAnalytics from './ga';
 import types from './types';
 import store from './store';
@@ -55,7 +60,9 @@ library.add(
   faExclamationTriangle,
   faPlus,
   faQuestionCircle,
-  faWallet
+  faWallet,
+  faArrowAltCircleRight,
+  faExternalLinkAlt,
 );
 
 const initializeOdin = async () => {
@@ -93,6 +100,15 @@ const initializeOdin = async () => {
 window.addEventListener('load', initializeOdin);
 window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
+
+// Open all links in external browser
+document.addEventListener('click', (event) => {
+  if (event.target.tagName === 'A' && event.target.href.startsWith('http')) {
+    Logger.info(`open external link: ${event.target.href}`);
+    event.preventDefault();
+    shell.openExternal(event.target.href);
+  }
+})
 
 if (module.hot) {
   module.hot.accept('./App', () => {

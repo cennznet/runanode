@@ -32,16 +32,6 @@
     "arrow-body-style": 0,
     "arrow-parens": 0,
     "consistent-return": 0,
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "only-multiline",
-        "objects": "only-multiline",
-        "imports": "only-multiline",
-        "exports": "only-multiline",
-        "functions": "never"
-      }
-    ],
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
     "jsx-a11y/href-no-hash": 0,
@@ -79,7 +69,6 @@
     "flowtype/no-types-missing-file-annotation": 0,
     "no-unused-expressions": 0,
     "no-return-assign": 0,
-    "comma-dangle": 0,
     "no-restricted-syntax": 0,
     "react/prefer-stateless-function": 0,
     "react/display-name": 0

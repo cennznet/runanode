@@ -10,9 +10,25 @@ export const PreDefinedAssetId = {
 export const CustomTokenAssetId = ['100'];
 
 export const PreDefinedAssetIdName = {
-  '0': 'Stake Token',
-  '10': 'Spending Token',
+  '0': 'CENNZ(Stake Token)',
+  '10': 'CPAY(Spending Token)',
   '100': 'Sylo Token',
+};
+
+// Network option to network name mapping, check cennznet-node chain_spec.rs cennznet_dev_config_latest and cennznet_uat_config_latest
+export const NetworkNameMapping = {
+  'Rimu CENNZnet': 'rimu',
+  'Kauri CENNZnet': 'kauri',
+};
+
+export const CENNZScanTxUrl = {
+  'rimu': 'https://service.centrality.me/cennzscan/tx',
+  'kauri': 'https://service.centrality.me/cennzscan/tx', // TODO CENNZScan not support DEV yet
+};
+
+export const CENNZScanAddressUrl = {
+  'rimu': 'https://service.centrality.me/cennzscan/addresses',
+  'kauri': 'https://service.centrality.me/cennzscan/addresses', // TODO CENNZScan not support DEV yet
 };
 
 export const PreDefinedAssetIdObj = {

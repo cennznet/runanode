@@ -9,33 +9,61 @@ import { getStorage, storageKeys } from '../api/utils/storage';
 import { Logger } from '../utils/logging';
 import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
 
+const recomposeWallet = async (actionType, payload) => {
+  const wallet = payload;
+
+  const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
+  const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
+  wallet.walletAddress = walletAddress;
+
+  // sync wallet data
+  const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
+
+  let wallets = await getStorage(storageKeys.WALLETS);
+  if (wallets === null) {
+    wallets = [];
+  }
+  wallets.push(syncedWallet);
+
+  return {
+    type: types[actionType].completed,
+    payload: { wallets },
+  };
+};
+
+const createHDKRWalletEpic = action$ =>
+  action$.pipe(
+    ofType(types.walletCreatWithHDKR.requested),
+    mergeMap(({ payload }) => recomposeWallet('walletCreatWithHDKR', payload))
+  );
+
 const createWalletWithSKREpic = action$ =>
   action$.pipe(
     ofType(types.walletCreatWithSKR.requested),
     mergeMap(async ({ payload }) => {
       const { name, mnemonic, passphrase } = payload;
-      let wallets = await getStorage(storageKeys.WALLETS);
-      if (wallets === null) {
-        wallets = [];
-      }
       const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
         name,
         mnemonic,
         passphrase: passphrase || '',
       });
 
-      const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
-      const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      wallet.wallet.walletAddress = walletAddress;
+      return recomposeWallet('walletCreatWithSKR', wallet);
+    })
+  );
 
-      // sync wallet data
-      const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
-      wallets.push(syncedWallet);
+const restoreHDKRWalletEpic = action$ =>
+  action$.pipe(
+    ofType(types.walletRestoreWithHDKR.requested),
+    mergeMap(async ({ payload }) => {
+      const { name, mnemonic, passphrase } = payload;
+      const wallet = await window.odin.api.cennz.restoreWallet({
+        name,
+        mnemonic,
+        passphrase: passphrase || '',
+      });
 
-      return {
-        type: types.walletCreatWithSKR.completed,
-        payload: { wallets },
-      };
+      return recomposeWallet('walletRestoreWithHDKR', wallet);
     })
   );
 
@@ -44,7 +72,8 @@ const storeWalletEpic = action$ =>
     filter(
       action =>
         action.type === types.walletCreatWithSKR.completed ||
-        action.type === types.walletRestoreWithHDKR.completed
+        action.type === types.walletRestoreWithHDKR.completed ||
+        action.type === types.walletCreatWithHDKR.completed
     ),
     mergeMap(({ payload: { wallets } }) => {
       return of({
@@ -83,36 +112,6 @@ const walletPaperGenerateEpic = action$ =>
     })
   );
 
-const restoreHDKRWalletEpic = action$ =>
-  action$.pipe(
-    ofType(types.walletRestoreWithHDKR.requested),
-    mergeMap(async ({ payload }) => {
-      const { name, mnemonic, passphrase } = payload;
-      let wallets = await getStorage(storageKeys.WALLETS);
-      if (wallets === null) {
-        wallets = [];
-      }
-      const wallet = await window.odin.api.cennz.restoreWallet({
-        name,
-        mnemonic,
-        passphrase: passphrase || '',
-      });
-
-      const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
-      const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-      wallet.wallet.walletAddress = walletAddress;
-
-      // sync wallet data
-      const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
-      wallets.push(syncedWallet);
-
-      return {
-        type: types.walletRestoreWithHDKR.completed,
-        payload: { wallets },
-      };
-    })
-  );
-
 const chainToasterAfterWalletConnectEpic = chainEpics(
   types.walletRestoreWithHDKR.completed,
   types.successToaster.triggered,
@@ -133,4 +132,5 @@ export default [
   restoreHDKRWalletEpic,
   chainToasterAfterWalletConnectEpic,
   chainToasterAfterWalletCreateEpic,
+  createHDKRWalletEpic,
 ];

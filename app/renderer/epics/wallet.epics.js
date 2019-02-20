@@ -2,6 +2,8 @@ import { EMPTY, from, of, empty } from 'rxjs';
 import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
+import BN from 'bn.js';
+
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
 import { Logger } from '../utils/logging';
@@ -34,4 +36,26 @@ const syncWalletDataEpic = action$ =>
     })
   );
 
-export default [syncWalletDataEpic];
+const transferEpic = action$ =>
+  action$.pipe(
+    ofType(types.transfer.requested),
+    mergeMap(async ({ payload }) => {
+      Logger.debug(`transferEpic`);
+      const assetId = new BN(payload.assetId, 10);
+      const { toAddress, fromAddress, wallet } = payload;
+      const amount = new BN(payload.amount, 10);
+      const txHash = await window.odin.api.cennz.doGenericAssetTransfer(assetId, fromAddress, toAddress, amount, wallet);
+      Logger.info(`txHash: ${txHash}`);
+      if(txHash) {
+        return (
+          {
+            type: types.transfer.completed,
+            payload: { txHash },
+          }
+        );
+      }
+      return ({type: types.transfer.failed});
+    })
+  );
+
+export default [syncWalletDataEpic, transferEpic];

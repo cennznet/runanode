@@ -22,7 +22,7 @@ const StoreWarningModal = ({ isStoreWarningModalOpen, setStoreWarningModalOpen, 
             style={{ marginLeft: '0.5rem' }}
             onClick={() => {
               setStoreWarningModalOpen(false);
-              moveToStep(STEPS.SEED_PHRASE_CONFRIM);
+              moveToStep(STEPS.SEED_PHRASE_CONFIRM);
             }}
           >
             Yes
