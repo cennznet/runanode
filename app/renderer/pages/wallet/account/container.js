@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
-import R from 'ramda';
+import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
+import { lensProp, set, find, propEq } from 'ramda';
 
 import types from 'renderer/types';
 import { storageKeys } from 'renderer/api/utils/storage';
@@ -22,7 +22,21 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.transfer.requested, payload });
   },
 
-  onAddAccount: payload => {
+  onAddAccount: async walletItem => {
+    const { wallet } = walletItem;
+    const { updatedWallet, newAccount } = await window.odin.api.cennz.addAccount({ wallet });
+    if (newAccount) {
+      const resolvedWalletItem = set(lensProp('wallet'), updatedWallet, walletItem);
+      const syncedWallet = await window.odin.api.cennz.syncWalletData(resolvedWalletItem);
+      return { syncedWallet, newAccount };
+    }
+    /**
+     * TODO:
+     * Failure toaster if no new account
+     */
+  },
+
+  onConfirmAddAccount: payload => {
     dispatch({ type: types.addAccount.requested, payload });
   },
 });
@@ -36,7 +50,7 @@ const enhance = compose(
       // sync wallet data on page load
       const { onSyncWalletData, match, wallets } = this.props;
       const { walletId, accountPublicAddress } = match.params;
-      const wallet = R.find(R.propEq('id', walletId))(wallets);
+      const wallet = find(propEq('id', walletId))(wallets);
       onSyncWalletData({ id: walletId, wallet });
     },
 
@@ -46,11 +60,24 @@ const enhance = compose(
         Logger.debug('sync wallet data on different wallet Id');
         const { onSyncWalletData, match, wallets } = this.props;
         const { walletId, accountPublicAddress } = match.params;
-        const wallet = R.find(R.propEq('id', walletId))(wallets);
+        const wallet = find(propEq('id', walletId))(wallets);
         onSyncWalletData({ id: walletId, wallet });
       }
     },
-  })
+  }),
+  withState('isAddAccountModalOpen', 'setAddAccountModalOpen', false),
+  withState('newAccountName', 'setNewAccountName', null),
+  withState('initAccountNameInput', 'setInitAccountNameInput', true),
+  withState('newAccount', 'setNewAccount', null),
+
+  withStateHandlers(
+    ({ initReslovedWallet = null }) => ({
+      reslovedWallet: initReslovedWallet,
+    }),
+    {
+      setReslovedWallet: () => val => ({ reslovedWallet: val }),
+    }
+  )
 );
 
 export default compose(

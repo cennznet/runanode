@@ -1,9 +1,9 @@
 import { EMPTY, from, of, empty } from 'rxjs';
-import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
+import { concat, mergeMap, mapTo, filter, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
 import BN from 'bn.js';
-import { lensProp, set } from 'ramda';
+import { lensProp, set, findIndex, update, propEq } from 'ramda';
 
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
@@ -64,21 +64,20 @@ const addAccountEpic = action$ =>
   action$.pipe(
     ofType(types.addAccount.requested),
     mergeMap(async ({ payload }) => {
-      Logger.debug(`addAccount`);
-      const walletItem = payload;
-      const { wallet } = walletItem;
-      const addedAccountWallet = await window.odin.api.cennz.addAccount(wallet);
-      console.log('before - addAccount - walletItem', walletItem);
-      set(lensProp('wallet'), addedAccountWallet, walletItem);
-      console.log('addAccount - walletItem', walletItem);
+      const updatedWallet = payload;
 
-      let wallets = await getStorage(storageKeys.WALLETS);
-      if (wallets === null) {
-        wallets = [];
-      }
+      const storedWallets = await getStorage(storageKeys.WALLETS);
+      const toUpdateWalletIndex = findIndex(propEq('id', updatedWallet.id))(storedWallets);
+      const wallets = update(toUpdateWalletIndex, updatedWallet, storedWallets);
 
-      return { type: types.addAccount.completed };
+      return { type: types.addAccount.completed, payload: wallets };
+    }),
+    catchError(err => {
+      return of({
+        type: types.addAccount.failed,
+        payload: err,
+      });
     })
   );
 
-export default [syncWalletDataEpic, transferEpic];
+export default [syncWalletDataEpic, transferEpic, addAccountEpic];

@@ -143,36 +143,8 @@ export default class CennzApi {
       const resultWallet = wallet;
       const walletAddresses = window.odin.api.cennz.getWalletAddresses(resultWallet);
 
-      // fetch default data
-      // console.log(`walletAddresses: ${walletAddresses}`);
-      // const defaultAccountPublicAddress = walletAddresses[0];
-      // resultWallet.defaultAccountPublicAddress = defaultAccountPublicAddress;
-      // console.log(
-      //   `resultWallet.defaultAccountPublicAddress: ${resultWallet.defaultAccountPublicAddress}`
-      // );
-
-      // const stakingTokenFreeBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
-      //   PreDefinedAssetIdObj.STAKING_TOKEN.BN,
-      //   resultWallet.defaultAccountPublicAddress
-      // );
-      // resultWallet.stakingTokenFreeBalance = stakingTokenFreeBalance.toString(10);
-      // console.log(`resultWallet.stakingTokenFreeBalance: ${resultWallet.stakingTokenFreeBalance}`);
-
-      // const spendingTokenFreeBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
-      //   PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
-      //   resultWallet.defaultAccountPublicAddress
-      // );
-      // resultWallet.spendingTokenFreeBalance = spendingTokenFreeBalance.toString(10);
-      // console.log(
-      //   `resultWallet.spendingTokenFreeBalance: ${resultWallet.spendingTokenFreeBalance}`
-      // );
-
-      // const genericAssetNextAssetId = await window.odin.api.cennz.getGenericAssetNextAssetId();
-      // resultWallet.genericAssetNextAssetId = genericAssetNextAssetId.toString(10);
-      // console.log(`resultWallet.genericAssetNextAssetId: ${resultWallet.genericAssetNextAssetId}`);
-
       // extract data from wallet to accounts
-      const accounts = new Map();
+      const accounts = resultWallet.accounts || new Map();
       for (const walletAddress of walletAddresses) {
         console.log(`walletAddress: ${walletAddress}`);
 
@@ -208,6 +180,7 @@ export default class CennzApi {
 
         const account = new CennznetWalletAccount({
           address: walletAddress,
+          name: accounts[walletAddress] && accounts[walletAddress].name,
           // freeBalance: accountFreeBalance,
           assets,
         });
@@ -328,11 +301,18 @@ export default class CennzApi {
   };
 
   addAccount = async (request: AddAccountRequest): Promise<CennznetWallet> => {
-    Logger.debug('CennznetApi::restoreWalletWithHDKeyRing called');
+    Logger.debug('CennznetApi::addAccount called');
     try {
-      const walletWithNewAccount = await request.wallet.addAccount();
+      // reload wallet object
+      const originalWallet = new Wallet({
+        vault: request.wallet.vault,
+        // keyringTypes: [HDKeyring, SimpleKeyring],
+      });
+      await originalWallet.unlock('');
+
+      const newAccount = await originalWallet.addAccount();
       Logger.debug('CennznetApi::addAccount success');
-      return walletWithNewAccount;
+      return { updatedWallet: originalWallet, newAccount };
     } catch (error) {
       Logger.error('CennznetApi::addAccount error: ' + stringifyError(error));
       throw new GenericApiError();
