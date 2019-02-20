@@ -40,9 +40,11 @@ const storeNetworkOptionEpic = action$ =>
 const navigationAfterStoreNetworkEpic = action$ =>
   action$.ofType(types.setStorage.completed).pipe(
     filter(({ payload }) => payload.key === storageKeys.SELECTED_NETWORK),
-    mapTo({
-      type: types.navigation.triggered,
-      payload: ROUTES.SYNC_NODE,
+    mergeMap(() => {
+      return of({
+        type: types.navigation.triggered,
+        payload: ROUTES.SYNC_NODE,
+      })
     })
   );
 

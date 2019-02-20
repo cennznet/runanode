@@ -35,6 +35,7 @@ const TextField = ({
   noTickShow,
   width,
   minWidth,
+  readOnly = false,
 }) => {
   const { name, value, onChange, onBlur } = field;
   const { touched, errors } = form;
@@ -46,7 +47,8 @@ const TextField = ({
       <Input
         value={value || ''}
         {...{ placeholder, name, onChange, onBlur }}
-        valid={fieldTouched ? (noTickShow && !fieldError ? null : !fieldError) : null}
+        valid={fieldTouched && !readOnly ? (noTickShow && !fieldError ? null : !fieldError) : null}
+        readOnly={readOnly || false}
       />
       {fieldError && fieldTouched ? <ErrorMessage>{fieldError}</ErrorMessage> : <ErrorMessagePleaceHolder />}
     </Wrapper>

@@ -50,6 +50,7 @@ const transferEpic = action$ =>
         amount,
         wallet
       );
+      Logger.info(`txHash: ${txHash}`);
       if (txHash) {
         return {
           type: types.transfer.completed,

@@ -10,7 +10,7 @@ import withContainer from './container';
 import WalletDetailsSubNav from './WalletDetailsSubNav';
 import AccountDetails from './AccountDetails';
 
-const WalletDetailsPage = ({ wallets, match, onTransfer, ...otherProps }) => {
+const WalletDetailsPage = ({ wallets, transaction, match, onTransfer, ...otherProps }) => {
   const { walletId, accountPublicAddress } = match.params;
   const wallet = wallets && R.find(R.propEq('id', walletId))(wallets);
   return wallet ? (
@@ -22,6 +22,7 @@ const WalletDetailsPage = ({ wallets, match, onTransfer, ...otherProps }) => {
           account={wallet.accounts[accountPublicAddress]}
           onTransfer={onTransfer}
           currentWallet={wallet}
+          transaction={{ ...transaction }}
         />
       </MainContent>
     </MainLayout>

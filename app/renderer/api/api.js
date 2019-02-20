@@ -458,7 +458,7 @@ export default class CennzApi {
         vault: wallet.wallet.vault,
         keyringTypes: [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
       });
-      await originalWallet.unlock('');
+      await originalWallet.unlock(''); // TODO switch to pin code
       Logger.debug('unlock');
 
       this.api.setSigner(originalWallet);
