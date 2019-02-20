@@ -8,6 +8,7 @@
 ### Fixes
 
 ### Improvements
+- tidy up asset table layout
 
 # v0.5.0 (2019.02.20)
 
