@@ -26,6 +26,11 @@ export const CENNZScanTxUrl = {
   'kauri': 'https://service.centrality.me/cennzscan/tx', // TODO CENNZScan not support DEV yet
 };
 
+export const CENNZScanAddressUrl = {
+  'rimu': 'https://service.centrality.me/cennzscan/addresses',
+  'kauri': 'https://service.centrality.me/cennzscan/addresses', // TODO CENNZScan not support DEV yet
+};
+
 export const PreDefinedAssetIdObj = {
   STAKING_TOKEN: { ID: PreDefinedAssetId.stakingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], BN: new BN(PreDefinedAssetId.stakingToken, 10)},
   SPENDING_TOKEN: { ID: PreDefinedAssetId.spendingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], BN: new BN(PreDefinedAssetId.spendingToken, 10)},

@@ -3,6 +3,7 @@
 # vNext
 
 ### Features
+- add CENNZScan address link to account public address
 
 ### Fixes
 
