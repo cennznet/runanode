@@ -13,6 +13,11 @@ import AccountDetails from './AccountDetails';
 const WalletDetailsPage = ({ wallets, transaction, match, onTransfer, ...otherProps }) => {
   const { walletId, accountPublicAddress } = match.params;
   const wallet = wallets && R.find(R.propEq('id', walletId))(wallets);
+  console.log('onAddAccount - WalletDetailsPage -accountPublicAddress', accountPublicAddress);
+  console.log('onAddAccount - WalletDetailsPage -walletId', walletId);
+  console.log('onAddAccount - WalletDetailsPage -wallet', wallet);
+  console.log('onAddAccount - WalletDetailsPage -match', match);
+  console.log('onAddAccount - WalletDetailsPage -wallets', wallets);
   return wallet ? (
     <MainLayout
       subNav={<WalletDetailsSubNav currentWallet={wallet} {...{ wallets }} {...otherProps} />}

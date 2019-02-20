@@ -14,18 +14,22 @@ const syncWalletDataEpic = action$ =>
     ofType(types.syncWalletData.requested),
     mergeMap(async ({ payload }) => {
       Logger.debug(`syncWalletDataEpic`);
+      console.log('myWallet - syncWalletDataEpic', payload);
       let wallets = await getStorage(storageKeys.WALLETS);
       if (wallets === null) {
         wallets = [];
       }
 
       const myWallet = wallets.find(x => x.id === payload.id);
+      console.log('myWallet', myWallet);
       if (myWallet) {
         Logger.debug(`myWallet: ${myWallet}`);
+        console.log('myWallet', myWallet);
         const myWalletIndex = wallets.findIndex(x => x.id === payload.id);
         Logger.debug(`myWalletIndex: ${myWalletIndex}`);
         const syncedWallet = await window.odin.api.cennz.syncWalletData(myWallet);
         Logger.debug(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
+        console.log(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
         wallets[myWalletIndex] = syncedWallet;
       }
       return {

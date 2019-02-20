@@ -54,14 +54,18 @@ const WalletDetailsSubNav = ({
   setAddAccountModalOpen,
   ...otherProps
 }) => {
-  const onAddAccountAction = async wallet => {
-    const { syncedWallet, newAccount } = await onAddAccount(wallet);
-    if (newAccount) {
-      setNewAccount(newAccount);
-      setReslovedWallet(syncedWallet);
+  const onAddAccountAction = async addAccountWallet => {
+    const { syncedWallet, newAccount: newAccountAddr } = await onAddAccount(addAccountWallet);
+    if (newAccountAddr) {
+      console.log('onAddAccount - newAccountAddr', newAccountAddr);
+      // setNewAccount(newAccountAddr);
+      // setReslovedWallet(syncedWallet);
       setAddAccountModalOpen(true);
     }
+    return null;
   };
+
+  console.log('onAddAccount - wallets', wallets);
 
   const menuList = wallets.map(wallet => {
     return {
