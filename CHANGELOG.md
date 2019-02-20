@@ -10,6 +10,7 @@
 ### Improvements
 - tidy up asset table layout
 - update background gradient settings
+- update field text bg color to match with design
 
 # v0.5.0 (2019.02.20)
 
