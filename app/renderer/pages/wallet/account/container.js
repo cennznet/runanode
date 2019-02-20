@@ -8,7 +8,10 @@ import history from 'renderer/history';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
 
-const mapStateToProps = ({ localStorage }) => ({ wallets: localStorage[storageKeys.WALLETS] });
+const mapStateToProps = ({ localStorage, transaction }) => ({
+  wallets: localStorage[storageKeys.WALLETS],
+  transaction,
+});
 
 const mapDispatchToProps = dispatch => ({
   onPageLoaded: payload => {},

@@ -4,7 +4,7 @@ import { storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import types from 'renderer/types';
-import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping, NetworkNameOptions } from 'common/types/cennznet-node.types';
 import sreamConstants from 'renderer/constants/stream';
 import ROUTES from 'renderer/constants/routes';
 import { NETWORK_OPTIONS } from 'renderer/pages/chooseNetworkPage';
@@ -53,7 +53,7 @@ const enhance = lifecycle({
     const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
     const { localNode } = nodeSystem;
     const { chain } = localNode;
-    const isNetworkSwitched = selectedNetwork && selectedNetwork.label === chain;
+    const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
 
     if (isNetworkSwitched) {
       const { blockNum: localBestBlock } = this.props.syncStream;

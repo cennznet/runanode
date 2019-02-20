@@ -12,7 +12,7 @@ const inputStateStyles = (
   color: ${p.styles.color};
   border: ${getInputBorderColor(p)};
 
-  background-color: ${p.readOnly ? p.theme.colors.N100 : p.styles.backgroundColor};
+  background-color: ${p.readOnly ? p.theme.colors.V900 : p.styles.backgroundColor};
 
   &::placeholder {
     color: ${p.theme.colors.N200};
