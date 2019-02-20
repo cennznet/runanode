@@ -1,27 +1,46 @@
 import React from 'react';
 import jdenticon from "jdenticon";
-
-import Table from '../../../components/Table';
+import styled from 'styled-components';
+import SVGInline from "react-svg-inline";
+import Table from 'components/Table';
 
 const { colors } = require('../../../theme');
+
+const AssetIdIcon = ({value}) => {
+  const SVG = styled(SVGInline).attrs({
+    svg: jdenticon.toSvg(value, 50),
+  })`
+  width: auto;
+`;
+  return <SVG />;
+}
 
 const PortfolioSection = ({ account }) => {
   return <Table
     data={account && account.assets ? Object.values(account.assets) : [{}]}
     page={0}
-    pageSize={10}
+    pageSize={100}
     columns={[
-      {
-        Header: '',
-        accessor: 'assetId',
-        Cell: row => (
-          <img alt="" src={`data:image/png;base64, ${jdenticon.toPng(row.value.toString(10),200).toString('base64')}`} width="100rem"/>
-        ),
-      },
       {
         Header: 'Asset Name',
         id: 'assetName',
-        accessor: d => d.name,
+        accessor: d => d,
+        width: 230,
+        Cell: row => {
+          return (
+            <div
+              style={{
+                display: 'flex',
+                color: colors.N0,
+              }}
+            >
+              <AssetIdIcon value={row.value.assetId} />
+              <div style={{lineHeight: '3rem', marginLeft: '1rem'}}>
+                {row.value.name}
+              </div>
+            </div>
+          );
+        },
       },
       {
         Header: () => (

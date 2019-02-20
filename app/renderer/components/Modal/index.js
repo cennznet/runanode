@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 
 const ModalContent = styled.div`
-  padding: 1rem;
+  padding: 2rem;
 `;
 
 const ModalFooterWrapper = styled.div`
@@ -81,8 +81,8 @@ const StyledModal = styled(Modal)`
 StyledModal.defaultProps = {
   minWidth: '50vw',
   minHeight: '25vh',
-  maxWidth: '65vw',
-  maxHeight: '40vh',
+  maxWidth: '70vw',
+  maxHeight: '50vh',
   backgroundColor: '#040C40',
   boxShadow: `0 2px 4px 0 ${colors.N900}`,
   overlayBgColor: 'rgba(54, 58, 61, 0.7)',

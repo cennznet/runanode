@@ -6,11 +6,13 @@ import themeObj, { colors } from 'renderer/theme';
 const StyledSelect = styled(ReactSelect)`
   .react-select__control {
     box-shadow: none;
+    height: ${p => p.height};
     color: ${p => p.color};
     border-color: ${p => p.borderColor};
     font-weight: ${p => p.fontWeight};
     font-size: ${p => p.fontSize};
-
+    background-color: ${p => p.backgroundColor};
+    
     &:hover {
       border-color: ${p => p.borderHoverColor};
     }
@@ -18,7 +20,7 @@ const StyledSelect = styled(ReactSelect)`
 
   .react-select__menu {
     border: 1px solid ${p => p.menuBorderColor};
-    background-color: ${p => p.backgroundColor};
+    background-color: ${p => p.menuBackgroundColor};
   }
 
   .react-select__option--is-focused {
@@ -42,7 +44,10 @@ StyledSelect.defaultProps = {
   themeSpace: 'select',
 
   fontSize: '14px',
-  backgroundColor: colors.V800,
+  backgroundColor: 'rgba(114,94,255,0.5)',
+  menuBackgroundColor: colors.V800,
+  borderColor: colors.V400,
+  height: '3rem',
   color: colors.N0,
   selectedFontWeight: 'bolder',
   selectedBackgroundColor: 'transparent',
