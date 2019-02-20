@@ -44,7 +44,7 @@ StyledSelect.defaultProps = {
   themeSpace: 'select',
 
   fontSize: '14px',
-  backgroundColor: colors.V800,
+  backgroundColor: 'rgba(114,94,255,0.5)',
   menuBackgroundColor: colors.V800,
   borderColor: colors.V400,
   height: '3rem',
