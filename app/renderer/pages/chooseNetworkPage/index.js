@@ -86,6 +86,7 @@ const ChooseNetWork = ({
             <div>Choose network</div>
             <NetworkOptionWrapper>
               <Select
+                backgroundColor={colors.V800}
                 value={selectedNetwork}
                 onChange={selected => {
                   Logger.info('selected value', selected);

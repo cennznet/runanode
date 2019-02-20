@@ -43,7 +43,6 @@ const SelectField = ({
     <Wrapper style={{width}}>
       {labelText && <Label htmlFor={name}>{labelText}</Label>}
       <Select
-        backgroundColor={colors.V400}
         value={value}
         options={options}
         onChange={option => {
