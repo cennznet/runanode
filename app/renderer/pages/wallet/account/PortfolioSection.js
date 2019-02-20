@@ -35,7 +35,7 @@ const PortfolioSection = ({ account }) => {
               }}
             >
               <AssetIdIcon value={row.value.assetId} />
-              <div style={{lineHeight: '3rem'}}>
+              <div style={{lineHeight: '3rem', marginLeft: '1rem'}}>
                 {row.value.name}
               </div>
             </div>
