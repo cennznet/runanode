@@ -32,7 +32,7 @@ const config = {
 
   connectivity: {
     latency: {
-      period: 5 * 1000,
+      period: 5 * 100000,
       signalLevel: {
         full: {
           level: 3,
@@ -52,7 +52,7 @@ const config = {
 
   pollingInterval: {
     restartCheck: 5 * 1000,
-    blockHeight: 5 * 1000, // 5s
+    blockHeight: 5 * 100000, // 5s
   },
 };
 
