@@ -4,7 +4,7 @@ import yamljs from 'yamljs';
 import path from 'path';
 import { app } from 'electron';
 import parseArgs from 'minimist';
-import extend from "extend";
+import extend from 'extend';
 
 import type { LauncherConfig } from '../config';
 import { Logger, GetLogDir } from './logging';
@@ -17,15 +17,18 @@ const { isDevOrDebugProd, isDev, isDebugProd, isTest } = environment;
  * @param configPath {String}
  * @returns {LauncherConfig}
  */
-export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
+export default (configPath: ?string): LauncherConfig => {
   Logger.info(`********************************************************`);
   const args = parseArgs(process.argv);
   // $FlowFixMe
   Logger.info(`args: ${JSON.stringify(args)}`);
 
-  const config = extend({
-    DEBUG_PROD: process.env.DEBUG_PROD,
-  }, parseArgs(process.argv));
+  const config = extend(
+    {
+      DEBUG_PROD: process.env.DEBUG_PROD,
+    },
+    parseArgs(process.argv)
+  );
   Logger.info(`process.argv: ${JSON.stringify(process.argv)}`);
   Logger.info(`config: ${JSON.stringify(config)}`);
 
@@ -34,7 +37,7 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
   Logger.info(`readLauncherConfig, configPath: ${configPath}`);
   // $FlowFixMe
   const { resourcesPath } = process;
-  const distPath = path.join(resourcesPath, '..', 'dist')
+  const distPath = path.join(resourcesPath, '..', 'dist');
   // $FlowFixMe
   Logger.info(`process.env.NODE_ENV : ${process.env.NODE_ENV}`);
   // $FlowFixMe
@@ -57,7 +60,7 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
   Logger.info(`__dirname: ${__dirname}`);
 
   Logger.info(`********************************************************`);
-/*
+  /*
 [2018-12-26 21:40:56.855] [info] ********************************************************
 [2018-12-26 21:40:56.861] [info] readLauncherConfig, configPath: undefined
 [2018-12-26 21:40:56.861] [info] resourcesPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources
@@ -75,44 +78,46 @@ export const readLauncherConfig = (configPath: ?string): LauncherConfig => {
 [2018-12-26 21:40:56.865] [info] [main] ODIN_USER_DATA_DIRECTORY: /Users/kenhuang/Library/Application Support/Odin
 [2018-12-26 21:40:56.866] [info] [main] ODIN_INSTALL_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources/app.asar
 */
-  const inputYaml = configPath ? readFileSync(configPath, 'utf8') : readFileSync(path.join(distPath,"launcher-config.yaml") , 'utf8');
-  const finalYaml = inputYaml.replace(/\${([^}]+)}/g,
-    (a, b) => {
-      if (process.env[b]) {
-        return process.env[b];
-      }
-      if (b === 'ODIN_INSTALL_DIRECTORY') {
-        const ODIN_INSTALL_DIRECTORY = !app.isPackaged ? process.cwd() : app.getAppPath();
-        Logger.info(`ODIN_INSTALL_DIRECTORY: ${ODIN_INSTALL_DIRECTORY}`);
-        return ODIN_INSTALL_DIRECTORY;
-      }
-      if (b === 'ODIN_RESOURCE_DIRECTORY') {
-        const ODIN_RESOURCE_DIRECTORY = resourcesPath;
-        Logger.info(`ODIN_RESOURCE_DIRECTORY: ${ODIN_RESOURCE_DIRECTORY}`);
-        return ODIN_RESOURCE_DIRECTORY;
-      }
-      if (b === 'ODIN_DIST_DIRECTORY') {
-        const ODIN_DIST_DIRECTORY = !app.isPackaged ? process.cwd() + '/dist' : distPath;
-        Logger.info(`ODIN_DIST_DIRECTORY: ${ODIN_DIST_DIRECTORY}`);
-        return ODIN_DIST_DIRECTORY;
-      }
-      if (b === 'ODIN_USER_DATA_DIRECTORY') {
-        const ODIN_USER_DATA_DIRECTORY = !app.isPackaged ? process.cwd() + '/dist/user_data': app.getPath('userData');
-        Logger.info(`ODIN_USER_DATA_DIRECTORY: ${ODIN_USER_DATA_DIRECTORY}`);
-        return ODIN_USER_DATA_DIRECTORY;
-      }
-      if (b === 'ODIN_LOG_DATA_DIRECTORY') {
-        const ODIN_LOG_DATA_DIRECTORY = GetLogDir();
-        Logger.info(`ODIN_LOG_DATA_DIRECTORY ${ODIN_LOG_DATA_DIRECTORY}`);
-        return ODIN_LOG_DATA_DIRECTORY;
-      }
-      if (app.getPath(b)) {
-        return app.getPath(b);
-      }
-      Logger.info(`readLauncherConfig: warning var undefined: ${b}`);
-      return '';
+  const inputYaml = configPath
+    ? readFileSync(configPath, 'utf8')
+    : readFileSync(path.join(distPath, 'launcher-config.yaml'), 'utf8');
+  const finalYaml = inputYaml.replace(/\${([^}]+)}/g, (a, b) => {
+    if (process.env[b]) {
+      return process.env[b];
     }
-  );
+    if (b === 'ODIN_INSTALL_DIRECTORY') {
+      const ODIN_INSTALL_DIRECTORY = !app.isPackaged ? process.cwd() : app.getAppPath();
+      Logger.info(`ODIN_INSTALL_DIRECTORY: ${ODIN_INSTALL_DIRECTORY}`);
+      return ODIN_INSTALL_DIRECTORY;
+    }
+    if (b === 'ODIN_RESOURCE_DIRECTORY') {
+      const ODIN_RESOURCE_DIRECTORY = resourcesPath;
+      Logger.info(`ODIN_RESOURCE_DIRECTORY: ${ODIN_RESOURCE_DIRECTORY}`);
+      return ODIN_RESOURCE_DIRECTORY;
+    }
+    if (b === 'ODIN_DIST_DIRECTORY') {
+      const ODIN_DIST_DIRECTORY = !app.isPackaged ? process.cwd() + '/dist' : distPath;
+      Logger.info(`ODIN_DIST_DIRECTORY: ${ODIN_DIST_DIRECTORY}`);
+      return ODIN_DIST_DIRECTORY;
+    }
+    if (b === 'ODIN_USER_DATA_DIRECTORY') {
+      const ODIN_USER_DATA_DIRECTORY = !app.isPackaged
+        ? process.cwd() + '/dist/user_data'
+        : app.getPath('userData');
+      Logger.info(`ODIN_USER_DATA_DIRECTORY: ${ODIN_USER_DATA_DIRECTORY}`);
+      return ODIN_USER_DATA_DIRECTORY;
+    }
+    if (b === 'ODIN_LOG_DATA_DIRECTORY') {
+      const ODIN_LOG_DATA_DIRECTORY = GetLogDir();
+      Logger.info(`ODIN_LOG_DATA_DIRECTORY ${ODIN_LOG_DATA_DIRECTORY}`);
+      return ODIN_LOG_DATA_DIRECTORY;
+    }
+    if (app.getPath(b)) {
+      return app.getPath(b);
+    }
+    Logger.info(`readLauncherConfig: warning var undefined: ${b}`);
+    return '';
+  });
   // $FlowFixMe
   return yamljs.parse(finalYaml);
 };
