@@ -13,16 +13,21 @@
 - update field text bg color to match with design
 - update sync info layout
 
+- Refactor configure
+
 # v0.5.0 (2019.02.20)
 
 ### Features
+
 - able to send tx
 - add Yup validations for send tx
 
 ### Fixes
+
 - fix switch network issues
 
 ### Improvements
+
 - Make 'Local test net' optional
 
 # v0.4.1 (2019.02.12)
