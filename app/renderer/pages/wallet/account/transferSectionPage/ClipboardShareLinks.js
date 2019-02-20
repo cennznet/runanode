@@ -77,7 +77,7 @@ const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customS
 
   return (
     <Wrapper {...{styles}}>
-      <Text ref={textRef} value={children} onChange={() => {}} {...{styles}}/>
+      <Text ref={textRef} value={children} onChange={() => {}} {...{styles}} />
       <Icon
         {...icon}
         onClick={copyToClipboard}

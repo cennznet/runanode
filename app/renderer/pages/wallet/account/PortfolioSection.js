@@ -2,8 +2,8 @@ import React from 'react';
 import jdenticon from "jdenticon";
 import styled from 'styled-components';
 import SVGInline from "react-svg-inline";
-
 import Table from 'components/Table';
+
 const { colors } = require('../../../theme');
 
 const AssetIdIcon = ({value}) => {
