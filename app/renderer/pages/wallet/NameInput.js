@@ -52,7 +52,7 @@ const NameInput = ({ existingWallets, onSubmit: onSubmitFunc }) => {
                       {...field}
                       type="text"
                       placeholder="Please enter wallet name..."
-                      value={values.walletName || ''}
+                      value={values[field.name] || ''}
                       valid={touched[field.name] && !errors[field.name]}
                     />
                     {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}

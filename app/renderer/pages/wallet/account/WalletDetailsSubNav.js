@@ -8,6 +8,7 @@ import { Button } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import history from 'renderer/history';
 import { walletType } from 'renderer/constants/wallet';
+import AddAccountModal from './AddAccountModal';
 
 const tooltipId = uuid();
 
@@ -29,16 +30,39 @@ const AddAccountButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const additionalItem = (
-  <AddAccountButtonWrapper>
-    <Button color="secondary" size="lg" block>
-      <span>Add account</span>
-      <IconPlus />
-    </Button>
-  </AddAccountButtonWrapper>
-);
+const addAccountButton = (wallet, onClickFunc) => {
+  if (wallet.type === walletType.SIMPLEWALLET) {
+    return null;
+  }
 
-const WalletDetailsSubNav = ({ wallets, currentWallet }) => {
+  return (
+    <AddAccountButtonWrapper>
+      <Button color="secondary" size="lg" block onClick={() => onClickFunc(wallet)}>
+        <span>Add account</span>
+        <IconPlus />
+      </Button>
+    </AddAccountButtonWrapper>
+  );
+};
+
+const WalletDetailsSubNav = ({
+  wallets,
+  currentWallet,
+  onAddAccount,
+  setNewAccount,
+  setReslovedWallet,
+  setAddAccountModalOpen,
+  ...otherProps
+}) => {
+  const onAddAccountAction = async wallet => {
+    const { syncedWallet, newAccount } = await onAddAccount(wallet);
+    if (newAccount) {
+      setNewAccount(newAccount);
+      setReslovedWallet(syncedWallet);
+      setAddAccountModalOpen(true);
+    }
+  };
+
   const menuList = wallets.map(wallet => {
     return {
       title: wallet.name,
@@ -52,13 +76,14 @@ const WalletDetailsSubNav = ({ wallets, currentWallet }) => {
           link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
         };
       }),
-      additionalItem: wallet.type !== walletType.SIMPLEWALLET && additionalItem,
+      additionalItem: addAccountButton(wallet, onAddAccountAction),
     };
   });
 
   return (
     <SubNav {...{ footer }}>
       <CollapsibleMenu {...{ menuList }} />
+      <AddAccountModal {...{ setAddAccountModalOpen }} {...otherProps} />
     </SubNav>
   );
 };

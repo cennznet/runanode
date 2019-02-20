@@ -19,9 +19,9 @@ const recomposeWallet = async (actionType, payload) => {
     wallet.type = walletType.HDWALLET;
   }
 
-  const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
-  const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
-  wallet.walletAddress = walletAddress;
+  // const accountKeyringMap = wallet && wallet.wallet._accountKeyringMap;
+  // const walletAddress = await window.odin.api.cennz.getWalletAddress({ accountKeyringMap });
+  // wallet.walletAddress = walletAddress;
 
   // sync wallet data
   const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
@@ -35,7 +35,7 @@ const recomposeWallet = async (actionType, payload) => {
 
   return {
     type: types[actionType].completed,
-    payload: { wallets },
+    payload: wallets,
   };
 };
 
@@ -81,9 +81,10 @@ const storeWalletEpic = action$ =>
       action =>
         action.type === types.walletCreatWithSKR.completed ||
         action.type === types.walletRestoreWithHDKR.completed ||
-        action.type === types.walletCreatWithHDKR.completed
+        action.type === types.walletCreatWithHDKR.completed ||
+        action.type === types.addAccount.completed
     ),
-    mergeMap(({ payload: { wallets } }) => {
+    mergeMap(({ payload: wallets }) => {
       return of({
         type: types.setStorage.requested,
         payload: { key: storageKeys.WALLETS, value: wallets, redirect: true },
