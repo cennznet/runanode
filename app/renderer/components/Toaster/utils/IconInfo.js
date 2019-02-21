@@ -29,7 +29,7 @@ const StyledSVGInline = styled(SVGInline).attrs({
 
 StyledSVGInline.defaultProps = {
   color: colors.N700,
-  size: '1rem',
+  size: '1.4rem', // 20px
 };
 
 export default StyledSVGInline;

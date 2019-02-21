@@ -39,18 +39,18 @@ const ToasterMessage = styled.div`
 `;
 
 const statusMap = {
-  success: { color: colors.success, title: 'Success', IconComp: IconSuccess },
-  warn: { color: colors.warning, title: 'Warning', IconComp: IconWarning },
-  info: { color: colors.info, title: 'Warning', IconComp: IconInfo },
-  error: { color: colors.danger, title: 'Error', IconComp: IconDanger },
+  success: { color: colors.success, title: 'Success', Icon: IconSuccess },
+  warn: { color: colors.warning, title: 'Warning', Icon: IconWarning },
+  info: { color: colors.info, title: 'Warning', Icon: IconInfo },
+  error: { color: colors.danger, title: 'Error', Icon: IconDanger },
 };
 
 export const setToaster = (toasterStatus = 'success', toasterText) => {
-  const { color, title, IconComp } = statusMap[toasterStatus];
+  const { color, title, Icon } = statusMap[toasterStatus];
   toast[toasterStatus](
     <ToasterInfoWrapper>
       <IconBox>
-        <IconComp color={color} />
+        <Icon color={color} />
       </IconBox>
 
       <ToasterInfoContent>
