@@ -54,6 +54,7 @@ const AddAccountModal = ({
   const fieldName = 'newAccountName';
   const onAddAccountClick = newAccountName => {
     onConfirmAddAccount({ newAccountName, toUpdateWallet });
+    setAddAccountModalOpen(false);
   };
 
   return (
