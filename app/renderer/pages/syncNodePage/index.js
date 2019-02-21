@@ -5,14 +5,16 @@ import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
 
 import { NetworkNameMapping } from 'common/types/cennznet-node.types';
-import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
-import { PageHeading } from 'components';
-import ROUTES from 'renderer/constants/routes';
+import { Layout, LayoutWrapper, MainContent } from 'components/layout';
+import SideNav from 'components/layout/SideNav';
+import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Logger } from 'renderer/utils/logging';
 import { storageKeys } from 'renderer/api/utils/storage';
 import Spinner from 'components/Spinner';
 import withContainer from './container';
+import { environment } from '../../../main/environment';
 
+const  { isDev } = environment;
 
 const SpinnerWrapper = styled.div`
   height: 100%;
@@ -63,7 +65,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
   if (!isNetworkSwitched) {
     return (
-      <Layout defaultSidebar>
+      <Layout sidebar={<SimpleSidebar />}>
         <LayoutWrapper>
           <MainContent>
             <SpinnerWrapper>
@@ -96,8 +98,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   Logger.info(`  Sync progress in Local ${syncNodePercentage}%`);
 
   return (
-    // <Layout sidebar={<SimpleSidebar />}>
-    <Layout defaultSidebar>
+    <Layout sidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
