@@ -15,6 +15,7 @@
 - update side bar nav for launch process
 - display node state in dev info top bar
 - skip restart node when chose same network
+- add bps to sync screen
 - Refactor configure
 
 # v0.5.0 (2019.02.20)
