@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Spinner from 'components/Spinner';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
+import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import withContainer from './container';
 
 const SpinnerWrapper = styled.div`
@@ -13,7 +14,7 @@ const SpinnerWrapper = styled.div`
 
 const WaitPage = ({networkStatusStore}) => {
   return (
-    <Layout defaultSidebar>
+    <Layout sidebar={<SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <SpinnerWrapper>
