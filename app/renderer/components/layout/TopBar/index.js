@@ -128,7 +128,7 @@ const TopBar = ({
             <InfoDesc>block height</InfoDesc>
           </div>
           <div>
-            <InfoValue>{localBps || 0}</InfoValue>
+            <InfoValue>{localBps? localBps.toFixed(2) : 0}</InfoValue>
             <InfoDesc>bps</InfoDesc>
           </div>
         </InfoWrapper>
