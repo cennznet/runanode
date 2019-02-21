@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { colors } from 'renderer/theme';
-import iconReady from 'renderer/assets/icon/warning.svg';
+import iconWarning from 'renderer/assets/icon/warning.svg';
 
 const StyledSVGInline = styled(SVGInline).attrs({
-  svg: iconReady,
+  svg: iconWarning,
 })`
   svg {
     width: ${p => p.size};
@@ -29,7 +29,7 @@ const StyledSVGInline = styled(SVGInline).attrs({
 
 StyledSVGInline.defaultProps = {
   color: colors.N700,
-  size: '1rem',
+  size: '1.4rem', // 20px
 };
 
 export default StyledSVGInline;
