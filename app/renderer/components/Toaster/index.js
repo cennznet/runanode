@@ -18,11 +18,12 @@ const CustomToast = ({ children, ...props }) => {
 
 const Toaster = styled(CustomToast)`
   .Toastify__toast {
-    font-weight: 600;
+    font-weight: 500;
     padding: 0;
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.18), 0 1px 1px 0 rgba(0, 0, 0, 0.12),
       0 1px 3px 0 rgba(0, 0, 0, 0.1);
     background-color: #020835;
+    border-radius: 3px;
 
     .Toastify__close-button {
       padding: 1rem;
