@@ -19,7 +19,7 @@ import {
   getStreamMessageChangedType,
   getNodeWsChainGetHeaderType,
 } from 'renderer/helpers/actionTypeHelper';
-import config from '../utils/config';
+import config from 'app/config';
 
 const epic = (action$, state$) =>
   action$.pipe(
@@ -46,9 +46,8 @@ const epic = (action$, state$) =>
 const pollingEpic = action$ =>
   action$.pipe(
     ofType(types.nodeWsChainGetHeaderPolling.requested),
-    // take(1),
     mergeMap(() => {
-      return interval(config.connectivity.latency.period).pipe(
+      return interval(config.webSocket.latency.period).pipe(
         map(() => {
           return { type: types.nodeWsChainGetHeader.requested, payload: {} };
         })

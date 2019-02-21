@@ -8,7 +8,7 @@ import withContainer from './container';
 
 const Note = styled.div`
   font-size: 1rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0 1.5rem;
 `;
 
 class TosPage extends React.Component {
