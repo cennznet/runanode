@@ -12,6 +12,7 @@
 - update background gradient settings
 - update field text bg color to match with design
 - update sync info layout
+- update side bar nav for launch process
 
 # v0.5.0 (2019.02.20)
 

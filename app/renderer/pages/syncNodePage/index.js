@@ -12,7 +12,10 @@ import { Logger } from 'renderer/utils/logging';
 import { storageKeys } from 'renderer/api/utils/storage';
 import Spinner from 'components/Spinner';
 import withContainer from './container';
+import { environment } from '../../../main/environment';
+import SideNav from '../../components/layout/SideNav';
 
+const  { isDev } = environment;
 
 const SpinnerWrapper = styled.div`
   height: 100%;
@@ -63,7 +66,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
   if (!isNetworkSwitched) {
     return (
-      <Layout defaultSidebar>
+      <Layout defaultSidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
         <LayoutWrapper>
           <MainContent>
             <SpinnerWrapper>
@@ -96,8 +99,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   Logger.info(`  Sync progress in Local ${syncNodePercentage}%`);
 
   return (
-    // <Layout sidebar={<SimpleSidebar />}>
-    <Layout defaultSidebar>
+    <Layout defaultSidebar={isDevOrDebugProd ? <SideNav /> : <SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
