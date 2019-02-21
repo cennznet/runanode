@@ -14,8 +14,7 @@ const SpinnerWrapper = styled.div`
 
 const HomePage = ({ hasBlockNumbers }) => {
   return (
-    // <Layout sidebar={<SimpleSidebar />}>
-    <Layout defaultSidebar>
+    <Layout sidebar={<SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <SpinnerWrapper>
