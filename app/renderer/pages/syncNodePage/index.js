@@ -78,7 +78,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   }
 
   const { blockNum: bestBlock } = syncRemoteStream;
-  const { blockNum: syncedBlock } = syncStream;
+  const { blockNum: syncedBlock, bps } = syncStream;
   const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
   const syncNodePercentage =
     syncNodeProgress >= 0.995 && syncNodeProgress < 1
@@ -115,7 +115,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
               />
             </SyncNodeProgress>
             <SyncNodeInfo>
-              <TextWrapper>{syncNodePercentage}% synced</TextWrapper>
+              <TextWrapper>{syncNodePercentage}% synced, {bps?bps.toFixed(2):0} bps</TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
