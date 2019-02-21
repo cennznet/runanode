@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
-import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
+import { Layout, LayoutWrapper, MainContent } from 'components/layout';
+import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Button, FileUploader, Select, PageHeading } from 'components';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
@@ -77,8 +78,7 @@ const ChooseNetWork = ({
   Logger.info(`**Uploaded File: ${singleFile && singleFile.path}`);
 
   return (
-    // <Layout sidebar={<SimpleSidebar />}>
-    <Layout defaultSidebar>
+    <Layout sidebar={<SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <ChooseNetworkWrapper>
