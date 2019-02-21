@@ -77,7 +77,7 @@ export const secondary = V800;
 export const success = G400;
 export const warning = Y400;
 export const danger = R400;
-export const info = N700;
+export const info = N100;
 export const nuetral = N500;
 
 export const border = N400;

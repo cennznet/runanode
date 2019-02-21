@@ -7,6 +7,7 @@ import { colors } from 'renderer/theme';
 import IconSuccess from './IconSuccess';
 import IconWarning from './IconWarning';
 import IconDanger from './IconDanger';
+import IconInfo from './IconInfo';
 
 const ToasterInfoWrapper = styled.div`
   display: flex;
@@ -18,30 +19,8 @@ const ToasterInfoContent = styled.div`
   padding-left: 1rem;
 `;
 
-const Title = styled.div`
-  color: ${colors.success};
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  border-radius: 3px;
-  font-size: 12px;
-  box-shadow: 0 2px 8px ${colors.border};
-  width: 18rem;
-  background-color: ${colors.N0};
-  position: relative;
-  user-select: none;
-
-  & + & {
-    margin-top: 0.5rem;
-  }
-`;
-
-const Header = styled.div`
-  margin-bottom: 0.5rem;
-  font-size: 12px;
-  font-weight: 600;
-  color: ${colors.N0};
+const ToasterTitle = styled.div`
+  color: ${p => p.color};
 `;
 
 const IconBox = styled.div`
@@ -54,21 +33,29 @@ const IconBox = styled.div`
   height: 100%;
 `;
 
-const SuccessMessage = styled.div`
+const ToasterMessage = styled.div`
   font-weight: 500;
   margin-top: 0.5rem;
 `;
 
-export const successToast = scuessText => {
-  toast.success(
+const statusMap = {
+  success: { color: colors.success, title: 'Success', IconComp: IconSuccess },
+  warn: { color: colors.warning, title: 'Warning', IconComp: IconWarning },
+  info: { color: colors.info, title: 'Warning', IconComp: IconInfo },
+  error: { color: colors.danger, title: 'Error', IconComp: IconDanger },
+};
+
+export const setToaster = (toasterStatus = 'success', toasterText) => {
+  const { color, title, IconComp } = statusMap[toasterStatus];
+  toast[toasterStatus](
     <ToasterInfoWrapper>
       <IconBox>
-        <IconSuccess color={colors.N0} />
+        <IconComp color={color} />
       </IconBox>
 
       <ToasterInfoContent>
-        <Title>Success</Title>
-        <SuccessMessage>{scuessText}</SuccessMessage>
+        <ToasterTitle color={color}>{title}</ToasterTitle>
+        <ToasterMessage>{toasterText}</ToasterMessage>
       </ToasterInfoContent>
     </ToasterInfoWrapper>
   );

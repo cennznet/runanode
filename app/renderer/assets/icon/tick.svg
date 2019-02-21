@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
-    <title>tick</title>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Success icon</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Verification" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Verification-Stage-6---Claim-Tokens-+-State-Pallet---normal" transform="translate(-975.000000, -635.000000)" stroke="#34864C">
-            <g id="tick" transform="translate(976.000000, 636.000000)">
-                <g id="Group-2-Copy-3">
-                    <circle id="Oval-2" cx="12" cy="12" r="12"></circle>
-                    <polyline id="Path-3" stroke-width="1.2" stroke-linecap="round" points="6 13.7469309 8.56134185 16.5 18 7.5"></polyline>
-                </g>
-            </g>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Toast-/-Success" transform="translate(-14.000000, -22.000000)" fill="#5FC17C">
+            <path d="M24,42 C18.4771525,42 14,37.5228475 14,32 C14,26.4771525 18.4771525,22 24,22 C29.5228475,22 34,26.4771525 34,32 C34,37.5228475 29.5228475,42 24,42 Z M21.1599959,34.8965977 L19.4392844,33.0470836 C19.21357,32.8044736 18.833918,32.7907769 18.5913079,33.0164913 C18.3486978,33.2422057 18.3350012,33.6218577 18.5607156,33.8644678 L21.1089072,36.6034023 L29.4140536,28.6842345 C29.6538747,28.455559 29.66291,28.0757675 29.4342345,27.8359464 C29.205559,27.5961253 28.8257675,27.58709 28.5859464,27.8157655 L21.1599959,34.8965977 Z" id="Success-icon"></path>
         </g>
     </g>
 </svg>

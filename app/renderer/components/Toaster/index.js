@@ -5,7 +5,7 @@ import { colors } from 'renderer/theme';
 
 const CustomToast = ({ children, ...props }) => {
   return (
-    <ToastContainer transition={Slide} autoClose={800000} {...props}>
+    <ToastContainer transition={Slide} autoClose={5000} {...props}>
       {children}
     </ToastContainer>
   );
@@ -19,21 +19,32 @@ const Toaster = styled(CustomToast)`
       0 1px 3px 0 rgba(0, 0, 0, 0.1);
     background-color: #020835;
 
-    &.Toastify__progress-bar--success {
-      background-color: #020835;
-      color: red;
+    .Toastify__close-button {
+      padding: 1rem;
+    }
+
+    &.Toastify__toast--success {
+      .Toastify__progress-bar {
+        background: ${colors.success};
+      }
     }
 
     &.Toastify__toast--error {
-      background: ${colors.R500};
+      .Toastify__progress-bar {
+        background: ${colors.danger};
+      }
     }
 
     &.Toastify__toast--warning {
-      background: ${colors.Y500};
+      .Toastify__progress-bar {
+        background: ${colors.warning};
+      }
     }
 
     &.Toastify__toast--info {
-      background: ${colors.B500};
+      .Toastify__progress-bar {
+        background: ${colors.info};
+      }
     }
   }
 `;

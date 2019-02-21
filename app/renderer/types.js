@@ -73,7 +73,7 @@ const actionTypes = {
   /** Toaster */
   successToaster: triggerActionTypes('success_toaster'),
   warningToaster: triggerActionTypes('warning_toaster'),
-  dangerToaster: triggerActionTypes('danger_toaster'),
+  errorToaster: triggerActionTypes('error_toaster'),
   infoToaster: triggerActionTypes('info_toaster'),
 };
 
