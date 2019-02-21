@@ -13,7 +13,8 @@
 - update field text bg color to match with design
 - update sync info layout
 - update side bar nav for launch process
-
+- display node state in dev info top bar
+- skip restart node when chose same network
 - Refactor configure
 
 # v0.5.0 (2019.02.20)
