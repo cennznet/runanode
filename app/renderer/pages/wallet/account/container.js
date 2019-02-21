@@ -33,12 +33,11 @@ const mapDispatchToProps = dispatch => ({
 const enhance = compose(
   lifecycle({
     componentDidMount() {
-      Logger.debug('onAddAccount - componentDidMount');
       Logger.debug(this.props);
       // sync wallet data on page load
       const { onSyncWalletData, match, wallets } = this.props;
       const { walletId, accountPublicAddress } = match.params;
-      const wallet = R.find(R.propEq('id', walletId))(wallets);
+      const wallet = wallets && R.find(R.propEq('id', walletId))(wallets);
       onSyncWalletData({ id: walletId, wallet });
     },
     componentDidUpdate(prevProps) {
@@ -47,7 +46,7 @@ const enhance = compose(
         Logger.debug('sync wallet data on different wallet Id');
         const { onSyncWalletData, match, wallets } = this.props;
         const { walletId, accountPublicAddress } = match.params;
-        const wallet = R.find(R.propEq('id', walletId))(wallets);
+        const wallet = wallets && R.find(R.propEq('id', walletId))(wallets);
         onSyncWalletData({ id: walletId, wallet });
       }
     },
