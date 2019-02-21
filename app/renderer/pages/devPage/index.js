@@ -5,9 +5,10 @@ import Button from 'components/Button';
 import { MainContent } from 'components/layout';
 import MainLayout from 'renderer/components/layout/MainLayout';
 import styled from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import Toaster from 'components/Toaster';
 import * as colors from '../../theme/colors';
 import withContainer from './dev.container';
-
 
 const PageTitle = styled.div`
   color: ${colors.N0};
@@ -42,6 +43,7 @@ const DevPage = ({
   syncRemoteStream,
   networkStatusStore,
   onTransfer,
+  onTestToaster,
 }) => {
   const {
     localNode: { chain },
@@ -147,17 +149,25 @@ const DevPage = ({
           </Button>
         </Flex>
         <Flex>
-          <Button onClick={() => onTransfer({
-            assetId: new BN('0', 10),
-            fromAddress: '5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE',
-            toAddress: '5F1XzAhQGNcapqm666QNU2cMUnj9DRAKB6vGXoVTkxWMLhPs',
-            amount: new BN('13', 10),
-            wallet: window.odin.store.getState().localStorage.WALLETS[0].wallet,
-          })}>
+          <Button
+            onClick={() =>
+              onTransfer({
+                assetId: new BN('0', 10),
+                fromAddress: '5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE',
+                toAddress: '5F1XzAhQGNcapqm666QNU2cMUnj9DRAKB6vGXoVTkxWMLhPs',
+                amount: new BN('13', 10),
+                wallet: window.odin.store.getState().localStorage.WALLETS[0].wallet,
+              })
+            }
+          >
             Transfer
           </Button>
         </Flex>
+        <Flex>
+          <Button onClick={() => onTestToaster()}>Toaster Test</Button>
+        </Flex>
       </MainContent>
+      <Toaster />
     </MainLayout>
   );
 };
