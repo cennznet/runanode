@@ -15,9 +15,7 @@ const ToasterInfoWrapper = styled.div`
   align-items: center;
 `;
 
-const ToasterInfoContent = styled.div`
-  padding-left: 1rem;
-`;
+const ToasterInfoContent = styled.div``;
 
 const ToasterTitle = styled.div`
   color: ${p => p.color};
@@ -27,7 +25,7 @@ const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 0.8rem;
+  padding: 0 1rem;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
   height: 100%;
