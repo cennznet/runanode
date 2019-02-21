@@ -49,7 +49,6 @@ const IconBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 0.8rem;
-  background: ${colors.success};
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
   height: 100%;
@@ -61,7 +60,6 @@ const SuccessMessage = styled.div`
 `;
 
 export const successToast = scuessText => {
-  console.log('!!!successToast');
   toast.success(
     <ToasterInfoWrapper>
       <IconBox>
