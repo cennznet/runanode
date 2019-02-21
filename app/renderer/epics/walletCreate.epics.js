@@ -3,7 +3,7 @@ import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
 import ROUTES from 'renderer/constants/routes';
-import { walletType } from 'renderer/constants/wallet';
+import { WALLET_TYPE } from 'renderer/constants/wallet';
 import chainEpics from 'renderer/epics/chainEpics';
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
@@ -14,9 +14,9 @@ const recomposeWallet = async (actionType, payload) => {
   const wallet = payload;
 
   if (actionType === 'walletCreatWithSKR') {
-    wallet.type = walletType.SIMPLEWALLET;
+    wallet.type = WALLET_TYPE.SIMPLE;
   } else {
-    wallet.type = walletType.HDWALLET;
+    wallet.type = WALLET_TYPE.HD;
   }
 
   // sync wallet data

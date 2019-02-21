@@ -25,20 +25,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.transfer.requested, payload });
   },
 
-  onAddAccount: async walletItem => {
-    const { wallet } = walletItem;
-    const { updatedWallet, newAccount } = await window.odin.api.cennz.addAccount({ wallet });
-    if (newAccount) {
-      const resolvedWalletItem = set(lensProp('wallet'), updatedWallet, walletItem);
-      const syncedWallet = await window.odin.api.cennz.syncWalletData(resolvedWalletItem);
-      return { syncedWallet, newAccount };
-    }
-    /**
-     * TODO:
-     * Failure toaster if no new account
-     */
-  },
-
   onConfirmAddAccount: payload => {
     dispatch({ type: types.addAccount.requested, payload });
   },
@@ -68,16 +54,14 @@ const enhance = compose(
     },
   }),
   withState('isAddAccountModalOpen', 'setAddAccountModalOpen', false),
-  withState('newAccountName', 'setNewAccountName', null),
   withState('initAccountNameInput', 'setInitAccountNameInput', true),
-  withState('newAccount', 'setNewAccount', null),
 
   withStateHandlers(
-    ({ initReslovedWallet = null }) => ({
-      reslovedWallet: initReslovedWallet,
+    ({ initToUpdateWallet = null }) => ({
+      toUpdateWallet: initToUpdateWallet,
     }),
     {
-      setReslovedWallet: () => val => ({ reslovedWallet: val }),
+      setToUpdateWallet: () => val => ({ toUpdateWallet: val }),
     }
   )
 );

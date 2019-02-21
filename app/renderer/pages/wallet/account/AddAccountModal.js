@@ -5,7 +5,6 @@ import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NameInput from 'renderer/pages/wallet/NameInput';
 import { Formik, Field } from 'formik';
-import { lensProp, set, lensPath } from 'ramda';
 
 const InputTitle = styled.div`
   font-size: 16px;
@@ -38,29 +37,23 @@ const ButtonGroup = styled.div`
 const AddAccountModal = ({
   isAddAccountModalOpen,
   setAddAccountModalOpen,
-  newAccountName,
-  newAccount,
-  reslovedWallet,
+  toUpdateWallet,
   onConfirmAddAccount,
 }) => {
-  if (!newAccount || !reslovedWallet) {
+  if (!toUpdateWallet) {
     return null;
   }
 
-  const { name: walletName, accounts } = reslovedWallet;
-  const existingAccountAmount = Object.keys(accounts).length;
-  const defaultNewAccountName = `Account ${existingAccountAmount}`;
-  const existingAccountNames = existingAccountAmount
+  const { name: walletName, accounts } = toUpdateWallet;
+  const numOfExistingAccounts = Object.keys(accounts) && Object.keys(accounts).length;
+  const defaultNewAccountName = `Account ${numOfExistingAccounts + 1}`;
+  const existingAccountNames = numOfExistingAccounts
     ? Object.keys(accounts).map(account => accounts[account].name && accounts[account].name)
     : [];
 
   const fieldName = 'newAccountName';
-  const onAddAccountClick = name => {
-    const updatedAccounts = set(lensProp('name'), name, accounts[newAccount]);
-    const updatedWallet = reslovedWallet;
-    updatedWallet.accounts[newAccount] = updatedAccounts;
-    onConfirmAddAccount(updatedWallet);
-    setAddAccountModalOpen(false);
+  const onAddAccountClick = newAccountName => {
+    onConfirmAddAccount({ newAccountName, toUpdateWallet });
   };
 
   return (
@@ -93,9 +86,7 @@ const AddAccountModal = ({
                         <ButtonGroup>
                           <Button
                             flat
-                            color="nuetral"
                             onClick={() => {
-                              errors[field.name] = '';
                               setAddAccountModalOpen(false);
                             }}
                           >
@@ -104,7 +95,8 @@ const AddAccountModal = ({
                           <Button
                             onClick={() => onAddAccountClick(values[fieldName])}
                             style={{ marginLeft: '0.5rem' }}
-                            color="warning"
+                            disabled={!values[fieldName]}
+                            color="primary"
                           >
                             Add
                           </Button>
@@ -118,7 +110,7 @@ const AddAccountModal = ({
                           {...field}
                           type="text"
                           placeholder="Please enter account name..."
-                          value={values[field.name] || ''}
+                          value={values[field.name]}
                           valid={touched[field.name] && !errors[field.name]}
                         />
                         {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}

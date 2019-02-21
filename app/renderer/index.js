@@ -62,7 +62,7 @@ library.add(
   faQuestionCircle,
   faWallet,
   faArrowAltCircleRight,
-  faExternalLinkAlt,
+  faExternalLinkAlt
 );
 
 const initializeOdin = async () => {
@@ -102,13 +102,13 @@ window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 
 // Open all links in external browser
-document.addEventListener('click', (event) => {
+document.addEventListener('click', event => {
   if (event.target.tagName === 'A' && event.target.href.startsWith('http')) {
     Logger.info(`open external link: ${event.target.href}`);
     event.preventDefault();
     shell.openExternal(event.target.href);
   }
-})
+});
 
 if (module.hot) {
   module.hot.accept('./App', () => {
