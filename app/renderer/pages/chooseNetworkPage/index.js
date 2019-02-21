@@ -9,7 +9,7 @@ import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 import { environment } from '../../../main/environment';
 
-const  { isDevOrDebugProd } = environment;
+const { isDevOrDebugProd } = environment;
 
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
@@ -49,11 +49,11 @@ const ButtonWrapper = styled.div`
 export const NETWORK_OPTIONS = [
   // { label: 'CENNZnet DEV(OLD)', value: NetworkNameOptions.CENNZNET_DEV },
   // { label: 'CENNZnet UAT(OLD)', value: NetworkNameOptions.CENNZNET_UAT },
-  { label: 'CENNZnet RIMU(UAT)', value: NetworkNameOptions.CENNZNET_RIMU },// TODO should we add *-latest runtime option?
+  { label: 'CENNZnet RIMU(UAT)', value: NetworkNameOptions.CENNZNET_RIMU }, // TODO should we add *-latest runtime option?
   { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
 ];
 
-if(isDevOrDebugProd) {
+if (isDevOrDebugProd) {
   NETWORK_OPTIONS.push({ label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET });
 }
 
@@ -86,6 +86,7 @@ const ChooseNetWork = ({
             <div>Choose network</div>
             <NetworkOptionWrapper>
               <Select
+                backgroundColor={colors.V800}
                 value={selectedNetwork}
                 onChange={selected => {
                   Logger.info('selected value', selected);

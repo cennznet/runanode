@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
-import { lensProp, set, find, propEq } from 'ramda';
+import R from 'ramda';
 
 import types from 'renderer/types';
 import { storageKeys } from 'renderer/api/utils/storage';
@@ -38,17 +38,16 @@ const enhance = compose(
       // sync wallet data on page load
       const { onSyncWalletData, match, wallets } = this.props;
       const { walletId, accountPublicAddress } = match.params;
-      const wallet = find(propEq('id', walletId))(wallets);
+      const wallet = R.find(R.propEq('id', walletId))(wallets);
       onSyncWalletData({ id: walletId, wallet });
     },
     componentDidUpdate(prevProps) {
-      Logger.debug('onAddAccount - componentDidUpdate');
       // sync wallet data when nav to different account
       if (this.props.match.params.walletId !== prevProps.match.params.walletId) {
         Logger.debug('sync wallet data on different wallet Id');
         const { onSyncWalletData, match, wallets } = this.props;
         const { walletId, accountPublicAddress } = match.params;
-        const wallet = find(propEq('id', walletId))(wallets);
+        const wallet = R.find(R.propEq('id', walletId))(wallets);
         onSyncWalletData({ id: walletId, wallet });
       }
     },

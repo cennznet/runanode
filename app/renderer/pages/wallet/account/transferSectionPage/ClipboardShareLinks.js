@@ -3,6 +3,8 @@ import React, { useRef, useState } from 'react';
 import uuid from 'uuid/v4';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import R from 'ramda';
+
 import { Tooltip } from 'components';
 import { colors } from 'renderer/theme';
 import { Logger } from 'renderer/utils/logging';
@@ -11,8 +13,8 @@ import { Logger } from 'renderer/utils/logging';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${colors.V900};
-  padding: 0.5rem;
+  background-color: ${p => p.styles.backgroundColor};
+  padding: ${p => p.styles.padding};
 `;
 
 const Text = styled.textarea`
@@ -25,13 +27,15 @@ const Text = styled.textarea`
   resize: none;
   font-size: 14px;
   min-width: 26.5rem;
-  height: 3rem;
-  line-height: 3rem;
-  text-decoration: underline;
+  height: ${p => p.styles.height};
+  line-height: ${p => p.styles.lineHeight};
+  text-decoration: ${p => p.styles.textDecoration};
   width: 100%;
+  min-width: ${p => p.styles.textMinWidth};
+  padding-top: ${p => p.styles.textPaddingTop};
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: ${p => p.styles.textDecoration};
   }
 `;
 
@@ -40,10 +44,25 @@ const Icon = styled(FontAwesomeIcon)`
   margin-top: 2px;
 `;
 
-const Clipboard = ({ icon, iconExtLink, children, url }) => {
+const defaultStyling = () => {
+  return {
+    backgroundColor: colors.V900,
+    padding: '0.5rem',
+    height: '3rem',
+    lineHeight: '1.2rem',
+    textDecoration: 'underline',
+    icon2MarginLeft: '2rem',
+    textMinWidth: '20vw',
+    textPaddingTop: '1.5rem',
+  };
+};
+
+
+const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customStyles }) => {
   const id = uuid();
   const [message, setMessage] = useState('Copy address');
   const textRef = useRef(null);
+  const styles = R.merge(defaultStyling(),customStyles);
 
   function copyToClipboard(e) {
     textRef.current.select();
@@ -57,8 +76,8 @@ const Clipboard = ({ icon, iconExtLink, children, url }) => {
   }
 
   return (
-    <Wrapper>
-      <Text ref={textRef} value={children} onChange={() => {}} />
+    <Wrapper {...{styles}}>
+      <Text ref={textRef} value={children} onChange={() => {}} {...{styles}} />
       <Icon
         {...icon}
         onClick={copyToClipboard}
@@ -69,17 +88,17 @@ const Clipboard = ({ icon, iconExtLink, children, url }) => {
       <Icon
         {...iconExtLink}
         onClick={openExternalLink}
-        onMouseEnter={() => setMessage('Open external link')}
+        onMouseEnter={() => setMessage('Check on CENNZScan')}
         data-for={id}
         data-tip
-        style={{marginLeft: '2rem'}}
+        style={{marginLeft: styles.icon2MarginLeft}}
       />
       <Tooltip id={id}>{message}</Tooltip>
     </Wrapper>
   );
 };
 
-Clipboard.defaultProps = {
+ClipboardShareLinks.defaultProps = {
   icon: {
     color: colors.N0,
     icon: 'copy',
@@ -92,4 +111,4 @@ Clipboard.defaultProps = {
   },
 };
 
-export default Clipboard;
+export default ClipboardShareLinks;

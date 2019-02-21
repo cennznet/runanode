@@ -1,18 +1,31 @@
 import React from 'react';
-import R from 'ramda';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MainContent, MainLayout } from 'components/layout';
+
+import { CENNZScanAddressUrl } from 'common/types/cennznet-node.types';
 import { Clipboard, PageHeading, PageFooter, Tabs, TabPane } from 'components';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';
 import TransferSection from './transferSectionPage';
+import ClipboardShareLinks from './transferSectionPage/ClipboardShareLinks';
 
 const Subheading = ({ account }) => {
+  const url = CENNZScanAddressUrl.rimu; // TODO should base on selected network
   return (
     <div style={{ display: 'flex' }}>
       <span>Public Address: </span>
-      <Clipboard>{account.address}</Clipboard>
+      <ClipboardShareLinks
+        url={url}
+        styles={{
+          height: '1rem',
+          lineHeight: '1rem',
+          padding: null,
+          backgroundColor: null,
+          textDecoration: null,
+          icon2MarginLeft: '1rem',
+          textPaddingTop: null,
+          textMinWidth: null,
+        }}>{account.address}
+      </ClipboardShareLinks>
     </div>
   );
 };
