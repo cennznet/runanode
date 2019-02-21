@@ -1,4 +1,4 @@
-export const walletType = {
-  SIMPLEWALLET: 'SIMPLE_WALLET',
-  HDWALLET: 'HD_WALLET',
+export const WALLET_TYPE = {
+  SIMPLE: 'simple_wallet',
+  HD: 'HD_wallet',
 };

@@ -7,7 +7,7 @@ import { SubNav, CollapsibleMenu } from 'components/layout';
 import { Button } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import history from 'renderer/history';
-import { walletType } from 'renderer/constants/wallet';
+import { WALLET_TYPE } from 'renderer/constants/wallet';
 import AddAccountModal from './AddAccountModal';
 
 const tooltipId = uuid();
@@ -30,42 +30,37 @@ const AddAccountButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const addAccountButton = (wallet, onClickFunc) => {
-  if (wallet.type === walletType.SIMPLEWALLET) {
-    return null;
-  }
-
-  return (
-    <AddAccountButtonWrapper>
-      <Button color="secondary" size="lg" block onClick={() => onClickFunc(wallet)}>
-        <span>Add account</span>
-        <IconPlus />
-      </Button>
-    </AddAccountButtonWrapper>
-  );
-};
-
 const WalletDetailsSubNav = ({
   wallets,
   currentWallet,
   onAddAccount,
   setNewAccount,
-  setReslovedWallet,
+  setToUpdateWallet,
   setAddAccountModalOpen,
   ...otherProps
 }) => {
-  const onAddAccountAction = async addAccountWallet => {
-    const { syncedWallet, newAccount: newAccountAddr } = await onAddAccount(addAccountWallet);
-    if (newAccountAddr) {
-      console.log('onAddAccount - newAccountAddr', newAccountAddr);
-      // setNewAccount(newAccountAddr);
-      // setReslovedWallet(syncedWallet);
-      setAddAccountModalOpen(true);
+  const addAccountButton = wallet => {
+    if (wallet.type === WALLET_TYPE.SIMPLE) {
+      return null;
     }
-    return null;
-  };
 
-  console.log('onAddAccount - wallets', wallets);
+    return (
+      <AddAccountButtonWrapper>
+        <Button
+          color="secondary"
+          size="lg"
+          block
+          onClick={() => {
+            setToUpdateWallet(wallet);
+            setAddAccountModalOpen(true);
+          }}
+        >
+          <span>Add account</span>
+          <IconPlus />
+        </Button>
+      </AddAccountButtonWrapper>
+    );
+  };
 
   const menuList = wallets.map(wallet => {
     return {
@@ -80,7 +75,7 @@ const WalletDetailsSubNav = ({
           link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
         };
       }),
-      additionalItem: addAccountButton(wallet, onAddAccountAction),
+      additionalItem: addAccountButton(wallet),
     };
   });
 
