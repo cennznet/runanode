@@ -5,7 +5,7 @@ import { colors } from 'renderer/theme';
 
 const CustomToast = ({ children, ...props }) => {
   return (
-    <ToastContainer transition={Slide} autoClose={80000} hideProgressBar {...props}>
+    <ToastContainer transition={Slide} autoClose={800000} {...props}>
       {children}
     </ToastContainer>
   );
@@ -17,9 +17,11 @@ const Toaster = styled(CustomToast)`
     padding: 0;
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.18), 0 1px 1px 0 rgba(0, 0, 0, 0.12),
       0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    background-color: #020835;
 
-    &.Toastify__toast--success {
+    &.Toastify__progress-bar--success {
       background-color: #020835;
+      color: red;
     }
 
     &.Toastify__toast--error {
