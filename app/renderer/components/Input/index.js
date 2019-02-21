@@ -40,7 +40,7 @@ Input.defaultProps = {
   theme,
   styles: {
     borderColor: colors.V400,
-    backgroundColor: colors.V400,
+    backgroundColor: 'rgba(114,94,255,0.5)',
     color: colors.N0,
     focusBorderColor: colors.V500,
   },

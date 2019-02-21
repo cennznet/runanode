@@ -3,7 +3,7 @@ import { catchError, concat, filter, map, mergeMap, switchMap, take } from 'rxjs
 import { ofType } from 'redux-observable';
 import R from 'ramda';
 import types from 'renderer/types';
-import config from 'renderer/utils/config';
+import config from 'app/config';
 import { localStream as stream } from 'renderer/stream/stream';
 import sreamConstants from 'renderer/constants/stream';
 import streamTypes from '../stream/types';
@@ -25,7 +25,7 @@ const messageSubject$ = stream.messageSubject.pipe(
 const statusSubject$ = stream.statusSubject.pipe(
   mergeMap(status => {
     if (status.isConnected) {
-      return interval(config.connectivity.latency.period).pipe(
+      return interval(config.webSocket.latency.period).pipe(
         map(() => {
           return { type: streamPingType.requested, payload: Date.now() };
         })

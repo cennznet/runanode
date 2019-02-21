@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs/Subject';
-import config from 'renderer/utils/config';
+import config from 'app/config';
 import payload from './payload';
 import streamTypes from './types';
 
@@ -235,10 +235,10 @@ export class Stream {
   }
 }
 
-const defaultStream = new Stream(config.urls.LOCAL_WS);
+const defaultStream = new Stream(config.webSocket.localStreamUrl);
 export default defaultStream;
 export const localStream = defaultStream;
-export const remoteStream = new Stream(config.urls.REMOTE_WS);
+export const remoteStream = new Stream(config.webSocket.remoteStreamUrl);
 
 if (module.hot) {
   module.hot.dispose(() => {
