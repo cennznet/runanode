@@ -7,6 +7,8 @@ import { SubNav, CollapsibleMenu } from 'components/layout';
 import { Button } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import history from 'renderer/history';
+import { WALLET_TYPE } from 'renderer/constants/wallet';
+import AddAccountModal from './AddAccountModal';
 
 const tooltipId = uuid();
 
@@ -28,19 +30,42 @@ const AddAccountButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const additionalItem = (
-  <AddAccountButtonWrapper>
-    <Button color="secondary" size="lg" block>
-      <span>Add account</span>
-      <IconPlus />
-    </Button>
-  </AddAccountButtonWrapper>
-);
+const WalletDetailsSubNav = ({
+  wallets,
+  currentWallet,
+  onAddAccount,
+  setNewAccount,
+  setToUpdateWallet,
+  setAddAccountModalOpen,
+  ...otherProps
+}) => {
+  const addAccountButton = wallet => {
+    if (wallet.type === WALLET_TYPE.SIMPLE) {
+      return null;
+    }
 
-const WalletDetailsSubNav = ({ wallets, currentWallet }) => {
+    return (
+      <AddAccountButtonWrapper>
+        <Button
+          color="secondary"
+          size="lg"
+          block
+          onClick={() => {
+            setToUpdateWallet(wallet);
+            setAddAccountModalOpen(true);
+          }}
+        >
+          <span>Add account</span>
+          <IconPlus />
+        </Button>
+      </AddAccountButtonWrapper>
+    );
+  };
+
   const menuList = wallets.map(wallet => {
     return {
       title: wallet.name,
+      type: wallet.type,
       isTitleHighlight: wallet.id === currentWallet.id,
       tail: `(${Object.keys(wallet.accounts).length})`,
       navItems: Object.keys(wallet.accounts).map(address => {
@@ -50,13 +75,14 @@ const WalletDetailsSubNav = ({ wallets, currentWallet }) => {
           link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
         };
       }),
-      additionalItem,
+      additionalItem: addAccountButton(wallet),
     };
   });
 
   return (
     <SubNav {...{ footer }}>
       <CollapsibleMenu {...{ menuList }} />
+      <AddAccountModal {...{ setAddAccountModalOpen }} {...otherProps} />
     </SubNav>
   );
 };

@@ -7,8 +7,9 @@ import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
 import { colors } from 'renderer/theme';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
+import { WALLET_TYPE } from 'renderer/constants/wallet';
 import { recoverySeedPhrases } from './utils';
-import { STEPS, WALLETTYPE } from '../constants';
+import { STEPS } from '../constants';
 
 const ReocveryOptionWrapper = styled.div`
   flex-direction: column;
@@ -59,7 +60,7 @@ const seedPhraseRecoverPage = ({
     setMnemonic(mnemonic);
     let checkedWallet = null;
 
-    if (recoverWalletType === WALLETTYPE.HDWALLET) {
+    if (recoverWalletType === WALLET_TYPE.HD) {
       checkedWallet = await onValidateHDKRWallet(mnemonic);
     } else {
       checkedWallet = await onValidateSKRWallet(mnemonic);
@@ -80,8 +81,8 @@ const seedPhraseRecoverPage = ({
           <RadioGroup>
             <Radio
               selected={recoverWalletType}
-              value={WALLETTYPE.HDWALLET}
-              onChange={() => setRecoverWalletType(WALLETTYPE.HDWALLET)}
+              value={WALLET_TYPE.HD}
+              onChange={() => setRecoverWalletType(WALLET_TYPE.HD)}
             >
               <div>HD Wallet</div>
               <ReocveryOptionExplain>
@@ -90,8 +91,8 @@ const seedPhraseRecoverPage = ({
             </Radio>
             <Radio
               selected={recoverWalletType}
-              value={WALLETTYPE.SIMPLEWALLET}
-              onChange={() => setRecoverWalletType(WALLETTYPE.SIMPLEWALLET)}
+              value={WALLET_TYPE.SIMPLE}
+              onChange={() => setRecoverWalletType(WALLET_TYPE.SIMPLE)}
             >
               Simple Wallet
             </Radio>
