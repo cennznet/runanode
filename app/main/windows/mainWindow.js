@@ -3,14 +3,14 @@ import { app, BrowserWindow, ipcMain, Menu } from 'electron';
 import { environment } from '../environment';
 import ipcApi from '../ipc';
 import RendererErrorHandler from '../utils/rendererErrorHandler';
-import { launcherConfig } from '../config';
-import { Logger } from "../utils/logging";
+import { launcherConfig } from '../launcherConfig';
+import { Logger } from '../utils/logging';
 
 const rendererErrorHandler = new RendererErrorHandler();
 
 const { isRemoteDebug, isDev, isTest, buildLabel, isLinux, isHot, port, isDebugProd } = environment;
 
-export const createMainWindow = (isInSafeMode) => {
+export const createMainWindow = isInSafeMode => {
   Logger.info('createMainWindow');
   Logger.info(`port: ${port}`);
   Logger.info(`isDev: ${isDev}`);
@@ -29,8 +29,8 @@ export const createMainWindow = (isInSafeMode) => {
       enableRemoteModule: isTest,
       devTools: !(isDev && isRemoteDebug), // set devTools: false when is remote debug
       // preload: path.join(__dirname, '../../dist/preload.js')
-      preload: path.join(__dirname, isDev ? '../../dist/preload.js' : './dist/preload.prod.js')
-    }
+      preload: path.join(__dirname, isDev ? '../../dist/preload.js' : './dist/preload.prod.js'),
+    },
   };
 
   if (isLinux) {
@@ -54,7 +54,7 @@ export const createMainWindow = (isInSafeMode) => {
   });
 
   // Provide render process with an api to close the main window
-  ipcMain.on('close-window', (event) => {
+  ipcMain.on('close-window', event => {
     if (event.sender !== window.webContents) return;
     window.close();
   });
@@ -72,7 +72,9 @@ export const createMainWindow = (isInSafeMode) => {
 
   window.loadURL(isDev ? `file://${__dirname}/../../app.html` : `file://${__dirname}/app.html`);
 
-  window.on('page-title-updated', event => { event.preventDefault(); });
+  window.on('page-title-updated', event => {
+    event.preventDefault();
+  });
 
   let title = buildLabel;
   if (isInSafeMode) title += ' [GPU safe mode]';
@@ -90,7 +92,7 @@ export const createMainWindow = (isInSafeMode) => {
         label: 'Inspect element',
         click() {
           window.inspectElement(x, y);
-        }
+        },
       });
     }
 
@@ -109,11 +111,11 @@ export const createMainWindow = (isInSafeMode) => {
     app.quit();
   });
 
-  window.webContents.on('did-fail-load', (err) => {
+  window.webContents.on('did-fail-load', err => {
     rendererErrorHandler.onError('did-fail-load', err);
   });
 
-  window.webContents.on('crashed', (err) => {
+  window.webContents.on('crashed', err => {
     rendererErrorHandler.onError('crashed', err);
   });
 
