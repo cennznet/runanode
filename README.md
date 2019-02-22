@@ -112,7 +112,7 @@ Start `Debug Renderer Process` in VSCode
 ## Pass args on app start
 
 Mac:
-open ./release/mac/Odin.app --args --DEBUG_PROD=true
+open -a /Applications/Odin.app --args --DEBUG_PROD=true
 
 Windows:
 Odin.exe --DEBUG_PROD=true
