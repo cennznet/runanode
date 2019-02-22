@@ -10,13 +10,15 @@ const CloseButton = styled(IconCross)`
 
 const CustomToast = ({ children, ...props }) => {
   return (
-    <ToastContainer transition={Slide} autoClose={500000} {...props} closeButton={<CloseButton />}>
+    <ToastContainer transition={Slide} autoClose={5000} {...props} closeButton={<CloseButton />}>
       {children}
     </ToastContainer>
   );
 };
 
 const Toaster = styled(CustomToast)`
+  margin-top: 4.5rem;
+
   .Toastify__toast {
     font-weight: 500;
     padding: 0;
