@@ -35,10 +35,6 @@ yarn package --[option]
 yarn package-all
 ```
 
-```shell
-DEBUG_PROD=true yarn package
-```
-
 ## Testing
 
 ```shell
@@ -62,7 +58,6 @@ yarn release:github
 ## Debug/Logging for packaged app
 
 ```shell
-DEBUG_PROD=true yarn package
 open release/mac/Odin.app
 tail -f ~/Library/Logs/Odin/*
 ```

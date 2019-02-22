@@ -107,7 +107,6 @@
     "electron-unhandled": "^2.1.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "es6-error": "^4.1.1",
-    "extend": "^3.0.2",
     "formik": "^1.4.3",
     "history": "^4.7.2",
     "jdenticon": "^2.1.1",

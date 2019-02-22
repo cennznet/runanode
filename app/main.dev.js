@@ -30,7 +30,7 @@ import { createMainWindow } from './main/windows/mainWindow';
 import { environment } from './main/environment';
 import { cennznetStatusChannel } from './main/ipc/cennznet.ipc';
 
-const { isDevOrDebugProd, buildLabel } = environment;
+const { isDev, buildLabel } = environment;
 
 export default class AppUpdater {
   constructor() {
@@ -84,10 +84,11 @@ export const createDefaultWindow = () => {
 const safeExit = async () => {
   if (cennzNetNode.state === CennzNetNodeStates.STOPPING) return;
   try {
-
-    cennzNetNode.saveStatus(Object.assign(cennzNetNode.status?cennzNetNode.status:{},{
-      isNodeSafeExisting: true
-    }));
+    cennzNetNode.saveStatus(
+      Object.assign(cennzNetNode.status ? cennzNetNode.status : {}, {
+        isNodeSafeExisting: true,
+      })
+    );
     await cennznetStatusChannel.send(cennzNetNode.status, mainWindow);
     Logger.info(`Odin:safeExit: cennzNetNode.status ${cennzNetNode.status}`);
 
@@ -106,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (isDevOrDebugProd) {
+if (isDev) {
   require('electron-debug')();
 }
 
@@ -152,7 +153,7 @@ app.on('ready', async () => {
     app.exit(1);
   }
 
-  if (isDevOrDebugProd) {
+  if (isDev) {
     await installExtensions();
   }
   // Detect safe mode

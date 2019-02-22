@@ -1,8 +1,6 @@
 // @flow
 import os from 'os';
 import { uniq, upperFirst } from 'lodash';
-import parseArgs from 'minimist';
-import extend from 'extend';
 
 import { version } from '../../package.json';
 import type { Environment } from '../common/types/environment.types';
@@ -20,25 +18,13 @@ import {
   WINDOWS,
 } from '../common/types/environment.types';
 
-// Configuration
-//
-const config = extend(
-  {
-    NODE_ENV: process.env.NODE_ENV,
-    DEBUG_PROD: process.env.DEBUG_PROD,
-  },
-  parseArgs(process.argv.slice(1))
-);
-
 // environment variables
 const CURRENT_NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
 const NETWORK = process.env.NETWORK || DEVELOPMENT;
 const REPORT_URL = process.env.REPORT_URL || STAGING_REPORT_URL;
 const port = process.env.PORT || 1212;
 const isHot = process.env.HOT === '1';
-const isDebugProd = config.DEBUG_PROD === 'true';
 const isDev = CURRENT_NODE_ENV === DEVELOPMENT;
-const isDevOrDebugProd = isDev || isDebugProd;
 const isRemoteDebug = process.env.DEBUG_REMOTE === 'true';
 const isTest = CURRENT_NODE_ENV === TEST;
 const isProduction = CURRENT_NODE_ENV === PRODUCTION;
@@ -74,9 +60,7 @@ export const environment: Environment = Object.assign(
     reportUrl: REPORT_URL,
     port,
     isHot,
-    isDebugProd,
     isDev,
-    isDevOrDebugProd,
     isRemoteDebug,
     isTest,
     isProduction,
