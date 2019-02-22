@@ -5,12 +5,12 @@ import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Button, FileUploader, Select, PageHeading } from 'components';
+import { environment } from 'main/environment';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import withContainer from './container';
-import { environment } from '../../../main/environment';
 
-const { isDevOrDebugProd } = environment;
+const { isDev } = environment;
 
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
@@ -54,7 +54,7 @@ export const NETWORK_OPTIONS = [
   { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
 ];
 
-if (isDevOrDebugProd) {
+if (isDev) {
   NETWORK_OPTIONS.push({ label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET });
 }
 

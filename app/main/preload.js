@@ -5,19 +5,12 @@ import _http from 'http';
 import { ipcRenderer as _ipcRenderer, remote as _remote } from 'electron';
 import _electronLog from 'electron-log';
 import ElectronStore from 'electron-store';
-import parseArgs from 'minimist';
-import R from 'ramda';
 import { environment } from './environment';
 
 const _process = process;
 const _electronStore = new ElectronStore();
 
-const processArgv = R.merge(
-  { DEBUG_PROD: _process.env.DEBUG_PROD },
-  parseArgs(_remote.process.argv)
-);
-
-const isDevOrDebugProd = R.propOr(false, 'DEBUG_PROD')(processArgv);
+const { isDev } = environment;
 
 process.once('loaded', () => {
   Object.assign(global, {
@@ -37,7 +30,6 @@ process.once('loaded', () => {
       delete: (...args) => _electronStore.delete(...args),
     },
     environment,
-    isDevOrDebugProd,
     https: {
       request: (...args) => _https.request(...args),
     },
@@ -60,7 +52,7 @@ process.once('loaded', () => {
     // $FlowFixMe
     global.spectronRequire = __non_webpack_require__; // eslint-disable-line
   }
-  if (!isDevOrDebugProd) {
+  if (!isDev) {
     // ESLint will warn about any use of eval(), even this one
     // eslint-disable-next-line
     global.eval = () => {
