@@ -4,11 +4,11 @@ import { SimpleKeyring, Wallet, HDKeyring } from 'cennznet-wallet';
 import { GenericAsset } from 'cennznet-generic-asset';
 import { Api } from 'cennznet-api';
 import uuid from 'uuid/v4';
-import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import { u32, Balance, AccountId } from '@polkadot/types';
-import * as util from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring';
+import decode from '@polkadot/keyring/pair/decode';
+import { assert, stringToU8a, u8aToHex, hexToU8a } from '@polkadot/util/index';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
@@ -55,7 +55,7 @@ const { buildLabel } = environment;
 
 // Generate toy keys from name, toy keys is only for play or tests
 const toyKeyringFromNames = (names: string[]) => {
-  const seeds = names.map(name => util.stringToU8a(name.padEnd(32, ' ')));
+  const seeds = names.map(name => stringToU8a(name.padEnd(32, ' ')));
   const keyring: any = new Keyring();
   seeds.forEach((seed, index) => {
     const key = keyring.addFromSeed(seed);
@@ -172,11 +172,11 @@ export default class CennzApi {
       console.log(`resultWallet.genericAssetNextAssetId: ${resultWallet.genericAssetNextAssetId}`);
 
       // extract data from wallet to accounts
-      const accounts = new Map();
+      const accounts = {};
       for (const walletAddress of walletAddresses) {
         console.log(`walletAddress: ${walletAddress}`);
 
-        const assets = new Map();
+        const assets = {};
         // eslint-disable-next-line no-await-in-loop
         const stakingTokenAsset = await this.getCennznetWalletAsset(
           PreDefinedAssetIdObj.STAKING_TOKEN.BN,
@@ -328,6 +328,8 @@ export default class CennzApi {
   };
 
   /**
+   * TODO remove this
+   * @deprecated
    * @param request
    * @returns {Promise<*|Array<string>>}
    */
@@ -440,6 +442,36 @@ export default class CennzApi {
   };
 
   /**
+   * @param wallet
+   * @returns {Promise<Wallet>}
+   */
+  reloadSimpleWallet = (wallet: CennznetWallet): Promise<Wallet> => {
+    assert(wallet, `missing wallet`);
+    // TODO check wallet is simple
+    const originalWallet = new Wallet({
+      vault: wallet.wallet.vault,
+      keyringTypes: [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
+    });
+    return originalWallet;
+  };
+
+  /**
+   * @param wallet
+   * @param passphrase
+   * @returns {Promise<*>}
+   */
+  getSeedFromSimpleWallet = async (wallet: CennznetWallet, passphrase: string): Promise<string> => {
+    const originalWallet = this.reloadSimpleWallet(wallet);
+    await originalWallet.unlock(passphrase);
+    assert(wallet.accounts, `missing accounts`);
+    const json = await originalWallet.exportAccount(Object.keys(wallet.accounts)[0], passphrase);
+    const decodeMsg = decode('', hexToU8a(json.encoded));
+    const seed = u8aToHex(decodeMsg.seed);
+    // const publicKey = u8aToHex(decodeMsg.publicKey);
+    return seed;
+  }
+
+  /**
    * @param assetId
    * @param fromWalletAddress
    * @param toWalletAddress
@@ -451,29 +483,14 @@ export default class CennzApi {
     Logger.debug('CennznetApi::doGenericAssetTransfer called');
     Logger.debug(`assetId: ${assetId.toString(10)}, amount: ${amount.toString(10)}, fromWalletAddress: ${fromWalletAddress}, toWalletAddress: ${toWalletAddress}`);
     try {
-
-      // reload wallet object
-      const originalWallet = new Wallet({
-        vault: wallet.wallet.vault,
-        keyringTypes: [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
-      });
+      const originalWallet = this.reloadSimpleWallet(wallet);
       await originalWallet.unlock(''); // TODO switch to pin code
       Logger.debug('unlock');
 
       this.api.setSigner(originalWallet);
       Logger.debug('setSigner');
 
-      // const tx = await this.ga.transfer(assetId, toWalletAddress, amount).send({from: fromWalletAddress}, async (status) => {
-      //   console.log('transfer status');
-      //   console.log(status);
-      //   if (status.type === 'Finalised' && status.events !== undefined) {
-      //     console.log('success');
-      //     const balance: BN = await this.ga.getFreeBalance(assetId, toWalletAddress);
-      //     console.log('balance');
-      //     console.log(balance);
-      //   }s
-      // });
-      const txHash = await this.ga.transfer(assetId, toWalletAddress, amount).send({from: fromWalletAddress});
+      const txHash = await this.ga.transfer(assetId, toWalletAddress, amount).signAndSend(fromWalletAddress);
       Logger.debug(`CennznetApi::doGenericAssetTransfer txHash ${txHash}`);
       return txHash;
     } catch (error) {

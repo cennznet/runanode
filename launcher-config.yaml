@@ -1,6 +1,9 @@
 nodePath: ${ODIN_DIST_DIRECTORY}/cennznet-node
 logsPrefix: ${ODIN_LOG_DATA_DIRECTORY}
 nodeArgs:
+#  - --validator
+#  - --key=0x8b1f2618b5a41535c4a2304ff742919bd04b1399bc9345c8963c727d399c2266
+#  - --key=0xba99a32e2e8e1d1da6aa9ab8b95bed167dac89eca301759c4d5c7fa2878f78ea
   - --pruning=archive
 #  - --name
 #  - Odin-test
