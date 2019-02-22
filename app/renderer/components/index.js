@@ -19,6 +19,7 @@ import Toggle from 'components/Toggle';
 import Tooltip from 'components/Tooltip';
 import TosContent from 'components/TosContent';
 import Radio from 'components/Radio';
+import Toaster from 'components/Toaster';
 
 export {
   Box,
@@ -42,4 +43,5 @@ export {
   Tooltip,
   TosContent,
   Radio,
+  Toaster,
 };

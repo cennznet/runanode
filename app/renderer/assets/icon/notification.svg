@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="50px" viewBox="0 0 80 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-15">
+            <ellipse id="Oval" fill="#4E5458" cx="9.87012987" cy="8.85416667" rx="1.55844156" ry="1.5625"></ellipse>
+            <ellipse id="Oval-Copy" fill="#4E5458" cx="16.1038961" cy="8.85416667" rx="1.55844156" ry="1.5625"></ellipse>
+            <ellipse id="Oval-Copy-2" fill="#4E5458" cx="22.3376623" cy="8.85416667" rx="1.55844156" ry="1.5625"></ellipse>
+            <rect id="Rectangle-7" stroke="#4E5458" stroke-width="3" x="1.5" y="1.5" width="57.2597403" height="47" rx="5"></rect>
+            <path d="M2.49857981,15.1041667 L57.6623377,15.1041667" id="Line" stroke="#4E5458" stroke-width="3" stroke-linecap="square"></path>
+            <rect id="Rectangle-2" stroke="#4E5458" stroke-width="3" fill="#FFFFFF" x="36.8246753" y="23.375" width="41.6753247" height="15.75" rx="3"></rect>
+            <path d="M48.3116883,28.125 L58.7012987,28.125" id="Line-2" stroke="#4E5458" stroke-linecap="round"></path>
+            <path d="M48.3116883,31.25 L73.2467532,31.25" id="Line-2-Copy" stroke="#4E5458" stroke-linecap="round"></path>
+            <path d="M48.3116883,34.375 L73.2467532,34.375" id="Line-2-Copy-2" stroke="#4E5458" stroke-linecap="round"></path>
+            <ellipse id="Oval-3" fill="#FFC500" cx="43.1168831" cy="34.375" rx="1" ry="1"></ellipse>
+            <path d="M43.1168831,27.6041667 L43.1168831,31.7708333" id="Line-3" stroke="#FFC500" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>
