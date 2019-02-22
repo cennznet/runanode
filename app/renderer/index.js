@@ -31,7 +31,7 @@ import App from './App';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
 
-// store.dispatch({ type: types.resetLocalStorage.triggered });
+store.dispatch({ type: types.resetLocalStorage.triggered });
 store.dispatch({ type: types.init.triggered });
 
 // import utils from './utils';
@@ -62,7 +62,7 @@ library.add(
   faQuestionCircle,
   faWallet,
   faArrowAltCircleRight,
-  faExternalLinkAlt,
+  faExternalLinkAlt
 );
 
 const initializeOdin = async () => {
@@ -102,13 +102,13 @@ window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 
 // Open all links in external browser
-document.addEventListener('click', (event) => {
+document.addEventListener('click', event => {
   if (event.target.tagName === 'A' && event.target.href.startsWith('http')) {
     Logger.info(`open external link: ${event.target.href}`);
     event.preventDefault();
     shell.openExternal(event.target.href);
   }
-})
+});
 
 if (module.hot) {
   module.hot.accept('./App', () => {

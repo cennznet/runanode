@@ -27,3 +27,7 @@ export type GeneratePaperRequest = {
 export type GetWalletAddressRequest = {
   accountKeyringMap: object,
 };
+
+export type AddAccountRequest = {
+  wallet: object,
+};

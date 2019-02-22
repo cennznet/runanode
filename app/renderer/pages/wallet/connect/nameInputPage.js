@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, PageHeading, PageFooter, Input, Modal } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import NameInput from 'renderer/pages/wallet/NameInput';
-import { WALLETTYPE } from './constants';
+import { WALLET_TYPE } from 'renderer/constants/wallet';
 
 const NameInputPage = ({
   existingWallets,
@@ -19,7 +19,7 @@ const NameInputPage = ({
       <NameInput
         existingWallets={existingWallets}
         onSubmit={value => {
-          recoverWalletType === WALLETTYPE.HDWALLET
+          recoverWalletType === WALLET_TYPE.HD
             ? onCreateHDKRWallet({
                 name: value,
                 mnemonic,
