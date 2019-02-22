@@ -141,7 +141,7 @@ export default class CennzApi {
     Logger.debug('CennznetApi::syncWalletData called');
     try {
       const resultWallet = wallet;
-      const walletAddresses = window.odin.api.cennz.getWalletAddresses(resultWallet);
+      const walletAddresses = window.odin.api.cennz.getWalletAccountAddresses(resultWallet);
 
       // extract data from wallet to accounts
       const accounts = resultWallet.accounts || new Map();
@@ -339,14 +339,14 @@ export default class CennzApi {
    * @param request
    * @returns {string[]}
    */
-  getWalletAddresses = (request: CennznetWallet): string[] => {
-    Logger.debug('CennznetApi::getWalletAddresses called');
+  getWalletAccountAddresses = (request: CennznetWallet): string[] => {
+    Logger.debug('CennznetApi::getWalletAccountAddresses called');
     try {
-      const walletAddresses = Object.keys(request.wallet._accountKeyringMap);
-      Logger.debug(`CennznetApi::getWalletAddresses success: ${walletAddresses}`);
-      return walletAddresses;
+      const walletAccountAddresses = Object.keys(request.wallet._accountKeyringMap);
+      Logger.debug(`CennznetApi::getWalletAccountAddresses success: ${walletAccountAddresses}`);
+      return walletAccountAddresses;
     } catch (error) {
-      Logger.error('CennznetApi::getWalletAddresses error: ' + stringifyError(error));
+      Logger.error('CennznetApi::getWalletAccountAddresses error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
