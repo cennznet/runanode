@@ -1,8 +1,9 @@
 import { EMPTY, from, of, empty } from 'rxjs';
-import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
+import { concat, mergeMap, mapTo, filter, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
 import BN from 'bn.js';
+import R from 'ramda';
 
 import types from '../types';
 import { getStorage, storageKeys } from '../api/utils/storage';
@@ -19,7 +20,7 @@ const syncWalletDataEpic = action$ =>
       }
 
       const myWallet = wallets.find(x => x.id === payload.id);
-      if(myWallet) {
+      if (myWallet) {
         Logger.debug(`myWallet: ${myWallet}`);
         const myWalletIndex = wallets.findIndex(x => x.id === payload.id);
         Logger.debug(`myWalletIndex: ${myWalletIndex}`);
@@ -27,12 +28,10 @@ const syncWalletDataEpic = action$ =>
         Logger.debug(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
         wallets[myWalletIndex] = syncedWallet;
       }
-      return (
-        {
-          type: types.setStorage.requested,
-          payload: { key: storageKeys.WALLETS, value: wallets },
-        }
-      );
+      return {
+        type: types.setStorage.requested,
+        payload: { key: storageKeys.WALLETS, value: wallets },
+      };
     })
   );
 
@@ -44,18 +43,47 @@ const transferEpic = action$ =>
       const assetId = new BN(payload.assetId, 10);
       const { toAddress, fromAddress, wallet } = payload;
       const amount = new BN(payload.amount, 10);
-      const txHash = await window.odin.api.cennz.doGenericAssetTransfer(assetId, fromAddress, toAddress, amount, wallet);
+      const txHash = await window.odin.api.cennz.doGenericAssetTransfer(
+        assetId,
+        fromAddress,
+        toAddress,
+        amount,
+        wallet
+      );
       Logger.info(`txHash: ${txHash}`);
-      if(txHash) {
-        return (
-          {
-            type: types.transfer.completed,
-            payload: { txHash },
-          }
-        );
+      if (txHash) {
+        return {
+          type: types.transfer.completed,
+          payload: { txHash },
+        };
       }
-      return ({type: types.transfer.failed});
+      return { type: types.transfer.failed };
     })
   );
 
-export default [syncWalletDataEpic, transferEpic];
+const addAccountEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(types.addAccount.requested),
+    mergeMap(async ({ payload }) => {
+      const { toUpdateWallet, newAccountName } = payload;
+      const { wallet } = toUpdateWallet;
+      const { updatedWallet, newAccount } = await window.odin.api.cennz.addAccount({ wallet });
+      const resolvedWalletItem = R.set(R.lensProp('wallet'), updatedWallet, toUpdateWallet);
+      const syncedWallet = await window.odin.api.cennz.syncWalletData(resolvedWalletItem);
+      syncedWallet.accounts[newAccount] = { name: newAccountName };
+
+      const storedWallets = state$.value.localStorage[storageKeys.WALLETS];
+      const toUpdateWalletIndex = R.findIndex(R.propEq('id', syncedWallet.id))(storedWallets);
+      const wallets = R.update(toUpdateWalletIndex, syncedWallet, storedWallets);
+
+      return { type: types.addAccount.completed, payload: wallets };
+    }),
+    catchError(err => {
+      return of({
+        type: types.addAccount.failed,
+        payload: err,
+      });
+    })
+  );
+
+export default [syncWalletDataEpic, transferEpic, addAccountEpic];
