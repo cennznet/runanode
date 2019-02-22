@@ -70,6 +70,12 @@ const actionTypes = {
   syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
+
+  /** Toaster */
+  successToaster: triggerActionTypes('success_toaster'),
+  warningToaster: triggerActionTypes('warning_toaster'),
+  errorToaster: triggerActionTypes('error_toaster'),
+  infoToaster: triggerActionTypes('info_toaster'),
 };
 
 export default actionTypes;

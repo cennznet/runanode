@@ -117,11 +117,25 @@ const walletPaperGenerateEpic = action$ =>
     })
   );
 
+const chainToasterAfterWalletConnectEpic = chainEpics(
+  types.walletRestoreWithHDKR.completed,
+  types.successToaster.triggered,
+  'Wallet has been connected.'
+);
+
+const chainToasterAfterWalletCreateEpic = chainEpics(
+  types.walletCreatWithSKR.completed,
+  types.successToaster.triggered,
+  'Wallet has been created.'
+);
+
 export default [
   createWalletWithSKREpic,
   storeWalletEpic,
   pageRedirectionAfterWalletCreatedEpic,
   walletPaperGenerateEpic,
   restoreHDKRWalletEpic,
+  chainToasterAfterWalletConnectEpic,
+  chainToasterAfterWalletCreateEpic,
   createHDKRWalletEpic,
 ];

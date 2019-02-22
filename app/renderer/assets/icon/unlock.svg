@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>unlock</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="unlock" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle-2" x="0" y="0" width="24" height="24"></rect>
+        <rect id="Rectangle" stroke="#4E5458" x="0.5" y="8.5" width="23" height="15" rx="3"></rect>
+        <path d="M10.8002888,16.1003999 L11,16.2504088 L11,18.5 C11,19.0522847 11.4477153,19.5 12,19.5 C12.5522847,19.5 13,19.0522847 13,18.5 L13,16.2504088 L13.1997112,16.1003999 C13.7002034,15.7244656 14,15.1376151 14,14.5 C14,13.3954305 13.1045695,12.5 12,12.5 C10.8954305,12.5 10,13.3954305 10,14.5 C10,15.1376151 10.2997966,15.7244656 10.8002888,16.1003999 Z" id="Combined-Shape" stroke="#4E5458"></path>
+        <path d="M16,4.5 C16,2.290861 14.209139,0.5 12,0.5 C9.790861,0.5 8,2.290861 8,4.5 C8,6.709139 8,7.85172501 8,8 C8,8.09885 8,7.93218333 8,7.5" id="Oval-9" stroke="#4E5458" stroke-linecap="round"></path>
+    </g>
+</svg>
