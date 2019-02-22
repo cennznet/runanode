@@ -42,7 +42,7 @@ const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
     <Accordion>
       {menuList &&
         menuList.map((menu, i) => {
-          const { title, isTitleHighlight, tail, navItems, additionalItem } = menu;
+          const { type, title, isTitleHighlight, tail, navItems, additionalItem } = menu;
           return (
             <AccordionItem
               key={uuid()}

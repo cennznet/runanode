@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import types from 'renderer/types';
-import { STEPS, WALLETTYPE } from './constants';
+import { WALLET_TYPE } from 'renderer/constants/wallet';
+import { STEPS } from './constants';
 
 const mapStateToProps = ({ localStorage: { WALLETS } }) => ({
   existingWallets: WALLETS,
@@ -51,7 +52,7 @@ const enhance = compose(
   withStateHandlers(
     ({
       initStep = STEPS.SEED_PHRASE_RECOVER,
-      initRecoverWalletType = WALLETTYPE.HDWALLET,
+      initRecoverWalletType = WALLET_TYPE.HD,
       initMnemonic = '',
       initWalletName = '',
     }) => ({
