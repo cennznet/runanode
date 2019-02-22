@@ -4,6 +4,7 @@
 
 ### Features
 - add CENNZScan address link to account public address
+- able to get seed from wallet json
 
 ### Fixes
 
