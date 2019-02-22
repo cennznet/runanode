@@ -61,7 +61,7 @@ const transferEpic = action$ =>
     })
   );
 
-const addAccountEpic = action$ =>
+const addAccountEpic = (action$, state$) =>
   action$.pipe(
     ofType(types.addAccount.requested),
     mergeMap(async ({ payload }) => {
@@ -72,7 +72,7 @@ const addAccountEpic = action$ =>
       const syncedWallet = await window.odin.api.cennz.syncWalletData(resolvedWalletItem);
       syncedWallet.accounts[newAccount] = { name: newAccountName };
 
-      const storedWallets = await getStorage(storageKeys.WALLETS);
+      const storedWallets = state$.value.localStorage[storageKeys.WALLETS];
       const toUpdateWalletIndex = R.findIndex(R.propEq('id', syncedWallet.id))(storedWallets);
       const wallets = R.update(toUpdateWalletIndex, syncedWallet, storedWallets);
 

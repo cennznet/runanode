@@ -60,12 +60,11 @@ const AddAccountModal = ({
   return (
     <Formik
       initialValues={{ newAccountName: defaultNewAccountName }}
-      onSubmit={{}}
       render={formProps => {
         const { isValid, values, errors, touched } = formProps;
 
         return (
-          <Form onSubmit={formProps.handleSubmit}>
+          <Form>
             <Field
               type="text"
               name={fieldName}
