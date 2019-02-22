@@ -9,7 +9,6 @@ const devConfig = {
   feature,
   // dev specific config comes here...
   gaTrackId: 'UA-132943388-1',
-  isDev: true,
   webSocket: {
     latency: {
       period: 15 * 1000,
