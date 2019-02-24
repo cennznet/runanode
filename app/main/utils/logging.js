@@ -2,7 +2,7 @@
 import { app } from 'electron';
 import log from 'electron-log';
 
-import { environment } from '../environment';
+import { environment } from 'common/environment';
 
 const { isDev } = environment;
 

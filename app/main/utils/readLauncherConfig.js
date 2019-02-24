@@ -5,9 +5,9 @@ import path from 'path';
 import { app } from 'electron';
 import parseArgs from 'minimist';
 
+import { environment } from 'common/environment';
 import type { LauncherConfig } from '../launcherConfig';
 import { Logger, GetLogDir } from './logging';
-import { environment } from '../environment';
 
 const { isDev, isTest } = environment;
 

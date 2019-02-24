@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { environment } from 'common/environment';
 import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
-import { environment } from 'main/environment';
 
 const { isDev } = environment;
 

@@ -1,6 +1,6 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
-import { environment } from './environment';
+import { environment } from 'common/environment';
 
 const { isDev } = environment;
 

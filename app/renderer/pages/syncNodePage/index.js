@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
 
+import { environment } from 'common/environment';
 import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SideNav from 'components/layout/SideNav';
@@ -12,7 +13,6 @@ import { Logger } from 'renderer/utils/logging';
 import { storageKeys } from 'renderer/api/utils/storage';
 import Spinner from 'components/Spinner';
 import withContainer from './container';
-import { environment } from '../../../main/environment';
 
 const  { isDev } = environment;
 console.log('isDev', isDev);

@@ -5,7 +5,7 @@ import _http from 'http';
 import { ipcRenderer as _ipcRenderer, remote as _remote } from 'electron';
 import _electronLog from 'electron-log';
 import ElectronStore from 'electron-store';
-import { environment } from './environment';
+import { environment } from 'common/environment';
 
 const _process = process;
 const _electronStore = new ElectronStore();

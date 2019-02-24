@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
-import { environment } from 'main/environment';
+import { environment } from 'common/environment';
 import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/centrality-logo.svg';

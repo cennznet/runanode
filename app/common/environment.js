@@ -3,7 +3,7 @@ import os from 'os';
 import { uniq, upperFirst } from 'lodash';
 
 import { version } from '../../package.json';
-import type { Environment } from '../common/types/environment.types';
+import type { Environment } from './types/environment.types';
 import {
   DEVELOPMENT,
   LINUX,
@@ -16,7 +16,7 @@ import {
   TEST,
   TESTNET,
   WINDOWS,
-} from '../common/types/environment.types';
+} from './types/environment.types';
 
 // environment variables
 const CURRENT_NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
