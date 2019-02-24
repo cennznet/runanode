@@ -15,7 +15,7 @@ import Spinner from 'components/Spinner';
 import withContainer from './container';
 
 const  { isDev } = environment;
-console.log('isDev', isDev);
+
 const SpinnerWrapper = styled.div`
   height: 100%;
   justify-content: center;
@@ -65,7 +65,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
   if (!isNetworkSwitched) {
     return (
-      <Layout sidebar={<SimpleSidebar />}>
+      <Layout sidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
         <LayoutWrapper>
           <MainContent>
             <SpinnerWrapper>
