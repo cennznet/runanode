@@ -15,7 +15,7 @@ import withContainer from './container';
 import { environment } from '../../../main/environment';
 
 const  { isDev } = environment;
-
+console.log('isDev', isDev);
 const SpinnerWrapper = styled.div`
   height: 100%;
   justify-content: center;
