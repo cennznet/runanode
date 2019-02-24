@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { rgba } from 'polished';
-import deepAssign from 'deep-assign';
+import mergeOptions from 'merge-options';
 import themeObj from 'renderer/theme';
 
 const defaultStyling = p => {
@@ -10,7 +10,7 @@ const defaultStyling = p => {
   };
 };
 
-const styling = p => deepAssign({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
+const styling = p => mergeOptions({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
 
 const spinnerRotate = keyframes`
   from {

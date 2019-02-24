@@ -22,7 +22,7 @@ import MenuBuilder from './main/menu';
 import { Logger } from './main/utils/logging';
 import { setupCennzNet } from './main/cennznet/setup';
 import { CennzNetNode } from './main/cennznet/CennzNetNode';
-import { launcherConfig } from './main/config';
+import { launcherConfig } from './main/launcherConfig';
 import { CennzNetNodeStates } from './common/types/cennznet-node.types';
 import { acquireAppInstanceLock } from './main/utils/app-instance-lock';
 import { safeExitWithCode } from './main/utils/safeExitWithCode';

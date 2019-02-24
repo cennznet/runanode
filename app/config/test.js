@@ -1,4 +1,4 @@
-import R from 'ramda';
+import mergeOptions from 'merge-options';
 import commonConfig from './common';
 
 const feature = {
@@ -13,4 +13,4 @@ const testConfig = {
   },
 };
 
-export default R.mergeDeepRight(commonConfig, testConfig);
+export default mergeOptions(commonConfig, testConfig);
