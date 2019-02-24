@@ -18,19 +18,19 @@ import os from 'os';
 
 import mainErrorHandler from 'main/utils/mainErrorHandler';
 import { setupLogging } from 'main/utils/setupLogging';
-import MenuBuilder from './main/menu';
-import { Logger } from './main/utils/logging';
-import { setupCennzNet } from './main/cennznet/setup';
-import { CennzNetNode } from './main/cennznet/CennzNetNode';
-import { launcherConfig } from './main/config';
-import { CennzNetNodeStates } from './common/types/cennznet-node.types';
-import { acquireAppInstanceLock } from './main/utils/app-instance-lock';
-import { safeExitWithCode } from './main/utils/safeExitWithCode';
-import { createMainWindow } from './main/windows/mainWindow';
-import { environment } from './main/environment';
-import { cennznetStatusChannel } from './main/ipc/cennznet.ipc';
+import MenuBuilder from 'main/menu';
+import { Logger } from 'main/utils/logging';
+import { setupCennzNet } from 'main/cennznet/setup';
+import { CennzNetNode } from 'main/cennznet/CennzNetNode';
+import { launcherConfig } from 'main/launcherConfig';
+import { acquireAppInstanceLock } from 'main/utils/app-instance-lock';
+import { safeExitWithCode } from 'main/utils/safeExitWithCode';
+import { createMainWindow } from 'main/windows/mainWindow';
+import { cennznetStatusChannel } from 'main/ipc/cennznet.ipc';
+import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
+import { environment } from 'common/environment';
 
-const { isDevOrDebugProd, buildLabel } = environment;
+const { isDev, buildLabel } = environment;
 
 export default class AppUpdater {
   constructor() {
@@ -84,10 +84,11 @@ export const createDefaultWindow = () => {
 const safeExit = async () => {
   if (cennzNetNode.state === CennzNetNodeStates.STOPPING) return;
   try {
-
-    cennzNetNode.saveStatus(Object.assign(cennzNetNode.status?cennzNetNode.status:{},{
-      isNodeSafeExisting: true
-    }));
+    cennzNetNode.saveStatus(
+      Object.assign(cennzNetNode.status ? cennzNetNode.status : {}, {
+        isNodeSafeExisting: true,
+      })
+    );
     await cennznetStatusChannel.send(cennzNetNode.status, mainWindow);
     Logger.info(`Odin:safeExit: cennzNetNode.status ${cennzNetNode.status}`);
 
@@ -106,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (isDevOrDebugProd) {
+if (isDev) {
   require('electron-debug')();
 }
 
@@ -152,7 +153,7 @@ app.on('ready', async () => {
     app.exit(1);
   }
 
-  if (isDevOrDebugProd) {
+  if (isDev) {
     await installExtensions();
   }
   // Detect safe mode

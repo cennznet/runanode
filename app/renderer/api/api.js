@@ -12,6 +12,7 @@ import { Keyring } from '@polkadot/keyring';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
+import { environment } from 'common/environment';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
@@ -42,7 +43,6 @@ import {
   ForbiddenMnemonicError,
 } from './common/errors';
 import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
-import { environment } from '../../main/environment';
 import {
   PreDefinedAssetIdObj,
   PreDefinedAssetIdName,

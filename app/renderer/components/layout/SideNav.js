@@ -2,16 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { environment } from 'common/environment';
 import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
-import { environment } from '../../../main/environment';
 
-const { isDevOrDebugProd } = environment;
+const { isDev } = environment;
 
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
-  utilwidth: 5rem;
+  width: 5rem;
 `;
 
 const IconLink = styled(NavLink)`
@@ -72,7 +72,7 @@ const SideNav = () => {
           </IconLink>
         </TopIcons>
         <BottomIcons>
-          {isDevOrDebugProd && (
+          {isDev && (
             <IconLink to="/dev">
               <FontAwesomeIcon icon={['fab', 'dev']} />
             </IconLink>

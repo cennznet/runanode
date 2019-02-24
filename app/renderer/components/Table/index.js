@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import deepAssign from 'deep-assign';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 

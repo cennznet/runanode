@@ -1,4 +1,4 @@
-import R from 'ramda';
+import mergeOptions from 'merge-options';
 import commonConfig from './common';
 
 const feature = {
@@ -9,7 +9,6 @@ const devConfig = {
   feature,
   // dev specific config comes here...
   gaTrackId: 'UA-132943388-1',
-  isDev: true,
   webSocket: {
     latency: {
       period: 15 * 1000,
@@ -17,4 +16,4 @@ const devConfig = {
   },
 };
 
-export default R.mergeDeepRight(commonConfig, devConfig);
+export default mergeOptions(commonConfig, devConfig);
