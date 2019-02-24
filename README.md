@@ -96,21 +96,27 @@ Packaged app structure for mac:
 ## Remote debug in VSCode
 
 ### Main process
+
 Start `Debug Main Process` in VSCode
 
 ### Renderer process
+
 Install debugger-for-chrome
+
 ```shell
 yarn start-renderer-dev
 ```
-Start `Debug Renderer Process` in VSCode
 
+Start `Debug Renderer Process` in VSCode
 
 ## Pass args on app start
 
 Mac:
- open -a /path-to-project/cennz-node-ui/release/mac/Odin.app --args --DEBUG_PROD=true
-
+open ./release/mac/Odin.app --args --DEBUG_PROD=true
 
 Windows:
 Odin.exe --DEBUG_PROD=true
+
+## Component development
+
+`yarn styleguide`

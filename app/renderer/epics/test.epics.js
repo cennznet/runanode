@@ -1,8 +1,13 @@
-import { EMPTY, from, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { EMPTY, from, of, empty } from 'rxjs';
+import { concat, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { Wallet } from 'cennznet-wallet';
 
 import types from '../types';
+import { getStorage, storageKeys } from '../api/utils/storage';
+import { Logger } from '../utils/logging';
+import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
+import ROUTES from '../constants/routes';
 
 const testPageEpic = action$ =>
   action$.pipe(
@@ -10,4 +15,18 @@ const testPageEpic = action$ =>
     mergeMap(() => EMPTY)
   );
 
-export default [testPageEpic];
+const walletCreateEpic = action$ =>
+  action$.pipe(
+    ofType(types.walletCreate.requested),
+    mergeMap(async () => {
+      Logger.info('walletCreateEpic');
+      const mnemonic = window.odin.api.cennz.createMnemonic({num: 24});
+      const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({ name: 'test wallet', mnemonic, passphrase: 'password'});
+      return {
+        type: types.setStorage.requested,
+        payload: { key: storageKeys.WALLET, value: wallet },
+      };
+    })
+  );
+
+export default [testPageEpic, walletCreateEpic];

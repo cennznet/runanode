@@ -2,11 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
-import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
+import { Layout, LayoutWrapper, MainContent } from 'components/layout';
+import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Button, FileUploader, Select, PageHeading } from 'components';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import withContainer from './container';
+import { environment } from '../../../main/environment';
+
+const { isDevOrDebugProd } = environment;
 
 const ChooseNetworkWrapper = styled.div`
   width: 60%;
@@ -41,13 +45,22 @@ const ButtonWrapper = styled.div`
   flex-direction: row-reverse;
 `;
 
+// TODO: Keep label the same as loaclNode-chain
+// TODO: Find a place to place variable
 export const NETWORK_OPTIONS = [
-  { label: 'CENNZNet DEV', value: NetworkNameOptions.CENNZNET_DEV },
-  { label: 'CENNZNet UAT', value: NetworkNameOptions.CENNZNET_UAT },
-  { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
+  // { label: 'CENNZnet DEV(OLD)', value: NetworkNameOptions.CENNZNET_DEV },
+  // { label: 'CENNZnet UAT(OLD)', value: NetworkNameOptions.CENNZNET_UAT },
+  { label: 'CENNZnet RIMU(UAT)', value: NetworkNameOptions.CENNZNET_RIMU }, // TODO should we add *-latest runtime option?
+  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
 ];
 
-export const getNetworkOptionPair = value => NETWORK_OPTIONS.find(option => option.value === value);
+if (isDevOrDebugProd) {
+  NETWORK_OPTIONS.push({ label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET });
+}
+
+export const getNetworkOptionPair = (value, param = 'value') => {
+  return NETWORK_OPTIONS.find(option => option[param] === value);
+};
 
 const ChooseNetWork = ({
   selectedNetwork,
@@ -65,8 +78,7 @@ const ChooseNetWork = ({
   Logger.info(`**Uploaded File: ${singleFile && singleFile.path}`);
 
   return (
-    // <Layout sidebar={<SimpleSidebar />}>
-    <Layout defaultSidebar>
+    <Layout sidebar={<SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <ChooseNetworkWrapper>
@@ -74,14 +86,12 @@ const ChooseNetWork = ({
             <div>Choose network</div>
             <NetworkOptionWrapper>
               <Select
-                value={getNetworkOptionPair(selectedNetwork)}
+                backgroundColor={colors.V800}
+                value={selectedNetwork}
                 onChange={selected => {
                   Logger.info('selected value', selected);
                   setSelectedNetwork(selected);
                 }}
-                backgroundColor={colors.N800}
-                selectedBackgroundColor={colors.N800}
-                color={colors.N0}
                 options={NETWORK_OPTIONS}
               />
             </NetworkOptionWrapper>
@@ -110,7 +120,7 @@ const ChooseNetWork = ({
                   disabled={!canJoinNetwork}
                   onClick={() =>
                     onJoinNetwork({
-                      selectedNetwork: selectedNetwork.value,
+                      selectedNetwork,
                       genesisFile: singleFile,
                     })
                   }

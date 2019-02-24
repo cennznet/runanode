@@ -1,8 +1,12 @@
 import React from 'react';
+import BN from 'bn.js';
+
 import Button from 'components/Button';
 import { MainContent } from 'components/layout';
 import MainLayout from 'renderer/components/layout/MainLayout';
 import styled from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import Toaster from 'components/Toaster';
 import * as colors from '../../theme/colors';
 import withContainer from './dev.container';
 
@@ -32,12 +36,22 @@ const DevPage = ({
   onRemoteStreamStop,
   onChainSubscribeNewHead,
   onNavToChooseNetwork,
+  onWalletCreate,
+  onWalletPaperGenerate,
   nodeSystem,
   syncStream,
   syncRemoteStream,
+  networkStatusStore,
+  onTransfer,
+  onTestToaster,
 }) => {
-  const { chain, name, version, health } = nodeSystem;
-  const networkStatus = `${chain} ${version} (status:${health.message}, sync:${
+  const {
+    localNode: { chain },
+    name,
+    version,
+    health,
+  } = nodeSystem;
+  const networkStatusLabel = `${chain} ${version} (status:${health.message}, sync:${
     health.isSyncing
   }, peers:${health.peers}, name:${name})`;
 
@@ -58,7 +72,7 @@ const DevPage = ({
         </PageTitle>
         <Flex>
           <Button onClick={onNetworkStatusClick}>Get Network Status</Button>
-          <div>{networkStatus}</div>
+          <div>{networkStatusLabel}</div>
         </Flex>
         <Flex>
           <Button onClick={onGetHeaderClick}>Get Header</Button>
@@ -70,6 +84,7 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={onRestartNodeClick}>Restart node</Button>
+          <div>{JSON.stringify(networkStatusStore)}</div>
         </Flex>
         <Flex>
           <Button onClick={onStreamStart}>Start stream</Button>
@@ -90,7 +105,69 @@ const DevPage = ({
         <Flex>
           <Button onClick={() => onResetLocalStorage()}>Reset Local Storage</Button>
         </Flex>
+        <Flex>
+          <Button onClick={() => onWalletCreate()}>Create Wallet</Button>
+        </Flex>
+        <Flex>
+          <Button
+            onClick={() =>
+              onWalletPaperGenerate({
+                mnemonic:
+                  'abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde, abcde',
+                address: 'Wallet address',
+                name: 'Wallet Name',
+                networkName: 'Network Name',
+                isMainnet: true,
+              })
+            }
+          >
+            Create Paper Wallet
+          </Button>
+        </Flex>
+        <Flex>
+          <Button
+            onClick={() =>
+              window.odin.api.cennz.createWalletWithHDKeyRing({
+                passphrase: '',
+              })
+            }
+          >
+            Create HD Wallet
+          </Button>
+        </Flex>
+        <Flex>
+          <Button
+            onClick={() =>
+              window.odin.api.cennz.restoreWallet({
+                mnemonic:
+                  'dove pull aerobic reason husband electric egg ceiling castle swear tank proud',
+                passphrase: '',
+              })
+            }
+          >
+            Restore HD Wallet
+          </Button>
+        </Flex>
+        <Flex>
+          <Button
+            onClick={() =>
+              onTransfer({
+                assetId: new BN('0', 10),
+                fromAddress: '5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE',
+                toAddress: '5F1XzAhQGNcapqm666QNU2cMUnj9DRAKB6vGXoVTkxWMLhPs',
+                amount: new BN('13', 10),
+                wallet: window.odin.store.getState().localStorage.WALLETS[0].wallet,
+              })
+            }
+          >
+            Transfer
+          </Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onTestToaster()}>Toaster Test</Button>
+        </Flex>
       </MainContent>
+      <Toaster />
     </MainLayout>
   );
 };

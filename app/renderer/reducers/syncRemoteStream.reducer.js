@@ -1,9 +1,9 @@
 import createChainFns from 'renderer/helpers/reducerHelper';
 
 import types from 'renderer/types';
-import config from 'renderer/utils/config';
+import config from 'app/config';
 
-const INITIAL_STATE = {
+const DEFAULT_STATE = {
   blockNum: null,
   previousBlockNum: null,
   bps: null,
@@ -26,7 +26,7 @@ const parseLatency = (pingAt, pongAt) => {
     return {};
   }
 
-  const { full, medium, weak } = config.connectivity.latency.signalLevel;
+  const { full, medium, weak } = config.webSocket.latency.signalLevel;
   const level = [full, medium, weak].find(l => latency >= l.latency[0] && latency < l.latency[1]);
 
   if (level) {
@@ -40,40 +40,41 @@ const parseLatency = (pingAt, pongAt) => {
   return { pongAt, latency };
 };
 
-const setStatus = (state, payload) => ({
-  ...state,
-  ...payload,
-});
+export default function localStorage(state = DEFAULT_STATE, { type, payload }) {
+  switch (type) {
+    case types.syncRemoteStreamStatus.changed:
+      return {
+        ...state,
+        ...payload,
+      };
+    case types.syncRemoteStreamPing.requested:
+      return {
+        ...state,
+        ...payload,
+      };
+    case types.syncRemoteStreamPing.completed:
+      return {
+        ...state,
+        ...parseLatency(state.pingAt, Date.now()),
+        blockNum: parseInt(payload.number, 16),
+        previousBlockNum: state.blockNum,
+        bps:
+          ((parseInt(payload.number, 16) - state.blockNum) / config.webSocket.latency.period) *
+          1000,
+      };
 
-const handlePing = (state, pingAt) => ({
-  ...state,
-  pingAt,
-  pointAt: null,
-});
+    case types.nodeWsRemoteChainGetHeader.completed:
+      return {
+        ...state,
+        ...parseLatency(state.pingAt, Date.now()),
+        blockNum: parseInt(payload.number, 16),
+        previousBlockNum: state.blockNum,
+        bps:
+          ((parseInt(payload.number, 16) - state.blockNum) / config.webSocket.latency.period) *
+          1000,
+      };
 
-const handlePong = (state, pointAt) => ({
-  ...state,
-  ...parseLatency(state.pingAt, pointAt),
-});
-
-const handlePongWithPayload = (state, payload) => {
-  const blockNum = parseInt(payload.number, 16);
-  const previousBlockNum = state.blockNum;
-  const bps = ((blockNum - previousBlockNum) / config.connectivity.latency.period) * 1000;
-  return {
-    ...state,
-    ...parseLatency(state.pingAt, Date.now()),
-    blockNum,
-    previousBlockNum,
-    bps,
-  };
-};
-
-const handlers = {
-  [types.syncRemoteStreamStatus.changed]: setStatus,
-  [types.syncRemoteStreamPing.requested]: handlePing,
-  [types.syncRemoteStreamPing.completed]: handlePongWithPayload,
-  [types.nodeWsRemoteChainGetHeader.completed]: handlePongWithPayload,
-};
-
-export default createChainFns(handlers, INITIAL_STATE);
+    default:
+      return state;
+  }
+}

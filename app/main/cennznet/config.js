@@ -25,13 +25,13 @@ export const prepareArgs = (config: LauncherConfig) => {
   // default node name
   const nameArgIndex = args.findIndex((item) => item === '--name');
   if(nameArgIndex<0) {
-    args.push('--name', "Odin-"+os.userInfo().username);
+    args.push('--name', "❤️Odin-"+os.userInfo().username);
   }
 
   // default chain
   const chainArgIndex = args.findIndex((item) => item === '--chain');
   if(chainArgIndex<0) {
-    args.push('--chain', NetworkNameOptions.CENNZNET_UAT);
+    args.push('--chain', NetworkNameOptions.CENNZNET_RIMU);
   }
   return args;
 };

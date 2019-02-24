@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import themeObj from 'renderer/theme';
+import theme, { colors } from 'renderer/theme';
 import InputCore from './lib/InputCore';
 import InputAddon from './lib/InputAddon';
 import InputAffix from './lib/InputAffix';
@@ -11,29 +11,23 @@ const InputWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 
+const renderWithAffix = props => {
+  const { children, prefix, suffix, valid } = props;
+
+  return (
+    <InputAffix {...{ prefix, suffix, valid }}>{children || <InputCore {...props} />}</InputAffix>
+  );
+};
+
 class CustomInput extends Component {
-  renderWithAffix = props => {
-    const { children, prefix, suffix } = props;
-
-    return (
-      <Fragment>
-        {prefix || suffix ? (
-          <InputAffix {...{ prefix, suffix }}>{children || <InputCore {...props} />}</InputAffix>
-        ) : (
-          <Fragment>{children || <InputCore {...props} />}</Fragment>
-        )}
-      </Fragment>
-    );
-  };
-
   render() {
-    const { prepend, append } = this.props;
+    const { prepend, append, styles } = this.props;
     return (
       <InputWrapper>
         {prepend || append ? (
-          <InputAddon {...{ prepend, append }}> {this.renderWithAffix(this.props)}</InputAddon>
+          <InputAddon {...{ prepend, append, styles }}>{renderWithAffix(this.props)}</InputAddon>
         ) : (
-          this.renderWithAffix(this.props)
+          renderWithAffix(this.props)
         )}
       </InputWrapper>
     );
@@ -43,7 +37,16 @@ class CustomInput extends Component {
 const Input = styled(CustomInput)``;
 
 Input.defaultProps = {
-  theme: themeObj,
+  theme,
+  styles: {
+    borderColor: colors.V400,
+    backgroundColor: 'rgba(114,94,255,0.5)',
+    color: colors.N0,
+    focusBorderColor: colors.V500,
+  },
+  type: 'text',
+  placeholder: '',
+  valid: null,
   render: null,
   prepend: null,
   append: null,
@@ -52,6 +55,8 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
   /** <Input render={(props)=> <CustomInput {...props} />} /> */
   render: PropTypes.func,
   /** Prepend addon which is placed outside Input */

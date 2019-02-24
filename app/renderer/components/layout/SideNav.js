@@ -4,11 +4,14 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
+import { environment } from '../../../main/environment';
+
+const { isDevOrDebugProd } = environment;
 
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
-  width: 5rem;
+  utilwidth: 5rem;
 `;
 
 const IconLink = styled(NavLink)`
@@ -17,16 +20,22 @@ const IconLink = styled(NavLink)`
   justify-content: center;
   height: 5rem;
   font-size: 1rem;
-  color: ${colors.N0};
+  color: ${colors.textMuted};
   text-decoration: none;
 
   &.active {
-    background-color: ${colors.primary};
+    color: ${colors.N0};
   }
 
   &:hover:not(.active) {
-    background-color: ${colors.N900};
+    background-color: ${colors.V500};
   }
+`;
+
+const IconText = styled.div`
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 12px;
 `;
 
 const IconNav = styled.div`
@@ -34,36 +43,50 @@ const IconNav = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 5rem;
-  background-color: ${colors.N1000};
+  background-color: ${colors.V900};
+  box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.14);
 `;
 
 const TopIcons = styled.div``;
 const BottomIcons = styled.div``;
+const IconWrapper = styled.div`
+  text-align: center;
+`;
 
-const SideNav = () => (
-  <Wrapper>
-    <IconNav>
-      <TopIcons>
-        <IconLink to={ROUTES.WALLET.CREATE}>
-          <FontAwesomeIcon icon="plus" />
-        </IconLink>
-        <IconLink to="/wallet/import">
-          <FontAwesomeIcon icon="wallet" />
-        </IconLink>
-      </TopIcons>
-      <BottomIcons>
-        <IconLink to="/dev">
-          <FontAwesomeIcon icon={["fab", "dev"]} />
-        </IconLink>
-        <IconLink to={ROUTES.SETTINGS.ROOT}>
-          <FontAwesomeIcon icon="cogs" />
-        </IconLink>
-        <IconLink to="/syncNode">
-          <FontAwesomeIcon icon="question-circle" />
-        </IconLink>
-      </BottomIcons>
-    </IconNav>
-  </Wrapper>
-);
+const SideNav = () => {
+  return (
+    <Wrapper>
+      <IconNav>
+        <TopIcons>
+          <IconLink to={ROUTES.WALLET.ROOT}>
+            <IconWrapper>
+              <FontAwesomeIcon icon="wallet" />
+              <IconText>Wallet</IconText>
+            </IconWrapper>
+          </IconLink>
+          <IconLink to={ROUTES.SETTINGS.ROOT}>
+            <IconWrapper>
+              <FontAwesomeIcon icon="cogs" />
+              <IconText>Settings</IconText>
+            </IconWrapper>
+          </IconLink>
+        </TopIcons>
+        <BottomIcons>
+          {isDevOrDebugProd && (
+            <IconLink to="/dev">
+              <FontAwesomeIcon icon={['fab', 'dev']} />
+            </IconLink>
+          )}
+          <IconLink to={ROUTES.TERMS_OF_USE_ACCEPTANCE}>
+            <IconWrapper>
+              <FontAwesomeIcon icon="question-circle" />
+              <IconText>FAQ</IconText>
+            </IconWrapper>
+          </IconLink>
+        </BottomIcons>
+      </IconNav>
+    </Wrapper>
+  );
+};
 
 export default SideNav;

@@ -1,5 +1,5 @@
 import { EMPTY, from, of, zip } from 'rxjs';
-import { mergeMap, map, concat, tap } from 'rxjs/operators';
+import { mergeMap, map, concat, tap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
@@ -33,7 +33,18 @@ const storeNetworkOptionEpic = action$ =>
             value: filterGenesisFile(genesisFile),
           },
         }
-      ).pipe(concat(of({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE })));
+      );
+    })
+  );
+
+const navigationAfterStoreNetworkEpic = action$ =>
+  action$.ofType(types.setStorage.completed).pipe(
+    filter(({ payload }) => payload.key === storageKeys.SELECTED_NETWORK),
+    mergeMap(() => {
+      return of({
+        type: types.navigation.triggered,
+        payload: ROUTES.SYNC_NODE,
+      })
     })
   );
 
@@ -100,4 +111,5 @@ export default [
   stopStreamEpic,
   restartNodeWithNetworkChain,
   restartNodeEpic,
+  navigationAfterStoreNetworkEpic,
 ];

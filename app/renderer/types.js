@@ -16,6 +16,13 @@ const actionTypes = {
   homePageLoad: triggerActionTypes('home_page_load'),
   navigation: triggerActionTypes('navigation'),
 
+  walletCreate: apiActionTypes('wallet_create'),
+  walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
+  walletCreatWithHDKR: apiActionTypes('wallet_create_with_HD_keyring'),
+  walletRestoreWithHDKR: apiActionTypes('wallet_restore_with_HD_keyring'),
+  walletPaperGenerate: apiActionTypes('wallet_paper_generate'),
+  addAccount: apiActionTypes('add_account'),
+
   /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
   acceptTermsOfUse: triggerActionTypes('accept_terms_of_use'),
@@ -24,8 +31,12 @@ const actionTypes = {
   setStorage: apiActionTypes('set_storage'),
   getStorage: apiActionTypes('get_storage'),
   clearStorage: apiActionTypes('clear_storage'),
+  syncWalletData: apiActionTypes('sync_wallet_data'),
+  transfer: apiActionTypes('transfer'),
 
   /* Network */
+  networkStateChange: triggerActionTypes('network_state_change'),
+  cenznetStatusChange: triggerActionTypes('cennznet_status_change'),
   switchNetwork: triggerActionTypes('switch_network'),
   stopStream: apiActionTypes('stop_stream'),
   restartNode: triggerActionTypes('restart_network'),
@@ -59,6 +70,12 @@ const actionTypes = {
   syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
+
+  /** Toaster */
+  successToaster: triggerActionTypes('success_toaster'),
+  warningToaster: triggerActionTypes('warning_toaster'),
+  errorToaster: triggerActionTypes('error_toaster'),
+  infoToaster: triggerActionTypes('info_toaster'),
 };
 
 export default actionTypes;

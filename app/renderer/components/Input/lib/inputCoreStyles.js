@@ -11,9 +11,9 @@ const inputCoreStyles = (
 
   flex: 1;
   box-sizing: border-box;
-  padding-left: ${p.prefix ? '3rem' : '1.25rem'};
-  padding-right: ${p.suffix ? '3rem' : '1.25rem'};
-  height: ${p.height || '2.5rem'};
+  padding-left: ${p.prefix ? '3rem' : '1rem'};
+  padding-right: ${p.suffix ? '3rem' : '1rem'};
+  height: ${p.height || '3rem'};
   font-size: 14px;
   border-top-left-radius: ${p.prepend ? '0' : '0.2rem'};
   border-bottom-left-radius: ${p.prepend ? '0' : '0.2rem'};

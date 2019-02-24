@@ -6,7 +6,7 @@ import themeObj from 'renderer/theme';
 const defaultStyling = p => {
   const { colors } = p.theme;
   return {
-    color: colors.N500,
+    color: colors.N200,
   };
 };
 
