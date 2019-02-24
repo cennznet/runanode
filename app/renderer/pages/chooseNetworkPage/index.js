@@ -5,7 +5,7 @@ import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Button, FileUploader, Select, PageHeading } from 'components';
-import { environment } from 'main/environment';
+import { environment } from 'common/environment';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import withContainer from './container';

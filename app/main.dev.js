@@ -18,17 +18,17 @@ import os from 'os';
 
 import mainErrorHandler from 'main/utils/mainErrorHandler';
 import { setupLogging } from 'main/utils/setupLogging';
-import MenuBuilder from './main/menu';
-import { Logger } from './main/utils/logging';
-import { setupCennzNet } from './main/cennznet/setup';
-import { CennzNetNode } from './main/cennznet/CennzNetNode';
-import { launcherConfig } from './main/launcherConfig';
-import { CennzNetNodeStates } from './common/types/cennznet-node.types';
-import { acquireAppInstanceLock } from './main/utils/app-instance-lock';
-import { safeExitWithCode } from './main/utils/safeExitWithCode';
-import { createMainWindow } from './main/windows/mainWindow';
-import { environment } from './main/environment';
-import { cennznetStatusChannel } from './main/ipc/cennznet.ipc';
+import MenuBuilder from 'main/menu';
+import { Logger } from 'main/utils/logging';
+import { setupCennzNet } from 'main/cennznet/setup';
+import { CennzNetNode } from 'main/cennznet/CennzNetNode';
+import { launcherConfig } from 'main/launcherConfig';
+import { acquireAppInstanceLock } from 'main/utils/app-instance-lock';
+import { safeExitWithCode } from 'main/utils/safeExitWithCode';
+import { createMainWindow } from 'main/windows/mainWindow';
+import { cennznetStatusChannel } from 'main/ipc/cennznet.ipc';
+import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
+import { environment } from 'common/environment';
 
 const { isDev, buildLabel } = environment;
 
