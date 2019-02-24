@@ -93,7 +93,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.walletPaperGenerate.requested, payload });
   },
   onTransfer: payload => {
-    console.log(`onTransfer: ${payload}`);
     window.odin.api.cennz.doGenericAssetTransfer(
       payload.assetId,
       payload.fromWalletAddress,
