@@ -1,12 +1,13 @@
 // @flow
 import os from 'os';
 import _https from 'https';
+import _http from 'http';
 import { ipcRenderer as _ipcRenderer, remote as _remote } from 'electron';
 import _electronLog from 'electron-log';
 import ElectronStore from 'electron-store';
+import config from 'app/config';
 import { environment } from './environment';
 
-const { isDev } = environment;
 const _process = process;
 const _electronStore = new ElectronStore();
 
@@ -31,6 +32,9 @@ process.once('loaded', () => {
     https: {
       request: (...args) => _https.request(...args),
     },
+    http: {
+      request: (...args) => _http.request(...args),
+    },
     ipcRenderer: {
       on: (...args) => _ipcRenderer.on(...args),
       once: (...args) => _ipcRenderer.once(...args),
@@ -47,7 +51,7 @@ process.once('loaded', () => {
     // $FlowFixMe
     global.spectronRequire = __non_webpack_require__; // eslint-disable-line
   }
-  if (!isDev) {
+  if (!config.isDev) {
     // ESLint will warn about any use of eval(), even this one
     // eslint-disable-next-line
     global.eval = () => {

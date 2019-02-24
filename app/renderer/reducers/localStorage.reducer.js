@@ -11,6 +11,10 @@ export default function localStorage(state = DEFAULT_STATE, { type, payload }) {
       return R.merge(state, {
         [payload.key]: payload.value,
       });
+    case types.syncWalletData.completed:
+      return R.merge(state, {
+        WALLETS: payload.wallets,
+      });
     default:
       return state;
   }

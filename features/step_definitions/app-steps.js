@@ -12,7 +12,6 @@ const assert = require('assert');
 declare var odin: Odin;
 
 Given(/^Odin is running$/, function () {
-  console.log('Odin is running', this.app.isRunning());
   expect(this.app.isRunning()).to.be.true;
 });
 
@@ -21,7 +20,6 @@ When(/^I refresh the main window$/, async function () {
 });
 
 When(/^I close the main window$/, async function () {
-  console.log('I close the main window');
   // TODO refactor to use odin
   // await this.client.execute(() => odin.stores.window.closeWindow());
   await this.client.execute(() => window.ipcRenderer.send('close-window'));

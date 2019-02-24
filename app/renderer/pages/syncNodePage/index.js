@@ -3,12 +3,25 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
-import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
-import { PageHeading } from 'components';
-import ROUTES from 'renderer/constants/routes';
+
+import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { Layout, LayoutWrapper, MainContent } from 'components/layout';
+import SideNav from 'components/layout/SideNav';
+import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Logger } from 'renderer/utils/logging';
-import { getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
+import { storageKeys } from 'renderer/api/utils/storage';
+import Spinner from 'components/Spinner';
 import withContainer from './container';
+import { environment } from '../../../main/environment';
+
+const  { isDev } = environment;
+
+const SpinnerWrapper = styled.div`
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
 
 const SyncNodeTitle = styled.div`
   color: ${colors.N0};
@@ -45,11 +58,25 @@ const networkOptionMapping = {
   mainNet: 'Main net',
 };
 
-const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
-  console.log('localStorage', localStorage);
-  const { SELECTED_NETWORK: selectedNetwork } = localStorage;
+const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }) => {
+  const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
+  const { localNode } = nodeSystem;
+  const { chain } = localNode;
+  const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
+  if (!isNetworkSwitched) {
+    return (
+      <Layout sidebar={<SimpleSidebar />}>
+        <LayoutWrapper>
+          <MainContent>
+            <SpinnerWrapper>
+              <Spinner size="2.5rem" />
+            </SpinnerWrapper>
+          </MainContent>
+        </LayoutWrapper>
+      </Layout>
+    );
+  }
 
-  const networkOption = getNetworkOptionPair(selectedNetwork);
   const { blockNum: bestBlock } = syncRemoteStream;
   const { blockNum: syncedBlock } = syncStream;
   const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
@@ -71,15 +98,10 @@ const SyncNodePage = ({ syncStream, syncRemoteStream, localStorage }) => {
   Logger.info(`  Sync progress in Local ${syncNodePercentage}%`);
 
   return (
-    // <Layout sidebar={<SimpleSidebar />}>
-    <Layout defaultSidebar>
+    <Layout sidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
-          <SyncNodeTitle>
-            {getNetworkOptionPair(selectedNetwork)
-              ? getNetworkOptionPair(selectedNetwork).label
-              : 'Main net'}
-          </SyncNodeTitle>
+          <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
           <SyncNodeProgressWarpper>
             <SyncNodeProgress>
               <Line

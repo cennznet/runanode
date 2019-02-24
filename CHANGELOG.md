@@ -3,6 +3,68 @@
 # vNext
 
 ### Features
+- add CENNZScan address link to account public address
+
+### Fixes
+
+### Improvements
+- tidy up asset table layout
+- update background gradient settings
+- update field text bg color to match with design
+- update sync info layout
+- update side bar nav for launch process
+
+- Refactor configure
+
+# v0.5.0 (2019.02.20)
+
+### Features
+
+- able to send tx
+- add Yup validations for send tx
+
+### Fixes
+
+- fix switch network issues
+
+### Improvements
+
+- Make 'Local test net' optional
+
+# v0.4.1 (2019.02.12)
+
+### Features
+
+- Add tabs and scrollable components
+- new data structure to store Wallets -> Accounts -> Assets
+- Connect wallet with both HDKeyring and SimpleKeyring
+- Able to display balance in Account detail page
+- Add send tx confirmation flow
+
+### Fixes
+
+- fix cucumber not able to start issue
+- able to check cennznet-node process in tests
+
+### Improvements
+
+- able to run `yarn cucumber` test in CI
+- update refresh rate to 5s
+- Improved styleguide
+- upgrade to Rimu CENNZNETNode
+
+# v0.3.1 (2019.01.31)
+
+### Improvements
+
+- Refactor reducer
+- able to detect app state and able to show spinner on exit
+- Single page seed phase PDF design
+- Added download seed phrase confirm modal
+
+# v0.3.0 (2019.01.27)
+
+### Features
 
 - Start up process
   (initial Node start && root route control)
@@ -14,8 +76,14 @@
 - make yarn install works with gemfury
 - enable PR build with Jenkins
 - Add Google Analytics
+- able to create wallet from DEV page, sync to redux state and electron-storage
+- Add checkbox component
+- Add wallet details page
+- able to generate pdf
 
 ### Fixes
+
+- fix static link issue for cennznet-node windows and mac build
 
 ### Improvements
 
@@ -23,6 +91,10 @@
 - default dev tools open on the right side
 - rename ./npmrc to ./npmrc.template
 - upgrade cennznet-api and cennznet-wallet to 0.5.2
+- disable redux-log by default
+- Change page layout and color themes
+- support multiple wallets
+- Refine secondary button
 
 # v0.2.4 (2019.01.16)
 

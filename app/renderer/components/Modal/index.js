@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import Button from 'components/Button';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 
 const ModalContent = styled.div`
-  padding: 1rem;
+  padding: 2rem;
 `;
 
 const ModalFooterWrapper = styled.div`
@@ -64,7 +63,9 @@ const StyledModal = styled(Modal)`
     border-radius: 3px;
     min-width: ${p => p.minWidth};
     min-height: ${p => p.minHeight};
-    background-color: ${p => p.backgroundColor || 'red'};
+    max-width: ${p => p.maxWidth};
+    max-height: ${p => p.maxHeight};
+    background-color: ${p => p.backgroundColor};
     box-shadow: ${p => p.boxShadow};
     color: ${p => p.color || colors.N0};
     display: flex;
@@ -80,9 +81,11 @@ const StyledModal = styled(Modal)`
 StyledModal.defaultProps = {
   minWidth: '50vw',
   minHeight: '25vh',
+  maxWidth: '70vw',
+  maxHeight: '50vh',
   backgroundColor: '#040C40',
   boxShadow: `0 2px 4px 0 ${colors.N900}`,
-  overlayBgColor: 'rgba(255, 255, 255, 0.55)',
+  overlayBgColor: 'rgba(54, 58, 61, 0.7)',
 };
 
 export default StyledModal;

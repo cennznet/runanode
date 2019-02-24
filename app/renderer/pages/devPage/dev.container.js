@@ -4,24 +4,28 @@ import types from 'renderer/types';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';
-import sreamConstants from 'renderer/constants/stream';
+import streamConstants from 'renderer/constants/stream';
+import { Logger } from 'renderer/utils/logging';
+import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream }) => ({
+const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, networkStatusStore }) => ({
   nodeSystem,
   syncStream,
   syncRemoteStream,
+  networkStatusStore,
 });
 
 const mapDispatchToProps = dispatch => ({
   onNetworkStatusClick: () => {
-    dispatch({
-      type: types.nodeWsSystemChainPolling.requested,
-      payload: {},
-    });
+    Logger.debug('onNetworkStatusClick debug');
     // dispatch({
-    //   type: types.nodeJsonRpcSystem.requested,
+    //   type: types.nodeWsSystemChainPolling.requested,
     //   payload: {},
     // });
+    dispatch({
+      type: types.nodeJsonRpcSystem.requested,
+      payload: {},
+    });
   },
   onGetHeaderClick: () => {
     // dispatch({
@@ -41,33 +45,32 @@ const mapDispatchToProps = dispatch => ({
   },
   onRestartNodeClick: () => {
     const options: CennzNetRestartOptions = {
-      name: 'my-custom-node',
-      chain: '/Users/benxgao/hackathon/cennz-node-ui/dist/local.json',
+      chain: NetworkNameOptions.CENNZNET_UAT,
     };
     restartCennzNetNodeChannel.send(options);
   },
   onStreamStart: () => {
     dispatch({
       type: types.syncStream.requested,
-      payload: { command: sreamConstants.CONNECT },
+      payload: { command: streamConstants.CONNECT },
     });
   },
   onRemoteStreamStart: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
-      payload: { command: sreamConstants.CONNECT },
+      payload: { command: streamConstants.CONNECT },
     });
   },
   onStreamStop: () => {
     dispatch({
       type: types.syncStream.requested,
-      payload: { command: sreamConstants.DISCONNECT },
+      payload: { command: streamConstants.DISCONNECT },
     });
   },
   onRemoteStreamStop: () => {
     dispatch({
       type: types.syncRemoteStream.requested,
-      payload: { command: sreamConstants.DISCONNECT },
+      payload: { command: streamConstants.DISCONNECT },
     });
   },
   onChainSubscribeNewHead: () => {
@@ -82,6 +85,25 @@ const mapDispatchToProps = dispatch => ({
   },
   onResetLocalStorage: () => {
     dispatch({ type: types.resetLocalStorage.triggered });
+  },
+  onWalletCreate: () => {
+    dispatch({ type: types.walletCreate.requested });
+  },
+  onWalletPaperGenerate: payload => {
+    dispatch({ type: types.walletPaperGenerate.requested, payload });
+  },
+  onTransfer: payload => {
+    console.log(`onTransfer: ${payload}`);
+    window.odin.api.cennz.doGenericAssetTransfer(
+      payload.assetId,
+      payload.fromWalletAddress,
+      payload.toAddress,
+      payload.amoumt,
+      payload.wallet
+    );
+  },
+  onTestToaster: () => {
+    dispatch({ type: types.successToaster.triggered });
   },
 });
 

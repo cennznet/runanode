@@ -21,7 +21,7 @@ import {
   getStreamMessageChangedType,
   getNodeWsChainGetHeaderType,
 } from 'renderer/helpers/actionTypeHelper';
-import config from '../utils/config';
+import config from 'app/config';
 
 const epic = (action$, state$) =>
   action$.pipe(
@@ -50,8 +50,7 @@ const pollingEpic = (action$, state$) =>
     ofType(types.nodeWsSystemChainPolling.requested),
     // take(1),
     mergeMap(() => {
-      console.log('nodeWsSystemChainPolling interval');
-      return interval(config.connectivity.latency.period).pipe(
+      return interval(config.webSocket.latency.period).pipe(
         map(() => {
           return { type: types.nodeWsSystemChain.requested, payload: {} };
         })

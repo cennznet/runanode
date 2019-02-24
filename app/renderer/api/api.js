@@ -1,128 +1,37 @@
 // @flow
-import { split, get } from 'lodash';
-// import { action } from 'mobx';
-// import BigNumber from 'bignumber.js';
+import _ from 'lodash';
+import { SimpleKeyring, Wallet, HDKeyring } from 'cennznet-wallet';
+import { GenericAsset } from 'cennznet-generic-asset';
+import { Api } from 'cennznet-api';
+import uuid from 'uuid/v4';
+import BigNumber from 'bignumber.js';
+import BN from 'bn.js';
+import { u32, Balance, AccountId } from '@polkadot/types';
+import * as util from '@polkadot/util';
+import { Keyring } from '@polkadot/keyring';
 
-// domains
-// import Wallet from '../domains/Wallet';
-// import { WalletTransaction, transactionTypes } from '../domains/WalletTransaction';
-// import WalletAddress from '../domains/WalletAddress';
-
-// Accounts requests
-// import { getAccounts } from './accounts/requests/getAccounts';
-
-// Addresses requests
-// import { getAddress } from './addresses/requests/getAddress';
-// import { createAddress } from './addresses/requests/createAddress';
-
-// Common requests
-// import { sendBugReport } from './common/requests/sendBugReport';
-
-// Nodes requests
-// import { applyNodeUpdate } from './nodes/requests/applyNodeUpdate';
-import { getNodeInfo } from './nodes/requests/getNodeInfo';
-// import { getNextNodeUpdate } from './nodes/requests/getNextNodeUpdate';
-// import { postponeNodeUpdate } from './nodes/requests/postponeNodeUpdate';
-
-// Transactions requests
-// import { getTransactionFee } from './transactions/requests/getTransactionFee';
-// import { getTransactionHistory } from './transactions/requests/getTransactionHistory';
-// import { createTransaction } from './transactions/requests/createTransaction';
-// import { redeemAda } from './transactions/requests/redeemAda';
-// import { redeemPaperVendedAda } from './transactions/requests/redeemPaperVendedAda';
-
-// Wallets requests
-// import { resetWalletState } from './wallets/requests/resetWalletState';
-// import { changeSpendingPassword } from './wallets/requests/changeSpendingPassword';
-// import { deleteWallet } from './wallets/requests/deleteWallet';
-// import { exportWalletAsJSON } from './wallets/requests/exportWalletAsJSON';
-// import { importWalletAsJSON } from './wallets/requests/importWalletAsJSON';
-// import { getWallets } from './wallets/requests/getWallets';
-// import { importWalletAsKey } from './wallets/requests/importWalletAsKey';
-// import { createWallet } from './wallets/requests/createWallet';
-// import { restoreWallet } from './wallets/requests/restoreWallet';
-// import { updateWallet } from './wallets/requests/updateWallet';
-
-// utility functions
-import { awaitUpdateChannel, cennznetFaultInjectionChannel } from '../ipc/cennznet.ipc';
-// import patchAdaApi from './utils/patchAdaApi';
-// import { isValidMnemonic } from '../../../common/crypto/decrypt';
-// import { utcStringToDate, encryptPassphrase } from './utils';
+import { generateMnemonic } from 'renderer/utils/crypto';
+import { stringifyData, stringifyError } from 'common/utils/logging';
+import MNEMONIC_RULE from 'renderer/constants/mnemonic';
+import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
-// import {
-//   isValidRedemptionKey,
-//   isValidPaperVendRedemptionKey
-// } from '../utils/redemption-key-validation';
-// import {
-//   unscrambleMnemonics,
-//   scrambleMnemonics,
-//   generateAccountMnemonics,
-//   generateAdditionalMnemonics
-// } from './utils/mnemonics';
-
-// config constants
-// import {
-//   LOVELACES_PER_ADA,
-//   MAX_TRANSACTIONS_PER_PAGE
-// } from '../config/numbersConfig';
-// import {
-//   ADA_CERTIFICATE_MNEMONIC_LENGTH,
-//   ADA_REDEMPTION_PASSPHRASE_LENGTH,
-//   WALLET_RECOVERY_PHRASE_WORD_COUNT
-// } from '../config/cryptoConfig';
-
-// Accounts types
-// import type { Accounts } from './accounts/types';
-
-// Addresses Types
-// import type {
-//   Address,
-//   GetAddressesRequest,
-//   CreateAddressRequest,
-//   GetAddressesResponse
-// } from './addresses/types';
 
 // Common Types
-import type {
-  RequestConfig,
-  SendBugReportRequest
-} from './common/types';
+import type { RequestConfig } from './common/types';
 
 // Nodes Types
-import type {
-  NodeInfo,
-  NodeSoftware,
-  GetNetworkStatusResponse
-} from './nodes/types';
-import type { NodeQueryParams } from './nodes/requests/getNodeInfo';
-
-// Transactions Types
-// import type { RedeemAdaParams } from './transactions/requests/redeemAda';
-// import type { RedeemPaperVendedAdaParams } from './transactions/requests/redeemPaperVendedAda';
-// import type {
-//   Transaction,
-//   Transactions,
-//   TransactionFee,
-//   TransactionRequest,
-//   GetTransactionsRequest,
-//   GetTransactionsResponse
-// } from './transactions/types';
+import type { SystemHealth, NodeInfo, NodeSoftware, GetNetworkStatusResponse } from './nodes/types';
+import type { NodeQueryParams } from './nodes/requests/getSystemHealth';
 
 // Wallets Types
-// import type {
-//   AdaWallet,
-//   AdaWallets,
-//   CreateWalletRequest,
-//   DeleteWalletRequest,
-//   RestoreWalletRequest,
-//   UpdateSpendingPasswordRequest,
-//   ExportWalletToFileRequest,
-//   GetWalletCertificateRecoveryPhraseRequest,
-//   GetWalletRecoveryPhraseFromCertificateRequest,
-//   ImportWalletFromKeyRequest,
-//   ImportWalletFromFileRequest,
-//   UpdateWalletRequest
-// } from './wallets/types';
+import type {
+  CreateMnemonicRequest,
+  CreateWalletRequest,
+  GeneratePaperRequest,
+  GetWalletAddressRequest,
+} from './wallets/types';
+
+import CennznetWallet from './wallets/CennznetWallet';
 
 // Common errors
 import {
@@ -130,711 +39,449 @@ import {
   IncorrectSpendingPasswordError,
   ReportRequestError,
   InvalidMnemonicError,
-  ForbiddenMnemonicError
+  ForbiddenMnemonicError,
 } from './common/errors';
+import { generatePaperWalletChannel } from '../ipc/generatePaperWalletChannel';
+import { environment } from '../../main/environment';
+import {
+  PreDefinedAssetIdObj,
+  PreDefinedAssetIdName,
+  CustomTokenAssetId,
+} from '../../common/types/cennznet-node.types';
+import CennznetWalletAccount from './wallets/CennznetWalletAccount';
+import CennznetWalletAsset from './wallets/CennznetWalletAsset';
 
-// Wallets errors
-// import {
-//   WalletAlreadyRestoredError,
-//   WalletAlreadyImportedError,
-//   WalletFileImportError
-// } from './wallets/errors';
+const { buildLabel } = environment;
 
-// Transactions errors
-// import {
-//   CanNotCalculateTransactionFeesError,
-//   NotAllowedToSendMoneyToRedeemAddressError,
-//   NotEnoughFundsForTransactionFeesError,
-//   NotEnoughFundsForTransactionError,
-//   NotEnoughMoneyToSendError,
-//   RedeemAdaError
-// } from './transactions/errors';
-import type { FaultInjectionIpcRequest } from '../../common/types/cennznet-node.types';
-import { stringifyData, stringifyError } from '../../common/utils/logging';
+// Generate toy keys from name, toy keys is only for play or tests
+const toyKeyringFromNames = (names: string[]) => {
+  const seeds = names.map(name => util.stringToU8a(name.padEnd(32, ' ')));
+  const keyring: any = new Keyring();
+  seeds.forEach((seed, index) => {
+    const key = keyring.addFromSeed(seed);
+    keyring[names[index].toLowerCase()] = key;
+  });
+  return keyring;
+};
+
+const toyKeyring = toyKeyringFromNames([
+  'Alice',
+  'Bob',
+  'Charlie',
+  'Dave',
+  'Eve',
+  'Ferdie',
+  'Andrea',
+  'Brooke',
+  'Courtney',
+  'Drew',
+  'Emily',
+  'Frank',
+]);
 
 export default class CennzApi {
-
   config: RequestConfig;
+  api: Api;
+  ga: GenericAsset;
 
-  constructor(isTest: boolean, config: RequestConfig) {
+  constructor(config: RequestConfig) {
     this.setRequestConfig(config);
-    // if (isTest) patchAdaApi(this);
   }
 
   setRequestConfig(config: RequestConfig) {
     this.config = config;
   }
 
-  // getWallets = async (): Promise<Array<Wallet>> => {
-  //   Logger.debug('AdaApi::getWallets called');
-  //   try {
-  //     const response: AdaWallets = await getWallets(this.config);
-  //     Logger.debug('AdaApi::getWallets success: ' + stringifyData(response));
-  //     return response.map(data => _createWalletFromServerData(data));
-  //   } catch (error) {
-  //     Logger.error('AdaApi::getWallets error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // getAddresses = async (request: GetAddressesRequest): Promise<GetAddressesResponse> => {
-  //   Logger.debug('AdaApi::getAddresses called: ' + stringifyData(request));
-  //   const { walletId } = request;
-  //   try {
-  //     const accounts: Accounts = await getAccounts(this.config, { walletId });
-  //     Logger.debug('AdaApi::getAddresses success: ' + stringifyData(accounts));
-  //
-  //     if (!accounts || !accounts.length) {
-  //       return new Promise(resolve => resolve({ accountIndex: null, addresses: [] }));
-  //     }
-  //
-  //     // For now only the first wallet account is used
-  //     const firstAccount = accounts[0];
-  //     const { index: accountIndex, addresses } = firstAccount;
-  //
-  //     return new Promise(resolve => resolve({ accountIndex, addresses }));
-  //   } catch (error) {
-  //     Logger.error('AdaApi::getAddresses error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // getTransactions = async (request: GetTransactionsRequest): Promise<GetTransactionsResponse> => {
-  //   Logger.debug('AdaApi::searchHistory called: ' + stringifyData(request));
-  //   const { walletId, skip, limit } = request;
-  //   const accounts: Accounts = await getAccounts(this.config, { walletId });
-  //
-  //   if (!accounts.length || !accounts[0].index) {
-  //     return new Promise(resolve => resolve({ transactions: [], total: 0 }));
-  //   }
-  //
-  //   let perPage = limit;
-  //   if (limit === null || limit > MAX_TRANSACTIONS_PER_PAGE) {
-  //     perPage = MAX_TRANSACTIONS_PER_PAGE;
-  //   }
-  //
-  //   const params = {
-  //     accountIndex: accounts[0].index,
-  //     page: skip === 0 ? 1 : (skip / limit) + 1,
-  //     per_page: perPage,
-  //     wallet_id: walletId,
-  //     sort_by: 'DES[created_at]',
-  //   };
-  //   const pagesToBeLoaded = Math.ceil(limit / params.per_page);
-  //
-  //   try {
-  //     const response: Transactions = await getTransactionHistory(this.config, params);
-  //     const { meta, data: txnHistory } = response;
-  //     const { totalPages } = meta.pagination;
-  //     const hasMultiplePages = (totalPages > 1 && limit > MAX_TRANSACTIONS_PER_PAGE);
-  //
-  //     if (hasMultiplePages) {
-  //       let page = 2;
-  //       const hasNextPage = () => page < totalPages + 1;
-  //       const shouldLoadNextPage = () => limit === null || page <= pagesToBeLoaded;
-  //
-  //       for (page; (hasNextPage() && shouldLoadNextPage()); page++) {
-  //         const { data: pageHistory } =
-  //           await getTransactionHistory(this.config, Object.assign(params, { page }));
-  //         txnHistory.push(...pageHistory);
-  //       }
-  //       if (limit !== null) txnHistory.splice(limit);
-  //     }
-  //
-  //     const transactions = txnHistory.map(txn => _createTransactionFromServerData(txn));
-  //     const total = transactions.length;
-  //     Logger.debug('AdaApi::searchHistory success: ' + stringifyData(txnHistory));
-  //     return new Promise(resolve => resolve({ transactions, total }));
-  //   } catch (error) {
-  //     Logger.error('AdaApi::searchHistory error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // createWallet = async (request: CreateWalletRequest): Promise<Wallet> => {
-  //   Logger.debug('AdaApi::createWallet called');
-  //   const { name, mnemonic, spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   const assuranceLevel = 'normal';
-  //   try {
-  //     const walletInitData = {
-  //       operation: 'create',
-  //       backupPhrase: split(mnemonic, ' '),
-  //       assuranceLevel,
-  //       name,
-  //       spendingPassword,
-  //     };
-  //     const wallet: AdaWallet = await createWallet(this.config, { walletInitData });
-  //     Logger.debug('AdaApi::createWallet success');
-  //     return _createWalletFromServerData(wallet);
-  //   } catch (error) {
-  //     Logger.error('AdaApi::createWallet error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // deleteWallet = async (request: DeleteWalletRequest): Promise<boolean> => {
-  //   Logger.debug('AdaApi::deleteWallet called: ' + stringifyData(request));
-  //   try {
-  //     const { walletId } = request;
-  //     const response = await deleteWallet(this.config, { walletId });
-  //     Logger.debug('AdaApi::deleteWallet success: ' + stringifyData(response));
-  //     return true;
-  //   } catch (error) {
-  //     Logger.error('AdaApi::deleteWallet error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // createTransaction = async (
-  //   request: TransactionRequest
-  // ): Promise<WalletTransaction> => {
-  //   Logger.debug('AdaApi::createTransaction called');
-  //   const { accountIndex, walletId, address, amount, spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   try {
-  //     const data = {
-  //       source: {
-  //         accountIndex,
-  //         walletId,
-  //       },
-  //       destinations: [
-  //         {
-  //           address,
-  //           amount,
-  //         },
-  //       ],
-  //       groupingPolicy: 'OptimizeForSecurity',
-  //       spendingPassword,
-  //     };
-  //     const response: Transaction = await createTransaction(this.config, { data });
-  //     Logger.debug('AdaApi::createTransaction success: ' + stringifyData(response));
-  //     return _createTransactionFromServerData(response);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::createTransaction error: ' + stringifyError(error));
-  //     if (error.message === 'OutputIsRedeem') {
-  //       throw new NotAllowedToSendMoneyToRedeemAddressError();
-  //     }
-  //     if (error.message === 'NotEnoughMoney') {
-  //       throw new NotEnoughMoneyToSendError();
-  //     }
-  //     if (error.message === 'CannotCreateAddress') {
-  //       throw new IncorrectSpendingPasswordError();
-  //     }
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // calculateTransactionFee = async (
-  //   request: TransactionRequest
-  // ): Promise<BigNumber> => {
-  //   Logger.debug('AdaApi::calculateTransactionFee called');
-  //   const {
-  //     accountIndex,
-  //     walletId, walletBalance,
-  //     address, amount,
-  //     spendingPassword: passwordString,
-  //   } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   try {
-  //     const data = {
-  //       source: {
-  //         accountIndex,
-  //         walletId,
-  //       },
-  //       destinations: [
-  //         {
-  //           address,
-  //           amount,
-  //         },
-  //       ],
-  //       groupingPolicy: 'OptimizeForSecurity',
-  //       spendingPassword,
-  //     };
-  //     const response: TransactionFee = await getTransactionFee(this.config, { data });
-  //     Logger.debug('AdaApi::calculateTransactionFee success: ' + stringifyData(response));
-  //     return _createTransactionFeeFromServerData(response);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::calculateTransactionFee error: ' + stringifyError(error));
-  //     if (error.message === 'NotEnoughMoney') {
-  //       const errorMessage = get(error, 'diagnostic.details.msg', '');
-  //       if (errorMessage.includes('Not enough coins to cover fee')) {
-  //         // Amount + fees exceeds walletBalance:
-  //         // - error.diagnostic.details.msg === 'Not enough coins to cover fee.'
-  //         // = show "Not enough Ada for fees. Try sending a smaller amount."
-  //         throw new NotEnoughFundsForTransactionFeesError();
-  //       } else if (errorMessage.includes('Not enough available coins to proceed')) {
-  //         const availableBalance = new BigNumber(
-  //           get(error, 'diagnostic.details.availableBalance', 0)
-  //         ).dividedBy(LOVELACES_PER_ADA);
-  //         if (walletBalance.gt(availableBalance)) {
-  //           // Amount exceeds availableBalance due to pending transactions:
-  //           // - error.diagnostic.details.msg === 'Not enough available coins to proceed.'
-  //           // - total walletBalance > error.diagnostic.details.availableBalance
-  //           // = show "Cannot calculate fees while there are pending transactions."
-  //           throw new CanNotCalculateTransactionFeesError();
-  //         } else {
-  //           // Amount exceeds walletBalance:
-  //           // - error.diagnostic.details.msg === 'Not enough available coins to proceed.'
-  //           // - total walletBalance === error.diagnostic.details.availableBalance
-  //           // = show "Not enough Ada. Try sending a smaller amount."
-  //           throw new NotEnoughFundsForTransactionError();
-  //         }
-  //       } else {
-  //         // Amount exceeds walletBalance:
-  //         // = show "Not enough Ada. Try sending a smaller amount."
-  //         throw new NotEnoughFundsForTransactionError();
-  //       }
-  //     }
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // createAddress = async (request: CreateAddressRequest): Promise<Address> => {
-  //   Logger.debug('AdaApi::createAddress called');
-  //   const { accountIndex, walletId, spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   try {
-  //     const address: Address = await createAddress(
-  //       this.config, { spendingPassword, accountIndex, walletId }
-  //     );
-  //     Logger.debug('AdaApi::createAddress success: ' + stringifyData(address));
-  //     return _createAddressFromServerData(address);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::createAddress error: ' + stringifyError(error));
-  //     if (error.message === 'CannotCreateAddress') {
-  //       throw new IncorrectSpendingPasswordError();
-  //     }
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // async isValidAddress(address: string): Promise<boolean> {
-  //   Logger.debug('AdaApi::isValidAdaAddress called');
-  //   try {
-  //     const response: Address = await getAddress(this.config, { address });
-  //     Logger.debug(`AdaApi::isValidAdaAddress success: ${stringifyData(response)}`);
-  //     return true;
-  //   } catch (error) {
-  //     Logger.debug(`AdaApi::isValidAdaAddress error: ${stringifyError(error)}`);
-  //     return false;
-  //   }
-  // }
-  //
-  // isValidMnemonic = (mnemonic: string): boolean => (
-  //   isValidMnemonic(mnemonic, WALLET_RECOVERY_PHRASE_WORD_COUNT)
-  // );
-  //
-  // isValidRedemptionKey = (mnemonic: string): boolean => (isValidRedemptionKey(mnemonic));
-  //
-  // isValidPaperVendRedemptionKey = (mnemonic: string): boolean => (
-  //   isValidPaperVendRedemptionKey(mnemonic)
-  // );
-  //
-  // isValidRedemptionMnemonic = (mnemonic: string): boolean => (
-  //   isValidMnemonic(mnemonic, ADA_REDEMPTION_PASSPHRASE_LENGTH)
-  // );
-  //
-  // isValidCertificateMnemonic = (mnemonic: string): boolean => (
-  //   mnemonic.split(' ').length === ADA_CERTIFICATE_MNEMONIC_LENGTH
-  // );
-  //
-  // getWalletRecoveryPhrase(): Promise<Array<string>> {
-  //   Logger.debug('AdaApi::getWalletRecoveryPhrase called');
-  //   try {
-  //     const response: Promise<Array<string>> = new Promise(
-  //       (resolve) => resolve(generateAccountMnemonics())
-  //     );
-  //     Logger.debug('AdaApi::getWalletRecoveryPhrase success');
-  //     return response;
-  //   } catch (error) {
-  //     Logger.error('AdaApi::getWalletRecoveryPhrase error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // }
-  //
-  // // eslint-disable-next-line max-len
-  // getWalletCertificateAdditionalMnemonics(): Promise<Array<string>> {
-  //   Logger.debug('AdaApi::getWalletCertificateAdditionalMnemonics called');
-  //   try {
-  //     const response: Promise<Array<string>> = new Promise(
-  //       (resolve) => resolve(generateAdditionalMnemonics())
-  //     );
-  //     Logger.debug('AdaApi::getWalletCertificateAdditionalMnemonics success');
-  //     return response;
-  //   } catch (error) {
-  //     Logger.error('AdaApi::getWalletCertificateAdditionalMnemonics error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // }
-  //
-  // getWalletCertificateRecoveryPhrase(
-  //   request: GetWalletCertificateRecoveryPhraseRequest
-  // ): Promise<Array<string>> {
-  //   Logger.debug('AdaApi::getWalletCertificateRecoveryPhrase called');
-  //   const { passphrase, input: scrambledInput } = request;
-  //   try {
-  //     const response: Promise<Array<string>> = new Promise(
-  //       (resolve) => resolve(scrambleMnemonics({ passphrase, scrambledInput }))
-  //     );
-  //     Logger.debug('AdaApi::getWalletCertificateRecoveryPhrase success');
-  //     return response;
-  //   } catch (error) {
-  //     Logger.error('AdaApi::getWalletCertificateRecoveryPhrase error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // }
-  //
-  // getWalletRecoveryPhraseFromCertificate(
-  //   request: GetWalletRecoveryPhraseFromCertificateRequest
-  // ): Promise<Array<string>> {
-  //   Logger.debug('AdaApi::getWalletRecoveryPhraseFromCertificate called');
-  //   const { passphrase, scrambledInput } = request;
-  //   try {
-  //     const response = unscrambleMnemonics({ passphrase, scrambledInput });
-  //     Logger.debug('AdaApi::getWalletRecoveryPhraseFromCertificate success');
-  //     return Promise.resolve(response);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::getWalletRecoveryPhraseFromCertificate error: ' + stringifyError(error));
-  //     return Promise.reject(new InvalidMnemonicError());
-  //   }
-  // }
-  //
-  // restoreWallet = async (request: RestoreWalletRequest): Promise<Wallet> => {
-  //   Logger.debug('AdaApi::restoreWallet called');
-  //   const { recoveryPhrase, walletName, spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   const assuranceLevel = 'normal';
-  //   const walletInitData = {
-  //     operation: 'restore',
-  //     backupPhrase: split(recoveryPhrase, ' '),
-  //     assuranceLevel,
-  //     name: walletName,
-  //     spendingPassword
-  //   };
-  //
-  //   try {
-  //     const wallet: AdaWallet = await restoreWallet(this.config, { walletInitData });
-  //     Logger.debug('AdaApi::restoreWallet success');
-  //     return _createWalletFromServerData(wallet);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::restoreWallet error: ' + stringifyError(error));
-  //     if (error.message === 'WalletAlreadyExists') {
-  //       throw new WalletAlreadyRestoredError();
-  //     }
-  //     if (error.message === 'JSONValidationFailed') {
-  //       const validationError = get(error, 'diagnostic.validationError', '');
-  //       if (validationError.includes('Forbidden Mnemonic: an example Mnemonic has been submitted')) {
-  //         throw new ForbiddenMnemonicError();
-  //       }
-  //     }
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // importWalletFromKey = async (
-  //   request: ImportWalletFromKeyRequest
-  // ): Promise<Wallet> => {
-  //   Logger.debug('AdaApi::importWalletFromKey called');
-  //   const { filePath, spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   try {
-  //     const importedWallet: AdaWallet = await importWalletAsKey(
-  //       this.config, { filePath, spendingPassword }
-  //     );
-  //     Logger.debug('AdaApi::importWalletFromKey success');
-  //     return _createWalletFromServerData(importedWallet);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::importWalletFromKey error: ' + stringifyError(error));
-  //     if (error.message === 'WalletAlreadyExists') {
-  //       throw new WalletAlreadyImportedError();
-  //     }
-  //     throw new WalletFileImportError();
-  //   }
-  // };
-  //
-  // importWalletFromFile = async (
-  //   request: ImportWalletFromFileRequest
-  // ): Promise<Wallet> => {
-  //   Logger.debug('AdaApi::importWalletFromFile called');
-  //   const { filePath, spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   const isKeyFile = filePath.split('.').pop().toLowerCase() === 'key';
-  //   try {
-  //     const importedWallet: AdaWallet = isKeyFile ? (
-  //       await importWalletAsKey(this.config, { filePath, spendingPassword })
-  //     ) : (
-  //       await importWalletAsJSON(this.config, filePath)
-  //     );
-  //     Logger.debug('AdaApi::importWalletFromFile success');
-  //     return _createWalletFromServerData(importedWallet);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::importWalletFromFile error: ' + stringifyError(error));
-  //     if (error.message === 'WalletAlreadyExists') {
-  //       throw new WalletAlreadyImportedError();
-  //     }
-  //     throw new WalletFileImportError();
-  //   }
-  // };
-  //
-  // redeemAda = async (
-  //   request: RedeemAdaParams
-  // ): Promise<WalletTransaction> => {
-  //   Logger.debug('AdaApi::redeemAda called');
-  //   const { spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   try {
-  //     const transaction: Transaction = await redeemAda(
-  //       this.config, { ...request, spendingPassword }
-  //     );
-  //     Logger.debug('AdaApi::redeemAda success');
-  //     return _createTransactionFromServerData(transaction);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::redeemAda error: ' + stringifyError(error));
-  //     if (error.message === 'CannotCreateAddress') {
-  //       throw new IncorrectSpendingPasswordError();
-  //     }
-  //     throw new RedeemAdaError();
-  //   }
-  // };
-  //
-  // redeemPaperVendedAda = async (
-  //   request: RedeemPaperVendedAdaParams
-  // ): Promise<WalletTransaction> => {
-  //   Logger.debug('AdaApi::redeemAdaPaperVend called');
-  //   const { spendingPassword: passwordString } = request;
-  //   const spendingPassword = passwordString ? encryptPassphrase(passwordString) : '';
-  //   try {
-  //     const transaction: Transaction = await redeemPaperVendedAda(
-  //       this.config, { ...request, spendingPassword }
-  //     );
-  //     Logger.debug('AdaApi::redeemAdaPaperVend success');
-  //     return _createTransactionFromServerData(transaction);
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::redeemAdaPaperVend error: ' + stringifyError(error));
-  //     if (error.message === 'CannotCreateAddress') {
-  //       throw new IncorrectSpendingPasswordError();
-  //     }
-  //     throw new RedeemAdaError();
-  //   }
-  // };
-  //
-  // async sendBugReport({ requestFormData, environmentData }: SendBugReportRequest): Promise<any> {
-  //   Logger.debug('AdaApi::sendBugReport called: ' + stringifyData({ requestFormData, environmentData }));
-  //   try {
-  //     await sendBugReport({ requestFormData, environmentData });
-  //     Logger.debug('AdaApi::sendBugReport success');
-  //     return true;
-  //   } catch (error) {
-  //     Logger.error('AdaApi::sendBugReport error: ' + stringifyError(error));
-  //     throw new ReportRequestError();
-  //   }
-  // }
-  //
-  // nextUpdate = async (): Promise<NodeSoftware | null> => {
-  //   Logger.debug('AdaApi::nextUpdate called');
-  //   try {
-  //     const nodeUpdate = await getNextNodeUpdate(this.config);
-  //     if (nodeUpdate && nodeUpdate.version) {
-  //       Logger.debug('AdaApi::nextUpdate success: ' + stringifyData(nodeUpdate));
-  //       return nodeUpdate;
-  //     }
-  //     Logger.debug('AdaApi::nextUpdate success: No Update Available');
-  //   } catch (error) {
-  //     Logger.error('AdaApi::nextUpdate error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  //   return null;
-  // };
-  //
-  // postponeUpdate = async (): Promise<void> => {
-  //   Logger.debug('AdaApi::postponeUpdate called');
-  //   try {
-  //     const response: Promise<any> = await postponeNodeUpdate(this.config);
-  //     Logger.debug('AdaApi::postponeUpdate success: ' + stringifyData(response));
-  //   } catch (error) {
-  //     Logger.error('AdaApi::postponeUpdate error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // applyUpdate = async (): Promise<void> => {
-  //   Logger.debug('AdaApi::applyUpdate called');
-  //   try {
-  //     await awaitUpdateChannel.send();
-  //     const response: Promise<any> = await applyNodeUpdate(this.config);
-  //     Logger.debug('AdaApi::applyUpdate success: ' + stringifyData(response));
-  //   } catch (error) {
-  //     Logger.error('AdaApi::applyUpdate error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // updateWallet = async (request: UpdateWalletRequest): Promise<Wallet> => {
-  //   Logger.debug('AdaApi::updateWallet called: ' + stringifyData(request));
-  //   const { walletId, assuranceLevel, name } = request;
-  //   try {
-  //     const wallet: AdaWallet = await updateWallet(
-  //       this.config, { walletId, assuranceLevel, name }
-  //     );
-  //     Logger.debug('AdaApi::updateWallet success: ' + stringifyData(wallet));
-  //     return _createWalletFromServerData(wallet);
-  //   } catch (error) {
-  //     Logger.error('AdaApi::updateWallet error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // updateSpendingPassword = async (
-  //   request: UpdateSpendingPasswordRequest
-  // ): Promise<boolean> => {
-  //   Logger.debug('AdaApi::updateSpendingPassword called');
-  //   const { walletId, oldPassword, newPassword } = request;
-  //   try {
-  //     await changeSpendingPassword(this.config, { walletId, oldPassword, newPassword });
-  //     Logger.debug('AdaApi::updateSpendingPassword success');
-  //     return true;
-  //   } catch (error) {
-  //     Logger.debug('AdaApi::updateSpendingPassword error: ' + stringifyError(error));
-  //     const errorMessage = get(error, 'diagnostic.msg', '');
-  //     if (errorMessage.includes('UpdateWalletPasswordOldPasswordMismatch')) {
-  //       throw new IncorrectSpendingPasswordError();
-  //     }
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // exportWalletToFile = async (
-  //   request: ExportWalletToFileRequest
-  // ): Promise<[]> => {
-  //   const { walletId, filePath } = request;
-  //   Logger.debug('AdaApi::exportWalletToFile called');
-  //   try {
-  //     const response: Promise<[]> = await exportWalletAsJSON(
-  //       this.config, { walletId, filePath }
-  //     );
-  //     Logger.debug('AdaApi::exportWalletToFile success: ' + stringifyData(response));
-  //     return response;
-  //   } catch (error) {
-  //     Logger.error('AdaApi::exportWalletToFile error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
-  //
-  // testReset = async (): Promise<void> => {
-  //   Logger.debug('AdaApi::testReset called');
-  //   try {
-  //     const response: Promise<void> = await resetWalletState(this.config);
-  //     Logger.debug('AdaApi::testReset success: ' + stringifyData(response));
-  //     return response;
-  //   } catch (error) {
-  //     Logger.error('AdaApi::testReset error: ' + stringifyError(error));
-  //     throw new GenericApiError();
-  //   }
-  // };
+  createMnemonic = (request: CreateMnemonicRequest): Promise<String> => {
+    const mnemonic = generateMnemonic(request.num).split(' ');
+    return _.map(mnemonic).join(', ');
+  };
 
-  getNetworkStatus = async (
-    queryParams?: NodeQueryParams
-  ): Promise<GetNetworkStatusResponse> => {
-    const isForceNTPCheck = !!queryParams;
-    const loggerText = `AdaApi::getNetworkStatus${isForceNTPCheck ? ' (FORCE-NTP-CHECK)' : ''}`;
+  generatePaperWallet = async (request: GeneratePaperRequest): Promise<String> => {
+    Logger.debug('CennznetApi::generatePaperWallet called');
+    const filePath = global.dialog.showSaveDialog({
+      defaultPath: 'paper-wallet-certificate.pdf',
+      filters: [
+        {
+          name: 'paper-wallet-certificate',
+          extensions: ['pdf'],
+        },
+      ],
+    });
+
+    if (!filePath) return;
+
+    await generatePaperWalletChannel.send({
+      address: request.address,
+      filePath,
+      mnemonics: request.mnemonic.split(MNEMONIC_RULE),
+      isMainnet: true,
+      networkName: request.networkName,
+      buildLabel,
+      messages: {
+        walletAddressLabel: request.name,
+        recoveryPhraseLabel: 'SEED PHRASE',
+        infoTitle: 'Paper Wallet',
+        infoAuthor: 'Odin',
+      },
+    });
+
+    return filePath;
+  };
+
+  initCennzetApi = async (): Promise<void> => {
+    this.api = await Api.create({
+      provider: 'ws://localhost:9944',
+    });
+    const ga = new GenericAsset(this.api);
+    this.ga = ga;
+  };
+
+  syncWalletData = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::syncWalletData called');
+    try {
+      const resultWallet = wallet;
+      const walletAddresses = window.odin.api.cennz.getWalletAccountAddresses(resultWallet);
+
+      // extract data from wallet to accounts
+      const accounts = resultWallet.accounts || new Map();
+      for (const walletAddress of walletAddresses) {
+        console.log(`walletAddress: ${walletAddress}`);
+
+        const assets = new Map();
+        // eslint-disable-next-line no-await-in-loop
+        const stakingTokenAsset = await this.getCennznetWalletAsset(
+          PreDefinedAssetIdObj.STAKING_TOKEN.BN,
+          walletAddress
+        );
+        assets[PreDefinedAssetIdObj.STAKING_TOKEN.BN] = stakingTokenAsset;
+
+        // eslint-disable-next-line no-await-in-loop
+        const spendingTokenAsset = await this.getCennznetWalletAsset(
+          PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
+          walletAddress
+        );
+        assets[PreDefinedAssetIdObj.SPENDING_TOKEN.BN] = spendingTokenAsset;
+
+        // TODO base on nextAssetId fetch all custom token ?
+        for (const customToken of CustomTokenAssetId) {
+          const customTokenAssetIdAsBN = new BN(customToken, 10);
+          // eslint-disable-next-line no-await-in-loop
+          const customTokenAsset = await this.getCennznetWalletAsset(
+            customTokenAssetIdAsBN,
+            walletAddress
+          );
+          assets[customTokenAssetIdAsBN] = customTokenAsset;
+        }
+
+        // fetch wallet balance
+        // eslint-disable-next-line no-await-in-loop
+        // const accountFreeBalance = await this.getBalancesFreeBalance(walletAddress);
+
+        const account = new CennznetWalletAccount({
+          address: walletAddress,
+          name: accounts[walletAddress] && accounts[walletAddress].name,
+          // freeBalance: accountFreeBalance,
+          assets,
+        });
+        accounts[walletAddress] = account;
+      }
+
+      resultWallet.accounts = accounts;
+      return resultWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::syncWalletData error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  getCennznetWalletAsset = async (
+    assetId: BN,
+    walletAddress: String
+  ): Promise<CennznetWalletAsset> => {
+    Logger.debug('CennznetApi::getCennznetWalletAsset called');
+    try {
+      const freeBalanceBN = await window.odin.api.cennz.getGenericAssetFreeBalance(
+        assetId,
+        walletAddress
+      );
+      const freeBalance = { toBN: freeBalanceBN, toString: freeBalanceBN.toString(10) };
+      const reservedBalanceBN = await window.odin.api.cennz.getGenericAssetReservedBalance(
+        assetId,
+        walletAddress
+      );
+      const reservedBalance = { toBN: reservedBalanceBN, toString: reservedBalanceBN.toString(10) };
+      const totalBalanceBN = freeBalanceBN.add(reservedBalanceBN);
+      const totalBalance = { toBN: totalBalanceBN, toString: totalBalanceBN.toString(10) };
+      const asset = new CennznetWalletAsset({
+        assetId,
+        address: walletAddress,
+        name: PreDefinedAssetIdName[assetId],
+        freeBalance,
+        reservedBalance,
+        totalBalance,
+      });
+      return asset;
+    } catch (error) {
+      Logger.error('CennznetApi::getCennznetWalletAsset error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  createWalletWithSimpleKeyRing = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::createWalletWithSimpleKeyRing called');
+    try {
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      const keyring = new SimpleKeyring();
+      await keyring.addFromMnemonic(request.mnemonic);
+      await wallet.addKeyring(keyring);
+      const backup = await wallet.export(request.passphrase);
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        hasPassword: request.passphrase !== null,
+        wallet,
+      });
+      Logger.debug('CennznetApi::createWalletWithSimpleKeyRing success');
+      return cennznetWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::createWalletWithSimpleKeyRing error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  createWalletWithHDKeyRing = async (request: CreateHDKRWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::createWalletWithHDKeyRing called');
+    try {
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      await wallet.addAccount();
+      const exportedWallet = await wallet.export(request.passphrase);
+      const mnemonic = exportedWallet && exportedWallet[0].data.mnemonic;
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        hasPassword: request.passphrase !== null,
+        mnemonic,
+        wallet,
+      });
+      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      return cennznetWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  restoreWallet = async (request: RestoreHDKRWalletRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::restoreWalletWithHDKeyRing called');
+    try {
+      const wallet = new Wallet();
+      await wallet.createNewVault(request.passphrase);
+      const keyring = new HDKeyring({ mnemonic: request.mnemonic });
+      wallet.createNewVaultAndRestore(request.passphrase, [keyring]);
+      await wallet.addAccount();
+      const backup = await wallet.export(request.passphrase);
+
+      const cennznetWallet = new CennznetWallet({
+        id: uuid(),
+        name: request.name,
+        hasPassword: request.passphrase !== null,
+        wallet,
+      });
+      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      return cennznetWallet;
+    } catch (error) {
+      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  addAccount = async (request: AddAccountRequest): Promise<CennznetWallet> => {
+    Logger.debug('CennznetApi::addAccount called');
+    try {
+      // reload wallet object
+      const originalWallet = new Wallet({
+        vault: request.wallet.vault,
+        // keyringTypes: [HDKeyring, SimpleKeyring],
+      });
+      await originalWallet.unlock('');
+
+      const newAccount = await originalWallet.addAccount();
+      Logger.debug('CennznetApi::addAccount success');
+      return { updatedWallet: originalWallet, newAccount };
+    } catch (error) {
+      Logger.error('CennznetApi::addAccount error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * @param request
+   * @returns {Promise<*|Array<string>>}
+   */
+  getWalletAddress = async (request: GetWalletAddressRequest): Promise<string[]> => {
+    Logger.debug('CennznetApi::getWalletAddress called');
+    try {
+      const walletAddress = Object.keys(request.accountKeyringMap);
+      Logger.debug(`CennznetApi::getWalletAddress success: ${walletAddress}`);
+      return walletAddress;
+    } catch (error) {
+      Logger.error('CennznetApi::getWalletAddress error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * @param request
+   * @returns {string[]}
+   */
+  getWalletAccountAddresses = (request: CennznetWallet): string[] => {
+    Logger.debug('CennznetApi::getWalletAccountAddresses called');
+    try {
+      const walletAccountAddresses = Object.keys(request.wallet._accountKeyringMap);
+      Logger.debug(`CennznetApi::getWalletAccountAddresses success: ${walletAccountAddresses}`);
+      return walletAccountAddresses;
+    } catch (error) {
+      Logger.error('CennznetApi::getWalletAccountAddresses error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  getSystemHealth = async (queryParams?: NodeQueryParams): Promise<SystemHealth> => {
+    const loggerText = `CennznetApi::getSystemHealth`;
     Logger.debug(`${loggerText} called`);
     try {
-      const status: NodeInfo = await getNodeInfo(this.config, queryParams);
+      const status: SystemHealth = await getSystemHealth(this.config, queryParams);
       Logger.debug(`${loggerText} success: ${stringifyData(status)}`);
-
-      const {
-        blockchainHeight,
-        subscriptionStatus,
-        syncProgress,
-        localBlockchainHeight,
-        localTimeInformation,
-      } = status;
-
-      // extract relevant data before sending to NetworkStatusStore
-      return {
-        subscriptionStatus,
-        syncProgress: syncProgress.quantity,
-        blockchainHeight: get(blockchainHeight, 'quantity', 0),
-        localBlockchainHeight: localBlockchainHeight.quantity,
-        localTimeDifference: get(localTimeInformation, 'differenceFromNtpServer.quantity', null),
-      };
+      return status;
     } catch (error) {
       Logger.error(`${loggerText} error: ${stringifyError(error)}`);
       throw new GenericApiError(error);
     }
   };
 
-  setCardanoNodeFault = async (fault: FaultInjectionIpcRequest) => {
-    await cennznetFaultInjectionChannel.send(fault);
+  getGenericAssetNextAssetId = async (): Promise<u32> => {
+    Logger.debug('CennznetApi::getNextAssetId called');
+    try {
+      const nextAssetId = await this.ga.getNextAssetId();
+      Logger.debug(`CennznetApi::getNextAssetId nextAssetId: ${nextAssetId}`);
+      return nextAssetId;
+    } catch (error) {
+      Logger.error('CennznetApi::getNextAssetId error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
   };
 
-  // No implementation here but can be overwritten
-  getLocalTimeDifference: Function;
-  setLocalTimeDifference: Function;
-  setNextUpdate: Function;
+  /**
+   * The free balance of a given asset under an account.
+   * @param assetId
+   * @param walletAddress
+   * @returns {Promise<number>}
+   */
+  getGenericAssetFreeBalance = async (assetId: BN, walletAddress: string): Promise<BN> => {
+    Logger.debug('CennznetApi::getGenericAssetFreeBalance called');
+    try {
+      const freeBalance = await this.ga.getFreeBalance(assetId, walletAddress);
+      Logger.debug(
+        `CennznetApi::getGenericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`
+      );
+      return new BN(freeBalance.toString(10), 10);
+    } catch (error) {
+      Logger.error('CennznetApi::getGenericAssetFreeBalance error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
 
+  /**
+   * The reserved balance of a given asset under an account.
+   * @param assetId
+   * @param walletAddress
+   * @returns {Promise<Balance>}
+   */
+  getGenericAssetReservedBalance = async (assetId: BN, walletAddress: string): Promise<Balance> => {
+    Logger.debug('CennznetApi::getGenericAssetReservedBalance called');
+    try {
+      const reservedBalance = await this.ga.getReservedBalance(assetId, walletAddress);
+      Logger.debug(`CennznetApi::getGenericAssetReservedBalance freeBalance: ${reservedBalance}`);
+      return reservedBalance;
+    } catch (error) {
+      Logger.error('CennznetApi::getGenericAssetReservedBalance error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * Total supply of a given asset.
+   * @param assetId
+   * @returns {Promise<Balance>}
+   */
+  getGenericAssetTotalSupply = async (assetId: BN): Promise<Balance> => {
+    Logger.debug('CennznetApi::getGenericAssetTotalSupply called');
+    try {
+      const totalSupply = await this.ga.getTotalSupply(assetId);
+      Logger.debug(`CennznetApi::getGenericAssetTotalSupply freeBalance: ${totalSupply}`);
+      return totalSupply;
+    } catch (error) {
+      Logger.error('CennznetApi::getGenericAssetTotalSupply error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * @param assetId
+   * @param fromWalletAddress
+   * @param toWalletAddress
+   * @param amount
+   * @param wallet
+   * @returns {Promise<Hash>}
+   */
+  doGenericAssetTransfer = async (
+    assetId: BN,
+    fromWalletAddress: string,
+    toWalletAddress: string,
+    amount: BN,
+    wallet: CennznetWallet
+  ): Promise<Hash> => {
+    Logger.debug('CennznetApi::doGenericAssetTransfer called');
+    Logger.debug(
+      `assetId: ${assetId.toString(10)}, amount: ${amount.toString(
+        10
+      )}, fromWalletAddress: ${fromWalletAddress}, toWalletAddress: ${toWalletAddress}`
+    );
+    try {
+      // reload wallet object
+      const originalWallet = new Wallet({
+        vault: wallet.wallet.vault,
+        keyringTypes: [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
+      });
+      await originalWallet.unlock(''); // TODO switch to pin code
+      Logger.debug('unlock');
+
+      this.api.setSigner(originalWallet);
+      Logger.debug('setSigner');
+
+      // const tx = await this.ga.transfer(assetId, toWalletAddress, amount).send({from: fromWalletAddress}, async (status) => {
+      //   console.log('transfer status');
+      //   console.log(status);
+      //   if (status.type === 'Finalised' && status.events !== undefined) {
+      //     console.log('success');
+      //     const balance: BN = await this.ga.getFreeBalance(assetId, toWalletAddress);
+      //     console.log('balance');
+      //     console.log(balance);
+      //   }s
+      // });
+      const txHash = await this.ga
+        .transfer(assetId, toWalletAddress, amount)
+        .send({ from: fromWalletAddress });
+      Logger.debug(`CennznetApi::doGenericAssetTransfer txHash ${txHash}`);
+      return txHash;
+    } catch (error) {
+      Logger.error('CennznetApi::doGenericAssetTransfer error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
 }
-
-// ========== TRANSFORM SERVER DATA INTO FRONTEND MODELS =========
-
-// const _createWalletFromServerData = action(
-//   'AdaApi::_createWalletFromServerData', (data: AdaWallet) => {
-//     const {
-//       id, balance, name, assuranceLevel,
-//       hasSpendingPassword, spendingPasswordLastUpdate,
-//       syncState,
-//     } = data;
-//
-//     return new Wallet({
-//       id,
-//       amount: new BigNumber(balance).dividedBy(LOVELACES_PER_ADA),
-//       name,
-//       assurance: assuranceLevel,
-//       hasPassword: hasSpendingPassword,
-//       passwordUpdateDate: new Date(`${spendingPasswordLastUpdate}Z`),
-//       syncState,
-//     });
-//   }
-// );
-
-// const _createAddressFromServerData = action(
-//   'AdaApi::_createAddressFromServerData',
-//   (address: Address) => new WalletAddress(address)
-// );
-
-// const _conditionToTxState = (condition: string) => {
-//   switch (condition) {
-//     case 'applying':
-//     case 'creating': return 'pending';
-//     case 'wontApply': return 'failed';
-//     default: return 'ok';
-//     // Others V0: CPtxInBlocks && CPtxNotTracked
-//     // Others V1: "inNewestBlocks" "persisted" "creating"
-//   }
-// };
-
-// const _createTransactionFromServerData = action(
-//   'AdaApi::_createTransactionFromServerData', (data: Transaction) => {
-//     const { id, direction, amount, confirmations, creationTime, inputs, outputs, status } = data;
-//     return new WalletTransaction({
-//       id,
-//       title: direction === 'outgoing' ? 'Ada sent' : 'Ada received',
-//       type: direction === 'outgoing' ? transactionTypes.EXPEND : transactionTypes.INCOME,
-//       amount: new BigNumber(direction === 'outgoing' ? (amount * -1) : amount).dividedBy(LOVELACES_PER_ADA),
-//       date: utcStringToDate(creationTime),
-//       description: '',
-//       numberOfConfirmations: confirmations,
-//       addresses: {
-//         from: inputs.map(({ address }) => address),
-//         to: outputs.map(({ address }) => address),
-//       },
-//       state: _conditionToTxState(status.tag),
-//     });
-//   }
-// );
-
-// const _createTransactionFeeFromServerData = action(
-//   'AdaApi::_createTransactionFeeFromServerData', (data: TransactionFee) =>
-//     new BigNumber(data.estimatedAmount).dividedBy(LOVELACES_PER_ADA)
-// );

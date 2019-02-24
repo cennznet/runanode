@@ -7,9 +7,10 @@ const ContentWrapper = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 2.5rem;
-  height: 2.5rem;
-  border: ${`1px solid ${colors.N300}`};
+  min-width: 3rem;
+  height: 3rem;
+  border: ${p => `1px solid ${p.styles.borderColor}`};
+  background-color: ${p => p.styles.backgroundColor};
   border-radius: 0.2rem;
   box-sizing: border-box;
 `;
@@ -24,7 +25,7 @@ const PrependWrapper = styled(ContentWrapper)`
   border-bottom-right-radius: 0;
 `;
 
-const Prepend = ({ prepend }) => <PrependWrapper>{prepend}</PrependWrapper>;
+const Prepend = ({ prepend, styles }) => <PrependWrapper {...{ styles }}>{prepend}</PrependWrapper>;
 
 const AppendWrapper = styled(ContentWrapper)`
   border-left: 0;
@@ -32,7 +33,7 @@ const AppendWrapper = styled(ContentWrapper)`
   border-bottom-left-radius: 0;
 `;
 
-const Append = ({ append }) => <AppendWrapper>{append}</AppendWrapper>;
+const Append = ({ append, styles }) => <AppendWrapper {...{ styles }}>{append}</AppendWrapper>;
 
 const AddonWrapper = styled.span`
   display: flex;
@@ -41,7 +42,7 @@ const AddonWrapper = styled.span`
 `;
 
 const InputAddon = ({ children, ...otherProps }) => {
-  const { prepend, append } = otherProps;
+  const { prepend, append, styles } = otherProps;
 
   if (!(prepend || append)) {
     return children;
@@ -49,9 +50,9 @@ const InputAddon = ({ children, ...otherProps }) => {
 
   return (
     <AddonWrapper>
-      {prepend && <Prepend {...{ prepend }} />}
+      {prepend && <Prepend {...{ prepend, styles }} />}
       {children}
-      {append && <Append {...{ append }} />}
+      {append && <Append {...{ append, styles }} />}
     </AddonWrapper>
   );
 };

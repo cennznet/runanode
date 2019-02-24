@@ -1,15 +1,7 @@
 import deepAssign from 'deep-assign';
 import theme from 'renderer/theme';
+
 import getInputBorderColor from './getInputBorderColor';
-
-const defaultStyling = p => {
-  const { colors } = p.theme;
-  return {
-    focusBorderColor: colors.primary,
-  };
-};
-
-const styling = p => deepAssign({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
 
 const inputStateStyles = (
   p = {
@@ -17,20 +9,18 @@ const inputStateStyles = (
     themeSpace: 'input',
   }
 ) => `
-  color: ${p.color || p.theme.colors.N500};
-  border: ${`1px solid ${p.borderColor}` || getInputBorderColor(p)};
+  color: ${p.styles.color};
+  border: ${getInputBorderColor(p)};
 
-  background-color: ${p.readOnly ? p.theme.colors.N100 : p.backgroundColor || p.theme.colors.N0};
+  background-color: ${p.readOnly ? p.theme.colors.V900 : p.styles.backgroundColor};
 
   &::placeholder {
-    color: ${p.theme.colors.N300};
+    color: ${p.theme.colors.N200};
   }
 
   &:focus {
     outline: none;
-    border: ${`1px solid ${
-      p.readOnly ? p.theme.colors.border : p.focusBorderColor || styling(p).focusBorderColor
-    }`};
+    border: ${`1px solid ${p.readOnly ? p.theme.colors.border : getInputBorderColor(p)}`};
   }
 
   &:disabled {

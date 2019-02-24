@@ -1,8 +1,17 @@
 ```jsx
 initialState = { selected: false };
 
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 0.3rem;
+  }
+`;
+
 <DemoFlex>
-  <label>
+  <Label>
     <Toggle
       defaultChecked={state.selected}
       onChange={e => {
@@ -10,9 +19,9 @@ initialState = { selected: false };
       }}
     />
     <span>SUCCESS</span>
-  </label>
+  </Label>
 
-  <label>
+  <Label>
     <Toggle
       disabled
       defaultChecked={state.selected}
@@ -21,6 +30,6 @@ initialState = { selected: false };
       }}
     />
     <span>DISABLED</span>
-  </label>
+  </Label>
 </DemoFlex>;
 ```

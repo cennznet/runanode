@@ -1,46 +1,61 @@
 import React from 'react';
 import ReactSelect from 'react-select';
 import styled from 'styled-components';
-// import styledMixins from '../../../styledMixins';
-import themeObj from '../../theme';
+import themeObj, { colors } from 'renderer/theme';
 
 const StyledSelect = styled(ReactSelect)`
   .react-select__control {
     box-shadow: none;
-    color: ${p => p.color || p.theme.colors.N500};
-    border-color: ${p => p.borderColor || p.theme.colors.N100};
-
+    height: ${p => p.height};
+    color: ${p => p.color};
+    border-color: ${p => p.borderColor};
+    font-weight: ${p => p.fontWeight};
+    font-size: ${p => p.fontSize};
+    background-color: ${p => p.backgroundColor};
+    
     &:hover {
-      border-color: ${p => p.borderHoverColor || p.theme.colors.N100};
+      border-color: ${p => p.borderHoverColor};
     }
   }
 
-  .react-select__control--is-disabled {
-    background-color: ${p => p.theme.colors.N100};
-  }
-
   .react-select__menu {
-    background-color: ${p => p.backgroundColor || p.theme.colors.N0};
+    border: 1px solid ${p => p.menuBorderColor};
+    background-color: ${p => p.menuBackgroundColor};
   }
 
   .react-select__option--is-focused {
-    color: ${p => p.focusColor || p.theme.colors.N800};
-    background-color: ${p => p.focusBackgroundColor || p.theme.colors.N0};
+    color: ${p => p.focusColor};
+    background-color: ${p => p.focusBackgroundColor};
   }
 
   .react-select__indicator-separator {
-    background-color: ${p => p.theme.colors.N100};
+    background-color: ${p => p.borderColor || p.indicatorBackgroundColor};
   }
 
   .react-select__option--is-selected {
-    background-color: ${p => p.selectedBackgroundColor || p.theme.colors.N0};
-    color: ${p => p.theme.colors.N500};
+    background-color: ${p => p.selectedBackgroundColor};
+    color: ${p => p.selectedColor};
+    font-weight: ${p => p.selectedFontWeight};
   }
 `;
 
 StyledSelect.defaultProps = {
   theme: themeObj,
   themeSpace: 'select',
+
+  fontSize: '14px',
+  backgroundColor: 'rgba(114,94,255,0.5)',
+  menuBackgroundColor: colors.V800,
+  borderColor: colors.V400,
+  height: '3rem',
+  color: colors.N0,
+  selectedFontWeight: 'bolder',
+  selectedBackgroundColor: 'transparent',
+  selectedColor: colors.N0,
+  focusBackgroundColor: colors.V500,
+  focusColor: colors.N0,
+  indicatorBackgroundColor: colors.N100,
+  menuBorderColor: colors.N100,
 };
 
 const Select = ({ disabled, ...props }) => (

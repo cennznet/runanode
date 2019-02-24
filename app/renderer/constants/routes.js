@@ -1,6 +1,7 @@
 // @flow
 export default {
   ROOT: '/',
+  WAIT: '/wait',
   SETTINGS: {
     ROOT: '/settings',
     GENERAL: '/settings/general',
@@ -8,9 +9,9 @@ export default {
   },
   WALLET: {
     ROOT: '/wallet',
+    LANDING: '/wallet/landing',
     CREATE: '/wallet/create',
-    IMPORT: '/wallet/import',
-    RESTORE: '/wallet/restore',
+    CONNECT: '/wallet/connect',
   },
   DEV: '/dev',
   TERMS_OF_USE_ACCEPTANCE: '/terms-of-use-acceptance',

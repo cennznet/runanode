@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { LocalizeProvider } from 'react-localize-redux';
 import AppThemeProvider from 'components/AppThemeProvider';
+import { Toaster } from 'components';
 import theme from 'renderer/theme';
 import history from 'renderer/history';
 import globalStyles from './globalStyles';
@@ -15,7 +16,10 @@ const AppWithProviders = () => (
     <AppThemeProvider {...{ theme, globalStyles }}>
       <LocalizeProvider store={store}>
         <ConnectedRouter {...{ history }}>
-          <AppRoutes />
+          <React.Fragment>
+            <Toaster />
+            <AppRoutes />
+          </React.Fragment>
         </ConnectedRouter>
       </LocalizeProvider>
     </AppThemeProvider>

@@ -1,10 +1,8 @@
 import createChainFns from 'renderer/helpers/reducerHelper';
-import { setActionLoading, initialState } from 'renderer/helpers/uiReducer';
+
 import types from 'renderer/types';
 
-const INITIAL_STATE = {
-  ...initialState,
-  chain: '',
+const DEFAULT_STATE = {
   name: '',
   health: {
     code: 200,
@@ -23,7 +21,7 @@ const INITIAL_STATE = {
       message: 'ok',
       isSyncing: '',
       peers: 0,
-    }
+    },
   },
   localNode: {
     bestBlock: 0,
@@ -34,71 +32,47 @@ const INITIAL_STATE = {
       message: 'ok',
       isSyncing: '',
       peers: 0,
-    }
+    },
+  },
+};
+
+export default function localStorage(state = DEFAULT_STATE, { type, payload }) {
+  switch (type) {
+    case types.nodeJsonRpcSystemVersion.completed:
+      return {
+        ...state,
+        version: payload.result,
+      };
+
+    case types.nodeJsonRpcSystemChain.completed:
+      return {
+        ...state,
+        chain: payload.result,
+      };
+
+    case types.nodeJsonRpcSystemName.completed:
+      return {
+        ...state,
+        name: payload.result,
+      };
+    case types.nodeJsonRpcSystemHealth.completed:
+      return {
+        ...state,
+        health: payload,
+      };
+
+    case types.nodeWsChainGetHeader.completed:
+      return {
+        ...state,
+        localNode: { ...state.localNode, bestBlock: payload.number },
+      };
+
+    case types.nodeWsSystemChain.completed:
+      return {
+        ...state,
+        localNode: { ...state.localNode, chain: payload.result },
+      };
+    default:
+      return state;
   }
-};
-
-const setNodeSystemVersion = (state, { result }) => ({
-  ...state,
-  version: result
-});
-
-const setNodeSystemChain = (state, { result }) => ({
-  ...state,
-  chain: result
-});
-
-const setNodeSystemName = (state, { result }) => ({
-  ...state,
-  name: result
-});
-
-const setNodeSystemHealth = (state, health) => ({
-  ...state,
-  health
-});
-
-const handleChainGetHeader = (state, payload) => {
-  const { localNode } = INITIAL_STATE;
-  console.log('handleChainGetHeader');
-  console.log(payload);
-
-  localNode.bestBlock = payload.number;
-  return {
-    ...state,
-    localNode,
-  };
-};
-
-const handleSystemChain = (state, payload) => {
-  const { localNode } = INITIAL_STATE;
-  console.log('handleSystemChain');
-  console.log(payload);
-
-  localNode.chain = payload.result;
-  return {
-    ...state,
-    chain: localNode.chain,
-    localNode,
-  };
-};
-
-const handlers = {
-  [types.nodeJsonRpcSystemVersion.completed]: setNodeSystemVersion,
-  [types.nodeJsonRpcSystemChain.completed]: setNodeSystemChain,
-  [types.nodeJsonRpcSystemName.completed]: setNodeSystemName,
-  [types.nodeJsonRpcSystemHealth.completed]: setNodeSystemHealth,
-  [types.nodeWsChainGetHeader.completed]: handleChainGetHeader,
-  [types.nodeWsSystemChain.completed]: handleSystemChain,
-};
-
-export default createChainFns(
-  [
-    setActionLoading(types.nodeJsonRpcSystemVersion),
-    setActionLoading(types.nodeJsonRpcSystemChain),
-    setActionLoading(types.nodeJsonRpcSystemName),
-    setActionLoading(types.nodeJsonRpcSystemHealth),
-    handlers
-  ],
-  INITIAL_STATE,
-);
+}

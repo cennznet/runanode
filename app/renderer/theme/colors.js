@@ -58,20 +58,32 @@ export const B700 = '#015094';
 export const B800 = '#003562';
 export const B900 = '#00192F';
 
+/** Violet */
+export const V100 = '#725EFF';
+export const V200 = '#725EFF';
+export const V300 = '#725EFF';
+export const V400 = '#725EFF';
+export const V500 = '#1130FF';
+export const V600 = '#0000CA';
+export const V700 = '#08187F';
+export const V800 = '#040C40';
+export const V900 = '#020835';
+
 export const brandPrimary = rgba(17, 48, 255, 0.9);
 export const brandSecondary = Y400;
 
 export const primary = rgba(17, 48, 255, 0.9);
-export const secondary = Y500;
-export const success = G500;
-export const warning = Y500;
-export const danger = R500;
-export const info = N700;
+export const secondary = V800;
+export const success = G400;
+export const warning = Y400;
+export const danger = R400;
+export const info = N100;
 export const nuetral = N500;
 
 export const border = N400;
 export const borderLight = N100;
-export const text = N700;
-export const textLight = N500;
+export const text = N0;
+export const textMuted = rgba(255, 255, 255, 0.7);
+export const textHover = N200;
 export const link = B500;
 export const linkHover = B600;

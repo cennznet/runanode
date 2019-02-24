@@ -35,6 +35,10 @@ const initEpic = action$ =>
           payload: { key: storageKeys.GENESIS_CONFIG_FILE_INFO },
         },
         {
+          type: types.getStorage.requested,
+          payload: { key: storageKeys.WALLETS },
+        },
+        {
           type: types.nodeWsSystemChainPolling.requested,
         }
       );
