@@ -9,8 +9,8 @@ const MainContent = styled.div`
   margin: 0 auto;
   background-color: transparent;
   padding: 3rem 0 0 3rem;
-  min-width: 50rem;
-  max-width: 50rem;
+  min-width: 45rem;
+  max-width: 45rem;
 
   .content {
     flex: 1 auto;
