@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import styledProps from 'styled-props';
-import deepAssign from 'deep-assign';
+import mergeOptions from 'merge-options';
 import RcCheckbox from 'rc-checkbox';
 import 'rc-checkbox/assets/index.css';
 import theme from 'renderer/theme';
@@ -19,7 +19,7 @@ const defaultStyling = p => {
   };
 };
 
-const styling = p => deepAssign({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
+const styling = p => mergeOptions({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
 
 const StyledLabel = styled.label`
   display: flex;

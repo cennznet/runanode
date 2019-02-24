@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import styledProps from 'styled-props';
-import deepAssign from 'deep-assign';
+import mergeOptions from 'merge-options';
 import ReactToggle from 'react-toggle';
 import 'react-toggle/style.css';
 import themeObj from 'renderer/theme';
@@ -20,7 +20,7 @@ const defaultStyling = p => {
   };
 };
 
-const styling = p => deepAssign({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
+const styling = p => mergeOptions({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
 
 const CustomToggle = ({ theme, themeStyles, themeSpace, color, ...restProps }) => (
   <ReactToggle icons={false} {...restProps} />
