@@ -63,6 +63,9 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   const { localNode } = nodeSystem;
   const { chain } = localNode;
   const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
+  Logger.debug(`selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
+  Logger.debug(`chain: ${chain}`);
+  Logger.debug(`isNetworkSwitched: ${isNetworkSwitched}`);
   if (!isNetworkSwitched) {
     return (
       <Layout sidebar={<SimpleSidebar />}>

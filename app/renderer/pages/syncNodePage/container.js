@@ -35,6 +35,10 @@ const enhance = lifecycle({
     const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
     const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
     const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
+
+    Logger.debug(`selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
+    Logger.debug(`genesisConfigFile: ${JSON.stringify(genesisConfigFile)}`);
+    Logger.debug(`genesisConfigFilePath: ${genesisConfigFilePath}`);
     if (selectedNetwork && selectedNetwork.value) {
       const targetChain =
         selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath
