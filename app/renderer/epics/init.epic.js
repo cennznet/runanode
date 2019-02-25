@@ -20,6 +20,10 @@ const initEpic = action$ =>
         },
         {
           type: types.getStorage.requested,
+          payload: { key: storageKeys.ENABLE_ANALYTICS },
+        },
+        {
+          type: types.getStorage.requested,
           payload: { key: storageKeys.TERMS_OF_USE_ACCEPTANCE },
         },
         {

@@ -53,7 +53,13 @@ const PreferenceItem = styled.div`
   }
 `;
 
-const SettingsGeneralPage = ({ subNav, rememberNetwork, onToggleRememberNetwork }) => (
+const SettingsGeneralPage = ({
+  subNav,
+  rememberNetwork,
+  onToggleRememberNetwork,
+  enableAnalytics,
+  onToggleEnableAnalytics,
+}) => (
   <MainLayout subNav={subNav}>
     <MainContent>
       <PageHeading marginBottom="0">Settings</PageHeading>
@@ -83,9 +89,9 @@ const SettingsGeneralPage = ({ subNav, rememberNetwork, onToggleRememberNetwork 
               </span>
             </Label>
             <Toggle
-              defaultChecked={rememberNetwork === null ? true : rememberNetwork}
+              defaultChecked={enableAnalytics === null ? true : enableAnalytics}
               onChange={e => {
-                onToggleRememberNetwork(rememberNetwork === null ? false : !rememberNetwork);
+                onToggleEnableAnalytics(enableAnalytics === null ? false : !enableAnalytics);
               }}
             />
           </PreferenceItem>
