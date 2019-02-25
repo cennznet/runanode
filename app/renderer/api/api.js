@@ -146,8 +146,6 @@ export default class CennzApi {
       // extract data from wallet to accounts
       const accounts = resultWallet.accounts || new Map();
       for (const walletAddress of walletAddresses) {
-        console.log(`walletAddress: ${walletAddress}`);
-
         const assets = new Map();
         // eslint-disable-next-line no-await-in-loop
         const stakingTokenAsset = await this.getCennznetWalletAsset(
