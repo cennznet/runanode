@@ -1,6 +1,6 @@
 ```jsx
-const { ModalFooter } = require('./lib/ModalFooter.js');
-const { ModalBody } = require('./lib/ModalBody.js');
+const ModalFooter = require('./lib/ModalFooter').default;
+const ModalBody = require('./lib/ModalBody').default;
 initialState = { isOpen: false };
 <div>
   <Button onClick={() => setState({ isOpen: true })}>Open Modal</Button>

@@ -7,4 +7,6 @@ const ModalBodyWrapper = styled.div`
   padding: 2rem;
 `;
 
-export const ModalBody = ({ children }) => <ModalBodyWrapper>{children}</ModalBodyWrapper>;
+const ModalBody = ({ children }) => <ModalBodyWrapper>{children}</ModalBodyWrapper>;
+
+export default ModalBody;

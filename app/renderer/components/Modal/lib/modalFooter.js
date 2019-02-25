@@ -12,4 +12,6 @@ const ModalFooterWrapper = styled.div`
   border-top: ${p => `1px solid ${colors.N500}`};
 `;
 
-export const ModalFooter = ({ children }) => <ModalFooterWrapper>{children}</ModalFooterWrapper>;
+const ModalFooter = ({ children }) => <ModalFooterWrapper>{children}</ModalFooterWrapper>;
+
+export default ModalFooter;
