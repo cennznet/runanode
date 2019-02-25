@@ -22,9 +22,9 @@ import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
 import 'electron-cookies'; // For GA writes clientId to cookie to recognize existing users
-
+import { getStorage, storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
-import setupGoogleAnalytics from './ga';
+import { enableGoogleAnalytics, disableGoogleAnalytics } from 'renderer/analytics';
 import types from './types';
 import store from './store';
 import App from './App';
@@ -33,6 +33,15 @@ import { setupApi } from './api/index';
 
 // store.dispatch({ type: types.resetLocalStorage.triggered });
 store.dispatch({ type: types.init.triggered });
+
+getStorage(storageKeys.ENABLE_ANALYTICS).then(isEnabled => {
+  console.log('isEnabled', isEnabled);
+  if (isEnabled !== false) {
+    enableGoogleAnalytics();
+  } else {
+    disableGoogleAnalytics();
+  }
+});
 
 // import utils from './utils';
 // import translations from './i18n/translations';
@@ -71,7 +80,6 @@ const initializeOdin = async () => {
   // const router = new RouterStore();
   // const history = syncHistoryWithStore(hashHistory, router);
   // const stores = setupStores(api, actions, router);
-  setupGoogleAnalytics();
 
   window.odin = {
     api,

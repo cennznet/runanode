@@ -5,7 +5,8 @@ import appVersion from '../../package.json';
 const storage = global.electronStore;
 const userId = 'GA_USER_ID';
 
-const setUpGoogleAnalytics = () => {
+export const enableGoogleAnalytics = () => {
+  console.log('enabled google analytics');
   if (!storage.get(userId)) {
     storage.set(userId, uuid());
   }
@@ -20,4 +21,13 @@ const setUpGoogleAnalytics = () => {
   }
 };
 
-export default setUpGoogleAnalytics;
+export const disableGoogleAnalytics = () => {
+  console.log('disabled google analytics');
+  if (storage.get(userId)) {
+    storage.delete(userId);
+  }
+
+  if (window.ga) {
+    window.ga = null;
+  }
+};
