@@ -3,19 +3,6 @@ import ReactModal from 'react-modal';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 
-const ModalContent = styled.div`
-  padding: 2rem;
-`;
-
-const ModalFooterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row-reverse;
-  padding: 1rem;
-  border-top: ${p => `1px solid ${colors.N500}`};
-`;
-
 const Modal = ({
   isOpen,
   onOpenModal,
@@ -23,7 +10,6 @@ const Modal = ({
   styles,
   children,
   className,
-  footer,
   ...restProps
 }) => {
   const contentClassName = `${className}__content`;
@@ -39,8 +25,7 @@ const Modal = ({
       ariaHideApp={false}
       {...restProps}
     >
-      <ModalContent>{children}</ModalContent>
-      {footer && <ModalFooterWrapper>{footer}</ModalFooterWrapper>}
+      {children}
     </ReactModal>
   );
 };

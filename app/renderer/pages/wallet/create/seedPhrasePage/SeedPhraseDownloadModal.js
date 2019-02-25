@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeading, Modal, Checkbox } from 'components';
+import { Button, PageHeading, Modal, ModalBody, ModalFooter, Checkbox } from 'components';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
@@ -20,9 +20,13 @@ const StoreWarningModal = ({
   networkName,
 }) => {
   return (
-    <Modal
-      isOpen={isSeedPhaseDownloadModalOpen}
-      footer={
+    <Modal isOpen={isSeedPhaseDownloadModalOpen}>
+      <ModalBody>
+        <PageHeading subHeading="This is the least safe way to save your seed phrase. There is risk of your computer getting hacked and your seed stolen.">
+          Download seed phrase as a PDF
+        </PageHeading>
+      </ModalBody>
+      <ModalFooter>
         <React.Fragment>
           <ButtonGroup>
             <Button flat color="nuetral" onClick={() => setSeedPhaseDownloadModalOpen(false)}>
@@ -56,11 +60,7 @@ const StoreWarningModal = ({
             I understand the risk
           </Checkbox>
         </React.Fragment>
-      }
-    >
-      <PageHeading subHeading="This is the least safe way to save your seed phrase. There is risk of your computer getting hacked and your seed stolen.">
-        Download seed phrase as a PDF
-      </PageHeading>
+      </ModalFooter>
     </Modal>
   );
 };
