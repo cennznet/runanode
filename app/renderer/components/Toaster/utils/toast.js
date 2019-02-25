@@ -39,7 +39,7 @@ const ToasterMessage = styled.div`
 const statusMap = {
   success: { color: colors.success, title: 'Success', Icon: IconSuccess },
   warn: { color: colors.warning, title: 'Warning', Icon: IconWarning },
-  info: { color: colors.info, title: 'Warning', Icon: IconInfo },
+  info: { color: colors.info, title: 'Information', Icon: IconInfo },
   error: { color: colors.danger, title: 'Error', Icon: IconDanger },
 };
 
