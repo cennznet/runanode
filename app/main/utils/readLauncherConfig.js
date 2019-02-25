@@ -4,13 +4,12 @@ import yamljs from 'yamljs';
 import path from 'path';
 import { app } from 'electron';
 import parseArgs from 'minimist';
-import extend from 'extend';
 
-import type { LauncherConfig } from '../config';
+import { environment } from 'common/environment';
+import type { LauncherConfig } from '../launcherConfig';
 import { Logger, GetLogDir } from './logging';
-import { environment } from '../environment';
 
-const { isDevOrDebugProd, isDev, isDebugProd, isTest } = environment;
+const { isDev, isTest } = environment;
 
 /**
  * Reads and parses the launcher config yaml file on given path.
@@ -23,14 +22,7 @@ export default (configPath: ?string): LauncherConfig => {
   // $FlowFixMe
   Logger.info(`args: ${JSON.stringify(args)}`);
 
-  const config = extend(
-    {
-      DEBUG_PROD: process.env.DEBUG_PROD,
-    },
-    parseArgs(process.argv)
-  );
   Logger.info(`process.argv: ${JSON.stringify(process.argv)}`);
-  Logger.info(`config: ${JSON.stringify(config)}`);
 
   Logger.info(`app.isPackaged: ${app.isPackaged}`);
   // $FlowFixMe
@@ -41,17 +33,10 @@ export default (configPath: ?string): LauncherConfig => {
   // $FlowFixMe
   Logger.info(`process.env.NODE_ENV : ${process.env.NODE_ENV}`);
   // $FlowFixMe
-  Logger.info(`process.env.DEBUG_PROD : ${process.env.DEBUG_PROD}`);
-  // $FlowFixMe
-  Logger.info(`isDevOrDebugProd : ${isDevOrDebugProd}`);
-  // $FlowFixMe
-  Logger.info(`isDebugProd : ${isDebugProd}`);
-  // $FlowFixMe
   Logger.info(`isDev : ${isDev}`);
   // $FlowFixMe
   Logger.info(`isTest : ${isTest}`);
   // $FlowFixMe
-  Logger.info(`isDevOrDebugProd : ${isDevOrDebugProd}`);
   Logger.info(`distPath: ${distPath}`);
   Logger.info(`process.resourcesPath: ${resourcesPath}`);
   Logger.info(`process.cwd(): ${process.cwd()}`);
