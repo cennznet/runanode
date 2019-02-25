@@ -3,10 +3,19 @@
 # vNext
 
 ### Features
-- add CENNZScan address link to account public address
 - able to get seed from wallet json
 
-### Fixes
+### Improvements
+
+### Improvements
+- display node state in dev info top bar
+- skip restart node when chose same network
+- add bps to sync screen
+
+# v0.5.2 (2019.02.25)
+
+### Features
+- add CENNZScan address link to account public address
 
 ### Improvements
 - tidy up asset table layout
@@ -14,9 +23,6 @@
 - update field text bg color to match with design
 - update sync info layout
 - update side bar nav for launch process
-- display node state in dev info top bar
-- skip restart node when chose same network
-- add bps to sync screen
 - Refactor configure
 
 # v0.5.0 (2019.02.20)

@@ -1,11 +1,12 @@
 ```jsx
+const ModalFooter = require('./lib/ModalFooter').default;
+const ModalBody = require('./lib/ModalBody').default;
 initialState = { isOpen: false };
 <div>
   <Button onClick={() => setState({ isOpen: true })}>Open Modal</Button>
-  <Modal
-    isOpen={state.isOpen}
-    onRequestClose={() => setState({ isOpen: false })}
-    footer={
+  <Modal isOpen={state.isOpen} onRequestClose={() => setState({ isOpen: false })}>
+    <ModalBody>This is the example modal</ModalBody>
+    <ModalFooter>
       <div style={{ display: 'flex' }}>
         <Button color="nuetral" onClick={() => setState({ isOpen: false })}>
           Close
@@ -14,9 +15,7 @@ initialState = { isOpen: false };
           Next
         </Button>
       </div>
-    }
-  >
-    This is the example modal
+    </ModalFooter>
   </Modal>
 </div>;
 ```

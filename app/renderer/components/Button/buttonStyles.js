@@ -1,5 +1,5 @@
 import styledProps from 'styled-props';
-import deepAssign from 'deep-assign';
+import mergeOptions from 'merge-options';
 import defaultStyling from './defaultStyling';
 
 const buttonColor = (p, styling) => {
@@ -87,7 +87,7 @@ const hoverBorderColor = (p, styling) => {
 };
 
 const buttonStyles = props => {
-  const styling = deepAssign(
+  const styling = mergeOptions(
     {},
     defaultStyling(props.theme),
     props.theme[props.themeSpace],

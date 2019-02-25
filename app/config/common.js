@@ -1,6 +1,12 @@
 const commonConfig = {
   // Common config shared by dev and prod comes here...
-  node: {},
+  node: {
+    startupMaxRetry: 5,
+    startupTimeout: 5000,
+    shutDownTimeout: 10000,
+    killTimeout: 10000,
+    updateTimeout: 10000,
+  },
   jsonRpc: {
     localUrl: 'http://localhost:9933',
     remoteUrl: 'http://cennznet-node-0.centrality.cloud:9933',

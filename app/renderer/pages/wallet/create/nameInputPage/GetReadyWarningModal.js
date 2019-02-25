@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeading, Modal } from 'components';
+import { Button, PageHeading, Modal, ModalFooter, ModalBody } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -51,9 +51,25 @@ const GetReadyWarningModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpenPenPrepareModal}
-      footer={
+    <Modal isOpen={isOpenPenPrepareModal}>
+      <ModalBody>
+        <PageHeading>Please prepare a pen and paper</PageHeading>
+        <ModalWarningWrapper>
+          <div>
+            <FontAwesomeIcon icon="exclamation-circle" size="sm" color={colors.warning} />
+          </div>
+          <ModalWarningDetails>
+            <div>
+              In the next step, CENNZ node will generate a random seed phrase. It is essential that
+              you write this down and store it somewhere securely, like in a safe or safety deposit
+              box. If you lose access to your wallet, this seed phrase is the only way to recover
+              yours funds. Your seed phrase will only display once.
+            </div>
+            <div>For more information on how to keep your seed phrase safe click here</div>
+          </ModalWarningDetails>
+        </ModalWarningWrapper>
+      </ModalBody>
+      <ModalFooter>
         <ButtonGroup>
           <Button flat color="nuetral" onClick={() => setIsOpenPenPrepareModal(false)}>
             Go back
@@ -62,23 +78,7 @@ const GetReadyWarningModal = ({
             I am prepared
           </Button>
         </ButtonGroup>
-      }
-    >
-      <PageHeading>Please prepare a pen and paper</PageHeading>
-      <ModalWarningWrapper>
-        <div>
-          <FontAwesomeIcon icon="exclamation-circle" size="sm" color={colors.warning} />
-        </div>
-        <ModalWarningDetails>
-          <div>
-            In the next step, CENNZ node will generate a random seed phrase. It is essential that
-            you write this down and store it somewhere securely, like in a safe or safety deposit
-            box. If you lose access to your wallet, this seed phrase is the only way to recover
-            yours funds. Your seed phrase will only display once.
-          </div>
-          <div>For more information on how to keep your seed phrase safe click here</div>
-        </ModalWarningDetails>
-      </ModalWarningWrapper>
+      </ModalFooter>
     </Modal>
   );
 };

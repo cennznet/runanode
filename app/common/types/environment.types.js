@@ -10,7 +10,6 @@ export type Environment = {
   isDebugProd: boolean,
   isRemoteDebug: boolean,
   isDev: boolean,
-  isDevOrDebugProd: boolean,
   isTest: boolean,
   isProduction: boolean,
   isMainnet: boolean,
@@ -26,7 +25,7 @@ export type Environment = {
   version: string,
   isWindows: boolean,
   isMacOS: boolean,
-  isLinux: boolean
+  isLinux: boolean,
 };
 // constants
 export const PRODUCTION = 'production';

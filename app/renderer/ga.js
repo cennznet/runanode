@@ -17,8 +17,6 @@ const setUpGoogleAnalytics = () => {
     window.ga('set', 'checkStorageTask', null);
     window.ga('set', 'userId', storage.get(userId));
     window.ga('set', 'dimension1', appVersion.version || '0.0.0');
-  } else {
-    console.error('window.ga is not defined');
   }
 };
 
