@@ -35,29 +35,13 @@ import { setupApi } from './api/index';
 store.dispatch({ type: types.init.triggered });
 
 getStorage(storageKeys.ENABLE_ANALYTICS).then(isEnabled => {
-  console.log('isEnabled', isEnabled);
   if (isEnabled !== false) {
     enableGoogleAnalytics();
-  } else {
-    disableGoogleAnalytics();
   }
 });
 
-// import utils from './utils';
-// import translations from './i18n/translations';
-
-// render(<App />, document.getElementById('root'));
-
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data
 addLocaleData([...en, ...ja]);
-
-// const { environment } = global;
-// const environment = global.environment;
-// const { NODE_ENV, NETWORK } = environment;
-// const isTest = NODE_ENV === 'test';
-
-const NETWORK = 'testnet';
-const isTest = false;
 
 library.add(
   faArrowLeft,
