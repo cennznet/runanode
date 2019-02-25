@@ -5,7 +5,7 @@ import type { WriteStream } from 'fs';
 import { toInteger } from 'lodash';
 import waitPort from 'wait-port';
 
-import { environment } from '../environment';
+import { environment } from 'common/environment';
 
 import type {
   CennzNetNodeState,

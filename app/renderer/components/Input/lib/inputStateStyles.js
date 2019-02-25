@@ -1,4 +1,3 @@
-import deepAssign from 'deep-assign';
 import theme from 'renderer/theme';
 
 import getInputBorderColor from './getInputBorderColor';

@@ -5,11 +5,12 @@ import _http from 'http';
 import { ipcRenderer as _ipcRenderer, remote as _remote } from 'electron';
 import _electronLog from 'electron-log';
 import ElectronStore from 'electron-store';
-import config from 'app/config';
-import { environment } from './environment';
+import { environment } from 'common/environment';
 
 const _process = process;
 const _electronStore = new ElectronStore();
+
+const { isDev } = environment;
 
 process.once('loaded', () => {
   Object.assign(global, {
@@ -51,7 +52,7 @@ process.once('loaded', () => {
     // $FlowFixMe
     global.spectronRequire = __non_webpack_require__; // eslint-disable-line
   }
-  if (!config.isDev) {
+  if (!isDev) {
     // ESLint will warn about any use of eval(), even this one
     // eslint-disable-next-line
     global.eval = () => {

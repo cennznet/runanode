@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
-
+import { environment } from 'common/environment';
 import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/centrality-logo.svg';
@@ -10,9 +10,8 @@ import { Select } from 'components';
 import SwitchNetworkWarningModal from './TopBarWarningModal';
 import UploadGenesisFileModal from './UploadGenesisModal';
 import withContainer from './TopBarContainer';
-import { environment } from '../../../../main/environment';
 
-const  { isDevOrDebugProd } = environment;
+const { isDev } = environment;
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,21 +45,21 @@ const InfoWrapper = styled.div`
 `;
 
 const InfoValue = styled.div`
-  height: 16px;	
+  height: 16px;
   color: ${colors.N0};
-  line-height: 21px;	
+  line-height: 21px;
   text-align: right;
 `;
 
 const InfoDesc = styled.div`
-  height: 16px;	
+  height: 16px;
   color: ${colors.textMuted};
-  line-height: 21px;	
+  line-height: 21px;
   text-align: right;
 `;
 
-const DevInfo = ({isSynced, syncPercentage, blockNum, blockSpeed }) => {
-  if(!isDevOrDebugProd) {
+const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed }) => {
+  if (!isDev) {
     return <div />;
   }
   return (
@@ -94,7 +93,9 @@ const TopBar = ({
   const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
   const { blockNum: localBlockNum, bps: localBps } = syncStream;
   const blockNum = `#${localBlockNum} / #${remoteBlockNum}`;
-  const blockSpeed = `${localBps?localBps.toFixed(2):0}bps / ${remoteBps?remoteBps.toFixed(2):0}bps`;
+  const blockSpeed = `${localBps ? localBps.toFixed(2) : 0}bps / ${
+    remoteBps ? remoteBps.toFixed(2) : 0
+  }bps`;
 
   const percentage = remoteBlockNum > 0 ? ((localBlockNum / remoteBlockNum) * 100).toFixed(2) : 0;
   const syncPercentage = `${percentage}%`;
@@ -119,10 +120,12 @@ const TopBar = ({
             />
           </NetworkSectionWrapper>
         </NetworkSectionContainer>
-        <DevInfo {...{isSynced, syncPercentage, blockNum, blockSpeed}} />
+        <DevInfo {...{ isSynced, syncPercentage, blockNum, blockSpeed }} />
         <InfoWrapper>
-          <div style={{marginRight: '2rem'}}>
-            <InfoValue>{localBlockNum || 0}/{remoteBlockNum || 0}({syncPercentage})</InfoValue>
+          <div style={{ marginRight: '2rem' }}>
+            <InfoValue>
+              {localBlockNum || 0}/{remoteBlockNum || 0}({syncPercentage})
+            </InfoValue>
             <InfoDesc>block height</InfoDesc>
           </div>
           <div>
