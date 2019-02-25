@@ -87,6 +87,8 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
       ? 100
       : (syncNodeProgress * 100).toFixed(2);
 
+  const estimateMin = (bestBlock - syncedBlock)/bps/60;
+
   Logger.info(`
   ===========================================
   Best block in MainNet #${bestBlock}
@@ -117,6 +119,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
             <SyncNodeInfo>
               <TextWrapper>{syncNodePercentage}% synced, {bps?bps.toFixed(2):0} bps</TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
+              <TextWrapper>estimate: {estimateMin?estimateMin.toFixed(2):0} min</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
         </MainContent>
