@@ -8,7 +8,8 @@ import BN from 'bn.js';
 import { u32, Balance, AccountId } from '@polkadot/types';
 import { Keyring } from '@polkadot/keyring';
 import decode from '@polkadot/keyring/pair/decode';
-import { assert, stringToU8a, u8aToHex, hexToU8a } from '@polkadot/util/index';
+import { stringToU8a, u8aToHex, hexToU8a } from '@polkadot/util/index';
+import assert from 'assert';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
@@ -437,9 +438,8 @@ export default class CennzApi {
    * @param wallet
    * @returns {Promise<Wallet>}
    */
-  reloadSimpleWallet = (wallet: CennznetWallet): Promise<Wallet> => {
+  reloadWallet = (wallet: CennznetWallet): Promise<Wallet> => {
     assert(wallet, `missing wallet`);
-    // TODO check wallet is simple
     const originalWallet = new Wallet({
       vault: wallet.wallet.vault,
       keyringTypes: [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
@@ -449,17 +449,18 @@ export default class CennzApi {
 
   /**
    * @param wallet
+   * @param address
    * @param passphrase
    * @returns {Promise<*>}
    */
-  getSeedFromSimpleWallet = async (wallet: CennznetWallet, passphrase: string): Promise<string> => {
-    const originalWallet = this.reloadSimpleWallet(wallet);
+  getSeedFromWalletAccount = async (wallet: CennznetWallet, address: string, passphrase: string): Promise<string> => {
+    const originalWallet = this.reloadWallet(wallet);
     await originalWallet.unlock(passphrase);
     assert(wallet.accounts, `missing accounts`);
-    const json = await originalWallet.exportAccount(Object.keys(wallet.accounts)[0], passphrase);
-    const decodeMsg = decode('', hexToU8a(json.encoded));
+    assert(address, `missing address`);
+    const json = await originalWallet.exportAccount(address, passphrase);
+    const decodeMsg = decode(passphrase, hexToU8a(json.encoded));
     const seed = u8aToHex(decodeMsg.seed);
-    // const publicKey = u8aToHex(decodeMsg.publicKey);
     return seed;
   }
 
@@ -485,19 +486,22 @@ export default class CennzApi {
       )}, fromWalletAddress: ${fromWalletAddress}, toWalletAddress: ${toWalletAddress}`
     );
     try {
-      const originalWallet = this.reloadSimpleWallet(wallet);
+      const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(''); // TODO switch to pin code
       Logger.debug('unlock');
 
-      const seed = await this.getSeedFromSimpleWallet(wallet, '');
-      debugger;
+      // test getSeedFromWalletAccount
+      // const seed = await this.getSeedFromWalletAccount(wallet, Object.keys(wallet.accounts)[0], '');
+      // console.log('seed');
+      // console.log(seed);
+      // debugger;
 
       this.api.setSigner(originalWallet);
       Logger.debug('setSigner');
 
       const txHash = await this.ga
         .transfer(assetId, toWalletAddress, amount)
-        .send({ from: fromWalletAddress });
+        .signAndSend(fromWalletAddress);
       Logger.debug(`CennznetApi::doGenericAssetTransfer txHash ${txHash}`);
       return txHash;
     } catch (error) {
