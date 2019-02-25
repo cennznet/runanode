@@ -3,10 +3,10 @@ import { Formik, Field } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
-import { Button, PageHeading, Modal, Form } from 'components';
+import { Button, PageHeading, Modal, ModalFooter, ModalBody, Form } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
-import SVGInline from "react-svg-inline";
+import SVGInline from 'react-svg-inline';
 import arrowCycleRightIcon from '../../../../assets/icon/arrow-cycle-right.svg';
 
 const ArrowCycleRightIcon = styled(SVGInline).attrs({
@@ -18,7 +18,6 @@ const ArrowCycleRightIcon = styled(SVGInline).attrs({
 const ButtonGroup = styled.div`
   display: flex;
 `;
-
 
 const Wrapper = styled.div.attrs({
   className: '',
@@ -65,13 +64,12 @@ const Label = styled.label`
   flex: 1 auto;
   margin: 0.5rem 0.5rem 0 0;
   color: ${colors.N0};
-  font-size: 16px;	
-  font-weight: 600;	
+  font-size: 16px;
+  font-weight: 600;
   line-height: 1.2rem;
 `;
 
-
-const SendTxConfirmForm = (payload) => {
+const SendTxConfirmForm = payload => {
   const sendValue = payload.amount + ' (' + PreDefinedAssetIdName[payload.assetId] + ')';
   return (
     <React.Fragment>
@@ -79,9 +77,7 @@ const SendTxConfirmForm = (payload) => {
         <Label>Send</Label>
       </Wrapper>
       <WrapperBg>
-        <DataSend>
-          {sendValue}
-        </DataSend>
+        <DataSend>{sendValue}</DataSend>
       </WrapperBg>
 
       <Wrapper>
@@ -90,26 +86,31 @@ const SendTxConfirmForm = (payload) => {
         <Label>To</Label>
       </Wrapper>
       <WrapperBg>
-        <Data>
-          {payload.fromAddress}
-        </Data>
+        <Data>{payload.fromAddress}</Data>
         <Icon>
           <ArrowCycleRightIcon />
         </Icon>
-        <Data>
-          {payload.toAddress}
-        </Data>
+        <Data>{payload.toAddress}</Data>
       </WrapperBg>
     </React.Fragment>
-  )
+  );
 };
 
-const TransferConfirmModal = ({ isTransferConfirmModalOpen, setTransferConfirmModalOpen, setTransferSentModalOpen, getSendTxPayload, onTransfer }) => {
+const TransferConfirmModal = ({
+  isTransferConfirmModalOpen,
+  setTransferConfirmModalOpen,
+  setTransferSentModalOpen,
+  getSendTxPayload,
+  onTransfer,
+}) => {
   const payload = getSendTxPayload;
   return (
-    <Modal
-      isOpen={isTransferConfirmModalOpen}
-      footer={
+    <Modal isOpen={isTransferConfirmModalOpen}>
+      <ModalBody>
+        <PageHeading subHeading="">Confirm payment</PageHeading>
+        <SendTxConfirmForm {...payload} />
+      </ModalBody>
+      <ModalFooter>
         <ButtonGroup>
           <Button flat color="nuetral" onClick={() => setTransferConfirmModalOpen(false)}>
             Cancel
@@ -125,12 +126,7 @@ const TransferConfirmModal = ({ isTransferConfirmModalOpen, setTransferConfirmMo
             Confirm
           </Button>
         </ButtonGroup>
-      }
-    >
-      <PageHeading subHeading="">
-        Confirm payment
-      </PageHeading>
-      <SendTxConfirmForm {...payload} />
+      </ModalFooter>
     </Modal>
   );
 };

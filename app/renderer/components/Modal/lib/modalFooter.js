@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactModal from 'react-modal';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 
@@ -11,6 +12,4 @@ const ModalFooterWrapper = styled.div`
   border-top: ${p => `1px solid ${colors.N500}`};
 `;
 
-const ModalFooter = ({ children }) => <ModalFooterWrapper>{children}</ModalFooterWrapper>;
-
-export default ModalFooter;
+export const ModalFooter = ({ children }) => <ModalFooterWrapper>{children}</ModalFooterWrapper>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeading, Modal, Input, Form } from 'components';
+import { Button, PageHeading, Modal, ModalFooter, ModalBody, Input, Form } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,9 +80,22 @@ const AddAccountModal = ({
               render={({ field }) => {
                 return (
                   <div>
-                    <Modal
-                      isOpen={isAddAccountModalOpen}
-                      footer={
+                    <Modal isOpen={isAddAccountModalOpen}>
+                      <ModalBody>
+                        <PageHeading>Add an account to {walletName}</PageHeading>
+                        <InputTitle>Account Name</InputTitle>
+                        <ModalWarningWrapper>
+                          <Input
+                            {...field}
+                            type="text"
+                            placeholder="Please enter account name..."
+                            value={values[field.name]}
+                            valid={touched[field.name] && !errors[field.name]}
+                          />
+                          {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}
+                        </ModalWarningWrapper>
+                      </ModalBody>
+                      <ModalFooter>
                         <ButtonGroup>
                           <Button
                             flat
@@ -101,20 +114,7 @@ const AddAccountModal = ({
                             Add
                           </Button>
                         </ButtonGroup>
-                      }
-                    >
-                      <PageHeading>Add an account to {walletName}</PageHeading>
-                      <InputTitle>Account Name</InputTitle>
-                      <ModalWarningWrapper>
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="Please enter account name..."
-                          value={values[field.name]}
-                          valid={touched[field.name] && !errors[field.name]}
-                        />
-                        {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}
-                      </ModalWarningWrapper>
+                      </ModalFooter>
                     </Modal>
                   </div>
                 );

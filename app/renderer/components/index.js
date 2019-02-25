@@ -7,6 +7,8 @@ import FileUploader from 'components/FileUploader';
 import Hint from 'components/Hint';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
+import { ModalFooter } from 'components/Modal/lib/ModalFooter';
+import { ModalBody } from 'components/Modal/lib/ModalBody';
 import PageFooter from 'components/PageFooter';
 import PageHeading from 'components/PageHeading';
 import Scrollable from 'components/Scrollable';
@@ -31,6 +33,8 @@ export {
   Hint,
   Input,
   Modal,
+  ModalFooter,
+  ModalBody,
   PageFooter,
   PageHeading,
   Scrollable,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeading, FileUploader, Modal } from 'components';
+import { Button, PageHeading, FileUploader, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,9 +42,29 @@ const UploadGenesisModal = ({
   const singleFile = genesisFile && genesisFile[genesisFile.length - 1];
 
   return (
-    <Modal
-      isOpen={isUploadGenesisModal}
-      footer={
+    <Modal isOpen={isUploadGenesisModal}>
+      <ModalBody>
+        <PageHeading>Sync to local test network</PageHeading>
+        <ModalWarningWrapper>
+          <UploadFileWrapper>
+            <div>Upload chain setting file</div>
+            <UploaderWrapper>
+              <FileUploader
+                value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
+                backgroundColor="transparent"
+                borderColor={colors.N0}
+                focusBorderColor={colors.N0}
+                acceptTypes=".json"
+                onDrop={file => {
+                  setUpGenesisFile(file);
+                }}
+              />
+            </UploaderWrapper>
+            <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
+          </UploadFileWrapper>
+        </ModalWarningWrapper>
+      </ModalBody>
+      <ModalFooter>
         <ButtonGroup>
           <Button flat color="nuetral" onClick={() => setIsOpenUploadGenesisModal(false)}>
             Cancel
@@ -59,27 +79,7 @@ const UploadGenesisModal = ({
             Start syncing
           </Button>
         </ButtonGroup>
-      }
-    >
-      <PageHeading>Sync to local test network</PageHeading>
-      <ModalWarningWrapper>
-        <UploadFileWrapper>
-          <div>Upload chain setting file</div>
-          <UploaderWrapper>
-            <FileUploader
-              value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
-              backgroundColor="transparent"
-              borderColor={colors.N0}
-              focusBorderColor={colors.N0}
-              acceptTypes=".json"
-              onDrop={file => {
-                setUpGenesisFile(file);
-              }}
-            />
-          </UploaderWrapper>
-          <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
-        </UploadFileWrapper>
-      </ModalWarningWrapper>
+      </ModalFooter>
     </Modal>
   );
 };
