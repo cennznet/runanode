@@ -122,8 +122,6 @@ Odin.exe --XXXX=true
 
 Install docker and docker-compose
 
-remove settings in docker-compose.override.yml
-
 Follow cennzne-node instruction login to centrality docker registry
 
 Start multiple nodes
