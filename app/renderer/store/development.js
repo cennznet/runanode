@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { routerMiddleware } from 'connected-react-router';
-
 import history from 'renderer/history';
 import { createLogger } from 'redux-logger';
 import gaMiddleware from './middlewares/analytics';
@@ -34,7 +33,6 @@ const composedEnhancers = compose(
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
     : f => f
 );
-
 const store = createStore(rootReducer, composedEnhancers);
 
 epicMiddleware.run(epics);

@@ -11,22 +11,14 @@ export const enableGoogleAnalytics = () => {
     storage.set(userId, uuid());
   }
 
-  console.log('window.ga before', window.ga);
-  console.log('window.ga() before', window.ga());
-
-  if (window.ga && window.ga() !== 'ANALYTICS_DISABLED') {
-    window.ga = window.ga;
-  }
-
+  /* eslint-disable */
   if (!window.ga) {
     window.ga = function() {
       (ga.q = ga.q || []).push(arguments);
     };
     ga.l = +new Date();
   }
-
-  console.log('window.ga after', window.ga);
-  console.log('window.ga() after', window.ga());
+  /* eslint-enable */
 
   // window.ga_debug = { trace: true }; // Userd in ga debug mode
   window.ga('create', config.gaTrackId, 'auto');
@@ -41,5 +33,5 @@ export const disableGoogleAnalytics = () => {
     storage.delete(userId);
   }
 
-  window.ga = () => 'ANALYTICS_DISABLED';
+  window.ga = () => ANALYTICS_DISABLED;
 };
