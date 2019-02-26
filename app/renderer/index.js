@@ -21,7 +21,7 @@ import {
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
-import 'electron-cookies'; // For Google Analytics writes clientId to cookie to recognize existing users
+import 'electron-cookies';
 import { getStorage, storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
 import { enableGoogleAnalytics, disableGoogleAnalytics } from 'renderer/analytics';
