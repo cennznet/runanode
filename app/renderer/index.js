@@ -21,7 +21,7 @@ import {
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
-import 'electron-cookies'; // For GA writes clientId to cookie to recognize existing users
+import 'electron-cookies'; // For Google Analytics writes clientId to cookie to recognize existing users
 import { getStorage, storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
 import { enableGoogleAnalytics, disableGoogleAnalytics } from 'renderer/analytics';
@@ -37,6 +37,8 @@ store.dispatch({ type: types.init.triggered });
 getStorage(storageKeys.ENABLE_ANALYTICS).then(isEnabled => {
   if (isEnabled !== false) {
     enableGoogleAnalytics();
+  } else {
+    disableGoogleAnalytics();
   }
 });
 
@@ -61,22 +63,10 @@ library.add(
 const initializeOdin = async () => {
   const api = setupApi();
   await api.cennz.initCennzetApi();
-  // const router = new RouterStore();
-  // const history = syncHistoryWithStore(hashHistory, router);
-  // const stores = setupStores(api, actions, router);
 
   window.odin = {
     api,
     store,
-    // environment,
-    // actions,
-    // utils,
-    // stores,
-    // translations,
-    // reset: action(() => {
-    //   Action.resetAllActions();
-    //   setupStores(api, actions, router);
-    // }),
   };
 
   const rootElement = document.getElementById('root');
