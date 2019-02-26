@@ -115,3 +115,39 @@ Odin.exe --XXXX=true
 ## Component development
 
 `yarn styleguide`
+
+## Quick start guide
+
+### Start with pre-build docker image
+
+Install docker and docker-compose
+
+remove settings in docker-compose.override.yml
+
+Follow cennzne-node instruction login to centrality docker registry
+
+Start multiple nodes
+```bash
+make up
+```
+
+Check logs
+```bash
+make logs
+or
+make logs telemetry
+```
+Open telemetry UI
+```bash
+open http://localhost:5000
+```
+
+Stop all nodes
+```bash
+make stop
+```
+
+update docker-compose.yml for different node configurations, then run
+```bash
+make up
+```
