@@ -9,7 +9,6 @@ import streamConstants from 'renderer/constants/stream';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import { Logger } from 'renderer/utils/logging';
 
-
 const stakingAndRestartNodeChain = chainEpics(
   types.stakeAndRestartNode.triggered,
   types.stakingStopStream.requested,
@@ -46,20 +45,26 @@ const stakingRestartNodeWithNetworkChain = chainEpics(
 const stakingRestartNodeEpic = action$ =>
   action$.pipe(
     ofType(types.stakingRestartNode.requested),
-    tap( async ({ payload }) => {
-      const { cennzNetRestartOptions, wallet, fromAddress } = payload;
+    tap(async ({ payload }) => {
+      const { wallet, stashAccountAddress, isValidatorMode = false } = payload;
 
-      // send staking extrinsic
-      const txHash = await window.odin.api.cennz.doStake(wallet, fromAddress, '');
+      const txHash = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, '');
       Logger.debug(`txHash: ${txHash}`);
       assert(txHash, 'missing txHash');
 
-      // retreat wallet seed
-      const seed = await window.odin.api.cennz.getSeedFromWalletAccount(wallet, fromAddress, '');
-      assert(seed, 'fail to getSeedFromWalletAccount');
-      cennzNetRestartOptions.key = seed;
+      const seed = await window.odin.api.cennz.getSeedFromWalletAccount(
+        wallet,
+        stashAccountAddress,
+        ''
+      );
 
-      // restart node in validator mode
+      assert(seed, 'fail to getSeedFromWalletAccount');
+
+      const cennzNetRestartOptions = {
+        key: seed,
+        isValidatorMode,
+      };
+
       restartCennzNetNodeChannel.send(cennzNetRestartOptions);
     }),
     mergeMap(() =>
@@ -82,16 +87,9 @@ const stakingRestartNodeEpic = action$ =>
     )
   );
 
-// const chainToasterAfterRestartNodeEpic = chainEpics(
-//   types.stakingRestartNode.completed,
-//   types.successToaster.triggered,
-//   'Wallet has been connected.'
-// );
-
 export default [
   stakingAndRestartNodeChain,
   stakingStopStreamEpic,
   stakingRestartNodeWithNetworkChain,
   stakingRestartNodeEpic,
-  // chainToasterAfterRestartNodeEpic,
 ];
