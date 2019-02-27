@@ -16,6 +16,9 @@ const actionTypes = {
   homePageLoad: triggerActionTypes('home_page_load'),
   navigation: triggerActionTypes('navigation'),
 
+  enableAnalytics: triggerActionTypes('enable_analytics'),
+  disableAnalytics: triggerActionTypes('disable_analytics'),
+
   walletCreate: apiActionTypes('wallet_create'),
   walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
   walletCreatWithHDKR: apiActionTypes('wallet_create_with_HD_keyring'),

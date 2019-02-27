@@ -21,10 +21,10 @@ import {
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
 import { AppContainer } from 'react-hot-loader';
-import 'electron-cookies'; // For GA writes clientId to cookie to recognize existing users
-
+import 'electron-cookies';
+import { getStorage, storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
-import setupGoogleAnalytics from './ga';
+import { enableGoogleAnalytics, disableGoogleAnalytics } from 'renderer/analytics';
 import types from './types';
 import store from './store';
 import App from './App';
@@ -34,21 +34,16 @@ import { setupApi } from './api/index';
 // store.dispatch({ type: types.resetLocalStorage.triggered });
 store.dispatch({ type: types.init.triggered });
 
-// import utils from './utils';
-// import translations from './i18n/translations';
-
-// render(<App />, document.getElementById('root'));
+getStorage(storageKeys.ENABLE_ANALYTICS).then(isEnabled => {
+  if (isEnabled !== false) {
+    enableGoogleAnalytics();
+  } else {
+    disableGoogleAnalytics();
+  }
+});
 
 // https://github.com/yahoo/react-intl/wiki#loading-locale-data
 addLocaleData([...en, ...ja]);
-
-// const { environment } = global;
-// const environment = global.environment;
-// const { NODE_ENV, NETWORK } = environment;
-// const isTest = NODE_ENV === 'test';
-
-const NETWORK = 'testnet';
-const isTest = false;
 
 library.add(
   faArrowLeft,
@@ -68,23 +63,10 @@ library.add(
 const initializeOdin = async () => {
   const api = setupApi();
   await api.cennz.initCennzetApi();
-  // const router = new RouterStore();
-  // const history = syncHistoryWithStore(hashHistory, router);
-  // const stores = setupStores(api, actions, router);
-  setupGoogleAnalytics();
 
   window.odin = {
     api,
     store,
-    // environment,
-    // actions,
-    // utils,
-    // stores,
-    // translations,
-    // reset: action(() => {
-    //   Action.resetAllActions();
-    //   setupStores(api, actions, router);
-    // }),
   };
 
   const rootElement = document.getElementById('root');

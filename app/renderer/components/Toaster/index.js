@@ -4,13 +4,31 @@ import { ToastContainer, Slide } from 'react-toastify';
 import { colors } from 'renderer/theme';
 import IconCross from './utils/IconCross';
 
-const CloseButton = styled(IconCross)`
-  padding: 1rem;
+const IconButton = styled.button`
+  width: 2rem;
+  height: 2rem;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus {
+    outline: 0;
+  }
 `;
+
+const CloseButton = ({ closeToast }) => (
+  <IconButton onClick={closeToast}>
+    <IconCross />
+  </IconButton>
+);
 
 const CustomToast = ({ children, ...props }) => {
   return (
-    <ToastContainer transition={Slide} autoClose={5000} {...props} closeButton={<CloseButton />}>
+    <ToastContainer transition={Slide} autoClose={5000} closeButton={<CloseButton />} {...props}>
       {children}
     </ToastContainer>
   );
