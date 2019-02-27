@@ -2,9 +2,19 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import types from 'renderer/types';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ localStorage: { WALLETS } }) => ({
+  wallets: WALLETS,
+});
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  onStake: payload => {
+    console.log('onStake', payload);
+    dispatch({
+      type: types.stakeAndRestartNode.triggered,
+      payload,
+    });
+  },
+});
 
 const enhance = lifecycle({
   componentDidMount() {},

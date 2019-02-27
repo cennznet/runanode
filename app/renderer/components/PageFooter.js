@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { colors } from 'renderer/theme';
 
 const Wrapper = styled.div`
@@ -8,7 +7,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 5rem;
-  border-top: ${p => (p.blank ? 0 : `1px solid ${rgba(255, 255, 255, 0.3)}`)};
+  border-top: ${p => (p.blank ? 0 : `1px solid ${colors.border}`)};
 `;
 
 const PageFooter = ({ blank, children }) => {

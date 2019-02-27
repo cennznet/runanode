@@ -79,6 +79,8 @@ const actionTypes = {
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
 
+  /** Staking */
+
   /** Toaster */
   successToaster: triggerActionTypes('success_toaster'),
   warningToaster: triggerActionTypes('warning_toaster'),
