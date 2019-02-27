@@ -95,7 +95,7 @@ const mapDispatchToProps = dispatch => ({
   onTransfer: payload => {
     window.odin.api.cennz.doGenericAssetTransfer(
       payload.assetId,
-      payload.fromWalletAddress,
+      payload.fromAddress,
       payload.toAddress,
       payload.amoumt,
       payload.wallet
@@ -103,6 +103,12 @@ const mapDispatchToProps = dispatch => ({
   },
   onTestToaster: () => {
     dispatch({ type: types.successToaster.triggered });
+  },
+  onStake: payload => {
+    window.odin.api.cennz.doStake(payload.wallet, payload.fromAddress, '');
+  },
+  onUnStake: payload => {
+    window.odin.api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
   },
 });
 
