@@ -11,6 +11,7 @@ import decode from '@polkadot/keyring/pair/decode';
 import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
 import assert from 'assert';
 
+import { WALLET_TYPE } from 'renderer/constants/wallet';
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
 import { environment } from 'common/environment';
@@ -440,7 +441,7 @@ export default class CennzApi {
     assert(wallet, `missing wallet`);
     const originalWallet = new Wallet({
       vault: wallet.wallet.vault,
-      keyringTypes: [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
+      keyringTypes: wallet.type === WALLET_TYPE.HD ? [HDKeyring] : [HDKeyring, SimpleKeyring], // add keyringTypes: [HDKeyring, SimpleKeyring] if SimpleKeyring is used
     });
     return originalWallet;
   };
@@ -502,7 +503,7 @@ export default class CennzApi {
 
       this.api.setSigner(originalWallet);
       Logger.debug('setSigner');
-      const intentions = await window.odin.api.cennz.api.query.staking.intentions();
+      const intentions = await this.api.query.staking.intentions();
       Logger.debug(`intentions: ${intentions}`);
       const intentionsStr = intentions.map((item)  => {
         return item.toString();

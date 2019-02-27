@@ -1,6 +1,9 @@
 // @flow
 import BN from 'bn.js';
+
+import { WALLET_TYPE } from 'renderer/constants/wallet';
 import CennznetWalletAccount from './CennznetWalletAccount';
+
 
 export default class CennznetWallet {
   id: string = '';
@@ -23,6 +26,8 @@ export default class CennznetWallet {
   spendingTokenTotalSupply: BN;
 
   accounts: Map<string, CennznetWalletAccount>;
+
+  type: WALLET_TYPE;
 
   constructor(data: {
     id: string,
