@@ -8,7 +8,7 @@ import BN from 'bn.js';
 import { u32, Balance, AccountId } from '@polkadot/types';
 import { Keyring } from '@polkadot/keyring';
 import decode from '@polkadot/keyring/pair/decode';
-import { stringToU8a, u8aToHex, hexToU8a } from '@polkadot/util/index';
+import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
 import assert from 'assert';
 
 import { generateMnemonic } from 'renderer/utils/crypto';
@@ -478,11 +478,45 @@ export default class CennzApi {
       this.api.setSigner(originalWallet);
       Logger.debug('setSigner');
 
-      const txHash = await this.api.tx.staking.stake().send({ from: fromWalletAddress });
+      const txHash = await this.api.tx.staking.stake().signAndSend(fromWalletAddress);
       Logger.debug(`CennznetApi::doStake txHash ${txHash}`);
       return txHash;
     } catch (error) {
       Logger.error('CennznetApi::doStake error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * @param wallet
+   * @param fromWalletAddress
+   * @param passphrase
+   * @returns {Promise<Hash>}
+   */
+  doUnStake = async (wallet: CennznetWallet, fromWalletAddress: string, passphrase: string): Promise<Hash> => {
+    Logger.debug('CennznetApi::doUnStake called');
+    try {
+      const originalWallet = this.reloadWallet(wallet);
+      await originalWallet.unlock(passphrase);
+      Logger.debug('unlock');
+
+      this.api.setSigner(originalWallet);
+      Logger.debug('setSigner');
+      const intentions = await window.odin.api.cennz.api.query.staking.intentions();
+      Logger.debug(`intentions: ${intentions}`);
+      const intentionsStr = intentions.map((item)  => {
+        return item.toString();
+      });
+
+      const intentionsIndex = intentionsStr.indexOf(fromWalletAddress);
+      Logger.debug(`fromWalletAddress: ${fromWalletAddress}`);
+      Logger.debug(`intentionsIndex: ${intentionsIndex}`);
+
+      const txHash = await this.api.tx.staking.unstake(intentionsIndex).signAndSend(fromWalletAddress);
+      Logger.debug(`CennznetApi::doUnStake txHash ${txHash}`);
+      return txHash;
+    } catch (error) {
+      Logger.error('CennznetApi::doUnStake error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };

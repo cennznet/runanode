@@ -4,6 +4,7 @@
 
 ### Features
 - able to get seed from wallet json
+- able to stake and unstake
 
 ### Fixes
 

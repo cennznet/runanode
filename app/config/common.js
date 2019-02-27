@@ -13,7 +13,7 @@ const commonConfig = {
   },
   webSocket: {
     localStreamUrl: 'ws://localhost:9944',
-    remoteStreamUrl: 'ws://localhost:9944',
+    remoteStreamUrl: 'wss://cennznet-node-0.centrality.cloud:9944',
     latency: {
       period: 5 * 1000,
       signalLevel: {
