@@ -63,6 +63,9 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   const { localNode } = nodeSystem;
   const { chain } = localNode;
   const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
+  Logger.debug(`selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
+  Logger.debug(`chain: ${chain}`);
+  Logger.debug(`isNetworkSwitched: ${isNetworkSwitched}`);
   if (!isNetworkSwitched) {
     return (
       <Layout sidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
@@ -78,7 +81,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   }
 
   const { blockNum: bestBlock } = syncRemoteStream;
-  const { blockNum: syncedBlock } = syncStream;
+  const { blockNum: syncedBlock, bps } = syncStream;
   const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
   const syncNodePercentage =
     syncNodeProgress >= 0.995 && syncNodeProgress < 1
@@ -86,6 +89,8 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
       : syncNodeProgress >= 1
       ? 100
       : (syncNodeProgress * 100).toFixed(2);
+
+  const estimateMin = (bestBlock - syncedBlock)/bps/60;
 
   Logger.info(`
   ===========================================
@@ -115,8 +120,9 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
               />
             </SyncNodeProgress>
             <SyncNodeInfo>
-              <TextWrapper>{syncNodePercentage}% synced</TextWrapper>
+              <TextWrapper>{syncNodePercentage}% synced, {bps?bps.toFixed(2):0} bps</TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
+              <TextWrapper>estimate: {estimateMin?estimateMin.toFixed(2):0} min</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
         </MainContent>
