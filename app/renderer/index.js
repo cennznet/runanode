@@ -8,6 +8,7 @@ import ja from 'react-intl/locale-data/ja';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
+  faChartPie,
   faCogs,
   faCopy,
   faDownload,
@@ -47,6 +48,7 @@ addLocaleData([...en, ...ja]);
 
 library.add(
   faArrowLeft,
+  faChartPie,
   faCogs,
   faCopy,
   faDev,
