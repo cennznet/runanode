@@ -2,6 +2,11 @@
 export default {
   ROOT: '/',
   WAIT: '/wait',
+  STAKING: {
+    ROOT: '/staking',
+    OVERVIEW: '/staking/overview',
+    STAKE: '/staking/stake',
+  },
   SETTINGS: {
     ROOT: '/settings',
     GENERAL: '/settings/general',
