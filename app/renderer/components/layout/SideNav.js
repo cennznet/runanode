@@ -64,6 +64,12 @@ const SideNav = () => {
               <IconText>Wallet</IconText>
             </IconWrapper>
           </IconLink>
+          <IconLink to={ROUTES.STAKING.ROOT}>
+            <IconWrapper>
+              <FontAwesomeIcon icon="chart-pie" />
+              <IconText>Staking</IconText>
+            </IconWrapper>
+          </IconLink>
           <IconLink to={ROUTES.SETTINGS.ROOT}>
             <IconWrapper>
               <FontAwesomeIcon icon="cogs" />

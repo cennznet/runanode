@@ -15,6 +15,7 @@ import WalletAccountPage from 'renderer/pages/wallet/account';
 import WalletCreatePage from 'renderer/pages/wallet/create';
 import WalletConnectPage from 'renderer/pages/wallet/connect';
 import WalletRootPage from 'renderer/pages/wallet/rootPage';
+import StakingRoutes from 'renderer/routes/StakingRoutes';
 import SettingsRoutes from 'renderer/routes/SettingsRoutes';
 import ROUTES from 'renderer/constants/routes';
 
@@ -40,6 +41,7 @@ class AppRoutes extends React.Component {
       <Switch>
         <Route exact path={ROUTES.ROOT} component={HomePage} />
         <Route exact path={ROUTES.WAIT} component={WaitPage} />
+        <Redirect exact from={ROUTES.STAKING.ROOT} to={ROUTES.STAKING.OVERVIEW} />
         <Redirect exact from={ROUTES.SETTINGS.ROOT} to={ROUTES.SETTINGS.GENERAL} />
         <Route exact from={ROUTES.WALLET.ROOT} component={WalletRootPage} />
         <Route
@@ -49,6 +51,7 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.WALLET.LANDING} component={WalletLandingPage} />
         <Route exact path={ROUTES.WALLET.CREATE} component={WalletCreatePage} />
         <Route exact path={ROUTES.WALLET.CONNECT} component={WalletConnectPage} />
+        <Route path={ROUTES.STAKING.ROOT} render={StakingRoutes} />
         <Route path={ROUTES.SETTINGS.ROOT} render={SettingsRoutes} />
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
         <Route exact path={ROUTES.CHOOSE_NETWORK} render={() => <ChooseNetworkPage />} />
