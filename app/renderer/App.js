@@ -1,7 +1,6 @@
 import React from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
-import { hot } from 'react-hot-loader';
 import { LocalizeProvider } from 'react-localize-redux';
 import AppThemeProvider from 'components/AppThemeProvider';
 import { Toaster } from 'components';

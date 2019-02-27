@@ -79,8 +79,7 @@ export const warning = Y400;
 export const danger = R400;
 export const info = N100;
 export const nuetral = N500;
-
-export const border = N400;
+export const border = rgba(255, 255, 255, 0.3);
 export const borderLight = N100;
 export const text = N0;
 export const textMuted = rgba(255, 255, 255, 0.7);
