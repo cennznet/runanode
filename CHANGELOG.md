@@ -5,12 +5,13 @@
 ### Features
 - able to get seed from wallet json
 
-### Improvements
+### Fixes
 
 ### Improvements
 - display node state in dev info top bar
 - skip restart node when chose same network
 - add bps to sync screen
+- able to run cennznet-node cluster locally
 
 # v0.5.2 (2019.02.25)
 
