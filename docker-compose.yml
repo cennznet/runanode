@@ -3,7 +3,7 @@ services:
   node-0:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.214
     volumes:
-      - "./node_0:/mnt/node"
+      - "./target/node_0:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
     depends_on:
       - "telemetry"
@@ -26,7 +26,7 @@ services:
   node-1:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.214
     volumes:
-      - "./node_1:/mnt/node"
+      - "./target/node_1:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
     depends_on:
       - "telemetry"
@@ -47,7 +47,7 @@ services:
   node-2:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.214
     volumes:
-      - "./node_2:/mnt/node"
+      - "./target/node_2:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
     depends_on:
       - "telemetry"
