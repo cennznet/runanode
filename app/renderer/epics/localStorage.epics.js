@@ -52,10 +52,6 @@ const resetLocalStorageEpic = action$ =>
         },
         {
           type: types.clearStorage.requested,
-          payload: { key: storageKeys.WALLETS },
-        },
-        {
-          type: types.clearStorage.requested,
           payload: { key: storageKeys.GENESIS_CONFIG_FILE_INFO },
         },
         {
