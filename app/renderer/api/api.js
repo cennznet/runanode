@@ -548,12 +548,6 @@ export default class CennzApi {
       await originalWallet.unlock(''); // TODO switch to pin code
       Logger.debug('unlock');
 
-      // test getSeedFromWalletAccount
-      // const seed = await this.getSeedFromWalletAccount(wallet, Object.keys(wallet.accounts)[0], '');
-      // console.log('seed');
-      // console.log(seed);
-      // debugger;
-
       this.api.setSigner(originalWallet);
       Logger.debug('setSigner');
 
