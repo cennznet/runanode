@@ -6,6 +6,7 @@
 - able to get seed from wallet json
 - able to stake and unstake
 - Add Staking routes;
+- able to do staking and restart node
 
 ### Fixes
 
@@ -62,7 +63,7 @@
 - able to check cennznet-node process in tests
 
 ### Improvements
-
+- re-enable isDevOrDebugProd to allow use dev tools in packaged app 
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
 - Improved styleguide
