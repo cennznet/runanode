@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   onCennznetNodeStateChange: (state: CennzNetNodeState) => {
     Logger.info(`onCennznetNodeStateChange: handling cennznet-node state <${state}>`);
     dispatch({
-      type: types.networkStateChange.triggered,
+      type: types.nodeStateChange.triggered,
       payload: state,
     });
   },

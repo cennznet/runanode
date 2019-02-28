@@ -3,12 +3,12 @@ import types from '../types';
 
 const DEFAULT_STATE = {
   state: '', // CENNZNETNode state
-  status: '',
+  status: '', // CennzNetStatus status, extra status can handle by renderer, currently handle isNodeSafeExisting
 };
 
-export default function networkStatusStore(state = DEFAULT_STATE, { type, payload }) {
+export default function nodeStateStore(state = DEFAULT_STATE, { type, payload }) {
   switch (type) {
-    case types.networkStateChange.triggered:
+    case types.nodeStateChange.triggered:
       return R.merge(state, {
         state: payload,
       });

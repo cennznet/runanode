@@ -173,4 +173,6 @@ export type CennzNetStatus = {
 export type CennzNetRestartOptions = {
   name: string,
   chain: string,
+  isValidatorMode: boolean,
+  key: string,
 };

@@ -4,6 +4,7 @@ import type { ChildProcess, spawn, exec } from 'child_process';
 import type { WriteStream } from 'fs';
 import { toInteger } from 'lodash';
 import waitPort from 'wait-port';
+import assert from 'assert';
 
 import { environment } from 'common/environment';
 
@@ -400,25 +401,37 @@ export class CennzNetNode {
   ): Promise<void> {
     const { _log, _config } = this;
     const { nodeArgs } = _config;
+
+    assert(_config, '_config missing');
+    assert(options, 'options missing');
+
+    // TODO remove/mask --key value
     _log.info(`before ${JSON.stringify(_config)}`);
+
+
     if (options.chain) {
-      // remove existing config
-      const chainArgIndex = nodeArgs.findIndex(item => item === '--chain');
-      if (chainArgIndex >= 0) {
-        nodeArgs.splice(chainArgIndex, 2);
-      }
+      this._removeArgs(nodeArgs, '--chain', 2);
       nodeArgs.push('--chain');
       nodeArgs.push(options.chain);
     }
+
     if (options.name) {
-      // remove existing config
-      const chainArgIndex = nodeArgs.findIndex(item => item === '--name');
-      if (chainArgIndex >= 0) {
-        nodeArgs.splice(chainArgIndex, 2);
-      }
+      this._removeArgs(nodeArgs, '--name', 2);
       nodeArgs.push('--name');
       nodeArgs.push(options.name);
     }
+
+    if (options.isValidatorMode) {
+      this._removeArgs(nodeArgs, '--validator', 1);
+      this._removeArgs(nodeArgs, '--key', 2);
+      nodeArgs.push('--validator');
+      nodeArgs.push('--key');
+      nodeArgs.push(options.key);
+    } else {
+      this._removeArgs(nodeArgs, '--validator', 1);
+      this._removeArgs(nodeArgs, '--key', 2);
+    }
+
     _log.info(`after ${JSON.stringify(_config)}`);
     return await this.restart(isForced);
   }
@@ -804,4 +817,11 @@ export class CennzNetNode {
   };
 
   _isUnrecoverable = (config: CennzNetNodeConfig) => this._startupTries >= config.startupMaxRetries;
+
+  _removeArgs = ( nodeArgs, argName, space ) => {
+    const validatorArgIndex = nodeArgs.findIndex(item => item === argName);
+    if (validatorArgIndex >= 0) {
+      nodeArgs.splice(validatorArgIndex, space);
+    }
+  }
 }

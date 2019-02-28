@@ -10,7 +10,7 @@ declare var odin: Odin;
 
 export const getCennzNetNodeState = async (client: WebdriverClient): CennzNetNodeStates => (
   (await client.execute(() =>  {
-    return odin.store.getState().networkStatusStore.state;
+    return odin.store.getState().nodeStateStore.state;
   })).value
 );
 

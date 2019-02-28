@@ -38,11 +38,16 @@ const actionTypes = {
   transfer: apiActionTypes('transfer'),
 
   /* Network */
-  networkStateChange: triggerActionTypes('network_state_change'),
+  nodeStateChange: triggerActionTypes('network_state_change'),
   cenznetStatusChange: triggerActionTypes('cennznet_status_change'),
   switchNetwork: triggerActionTypes('switch_network'),
   stopStream: apiActionTypes('stop_stream'),
   restartNode: triggerActionTypes('restart_network'),
+
+  /* Staking */
+  stakeAndRestartNode: triggerActionTypes('stake_and_restart_node'),
+  stakingStopStream: apiActionTypes('staking_stop_stream'),
+  stakingRestartNode: apiActionTypes('staking_restart_network'),
 
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
