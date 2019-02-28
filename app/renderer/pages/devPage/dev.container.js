@@ -107,9 +107,20 @@ const mapDispatchToProps = dispatch => ({
   onStake: payload => {
     window.odin.api.cennz.doStake(payload.wallet, payload.fromAddress, '');
   },
+  onStakeAndRestart: payload => {
+    const { cennzNetRestartOptions, wallet, fromAddress } = payload;
+    // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
+    dispatch({ type: types.stakeAndRestartNode.triggered, payload });
+  },
   onUnStake: payload => {
     window.odin.api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
   },
+  onUnStakeAndRestart: payload => {
+    const { cennzNetRestartOptions } = payload;
+    // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
+    // no-op for now
+  },
+
 });
 
 export default connect(
