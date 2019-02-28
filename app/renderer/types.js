@@ -38,7 +38,7 @@ const actionTypes = {
   transfer: apiActionTypes('transfer'),
 
   /* Network */
-  networkStateChange: triggerActionTypes('network_state_change'),
+  nodeStateChange: triggerActionTypes('network_state_change'),
   cenznetStatusChange: triggerActionTypes('cennznet_status_change'),
   switchNetwork: triggerActionTypes('switch_network'),
   stopStream: apiActionTypes('stop_stream'),
