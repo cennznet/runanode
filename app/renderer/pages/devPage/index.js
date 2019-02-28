@@ -46,6 +46,8 @@ const DevPage = ({
   onTestToaster,
   onStake,
   onUnStake,
+  onStakeAndRestart,
+  onUnStakeAndRestart,
 }) => {
   const {
     localNode: { chain },
@@ -84,6 +86,18 @@ const DevPage = ({
             wallet: window.odin.store.getState().localStorage.WALLETS[0],
           })}>
             UnStake
+          </Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onStakeAndRestart({
+            fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+            wallet: window.odin.store.getState().localStorage.WALLETS[0],
+            cennzNetRestartOptions: {
+              isValidatorMode: true,
+              key: '0x0b5660f358b4c54b42ab766d51bafa76d54886e92cbd7773057448dd79f2d91d',
+            }
+          })}>
+            Stake and restart
           </Button>
         </Flex>
         <Flex>

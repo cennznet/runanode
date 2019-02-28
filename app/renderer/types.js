@@ -44,6 +44,11 @@ const actionTypes = {
   stopStream: apiActionTypes('stop_stream'),
   restartNode: triggerActionTypes('restart_network'),
 
+  /* Staking */
+  stakeAndRestartNode: triggerActionTypes('stake_and_restart_node'),
+  stakingStopStream: apiActionTypes('staking_stop_stream'),
+  stakingRestartNode: apiActionTypes('staking_restart_network'),
+
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
   nodeJsonRpcSystemVersion: apiActionTypes('node_jsonrpc_system_version'),

@@ -6,6 +6,7 @@
 - able to get seed from wallet json
 - able to stake and unstake
 - Add Staking routes;
+- able to do staking and restart node
 
 ### Fixes
 
