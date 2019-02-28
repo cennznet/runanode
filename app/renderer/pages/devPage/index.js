@@ -49,6 +49,10 @@ const DevPage = ({
   onGetIntensions,
   onStake,
   onUnStake,
+  onGetEraProgress,
+  onGetSessioProgress,
+  onGetEraLength,
+  onGetIntentionsBalances,
 }) => {
   const {
     localNode: { chain },
@@ -194,9 +198,15 @@ const DevPage = ({
           <Button onClick={() => onTestToaster()}>Toaster Test</Button>
         </Flex>
         <Flex>
-          <Button onClick={async () => await onGetValidators()}>Validators</Button>
-          <Button onClick={async () => await onGetIntensions()}>Intensions</Button>
-          <Button onClick={async () => await onGetSessionLength()}>Session Length</Button>
+          <Button onClick={() => onGetValidators()}>Validators</Button>
+          <Button onClick={() => onGetIntensions()}>Intensions</Button>
+          <Button onClick={() => onGetIntentionsBalances()}>IntentionsBalances</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onGetSessioProgress()}>Session Progress</Button>
+          <Button onClick={() => onGetSessionLength()}>Session Length</Button>
+          <Button onClick={() => onGetEraProgress()}>EraProgress</Button>
+          <Button onClick={() => onGetEraLength()}>EraLength</Button>
         </Flex>
       </MainContent>
       <Toaster />

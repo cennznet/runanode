@@ -79,6 +79,11 @@ const actionTypes = {
   warningToaster: triggerActionTypes('warning_toaster'),
   errorToaster: triggerActionTypes('error_toaster'),
   infoToaster: triggerActionTypes('info_toaster'),
+
+  /** Staking */
+  updateStakingOverview: triggerActionTypes('update_staking_overview'),
+  getValidators: apiActionTypes('get_validators'),
+  getIntensions: apiActionTypes('get_intensions'),
 };
 
 export default actionTypes;
