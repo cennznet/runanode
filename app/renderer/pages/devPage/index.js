@@ -44,6 +44,9 @@ const DevPage = ({
   networkStatusStore,
   onTransfer,
   onTestToaster,
+  onGetValidators,
+  onGetSessionLength,
+  onGetIntensions,
 }) => {
   const {
     localNode: { chain },
@@ -165,6 +168,11 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={() => onTestToaster()}>Toaster Test</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={async () => await onGetValidators()}>Validators</Button>
+          <Button onClick={async () => await onGetIntensions()}>Intensions</Button>
+          <Button onClick={async () => await onGetSessionLength()}>Session Length</Button>
         </Flex>
       </MainContent>
       <Toaster />
