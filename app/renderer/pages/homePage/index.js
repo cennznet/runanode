@@ -8,7 +8,7 @@ import SimpleSidebar from 'components/layout/SimpleSidebar';
 import { environment } from 'common/environment';
 import withContainer from './container';
 
-const { isDev } = environment;
+const { isDevOrDebugProd } = environment;
 
 const SpinnerWrapper = styled.div`
   height: 100%;
@@ -19,7 +19,7 @@ const SpinnerWrapper = styled.div`
 
 const HomePage = ({ hasBlockNumbers }) => {
   return (
-    <Layout sidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
+    <Layout sidebar={isDevOrDebugProd ? <SideNav /> : <SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <SpinnerWrapper>
