@@ -81,9 +81,12 @@ const actionTypes = {
   infoToaster: triggerActionTypes('info_toaster'),
 
   /** Staking */
-  updateStakingOverview: triggerActionTypes('update_staking_overview'),
-  getValidators: apiActionTypes('get_validators'),
-  getIntensions: apiActionTypes('get_intensions'),
+  updateValidators: triggerActionTypes('update_validators'),
+  updateIntentions: triggerActionTypes('update_intensions'),
+  updateEraLength: triggerActionTypes('update_era_length'),
+  updateEraProgress: triggerActionTypes('update_era_progress'),
+  updateSessionLength: triggerActionTypes('update_session_length'),
+  updateSessionProgress: triggerActionTypes('update_session_progress'),
 };
 
 export default actionTypes;
