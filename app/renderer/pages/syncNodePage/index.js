@@ -14,7 +14,7 @@ import { storageKeys } from 'renderer/api/utils/storage';
 import Spinner from 'components/Spinner';
 import withContainer from './container';
 
-const  { isDev } = environment;
+const  { isDevOrDebugProd } = environment;
 
 const SpinnerWrapper = styled.div`
   height: 100%;
@@ -68,7 +68,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   Logger.debug(`isNetworkSwitched: ${isNetworkSwitched}`);
   if (!isNetworkSwitched) {
     return (
-      <Layout sidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
+      <Layout sidebar={isDevOrDebugProd ? <SideNav /> : <SimpleSidebar />}>
         <LayoutWrapper>
           <MainContent>
             <SpinnerWrapper>
