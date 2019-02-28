@@ -6,7 +6,7 @@ import { Api } from 'cennznet-api';
 import uuid from 'uuid/v4';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
-import { u32, Balance, AccountId } from '@polkadot/types';
+import { u32, Balance, AccountId, BlockNumber } from '@polkadot/types';
 import * as util from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring';
 
@@ -16,7 +16,6 @@ import { environment } from 'common/environment';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
-
 // Common Types
 import type { RequestConfig } from './common/types';
 
@@ -479,6 +478,54 @@ export default class CennzApi {
       return txHash;
     } catch (error) {
       Logger.error('CennznetApi::doGenericAssetTransfer error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * The current set of validators.
+   * @returns {Promise<List>}
+   */
+  getValidators = async (): Promise<List> => {
+    Logger.debug('CennznetApi::getValidators called');
+    try {
+      const validators = await this.api.query.session.validators();
+      Logger.debug(`CennznetApi::getValidators success: ${validators}`);
+      return validators;
+    } catch (error) {
+      Logger.error('CennznetApi::getValidators error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * Current length of the session.
+   * @returns {Promise<BlockNumber>}
+   */
+  getSessionLength = async (): Promise<BlockNumber> => {
+    Logger.debug('CennznetApi::getSessions called');
+    try {
+      const sessionLength = await this.api.query.session.sessionLength();
+      Logger.debug(`CennznetApi::getSessions success: ${sessionLength}`);
+      return sessionLength;
+    } catch (error) {
+      Logger.error('CennznetApi::getSessions error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * All the accounts with a desire to stake.
+   * @returns {Promise<AccountIdList>}
+   */
+  getIntentions = async (): Promise<AccountIdList> => {
+    Logger.debug('CennznetApi::getIntentions called');
+    try {
+      const intentions = await this.api.query.staking.intentions(...['intentions']);
+      Logger.debug(`CennznetApi::getIntentions success: ${intentions}`);
+      return intentions;
+    } catch (error) {
+      Logger.error('CennznetApi::getIntentions error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };

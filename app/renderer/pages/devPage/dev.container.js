@@ -7,6 +7,7 @@ import ROUTES from 'renderer/constants/routes';
 import streamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { ApiPromise } from '@polkadot/api';
 
 const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, networkStatusStore }) => ({
   nodeSystem,
@@ -103,6 +104,18 @@ const mapDispatchToProps = dispatch => ({
   },
   onTestToaster: () => {
     dispatch({ type: types.successToaster.triggered });
+  },
+
+  onGetValidators: async () => {
+    const validators = await window.odin.api.cennz.getValidators();
+  },
+
+  onGetSessionLength: async () => {
+    const sessionLength = await window.odin.api.cennz.getSessionLength();
+  },
+
+  onGetIntensions: async () => {
+    const intensions = await window.odin.api.cennz.getIntentions();
   },
 });
 
