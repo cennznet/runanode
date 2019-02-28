@@ -3,9 +3,9 @@ import { ofType } from 'redux-observable';
 import { Wallet } from 'cennznet-wallet';
 import { mergeMap } from "rxjs/operators";
 
+import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
+import { environment } from 'common/environment';
 import types from '../types';
-import { CennzNetNodeStates } from '../../common/types/cennznet-node.types';
-import { environment } from '../../common/environment';
 
 const { isDev } = environment;
 
@@ -19,22 +19,22 @@ const getTosterType = state => {
   ) {
     return types.errorToaster.triggered;
   }
-  return types.warningToaster.triggered
-}
+  return types.warningToaster.triggered;
+};
 
-const chainToasterAfterNetworkStateChangeEpic = action$ =>
+const chainToasterAfterNodeStateChangeEpic = action$ =>
   action$.pipe(
-    ofType(types.networkStateChange.triggered),
-    mergeMap(({payload}) => {
-      if(isDev) {
+    ofType(types.nodeStateChange.triggered),
+    mergeMap(({ payload }) => {
+      if (isDev) {
         return of(
           {
             type: getTosterType(payload),
             payload: `Node state changed: ${JSON.stringify(payload)}`,
-          }
+          },
         );
       }
-    })
+    }),
   );
 
-export default [chainToasterAfterNetworkStateChangeEpic];
+export default [chainToasterAfterNodeStateChangeEpic];

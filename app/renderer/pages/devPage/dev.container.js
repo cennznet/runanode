@@ -8,11 +8,11 @@ import streamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, networkStatusStore }) => ({
+const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, nodeStateStore }) => ({
   nodeSystem,
   syncStream,
   syncRemoteStream,
-  networkStatusStore,
+  nodeStateStore,
 });
 
 const mapDispatchToProps = dispatch => ({

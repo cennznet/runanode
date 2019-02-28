@@ -41,7 +41,7 @@ const DevPage = ({
   nodeSystem,
   syncStream,
   syncRemoteStream,
-  networkStatusStore,
+  nodeStateStore,
   onTransfer,
   onTestToaster,
   onStake,
@@ -114,7 +114,7 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={onRestartNodeClick}>Restart node</Button>
-          <div>{JSON.stringify(networkStatusStore)}</div>
+          <div>{JSON.stringify(nodeStateStore)}</div>
         </Flex>
         <Flex>
           <Button onClick={onStreamStart}>Start stream</Button>
