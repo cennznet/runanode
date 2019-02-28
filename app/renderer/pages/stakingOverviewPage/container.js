@@ -1,19 +1,17 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
 import types from 'renderer/types';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ staking }) => ({ staking });
 
-const mapDispatchToProps = dispatch => ({});
-
-const enhance = lifecycle({
-  componentDidMount() {},
+const mapDispatchToProps = dispatch => ({
+  onUpdateStakingOverview: () => {
+    dispatch({
+      type: types.updateStakingOverview.triggered,
+    });
+  },
 });
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  enhance
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 );

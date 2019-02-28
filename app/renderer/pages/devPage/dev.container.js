@@ -106,18 +106,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.successToaster.triggered });
   },
 
-  onGetValidators: async () => {
-    await window.odin.api.cennz.getValidators();
-  },
-
-  onGetSessionLength: async () => {
-    await window.odin.api.cennz.getSessionLength();
-  },
-
-  onGetIntensions: async () => {
-    await window.odin.api.cennz.getIntentions();
-  },
-
   onStake: payload => {
     window.odin.api.cennz.doStake(payload.wallet, payload.fromAddress, '');
   },
@@ -125,6 +113,48 @@ const mapDispatchToProps = dispatch => ({
   onUnStake: payload => {
     window.odin.api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
   },
+
+  onGetEraLength: () => {
+    window.odin.api.cennz.getEraLength(eraLength =>
+      Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`)
+    );
+  },
+
+  onGetEraProgress: () => {
+    window.odin.api.cennz.getEraProgress(EraProgress =>
+      Logger.debug(`CennznetApi::getEraProgress success: ${EraProgress}`)
+    );
+  },
+
+  onGetValidators: () => {
+    window.odin.api.cennz.getValidators(validators =>
+      Logger.debug(`CennznetApi::getValidators success: ${validators}`)
+    );
+  },
+
+  onGetSessioProgress: () => {
+    window.odin.api.cennz.getSessionProgress(sessionProgress =>
+      Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`)
+    );
+  },
+
+  onGetSessionLength: () => {
+    window.odin.api.cennz.getSessionLength(sessionLength =>
+      Logger.debug(`CennznetApi::getSessionLength success: ${sessionLength}`)
+    );
+  },
+
+  onGetIntensions: () => {
+    window.odin.api.cennz.getIntentions(intensions =>
+      Logger.debug(`CennznetApi::getIntentions success: ${intensions}`)
+    );
+  },
+
+  // onGetIntentionsBalances: () => {
+  //   window.odin.api.cennz.getIntentionsBalances(intensionsBalances =>
+  //     Logger.debug(`CennznetApi::getIntentionsBalances success: ${intensionsBalances}`)
+  //   );
+  // },
 });
 
 export default connect(
