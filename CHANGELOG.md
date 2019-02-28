@@ -3,17 +3,26 @@
 # vNext
 
 ### Features
+- able to get seed from wallet json
+- able to stake and unstake
+- Add Staking routes;
+
+### Fixes
 
 ### Improvements
-
-### Improvements
+- display node state in dev info top bar
+- skip restart node when chose same network
+- add bps to sync screen
+- able to run cennznet-node cluster locally
 
 # v0.5.2 (2019.02.25)
 
 ### Features
+
 - add CENNZScan address link to account public address
 
 ### Improvements
+
 - tidy up asset table layout
 - update background gradient settings
 - update field text bg color to match with design

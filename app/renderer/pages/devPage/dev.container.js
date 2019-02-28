@@ -96,7 +96,7 @@ const mapDispatchToProps = dispatch => ({
   onTransfer: payload => {
     window.odin.api.cennz.doGenericAssetTransfer(
       payload.assetId,
-      payload.fromWalletAddress,
+      payload.fromAddress,
       payload.toAddress,
       payload.amoumt,
       payload.wallet
@@ -107,15 +107,23 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onGetValidators: async () => {
-    const validators = await window.odin.api.cennz.getValidators();
+    await window.odin.api.cennz.getValidators();
   },
 
   onGetSessionLength: async () => {
-    const sessionLength = await window.odin.api.cennz.getSessionLength();
+    await window.odin.api.cennz.getSessionLength();
   },
 
   onGetIntensions: async () => {
-    const intensions = await window.odin.api.cennz.getIntentions();
+    await window.odin.api.cennz.getIntentions();
+  },
+
+  onStake: payload => {
+    window.odin.api.cennz.doStake(payload.wallet, payload.fromAddress, '');
+  },
+
+  onUnStake: payload => {
+    window.odin.api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
   },
 });
 

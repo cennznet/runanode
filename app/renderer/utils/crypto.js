@@ -43,9 +43,9 @@ export const generateMnemonic = (ms: ?number = 12) => {
   return bip39.generateMnemonic(ent, null, validWords);
 };
 
-export const mnemonicToSeedHex = (mnemonic: string, password: ?string) => {
-  const mnemonicBuffer = Buffer.from(unorm.nfkd(mnemonic), 'utf8');
-  const salt = 'mnemonic' + (unorm.nfkd(password) || '');
-  const saltBuffer = Buffer.from(salt, 'utf8');
-  return pbkdf2(mnemonicBuffer, saltBuffer, 2048, 32, 'sha512').toString('hex');
-};
+// export const mnemonicToSeedHex = (mnemonic: string, password: ?string) => {
+//   const mnemonicBuffer = Buffer.from(unorm.nfkd(mnemonic), 'utf8');
+//   const salt = 'mnemonic' + (unorm.nfkd(password) || '');
+//   const saltBuffer = Buffer.from(salt, 'utf8');
+//   return pbkdf2(mnemonicBuffer, saltBuffer, 2048, 32, 'sha512').toString('hex');
+// };
