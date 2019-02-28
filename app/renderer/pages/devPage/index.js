@@ -47,6 +47,8 @@ const DevPage = ({
   onGetValidators,
   onGetSessionLength,
   onGetIntensions,
+  onStake,
+  onUnStake,
 }) => {
   const {
     localNode: { chain },
@@ -73,6 +75,28 @@ const DevPage = ({
         <PageTitle>
           <h1>Dev Page</h1>
         </PageTitle>
+        <Flex>
+          <Button
+            onClick={() =>
+              onStake({
+                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+                wallet: window.odin.store.getState().localStorage.WALLETS[0],
+              })
+            }
+          >
+            Stake
+          </Button>
+          <Button
+            onClick={() =>
+              onUnStake({
+                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+                wallet: window.odin.store.getState().localStorage.WALLETS[0],
+              })
+            }
+          >
+            UnStake
+          </Button>
+        </Flex>
         <Flex>
           <Button onClick={onNetworkStatusClick}>Get Network Status</Button>
           <div>{networkStatusLabel}</div>

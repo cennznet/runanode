@@ -19,6 +19,7 @@ export const PreDefinedAssetIdName = {
 export const NetworkNameMapping = {
   'Rimu CENNZnet': 'rimu',
   'Kauri CENNZnet': 'kauri',
+  'Development': 'local-testnet',
 };
 
 export const CENNZScanTxUrl = {

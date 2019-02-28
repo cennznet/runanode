@@ -58,7 +58,7 @@ const InfoDesc = styled.div`
   text-align: right;
 `;
 
-const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed }) => {
+const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed, networkStatusStore }) => {
   if (!isDev) {
     return <div />;
   }
@@ -67,6 +67,7 @@ const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed }) => {
       <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
       <div>(block height: {blockNum})</div>
       <div>(block speed: {blockSpeed})</div>
+      <div>(node state: {networkStatusStore.state})</div>
     </div>
   );
 };
@@ -78,6 +79,7 @@ const TopBar = ({
   syncRemoteStream,
   setIsOpenNetworkWarningModal,
   setSelectedNetwork,
+  networkStatusStore,
   ...otherProps
 }) => {
   const {
@@ -120,7 +122,7 @@ const TopBar = ({
             />
           </NetworkSectionWrapper>
         </NetworkSectionContainer>
-        <DevInfo {...{ isSynced, syncPercentage, blockNum, blockSpeed }} />
+        <DevInfo {...{ isSynced, syncPercentage, blockNum, blockSpeed, networkStatusStore }} />
         <InfoWrapper>
           <div style={{ marginRight: '2rem' }}>
             <InfoValue>
@@ -129,7 +131,7 @@ const TopBar = ({
             <InfoDesc>block height</InfoDesc>
           </div>
           <div>
-            <InfoValue>{localBps || 0}</InfoValue>
+            <InfoValue>{localBps? localBps.toFixed(2) : 0}</InfoValue>
             <InfoDesc>bps</InfoDesc>
           </div>
         </InfoWrapper>
