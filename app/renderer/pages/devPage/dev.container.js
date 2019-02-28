@@ -8,11 +8,11 @@ import streamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 
-const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, networkStatusStore }) => ({
+const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, nodeStateStore }) => ({
   nodeSystem,
   syncStream,
   syncRemoteStream,
-  networkStatusStore,
+  nodeStateStore,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -107,9 +107,20 @@ const mapDispatchToProps = dispatch => ({
   onStake: payload => {
     window.odin.api.cennz.doStake(payload.wallet, payload.fromAddress, '');
   },
+  onStakeAndRestart: payload => {
+    const { cennzNetRestartOptions, wallet, fromAddress } = payload;
+    // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
+    dispatch({ type: types.stakeAndRestartNode.triggered, payload });
+  },
   onUnStake: payload => {
     window.odin.api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
   },
+  onUnStakeAndRestart: payload => {
+    const { cennzNetRestartOptions } = payload;
+    // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
+    // no-op for now
+  },
+
 });
 
 export default connect(
