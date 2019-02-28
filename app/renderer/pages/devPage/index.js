@@ -41,11 +41,13 @@ const DevPage = ({
   nodeSystem,
   syncStream,
   syncRemoteStream,
-  networkStatusStore,
+  nodeStateStore,
   onTransfer,
   onTestToaster,
   onStake,
   onUnStake,
+  onStakeAndRestart,
+  onUnStakeAndRestart,
 }) => {
   const {
     localNode: { chain },
@@ -87,6 +89,18 @@ const DevPage = ({
           </Button>
         </Flex>
         <Flex>
+          <Button onClick={() => onStakeAndRestart({
+            fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+            wallet: window.odin.store.getState().localStorage.WALLETS[0],
+            cennzNetRestartOptions: {
+              isValidatorMode: true,
+              key: '0x0b5660f358b4c54b42ab766d51bafa76d54886e92cbd7773057448dd79f2d91d',
+            }
+          })}>
+            Stake and restart
+          </Button>
+        </Flex>
+        <Flex>
           <Button onClick={onNetworkStatusClick}>Get Network Status</Button>
           <div>{networkStatusLabel}</div>
         </Flex>
@@ -100,7 +114,7 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={onRestartNodeClick}>Restart node</Button>
-          <div>{JSON.stringify(networkStatusStore)}</div>
+          <div>{JSON.stringify(nodeStateStore)}</div>
         </Flex>
         <Flex>
           <Button onClick={onStreamStart}>Start stream</Button>

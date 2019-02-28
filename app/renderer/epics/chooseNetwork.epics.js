@@ -7,6 +7,7 @@ import { storageKeys } from 'renderer/api/utils/storage';
 import chainEpics from 'renderer/epics/chainEpics';
 import streamConstants from 'renderer/constants/stream';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
+import { Logger } from 'renderer/utils/logging';
 
 const filterGenesisFile = file => {
   if (!file) {
