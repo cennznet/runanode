@@ -5,7 +5,7 @@ import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys } from 'renderer/api/utils/storage';
 import chainEpics from 'renderer/epics/chainEpics';
-import sreamConstants from 'renderer/constants/stream';
+import streamConstants from 'renderer/constants/stream';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 
 const filterGenesisFile = file => {
@@ -61,11 +61,11 @@ const stopStreamEpic = action$ =>
       return of(
         {
           type: types.syncStream.requested,
-          payload: { command: sreamConstants.DISCONNECT },
+          payload: { command: streamConstants.DISCONNECT },
         },
         {
           type: types.syncRemoteStream.requested,
-          payload: { command: sreamConstants.DISCONNECT },
+          payload: { command: streamConstants.DISCONNECT },
         },
         {
           type: types.stopStream.completed,
@@ -92,11 +92,11 @@ const restartNodeEpic = action$ =>
       of(
         {
           type: types.syncStream.requested,
-          payload: { command: sreamConstants.CONNECT },
+          payload: { command: streamConstants.CONNECT },
         },
         {
           type: types.syncRemoteStream.requested,
-          payload: { command: sreamConstants.CONNECT },
+          payload: { command: streamConstants.CONNECT },
         },
         {
           type: types.nodeWsSystemChainPolling.requested,

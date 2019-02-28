@@ -14,6 +14,7 @@
 - skip restart node when chose same network
 - add bps to sync screen
 - able to run cennznet-node cluster locally
+- upgrade cenznet-api to v0.7.4
 
 # v0.5.2 (2019.02.25)
 
