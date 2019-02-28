@@ -62,7 +62,7 @@
 - able to check cennznet-node process in tests
 
 ### Improvements
-
+- re-enable isDevOrDebugProd to allow use dev tools in packaged app 
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
 - Improved styleguide

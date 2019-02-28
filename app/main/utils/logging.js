@@ -4,7 +4,7 @@ import log from 'electron-log';
 
 import { environment } from 'common/environment';
 
-const { isDev } = environment;
+const { isDevOrDebugProd } = environment;
 
 const prefixProcessType = (str: string) => '[main] ' + str;
 
@@ -31,7 +31,7 @@ export const GetCennzNodeLogFullPath = () => {
   return GetLogDir() + '/cennznet-node.log';
 };
 
-if (isDev) {
+if (isDevOrDebugProd) {
   log.transports.console.level = 'info';
   log.transports.file.level = 'info';
 

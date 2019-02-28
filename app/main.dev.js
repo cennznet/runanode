@@ -30,7 +30,7 @@ import { cennznetStatusChannel } from 'main/ipc/cennznet.ipc';
 import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
 import { environment } from 'common/environment';
 
-const { isDev, buildLabel } = environment;
+const { isDevOrDebugProd, buildLabel } = environment;
 
 export default class AppUpdater {
   constructor() {
@@ -107,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (isDev) {
+if (isDevOrDebugProd) {
   require('electron-debug')();
 }
 
@@ -153,7 +153,7 @@ app.on('ready', async () => {
     app.exit(1);
   }
 
-  if (isDev) {
+  if (isDevOrDebugProd) {
     await installExtensions();
   }
   // Detect safe mode
