@@ -11,7 +11,7 @@ import SwitchNetworkWarningModal from './TopBarWarningModal';
 import UploadGenesisFileModal from './UploadGenesisModal';
 import withContainer from './TopBarContainer';
 
-const { isDev } = environment;
+const { isDevOrDebugProd } = environment;
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,8 +58,8 @@ const InfoDesc = styled.div`
   text-align: right;
 `;
 
-const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed, networkStatusStore }) => {
-  if (!isDev) {
+const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed, nodeStateStore }) => {
+  if (!isDevOrDebugProd) {
     return <div />;
   }
   return (
@@ -67,7 +67,7 @@ const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed, networkStatus
       <div>{isSynced ? '100% ' : syncPercentage + ' '} synced</div>
       <div>(block height: {blockNum})</div>
       <div>(block speed: {blockSpeed})</div>
-      <div>(node state: {networkStatusStore.state})</div>
+      <div>(node state: {nodeStateStore.state})</div>
     </div>
   );
 };
@@ -79,7 +79,7 @@ const TopBar = ({
   syncRemoteStream,
   setIsOpenNetworkWarningModal,
   setSelectedNetwork,
-  networkStatusStore,
+  nodeStateStore,
   ...otherProps
 }) => {
   const {
@@ -122,7 +122,7 @@ const TopBar = ({
             />
           </NetworkSectionWrapper>
         </NetworkSectionContainer>
-        <DevInfo {...{ isSynced, syncPercentage, blockNum, blockSpeed, networkStatusStore }} />
+        <DevInfo {...{ isSynced, syncPercentage, blockNum, blockSpeed, nodeStateStore }} />
         <InfoWrapper>
           <div style={{ marginRight: '2rem' }}>
             <InfoValue>
