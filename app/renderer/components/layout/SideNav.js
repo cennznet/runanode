@@ -6,7 +6,7 @@ import { environment } from 'common/environment';
 import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
 
-const { isDev } = environment;
+const { isDevOrDebugProd } = environment;
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,7 +78,7 @@ const SideNav = () => {
           </IconLink>
         </TopIcons>
         <BottomIcons>
-          {isDev && (
+          {isDevOrDebugProd && (
             <IconLink to="/dev">
               <FontAwesomeIcon icon={['fab', 'dev']} />
             </IconLink>
