@@ -103,7 +103,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
   Logger.info(`  Sync progress in Local ${syncNodePercentage}%`);
 
   return (
-    <Layout sidebar={isDev ? <SideNav /> : <SimpleSidebar />}>
+    <Layout sidebar={isDevOrDebugProd ? <SideNav /> : <SimpleSidebar />}>
       <LayoutWrapper>
         <MainContent>
           <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
