@@ -6,6 +6,7 @@ export default {
     ROOT: '/staking',
     OVERVIEW: '/staking/overview',
     STAKE: '/staking/stake',
+    MANAGE: '/staking/manage',
   },
   SETTINGS: {
     ROOT: '/settings',

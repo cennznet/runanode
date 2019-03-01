@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 
 const MainContent = styled.div`
+  position: relative;
   display: ${p => (p.display === 'flex' ? 'flex' : 'block')};
   flex-direction: ${p => (p.display === 'flex' ? 'column' : 'none')};
   justify-content: ${p => (p.display === 'flex' ? 'space-between' : 'none')};
