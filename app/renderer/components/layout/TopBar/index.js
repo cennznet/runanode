@@ -11,7 +11,7 @@ import SwitchNetworkWarningModal from './TopBarWarningModal';
 import UploadGenesisFileModal from './UploadGenesisModal';
 import withContainer from './TopBarContainer';
 
-const { isDev } = environment;
+const { isDevOrDebugProd } = environment;
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,7 +59,7 @@ const InfoDesc = styled.div`
 `;
 
 const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed, nodeStateStore }) => {
-  if (!isDev) {
+  if (!isDevOrDebugProd) {
     return <div />;
   }
   return (

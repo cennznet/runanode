@@ -3,6 +3,7 @@ import os from 'os';
 import { uniq, upperFirst } from 'lodash';
 import parseArgs from 'minimist';
 import mergeOptions from 'merge-options';
+import { remote } from 'electron'; // TODO check is this safe?
 
 import { version } from '../../package.json';
 import type { Environment } from './types/environment.types';
@@ -20,13 +21,22 @@ import {
   WINDOWS,
 } from './types/environment.types';
 
-const config = mergeOptions(
+// config for argv
+let config = mergeOptions(
   {
     NODE_ENV: process.env.NODE_ENV,
     DEBUG_PROD: process.env.DEBUG_PROD,
   },
   parseArgs(process.argv.slice(1))
 );
+
+// for renderer process
+if(remote) {
+  config = mergeOptions(
+    config,
+    parseArgs(remote.process.argv.slice(1))
+  );
+}
 
 // environment variables
 const CURRENT_NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
@@ -35,7 +45,7 @@ const REPORT_URL = process.env.REPORT_URL || STAGING_REPORT_URL;
 const port = process.env.PORT || 1212;
 const isHot = process.env.HOT === '1';
 const isDev = CURRENT_NODE_ENV === DEVELOPMENT;
-const isDebugProd = config.DEBUG_PROD === 'true'; // currently only apply to main, to support renderer, need to include extra settings in preload.js, can follow this example, https://bitbucket.org/centralitydev/cennz-node-ui/commits/98df9ec2f402a339ac8c6ff8c348cbf4943b422b
+const isDebugProd = config.DEBUG_PROD === 'true';
 const isDevOrDebugProd = isDev || isDebugProd;
 const isRemoteDebug = process.env.DEBUG_REMOTE === 'true';
 const isTest = CURRENT_NODE_ENV === TEST;
