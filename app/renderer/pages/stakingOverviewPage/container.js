@@ -17,7 +17,11 @@ const callApi = (sessions, dispatch) => {
         value &&
         dispatch({
           type: types[actionMethod].triggered,
-          payload: { [updateField]: Array.isArray(value) ? value : value.toString(10) },
+          payload: {
+            [updateField]: Array.isArray(value)
+              ? value.map(BNItem => BNItem.toString(10))
+              : value.toString(10),
+          },
         })
     );
   });
