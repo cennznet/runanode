@@ -7,6 +7,7 @@
 - able to stake and unstake
 - Add Staking routes;
 - able to do staking and restart node
+- User able to unstake
 
 ### Fixes
 
