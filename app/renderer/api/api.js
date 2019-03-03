@@ -580,10 +580,10 @@ export default class CennzApi {
    * The current set of validators.
    * @returns {Promise<List>}
    */
-  getValidators = async (CallBackFunc: Function): Promise<List> => {
+  getValidators = async (callbackFn: Function): Promise<List> => {
     Logger.debug('CennznetApi::getValidators called');
     try {
-      const validators = await this.api.query.session.validators(CallBackFunc);
+      const validators = await this.api.query.session.validators(callbackFn);
       Logger.debug(`CennznetApi::getValidators success: ${validators}`);
       return validators;
     } catch (error) {
@@ -596,10 +596,10 @@ export default class CennzApi {
    * All the accounts with a desire to stake.
    * @returns {Promise<AccountIdList>}
    */
-  getIntentions = async (CallBackFunc: Function): Promise<AccountIdList> => {
+  getIntentions = async (callbackFn: Function): Promise<AccountIdList> => {
     Logger.debug('CennznetApi::getIntentions called');
     try {
-      const intentions = await this.api.query.staking.intentions(CallBackFunc);
+      const intentions = await this.api.query.staking.intentions(callbackFn);
       Logger.debug(`CennznetApi::getIntentions success: ${intentions}`);
       return intentions;
     } catch (error) {
@@ -612,12 +612,12 @@ export default class CennzApi {
    * All the accounts with a desire to stake.
    * @returns {Promise<AccountIdList>}
    */
-  // getIntentionsBalances = async (CallBackFunc: Function): Promise<AccountIdList> => {
+  // getIntentionsBalances = async (callbackFn: Function): Promise<AccountIdList> => {
   //   Logger.debug('CennznetApi::getIntentionsBalances called');
   //   try {
   //     const intentionsBalances = await this.api.derive.staking.intentionsBalances(
   //       ...['balances'],
-  //       CallBackFunc
+  //       callbackFn
   //     );
   //     Logger.debug(`CennznetApi::getIntentionsBalances success: ${intentionsBalances}`);
   //     return intentionsBalances;
@@ -631,10 +631,10 @@ export default class CennzApi {
    * Current length of the session.
    * @returns {Promise<BlockNumber>}
    */
-  getSessionLength = async (CallBackFunc: Function): Promise<BlockNumber> => {
+  getSessionLength = async (callbackFn: Function): Promise<BlockNumber> => {
     Logger.debug('CennznetApi::getSessions called');
     try {
-      const sessionLength = await this.api.query.session.sessionLength(CallBackFunc);
+      const sessionLength = await this.api.query.session.sessionLength(callbackFn);
       Logger.debug(`CennznetApi::getSessions success: ${sessionLength}`);
       return sessionLength;
     } catch (error) {
@@ -647,10 +647,10 @@ export default class CennzApi {
    * Current progress of the session.
    * @returns {Promise<BlockNumber>}
    */
-  getSessionProgress = async (CallBackFunc: Function): Promise<BlockNumber> => {
+  getSessionProgress = async (callbackFn: Function): Promise<BlockNumber> => {
     Logger.debug('CennznetApi::getSessionProgress called');
     try {
-      const sessionProgress = await this.api.derive.session.sessionProgress(CallBackFunc);
+      const sessionProgress = await this.api.derive.session.sessionProgress(callbackFn);
       Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`);
       return sessionProgress;
     } catch (error) {
@@ -663,10 +663,10 @@ export default class CennzApi {
    * Current length of the session.
    * @returns {Promise<BlockNumber>}
    */
-  getSessionLength = async (CallBackFunc: Function): Promise<BlockNumber> => {
+  getSessionLength = async (callbackFn: Function): Promise<BlockNumber> => {
     Logger.debug('CennznetApi::getSessionLength called');
     try {
-      const sessionLength = await this.api.query.session.sessionLength(CallBackFunc);
+      const sessionLength = await this.api.query.session.sessionLength(callbackFn);
       Logger.debug(`CennznetApi::getSessionLength success: ${sessionLength}`);
       return sessionLength;
     } catch (error) {
@@ -679,10 +679,10 @@ export default class CennzApi {
    * Era progress.
    * @returns {Promise<BlockNumber>}
    */
-  getEraProgress = async (CallBackFunc: Function): Promise<BlockNumber> => {
+  getEraProgress = async (callbackFn: Function): Promise<BlockNumber> => {
     Logger.debug('CennznetApi::getEraProgress called');
     try {
-      const eraProgress = await this.api.derive.session.eraProgress(CallBackFunc);
+      const eraProgress = await this.api.derive.session.eraProgress(callbackFn);
       Logger.debug(`CennznetApi::getEraProgress success: ${eraProgress}`);
       return eraProgress;
     } catch (error) {
@@ -695,10 +695,10 @@ export default class CennzApi {
    * Era length.
    * @returns {Promise<BlockNumber>}
    */
-  getEraLength = async (CallBackFunc: Function): Promise<BlockNumber> => {
+  getEraLength = async (callbackFn: Function): Promise<BlockNumber> => {
     Logger.debug('CennznetApi::getEraLength called');
     try {
-      const eraLength = await this.api.derive.session.eraLength(CallBackFunc);
+      const eraLength = await this.api.derive.session.eraLength(callbackFn);
       Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`);
       return eraLength;
     } catch (error) {
