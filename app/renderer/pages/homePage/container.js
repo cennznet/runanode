@@ -18,14 +18,7 @@ const mapDispatchToProps = dispatch => ({
     });
   },
 
-  // onCennznetNodeStateChange: (state: CennzNetNodeState) => {
-  //   Logger.info(`onCennznetNodeStateChange: handling cennznet-node state <${state}>`);
-  //   dispatch({
-  //     type: types.nodeStateChange.triggered,
-  //     payload: state,
-  //   });
-  // },
-
+  // TODO: Move this subcription into Epic
   onCennznetStatusChange: (status: CennzNetStatus) => {
     Logger.info(`onCennznetStatusChange: handling cennznet status <${status}>`);
     if (status.isNodeSafeExisting) {
@@ -44,7 +37,6 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    // cennznetStateChangeChannel.onReceive(this.props.onCennznetNodeStateChange);
     cennznetStatusChannel.onReceive(this.props.onCennznetStatusChange);
   },
 

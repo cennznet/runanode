@@ -64,8 +64,9 @@ const actionTypes = {
   nodeWsChainGetHeader: apiActionTypes('node_ws_chain_getHeader'),
   nodeWsRemoteChainGetHeader: apiActionTypes('node_ws_remote_chain_getHeader'),
 
-  /** IPC */
-  ipcNodeState: triggerActionTypes('ipc_node_state'),
+  /** Extrinsic */
+  subscribeExtrinsicStatus: triggerActionTypes('subscribe_extrinsic_status'),
+  unsubscribeExtrinsicStatus: triggerActionTypes('unsubscribe_extrinsic_status'),
 
   /* Sync Stream */
   syncStream: apiActionTypes('sync_stream'),

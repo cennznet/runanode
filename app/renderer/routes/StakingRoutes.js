@@ -9,7 +9,7 @@ import ROUTES from 'renderer/constants/routes';
 
 const navItems = [
   { label: 'Overview', link: ROUTES.STAKING.OVERVIEW },
-  { label: 'Stake', link: ROUTES.STAKING.STAKE },
+  { label: 'Start to stake', link: ROUTES.STAKING.STAKE },
   { label: 'Manage', link: ROUTES.STAKING.MANAGE },
 ];
 
