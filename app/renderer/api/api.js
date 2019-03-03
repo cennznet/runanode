@@ -490,11 +490,11 @@ export default class CennzApi {
 
   /**
    * @param wallet
-   * @param fromWalletAddress
+   * @param stashAccountAddress
    * @param passphrase
    * @returns {Promise<Hash>}
    */
-  doUnStake = async (wallet: CennznetWallet, fromWalletAddress: string, passphrase: string): Promise<Hash> => {
+  doUnStake = async (wallet: CennznetWallet, stashAccountAddress: string, passphrase: string): Promise<Hash> => {
     Logger.debug('CennznetApi::doUnStake called');
     try {
       const originalWallet = this.reloadWallet(wallet);
@@ -509,11 +509,11 @@ export default class CennzApi {
         return item.toString();
       });
 
-      const intentionsIndex = intentionsStr.indexOf(fromWalletAddress);
-      Logger.debug(`fromWalletAddress: ${fromWalletAddress}`);
+      const intentionsIndex = intentionsStr.indexOf(stashAccountAddress);
+      Logger.debug(`stashAccountAddress: ${stashAccountAddress}`);
       Logger.debug(`intentionsIndex: ${intentionsIndex}`);
 
-      const txHash = await this.api.tx.staking.unstake(intentionsIndex).signAndSend(fromWalletAddress);
+      const txHash = await this.api.tx.staking.unstake(intentionsIndex).signAndSend(stashAccountAddress);
       Logger.debug(`CennznetApi::doUnStake txHash ${txHash}`);
       return txHash;
     } catch (error) {
