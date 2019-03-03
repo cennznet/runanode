@@ -6,21 +6,31 @@ import withContainer from './container';
 import StakingProgressCard from './StakingProgressCard';
 import ValidatorsList from './ValidatorsList';
 import IntentionsList from './IntentionsList';
+import withApis from './withApis';
 
 const ListsWrapper = styled.div`
   margin: 2rem 0;
   display: flex;
   justify-content: space-between;
 `;
-
+// eraProgress, eraLength, sessionLength, sessionProgress,
 const StakingOverviewPage = ({
   subNav,
   onSubscribeStakingData,
-  staking: { eraProgress, eraLength, sessionLength, sessionProgress, validators, intentions },
+  // staking: { validators, intentions },
 }) => {
-  useEffect(() => {
-    onSubscribeStakingData();
-  }, []);
+  // useEffect(() => {
+  //   onSubscribeStakingData();
+  // }, []);
+
+  const [eraProgress, eraLength, sessionProgress, sessionLength, validators, intentions] = withApis(
+    'getEraProgress',
+    'getEraLength',
+    'getSessionProgress',
+    'getSessionLength',
+    'getValidators',
+    'getIntentions'
+  );
 
   const sortedIntentions =
     intentions && intentions.filter(address => !validators.includes(address));
@@ -36,8 +46,8 @@ const StakingOverviewPage = ({
           sessionProgress={sessionProgress}
         />
         <ListsWrapper>
-          <ValidatorsList validators={validators} />
-          <IntentionsList intentions={sortedIntentions} />
+          <ValidatorsList validators={validators || []} />
+          <IntentionsList intentions={sortedIntentions || []} />
         </ListsWrapper>
       </MainContent>
     </MainLayout>
