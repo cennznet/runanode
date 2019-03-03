@@ -19,7 +19,7 @@ const subNav = (
   </SubNav>
 );
 
-const SettingsRoutes = () => (
+const StakingRoutes = () => (
   <Switch>
     <Route
       path={ROUTES.STAKING.OVERVIEW}
@@ -36,4 +36,4 @@ const SettingsRoutes = () => (
   </Switch>
 );
 
-export default SettingsRoutes;
+export default StakingRoutes;
