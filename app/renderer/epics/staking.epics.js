@@ -1,8 +1,9 @@
-import { EMPTY, of, zip } from 'rxjs';
-import { mergeMap, concat, filter, withLatestFrom } from 'rxjs/operators';
+import { EMPTY, of } from 'rxjs';
+import { mergeMap, map, takeUntil, withLatestFrom, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 import { ofType } from 'redux-observable';
 import assert from 'assert';
-
+import R from 'ramda';
 import { storageKeys, setStorage } from 'renderer/api/utils/storage';
 import types from 'renderer/types';
 import chainEpics from 'renderer/epics/chainEpics';
@@ -29,7 +30,7 @@ const triggerStakingEpic = action$ =>
 
       const channelResponse = await restartCennzNetNodeChannel.send(cennzNetRestartOptions);
 
-      return of({ type: types.sendStakingExtrinsic.triggered, payload });
+      return { type: types.sendStakingExtrinsic.triggered, payload };
 
       // Once running => sendStakeTx => navigate to overview => watchTx => chain toaster => chain setStorage
 
@@ -46,19 +47,60 @@ const triggerStakingEpic = action$ =>
 
 const sendStakingExtrinsicEpic = action$ =>
   action$.pipe(
+    // ofType(types.sendStakingExtrinsic.triggered),
+    // mergeMap(async ({ payload }) => {
     ofType(types.nodeStateChange.triggered),
-    withLatestFrom(types.sendStakingExtrinsic.triggered),
-    mergeMap(async ([state, payload]) => {
-      console.log('sendStakingExtrinsicEpic payload', payload);
-      console.log('sendStakingExtrinsicEpic state', state);
+    withLatestFrom(action$.ofType(types.sendStakingExtrinsic.triggered)),
+    mergeMap(async ([nodeStateChangeAction, sendStakingExtrinsicAction]) => {
+      if (
+        nodeStateChangeAction.payload === 'running' &&
+        R.has('wallet')(sendStakingExtrinsicAction.payload)
+      ) {
+        // if (payload) {
+        const { wallet, stashAccountAddress, passphrase } = sendStakingExtrinsicAction.payload;
+        const extrinsicHash = await window.odin.api.cennz.doStake(
+          wallet,
+          stashAccountAddress,
+          passphrase
+        );
+        assert(extrinsicHash, 'Failed to get staking extrinsicHash');
 
-      if (state.payload && state.payload.state === 'running' && payload) {
-        const { wallet, stashAccountAddress, passphrase } = payload;
-        const txHash = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, passphrase);
-
-        assert(txHash, 'failed to get staking txHash');
+        return {
+          type: types.subscribeExtrinsicStatus.triggered,
+          payload: {
+            extrinsicHash,
+            type: 'STAKING',
+          },
+        };
       }
+
+      return { type: '' };
+    }),
+    catchError(err => {
+      return of({
+        type: types.errorToaster.triggered,
+        payload:
+          err instanceof assert.AssertionError ? err.message : 'Failed to send staking extrinsic',
+      });
     })
   );
+const watchExtrinsicEpic = action$ =>
+  action$.pipe(
+    ofType(types.subscribeExtrinsicStatus.triggered),
+    mergeMap(({ payload: { extrinsicHash } }) => {
+      assert(extrinsicHash, 'failed to get staking extrinsicHash');
 
-export default [triggerStakingEpic, sendStakingExtrinsicEpic];
+      return Observable.create(observer => {
+        window.odin.api.cennz.api.rpc.author.submitAndWatchExtrinsic(extrinsicHash, status => {
+          observer.next(status);
+        });
+      }).pipe(
+        map(status => {
+          return EMPTY;
+        })
+      );
+    }),
+    takeUntil(action$.ofType(types.unsubscribeExtrinsicStatus.triggered))
+  );
+
+export default [triggerStakingEpic, sendStakingExtrinsicEpic, watchExtrinsicEpic];

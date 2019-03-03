@@ -17,22 +17,25 @@ const StakeConfirmModal = ({
         <PageHeading subHeading="">Confirm staking summary</PageHeading>
       </ModalBody>
       <ModalFooter>
-        <Button
-          onClick={() => setStakeConfirmModalOpen(false)}
-          style={{ marginRight: '0.5rem' }}
-          color="nuetral"
-          flat
-        >
-          Cancel
-        </Button>
-        <Button
-          onClick={() => {
-            onStakeConfirmed();
-            setStakeConfirmModalOpen(false);
-          }}
-        >
-          Confirm
-        </Button>
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => setStakeConfirmModalOpen(false)}
+            style={{ marginRight: '0.5rem' }}
+            color="nuetral"
+            flat
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              onStakeConfirmed();
+              setStakeConfirmModalOpen(false);
+            }}
+            style={{ marginLeft: '0.5rem' }}
+          >
+            Confirm
+          </Button>
+        </div>
       </ModalFooter>
     </Modal>
   );
