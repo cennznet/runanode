@@ -2,16 +2,16 @@
 import { isString } from 'lodash';
 
 export type IpcSender = {
-  send: (channel: string, ...args: Array<any>) => void
+  send: (channel: string, ...args: Array<any>) => void,
 };
 
 export type IpcEvent = {
   sender: IpcSender,
-}
+};
 
 export type IpcReceiver = {
   on: (channel: string, (event: IpcEvent, ...args: Array<any>) => Promise<any>) => void,
-  once: (channel: string, (event: IpcEvent, isOk: boolean, ...args: Array<any>) => void) => void
+  once: (channel: string, (event: IpcEvent, isOk: boolean, ...args: Array<any>) => void) => void,
 };
 
 /**
@@ -21,7 +21,6 @@ export type IpcReceiver = {
  * and response cycles.
  */
 export class IpcChannel<Incoming, Outgoing> {
-
   /**
    * Each ipc channel should be a singleton (based on the channelName)
    * Here we track the created instances.
@@ -105,6 +104,14 @@ export class IpcChannel<Incoming, Outgoing> {
           reject(response);
         }
       });
+    });
+  }
+
+  async removeAllListeners(sender: IpcSender) {
+    return new Promise((resolve, reject) => {
+      sender.removeAllListeners(this._broadcastChannel);
+
+      resolve();
     });
   }
 
