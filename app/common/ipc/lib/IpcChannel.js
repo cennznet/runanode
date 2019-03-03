@@ -76,6 +76,7 @@ export class IpcChannel<Incoming, Outgoing> {
       sender.send(this._broadcastChannel, message);
       // Handle response to the sent request once
       receiver.once(this._responseChannel, (event, isOk: boolean, response: Incoming) => {
+        console.log('IpcChannel send', response);
         if (isOk) {
           resolve(response);
         } else {

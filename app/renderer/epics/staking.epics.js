@@ -1,29 +1,21 @@
-import { EMPTY, from, of, zip } from 'rxjs';
-import { mergeMap, map, concat, tap, mapTo, filter } from 'rxjs/operators';
+import { EMPTY, of, zip } from 'rxjs';
+import { mergeMap, concat, filter, withLatestFrom } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import assert from 'assert';
 
+import { storageKeys, setStorage } from 'renderer/api/utils/storage';
 import types from 'renderer/types';
 import chainEpics from 'renderer/epics/chainEpics';
 import streamConstants from 'renderer/constants/stream';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import { Logger } from 'renderer/utils/logging';
+import ROUTES from 'renderer/constants/routes';
 
-const stakingRestartNodeWithNetworkChain = chainEpics(
-  types.stakeAndRestartNode.triggered,
-  types.stakingRestartNode.requested,
-  payload => payload
-);
-
-const stakingRestartNodeEpic = action$ =>
+const triggerStakingEpic = action$ =>
   action$.pipe(
-    ofType(types.stakingRestartNode.requested),
-    tap(async ({ payload }) => {
-      const { wallet, stashAccountAddress, isValidatorMode = false, passphrase } = payload;
-
-      const txHash = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, passphrase);
-
-      assert(txHash, 'failed to get staking txHash');
+    ofType(types.stakeAndRestartNode.triggered),
+    mergeMap(async ({ payload }) => {
+      const { wallet, stashAccountAddress, passphrase } = payload;
 
       const seed = await window.odin.api.cennz.getSeedFromWalletAccount(
         wallet,
@@ -33,23 +25,40 @@ const stakingRestartNodeEpic = action$ =>
 
       assert(seed, 'fail to get seed from wallet account');
 
-      const cennzNetRestartOptions = {
-        key: seed,
-        isValidatorMode,
-      };
+      const cennzNetRestartOptions = { key: seed, isValidatorMode: true };
 
-      restartCennzNetNodeChannel.send(cennzNetRestartOptions);
-    }),
-    mergeMap(() =>
-      of(
-        // {
-        //   type: types.nodeWsSystemChainPolling.requested,
-        // },
-        {
-          type: types.stakingRestartNode.completed,
-        }
-      )
-    )
+      const channelResponse = await restartCennzNetNodeChannel.send(cennzNetRestartOptions);
+
+      return of({ type: types.sendStakingExtrinsic.triggered, payload });
+
+      // Once running => sendStakeTx => navigate to overview => watchTx => chain toaster => chain setStorage
+
+      // return of({
+      //   type: types.setStorage.requested,
+      //   payload: { key: storageKeys.STAKING, value: { stashAccountAddress } }, // TODO: store account type
+      // })
+      // .pipe(
+      //   concat(of({ type: types.navigation.triggered, payload: ROUTES.STAKEING })),
+      //   concat(of({ type: types.navigation.triggered, payload: ROUTES.STAKEING.OVERVIEW }))
+      // );
+    })
   );
 
-export default [stakingRestartNodeWithNetworkChain, stakingRestartNodeEpic];
+const sendStakingExtrinsicEpic = action$ =>
+  action$.pipe(
+    ofType(types.nodeStateChange.triggered),
+    withLatestFrom(types.sendStakingExtrinsic.triggered),
+    mergeMap(async ([state, payload]) => {
+      console.log('sendStakingExtrinsicEpic payload', payload);
+      console.log('sendStakingExtrinsicEpic state', state);
+
+      if (state.payload && state.payload.state === 'running' && payload) {
+        const { wallet, stashAccountAddress, passphrase } = payload;
+        const txHash = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, passphrase);
+
+        assert(txHash, 'failed to get staking txHash');
+      }
+    })
+  );
+
+export default [triggerStakingEpic, sendStakingExtrinsicEpic];

@@ -10,7 +10,6 @@ const StakingStakePage = ({ subNav, wallets, onStake }) => {
     onStake({
       wallet: wallets[0],
       stashAccountAddress: '5G9w9hVEtzmrb5yuomHRiJxdRkBGWNWWBStw6gJwY82XsAMR',
-      isValidatorMode: true,
       passphrase: '',
     });
 
