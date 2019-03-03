@@ -46,7 +46,6 @@ const actionTypes = {
 
   /* Staking */
   stakeAndRestartNode: triggerActionTypes('stake_and_restart_node'),
-  stakingStopStream: apiActionTypes('staking_stop_stream'),
   stakingRestartNode: apiActionTypes('staking_restart_network'),
 
   /* system apis */
@@ -78,8 +77,6 @@ const actionTypes = {
   syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
   syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
   syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
-
-  /** Staking */
 
   /** Toaster */
   successToaster: triggerActionTypes('success_toaster'),

@@ -8,7 +8,6 @@ const mapStateToProps = ({ localStorage: { WALLETS } }) => ({
 
 const mapDispatchToProps = dispatch => ({
   onStake: payload => {
-    console.log('onStake', payload);
     dispatch({
       type: types.stakeAndRestartNode.triggered,
       payload,
