@@ -42,9 +42,9 @@ const stakingRestartNodeEpic = action$ =>
     }),
     mergeMap(() =>
       of(
-        {
-          type: types.nodeWsSystemChainPolling.requested,
-        },
+        // {
+        //   type: types.nodeWsSystemChainPolling.requested,
+        // },
         {
           type: types.stakingRestartNode.completed,
         }

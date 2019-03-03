@@ -18,17 +18,17 @@ const mapDispatchToProps = dispatch => ({
     });
   },
 
-  onCennznetNodeStateChange: (state: CennzNetNodeState) => {
-    Logger.info(`onCennznetNodeStateChange: handling cennznet-node state <${state}>`);
-    dispatch({
-      type: types.nodeStateChange.triggered,
-      payload: state,
-    });
-  },
+  // onCennznetNodeStateChange: (state: CennzNetNodeState) => {
+  //   Logger.info(`onCennznetNodeStateChange: handling cennznet-node state <${state}>`);
+  //   dispatch({
+  //     type: types.nodeStateChange.triggered,
+  //     payload: state,
+  //   });
+  // },
 
   onCennznetStatusChange: (status: CennzNetStatus) => {
     Logger.info(`onCennznetStatusChange: handling cennznet status <${status}>`);
-    if(status.isNodeSafeExisting) {
+    if (status.isNodeSafeExisting) {
       Logger.info(`isNodeSafeExisting, status: ${JSON.stringify(status)}`);
       dispatch({
         type: types.navigation.triggered,
@@ -43,11 +43,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const enhance = lifecycle({
-
   componentDidMount() {
-    // Passively receive state changes of the cennznet-node
-    cennznetStateChangeChannel.onReceive(this.props.onCennznetNodeStateChange);
-    cennznetStatusChannel.onReceive(this.props.onCennznetStatusChange)
+    // cennznetStateChangeChannel.onReceive(this.props.onCennznetNodeStateChange);
+    cennznetStatusChannel.onReceive(this.props.onCennznetStatusChange);
   },
 
   componentDidUpdate() {
