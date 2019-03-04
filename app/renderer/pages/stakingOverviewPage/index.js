@@ -23,8 +23,13 @@ const StakingOverviewPage = ({ subNav }) => {
     'getIntentions'
   );
 
-  const sortedIntentions =
-    validators && intentions && intentions.filter(address => !validators.includes(address));
+  // TODO: Reorder the validator List with staking account
+  const sortedValidators = validators || [];
+
+  // TODO: Reorder the intentions List with staking account
+  const sortedIntentions = intentions
+    ? intentions.filter(address => !sortedValidators.includes(address))
+    : [];
 
   return (
     <MainLayout subNav={subNav}>
@@ -37,8 +42,8 @@ const StakingOverviewPage = ({ subNav }) => {
           sessionProgress={sessionProgress}
         />
         <ListsWrapper>
-          <ValidatorsList validators={validators || []} />
-          <IntentionsList intentions={sortedIntentions || []} />
+          <ValidatorsList validators={sortedValidators} />
+          <IntentionsList intentions={sortedIntentions} />
         </ListsWrapper>
       </MainContent>
     </MainLayout>
