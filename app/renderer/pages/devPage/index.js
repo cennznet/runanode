@@ -44,8 +44,15 @@ const DevPage = ({
   nodeStateStore,
   onTransfer,
   onTestToaster,
+  onGetValidators,
+  onGetSessionLength,
+  onGetIntensions,
   onStake,
   onUnStake,
+  onGetEraProgress,
+  onGetSessioProgress,
+  onGetEraLength,
+  onGetIntentionsBalances,
   onStakeAndRestart,
   onUnStakeAndRestart,
 }) => {
@@ -75,28 +82,40 @@ const DevPage = ({
           <h1>Dev Page</h1>
         </PageTitle>
         <Flex>
-          <Button onClick={() => onStake({
-            fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
-            wallet: window.odin.store.getState().localStorage.WALLETS[0],
-          })}>
+          <Button
+            onClick={() =>
+              onStake({
+                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+                wallet: window.odin.store.getState().localStorage.WALLETS[0],
+              })
+            }
+          >
             Stake
           </Button>
-          <Button onClick={() => onUnStake({
-            fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
-            wallet: window.odin.store.getState().localStorage.WALLETS[0],
-          })}>
+          <Button
+            onClick={() =>
+              onUnStake({
+                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+                wallet: window.odin.store.getState().localStorage.WALLETS[0],
+              })
+            }
+          >
             UnStake
           </Button>
         </Flex>
         <Flex>
-          <Button onClick={() => onStakeAndRestart({
-            fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
-            wallet: window.odin.store.getState().localStorage.WALLETS[0],
-            cennzNetRestartOptions: {
-              isValidatorMode: true,
-              key: '0x0b5660f358b4c54b42ab766d51bafa76d54886e92cbd7773057448dd79f2d91d',
+          <Button
+            onClick={() =>
+              onStakeAndRestart({
+                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+                wallet: window.odin.store.getState().localStorage.WALLETS[0],
+                cennzNetRestartOptions: {
+                  isValidatorMode: true,
+                  key: '0x0b5660f358b4c54b42ab766d51bafa76d54886e92cbd7773057448dd79f2d91d',
+                },
+              })
             }
-          })}>
+          >
             Stake and restart
           </Button>
         </Flex>
@@ -195,6 +214,17 @@ const DevPage = ({
         </Flex>
         <Flex>
           <Button onClick={() => onTestToaster()}>Toaster Test</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onGetValidators()}>Validators</Button>
+          <Button onClick={() => onGetIntensions()}>Intensions</Button>
+          <Button onClick={() => onGetIntentionsBalances()}>IntentionsBalances</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => onGetSessioProgress()}>Session Progress</Button>
+          <Button onClick={() => onGetSessionLength()}>Session Length</Button>
+          <Button onClick={() => onGetEraProgress()}>EraProgress</Button>
+          <Button onClick={() => onGetEraLength()}>EraLength</Button>
         </Flex>
       </MainContent>
       <Toaster />

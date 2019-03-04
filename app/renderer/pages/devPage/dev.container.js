@@ -7,6 +7,7 @@ import ROUTES from 'renderer/constants/routes';
 import streamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { ApiPromise } from '@polkadot/api';
 
 const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, nodeStateStore }) => ({
   nodeSystem,
@@ -104,6 +105,7 @@ const mapDispatchToProps = dispatch => ({
   onTestToaster: () => {
     dispatch({ type: types.successToaster.triggered });
   },
+
   onStake: payload => {
     window.odin.api.cennz.doStake(payload.wallet, payload.fromAddress, '');
   },
@@ -121,6 +123,47 @@ const mapDispatchToProps = dispatch => ({
     // no-op for now
   },
 
+  onGetEraLength: () => {
+    window.odin.api.cennz.getEraLength(eraLength =>
+      Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`)
+    );
+  },
+
+  onGetEraProgress: () => {
+    window.odin.api.cennz.getEraProgress(EraProgress =>
+      Logger.debug(`CennznetApi::getEraProgress success: ${EraProgress}`)
+    );
+  },
+
+  onGetValidators: () => {
+    window.odin.api.cennz.getValidators(validators =>
+      Logger.debug(`CennznetApi::getValidators success: ${validators}`)
+    );
+  },
+
+  onGetSessioProgress: () => {
+    window.odin.api.cennz.getSessionProgress(sessionProgress =>
+      Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`)
+    );
+  },
+
+  onGetSessionLength: () => {
+    window.odin.api.cennz.getSessionLength(sessionLength =>
+      Logger.debug(`CennznetApi::getSessionLength success: ${sessionLength}`)
+    );
+  },
+
+  onGetIntensions: () => {
+    window.odin.api.cennz.getIntentions(intensions =>
+      Logger.debug(`CennznetApi::getIntentions success: ${intensions}`)
+    );
+  },
+
+  // onGetIntentionsBalances: () => {
+  //   window.odin.api.cennz.getIntentionsBalances(intensionsBalances =>
+  //     Logger.debug(`CennznetApi::getIntentionsBalances success: ${intensionsBalances}`)
+  //   );
+  // },
 });
 
 export default connect(
