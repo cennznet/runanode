@@ -14,6 +14,7 @@ const NoDataText = styled.div`
 `;
 
 const ValidatorsList = ({ validators }) => {
+  const titleSuffix = validators.length ? `(${validators.length})` : '';
   return (
     <ListWrapper>
       <Table
@@ -30,7 +31,7 @@ const ValidatorsList = ({ validators }) => {
                   textAlign: 'left',
                 }}
               >
-                Validators
+                {`Validators ${titleSuffix}`}
               </div>
             ),
             id: 'validators',

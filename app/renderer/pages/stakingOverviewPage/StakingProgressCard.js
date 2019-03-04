@@ -3,7 +3,6 @@ import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
-import withContainer from './container';
 
 const StakingProgressWrapper = styled.div`
   height: 5.5rem;

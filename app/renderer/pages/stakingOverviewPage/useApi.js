@@ -12,7 +12,7 @@ import { useState, useEffect } from 'react';
  * didCancel varibales
  * https://github.com/facebook/react/issues/14369
  */
-const withOdinApi = apiSection => {
+const useApi = apiSection => {
   const [sectionData, setSectionData] = useState(null);
 
   useEffect(() => {
@@ -36,4 +36,4 @@ const withOdinApi = apiSection => {
   return sectionData;
 };
 
-export default withOdinApi;
+export default useApi;
