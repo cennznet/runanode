@@ -24,7 +24,7 @@ const StakingOverviewPage = ({ subNav }) => {
   );
 
   const sortedIntentions =
-    intentions && intentions.filter(address => !validators.includes(address));
+    validators && intentions && intentions.filter(address => !validators.includes(address));
 
   return (
     <MainLayout subNav={subNav}>
