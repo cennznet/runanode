@@ -84,14 +84,6 @@ const actionTypes = {
   warningToaster: triggerActionTypes('warning_toaster'),
   errorToaster: triggerActionTypes('error_toaster'),
   infoToaster: triggerActionTypes('info_toaster'),
-
-  /** Staking */
-  updateValidators: triggerActionTypes('update_validators'),
-  updateIntentions: triggerActionTypes('update_intensions'),
-  updateEraLength: triggerActionTypes('update_era_length'),
-  updateEraProgress: triggerActionTypes('update_era_progress'),
-  updateSessionLength: triggerActionTypes('update_session_length'),
-  updateSessionProgress: triggerActionTypes('update_session_progress'),
 };
 
 export default actionTypes;

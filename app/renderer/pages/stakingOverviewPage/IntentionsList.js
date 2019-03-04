@@ -14,6 +14,7 @@ const NoDataText = styled.div`
 `;
 
 const IntentionsList = ({ intentions }) => {
+  const titleSuffix = intentions.length ? `(${intentions.length})` : '';
   return (
     <ListWrapper>
       <Table
@@ -30,7 +31,7 @@ const IntentionsList = ({ intentions }) => {
                   textAlign: 'left',
                 }}
               >
-                Next Up
+                {`Pool ${titleSuffix}`}
               </div>
             ),
             id: 'intentions',
