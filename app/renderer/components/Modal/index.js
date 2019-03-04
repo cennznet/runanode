@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors, media } from 'renderer/theme';
 
 const Modal = ({
   isOpen,
@@ -46,9 +46,7 @@ const StyledModal = styled(Modal)`
   &__content {
     position: absolute;
     border-radius: 3px;
-    min-width: ${p => p.minWidth};
     min-height: ${p => p.minHeight};
-    max-width: ${p => p.maxWidth};
     max-height: ${p => p.maxHeight};
     background-color: ${p => p.backgroundColor};
     box-shadow: ${p => p.boxShadow};
@@ -57,6 +55,18 @@ const StyledModal = styled(Modal)`
     flex-direction: column;
     justify-content: space-between;
 
+    ${media.smDown`
+      width: 98%;
+    `}
+
+    ${media.smUp`
+      width: 30rem;
+    `}
+
+    ${media.mdUp`
+      width: 48rem;
+    `}
+
     :focus {
       outline: 0;
     }
@@ -64,9 +74,7 @@ const StyledModal = styled(Modal)`
 `;
 
 StyledModal.defaultProps = {
-  minWidth: '50vw',
   minHeight: '25vh',
-  maxWidth: '70vw',
   maxHeight: '50vh',
   backgroundColor: '#040C40',
   boxShadow: `0 2px 4px 0 ${colors.N900}`,

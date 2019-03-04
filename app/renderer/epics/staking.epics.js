@@ -1,97 +1,106 @@
-import { EMPTY, from, of, zip } from 'rxjs';
-import { mergeMap, map, concat, tap, mapTo, filter } from 'rxjs/operators';
+import { EMPTY, of } from 'rxjs';
+import { mergeMap, map, takeUntil, withLatestFrom, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 import { ofType } from 'redux-observable';
 import assert from 'assert';
-
+import R from 'ramda';
+import { storageKeys, setStorage } from 'renderer/api/utils/storage';
 import types from 'renderer/types';
 import chainEpics from 'renderer/epics/chainEpics';
 import streamConstants from 'renderer/constants/stream';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import { Logger } from 'renderer/utils/logging';
+import ROUTES from 'renderer/constants/routes';
 
-
-const stakingAndRestartNodeChain = chainEpics(
-  types.stakeAndRestartNode.triggered,
-  types.stakingStopStream.requested,
-  payload => payload
-);
-
-const stakingStopStreamEpic = action$ =>
+const triggerStakingEpic = action$ =>
   action$.pipe(
-    ofType(types.stakingStopStream.requested),
-    mergeMap(({ payload }) => {
-      return of(
-        {
-          type: types.syncStream.requested,
-          payload: { command: streamConstants.DISCONNECT },
-        },
-        {
-          type: types.syncRemoteStream.requested,
-          payload: { command: streamConstants.DISCONNECT },
-        },
-        {
-          type: types.stakingStopStream.completed,
-          payload,
-        }
+    ofType(types.stakeAndRestartNode.triggered),
+    mergeMap(async ({ payload }) => {
+      const { wallet, stashAccountAddress, passphrase } = payload;
+
+      const seed = await window.odin.api.cennz.getSeedFromWalletAccount(
+        wallet,
+        stashAccountAddress,
+        passphrase
       );
+
+      assert(seed, 'fail to get seed from wallet account');
+
+      const cennzNetRestartOptions = { key: seed, isValidatorMode: true };
+
+      const channelResponse = await restartCennzNetNodeChannel.send(cennzNetRestartOptions);
+
+      return { type: types.sendStakingExtrinsic.triggered, payload };
+
+      // Once running => sendStakeTx => navigate to overview => watchTx => chain toaster => chain setStorage
+
+      // return of({
+      //   type: types.setStorage.requested,
+      //   payload: { key: storageKeys.STAKING, value: { stashAccountAddress } }, // TODO: store account type
+      // })
+      // .pipe(
+      //   concat(of({ type: types.navigation.triggered, payload: ROUTES.STAKEING })),
+      //   concat(of({ type: types.navigation.triggered, payload: ROUTES.STAKEING.OVERVIEW }))
+      // );
     })
   );
 
-const stakingRestartNodeWithNetworkChain = chainEpics(
-  types.stakingStopStream.completed,
-  types.stakingRestartNode.requested,
-  payload => payload
-);
-
-const stakingRestartNodeEpic = action$ =>
+const sendStakingExtrinsicEpic = action$ =>
   action$.pipe(
-    ofType(types.stakingRestartNode.requested),
-    tap( async ({ payload }) => {
-      const { cennzNetRestartOptions, wallet, fromAddress } = payload;
+    // ofType(types.sendStakingExtrinsic.triggered),
+    // mergeMap(async ({ payload }) => {
+    ofType(types.nodeStateChange.triggered),
+    withLatestFrom(action$.ofType(types.sendStakingExtrinsic.triggered)),
+    mergeMap(async ([nodeStateChangeAction, sendStakingExtrinsicAction]) => {
+      if (
+        nodeStateChangeAction.payload === 'running' &&
+        R.has('wallet')(sendStakingExtrinsicAction.payload)
+      ) {
+        // if (payload) {
+        const { wallet, stashAccountAddress, passphrase } = sendStakingExtrinsicAction.payload;
+        const extrinsicHash = await window.odin.api.cennz.doStake(
+          wallet,
+          stashAccountAddress,
+          passphrase
+        );
+        assert(extrinsicHash, 'Failed to get staking extrinsicHash');
 
-      // send staking extrinsic
-      const txHash = await window.odin.api.cennz.doStake(wallet, fromAddress, '');
-      Logger.debug(`txHash: ${txHash}`);
-      assert(txHash, 'missing txHash');
+        return {
+          type: types.subscribeExtrinsicStatus.triggered,
+          payload: {
+            extrinsicHash,
+            type: 'STAKING',
+          },
+        };
+      }
 
-      // retreat wallet seed
-      const seed = await window.odin.api.cennz.getSeedFromWalletAccount(wallet, fromAddress, '');
-      assert(seed, 'fail to getSeedFromWalletAccount');
-      cennzNetRestartOptions.key = seed;
-
-      // restart node in validator mode
-      restartCennzNetNodeChannel.send(cennzNetRestartOptions);
+      return { type: '' };
     }),
-    mergeMap(() =>
-      of(
-        {
-          type: types.syncStream.requested,
-          payload: { command: streamConstants.CONNECT },
-        },
-        {
-          type: types.syncRemoteStream.requested,
-          payload: { command: streamConstants.CONNECT },
-        },
-        {
-          type: types.nodeWsSystemChainPolling.requested,
-        },
-        {
-          type: types.stakingRestartNode.completed,
-        }
-      )
-    )
+    catchError(err => {
+      return of({
+        type: types.errorToaster.triggered,
+        payload:
+          err instanceof assert.AssertionError ? err.message : 'Failed to send staking extrinsic',
+      });
+    })
+  );
+const watchExtrinsicEpic = action$ =>
+  action$.pipe(
+    ofType(types.subscribeExtrinsicStatus.triggered),
+    mergeMap(({ payload: { extrinsicHash } }) => {
+      assert(extrinsicHash, 'failed to get staking extrinsicHash');
+
+      return Observable.create(observer => {
+        window.odin.api.cennz.api.rpc.author.submitAndWatchExtrinsic(extrinsicHash, status => {
+          observer.next(status);
+        });
+      }).pipe(
+        map(status => {
+          return EMPTY;
+        })
+      );
+    }),
+    takeUntil(action$.ofType(types.unsubscribeExtrinsicStatus.triggered))
   );
 
-// const chainToasterAfterRestartNodeEpic = chainEpics(
-//   types.stakingRestartNode.completed,
-//   types.successToaster.triggered,
-//   'Wallet has been connected.'
-// );
-
-export default [
-  stakingAndRestartNodeChain,
-  stakingStopStreamEpic,
-  stakingRestartNodeWithNetworkChain,
-  stakingRestartNodeEpic,
-  // chainToasterAfterRestartNodeEpic,
-];
+export default [triggerStakingEpic, sendStakingExtrinsicEpic, watchExtrinsicEpic];
