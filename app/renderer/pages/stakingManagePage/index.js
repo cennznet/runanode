@@ -9,10 +9,15 @@ import ClipboardShareLinks from '../wallet/account/transferSectionPage/Clipboard
 import UnStakeWarningModal from './UnStakeWarningModal';
 import CennznetWallet from '../../api/wallets/CennznetWallet';
 import CennznetWalletAccount from '../../api/wallets/CennznetWalletAccount';
+import ChangeStakingPreferenceModal from './ChangeStakingPreferenceModal';
 
 const UnStakeButton = styled(Button)`
   position: absolute;
   right: 0rem;
+`;
+
+
+const ChangePreferenceButton = styled(Button)`
 `;
 
 const Subheading = ({ account, wallet }) => {
@@ -40,11 +45,12 @@ const Subheading = ({ account, wallet }) => {
   );
 };
 
-const StakingStakePage = ({ subNav, onUnStake }) => {
+const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
   // TODO fetch from saved stake account value
   const stakingWallet: CennznetWallet = window.odin.store.getState().localStorage.WALLETS[0];
   const stakingAccount: CennznetWalletAccount = window.odin.store.getState().localStorage.WALLETS[0].accounts['5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv'];
   const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
+  const [isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen] = useState(false);
 
   return (
     <MainLayout subNav={subNav}>
@@ -56,9 +62,11 @@ const StakingStakePage = ({ subNav, onUnStake }) => {
         </PageHeading>
         <div className="content">
           content
+          <ChangePreferenceButton onClick={() => setChangeStakingPreferenceModalOpen(true)}>Change preference</ChangePreferenceButton>
         </div>
       </MainContent>
       <UnStakeWarningModal {...{isUnStakeWarningModalOpen, setUnStakeWarningModalOpen, onUnStake, stakingWallet, stakingAccount}}/>
+      <ChangeStakingPreferenceModal {...{isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen, stakingWallet, stakingAccount, onSaveStakingPreferences }} />
     </MainLayout>
   );
 };

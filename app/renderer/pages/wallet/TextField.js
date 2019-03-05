@@ -36,6 +36,8 @@ const TextField = ({
   width,
   minWidth,
   readOnly = false,
+  suffix,
+  append,
 }) => {
   const { name, value, onChange, onBlur } = field;
   const { touched, errors } = form;
@@ -46,7 +48,7 @@ const TextField = ({
       {labelText && <Label htmlFor={name}>{labelText}</Label>}
       <Input
         value={value || ''}
-        {...{ placeholder, name, onChange, onBlur }}
+        {...{ placeholder, name, onChange, onBlur, suffix, append }}
         valid={fieldTouched && !readOnly ? (noTickShow && !fieldError ? null : !fieldError) : null}
         readOnly={readOnly || false}
       />

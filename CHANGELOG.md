@@ -8,6 +8,7 @@
 - Add Staking routes;
 - able to do staking and restart node
 - User able to unstake
+- able to save staking preference
 
 ### Fixes
 
