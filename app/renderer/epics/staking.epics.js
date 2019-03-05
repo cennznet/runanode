@@ -82,6 +82,37 @@ const stakingRestartNodeEpic = action$ =>
     )
   );
 
+const stakingSavePreferenceEpic = action$ =>
+  action$.pipe(
+    ofType(types.stakingSavePreferences.requested),
+    mergeMap(async ({ payload }) => {
+      Logger.debug(`stakingSavePreferenceEpic: ${JSON.stringify(payload)}`);
+      const intentionIndex = await window.odin.api.cennz.getIntentionIndex(payload.address);
+      Logger.debug(`intentionIndex: ${intentionIndex}`);
+      if(intentionIndex > 0) {
+        const { wallet, address } = payload.wallet;
+        const prefs = {
+          unstakeThreshold: payload.unStakeThreshold,
+          validatorPayment: payload.paymentPreferences,
+        };
+        const txHash = await window.odin.api.cennz.saveStakingPreferences(
+          wallet,
+          prefs,
+          address,
+        );
+        Logger.debug(`txHash: ${txHash}`);
+        assert(txHash, 'missing txHash');
+        return {
+          type: types.stakingSavePreferences.completed,
+          payload: txHash,
+        };
+      }
+      return { type: types.stakingSavePreferences.failed };
+    })
+  );
+
+
+
 // const chainToasterAfterRestartNodeEpic = chainEpics(
 //   types.stakingRestartNode.completed,
 //   types.successToaster.triggered,
@@ -93,5 +124,6 @@ export default [
   stakingStopStreamEpic,
   stakingRestartNodeWithNetworkChain,
   stakingRestartNodeEpic,
+  stakingSavePreferenceEpic,
   // chainToasterAfterRestartNodeEpic,
 ];
