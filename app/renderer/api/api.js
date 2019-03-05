@@ -512,6 +512,12 @@ export default class CennzApi {
     }
   };
 
+  /**
+   * @param wallet
+   * @param prefs
+   * @param accountAddress
+   * @returns {Promise<CodecResult>}
+   */
   saveStakingPreferences = async (wallet: CennznetWallet, prefs: any, accountAddress: string): Promise<any> => {
     Logger.debug('CennznetApi::saveStakingPreferences called');
     Logger.debug(`wallet: ${JSON.stringify(wallet)}`);
