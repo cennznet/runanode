@@ -57,7 +57,10 @@ const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setC
         render={({handleSubmit, ...formProps}) => {
           const { isValid, values, errors, touched } = formProps;
           return (
-            <Form onSubmit={handleSubmit}>
+            <Form
+              onSubmit={handleSubmit}
+              style={{ display: 'none' }} // without this will change the manage page layout
+            >
               <div>
                 <Modal isOpen={isChangeStakingPreferenceModalOpen}>
                   <ModalBody>

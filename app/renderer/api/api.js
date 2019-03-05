@@ -514,6 +514,7 @@ export default class CennzApi {
 
   saveStakingPreferences = async (wallet: CennznetWallet, prefs: any, accountAddress: string): Promise<any> => {
     Logger.debug('CennznetApi::saveStakingPreferences called');
+    Logger.debug(`wallet: ${JSON.stringify(wallet)}`);
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(''); // TODO switch to pin code
