@@ -14,7 +14,8 @@ const getTosterType = state => {
   if (state === CennzNetNodeStates.RUNNING) {
     return types.successToaster.triggered;
   }
-  if (state === CennzNetNodeStates.CRASHED ||
+  if (
+    state === CennzNetNodeStates.CRASHED ||
     state === CennzNetNodeStates.ERRORED ||
     state === CennzNetNodeStates.UNRECOVERABLE
   ) {
@@ -28,14 +29,12 @@ const chainToasterAfterNodeStateChangeEpic = action$ =>
     ofType(types.nodeStateChange.triggered),
     mergeMap(({ payload }) => {
       if (isDev) {
-        return of(
-          {
-            type: getTosterType(payload),
-            payload: `Node state changed: ${JSON.stringify(payload)}`,
-          },
-        );
+        return of({
+          type: getTosterType(payload),
+          payload: `Node is ${payload}`,
+        });
       }
-    }),
+    })
   );
 
 const chainToasterAfterSavePreferencesCompletedEpic = chainEpics(

@@ -4,6 +4,7 @@ import Checkbox from 'components/Checkbox';
 import Clipboard from 'components/Clipboard';
 import Form from 'components/Form';
 import FileUploader from 'components/FileUploader';
+import Ellipsis from 'components/Ellipsis';
 import Hint from 'components/Hint';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
@@ -48,4 +49,5 @@ export {
   TosContent,
   Radio,
   Toaster,
+  Ellipsis,
 };

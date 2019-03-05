@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import { Accordion } from 'react-sanfona';
 import { NavLink } from 'react-router-dom';
-import { ellipsis } from 'polished';
+import Ellipsis from 'components/Ellipsis';
 import { colors } from 'renderer/theme';
 import AccordionItem from './AccordionItem';
 import AccordionItemTitle from './AccordionItemTitle';
@@ -28,14 +28,6 @@ const NavItem = styled(NavLink)`
     background-color: ${colors.V500};
   }
 `;
-
-const Ellipsis = ({ children }) => {
-  const formattedText =
-    children.length > 17
-      ? children.substr(0, 12) + ' ... ' + children.substr(children.length - 5, children.length)
-      : children;
-  return <span>{formattedText}</span>;
-};
 
 const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
   return (
