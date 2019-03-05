@@ -46,21 +46,21 @@ const StakingOverviewPage = ({ subNav }) => {
   const getBalance = async address =>
     await window.odin.api.cennz.getGenericAssetFreeBalance('0', address);
 
-  const [intentionsBalances, SetIntentionsBalances] = useState([]);
-  useEffect(() => {
-    if (intentions) {
-      const sortedIntentions = intentions.reduce(async (result, currentIntention) => {
-        const cennzBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
-          '0',
-          currentIntention
-        );
-        console.log('cennzBalance', cennzBalance);
-        console.log('result', result);
-        return result && result.concat({ address: cennzBalance });
-      }, []);
-      console.log('lolo', sortedIntentions);
-    }
-  }, [intentions]);
+  // const [intentionsBalances, SetIntentionsBalances] = useState([]);
+  // useEffect(() => {
+  //   if (intentions) {
+  //     const sortedIntentions = intentions.reduce(async (result, currentIntention) => {
+  //       const cennzBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
+  //         '0',
+  //         currentIntention
+  //       );
+  //       console.log('cennzBalance', cennzBalance);
+  //       console.log('result', result);
+  //       return result && result.concat({ address: cennzBalance });
+  //     }, []);
+  //     console.log('lolo', sortedIntentions);
+  //   }
+  // }, [intentions]);
 
   // TODO: Reorder the validator List with staking account
   const sortedValidators = validators || [];
