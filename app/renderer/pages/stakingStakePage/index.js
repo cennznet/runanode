@@ -1,6 +1,6 @@
 import React from 'react';
 import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading, PageFooter } from 'components';
+import { PageHeading, PageFooter, PageSpinner } from 'components';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
 import Stake from './Stake';
@@ -16,7 +16,9 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   if (uiState.isProcessing) {
     return (
       <MainLayout subNav={subNav}>
-        <MainContent display="flex">{uiState.message}</MainContent>
+        <MainContent display="flex">
+          <PageSpinner message={uiState.message} />
+        </MainContent>
       </MainLayout>
     );
   }

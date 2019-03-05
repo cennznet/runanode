@@ -3,8 +3,8 @@ import types from '../types';
 
 const DEFAULT_STATE = {
   uiState: {
-    isProcessing: true,
-    message: 'loading...',
+    isProcessing: false,
+    message: '',
   },
 };
 
