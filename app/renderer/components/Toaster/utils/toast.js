@@ -11,7 +11,6 @@ import IconInfo from './IconInfo';
 
 const ToasterInfoWrapper = styled.div`
   display: flex;
-  height: 5rem;
   align-items: center;
 `;
 
