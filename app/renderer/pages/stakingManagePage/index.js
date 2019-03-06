@@ -76,15 +76,19 @@ const Subheading = ({ account, wallet }) => {
   );
 };
 
-const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking }) => {
+const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
 
   // TODO fetch from saved stake account value
   const stakingWallet: CennznetWallet = window.odin.store.getState().localStorage.WALLETS[0];
   const stakingAccountAddress = Object.keys(window.odin.store.getState().localStorage.WALLETS[0].accounts)[0];
   const stakingAccount: CennznetWalletAccount = window.odin.store.getState().localStorage.WALLETS[0].accounts[stakingAccountAddress];
 
-  const [intentions] = useApis(
-    'getIntentions'
+  const [intentions, validatorPreferences] = useApis(
+    'getIntentions',
+    [
+      'getValidatorPreferences',
+      { noSubscription: false, params: [stakingAccountAddress] },
+    ]
   );
 
   const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
@@ -107,11 +111,11 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking
             </Header>
             <Item>
               <Left>Unstake threshold</Left>
-              <Right>{staking.manage.stakingPreference.unStakeThreshold} warnings</Right>
+              <Right>{validatorPreferences ? validatorPreferences.unstakeThreshold.toString() : ''} warnings</Right>
             </Item>
             <Item>
               <Left>Validator payment</Left>
-              <Right>{staking.manage.stakingPreference.validatorPayment} CENNZ</Right>
+              <Right>{validatorPreferences ? validatorPreferences.validatorPayment.toString() : ''} CENNZ</Right>
             </Item>
             <Item>
               <Left />

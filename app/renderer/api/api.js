@@ -542,12 +542,15 @@ export default class CennzApi {
 
   /**
    * @param accountAddress
+   * @param callbackFn
    * @returns {Promise<ValidatorPrefs>}
    */
-  getValidatorPreferences = async (accountAddress: string): Promise<ValidatorPrefs> => {
+  getValidatorPreferences = async (accountAddress: string, callbackFn: Function): Promise<ValidatorPrefs> => {
     Logger.debug('CennznetApi::getValidatorPreferences called');
+    Logger.debug(`accountAddress: ${accountAddress}`);
+    Logger.debug(`callbackFn: ${callbackFn}`);
     try {
-      const validatorPreferences = await this.api.query.staking.validatorPreferences(accountAddress);
+      const validatorPreferences = await this.api.query.staking.validatorPreferences(accountAddress, callbackFn);
       Logger.debug(`validatorPreferences: ${JSON.stringify(validatorPreferences)}`);
       return validatorPreferences;
     } catch (error) {
