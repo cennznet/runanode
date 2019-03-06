@@ -9,7 +9,7 @@ import ROUTES from 'renderer/constants/routes';
 
 const navItems = [
   { label: 'Overview', link: ROUTES.STAKING.OVERVIEW },
-  { label: 'Stake', link: ROUTES.STAKING.STAKE },
+  { label: 'Start to stake', link: ROUTES.STAKING.STAKE },
   { label: 'Manage', link: ROUTES.STAKING.MANAGE },
 ];
 
@@ -19,7 +19,7 @@ const subNav = (
   </SubNav>
 );
 
-const SettingsRoutes = () => (
+const StakingRoutes = () => (
   <Switch>
     <Route
       path={ROUTES.STAKING.OVERVIEW}
@@ -36,4 +36,4 @@ const SettingsRoutes = () => (
   </Switch>
 );
 
-export default SettingsRoutes;
+export default StakingRoutes;

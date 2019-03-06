@@ -85,7 +85,9 @@ const DevPage = ({
           <Button
             onClick={() =>
               onStake({
-                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+                stashAccountAddress: Object.keys(
+                  window.odin.store.getState().localStorage.WALLETS[0].accounts
+                )[0],
                 wallet: window.odin.store.getState().localStorage.WALLETS[0],
               })
             }
@@ -95,7 +97,9 @@ const DevPage = ({
           <Button
             onClick={() =>
               onUnStake({
-                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
+                fromAddress: Object.keys(
+                  window.odin.store.getState().localStorage.WALLETS[0].accounts
+                )[0],
                 wallet: window.odin.store.getState().localStorage.WALLETS[0],
               })
             }
@@ -107,12 +111,10 @@ const DevPage = ({
           <Button
             onClick={() =>
               onStakeAndRestart({
-                fromAddress: '5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv',
                 wallet: window.odin.store.getState().localStorage.WALLETS[0],
-                cennzNetRestartOptions: {
-                  isValidatorMode: true,
-                  key: '0x0b5660f358b4c54b42ab766d51bafa76d54886e92cbd7773057448dd79f2d91d',
-                },
+                stashAccountAddress: Object.keys(
+                  window.odin.store.getState().localStorage.WALLETS[0].accounts
+                )[0],
               })
             }
           >

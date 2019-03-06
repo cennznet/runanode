@@ -46,8 +46,7 @@ const actionTypes = {
 
   /* Staking */
   stakeAndRestartNode: triggerActionTypes('stake_and_restart_node'),
-  stakingStopStream: apiActionTypes('staking_stop_stream'),
-  stakingRestartNode: apiActionTypes('staking_restart_network'),
+  sendStakingExtrinsic: triggerActionTypes('send_staking_extrinsic'),
 
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
@@ -64,6 +63,10 @@ const actionTypes = {
   nodeWsChainGetHeaderPolling: apiActionTypes('node_ws_chain_getHeader_polling'),
   nodeWsChainGetHeader: apiActionTypes('node_ws_chain_getHeader'),
   nodeWsRemoteChainGetHeader: apiActionTypes('node_ws_remote_chain_getHeader'),
+
+  /** Extrinsic */
+  subscribeExtrinsicStatus: triggerActionTypes('subscribe_extrinsic_status'),
+  unsubscribeExtrinsicStatus: triggerActionTypes('unsubscribe_extrinsic_status'),
 
   /* Sync Stream */
   syncStream: apiActionTypes('sync_stream'),
