@@ -8,8 +8,8 @@ nodeArgs:
   - --pruning=archive
 #  - --name
 #  - Odin-test
-#  - --chain
-#  - ./dist/local.json
+  - --chain
+  - ./genesis/local/local-rimu.json
 
 walletLogging: true
 statePath: ${ODIN_USER_DATA_DIRECTORY}/Odin

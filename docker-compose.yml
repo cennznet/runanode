@@ -1,7 +1,7 @@
 version: '3'
 services:
   node-0:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.214
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.227
     volumes:
       - "./target/node_0:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
@@ -20,11 +20,11 @@ services:
       - --rpc-external
       - --telemetry-url=ws://telemetry:1024
     ports:
-      - "9933:9933"
-      - "9944:9944"
+      - "19933:9933"
+      - "19944:9944"
       - "30334:30333"
   node-1:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.214
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.227
     volumes:
       - "./target/node_1:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
@@ -45,7 +45,7 @@ services:
     ports:
       - "30335:30333"
   node-2:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.214
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:1.0.227
     volumes:
       - "./target/node_2:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
