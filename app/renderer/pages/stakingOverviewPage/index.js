@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading } from 'components';
+import { PageHeading, Button } from 'components';
 import styled from 'styled-components';
 import StakingProgressCard from './StakingProgressCard';
+import withContainer from './container';
 import ValidatorsList from './ValidatorsList';
 import IntentionsList from './IntentionsList';
 import useApis from './useApis';
 import useApi from './useApi';
+
+const PageTitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const ListsWrapper = styled.div`
   margin: 2rem 0;
@@ -14,7 +20,7 @@ const ListsWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const StakingOverviewPage = ({ subNav }) => {
+const StakingOverviewPage = ({ subNav, onClickStakeButton }) => {
   const [
     eraProgress,
     eraLength,
@@ -72,7 +78,14 @@ const StakingOverviewPage = ({ subNav }) => {
   return (
     <MainLayout subNav={subNav}>
       <MainContent>
-        <PageHeading>Staking overview</PageHeading>
+        <PageHeading subHeading="Here you can view when the next era is, and how your staking performs among other validators.">
+          <PageTitleWrapper>
+            <div>Staking overview</div>
+            <Button size="lg" onClick={() => onClickStakeButton()}>
+              Stake
+            </Button>
+          </PageTitleWrapper>
+        </PageHeading>
         <StakingProgressCard
           eraProgress={eraProgress}
           eraLength={eraLength}
@@ -88,4 +101,4 @@ const StakingOverviewPage = ({ subNav }) => {
   );
 };
 
-export default StakingOverviewPage;
+export default withContainer(StakingOverviewPage);
