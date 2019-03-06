@@ -4,7 +4,6 @@ import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { STEPS } from '../constants';
 import SeedPhraseList from './SeedPhraseList';
 import StoreSeedPhraseModal from './StoreWarningModal';
 import SeedPhraseDownloadModal from './SeedPhraseDownloadModal';
@@ -37,8 +36,7 @@ const SeedPhrasePage = props => {
           color="secondary"
           onClick={() => {
             setSeedPhaseDownloadModalOpen(true);
-            }
-          }
+          }}
         >
           Download
           <FontAwesomeIcon style={{ marginLeft: '0.5rem' }} icon="download" />

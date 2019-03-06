@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize } from 'react-localize-redux';
 import types from 'renderer/types';
@@ -18,6 +18,7 @@ import WalletRootPage from 'renderer/pages/wallet/rootPage';
 import StakingRoutes from 'renderer/routes/StakingRoutes';
 import SettingsRoutes from 'renderer/routes/SettingsRoutes';
 import ROUTES from 'renderer/constants/routes';
+import Route from './Route';
 
 const setupLocalize = props => {
   props.initialize({

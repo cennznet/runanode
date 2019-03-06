@@ -107,10 +107,10 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onStake: payload => {
-    window.odin.api.cennz.doStake(payload.wallet, payload.fromAddress, '');
+    window.odin.api.cennz.doStake(payload.wallet, payload.stashAccountAddress, '');
   },
   onStakeAndRestart: payload => {
-    const { cennzNetRestartOptions, wallet, fromAddress } = payload;
+    const { cennzNetRestartOptions, wallet, stashAccountAddress } = payload;
     // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
     dispatch({ type: types.stakeAndRestartNode.triggered, payload });
   },
@@ -122,7 +122,6 @@ const mapDispatchToProps = dispatch => ({
     // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
     // no-op for now
   },
-
   onGetEraLength: () => {
     window.odin.api.cennz.getEraLength(eraLength =>
       Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`)

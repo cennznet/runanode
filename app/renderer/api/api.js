@@ -473,11 +473,7 @@ export default class CennzApi {
    * @param passphrase
    * @returns {Promise<Hash>}
    */
-  doStake = async (
-    wallet: CennznetWallet,
-    fromWalletAddress: string,
-    passphrase: string
-  ): Promise<Hash> => {
+  doStake = async (wallet: CennznetWallet, stashAccountAddress: string, passphrase: string): Promise<Hash> => {
     Logger.debug('CennznetApi::doStake called');
     try {
       const originalWallet = this.reloadWallet(wallet);
@@ -487,7 +483,7 @@ export default class CennzApi {
       this.api.setSigner(originalWallet);
       Logger.debug('setSigner');
 
-      const txHash = await this.api.tx.staking.stake().signAndSend(fromWalletAddress);
+      const txHash = await this.api.tx.staking.stake().signAndSend(stashAccountAddress);
       Logger.debug(`CennznetApi::doStake txHash ${txHash}`);
       return txHash;
     } catch (error) {

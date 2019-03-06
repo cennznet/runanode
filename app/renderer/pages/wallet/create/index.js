@@ -1,6 +1,5 @@
 import React from 'react';
 import { MainContent, MainLayout } from 'components/layout';
-import { Button, PageHeading } from 'components';
 import withContainer from './container';
 import NameInputPage from './nameInputPage';
 import SeedPhrasePage from './seedPhrasePage';
