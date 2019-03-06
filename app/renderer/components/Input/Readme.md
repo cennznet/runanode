@@ -11,10 +11,17 @@ const button = (
     Submit
   </Button>
 );
-<DemoFlex justifyContent="space-between">
+<DemoFlex>
   <Input suffix={button} />
   <Input suffix="spinner" />
-  <Input valid />
-  <Input valid={false} />
 </DemoFlex>;
+```
+
+```jsx
+<DemoFlex justifyContent="space-between">
+  <Input valid />
+  <Input valid showValidIcon />
+  <Input valid={false} />
+  <Input valid={false} showValidIcon />
+</DemoFlex>
 ```
