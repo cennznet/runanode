@@ -26,7 +26,7 @@ const enhance = lifecycle({
     // TODO get current staking account info from redux store
     const { onGetValidatorPreferences } = this.props;
     const stakingAccountAddress = Object.keys(window.odin.store.getState().localStorage.WALLETS[0].accounts)[0];
-    onGetValidatorPreferences(stakingAccountAddress);
+    // onGetValidatorPreferences(stakingAccountAddress);
   },
 });
 
