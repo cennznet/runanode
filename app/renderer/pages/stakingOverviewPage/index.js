@@ -58,7 +58,6 @@ const StakingOverviewPage = ({ subNav }) => {
     }
   }, [intentions]);
 
-  // TODO: Reorder the validator List with staking account
   const sortedValidators =
     intentionsWithBalances && validators
       ? intentionsWithBalances.filter(intentionWithBalance =>
@@ -66,7 +65,6 @@ const StakingOverviewPage = ({ subNav }) => {
         )
       : [];
 
-  // TODO: Reorder the intentions List with staking account
   const sortedIntentions = intentionsWithBalances
     ? intentionsWithBalances.filter(address => !sortedValidators.includes(address))
     : [];
