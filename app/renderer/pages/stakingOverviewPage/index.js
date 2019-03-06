@@ -49,16 +49,17 @@ const StakingOverviewPage = ({ subNav }) => {
   // const [intentionsBalances, SetIntentionsBalances] = useState([]);
   // useEffect(() => {
   //   if (intentions) {
-  //     const sortedIntentions = intentions.reduce(async (result, currentIntention) => {
-  //       const cennzBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
-  //         '0',
-  //         currentIntention
-  //       );
-  //       console.log('cennzBalance', cennzBalance);
-  //       console.log('result', result);
-  //       return result && result.concat({ address: cennzBalance });
-  //     }, []);
-  //     console.log('lolo', sortedIntentions);
+  //     const sortedIntentions = Promise.all(
+  //       intentions.map(async intention => {
+  //         const cennzBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
+  //           '0',
+  //           intention
+  //         );
+  //         console.log('cennzBalance', cennzBalance);
+  //         return cennzBalance && { address: intention, cennzBalance: cennzBalance.toString(10) };
+  //       })
+  //     );
+  //     console.log('lolo', Promise.resolve(sortedIntentions));
   //   }
   // }, [intentions]);
 
