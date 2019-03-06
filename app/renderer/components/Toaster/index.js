@@ -45,6 +45,11 @@ const Toaster = styled(CustomToast)`
     background-color: #020835;
     border-radius: 3px;
 
+    .Toastify__toast-body {
+      min-height: 3rem;
+      padding: 1rem 0;
+    }
+
     .Toastify__close-button {
       padding: 1rem;
       font-size: 0.8rem;
