@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, PageHeading, Modal, ModalFooter, ModalBody } from 'components';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as colors from '../../theme/colors';
+
+import { colors } from 'renderer/theme';
 
 const ButtonGroup = styled.div`
   display: flex;
