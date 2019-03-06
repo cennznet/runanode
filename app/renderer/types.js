@@ -15,6 +15,8 @@ const actionTypes = {
   testPage: triggerActionTypes('test_page'),
   homePageLoad: triggerActionTypes('home_page_load'),
   navigation: triggerActionTypes('navigation'),
+  changeAppUiState: triggerActionTypes('change_app_ui_state'),
+  resetAppUiState: triggerActionTypes('reset_app_ui_state'),
 
   enableAnalytics: triggerActionTypes('enable_analytics'),
   disableAnalytics: triggerActionTypes('disable_analytics'),
@@ -45,10 +47,11 @@ const actionTypes = {
   restartNode: triggerActionTypes('restart_network'),
 
   /* Staking */
-  stakeAndRestartNode: triggerActionTypes('stake_and_restart_node'),
+  stake: triggerActionTypes('stake'),
   sendStakingExtrinsic: triggerActionTypes('send_staking_extrinsic'),
   stakingUnStake: apiActionTypes('staking_un_stake'),
   stakingSavePreferences: apiActionTypes('staking_save_preferences'),
+  pendingToSendStakingExtrinsic: triggerActionTypes('pending_to_send_staking_extrinsic'),
 
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),

@@ -1,17 +1,27 @@
 import React from 'react';
 import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading, PageFooter } from 'components';
+import { PageHeading, PageFooter, PageSpinner } from 'components';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
 import Stake from './Stake';
 
-const StakingStakePage = ({ subNav, wallets, onStake }) => {
+const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   const onStakeConfirmed = () =>
     onStake({
       wallet: wallets[0], // TODO fix by user selected account
       stashAccountAddress: Object.keys(wallets[0].accounts)[0],
       passphrase: '',
     });
+
+  if (uiState.isProcessing) {
+    return (
+      <MainLayout subNav={subNav}>
+        <MainContent display="flex">
+          <PageSpinner message={uiState.message} />
+        </MainContent>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout subNav={subNav}>
