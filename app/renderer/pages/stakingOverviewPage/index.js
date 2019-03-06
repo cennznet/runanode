@@ -37,12 +37,38 @@ const StakingOverviewPage = ({ subNav }) => {
     // ]
   );
 
+  /**
+   * Can not use withApis in func
+   * Otherwise: Rendered more hooks than during the previous render.
+   *
+   */
+
+  const [intentionsWithBalances, setIntentionsWithBalances] = useState(null);
+  useEffect(() => {
+    if (intentions) {
+      Promise.all(
+        intentions.map(async intention => {
+          const cennzBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
+            '0',
+            intention
+          );
+          return cennzBalance && { address: intention, cennzBalance: cennzBalance.toString(10) };
+        })
+      ).then(result => setIntentionsWithBalances(result));
+    }
+  }, [intentions]);
+
   // TODO: Reorder the validator List with staking account
-  const sortedValidators = validators || [];
+  const sortedValidators =
+    intentionsWithBalances && validators
+      ? intentionsWithBalances.filter(intentionWithBalance =>
+          validators.includes(intentionWithBalance.address)
+        )
+      : [];
 
   // TODO: Reorder the intentions List with staking account
-  const sortedIntentions = intentions
-    ? intentions.filter(address => !sortedValidators.includes(address))
+  const sortedIntentions = intentionsWithBalances
+    ? intentionsWithBalances.filter(address => !sortedValidators.includes(address))
     : [];
 
   return (
