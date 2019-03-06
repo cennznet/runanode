@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { Button, PageHeading } from 'components';
 import withContainer from './container';
@@ -9,10 +10,15 @@ import ClipboardShareLinks from '../wallet/account/transferSectionPage/Clipboard
 import UnStakeWarningModal from './UnStakeWarningModal';
 import CennznetWallet from '../../api/wallets/CennznetWallet';
 import CennznetWalletAccount from '../../api/wallets/CennznetWalletAccount';
+import ChangeStakingPreferenceModal from './ChangeStakingPreferenceModal';
+import useApis from '../stakingOverviewPage/useApis';
 
 const UnStakeButton = styled(Button)`
   position: absolute;
   right: 0rem;
+`;
+
+const ChangePreferenceButton = styled(Button)`
 `;
 
 const Subheading = ({ account, wallet }) => {
@@ -40,15 +46,27 @@ const Subheading = ({ account, wallet }) => {
   );
 };
 
-const StakingStakePage = ({ subNav, onUnStake }) => {
+const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
+
+
   // TODO fetch from saved stake account value
   const stakingWallet: CennznetWallet = window.odin.store.getState().localStorage.WALLETS[0];
-  const stakingAccount: CennznetWalletAccount = window.odin.store.getState().localStorage.WALLETS[0].accounts['5FrNwaJ62UmCo2WdxxhyUHu9AkuAdmZUs3rduTKALsFsrWFv'];
+  const stakingAccountAddress = Object.keys(window.odin.store.getState().localStorage.WALLETS[0].accounts)[0];
+  const stakingAccount: CennznetWalletAccount = window.odin.store.getState().localStorage.WALLETS[0].accounts[stakingAccountAddress];
+
+
+  const [intentions] = useApis(
+    'getIntentions'
+  );
+
+  const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
+  Logger.debug(`StakingStakePage, intentionsIndex: ${intentionsIndex}`);
   const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
+  const [isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen] = useState(false);
 
   return (
     <MainLayout subNav={subNav}>
-      <MainContent>
+      <MainContent display="flex">
         <UnStakeButton color="danger" onClick={() => setUnStakeWarningModalOpen(true)}>Unstake</UnStakeButton>
         <PageHeading
           subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />}>
@@ -56,9 +74,15 @@ const StakingStakePage = ({ subNav, onUnStake }) => {
         </PageHeading>
         <div className="content">
           content
+          <ChangePreferenceButton
+            onClick={() => setChangeStakingPreferenceModalOpen(true)}
+            disabled={intentionsIndex < 0}>
+            Change preference
+          </ChangePreferenceButton>
         </div>
       </MainContent>
       <UnStakeWarningModal {...{isUnStakeWarningModalOpen, setUnStakeWarningModalOpen, onUnStake, stakingWallet, stakingAccount}}/>
+      <ChangeStakingPreferenceModal {...{isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen, stakingWallet, stakingAccount, onSaveStakingPreferences }} />
     </MainLayout>
   );
 };

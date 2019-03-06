@@ -8,8 +8,8 @@ import Stake from './Stake';
 const StakingStakePage = ({ subNav, wallets, onStake }) => {
   const onStakeConfirmed = () =>
     onStake({
-      wallet: wallets[0],
-      stashAccountAddress: '5G9w9hVEtzmrb5yuomHRiJxdRkBGWNWWBStw6gJwY82XsAMR',
+      wallet: wallets[0], // TODO fix by user selected account
+      stashAccountAddress: Object.keys(wallets[0].accounts)[0],
       passphrase: '',
     });
 
