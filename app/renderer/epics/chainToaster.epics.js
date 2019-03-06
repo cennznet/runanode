@@ -6,6 +6,7 @@ import { mergeMap } from 'rxjs/operators';
 import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
 import { environment } from 'common/environment';
 import types from '../types';
+import chainEpics from './chainEpics';
 
 const { isDev } = environment;
 
@@ -36,4 +37,34 @@ const chainToasterAfterNodeStateChangeEpic = action$ =>
     })
   );
 
-export default [chainToasterAfterNodeStateChangeEpic];
+const chainToasterAfterSavePreferencesCompletedEpic = chainEpics(
+  types.stakingSavePreferences.completed,
+  types.successToaster.triggered,
+  payload => {
+
+    // TODD how to format tx in toaster?
+    const children = payload.toString();
+    const substrLength = 12;
+    const formattedText =
+      children.length > 17
+        ? children.substr(0, substrLength) +
+        ' ... ' +
+        children.substr(children.length - 5, children.length)
+        : children;
+    return `Preference saved. ${formattedText}`;
+  },
+);
+
+const chainToasterAfterSavePreferencesFailedEpic = chainEpics(
+  types.stakingSavePreferences.failed,
+  types.errorToaster.triggered,
+  payload => {
+    return `Failed to save preference.`;
+  },
+);
+
+export default [
+  chainToasterAfterNodeStateChangeEpic,
+  chainToasterAfterSavePreferencesCompletedEpic,
+  chainToasterAfterSavePreferencesFailedEpic,
+];

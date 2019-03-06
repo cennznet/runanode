@@ -47,6 +47,8 @@ const actionTypes = {
   /* Staking */
   stakeAndRestartNode: triggerActionTypes('stake_and_restart_node'),
   sendStakingExtrinsic: triggerActionTypes('send_staking_extrinsic'),
+  stakingUnStake: apiActionTypes('staking_un_stake'),
+  stakingSavePreferences: apiActionTypes('staking_save_preferences'),
 
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
