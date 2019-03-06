@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter } from 'components';
 import withContainer from './container';
@@ -6,6 +6,8 @@ import SelectStakingAccount from './SelectStakingAccount';
 import Stake from './Stake';
 
 const StakingStakePage = ({ subNav, wallets, onStake }) => {
+  const [stakingAccount, setStakingAccount] = useState(null);
+  console.log('StakingStakePage - wallets', wallets);
   const onStakeConfirmed = () =>
     onStake({
       wallet: wallets[0], // TODO fix by user selected account
@@ -16,11 +18,9 @@ const StakingStakePage = ({ subNav, wallets, onStake }) => {
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
-        <PageHeading subHeading="Declare the desire to stake for the transactor. Effects will be executed at the beginning of the next era.">
-          Start to stake
-        </PageHeading>
+        <PageHeading>Start to stake</PageHeading>
         <div className="content">
-          <SelectStakingAccount />
+          <SelectStakingAccount wallets={wallets} onSelectFn={setStakingAccount} />
         </div>
         <PageFooter>
           <div />
