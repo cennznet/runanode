@@ -10,7 +10,12 @@ const SpinnerContainer = styled.div`
   height: 100%;
 `;
 
-const SpinnerWrapper = styled.div``;
+const SpinnerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Message = styled.div`
   margin-top: 0.5rem;
