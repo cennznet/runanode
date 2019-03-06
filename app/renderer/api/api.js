@@ -5,7 +5,7 @@ import { GenericAsset } from 'cennznet-generic-asset';
 import { Api } from 'cennznet-api';
 import uuid from 'uuid/v4';
 import BN from 'bn.js';
-import { u32, Balance, AccountId } from '@polkadot/types';
+import { u32, Balance, AccountId, ValidatorPrefs } from '@polkadot/types';
 import { Keyring } from '@polkadot/keyring';
 import decode from '@polkadot/keyring/pair/decode';
 import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
@@ -493,6 +493,54 @@ export default class CennzApi {
   };
 
   /**
+   * @param accountAddress
+   * @returns {Promise<number>}
+   */
+  getIntentionIndex = async (accountAddress: string): Promise<number> => {
+    Logger.debug('CennznetApi::getIntentionIndex called');
+    try {
+      const intentions = await this.api.query.staking.intentions();
+      Logger.debug(`intentions: ${intentions}`);
+      const intentionsStr = intentions.map((item) => {
+        return item.toString();
+      });
+      const intentionsIndex = intentionsStr.indexOf(accountAddress);
+      return intentionsIndex;
+    } catch (error) {
+      Logger.error('CennznetApi::getIntentionIndex error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
+   * @param wallet
+   * @param prefs
+   * @param accountAddress
+   * @returns {Promise<CodecResult>}
+   */
+  saveStakingPreferences = async (wallet: CennznetWallet, prefs: any, accountAddress: string): Promise<any> => {
+    Logger.debug('CennznetApi::saveStakingPreferences called');
+    Logger.debug(`wallet: ${JSON.stringify(wallet)}`);
+    try {
+      const originalWallet = this.reloadWallet(wallet);
+      await originalWallet.unlock(''); // TODO switch to pin code
+      Logger.debug('unlock');
+
+      this.api.setSigner(originalWallet);
+      Logger.debug('setSigner');
+
+      const validatorPrefs = new ValidatorPrefs(prefs);
+      const intentionIndex = await this.getIntentionIndex(accountAddress);
+      const txHash = await this.api.tx.staking.registerPreferences(intentionIndex, validatorPrefs).signAndSend(accountAddress);
+      Logger.debug(`CennznetApi::saveStakingPreferences txHash ${txHash}`);
+      return txHash;
+    } catch (error) {
+      Logger.error('CennznetApi::saveStakingPreferences error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
    * @param wallet
    * @param stashAccountAddress
    * @param passphrase
@@ -511,13 +559,8 @@ export default class CennzApi {
 
       this.api.setSigner(originalWallet);
       Logger.debug('setSigner');
-      const intentions = await this.api.query.staking.intentions();
-      Logger.debug(`intentions: ${intentions}`);
-      const intentionsStr = intentions.map(item => {
-        return item.toString();
-      });
 
-      const intentionsIndex = intentionsStr.indexOf(stashAccountAddress);
+      const intentionsIndex = await this.getIntentionIndex(stashAccountAddress);
       Logger.debug(`stashAccountAddress: ${stashAccountAddress}`);
       Logger.debug(`intentionsIndex: ${intentionsIndex}`);
 

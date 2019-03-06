@@ -16,6 +16,7 @@ const triggerStakingEpic = action$ =>
   action$.pipe(
     ofType(types.stakeAndRestartNode.triggered),
     mergeMap(async ({ payload }) => {
+      Logger.debug(`triggerStakingEpic, ${JSON.stringify(payload)}`);
       const { wallet, stashAccountAddress, passphrase } = payload;
 
       const seed = await window.odin.api.cennz.getSeedFromWalletAccount(
@@ -27,7 +28,7 @@ const triggerStakingEpic = action$ =>
       assert(seed, 'fail to get seed from wallet account');
 
       const cennzNetRestartOptions = { key: seed, isValidatorMode: true };
-
+      Logger.debug(`cennzNetRestartOptions: ${JSON.stringify(cennzNetRestartOptions)}`);
       const channelResponse = await restartCennzNetNodeChannel.send(cennzNetRestartOptions);
 
       return { type: types.sendStakingExtrinsic.triggered, payload };
@@ -84,6 +85,7 @@ const sendStakingExtrinsicEpic = action$ =>
       });
     })
   );
+
 const watchExtrinsicEpic = action$ =>
   action$.pipe(
     ofType(types.subscribeExtrinsicStatus.triggered),
@@ -103,4 +105,38 @@ const watchExtrinsicEpic = action$ =>
     takeUntil(action$.ofType(types.unsubscribeExtrinsicStatus.triggered))
   );
 
-export default [triggerStakingEpic, sendStakingExtrinsicEpic, watchExtrinsicEpic];
+const stakingSavePreferenceEpic = action$ =>
+  action$.pipe(
+    ofType(types.stakingSavePreferences.requested),
+    mergeMap(async ({ payload }) => {
+      Logger.debug(`stakingSavePreferenceEpic: ${JSON.stringify(payload)}`);
+      const intentionIndex = await window.odin.api.cennz.getIntentionIndex(payload.address);
+      Logger.debug(`intentionIndex: ${intentionIndex}`);
+      if(intentionIndex > 0) {
+        const { wallet, address } = payload;
+        const prefs = {
+          unstakeThreshold: payload.unStakeThreshold,
+          validatorPayment: payload.paymentPreferences,
+        };
+        const txHash = await window.odin.api.cennz.saveStakingPreferences(
+          wallet,
+          prefs,
+          address,
+        );
+        Logger.debug(`txHash: ${txHash}`);
+        assert(txHash, 'missing txHash');
+        return {
+          type: types.stakingSavePreferences.completed,
+          payload: txHash,
+        };
+      }
+      return { type: types.stakingSavePreferences.failed };
+    })
+  );
+
+export default [
+  triggerStakingEpic,
+  sendStakingExtrinsicEpic,
+  watchExtrinsicEpic,
+  stakingSavePreferenceEpic,
+];
