@@ -12,10 +12,12 @@ const InputWrapper = styled.div`
 `;
 
 const renderWithAffix = props => {
-  const { children, prefix, suffix, valid } = props;
+  const { children, prefix, suffix, valid, showValidIcon } = props;
 
   return (
-    <InputAffix {...{ prefix, suffix, valid }}>{children || <InputCore {...props} />}</InputAffix>
+    <InputAffix {...{ prefix, suffix, valid, showValidIcon }}>
+      {children || <InputCore {...props} />}
+    </InputAffix>
   );
 };
 
@@ -46,6 +48,7 @@ Input.defaultProps = {
   },
   type: 'text',
   placeholder: '',
+  showValidIcon: false,
   valid: null,
   render: null,
   prepend: null,
@@ -58,6 +61,7 @@ Input.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   /** <Input render={(props)=> <CustomInput {...props} />} /> */
+  showValidIcon: PropTypes.bool,
   render: PropTypes.func,
   /** Prepend addon which is placed outside Input */
   prepend: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.string]),

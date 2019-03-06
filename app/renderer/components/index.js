@@ -12,6 +12,7 @@ import ModalFooter from 'components/Modal/ModalFooter';
 import ModalBody from 'components/Modal/ModalBody';
 import PageFooter from 'components/PageFooter';
 import PageHeading from 'components/PageHeading';
+import PageSpinner from 'components/PageSpinner';
 import Scrollable from 'components/Scrollable';
 import Select from 'components/Select';
 import Spinner from 'components/Spinner';
@@ -38,6 +39,7 @@ export {
   ModalBody,
   PageFooter,
   PageHeading,
+  PageSpinner,
   Scrollable,
   Select,
   Spinner,
