@@ -9,7 +9,7 @@ nodeArgs:
 #  - --name
 #  - Odin-test
   - --chain
-  - ./genesis/local/local-rimu.json
+  - ./genesis/local/local.json
 
 walletLogging: true
 statePath: ${ODIN_USER_DATA_DIRECTORY}/Odin
