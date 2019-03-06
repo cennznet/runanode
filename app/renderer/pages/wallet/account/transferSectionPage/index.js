@@ -6,9 +6,8 @@ import * as Yup from 'yup';
 
 import {Button, Form, PageHeading, PageFooter, Select} from 'components';
 import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
-import StartOverLink from 'renderer/pages/wallet/StartOverLink';
-import SelectField from 'renderer/pages/wallet/SelectField';
-import TextField from 'renderer/pages/wallet/TextField';
+import SelectField from 'renderer/components/Field/SelectField';
+import TextField from 'renderer/components/Field/TextField';
 import TransferConfirmModal from './TransferConfirmModal';
 import TransferSentModal from './TransferSentModal';
 

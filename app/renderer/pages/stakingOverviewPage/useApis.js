@@ -5,6 +5,9 @@ import useApi from './useApi';
  */
 
 const useApis = (...apiSections) =>
-  apiSections && apiSections.map(apiSection => useApi(apiSection));
+  apiSections &&
+  apiSections.map(apiSection =>
+    Array.isArray(apiSection) ? useApi(...apiSection) : useApi(apiSection)
+  );
 
 export default useApis;

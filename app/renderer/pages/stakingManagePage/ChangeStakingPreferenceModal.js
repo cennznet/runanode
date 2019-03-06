@@ -7,8 +7,8 @@ import BN from 'bn.js';
 import * as Yup from 'yup';
 import R from 'ramda';
 
-import Form from '../../components/Form';
-import TextField from '../wallet/TextField';
+import Form from 'components/Form';
+import TextField from 'components/Field/TextField';
 
 const ButtonGroup = styled.div`
   display: flex;
