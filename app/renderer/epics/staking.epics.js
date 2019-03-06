@@ -130,9 +130,23 @@ const stakingSavePreferenceEpic = action$ =>
     })
   );
 
+const stakingGetValidatorPreferenceEpic = action$ =>
+  action$.pipe(
+    ofType(types.stakingGetValidatorPreferences.requested),
+    mergeMap(async ({ payload }) => {
+        const validatorPreferences = await window.odin.api.cennz.getValidatorPreferences(payload);
+        return {
+          type: types.stakingGetValidatorPreferences.completed,
+          payload: validatorPreferences,
+        };
+      },
+    ),
+  );
+
 export default [
   startToStakeEpic,
   chainSendStakingTxToChangeUistatus,
   sendStakingExtrinsicEpic,
   stakingSavePreferenceEpic,
+  stakingGetValidatorPreferenceEpic,
 ];

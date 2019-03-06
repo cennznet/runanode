@@ -9,6 +9,7 @@
 - able to do staking and restart node
 - User able to unstake
 - able to save staking preference
+- able to view staking preference
 
 ### Fixes
 
