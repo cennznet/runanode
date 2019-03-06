@@ -1,6 +1,6 @@
 ```jsx
 initialState = { selected: false };
-<div>
+<DemoFlex>
   <Checkbox
     checked={state.selected}
     onChange={e => {
@@ -20,5 +20,5 @@ initialState = { selected: false };
   </Checkbox>
   <Checkbox disabled>Disabled</Checkbox>
   <Checkbox themeStyles={{ color: { primary: 'black' } }}>Custom</Checkbox>
-</div>;
+</DemoFlex>;
 ```

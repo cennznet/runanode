@@ -38,6 +38,7 @@ const WorldField = ({
         value={recomposedValue || ''}
         {...{ placeholder, name, onChange, onBlur }}
         valid={fieldTouched ? (noTickShow && !fieldError ? null : !fieldError) : null}
+        showValidIcon
       />
     </Wrapper>
   );
