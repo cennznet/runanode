@@ -24,7 +24,9 @@ module.exports = {
   },
   styles: {
     Editor: {
-      root: {},
+      root: {
+        background: '#040C40',
+      },
     },
     Heading: {
       heading: {
@@ -42,17 +44,6 @@ module.exports = {
         color: '#FFFFFF',
         fontFamily: 'Helvetica',
         fontSize: '14px',
-      },
-      '@global .CodeMirror': {
-        background: '#040C40 !important',
-        color: '#FFFFFF !important',
-        lineHeight: '1.5',
-      },
-      '@global .cm-tag': {
-        color: '#e2777a !important',
-      },
-      '@global .cm-bracket': {
-        color: '#e2777a !important',
       },
       root: {
         background: 'linear-gradient(180deg, #1335B6 0%, #040C40 100%)',
