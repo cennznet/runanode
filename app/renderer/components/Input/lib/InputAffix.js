@@ -25,13 +25,15 @@ const SuffixWrapper = styled(ContentWrapper)`
   right: 0;
 `;
 
-const SuffixContent = ({ suffix, valid }) => {
-  if (valid === true) {
-    return <Tick />;
-  }
+const SuffixContent = ({ suffix, valid, showValidIcon }) => {
+  if (showValidIcon === true) {
+    if (valid === true) {
+      return <Tick />;
+    }
 
-  if (valid === false) {
-    return <Cross />;
+    if (valid === false) {
+      return <Cross />;
+    }
   }
 
   if (suffix === 'spinner') {
@@ -41,9 +43,9 @@ const SuffixContent = ({ suffix, valid }) => {
   return suffix;
 };
 
-const Suffix = ({ suffix, valid }) => (
+const Suffix = ({ suffix, valid, showValidIcon }) => (
   <SuffixWrapper>
-    <SuffixContent {...{ suffix, valid }} />
+    <SuffixContent {...{ suffix, valid, showValidIcon }} />
   </SuffixWrapper>
 );
 
@@ -55,7 +57,7 @@ const AffixWrapper = styled.div`
 `;
 
 const InputAffix = ({ children, ...otherProps }) => {
-  const { prefix, suffix, valid } = otherProps;
+  const { prefix, suffix, valid, showValidIcon } = otherProps;
 
   if (!(prefix || suffix || typeof valid === 'boolean')) {
     return children;
@@ -65,7 +67,7 @@ const InputAffix = ({ children, ...otherProps }) => {
     <AffixWrapper>
       {prefix && <Prefix {...{ prefix }} />}
       {children}
-      {(suffix || typeof valid === 'boolean') && <Suffix {...{ suffix, valid }} />}
+      {(suffix || typeof valid === 'boolean') && <Suffix {...{ suffix, valid, showValidIcon }} />}
     </AffixWrapper>
   );
 };
