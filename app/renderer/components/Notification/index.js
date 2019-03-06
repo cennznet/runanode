@@ -23,7 +23,7 @@ const Flex = styled.div`
   justify-content: center;
 `;
 
-const Notification = ({ children, ...props }) => {
+const Notification = ({ children }) => {
   return (
     <NotificationWrapper>
       <Flex>

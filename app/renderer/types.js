@@ -93,6 +93,9 @@ const actionTypes = {
   warningToaster: triggerActionTypes('warning_toaster'),
   errorToaster: triggerActionTypes('error_toaster'),
   infoToaster: triggerActionTypes('info_toaster'),
+
+  /** Notification bar */
+  notificationBar: triggerActionTypes('notification_bar'),
 };
 
 export default actionTypes;
