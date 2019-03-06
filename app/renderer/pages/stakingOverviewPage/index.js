@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading } from 'components';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import StakingProgressCard from './StakingProgressCard';
 import ValidatorsList from './ValidatorsList';
 import IntentionsList from './IntentionsList';
 import useApis from './useApis';
+import useApi from './useApi';
 
 const ListsWrapper = styled.div`
   margin: 2rem 0;
@@ -14,13 +15,26 @@ const ListsWrapper = styled.div`
 `;
 
 const StakingOverviewPage = ({ subNav }) => {
-  const [eraProgress, eraLength, sessionProgress, sessionLength, validators, intentions] = useApis(
+  const [
+    eraProgress,
+    eraLength,
+    sessionProgress,
+    sessionLength,
+    validators,
+    intentions,
+    // freeBalances,
+  ] = useApis(
     'getEraProgress',
     'getEraLength',
     'getSessionProgress',
     'getSessionLength',
     'getValidators',
     'getIntentions'
+    // Working Exmaple
+    // [
+    //   'getGenericAssetFreeBalance',
+    //   { noSubscription: true, params: ['0', '5FPGbDkvDaRDQTzqzs87PjLxDbM98p9hph3wp3KceiikF6Sy'] },
+    // ]
   );
 
   // TODO: Reorder the validator List with staking account

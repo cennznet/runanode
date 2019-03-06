@@ -12,20 +12,28 @@ import { useState, useEffect } from 'react';
  * didCancel varibales
  * https://github.com/facebook/react/issues/14369
  */
-const useApi = apiSection => {
+const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
   const [sectionData, setSectionData] = useState(null);
+  const [notSubscribe] = useState(noSubscription);
+  const [paramsToAssign] = useState(params);
 
   useEffect(() => {
     let didCancel = false;
 
-    window.odin.api.cennz[apiSection](value => {
-      if (value) {
-        const sortedValue = Array.isArray(value)
-          ? value.map(item => item.toString(10))
-          : value.toString(10);
-        !didCancel && setSectionData(sortedValue);
-      }
-    });
+    if (noSubscription) {
+      window.odin.api.cennz[apiSection](...params).then(
+        value => !didCancel && value && setSectionData(value.toString(10))
+      );
+    } else {
+      window.odin.api.cennz[apiSection](value => {
+        if (value) {
+          const sortedValue = Array.isArray(value)
+            ? value.map(item => item.toString(10))
+            : value.toString(10);
+          !didCancel && setSectionData(sortedValue);
+        }
+      });
+    }
 
     return () => {
       window.odin.api.cennz[apiSection]();
