@@ -26,10 +26,12 @@ const Content = styled.div`
 
 const Layout = ({ topBar, defaultTopBar, sidebar, defaultSidebar, notificationBar, children }) => {
   const notificationType = R.prop('type')(notificationBar);
+  console.log('notificationBar', notificationBar);
+  console.log('notificationType', notificationType);
   return (
     <PageWrapper>
       {defaultTopBar ? <TopBar /> : topBar}
-      {<Notification>{getNotificationByType(notificationType)}</Notification>}
+      {notificationType && <Notification>{getNotificationByType(notificationType)}</Notification>}
       <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar}>
         {defaultSidebar ? <SideNav /> : sidebar}
         <Content>{children}</Content>

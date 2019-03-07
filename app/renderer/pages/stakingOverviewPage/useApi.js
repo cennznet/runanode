@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import BlockNumber from '@polkadot/types/type/BlockNumber';
-import { ValidatorPrefs } from "@polkadot/types";
+import { ValidatorPrefs } from '@polkadot/types';
 import BN from 'bn.js';
 
 import { Logger } from 'renderer/utils/logging';
@@ -20,8 +20,6 @@ import { Logger } from 'renderer/utils/logging';
  */
 const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
   const [sectionData, setSectionData] = useState(null);
-  const [notSubscribe] = useState(noSubscription);
-  const [paramsToAssign] = useState(params);
 
   useEffect(() => {
     let didCancel = false;
@@ -34,46 +32,42 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
     } else {
       const callbackFn = value => {
         if (value) {
-          Logger.debug(`useApi, callbackFn, apiSection: ${apiSection}, value: ${JSON.stringify(value)}`);
           let sortedValue;
-          if(Array.isArray(value)) {
-            sortedValue = value.map(item => item.toString(10))
+          if (Array.isArray(value)) {
+            sortedValue = value.map(item => item.toString(10));
           }
-          if(value instanceof ValidatorPrefs) {
+          if (value instanceof ValidatorPrefs) {
             sortedValue = value;
           }
-          if(value instanceof BlockNumber) {
+          if (value instanceof BlockNumber) {
             sortedValue = value.toString(10);
           }
-          if(value instanceof BN) {
+          if (value instanceof BN) {
             sortedValue = value.toString(10);
           }
-          if(!sortedValue) {
-            Logger.warn(`unknown sortedValue apiSection: ${apiSection}, value: ${JSON.stringify(value)}`);
+          if (!sortedValue) {
             sortedValue = value;
           }
           !didCancel && setSectionData(sortedValue);
         }
       };
-      if(params) {
-        window.odin.api.cennz[apiSection](...params, callbackFn)
-          .then(value => {
-            unsubscribeFn = value;
-            Logger.debug(`useApi, set unsubscribeFn: ${unsubscribeFn}`);
-          });
+      if (params) {
+        window.odin.api.cennz[apiSection](...params, callbackFn).then(value => {
+          unsubscribeFn = value;
+        });
       } else {
-        window.odin.api.cennz[apiSection](callbackFn)
-          .then(value => {
-            unsubscribeFn = value;
-            Logger.debug(`useApi, set unsubscribeFn: ${unsubscribeFn}`);
-          });
+        window.odin.api.cennz[apiSection](callbackFn).then(value => {
+          unsubscribeFn = value;
+        });
       }
     }
 
     // useEffect clean up
     return () => {
-      if(unsubscribeFn) {
-        Logger.debug(`useApi, useEffect clean up, apiSection: ${apiSection}, unsubscribeFn: ${unsubscribeFn}`);
+      if (unsubscribeFn) {
+        Logger.debug(
+          `useApi, useEffect clean up, apiSection: ${apiSection}, unsubscribeFn: ${unsubscribeFn}`
+        );
         unsubscribeFn();
       }
       didCancel = true;

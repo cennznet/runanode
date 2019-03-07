@@ -53,6 +53,7 @@ const actionTypes = {
   stakingSavePreferences: apiActionTypes('staking_save_preferences'),
   pendingToSendStakingExtrinsic: triggerActionTypes('pending_to_send_staking_extrinsic'),
   stakingGetValidatorPreferences: apiActionTypes('staking_get_validator_preferences'),
+  subscribeValidators: triggerActionTypes('subscribe_validators'),
 
   /* system apis */
   nodeJsonRpcSystem: apiActionTypes('node_jsonrpc_system'),
