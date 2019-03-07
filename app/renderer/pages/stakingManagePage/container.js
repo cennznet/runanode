@@ -4,7 +4,9 @@ import { compose, lifecycle } from 'recompose';
 import { Logger } from 'renderer/utils/logging';
 import types from '../../types';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ staking }) => ({
+  staking,
+});
 
 const mapDispatchToProps = dispatch => ({
   onUnStake: value => {
@@ -17,7 +19,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const enhance = lifecycle({
-  componentDidMount() {},
+  componentDidMount() {
+  },
 });
 
 export default compose(

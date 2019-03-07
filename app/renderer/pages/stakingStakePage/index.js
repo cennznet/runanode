@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading, PageFooter } from 'components';
+import { PageHeading, PageFooter, PageSpinner } from 'components';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
 import StakingAccountBalances from './StakingAccountBalances';
 import Stake from './Stake';
 
-const StakingStakePage = ({ subNav, wallets, onStake }) => {
+const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   const [stakingOption, setStakingOption] = useState(null);
   const onStakeConfirmed = () =>
     onStake({
@@ -15,8 +15,15 @@ const StakingStakePage = ({ subNav, wallets, onStake }) => {
       passphrase: '',
     });
 
-  console.log('wallets', wallets);
-  console.log('StakingStakePage', stakingOption);
+  if (uiState.isProcessing) {
+    return (
+      <MainLayout subNav={subNav}>
+        <MainContent display="flex">
+          <PageSpinner message={uiState.message} />
+        </MainContent>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout subNav={subNav}>

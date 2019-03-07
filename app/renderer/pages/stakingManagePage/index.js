@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { colors } from 'renderer/theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { Button, PageHeading } from 'components';
@@ -19,6 +20,35 @@ const UnStakeButton = styled(Button)`
 `;
 
 const ChangePreferenceButton = styled(Button)`
+`;
+
+const StakingPreferenceWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: ${colors.V900};
+  border-radius: 3px;
+  padding: 2rem 2rem 2rem 1rem;
+`;
+
+const Header = styled.div`
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%
+`;
+
+const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-weight: 600;
+  width: 100%
+`;
+
+const Left = styled.div`
+`;
+
+const Right = styled.div`
 `;
 
 const Subheading = ({ account, wallet }) => {
@@ -48,15 +78,17 @@ const Subheading = ({ account, wallet }) => {
 
 const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
 
-
   // TODO fetch from saved stake account value
   const stakingWallet: CennznetWallet = window.odin.store.getState().localStorage.WALLETS[0];
   const stakingAccountAddress = Object.keys(window.odin.store.getState().localStorage.WALLETS[0].accounts)[0];
   const stakingAccount: CennznetWalletAccount = window.odin.store.getState().localStorage.WALLETS[0].accounts[stakingAccountAddress];
 
-
-  const [intentions] = useApis(
-    'getIntentions'
+  const [intentions, validatorPreferences] = useApis(
+    'getIntentions',
+    [
+      'getValidatorPreferences',
+      { noSubscription: false, params: [stakingAccountAddress] },
+    ]
   );
 
   const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
@@ -73,12 +105,29 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
           Manage
         </PageHeading>
         <div className="content">
-          content
-          <ChangePreferenceButton
-            onClick={() => setChangeStakingPreferenceModalOpen(true)}
-            disabled={intentionsIndex < 0}>
-            Change preference
-          </ChangePreferenceButton>
+          <StakingPreferenceWrapper>
+            <Header>
+              Staking preference
+            </Header>
+            <Item>
+              <Left>Unstake threshold</Left>
+              <Right>{validatorPreferences ? validatorPreferences.unstakeThreshold.toString() : ''} warnings</Right>
+            </Item>
+            <Item>
+              <Left>Validator payment</Left>
+              <Right>{validatorPreferences ? validatorPreferences.validatorPayment.toString() : ''} CENNZ</Right>
+            </Item>
+            <Item>
+              <Left />
+              <Right>
+                <ChangePreferenceButton
+                  onClick={() => setChangeStakingPreferenceModalOpen(true)}
+                  disabled={intentionsIndex < 0}>
+                  Change preference
+                </ChangePreferenceButton>
+              </Right>
+            </Item>
+          </StakingPreferenceWrapper>
         </div>
       </MainContent>
       <UnStakeWarningModal {...{isUnStakeWarningModalOpen, setUnStakeWarningModalOpen, onUnStake, stakingWallet, stakingAccount}}/>
