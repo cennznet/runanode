@@ -1,17 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ToastContainer, toast, Slide } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { colors } from 'renderer/theme';
-import IconSuccess from './IconSuccess';
-import IconWarning from './IconWarning';
-import IconDanger from './IconDanger';
-import IconInfo from './IconInfo';
+import { IconSuccess, IconWarning, IconDanger, IconInfo } from 'components/icons';
 
 const ToasterInfoWrapper = styled.div`
   display: flex;
-  height: 5rem;
   align-items: center;
 `;
 
@@ -38,7 +33,7 @@ const ToasterMessage = styled.div`
 
 const statusMap = {
   success: { color: colors.success, title: 'Success', Icon: IconSuccess },
-  warn: { color: colors.warning, title: 'Warning', Icon: IconWarning },
+  warning: { color: colors.warning, title: 'Warning', Icon: IconWarning },
   info: { color: colors.info, title: 'Information', Icon: IconInfo },
   error: { color: colors.danger, title: 'Error', Icon: IconDanger },
 };

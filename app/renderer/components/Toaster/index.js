@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ToastContainer, Slide } from 'react-toastify';
 import { colors } from 'renderer/theme';
-import IconCross from './utils/IconCross';
+import { IconCross } from 'components/icons';
 
 const IconButton = styled.button`
   width: 2rem;
@@ -44,6 +44,11 @@ const Toaster = styled(CustomToast)`
       0 1px 3px 0 rgba(0, 0, 0, 0.1);
     background-color: #020835;
     border-radius: 3px;
+
+    .Toastify__toast-body {
+      min-height: 3rem;
+      padding: 1rem 0;
+    }
 
     .Toastify__close-button {
       padding: 1rem;
