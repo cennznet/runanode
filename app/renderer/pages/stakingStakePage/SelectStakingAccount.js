@@ -2,6 +2,17 @@ import React from 'react';
 import { Select } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
+import { getConstantValue } from 'typescript';
+
+const StepDescription = styled.div`
+  margin: 1.5rem 0;
+`;
+
+const SelectTitle = styled.div`
+  margin: 0.5rem 0;
+  font-weight: 600;
+  font-size: 16px;
+`;
 
 const WalletName = styled.div`
   font-size: 14px;
@@ -26,10 +37,16 @@ const SelectStakingAccount = ({ wallets, onSelectFn }) => {
 
   return (
     <div>
+      <StepDescription>
+        Step 1: Start staking by choosing an account from dropdown.{' '}
+      </StepDescription>
+      <SelectTitle>Choose an account to stake</SelectTitle>
       <Select
-        placeholder="Please select an account to stake"
+        placeholder="Select from dropdown."
         options={groupedOptions}
         formatGroupLabel={data => <WalletName>{data.label}</WalletName>}
+        styles={{ option: styles => ({ ...styles, paddingLeft: '1.5rem' }) }}
+        onChange={value => console.log(getConstantValue)}
       />
     </div>
   );
