@@ -8,7 +8,7 @@ const { setToaster } = require('./utils/toast');
   <Button color="danger" onClick={() => setToaster('error', 'This is an error toaster')}>
     danger
   </Button>
-  <Button color="warning" onClick={() => setToaster('warn', 'This is a warning toaster')}>
+  <Button color="warning" onClick={() => setToaster('warning', 'This is a warning toaster')}>
     Warning
   </Button>
   <Button color="info" onClick={() => setToaster('info', 'This is an info toaster')}>

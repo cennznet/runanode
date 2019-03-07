@@ -541,6 +541,22 @@ export default class CennzApi {
   };
 
   /**
+   * @param accountAddress
+   * @returns {Promise<ValidatorPrefs>}
+   */
+  getValidatorPreferences = async (accountAddress: string): Promise<ValidatorPrefs> => {
+    Logger.debug('CennznetApi::getValidatorPreferences called');
+    try {
+      const validatorPreferences = await this.api.query.staking.validatorPreferences(accountAddress);
+      Logger.debug(`validatorPreferences: ${JSON.stringify(validatorPreferences)}`);
+      return validatorPreferences;
+    } catch (error) {
+      Logger.error('CennznetApi::getValidatorPreferences error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
    * @param wallet
    * @param stashAccountAddress
    * @param passphrase
