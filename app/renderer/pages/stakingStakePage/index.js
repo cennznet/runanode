@@ -37,8 +37,8 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
 
   const onStakeConfirmed = () =>
     onStake({
-      wallet: wallets[0], // TODO fix by user selected account
-      stashAccountAddress: Object.keys(wallets[0].accounts)[0],
+      wallet: stakingOption.wallet,
+      stashAccountAddress: stakingOption.value,
       passphrase: '',
     });
 
