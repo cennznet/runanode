@@ -19,32 +19,6 @@ const StepDescription = styled.div`
   height: 8rem;
 `;
 
-// const CardSummaryWrapper = styled.div`
-//   min-height: 3rem;
-//   border-radius: 3px;
-//   background-color: ${colors.V900};
-//   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-//   display: flex;
-//   padding: 1rem;
-//   flex-direction: column;
-// `;
-
-// const CardSummaryTitle = styled.div`
-//   display: flex;
-//   color: ${colors.textMuted};
-//   line-height: 1.5rem;
-// `;
-
-// const CardSummary = ({ hint, title, children }) => (
-//   <CardSummaryWrapper>
-//     <CardSummaryTitle>
-//       <div>{title}</div>
-//       {hint && <Hint tooltip={{ styles: { maxWidth: '25rem' } }}>{hint}</Hint>}
-//     </CardSummaryTitle>
-//     <div>{children}</div>
-//   </CardSummaryWrapper>
-// );
-
 const BalanceDetail = styled.div`
   font-size: 16px;
   line-height: 1.2rem;
@@ -57,21 +31,7 @@ const Balance = styled.div`
   margin-right: 0.5rem;
 `;
 
-const cennzAssetId = '0';
-const cpayAssetId = '10';
-
-const StakingAccountBalances = ({ stakingOption }) => {
-  const {
-    value: stakingAccount,
-    wallet: { accounts },
-  } = stakingOption;
-
-  const { assets } = accounts[stakingAccount];
-  const cennzFreeBalance = assets[cennzAssetId].freeBalance.toString;
-  const cpayFreeBalance = assets[cpayAssetId].freeBalance.toString;
-  // TODO: estimation code is not ready yet, would hard code first.
-  const gasFee = 20;
-
+const StakingAccountBalances = ({ cennzFreeBalance, cpayFreeBalance, gasFee }) => {
   return (
     <BalancesWrapper>
       <BalanceDetailsWrapper>
