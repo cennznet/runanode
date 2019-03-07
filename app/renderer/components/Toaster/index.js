@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ToastContainer, Slide } from 'react-toastify';
 import { colors } from 'renderer/theme';
-import IconCross from './utils/IconCross';
+import { IconCross } from 'components/icons';
 
 const IconButton = styled.button`
   width: 2rem;
