@@ -36,7 +36,7 @@ const IntentionsList = ({ intentions }) => {
             ),
             id: 'intentions',
             accessor: d => d,
-            Cell: row => {
+            Cell: ({ value }) => {
               return (
                 <div
                   style={{
@@ -45,7 +45,7 @@ const IntentionsList = ({ intentions }) => {
                     textAlign: 'left',
                   }}
                 >
-                  <Ellipsis substrLength={8}>{row.value.toString()}</Ellipsis>
+                  <Ellipsis substrLength={8}>{(value && value.address) || 'Error'}</Ellipsis>
                 </div>
               );
             },
@@ -64,7 +64,7 @@ const IntentionsList = ({ intentions }) => {
             ),
             id: 'balances',
             accessor: d => d,
-            Cell: row => {
+            Cell: ({ value }) => {
               return (
                 <div
                   style={{
@@ -73,7 +73,7 @@ const IntentionsList = ({ intentions }) => {
                     textAlign: 'right',
                   }}
                 >
-                  0
+                  <Ellipsis substrLength={8}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
                 </div>
               );
             },
