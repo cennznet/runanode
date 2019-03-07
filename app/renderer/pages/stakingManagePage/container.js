@@ -19,8 +19,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const enhance = lifecycle({
-  componentDidMount() {
-  },
+  componentDidMount() {},
 });
 
 export default compose(
