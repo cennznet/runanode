@@ -3,11 +3,11 @@ import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter } from 'components';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
+import StakingAccountBalances from './StakingAccountBalances';
 import Stake from './Stake';
 
 const StakingStakePage = ({ subNav, wallets, onStake }) => {
-  const [stakingAccount, setStakingAccount] = useState(null);
-  console.log('StakingStakePage - wallets', wallets);
+  const [stakingOption, setStakingOption] = useState(null);
   const onStakeConfirmed = () =>
     onStake({
       wallet: wallets[0], // TODO fix by user selected account
@@ -15,12 +15,20 @@ const StakingStakePage = ({ subNav, wallets, onStake }) => {
       passphrase: '',
     });
 
+  console.log('wallets', wallets);
+  console.log('StakingStakePage', stakingOption);
+
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
         <PageHeading>Start to stake</PageHeading>
         <div className="content">
-          <SelectStakingAccount wallets={wallets} onSelectFn={setStakingAccount} />
+          <SelectStakingAccount
+            wallets={wallets}
+            onSelectFn={setStakingOption}
+            stakingOption={stakingOption}
+          />
+          {stakingOption && <StakingAccountBalances stakingAccount={stakingOption.value} />}
         </div>
         <PageFooter>
           <div />

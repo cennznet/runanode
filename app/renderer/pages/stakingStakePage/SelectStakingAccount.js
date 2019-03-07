@@ -20,7 +20,11 @@ const WalletName = styled.div`
   padding: 0.5rem 0;
 `;
 
-const SelectStakingAccount = ({ wallets, onSelectFn }) => {
+const PublicAddressDetail = styled.div`
+  margin: 0.8rem 0;
+`;
+
+const SelectStakingAccount = ({ wallets, onSelectFn, stakingOption }) => {
   const groupedOptions =
     Array.isArray(wallets) &&
     wallets.map(wallet => {
@@ -29,7 +33,7 @@ const SelectStakingAccount = ({ wallets, onSelectFn }) => {
       const accountsKeys = Object.keys(accounts);
       const groupedAccountsOptions = accountsKeys.map(key => {
         const optionName = accounts[key].name || key || 'Error';
-        return { label: optionName, value: key };
+        return { label: optionName, value: key, wallet };
       });
 
       return { label: groupName, options: groupedAccountsOptions };
@@ -46,8 +50,11 @@ const SelectStakingAccount = ({ wallets, onSelectFn }) => {
         options={groupedOptions}
         formatGroupLabel={data => <WalletName>{data.label}</WalletName>}
         styles={{ option: styles => ({ ...styles, paddingLeft: '1.5rem' }) }}
-        onChange={value => console.log(getConstantValue)}
+        onChange={option => onSelectFn(option)}
       />
+      {stakingOption && (
+        <PublicAddressDetail>Public address : {stakingOption.value}</PublicAddressDetail>
+      )}
     </div>
   );
 };
