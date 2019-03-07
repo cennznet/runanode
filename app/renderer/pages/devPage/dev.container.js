@@ -112,7 +112,7 @@ const mapDispatchToProps = dispatch => ({
   onStakeAndRestart: payload => {
     const { cennzNetRestartOptions, wallet, stashAccountAddress } = payload;
     // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
-    dispatch({ type: types.stakeAndRestartNode.triggered, payload });
+    dispatch({ type: types.stake.triggered, payload });
   },
   onUnStake: payload => {
     window.odin.api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
