@@ -8,6 +8,7 @@ import Stake from './Stake';
 
 const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   const [stakingOption, setStakingOption] = useState(null);
+
   const onStakeConfirmed = () =>
     onStake({
       wallet: wallets[0], // TODO fix by user selected account
@@ -35,7 +36,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
             onSelectFn={setStakingOption}
             stakingOption={stakingOption}
           />
-          {stakingOption && <StakingAccountBalances stakingAccount={stakingOption.value} />}
+          {stakingOption && <StakingAccountBalances stakingOption={stakingOption} />}
         </div>
         <PageFooter>
           <div />
