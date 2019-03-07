@@ -51,9 +51,9 @@
         "sessionLength": 10
       },
       "staking": {
-        "validatorCount": 5,
+        "validatorCount": 10,
         "minimumValidatorCount": 2,
-        "sessionsPerEra": 5,
+        "sessionsPerEra": 2,
         "sessionReward": 2065,
         "offlineSlash": 1001,
         "offlineSlashGrace": 1,
@@ -69,7 +69,7 @@
           "0x446eb9b558e39f370ed36d65b4d00e1ac8ada8c207af68263806ee7948129198",
           "0xb29a4ac19e9afbfdbf9f5d51705fe1a514d05d8fdbb3f21bd215859b2ab4d9e4"
         ],
-        "currentSessionReward": 0,
+        "currentSessionReward": 1,
         "currentOfflineSlash": 0
       },
       "democracy": {
