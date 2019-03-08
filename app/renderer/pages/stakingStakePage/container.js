@@ -16,14 +16,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const enhance = lifecycle({
-  componentDidMount() {},
-});
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  enhance
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 );
