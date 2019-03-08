@@ -41,9 +41,7 @@ const SelectStakingAccount = ({ wallets, onSelectFn, stakingOption }) => {
 
   return (
     <div>
-      <StepDescription>
-        Step 1: Start staking by choosing an account from dropdown.{' '}
-      </StepDescription>
+      <StepDescription>Step 1: Start staking by choosing an account from dropdown.</StepDescription>
       <SelectTitle>Choose an account to stake</SelectTitle>
       <Select
         placeholder="Select from dropdown."

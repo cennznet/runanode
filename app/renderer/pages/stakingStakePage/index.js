@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter, PageSpinner } from 'components';
 import BN from 'bn.js';
+import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
 import StakingAccountBalances from './StakingAccountBalances';
 import Stake from './Stake';
 
-const cennzAssetId = '0';
-const cpayAssetId = '10';
+const cennzAssetId = PreDefinedAssetId.stakingToken;
+const cpayAssetId = PreDefinedAssetId.spendingToken;
 
 const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   const [stakingOption, setStakingOption] = useState(null);
