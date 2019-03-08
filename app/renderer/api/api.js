@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import { SimpleKeyring, Wallet, HDKeyring } from 'cennznet-wallet';
 import { GenericAsset } from 'cennznet-generic-asset';
-import { Api, ApiRx } from 'cennznet-api';
+import { Api } from 'cennznet-api';
 import uuid from 'uuid/v4';
 import BN from 'bn.js';
 import { u32, Balance, AccountId, ValidatorPrefs } from '@polkadot/types';
@@ -83,7 +83,6 @@ const toyKeyring = toyKeyringFromNames([
 export default class CennzApi {
   config: RequestConfig;
   api: Api;
-  apiRx: ApiRx;
   ga: GenericAsset;
 
   constructor(config: RequestConfig) {
@@ -135,10 +134,6 @@ export default class CennzApi {
     this.api = await Api.create({
       provider: 'ws://localhost:9944',
     });
-
-    this.apiRx = await ApiRx.create({
-      provider: 'ws://localhost:9944',
-    }).toPromise();
 
     const ga = new GenericAsset(this.api);
     this.ga = ga;
@@ -478,7 +473,11 @@ export default class CennzApi {
    * @param passphrase
    * @returns {Promise<Hash>}
    */
-  doStake = async (wallet: CennznetWallet, stashAccountAddress: string, passphrase: string): Promise<Hash> => {
+  doStake = async (
+    wallet: CennznetWallet,
+    stashAccountAddress: string,
+    passphrase: string
+  ): Promise<Hash> => {
     Logger.debug('CennznetApi::doStake called');
     try {
       const originalWallet = this.reloadWallet(wallet);
@@ -506,7 +505,7 @@ export default class CennzApi {
     try {
       const intentions = await this.api.query.staking.intentions();
       Logger.debug(`intentions: ${intentions}`);
-      const intentionsStr = intentions.map((item) => {
+      const intentionsStr = intentions.map(item => {
         return item.toString();
       });
       const intentionsIndex = intentionsStr.indexOf(accountAddress);
@@ -523,7 +522,11 @@ export default class CennzApi {
    * @param accountAddress
    * @returns {Promise<CodecResult>}
    */
-  saveStakingPreferences = async (wallet: CennznetWallet, prefs: any, accountAddress: string): Promise<any> => {
+  saveStakingPreferences = async (
+    wallet: CennznetWallet,
+    prefs: any,
+    accountAddress: string
+  ): Promise<any> => {
     Logger.debug('CennznetApi::saveStakingPreferences called');
     Logger.debug(`wallet: ${JSON.stringify(wallet)}`);
     try {
@@ -536,7 +539,9 @@ export default class CennzApi {
 
       const validatorPrefs = new ValidatorPrefs(prefs);
       const intentionIndex = await this.getIntentionIndex(accountAddress);
-      const txHash = await this.api.tx.staking.registerPreferences(intentionIndex, validatorPrefs).signAndSend(accountAddress);
+      const txHash = await this.api.tx.staking
+        .registerPreferences(intentionIndex, validatorPrefs)
+        .signAndSend(accountAddress);
       Logger.debug(`CennznetApi::saveStakingPreferences txHash ${txHash}`);
       return txHash;
     } catch (error) {
@@ -550,12 +555,18 @@ export default class CennzApi {
    * @param callbackFn
    * @returns {Promise<ValidatorPrefs>}
    */
-  getValidatorPreferences = async (accountAddress: string, callbackFn: Function): Promise<ValidatorPrefs> => {
+  getValidatorPreferences = async (
+    accountAddress: string,
+    callbackFn: Function
+  ): Promise<ValidatorPrefs> => {
     Logger.debug('CennznetApi::getValidatorPreferences called');
     Logger.debug(`accountAddress: ${accountAddress}`);
     Logger.debug(`callbackFn: ${callbackFn}`);
     try {
-      const validatorPreferences = await this.api.query.staking.validatorPreferences(accountAddress, callbackFn);
+      const validatorPreferences = await this.api.query.staking.validatorPreferences(
+        accountAddress,
+        callbackFn
+      );
       Logger.debug(`validatorPreferences: ${JSON.stringify(validatorPreferences)}`);
       return validatorPreferences;
     } catch (error) {
@@ -592,7 +603,7 @@ export default class CennzApi {
         .unstake(intentionsIndex)
         .signAndSend(stashAccountAddress);
       Logger.debug(`CennznetApi::doUnStake txHash ${txHash}`);
-
+      // TODO: Chain epic to reflect the changes in reducer immediately
       await clearStorage(storageKeys.STAKING_STASH_ACCOUNT_ADDRESS);
 
       return txHash;
