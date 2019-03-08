@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = ({
   appStore: {
-    uiState: { notificationType },
+    notificationBar: { type },
   },
 }) => ({
-  notificationType,
+  notificationType: type,
 });
 
 const mapDispatchToProps = dispatch => ({});

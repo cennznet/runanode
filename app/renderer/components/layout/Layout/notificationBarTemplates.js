@@ -21,11 +21,14 @@ const StakingNotification = () => {
   );
 };
 
-const getNotificationByType = type => {
-  if (type === 'STAKING_NOTIFICATION') {
-    return <StakingNotification />;
-  }
+const templateMapping = {
+  STAKING_STARTED_NOTIFICATION: <StakingNotification />,
+};
 
+const getNotificationByType = type => {
+  if (type in templateMapping) {
+    return templateMapping[type];
+  }
   return null;
 };
 
