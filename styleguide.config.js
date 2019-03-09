@@ -88,6 +88,7 @@ module.exports = {
     '**/app/renderer/components/Modal/ModalBody.js',
     '**/app/renderer/components/Modal/ModalFooter.js',
     '**/app/renderer/components/cssIcons/index.js',
+    '**/app/renderer/components/Toaster/toast.js',
     '**/app/renderer/components/layout/SubNav/CollapsibleMenu/*.js',
   ],
   require: [
