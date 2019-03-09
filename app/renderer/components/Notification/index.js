@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSpring, animated } from 'react-spring';
+
 import { colors } from 'renderer/theme';
 import { IconWarning } from 'components/icons';
 
@@ -24,15 +26,19 @@ const Flex = styled.div`
 `;
 
 const Notification = ({ children }) => {
+  const springProps = useSpring({ opacity: children ? 1 : 0 });
+
   return (
-    <NotificationWrapper>
-      <Flex>
-        <Icon>
-          <IconWarning size="1rem" light color={colors.N800} />
-        </Icon>
-        {children}
-      </Flex>
-    </NotificationWrapper>
+    <animated.div style={springProps}>
+      <NotificationWrapper>
+        <Flex>
+          <Icon>
+            <IconWarning size="1rem" light color={colors.N800} />
+          </Icon>
+          {children}
+        </Flex>
+      </NotificationWrapper>
+    </animated.div>
   );
 };
 
