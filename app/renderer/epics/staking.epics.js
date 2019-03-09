@@ -82,8 +82,13 @@ const sendStakingExtrinsicEpic = action$ =>
               concat(
                 of({
                   type: types.successToaster.triggered,
-                  payload:
-                    'Your stake is successfully submitted to network. Before your stake goes to validator list, you can unstake without account being locked.',
+                  payload: {
+                    message:
+                      'Your stake is successfully submitted to network. Before your stake goes to validator list, you can unstake without account being locked.',
+                    options: {
+                      autoClose: 12000,
+                    },
+                  },
                 })
               )
             );
