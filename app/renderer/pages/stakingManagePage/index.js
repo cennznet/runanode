@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import SVGInline from "react-svg-inline";
 
+import centrapayIcon from 'renderer/assets/icon/centrapay.svg';
+import cennzIcon from 'renderer/assets/icon/cennz.svg';
 import { colors } from 'renderer/theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
@@ -13,42 +16,110 @@ import CennznetWallet from '../../api/wallets/CennznetWallet';
 import CennznetWalletAccount from '../../api/wallets/CennznetWalletAccount';
 import ChangeStakingPreferenceModal from './ChangeStakingPreferenceModal';
 import useApis from '../stakingOverviewPage/useApis';
+import SavePreferenceSection from './SavePreferenceSection';
+
+const CentrapayIcon = styled(SVGInline).attrs({
+  svg: centrapayIcon,
+})`
+  width: auto;
+`;
+
+const CennzIcon = styled(SVGInline).attrs({
+  svg: cennzIcon,
+})`
+  width: auto;
+`;
 
 const UnStakeButton = styled(Button)`
   position: absolute;
   right: 0rem;
 `;
 
-const ChangePreferenceButton = styled(Button)`
-`;
-
-const StakingPreferenceWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  background-color: ${colors.V900};
-  border-radius: 3px;
-  padding: 2rem 2rem 2rem 1rem;
-`;
-
-const Header = styled.div`
-  font-size: 1.2rem;
-  font-weight: 600;
-  width: 100%
-`;
-
-const Item = styled.div`
+const SectionLayoutWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
-  font-weight: 600;
-  width: 100%
+  flex-direction: row;
+`;
+
+const SectionLayoutInnerWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 `;
 
 const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+  height: 30rem;
 `;
 
 const Right = styled.div`
+  width: 30%;
+  padding: 0rem 0rem 0rem 1rem;
+`;
+
+const ItemTitle = styled.div`
+  color: ${colors.textMuted};
+  line-height: 1.8rem;;
+`;
+
+const ItemNum = styled.span`
+  font-size: 1.8rem;
+`;
+
+const Item = styled.div`
+  background-color: ${colors.V900};
+  border-radius: 3px;
+  padding: 1rem 1rem 1rem 1rem;
+  line-height: 1.5rem;
+  &+& {
+    margin-top: 1rem;
+  }
+`;
+
+const WarningContent = styled.div`
+  color: ${colors.warning};
+`;
+
+const PunishmentContent = styled.div`
+  color: ${colors.danger};
+`;
+
+const RewardContent = styled.div`
+  color: ${colors.success};
+`;
+
+const InnerSectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 2rem 2rem 2rem;
+  background-color: ${colors.V900};
+  border-radius: 3px;
+  width: 45%;
+`;
+
+const InnerSectionItem = styled.div`
+  margin-top: 1rem;
+`;
+
+const InnerSectionItemDiff = styled(InnerSectionItem)`
+  color: ${p => p.children > 0 ? colors.success : colors.danger}
+`;
+
+const InnerSectionItemNum = styled(InnerSectionItem)`
+  font-size: 1.8rem;
+`;
+
+const InnerSectionItemIcon = styled(InnerSectionItem)`
+  height: 8rem;
+`;
+
+const SectionHDivider = styled.div`
+  width: 10%;
 `;
 
 const Subheading = ({ account, wallet }) => {
@@ -102,32 +173,56 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
         <UnStakeButton color="danger" onClick={() => setUnStakeWarningModalOpen(true)}>Unstake</UnStakeButton>
         <PageHeading
           subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />}>
-          Manage
+          Manage Staking
         </PageHeading>
         <div className="content">
-          <StakingPreferenceWrapper>
-            <Header>
-              Staking preference
-            </Header>
-            <Item>
-              <Left>Unstake threshold</Left>
-              <Right>{validatorPreferences ? validatorPreferences.unstakeThreshold.toString() : ''} warnings</Right>
-            </Item>
-            <Item>
-              <Left>Validator payment</Left>
-              <Right>{validatorPreferences ? validatorPreferences.validatorPayment.toString() : ''} CENNZ</Right>
-            </Item>
-            <Item>
-              <Left />
-              <Right>
-                <ChangePreferenceButton
-                  onClick={() => setChangeStakingPreferenceModalOpen(true)}
-                  disabled={intentionsIndex < 0}>
-                  Change preference
-                </ChangePreferenceButton>
-              </Right>
-            </Item>
-          </StakingPreferenceWrapper>
+          <SectionLayoutWrapper>
+            <Left>
+              <SectionLayoutInnerWrapper>
+                <InnerSectionWrapper>
+                  <ItemTitle>Spending balance</ItemTitle>
+                  <InnerSectionItemIcon>
+                    <CennzIcon />
+                  </InnerSectionItemIcon>
+                  <InnerSectionItem>CENNZ</InnerSectionItem>
+                  <InnerSectionItemNum>73,254.86</InnerSectionItemNum>
+                  <InnerSectionItemDiff>120</InnerSectionItemDiff>
+                </InnerSectionWrapper>
+                <SectionHDivider/>
+                <InnerSectionWrapper>
+                  <ItemTitle>Spending balance</ItemTitle>
+                  <InnerSectionItemIcon>
+                    <CentrapayIcon />
+                  </InnerSectionItemIcon>
+                  <InnerSectionItem>CPAY</InnerSectionItem>
+                  <InnerSectionItemNum>73,254.86</InnerSectionItemNum>
+                  <InnerSectionItemDiff>-120</InnerSectionItemDiff>
+                </InnerSectionWrapper>
+              </SectionLayoutInnerWrapper>
+              <SavePreferenceSection {...{validatorPreferences, setChangeStakingPreferenceModalOpen, intentionsIndex}}/>
+            </Left>
+            <Right>
+              <Item>
+                <ItemTitle>Warning received</ItemTitle>
+                <WarningContent>
+                  <ItemNum>1</ItemNum> warning
+                </WarningContent>
+              </Item>
+              <Item>
+                <ItemTitle>Punishment</ItemTitle>
+                <PunishmentContent>
+                  <ItemNum>120</ItemNum> CENNZ
+                </PunishmentContent>
+              </Item>
+              <Item>
+                <ItemTitle>Reward</ItemTitle>
+                <RewardContent>
+                  <ItemNum>230</ItemNum> CPAY
+                </RewardContent>
+              </Item>
+            </Right>
+
+          </SectionLayoutWrapper>
         </div>
       </MainContent>
       <UnStakeWarningModal {...{isUnStakeWarningModalOpen, setUnStakeWarningModalOpen, onUnStake, stakingWallet, stakingAccount}}/>
