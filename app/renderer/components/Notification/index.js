@@ -5,9 +5,9 @@ import { useSpring, animated } from 'react-spring';
 import { colors } from 'renderer/theme';
 import { IconWarning } from 'components/icons';
 
-const NotificationWrapper = styled.div`
+const NotificationWrapper = styled(animated.div)`
   width: 100%;
-  height: 3rem;
+  height: ${p => (p.hasChildren ? '3rem' : 0)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,16 +29,14 @@ const Notification = ({ children }) => {
   const springProps = useSpring({ opacity: children ? 1 : 0 });
 
   return (
-    <animated.div style={springProps}>
-      <NotificationWrapper>
-        <Flex>
-          <Icon>
-            <IconWarning size="1rem" light color={colors.N800} />
-          </Icon>
-          {children}
-        </Flex>
-      </NotificationWrapper>
-    </animated.div>
+    <NotificationWrapper style={springProps} hasChildren={!!children}>
+      <Flex>
+        <Icon>
+          <IconWarning size="1rem" light color={colors.N800} />
+        </Icon>
+        {children}
+      </Flex>
+    </NotificationWrapper>
   );
 };
 
