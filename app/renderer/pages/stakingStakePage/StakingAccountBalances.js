@@ -3,12 +3,8 @@ import { Select, Hint, Ellipsis, Card } from 'components';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { colors } from 'renderer/theme';
-<<<<<<< HEAD
 import ROUTES from 'renderer/constants/routes';
 import useApis from '../stakingOverviewPage/useApis';
-=======
-import { PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
->>>>>>> NODE-105 enhance staking confirm modal
 
 const BalancesWrapper = styled.div`
   display: flex;
@@ -78,9 +74,8 @@ const StakingAccountBalances = ({
               <Ellipsis substrLength={6}>
                 <Balance>{cennzStakingBalance}</Balance>
               </Ellipsis>
-            {PreDefinedAssetIdName['0']}
+              Cennz
             </div>
-
           </BalanceDetail>
         </Card>
       </BalanceDetailsWrapper>
@@ -99,7 +94,7 @@ const StakingAccountBalances = ({
                 <Ellipsis substrLength={6}>
                   <Balance>{cpayStakingBalance}</Balance>
                 </Ellipsis>
-              {PreDefinedAssetIdName['10']}
+                CENTRAPAY
               </div>
             </BalanceDetail>
           </Card>
@@ -120,7 +115,6 @@ const StakingAccountBalances = ({
                   or <DespositLink to={ROUTES.WALLET.ROOT}>deposit</DespositLink>
                 </InsufficientGasFeeErr>
               )}
-
             </BalanceDetail>
           </Card>
         </div>

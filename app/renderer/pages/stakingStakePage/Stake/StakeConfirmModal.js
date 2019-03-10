@@ -1,5 +1,6 @@
 import React from 'react';
-import { PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
+import { Grid, Cell } from 'styled-css-grid';
+import { PreDefinedAssetIdName, PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import { Button, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
@@ -32,7 +33,7 @@ const StakeConfirmModal = ({
   isStakeConfirmModalOpen,
   setStakeConfirmModalOpen,
   onStakeConfirmed,
-  cennzFreeBalance,
+  cennzStakingBalance,
   gasFee,
   stakingAccount,
   isStakingEnabled,
@@ -43,12 +44,28 @@ const StakeConfirmModal = ({
         <PageHeading subHeading="Once confirm, your staking order will be seated in the pool, and be executed in the beginning of next Era.">
           Confirm staking summary
         </PageHeading>
-        <Field label="Stake" value={`${cennzFreeBalance} ${PreDefinedAssetIdName['0']}`} />
-        <Field label="Transaction fee" value={`${gasFee} ${PreDefinedAssetIdName['10']}`} />
-        <Field
-          label="Staking account address"
-          value={`${stakingAccount && stakingAccount.address}`}
-        />
+        <Grid rows={2} columns={2}>
+          <Cell width={1}>
+            <Field
+              label="Stake"
+              value={`${cennzStakingBalance} ${
+                PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]
+              }`}
+            />
+          </Cell>
+          <Cell width={1}>
+            <Field
+              label="Transaction fee"
+              value={`${gasFee} ${PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}`}
+            />
+          </Cell>
+          <Cell width={2}>
+            <Field
+              label="Staking account address"
+              value={`${stakingAccount && stakingAccount.address}`}
+            />
+          </Cell>
+        </Grid>
       </ModalBody>
       <ModalFooter>
         <div style={{ display: 'flex' }}>
