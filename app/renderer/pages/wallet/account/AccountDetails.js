@@ -50,6 +50,7 @@ const Subheading = ({ account }) => {
 
 const AccountDetails = ({
   account,
+  accountBalances,
   onTransfer,
   currentWallet,
   transaction,
@@ -74,7 +75,7 @@ const AccountDetails = ({
       <div className="content">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Portfolio" key="1" withScrollable>
-            <PortfolioSection {...{ account }} />
+            <PortfolioSection {...{ accountBalances }} />
           </TabPane>
           <TabPane tab="Deposit" key="2" withScrollable>
             <ReceiveSection {...{ account }} />
