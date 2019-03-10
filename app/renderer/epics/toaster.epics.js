@@ -30,7 +30,7 @@ const warningToasterEpic = action$ =>
   action$.pipe(
     ofType(types.warningToaster.triggered),
     mergeMap(({ payload }) => {
-      setToaster('warn', payload);
+      setToaster('warning', payload);
       return EMPTY;
     })
   );
