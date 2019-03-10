@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select } from 'components';
+import { components } from 'react-select';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { getConstantValue } from 'typescript';
@@ -24,6 +25,12 @@ const PublicAddressDetail = styled.div`
   margin: 0.8rem 0;
 `;
 
+const SingleValue = ({ children, ...props }) => {
+  const { data } = props;
+  const { groupName } = data || 'Wallet';
+  return <components.SingleValue {...props}>{`${groupName} : ${children}`}</components.SingleValue>;
+};
+
 const SelectStakingAccount = ({ wallets, onSelectFn, stakingOption }) => {
   const groupedOptions =
     Array.isArray(wallets) &&
@@ -33,7 +40,7 @@ const SelectStakingAccount = ({ wallets, onSelectFn, stakingOption }) => {
       const accountsKeys = Object.keys(accounts);
       const groupedAccountsOptions = accountsKeys.map(key => {
         const optionName = accounts[key].name || key || 'Error';
-        return { label: optionName, value: key, wallet };
+        return { label: optionName, value: key, groupName, wallet };
       });
 
       return { label: groupName, options: groupedAccountsOptions };
@@ -49,6 +56,7 @@ const SelectStakingAccount = ({ wallets, onSelectFn, stakingOption }) => {
         formatGroupLabel={data => <WalletName>{data.label}</WalletName>}
         styles={{ option: styles => ({ ...styles, paddingLeft: '1.5rem' }) }}
         onChange={option => onSelectFn(option)}
+        components={{ SingleValue }}
       />
       {stakingOption && (
         <PublicAddressDetail>Public address : {stakingOption.value}</PublicAddressDetail>
