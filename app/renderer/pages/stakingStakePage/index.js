@@ -28,7 +28,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
       const cennzStakingBalanceFromChain = assets[cennzAssetId].freeBalance.toString || 0;
       const cpayStakingBalanceFromChain = assets[cpayAssetId].freeBalance.toString || 0;
       // TODO: fetch estimated gas fee from chain
-      const sortedGasFee = 370;
+      const sortedGasFee = 334;
 
       const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
       const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
