@@ -3,11 +3,18 @@ import { Button } from 'components';
 import StakeWarningModal from './StakeWarningModal';
 import StakeConfirmModal from './StakeConfirmModal';
 
-const Stake = ({ onStakeConfirmed, cennzFreeBalance, cpayFreeBalance, gasFee, stakingAccount }) => {
+const Stake = ({
+  onStakeConfirmed,
+  cennzStakingBalance,
+  cpayStakingBalance,
+  gasFee,
+  sufficientGasFee,
+  stakingAccount,
+}) => {
   const [isStakeWarningModalOpen, setStakeWarningModalOpen] = useState(false);
-  const [isStakeConfirmModalOpen, setStakeConfirmModalOpen] = useState(true);
+  const [isStakeConfirmModalOpen, setStakeConfirmModalOpen] = useState(false);
 
-  const isStakingEnabled = stakingAccount && cennzFreeBalance && cpayFreeBalance > gasFee;
+  const isStakingEnabled = stakingAccount && cennzStakingBalance && sufficientGasFee;
 
   return (
     <div>
@@ -30,7 +37,7 @@ const Stake = ({ onStakeConfirmed, cennzFreeBalance, cpayFreeBalance, gasFee, st
             isStakeConfirmModalOpen,
             setStakeConfirmModalOpen,
             onStakeConfirmed,
-            cennzFreeBalance,
+            cennzStakingBalance,
             gasFee,
             stakingAccount,
             isStakingEnabled,
