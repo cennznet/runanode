@@ -2,13 +2,9 @@ import getActionTypeCreators from 'renderer/helpers/typeCreator';
 
 const ACTION_TYPES_NAME_SPACE = 'ODIN';
 
-const {
-  apiActionTypes,
-  changedActionTypes,
-  triggerActionTypes,
-  toggledActionTypes,
-  subscriptionActionTypes,
-} = getActionTypeCreators(ACTION_TYPES_NAME_SPACE);
+const { apiActionTypes, changedActionTypes, triggerActionTypes } = getActionTypeCreators(
+  ACTION_TYPES_NAME_SPACE
+);
 
 const actionTypes = {
   init: triggerActionTypes('init'),
@@ -21,6 +17,10 @@ const actionTypes = {
   enableAnalytics: triggerActionTypes('enable_analytics'),
   disableAnalytics: triggerActionTypes('disable_analytics'),
 
+  subscribeFinalisedHeads: triggerActionTypes('subscribe_finalised_heads'),
+  finalisedHeader: changedActionTypes('finalised_header'),
+
+  getAllAccountsBalances: apiActionTypes('get_all_accounts_balances'),
   walletCreate: apiActionTypes('wallet_create'),
   walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
   walletCreatWithHDKR: apiActionTypes('wallet_create_with_HD_keyring'),
