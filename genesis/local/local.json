@@ -53,7 +53,7 @@
       "staking": {
         "validatorCount": 10,
         "minimumValidatorCount": 2,
-        "sessionsPerEra": 1,
+        "sessionsPerEra": 2,
         "sessionReward": 2065,
         "offlineSlash": 1001,
         "offlineSlashGrace": 1,
