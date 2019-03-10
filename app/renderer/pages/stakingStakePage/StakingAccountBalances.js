@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Select, Hint, Ellipsis, Card } from 'components';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { colors } from 'renderer/theme';
+import ROUTES from 'renderer/constants/routes';
 import useApis from '../stakingOverviewPage/useApis';
 
 const BalancesWrapper = styled.div`
@@ -24,14 +26,38 @@ const BalanceDetail = styled.div`
   line-height: 1.2rem;
   padding: 1rem 0;
   display: flex;
+  color: ${p => (p.err ? colors.danger : colors.N0)};
+  display: flex;
+  flex-direction: column;
 `;
 
 const Balance = styled.div`
   font-size: 22px;
   margin-right: 0.5rem;
+  display: inline-block;
 `;
 
-const StakingAccountBalances = ({ cennzFreeBalance, cpayFreeBalance, gasFee }) => {
+const InsufficientGasFeeErr = styled.div`
+  font-size: 14px;
+  margin-right: 1.5rem;
+`;
+
+const DespositLink = styled(Link)`
+  color: ${colors.N0};
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    color: ${colors.textHover};
+  }
+`;
+
+const StakingAccountBalances = ({
+  cennzStakingBalance,
+  cpayStakingBalance,
+  gasFee,
+  sufficientGasFee,
+}) => {
   return (
     <BalancesWrapper>
       <BalanceDetailsWrapper>
@@ -44,10 +70,12 @@ const StakingAccountBalances = ({ cennzFreeBalance, cpayFreeBalance, gasFee }) =
           hint="CENNZ is required to join CENNZNet as Validator, contributing to securing and governing the network."
         >
           <BalanceDetail>
-            <Ellipsis substrLength={6}>
-              <Balance>{cennzFreeBalance} </Balance>
-            </Ellipsis>
-            Cennz
+            <div>
+              <Ellipsis substrLength={6}>
+                <Balance>{cennzStakingBalance}</Balance>
+              </Ellipsis>
+              Cennz
+            </div>
           </BalanceDetail>
         </Card>
       </BalanceDetailsWrapper>
@@ -62,21 +90,31 @@ const StakingAccountBalances = ({ cennzFreeBalance, cpayFreeBalance, gasFee }) =
             hint="CENTRAPAY is set as base Spending Token for paying network fees to counter attacks like DDos, and as the block reward for validators."
           >
             <BalanceDetail>
-              <Ellipsis substrLength={6}>
-                <Balance>{cpayFreeBalance} </Balance>
-              </Ellipsis>
-              CENTRAPAY
+              <div>
+                <Ellipsis substrLength={6}>
+                  <Balance>{cpayStakingBalance}</Balance>
+                </Ellipsis>
+                CENTRAPAY
+              </div>
             </BalanceDetail>
           </Card>
           <Card
             title="Estimated transaction fee (stake + unstake)"
             hint="Transaction fee is paid for maintaining a healthy network utilization."
           >
-            <BalanceDetail>
-              <Ellipsis substrLength={6}>
-                <Balance>{gasFee} </Balance>
-              </Ellipsis>
-              CENTRAPAY
+            <BalanceDetail err={!sufficientGasFee}>
+              <div>
+                <Ellipsis substrLength={6}>
+                  <Balance>{gasFee}</Balance>
+                </Ellipsis>
+                CENTRAPAY
+              </div>
+              {!sufficientGasFee && (
+                <InsufficientGasFeeErr>
+                  You don’t have enough funds to pay transaction fee. You can choose another account
+                  or <DespositLink to={ROUTES.WALLET.ROOT}>deposit</DespositLink>
+                </InsufficientGasFeeErr>
+              )}
             </BalanceDetail>
           </Card>
         </div>
