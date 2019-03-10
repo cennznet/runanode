@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const SubHeading = styled.div`
   font-size: 14px;
   font-weight: 400;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   line-height: 1.2rem;
 `;
 

@@ -15,20 +15,34 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   const [cennzStakingBalance, setCennzStakingBalance] = useState(null);
   const [cpayStakingBalance, setCpayStakingBalance] = useState(null);
   const [gasFee, setGasFee] = useState(null);
+<<<<<<< HEAD
   // For: errText in AccountBalance component and stake button
   const [sufficientGasFee, setSufficientGasFee] = useState(true);
+=======
+  const [stakingAccount, setStakingAccount] = useState(null);
+>>>>>>> NODE-105 enhance staking confirm modal
 
   useEffect(() => {
     if (stakingOption) {
       const {
-        value: stakingAccount,
+        value: stakingAccountAddress,
         wallet: { accounts },
       } = stakingOption;
+<<<<<<< HEAD
       const { assets } = accounts[stakingAccount];
       const cennzStakingBalanceFromChain = assets[cennzAssetId].freeBalance.toString || 0;
       const cpayStakingBalanceFromChain = assets[cpayAssetId].freeBalance.toString || 0;
       // TODO: fetch estimated gas fee from chain
       const sortedGasFee = 334;
+=======
+      const stakingAccountObject = accounts[stakingAccountAddress];
+      const { assets } = stakingAccountObject;
+      const sortedCennzFreeBalance = assets[cennzAssetId].freeBalance.toString || 0;
+      const sortedCpayFreeBalance = assets[cpayAssetId].freeBalance.toString || 0;
+      // TODO: estimation code is not ready yet, would hard code first.
+      // TODO: make the consistent compare unit
+      const sortedGasFee = 0;
+>>>>>>> NODE-105 enhance staking confirm modal
 
       const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
       const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
@@ -37,7 +51,11 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
       setCennzStakingBalance(sortedCennzStakingBalance);
       setCpayStakingBalance(sortedCpayStakingBalance);
       setGasFee(sortedGasFee);
+<<<<<<< HEAD
       setSufficientGasFee(isSufficientGasFee);
+=======
+      setStakingAccount(stakingAccountObject);
+>>>>>>> NODE-105 enhance staking confirm modal
     }
   }, [stakingOption]);
 
@@ -79,7 +97,9 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
         </div>
         <PageFooter>
           <div />
-          <Stake {...{ onStakeConfirmed }} />
+          <Stake
+            {...{ onStakeConfirmed, cennzFreeBalance, cpayFreeBalance, gasFee, stakingAccount }}
+          />
         </PageFooter>
       </MainContent>
     </MainLayout>

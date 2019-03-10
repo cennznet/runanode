@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
 import types from 'renderer/types';
 
 const mapStateToProps = ({ appStore: { uiState }, localStorage: { WALLETS } }) => ({

@@ -10,8 +10,8 @@ export const PreDefinedAssetId = {
 export const CustomTokenAssetId = ['100'];
 
 export const PreDefinedAssetIdName = {
-  '0': 'CENNZ(Stake Token)',
-  '10': 'CPAY(Spending Token)',
+  '0': 'CENNZ',
+  '10': 'CPAY',
   '100': 'Sylo Token',
 };
 
@@ -19,22 +19,30 @@ export const PreDefinedAssetIdName = {
 export const NetworkNameMapping = {
   'Rimu CENNZnet': 'rimu',
   'Kauri CENNZnet': 'kauri',
-  'Development': 'local-testnet',
+  Development: 'local-testnet',
 };
 
 export const CENNZScanTxUrl = {
-  'rimu': 'https://service.centrality.me/cennzscan/tx',
-  'kauri': 'https://service.centrality.me/cennzscan/tx', // TODO CENNZScan not support DEV yet
+  rimu: 'https://service.centrality.me/cennzscan/tx',
+  kauri: 'https://service.centrality.me/cennzscan/tx', // TODO CENNZScan not support DEV yet
 };
 
 export const CENNZScanAddressUrl = {
-  'rimu': 'https://service.centrality.me/cennzscan/addresses',
-  'kauri': 'https://service.centrality.me/cennzscan/addresses', // TODO CENNZScan not support DEV yet
+  rimu: 'https://service.centrality.me/cennzscan/addresses',
+  kauri: 'https://service.centrality.me/cennzscan/addresses', // TODO CENNZScan not support DEV yet
 };
 
 export const PreDefinedAssetIdObj = {
-  STAKING_TOKEN: { ID: PreDefinedAssetId.stakingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], BN: new BN(PreDefinedAssetId.stakingToken, 10)},
-  SPENDING_TOKEN: { ID: PreDefinedAssetId.spendingToken, NAME: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], BN: new BN(PreDefinedAssetId.spendingToken, 10)},
+  STAKING_TOKEN: {
+    ID: PreDefinedAssetId.stakingToken,
+    NAME: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken],
+    BN: new BN(PreDefinedAssetId.stakingToken, 10),
+  },
+  SPENDING_TOKEN: {
+    ID: PreDefinedAssetId.spendingToken,
+    NAME: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken],
+    BN: new BN(PreDefinedAssetId.spendingToken, 10),
+  },
 };
 
 export type TlsConfig = {
@@ -50,8 +58,10 @@ export type NetworkNames =
   | 'testnet'
   | 'development'
   | 'dev'
-  | 'kauri' | 'kauri-latest'
-  | 'rimu' | 'rimu-latest'
+  | 'kauri'
+  | 'kauri-latest'
+  | 'rimu'
+  | 'rimu-latest'
   | 'cennznet-dev'
   | 'cennznet-uat'
   | 'local-testnet'
