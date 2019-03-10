@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter, PageSpinner } from 'components';
-import BN from 'bn.js';
 import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
@@ -13,8 +12,8 @@ const cpayAssetId = PreDefinedAssetId.spendingToken;
 
 const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   const [stakingOption, setStakingOption] = useState(null);
-  const [cennzFreeBalance, setCennzFreeBalance] = useState(null);
-  const [cpayFreeBalance, setCpayFreeBalance] = useState(null);
+  const [cennzStakingBalance, setCennzStakingBalance] = useState(null);
+  const [cpayStakingBalance, setCpayStakingBalance] = useState(null);
   const [gasFee, setGasFee] = useState(null);
   // For: errText in AccountBalance component and stake button
   const [sufficientGasFee, setSufficientGasFee] = useState(true);
@@ -26,13 +25,17 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
         wallet: { accounts },
       } = stakingOption;
       const { assets } = accounts[stakingAccount];
-      const sortedCennzFreeBalance = assets[cennzAssetId].freeBalance.toString || 0;
-      const sortedCpayFreeBalance = assets[cpayAssetId].freeBalance.toString || 0;
-      const sortedGasFee = 10;
-      const isSufficientGasFee = parseInt(sortedCpayFreeBalance, 10) >= parseInt(sortedGasFee, 10);
+      const cennzStakingBalanceFromChain = assets[cennzAssetId].freeBalance.toString || 0;
+      const cpayStakingBalanceFromChain = assets[cpayAssetId].freeBalance.toString || 0;
+      // TODO: fetch estimated gas fee from chain
+      const sortedGasFee = 370;
 
-      setCennzFreeBalance(sortedCennzFreeBalance);
-      setCpayFreeBalance(sortedCpayFreeBalance);
+      const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
+      const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
+      const isSufficientGasFee = sortedCpayStakingBalance >= sortedGasFee;
+
+      setCennzStakingBalance(sortedCennzStakingBalance);
+      setCpayStakingBalance(sortedCpayStakingBalance);
       setGasFee(sortedGasFee);
       setSufficientGasFee(isSufficientGasFee);
     }
@@ -67,8 +70,8 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
           />
           {stakingOption && (
             <StakingAccountBalances
-              cennzFreeBalance={cennzFreeBalance}
-              cpayFreeBalance={cpayFreeBalance}
+              cennzStakingBalance={cennzStakingBalance}
+              cpayStakingBalance={cpayStakingBalance}
               gasFee={gasFee}
               sufficientGasFee={sufficientGasFee}
             />

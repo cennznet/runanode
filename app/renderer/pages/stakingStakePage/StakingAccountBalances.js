@@ -53,8 +53,8 @@ const DespositLink = styled(Link)`
 `;
 
 const StakingAccountBalances = ({
-  cennzFreeBalance,
-  cpayFreeBalance,
+  cennzStakingBalance,
+  cpayStakingBalance,
   gasFee,
   sufficientGasFee,
 }) => {
@@ -70,10 +70,12 @@ const StakingAccountBalances = ({
           hint="CENNZ is required to join CENNZNet as Validator, contributing to securing and governing the network."
         >
           <BalanceDetail>
-            <Ellipsis substrLength={6}>
-              <Balance>{cennzFreeBalance} </Balance>
-            </Ellipsis>
-            Cennz
+            <div>
+              <Ellipsis substrLength={6}>
+                <Balance>{cennzStakingBalance} </Balance>
+              </Ellipsis>
+              Cennz
+            </div>
           </BalanceDetail>
         </Card>
       </BalanceDetailsWrapper>
@@ -88,10 +90,12 @@ const StakingAccountBalances = ({
             hint="CENTRAPAY is set as base Spending Token for paying network fees to counter attacks like DDos, and as the block reward for validators."
           >
             <BalanceDetail>
-              <Ellipsis substrLength={6}>
-                <Balance>{cpayFreeBalance} </Balance>
-              </Ellipsis>
-              CENTRAPAY
+              <div>
+                <Ellipsis substrLength={6}>
+                  <Balance>{cpayStakingBalance} </Balance>
+                </Ellipsis>
+                CENTRAPAY
+              </div>
             </BalanceDetail>
           </Card>
           <Card
