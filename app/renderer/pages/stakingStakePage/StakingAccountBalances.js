@@ -72,7 +72,7 @@ const StakingAccountBalances = ({
           <BalanceDetail>
             <div>
               <Ellipsis substrLength={6}>
-                <Balance>{cennzStakingBalance} </Balance>
+                <Balance>{cennzStakingBalance}</Balance>
               </Ellipsis>
               Cennz
             </div>
@@ -92,7 +92,7 @@ const StakingAccountBalances = ({
             <BalanceDetail>
               <div>
                 <Ellipsis substrLength={6}>
-                  <Balance>{cpayStakingBalance} </Balance>
+                  <Balance>{cpayStakingBalance}</Balance>
                 </Ellipsis>
                 CENTRAPAY
               </div>
@@ -105,7 +105,7 @@ const StakingAccountBalances = ({
             <BalanceDetail err={!sufficientGasFee}>
               <div>
                 <Ellipsis substrLength={6}>
-                  <Balance>{gasFee} </Balance>
+                  <Balance>{gasFee}</Balance>
                 </Ellipsis>
                 CENTRAPAY
               </div>
