@@ -103,7 +103,15 @@ const mapDispatchToProps = dispatch => ({
     );
   },
   onTestToaster: () => {
-    dispatch({ type: types.successToaster.triggered });
+    dispatch({
+      type: types.successToaster.triggered,
+      payload: {
+        message: 'object payload',
+        options: {
+          autoClose: 100000,
+        },
+      },
+    });
   },
 
   onStake: payload => {
