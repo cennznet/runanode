@@ -27,12 +27,15 @@ const ValidatorsList = ({ validators, stakingStashAccountAddress }) => {
         page={0}
         pageSize={100}
         getTrProps={(state, rowInfo, column) => {
-          return {
-            style: {
-              background:
-                rowInfo.row.validators.address === stakingStashAccountAddress && colors.trGradient,
-            },
-          };
+          if (rowInfo.row.validators) {
+            return {
+              style: {
+                background:
+                  rowInfo.row.validators.address === stakingStashAccountAddress &&
+                  colors.trGradient,
+              },
+            };
+          }
         }}
         columns={[
           {
