@@ -1,6 +1,7 @@
 import { EMPTY, of, from } from 'rxjs';
-import { concat, mergeMap, withLatestFrom, catchError } from 'rxjs/operators';
+import { concat, map, mergeMap, withLatestFrom, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
+import { Observable } from 'rxjs/Observable';
 import assert from 'assert';
 import R from 'ramda';
 import { storageKeys } from 'renderer/api/utils/storage';
@@ -66,32 +67,31 @@ const sendStakingExtrinsicEpic = action$ =>
           passphrase,
         } = pendingToSendStakingExtrinsicAction.payload;
 
-        return from(window.odin.api.cennz.doStake(wallet, stashAccountAddress, passphrase)).pipe(
-          mergeMap(extrinsicHash => {
-            assert(extrinsicHash, 'Failed to get staking extrinsicHash');
+        return new Observable(async observer => {
+          const originalWallet = window.odin.api.cennz.reloadWallet(wallet);
+          await originalWallet.unlock(passphrase);
+          await window.odin.api.cennz.api.setSigner(originalWallet);
 
-            return of({
-              type: types.setStorage.requested,
-              payload: {
-                key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS,
-                value: stashAccountAddress,
-              },
-            }).pipe(
-              concat(of({ type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW })),
-              concat(of({ type: types.resetAppUiState.triggered })),
-              concat(
-                of({
-                  type: types.successToaster.triggered,
-                  payload: {
-                    message:
-                      'Your stake is successfully submitted to network. Before your stake goes to validator list, you can unstake without account being locked.',
-                    options: {
-                      autoClose: 12000,
-                    },
-                  },
-                })
-              )
-            );
+          await window.odin.api.cennz.api.tx.staking
+            .stake()
+            .signAndSend(stashAccountAddress, ({ events, status, type }) => {
+              observer.next(type);
+              if (type === 'Finalised') {
+                observer.complete();
+              }
+            });
+        }).pipe(
+          map(type => {
+            if (type === 'Finalised') {
+              return {
+                type: types.stakingExtrinsicCompleted.triggered,
+                payload: {
+                  wallet,
+                  stashAccountAddress,
+                },
+              };
+            }
+            return { type: '' };
           })
         );
       }
@@ -107,6 +107,50 @@ const sendStakingExtrinsicEpic = action$ =>
         });
       }
       return EMPTY;
+    })
+  );
+
+const sendStakingTxCompletedEpic = action$ =>
+  action$.pipe(
+    ofType(types.stakingExtrinsicCompleted.triggered),
+    mergeMap(({ payload: { wallet, stashAccountAddress } }) => {
+      return of(
+        {
+          type: types.setStorage.requested,
+          payload: {
+            key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS,
+            value: stashAccountAddress,
+          },
+        },
+        {
+          type: types.setStorage.requested,
+          payload: {
+            key: storageKeys.STAKING_STASH_WALLET_ID,
+            value: wallet.id,
+          },
+        }
+      ).pipe(
+        concat(
+          of(
+            // Call the action with empty payload to avoid accident excuting when users change network while staking
+            { type: types.pendingToSendStakingExtrinsic.triggered, payload: {} },
+            { type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW },
+            { type: types.resetAppUiState.triggered }
+          )
+        ),
+        concat(
+          of({
+            type: types.successToaster.triggered,
+            payload: {
+              message:
+                'Your stake is successfully submitted to network. Before your stake goes to validator list, you can unstake without account being locked.',
+              options: {
+                autoClose: 12000,
+              },
+            },
+          })
+        )
+      );
     })
   );
 
@@ -139,5 +183,6 @@ export default [
   startToStakeEpic,
   chainSendStakingTxToChangeUistatus,
   sendStakingExtrinsicEpic,
+  sendStakingTxCompletedEpic,
   stakingSavePreferenceEpic,
 ];

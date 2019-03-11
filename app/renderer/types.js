@@ -49,6 +49,7 @@ const actionTypes = {
   /* Staking */
   stake: triggerActionTypes('stake'),
   sendStakingExtrinsic: triggerActionTypes('send_staking_extrinsic'),
+  stakingExtrinsicCompleted: triggerActionTypes('staking_extrinsic_completed'),
   stakingUnStake: apiActionTypes('staking_un_stake'),
   stakingSavePreferences: apiActionTypes('staking_save_preferences'),
   pendingToSendStakingExtrinsic: triggerActionTypes('pending_to_send_staking_extrinsic'),
