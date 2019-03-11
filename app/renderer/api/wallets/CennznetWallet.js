@@ -12,19 +12,6 @@ export default class CennznetWallet {
   wallet: Wallet;
   passwordUpdateDate: ?Date;
 
-  defaultAccountPublicAddress: string;
-  genericAssetNextAssetId: number;
-
-  // staking token, assetId 0
-  stakingTokenFreeBalance: BN;
-  stakingTokenReservedBalance: BN;
-  stakingTokenTotalSupply: BN;
-
-  // spending token, assetId 10
-  spendingTokenFreeBalance: BN;
-  spendingTokenReservedBalance: BN;
-  spendingTokenTotalSupply: BN;
-
   accounts: Map<string, CennznetWalletAccount>;
 
   type: WALLET_TYPE;

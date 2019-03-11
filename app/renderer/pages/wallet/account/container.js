@@ -41,6 +41,7 @@ const enhance = compose(
       onSyncWalletData({ id: walletId, wallet });
     },
     componentDidUpdate(prevProps) {
+      // FIXME ken: not refresh on nav to different account
       // sync wallet data when nav to different account
       if (this.props.match.params.walletId !== prevProps.match.params.walletId) {
         Logger.debug('sync wallet data on different wallet Id');
