@@ -3,7 +3,7 @@ import jdenticon from 'jdenticon';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { Ellipsis, Table } from 'components';
-import { colors } from 'renderer/theme';
+import theme, { colors } from 'renderer/theme';
 
 const ListWrapper = styled.div`
   width: 49%;
@@ -13,7 +13,11 @@ const NoDataText = styled.div`
   margin: 1rem;
 `;
 
-const ValidatorsList = ({ validators }) => {
+const YourAccountText = styled.div`
+  margin: 0 0.4rem;
+`;
+
+const ValidatorsList = ({ validators, stakingStashAccountAddress }) => {
   const titleSuffix = validators.length ? `(${validators.length})` : '';
   return (
     <ListWrapper>
@@ -22,6 +26,17 @@ const ValidatorsList = ({ validators }) => {
         data={validators}
         page={0}
         pageSize={100}
+        getTrProps={(state, rowInfo, column) => {
+          if (rowInfo.row.validators) {
+            return {
+              style: {
+                background:
+                  rowInfo.row.validators.address === stakingStashAccountAddress &&
+                  theme.listitemHighlightGradient,
+              },
+            };
+          }
+        }}
         columns={[
           {
             Header: () => (
@@ -43,15 +58,18 @@ const ValidatorsList = ({ validators }) => {
                     color: colors.N300,
                     width: '100%',
                     textAlign: 'left',
+                    display: 'flex',
                   }}
                 >
-                  <Ellipsis substrLength={8}>{(value && value.address) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>{(value && value.address) || 'Error'}</Ellipsis>
+                  {value && value.address === stakingStashAccountAddress && (
+                    <YourAccountText>(You)</YourAccountText>
+                  )}
                 </div>
               );
             },
           },
           {
-            // TODO: Handle later
             Header: () => (
               <div
                 style={{
@@ -73,7 +91,7 @@ const ValidatorsList = ({ validators }) => {
                     textAlign: 'right',
                   }}
                 >
-                  <Ellipsis substrLength={8}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
                 </div>
               );
             },
