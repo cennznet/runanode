@@ -27,11 +27,11 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
         page={0}
         pageSize={100}
         getTrProps={(state, rowInfo, column) => {
-          if (rowInfo.row.intentions) {
+          if (rowInfo.row.waitingList) {
             return {
               style: {
                 background:
-                  rowInfo.row.intentions.address === stakingStashAccountAddress &&
+                  rowInfo.row.waitingList.address === stakingStashAccountAddress &&
                   colors.trGradient,
               },
             };
@@ -49,7 +49,7 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
                 {`Pool ${titleSuffix}`}
               </div>
             ),
-            id: 'intentions',
+            id: 'waitingList',
             accessor: d => d,
             Cell: ({ value }) => {
               return (
