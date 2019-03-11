@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import StakingProgressCard from './StakingProgressCard';
 import withContainer from './container';
 import ValidatorsList from './ValidatorsList';
-import IntentionsList from './IntentionsList';
+import WaitingList from './WaitingList';
 import useApis from './useApis';
 import useApi from './useApi';
 
@@ -20,7 +20,15 @@ const ListsWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const StakingOverviewPage = ({ subNav, onClickStakeButton }) => {
+const reoderList = (arryList, fromIndex, toIndex = 0) => {
+  if (Array.isArray(arryList)) {
+    arryList.splice(toIndex, 0, arryList.splice(fromIndex, 1)[0]);
+    return arryList;
+  }
+  return [];
+};
+
+const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAddress }) => {
   const [
     eraProgress,
     eraLength,
@@ -52,8 +60,11 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton }) => {
   const [intentionsWithBalances, setIntentionsWithBalances] = useState(null);
   useEffect(() => {
     if (intentions) {
+      const index = intentions.indexOf(stakingStashAccountAddress);
+      const reoderIntentions = index === -1 ? intentions : reoderList(intentions, index);
+
       Promise.all(
-        intentions.map(async intention => {
+        reoderIntentions.map(async intention => {
           const cennzBalance = await window.odin.api.cennz.getGenericAssetFreeBalance(
             '0',
             intention
@@ -71,7 +82,7 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton }) => {
         )
       : [];
 
-  const sortedIntentions = intentionsWithBalances
+  const sortedWaitingList = intentionsWithBalances
     ? intentionsWithBalances.filter(address => !sortedValidators.includes(address))
     : [];
 
@@ -93,8 +104,14 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton }) => {
           sessionProgress={sessionProgress}
         />
         <ListsWrapper>
-          <ValidatorsList validators={sortedValidators} />
-          <IntentionsList intentions={sortedIntentions} />
+          <ValidatorsList
+            validators={sortedValidators}
+            stakingStashAccountAddress={stakingStashAccountAddress}
+          />
+          <WaitingList
+            waitingList={sortedWaitingList}
+            stakingStashAccountAddress={stakingStashAccountAddress}
+          />
         </ListsWrapper>
       </MainContent>
     </MainLayout>

@@ -13,15 +13,27 @@ const NoDataText = styled.div`
   margin: 1rem;
 `;
 
-const IntentionsList = ({ intentions }) => {
-  const titleSuffix = intentions.length ? `(${intentions.length})` : '';
+const YourAccountText = styled.div`
+  margin: 0 0.4rem;
+`;
+
+const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
+  const titleSuffix = waitingList.length ? `(${waitingList.length})` : '';
   return (
     <ListWrapper>
       <Table
         NoDataComponent={() => <NoDataText>There’s no intention in the queue.</NoDataText>}
-        data={intentions}
+        data={waitingList}
         page={0}
         pageSize={100}
+        getTrProps={(state, rowInfo, column) => {
+          return {
+            style: {
+              background:
+                rowInfo.row.validators.address === stakingStashAccountAddress && colors.trGradient,
+            },
+          };
+        }}
         columns={[
           {
             Header: () => (
@@ -45,7 +57,10 @@ const IntentionsList = ({ intentions }) => {
                     textAlign: 'left',
                   }}
                 >
-                  <Ellipsis substrLength={8}>{(value && value.address) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>{(value && value.address) || 'Error'}</Ellipsis>
+                  {value && value.address === stakingStashAccountAddress && (
+                    <YourAccountText>(You)</YourAccountText>
+                  )}
                 </div>
               );
             },
@@ -73,7 +88,7 @@ const IntentionsList = ({ intentions }) => {
                     textAlign: 'right',
                   }}
                 >
-                  <Ellipsis substrLength={8}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
                 </div>
               );
             },
@@ -85,4 +100,4 @@ const IntentionsList = ({ intentions }) => {
   );
 };
 
-export default IntentionsList;
+export default WaitingList;
