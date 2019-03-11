@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
-import * as colors from '../../theme/colors';
-import Button from '../../components/Button';
+import { colors } from 'renderer/theme';
+import { Button }from 'components';
 
 const ChangePreferenceButton = styled(Button)`
 `;

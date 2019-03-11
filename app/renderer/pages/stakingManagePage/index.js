@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import SVGInline from "react-svg-inline";
 import BN from "bn.js";
 import { Balance, BlockNumber } from "@polkadot/types";
+import R from 'ramda';
 
 import {
   CENNZScanAddressUrl,
@@ -179,7 +180,7 @@ const Subheading = ({ account, wallet }) => {
   );
 };
 
-const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, stakingStashWalletId, stakingStashAccountAddress }) => {
+const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, stakingStashWalletId, stakingStashAccountAddress, wallets, onSyncWalletData }) => {
 
   const [warningValue, setWarningValue] = useState(0);
   const [punishmentValue, setPunishmentValue] = useState(0);
@@ -188,7 +189,7 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking
   const [rewardSpendingValue, setRewardSpendingValue] = useState('0');
   const [rewardSpendingValueDiff, setRewardSpendingValueDiff] = useState('0');
 
-  const stakingWallet: CennznetWallet = window.odin.store.getState().localStorage.WALLETS.find(wallet => wallet.id === stakingStashWalletId);
+  const stakingWallet: CennznetWallet = wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
   const stakingAccount: CennznetWalletAccount = stakingWallet.accounts[stakingStashAccountAddress];
 
   const [intentions, validators, validatorPreferences] = useApis(
@@ -266,7 +267,10 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking
     };
   },[]);
 
-
+  // sync wallet data
+  useEffect(() => {
+    onSyncWalletData({ id: stakingStashWalletId, stakingWallet });
+  },[]);
 
   const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
   const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
