@@ -9,6 +9,8 @@ import { storageKeys } from '../../api/utils/storage';
 const mapStateToProps = ({ staking, localStorage }) => ({
   staking,
   wallets: localStorage[storageKeys.WALLETS],
+  stakingStashAccountAddress: localStorage[storageKeys.STAKING_STASH_ACCOUNT_ADDRESS],
+  stakingStashWalletId: localStorage[storageKeys.STAKING_STASH_WALLET_ID],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -27,11 +29,9 @@ const mapDispatchToProps = dispatch => ({
 
 const enhance = lifecycle({
   componentDidMount() {
-    const { onSyncWalletData, wallets } = this.props;
-    // TODO: get wallet from store
-    const walletId = window.odin.store.getState().localStorage.WALLETS[0].id;
-    const wallet = wallets && R.find(R.propEq('id', walletId))(wallets);
-    onSyncWalletData({ id: walletId, wallet });
+    const { onSyncWalletData, wallets, stakingStashWalletId } = this.props;
+    const wallet = wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
+    onSyncWalletData({ id: stakingStashWalletId, wallet });
   },
 });
 

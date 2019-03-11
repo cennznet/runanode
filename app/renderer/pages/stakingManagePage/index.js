@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 import SVGInline from "react-svg-inline";
 import BN from "bn.js";
 import { Balance, BlockNumber } from "@polkadot/types";
-import { useSpring, animated } from 'react-spring'
 
 import {
   CENNZScanAddressUrl,
@@ -180,7 +179,7 @@ const Subheading = ({ account, wallet }) => {
   );
 };
 
-const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
+const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, stakingStashWalletId, stakingStashAccountAddress }) => {
 
   const [warningValue, setWarningValue] = useState(0);
   const [punishmentValue, setPunishmentValue] = useState(0);
@@ -189,17 +188,15 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
   const [rewardSpendingValue, setRewardSpendingValue] = useState('0');
   const [rewardSpendingValueDiff, setRewardSpendingValueDiff] = useState('0');
 
-  // TODO fetch from saved stake account value
-  const stakingWallet: CennznetWallet = window.odin.store.getState().localStorage.WALLETS[0];
-  const stakingAccountAddress = Object.keys(window.odin.store.getState().localStorage.WALLETS[0].accounts)[0];
-  const stakingAccount: CennznetWalletAccount = window.odin.store.getState().localStorage.WALLETS[0].accounts[stakingAccountAddress];
+  const stakingWallet: CennznetWallet = window.odin.store.getState().localStorage.WALLETS.find(wallet => wallet.id === stakingStashWalletId);
+  const stakingAccount: CennznetWalletAccount = stakingWallet.accounts[stakingStashAccountAddress];
 
   const [intentions, validators, validatorPreferences] = useApis(
     'getIntentions',
     'getValidators',
     [
       'getValidatorPreferences',
-      { noSubscription: false, params: [stakingAccountAddress] },
+      { noSubscription: false, params: [stakingStashAccountAddress] },
     ],
   );
 
@@ -208,7 +205,7 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
     return Math.floor(Math.random() * Math.floor(max));
   }
   useEffect(() => {
-    const interval = setTimeout(() => {
+    const interval = setInterval(() => {
       const val = getRandomInt(10);
       setRewardSpendingValue(value => new BN(value, 10).add(new BN(val)).toString(10));
       setRewardSpendingValueDiff(new BN(val).toString(10));
@@ -235,9 +232,10 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
             if(`${section}.${method}` === 'staking.Reward') {
               const balance: Balance = defaultData;
               const balanceValue = balance.toString() === '0' ? '3' : balance.toString(); // TODO DEMO only, after stake balance become 0
-              Logger.debug(`balanceValue: ${balanceValue}`);
-              setRewardValue(myValue => new BN(myValue, 10).add(new BN(balanceValue, 10).div(new BN(3))).toString(10));
-              setRewardValueDiff(new BN(balanceValue.toString(), 10).div(new BN(3)).toString(10));
+              const validatorNum = 3;
+              Logger.debug(`balanceValue: ${balanceValue}, validators: ${JSON.stringify(validators)}`);
+              setRewardValue(myValue => new BN(myValue, 10).add(new BN(balanceValue, 10).div(new BN(validatorNum))).toString(10));
+              setRewardValueDiff(new BN(balanceValue.toString(), 10).div(new BN(validatorNum)).toString(10));
             }
             // if(`${section}.${method}` === 'session.NewSession') {
             //   const blockNumber: BlockNumber = defaultData;
@@ -275,11 +273,8 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
   const [isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen] = useState(false);
 
   const AnimatedInnerSectionItemDiff = ({value}) => {
-    const props = useSpring({ opacity: 1, from: { opacity: 0 } });
     return (
-      <animated.div style={props}>
-        <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value }</InnerSectionItemDiff>
-      </animated.div>
+      <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value }</InnerSectionItemDiff>
     );
   };
 
@@ -304,6 +299,7 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
                   <InnerSectionItemNum>{stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}</InnerSectionItemNum>
                   <InnerSectionItem>Reserved: {stakingAccount.assets[PreDefinedAssetId.stakingToken].reservedBalance.toString}</InnerSectionItem>
                   <InnerSectionItem>Total: {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}</InnerSectionItem>
+                  <AnimatedInnerSectionItemDiff value={rewardValueDiff} />
                 </InnerSectionWrapper>
                 <SectionHDivider />
                 <InnerSectionWrapper>
