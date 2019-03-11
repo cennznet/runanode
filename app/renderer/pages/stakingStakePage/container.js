@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
 import types from 'renderer/types';
 
 const mapStateToProps = ({ appStore: { uiState }, localStorage: { WALLETS } }) => ({
@@ -16,14 +15,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const enhance = lifecycle({
-  componentDidMount() {},
-});
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  enhance
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 );

@@ -1,19 +1,24 @@
 ```jsx
-const { setToaster } = require('./utils/toast');
-
 <DemoFlex>
-  <Button color="success" onClick={() => setToaster('success', 'This is a success toaster')}>
+  <Button
+    color="success"
+    onClick={() =>
+      toast('success', 'This is a success toaster', {
+        autoClose: 100000,
+      })
+    }
+  >
     Success
   </Button>
-  <Button color="danger" onClick={() => setToaster('error', 'This is an error toaster')}>
-    danger
+  <Button color="danger" onClick={() => toast('error', 'This is an error toaster')}>
+    Error
   </Button>
-  <Button color="warning" onClick={() => setToaster('warning', 'This is a warning toaster')}>
+  <Button color="warning" onClick={() => toast('warning', 'This is a warning toaster')}>
     Warning
   </Button>
-  <Button color="info" onClick={() => setToaster('info', 'This is an info toaster')}>
+  <Button color="info" onClick={() => toast('info', 'This is an info toaster')}>
     Information
   </Button>
   <Toaster />
-</DemoFlex>;
+</DemoFlex>
 ```

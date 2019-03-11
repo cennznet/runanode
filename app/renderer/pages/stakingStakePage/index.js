@@ -1,15 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter, PageSpinner } from 'components';
+import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
+import StakingAccountBalances from './StakingAccountBalances';
 import Stake from './Stake';
 
+const cennzAssetId = PreDefinedAssetId.stakingToken;
+const cpayAssetId = PreDefinedAssetId.spendingToken;
+
 const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
+  const [stakingOption, setStakingOption] = useState(null);
+  const [cennzStakingBalance, setCennzStakingBalance] = useState(null);
+  const [cpayStakingBalance, setCpayStakingBalance] = useState(null);
+  const [gasFee, setGasFee] = useState(null);
+  const [sufficientGasFee, setSufficientGasFee] = useState(true);
+  const [stakingAccount, setStakingAccount] = useState(null);
+
+  useEffect(() => {
+    if (stakingOption) {
+      const {
+        value: stakingAccountAddress,
+        wallet: { accounts },
+      } = stakingOption;
+
+      const stakingAccountObject = accounts[stakingAccountAddress];
+      const { assets } = stakingAccountObject;
+      const cennzStakingBalanceFromChain = assets[cennzAssetId].freeBalance.toString || 0;
+      const cpayStakingBalanceFromChain = assets[cpayAssetId].freeBalance.toString || 0;
+      // TODO: estimation code is not ready yet, would hard code first.
+      // TODO: make the consistent compare unit
+      const sortedGasFee = 334;
+
+      const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
+      const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
+      const isSufficientGasFee = sortedCpayStakingBalance >= sortedGasFee;
+
+      setCennzStakingBalance(sortedCennzStakingBalance);
+      setCpayStakingBalance(sortedCpayStakingBalance);
+      setGasFee(sortedGasFee);
+      setSufficientGasFee(isSufficientGasFee);
+      setStakingAccount(stakingAccountObject);
+    }
+  }, [stakingOption]);
+
   const onStakeConfirmed = () =>
     onStake({
-      wallet: wallets[0], // TODO fix by user selected account
-      stashAccountAddress: Object.keys(wallets[0].accounts)[0],
+      wallet: stakingOption.wallet,
+      stashAccountAddress: stakingOption.value,
       passphrase: '',
     });
 
@@ -26,15 +65,34 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
-        <PageHeading subHeading="Declare the desire to stake for the transactor. Effects will be executed at the beginning of the next era.">
-          Start to stake
-        </PageHeading>
+        <PageHeading>Start to stake</PageHeading>
         <div className="content">
-          <SelectStakingAccount />
+          <SelectStakingAccount
+            wallets={wallets}
+            onSelectFn={setStakingOption}
+            stakingOption={stakingOption}
+          />
+          {stakingOption && (
+            <StakingAccountBalances
+              cennzStakingBalance={cennzStakingBalance}
+              cpayStakingBalance={cpayStakingBalance}
+              gasFee={gasFee}
+              sufficientGasFee={sufficientGasFee}
+            />
+          )}
         </div>
         <PageFooter>
           <div />
-          <Stake {...{ onStakeConfirmed }} />
+          <Stake
+            {...{
+              onStakeConfirmed,
+              cennzStakingBalance,
+              cpayStakingBalance,
+              gasFee,
+              sufficientGasFee,
+              stakingAccount,
+            }}
+          />
         </PageFooter>
       </MainContent>
     </MainLayout>

@@ -7,7 +7,7 @@ import defaultTheme from 'renderer/theme';
 import defaultStyling from './defaultStyling';
 import buttonStyles from './buttonStyles';
 
-export const StyledButton = styled.button`
+const StyledButton = styled.button`
   ${p => buttonStyles(p)};
   margin-right: ${p => (p.inputSuffix ? '0.25rem' : '')};
   min-width: ${p => p.minWidth};
@@ -97,5 +97,7 @@ Button.propTypes = {
   themeSpace: PropTypes.string,
   themeStyles: PropTypes.object,
 };
+
+Button.displayName = 'Button';
 
 export default Button;

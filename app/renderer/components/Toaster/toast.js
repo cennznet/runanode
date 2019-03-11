@@ -38,7 +38,7 @@ const statusMap = {
   error: { color: colors.danger, title: 'Error', Icon: IconDanger },
 };
 
-export const setToaster = (toasterStatus = 'success', toasterText) => {
+export default (toasterStatus = 'info', toasterText, options) => {
   const { color, title, Icon } = statusMap[toasterStatus];
   toast[toasterStatus](
     <ToasterInfoWrapper>
@@ -50,6 +50,7 @@ export const setToaster = (toasterStatus = 'success', toasterText) => {
         <ToasterTitle color={color}>{title}</ToasterTitle>
         <ToasterMessage>{toasterText}</ToasterMessage>
       </ToasterInfoContent>
-    </ToasterInfoWrapper>
+    </ToasterInfoWrapper>,
+    options
   );
 };
