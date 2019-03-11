@@ -6,6 +6,9 @@ const DEFAULT_STATE = {
     isProcessing: false,
     message: '',
   },
+  notificationBar: {
+    type: '',
+  },
 };
 
 export default function appStore(state = DEFAULT_STATE, { type, payload }) {
@@ -18,6 +21,11 @@ export default function appStore(state = DEFAULT_STATE, { type, payload }) {
     case types.resetAppUiState.triggered:
       return R.merge(state, {
         uiState: DEFAULT_STATE.uiState,
+      });
+
+    case types.notificationBar.triggered:
+      return R.merge(state, {
+        notificationBar: payload,
       });
 
     default:
