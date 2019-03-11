@@ -71,12 +71,20 @@ const sendStakingExtrinsicEpic = action$ =>
             assert(extrinsicHash, 'Failed to get staking extrinsicHash');
 
             return of({
-              type: types.setStorage.requested,
-              payload: {
-                key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS,
-                value: stashAccountAddress,
+                type: types.setStorage.requested,
+                payload: {
+                  key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS,
+                  value: stashAccountAddress,
+                },
               },
-            }).pipe(
+              {
+                type: types.setStorage.requested,
+                payload: {
+                  key: storageKeys.STAKING_STASH_WALLET_ID,
+                  value: wallet.id,
+                },
+              },
+            ).pipe(
               concat(of({ type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW })),
               concat(of({ type: types.resetAppUiState.triggered })),
               concat(
@@ -89,10 +97,10 @@ const sendStakingExtrinsicEpic = action$ =>
                       autoClose: 12000,
                     },
                   },
-                })
-              )
+                }),
+              ),
             );
-          })
+          }),
         );
       }
 

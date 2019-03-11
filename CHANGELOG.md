@@ -18,6 +18,8 @@
 
 ### Fixes
 
+- fix setInterval timer issue
+
 ### Improvements
 
 - display node state in dev info top bar
@@ -26,6 +28,7 @@
 - able to run cennznet-node cluster locally
 - upgrade cenznet-api to v0.7.4
 - isDevOrDebugProd works for renderer
+- use stored staking wallet/account info for manage stake page
 
 # v0.5.2 (2019.02.25)
 
