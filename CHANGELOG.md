@@ -14,6 +14,8 @@
 - User friendly skaking flow;
 - Add Notification bar;
 - Make Toaster configurable;
+- Staking Overview;
+- Able to start to stake;
 
 ### Fixes
 
@@ -25,6 +27,7 @@
 - able to run cennznet-node cluster locally
 - upgrade cenznet-api to v0.7.4
 - isDevOrDebugProd works for renderer
+- hight light self-own staking account;
 
 # v0.5.2 (2019.02.25)
 
