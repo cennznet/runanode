@@ -86,3 +86,10 @@ export const textMuted = rgba(255, 255, 255, 0.7);
 export const textHover = N200;
 export const link = B500;
 export const linkHover = B600;
+/**
+ * NOTICE: this file only contains basic color defination of basic elements like border,
+ * text, link, etc.
+ *
+ * For application/ components resuable colors, theme/index.js is the file to be considered.
+ *
+ * */
