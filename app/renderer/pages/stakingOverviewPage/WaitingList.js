@@ -3,7 +3,7 @@ import jdenticon from 'jdenticon';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { Ellipsis, Table } from 'components';
-import { colors } from 'renderer/theme';
+import theme, { colors } from 'renderer/theme';
 
 const ListWrapper = styled.div`
   width: 49%;
@@ -32,7 +32,7 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
               style: {
                 background:
                   rowInfo.row.waitingList.address === stakingStashAccountAddress &&
-                  colors.trGradient,
+                  theme.listitemHighlightGradient,
               },
             };
           }
@@ -58,6 +58,7 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
                     color: colors.N300,
                     width: '100%',
                     textAlign: 'left',
+                    display: 'flex',
                   }}
                 >
                   <Ellipsis substrLength={6}>{(value && value.address) || 'Error'}</Ellipsis>

@@ -3,7 +3,7 @@ import jdenticon from 'jdenticon';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { Ellipsis, Table } from 'components';
-import { colors } from 'renderer/theme';
+import theme, { colors } from 'renderer/theme';
 
 const ListWrapper = styled.div`
   width: 49%;
@@ -32,7 +32,7 @@ const ValidatorsList = ({ validators, stakingStashAccountAddress }) => {
               style: {
                 background:
                   rowInfo.row.validators.address === stakingStashAccountAddress &&
-                  colors.trGradient,
+                  theme.listitemHighlightGradient,
               },
             };
           }
