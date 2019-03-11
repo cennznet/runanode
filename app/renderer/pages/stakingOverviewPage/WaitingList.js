@@ -3,7 +3,7 @@ import jdenticon from 'jdenticon';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { Ellipsis, Table } from 'components';
-import { colors } from 'renderer/theme';
+import theme, { colors } from 'renderer/theme';
 
 const ListWrapper = styled.div`
   width: 49%;
@@ -13,15 +13,30 @@ const NoDataText = styled.div`
   margin: 1rem;
 `;
 
-const IntentionsList = ({ intentions }) => {
-  const titleSuffix = intentions.length ? `(${intentions.length})` : '';
+const YourAccountText = styled.div`
+  margin: 0 0.4rem;
+`;
+
+const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
+  const titleSuffix = waitingList.length ? `(${waitingList.length})` : '';
   return (
     <ListWrapper>
       <Table
         NoDataComponent={() => <NoDataText>There’s no intention in the queue.</NoDataText>}
-        data={intentions}
+        data={waitingList}
         page={0}
         pageSize={100}
+        getTrProps={(state, rowInfo, column) => {
+          if (rowInfo.row.waitingList) {
+            return {
+              style: {
+                background:
+                  rowInfo.row.waitingList.address === stakingStashAccountAddress &&
+                  theme.listitemHighlightGradient,
+              },
+            };
+          }
+        }}
         columns={[
           {
             Header: () => (
@@ -34,7 +49,7 @@ const IntentionsList = ({ intentions }) => {
                 {`Pool ${titleSuffix}`}
               </div>
             ),
-            id: 'intentions',
+            id: 'waitingList',
             accessor: d => d,
             Cell: ({ value }) => {
               return (
@@ -43,9 +58,13 @@ const IntentionsList = ({ intentions }) => {
                     color: colors.N300,
                     width: '100%',
                     textAlign: 'left',
+                    display: 'flex',
                   }}
                 >
-                  <Ellipsis substrLength={8}>{(value && value.address) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>{(value && value.address) || 'Error'}</Ellipsis>
+                  {value && value.address === stakingStashAccountAddress && (
+                    <YourAccountText>(You)</YourAccountText>
+                  )}
                 </div>
               );
             },
@@ -73,7 +92,7 @@ const IntentionsList = ({ intentions }) => {
                     textAlign: 'right',
                   }}
                 >
-                  <Ellipsis substrLength={8}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
                 </div>
               );
             },
@@ -85,4 +104,4 @@ const IntentionsList = ({ intentions }) => {
   );
 };
 
-export default IntentionsList;
+export default WaitingList;
