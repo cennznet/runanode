@@ -203,7 +203,7 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
     ],
   );
 
-  //TODO for demo only
+  // TODO for demo only
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
   }
@@ -304,9 +304,8 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
                   <InnerSectionItemNum>{stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}</InnerSectionItemNum>
                   <InnerSectionItem>Reserved: {stakingAccount.assets[PreDefinedAssetId.stakingToken].reservedBalance.toString}</InnerSectionItem>
                   <InnerSectionItem>Total: {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}</InnerSectionItem>
-                  {/*<AnimatedInnerSectionItemDiff value={rewardValueDiff} />*/}
                 </InnerSectionWrapper>
-                <SectionHDivider/>
+                <SectionHDivider />
                 <InnerSectionWrapper>
                   <ItemTitle>Spending balance</ItemTitle>
                   <InnerSectionItemIcon>
@@ -319,7 +318,7 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
                   <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} />
                 </InnerSectionWrapper>
               </SectionLayoutInnerWrapper>
-              <SavePreferenceSection {...{validatorPreferences, setChangeStakingPreferenceModalOpen, intentionsIndex}}/>
+              <SavePreferenceSection {...{validatorPreferences, setChangeStakingPreferenceModalOpen, intentionsIndex}} />
             </Left>
             <Right>
               <Item>
@@ -348,8 +347,20 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences }) => {
           </SectionLayoutWrapper>
         </div>
       </MainContent>
-      <UnStakeWarningModal {...{isUnStakeWarningModalOpen, setUnStakeWarningModalOpen, onUnStake, stakingWallet, stakingAccount}}/>
-      <ChangeStakingPreferenceModal {...{isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen, stakingWallet, stakingAccount, onSaveStakingPreferences }} />
+      <UnStakeWarningModal {...{
+        isUnStakeWarningModalOpen,
+        setUnStakeWarningModalOpen,
+        onUnStake,
+        stakingWallet,
+        stakingAccount,
+      }} />
+      <ChangeStakingPreferenceModal {...{
+        isChangeStakingPreferenceModalOpen,
+        setChangeStakingPreferenceModalOpen,
+        stakingWallet,
+        stakingAccount,
+        onSaveStakingPreferences,
+      }} />
     </MainLayout>
   );
 };
