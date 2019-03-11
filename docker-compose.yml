@@ -19,6 +19,7 @@ services:
       - --ws-external
       - --rpc-external
       - --telemetry-url=ws://telemetry:1024
+      - --pruning=archive
     ports:
       - "19933:9933"
       - "19944:9944"
@@ -42,6 +43,7 @@ services:
       - --ws-external
       - --rpc-external
       - --telemetry-url=ws://telemetry:1024
+      - --pruning=archive
     ports:
       - "30335:30333"
   node-2:
@@ -63,6 +65,7 @@ services:
       - --ws-external
       - --rpc-external
       - --telemetry-url=ws://telemetry:1024
+      - --pruning=archive
     ports:
       - "30336:30333"
   telemetry:
