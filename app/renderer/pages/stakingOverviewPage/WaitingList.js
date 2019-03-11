@@ -27,12 +27,15 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
         page={0}
         pageSize={100}
         getTrProps={(state, rowInfo, column) => {
-          return {
-            style: {
-              background:
-                rowInfo.row.validators.address === stakingStashAccountAddress && colors.trGradient,
-            },
-          };
+          if (rowInfo.row.intentions) {
+            return {
+              style: {
+                background:
+                  rowInfo.row.intentions.address === stakingStashAccountAddress &&
+                  colors.trGradient,
+              },
+            };
+          }
         }}
         columns={[
           {
