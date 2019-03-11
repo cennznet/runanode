@@ -651,6 +651,22 @@ export default class CennzApi {
   };
 
   /**
+   * @param callbackFn
+   * @returns {Promise<any>}
+   */
+  getSystemEvents = async (callbackFn: Function): Promise<any> => {
+    Logger.debug('CennznetApi::getSystemEvents called');
+    try {
+      const systemEvents = await this.api.query.system.events(callbackFn);
+      Logger.debug(`CennznetApi::getSystemEvents success: ${systemEvents}`);
+      return systemEvents;
+    } catch (error) {
+      Logger.error('CennznetApi::getSystemEvents error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  /**
    * All the accounts with a desire to stake.
    * @returns {Promise<AccountIdList>}
    */

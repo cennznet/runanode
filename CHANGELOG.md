@@ -10,6 +10,7 @@
 - User able to unstake
 - able to save staking preference
 - able to view staking preference
+- able to listen to reward events
 
 ### Fixes
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+
+import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
 import * as colors from '../../theme/colors';
 import Button from '../../components/Button';
 
@@ -48,7 +50,7 @@ const SavePreferenceSection = ({ validatorPreferences, setChangeStakingPreferenc
       </Item>
       <Item>
         <Left>Validator payment</Left>
-        <Right>{validatorPreferences ? validatorPreferences.validatorPayment.toString() : ''} CENNZ</Right>
+        <Right>{validatorPreferences ? validatorPreferences.validatorPayment.toString() : ''} {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}</Right>
       </Item>
       <Item>
         <Left />
