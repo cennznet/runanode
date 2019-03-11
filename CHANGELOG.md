@@ -16,8 +16,11 @@
 - Make Toaster configurable;
 - Staking Overview;
 - Able to start to stake;
+- able to listen to reward events
 
 ### Fixes
+
+- fix setInterval timer issue
 
 ### Improvements
 
@@ -28,6 +31,7 @@
 - upgrade cenznet-api to v0.7.4
 - isDevOrDebugProd works for renderer
 - hight light self-own staking account;
+- use stored staking wallet/account info for manage stake page
 
 # v0.5.2 (2019.02.25)
 
