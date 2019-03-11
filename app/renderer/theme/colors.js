@@ -86,5 +86,3 @@ export const textMuted = rgba(255, 255, 255, 0.7);
 export const textHover = N200;
 export const link = B500;
 export const linkHover = B600;
-export const trGradient =
-  'linear-gradient(90deg, rgba(210,38,242,0.5) 0%, rgba(8,24,127,0.5) 100%)';
