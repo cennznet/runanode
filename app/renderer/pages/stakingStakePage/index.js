@@ -15,19 +15,22 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
   const [cennzStakingBalance, setCennzStakingBalance] = useState(null);
   const [cpayStakingBalance, setCpayStakingBalance] = useState(null);
   const [gasFee, setGasFee] = useState(null);
-  // For: errText in AccountBalance component and stake button
   const [sufficientGasFee, setSufficientGasFee] = useState(true);
+  const [stakingAccount, setStakingAccount] = useState(null);
 
   useEffect(() => {
     if (stakingOption) {
       const {
-        value: stakingAccount,
+        value: stakingAccountAddress,
         wallet: { accounts },
       } = stakingOption;
-      const { assets } = accounts[stakingAccount];
+
+      const stakingAccountObject = accounts[stakingAccountAddress];
+      const { assets } = stakingAccountObject;
       const cennzStakingBalanceFromChain = assets[cennzAssetId].freeBalance.toString || 0;
       const cpayStakingBalanceFromChain = assets[cpayAssetId].freeBalance.toString || 0;
-      // TODO: fetch estimated gas fee from chain
+      // TODO: estimation code is not ready yet, would hard code first.
+      // TODO: make the consistent compare unit
       const sortedGasFee = 334;
 
       const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
@@ -38,6 +41,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
       setCpayStakingBalance(sortedCpayStakingBalance);
       setGasFee(sortedGasFee);
       setSufficientGasFee(isSufficientGasFee);
+      setStakingAccount(stakingAccountObject);
     }
   }, [stakingOption]);
 
@@ -79,7 +83,16 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
         </div>
         <PageFooter>
           <div />
-          <Stake {...{ onStakeConfirmed }} />
+          <Stake
+            {...{
+              onStakeConfirmed,
+              cennzStakingBalance,
+              cpayStakingBalance,
+              gasFee,
+              sufficientGasFee,
+              stakingAccount,
+            }}
+          />
         </PageFooter>
       </MainContent>
     </MainLayout>

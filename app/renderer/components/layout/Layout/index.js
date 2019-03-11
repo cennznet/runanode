@@ -27,8 +27,8 @@ const Content = styled.div`
 const Layout = ({ topBar, defaultTopBar, sidebar, defaultSidebar, notificationType, children }) => {
   return (
     <PageWrapper>
-      {notificationType && <Notification>{getNotificationByType(notificationType)}</Notification>}
       {defaultTopBar ? <TopBar /> : topBar}
+      {notificationType && <Notification>{getNotificationByType(notificationType)}</Notification>}
       <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar}>
         {defaultSidebar ? <SideNav /> : sidebar}
         <Content>{children}</Content>
