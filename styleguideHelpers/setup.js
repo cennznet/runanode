@@ -6,12 +6,14 @@ import DemoCanvas from './DemoCanvas';
 import DemoSquare from './DemoSquare';
 import DemoFlex from './DemoFlex';
 import { Button, TabPane } from '../app/renderer/components';
+import toast from '../app/renderer/components/Toaster/toast';
 import CollapsibleMenu from '../app/renderer/components/layout/SubNav/CollapsibleMenu';
 import SimpleMenu from '../app/renderer/components/layout/SubNav/SimpleMenu';
 
 global.styled = styled;
 global.FontAwesomeIcon = FontAwesomeIcon;
 global.Button = Button;
+global.toast = toast;
 global.ColorPalette = ColorPalette;
 global.DemoCanvas = DemoCanvas;
 global.DemoSquare = DemoSquare;
