@@ -37,7 +37,7 @@ const NetworkSectionContainer = styled.div`
 `;
 
 const NetworkSectionWrapper = styled.div`
-  min-width: 12rem;
+  min-width: 15rem;
 `;
 
 const InfoWrapper = styled.div`
@@ -131,7 +131,7 @@ const TopBar = ({
             <InfoDesc>block height</InfoDesc>
           </div>
           <div>
-            <InfoValue>{localBps? localBps.toFixed(2) : 0}</InfoValue>
+            <InfoValue>{localBps ? localBps.toFixed(2) : 0}</InfoValue>
             <InfoDesc>bps</InfoDesc>
           </div>
         </InfoWrapper>

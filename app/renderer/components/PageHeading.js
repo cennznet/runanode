@@ -5,13 +5,13 @@ const Wrapper = styled.div`
   font-weight: 600;
   font-size: 1.5rem;
   margin-top: ${p => p.marginTop || '0'};
-  margin-bottom: ${p => p.marginBottom || '1.5rem'};
+  margin-bottom: ${p => p.marginBottom || '2rem'};
 `;
 
 const SubHeading = styled.div`
   font-size: 14px;
   font-weight: 400;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   line-height: 1.2rem;
 `;
 

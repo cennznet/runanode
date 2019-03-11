@@ -3,6 +3,7 @@
 # vNext
 
 ### Features
+
 - able to get seed from wallet json
 - able to stake and unstake
 - Add Staking routes;
@@ -10,11 +11,15 @@
 - User able to unstake
 - able to save staking preference
 - able to view staking preference
+- User friendly skaking flow;
+- Add Notification bar;
+- Make Toaster configurable;
 - able to listen to reward events
 
 ### Fixes
 
 ### Improvements
+
 - display node state in dev info top bar
 - skip restart node when chose same network
 - add bps to sync screen
@@ -68,7 +73,8 @@
 - able to check cennznet-node process in tests
 
 ### Improvements
-- re-enable isDevOrDebugProd to allow use dev tools in packaged app 
+
+- re-enable isDevOrDebugProd to allow use dev tools in packaged app
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
 - Improved styleguide

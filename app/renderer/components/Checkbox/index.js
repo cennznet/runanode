@@ -32,6 +32,7 @@ const StyledCheckbox = styled(RcCheckbox)`
   &.rc-checkbox {
     .rc-checkbox-inner {
       background-color: ${p => p.theme.colors.N50};
+      transition: none;
 
       &::after {
         width: 4px;

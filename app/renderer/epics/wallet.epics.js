@@ -70,7 +70,7 @@ const addAccountEpic = (action$, state$) =>
       const { updatedWallet, newAccount } = await window.odin.api.cennz.addAccount({ wallet });
       const resolvedWalletItem = R.set(R.lensProp('wallet'), updatedWallet, toUpdateWallet);
       const syncedWallet = await window.odin.api.cennz.syncWalletData(resolvedWalletItem);
-      syncedWallet.accounts[newAccount] = { name: newAccountName };
+      syncedWallet.accounts[newAccount].name = newAccountName;
 
       const storedWallets = state$.value.localStorage[storageKeys.WALLETS];
       const toUpdateWalletIndex = R.findIndex(R.propEq('id', syncedWallet.id))(storedWallets);

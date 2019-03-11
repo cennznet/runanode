@@ -24,6 +24,7 @@ import Tooltip from 'components/Tooltip';
 import TosContent from 'components/TosContent';
 import Radio from 'components/Radio';
 import Toaster from 'components/Toaster';
+import Card from 'components/Card';
 
 export {
   Box,
@@ -52,4 +53,5 @@ export {
   Radio,
   Toaster,
   Ellipsis,
+  Card,
 };
