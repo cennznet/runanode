@@ -19,6 +19,7 @@ services:
       - --ws-external
       - --rpc-external
       - --telemetry-url=ws://telemetry:1024
+      - --pruning=archive
     ports:
       - "19933:9933"
       - "19944:9944"
@@ -42,6 +43,7 @@ services:
       - --ws-external
       - --rpc-external
       - --telemetry-url=ws://telemetry:1024
+      - --pruning=archive
     ports:
       - "30335:30333"
   node-2:
@@ -63,10 +65,11 @@ services:
       - --ws-external
       - --rpc-external
       - --telemetry-url=ws://telemetry:1024
+      - --pruning=archive
     ports:
       - "30336:30333"
   telemetry:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet-telemetry:1.0.18
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet-telemetry:1.0.19
     entrypoint: "bash scripts/deploy.sh"
     ports:
       - "1024:1024"
