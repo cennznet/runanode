@@ -37,6 +37,7 @@ const WalletDetailsSubNav = ({
   setNewAccount,
   setToUpdateWallet,
   setAddAccountModalOpen,
+  stakingStashAccountAddress,
   ...otherProps
 }) => {
   const addAccountButton = wallet => {
@@ -70,9 +71,11 @@ const WalletDetailsSubNav = ({
       tail: `(${Object.keys(wallet.accounts).length})`,
       navItems: Object.keys(wallet.accounts).map(address => {
         const account = wallet.accounts[address];
+        const icon = account.address === stakingStashAccountAddress ? { icon: 'lock' } : {};
         return {
           label: account.name || account.address,
           link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
+          ...icon,
         };
       }),
       additionalItem: addAccountButton(wallet),
