@@ -10,7 +10,7 @@ import { Keyring } from '@polkadot/keyring';
 import decode from '@polkadot/keyring/pair/decode';
 import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
 import assert from 'assert';
-
+import { storageKeys, clearStorage } from 'renderer/api/utils/storage';
 import { WALLET_TYPE } from 'renderer/constants/wallet';
 import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
@@ -473,7 +473,11 @@ export default class CennzApi {
    * @param passphrase
    * @returns {Promise<Hash>}
    */
-  doStake = async (wallet: CennznetWallet, stashAccountAddress: string, passphrase: string): Promise<Hash> => {
+  doStake = async (
+    wallet: CennznetWallet,
+    stashAccountAddress: string,
+    passphrase: string
+  ): Promise<Hash> => {
     Logger.debug('CennznetApi::doStake called');
     try {
       const originalWallet = this.reloadWallet(wallet);
@@ -501,7 +505,7 @@ export default class CennzApi {
     try {
       const intentions = await this.api.query.staking.intentions();
       Logger.debug(`intentions: ${intentions}`);
-      const intentionsStr = intentions.map((item) => {
+      const intentionsStr = intentions.map(item => {
         return item.toString();
       });
       const intentionsIndex = intentionsStr.indexOf(accountAddress);
@@ -518,7 +522,11 @@ export default class CennzApi {
    * @param accountAddress
    * @returns {Promise<CodecResult>}
    */
-  saveStakingPreferences = async (wallet: CennznetWallet, prefs: any, accountAddress: string): Promise<any> => {
+  saveStakingPreferences = async (
+    wallet: CennznetWallet,
+    prefs: any,
+    accountAddress: string
+  ): Promise<any> => {
     Logger.debug('CennznetApi::saveStakingPreferences called');
     Logger.debug(`wallet: ${JSON.stringify(wallet)}`);
     try {
@@ -531,7 +539,9 @@ export default class CennzApi {
 
       const validatorPrefs = new ValidatorPrefs(prefs);
       const intentionIndex = await this.getIntentionIndex(accountAddress);
-      const txHash = await this.api.tx.staking.registerPreferences(intentionIndex, validatorPrefs).signAndSend(accountAddress);
+      const txHash = await this.api.tx.staking
+        .registerPreferences(intentionIndex, validatorPrefs)
+        .signAndSend(accountAddress);
       Logger.debug(`CennznetApi::saveStakingPreferences txHash ${txHash}`);
       return txHash;
     } catch (error) {
@@ -545,12 +555,18 @@ export default class CennzApi {
    * @param callbackFn
    * @returns {Promise<ValidatorPrefs>}
    */
-  getValidatorPreferences = async (accountAddress: string, callbackFn: Function): Promise<ValidatorPrefs> => {
+  getValidatorPreferences = async (
+    accountAddress: string,
+    callbackFn: Function
+  ): Promise<ValidatorPrefs> => {
     Logger.debug('CennznetApi::getValidatorPreferences called');
     Logger.debug(`accountAddress: ${accountAddress}`);
     Logger.debug(`callbackFn: ${callbackFn}`);
     try {
-      const validatorPreferences = await this.api.query.staking.validatorPreferences(accountAddress, callbackFn);
+      const validatorPreferences = await this.api.query.staking.validatorPreferences(
+        accountAddress,
+        callbackFn
+      );
       Logger.debug(`validatorPreferences: ${JSON.stringify(validatorPreferences)}`);
       return validatorPreferences;
     } catch (error) {
@@ -587,6 +603,9 @@ export default class CennzApi {
         .unstake(intentionsIndex)
         .signAndSend(stashAccountAddress);
       Logger.debug(`CennznetApi::doUnStake txHash ${txHash}`);
+      // TODO: Chain epic to reflect the changes in reducer immediately
+      await clearStorage(storageKeys.STAKING_STASH_ACCOUNT_ADDRESS);
+
       return txHash;
     } catch (error) {
       Logger.error('CennznetApi::doUnStake error: ' + stringifyError(error));
@@ -639,10 +658,8 @@ export default class CennzApi {
    * @returns {Promise<List>}
    */
   getValidators = async (callbackFn: Function): Promise<List> => {
-    Logger.debug('CennznetApi::getValidators called');
     try {
       const validators = await this.api.query.session.validators(callbackFn);
-      Logger.debug(`CennznetApi::getValidators success: ${validators}`);
       return validators;
     } catch (error) {
       Logger.error('CennznetApi::getValidators error: ' + stringifyError(error));
@@ -655,10 +672,8 @@ export default class CennzApi {
    * @returns {Promise<AccountIdList>}
    */
   getIntentions = async (callbackFn: Function): Promise<AccountIdList> => {
-    Logger.debug('CennznetApi::getIntentions called');
     try {
       const intentions = await this.api.query.staking.intentions(callbackFn);
-      Logger.debug(`CennznetApi::getIntentions success: ${intentions}`);
       return intentions;
     } catch (error) {
       Logger.error('CennznetApi::getIntentions error: ' + stringifyError(error));
@@ -690,10 +705,8 @@ export default class CennzApi {
    * @returns {Promise<BlockNumber>}
    */
   getSessionLength = async (callbackFn: Function): Promise<BlockNumber> => {
-    Logger.debug('CennznetApi::getSessions called');
     try {
       const sessionLength = await this.api.query.session.sessionLength(callbackFn);
-      Logger.debug(`CennznetApi::getSessions success: ${sessionLength}`);
       return sessionLength;
     } catch (error) {
       Logger.error('CennznetApi::getSessions error: ' + stringifyError(error));
@@ -706,10 +719,8 @@ export default class CennzApi {
    * @returns {Promise<BlockNumber>}
    */
   getSessionProgress = async (callbackFn: Function): Promise<BlockNumber> => {
-    Logger.debug('CennznetApi::getSessionProgress called');
     try {
       const sessionProgress = await this.api.derive.session.sessionProgress(callbackFn);
-      Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`);
       return sessionProgress;
     } catch (error) {
       Logger.error('CennznetApi::getSessionProgress error: ' + stringifyError(error));
@@ -722,10 +733,8 @@ export default class CennzApi {
    * @returns {Promise<BlockNumber>}
    */
   getSessionLength = async (callbackFn: Function): Promise<BlockNumber> => {
-    Logger.debug('CennznetApi::getSessionLength called');
     try {
       const sessionLength = await this.api.query.session.sessionLength(callbackFn);
-      Logger.debug(`CennznetApi::getSessionLength success: ${sessionLength}`);
       return sessionLength;
     } catch (error) {
       Logger.error('CennznetApi::getSessionLength error: ' + stringifyError(error));
@@ -738,10 +747,8 @@ export default class CennzApi {
    * @returns {Promise<BlockNumber>}
    */
   getEraProgress = async (callbackFn: Function): Promise<BlockNumber> => {
-    Logger.debug('CennznetApi::getEraProgress called');
     try {
       const eraProgress = await this.api.derive.session.eraProgress(callbackFn);
-      Logger.debug(`CennznetApi::getEraProgress success: ${eraProgress}`);
       return eraProgress;
     } catch (error) {
       Logger.error('CennznetApi::getEraProgress error: ' + stringifyError(error));
@@ -754,10 +761,8 @@ export default class CennzApi {
    * @returns {Promise<BlockNumber>}
    */
   getEraLength = async (callbackFn: Function): Promise<BlockNumber> => {
-    Logger.debug('CennznetApi::getEraLength called');
     try {
       const eraLength = await this.api.derive.session.eraLength(callbackFn);
-      Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`);
       return eraLength;
     } catch (error) {
       Logger.error('CennznetApi::getEraLength error: ' + stringifyError(error));
