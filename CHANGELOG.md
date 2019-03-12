@@ -17,6 +17,7 @@
 - Staking Overview;
 - Able to start to stake;
 - able to listen to reward events
+- Label for staking account
 
 ### Fixes
 
