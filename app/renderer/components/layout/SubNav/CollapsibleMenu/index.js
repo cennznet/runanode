@@ -5,6 +5,7 @@ import { Accordion } from 'react-sanfona';
 import { NavLink } from 'react-router-dom';
 import Ellipsis from 'components/Ellipsis';
 import { colors } from 'renderer/theme';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AccordionItem from './AccordionItem';
 import AccordionItemTitle from './AccordionItemTitle';
 import AccordionItemBody from './AccordionItemBody';
@@ -29,6 +30,11 @@ const NavItem = styled(NavLink)`
   }
 `;
 
+const NavItemContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
   return (
     <Accordion>
@@ -46,7 +52,16 @@ const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
                   navItems.map(navItem => {
                     return (
                       <NavItem as={!isInsideRouter && 'div'} key={uuid()} to={navItem.link}>
-                        <Ellipsis title={navItem.label}>{navItem.label}</Ellipsis>
+                        <NavItemContent>
+                          <Ellipsis title={navItem.label} substrLength={10}>
+                            {navItem.label}
+                          </Ellipsis>
+                          {navItem.icon && (
+                            <div>
+                              <FontAwesomeIcon icon={navItem.icon} />
+                            </div>
+                          )}
+                        </NavItemContent>
                       </NavItem>
                     );
                   })}

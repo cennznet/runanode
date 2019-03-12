@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, Button } from 'components';
 import styled from 'styled-components';
+import theme from 'renderer/theme';
 import StakingProgressCard from './StakingProgressCard';
 import withContainer from './container';
 import ValidatorsList from './ValidatorsList';
@@ -12,6 +13,20 @@ import useApi from './useApi';
 const PageTitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const TextTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const NextUpHintText = styled.div`
+  font-size: 10px;
+  background: ${theme.listitemHighlightGradient};
+  border-radius: 12px;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  margin-left: 0.5rem;
 `;
 
 const ListsWrapper = styled.div`
@@ -83,15 +98,26 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
       : [];
 
   const sortedWaitingList = intentionsWithBalances
-    ? intentionsWithBalances.filter(address => !sortedValidators.includes(address))
+    ? intentionsWithBalances.filter(
+        intentionWithBalance => !sortedValidators.includes(intentionWithBalance)
+      )
     : [];
+
+  const toShowNextUpHintText =
+    sortedWaitingList.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
+      .length > 0;
 
   return (
     <MainLayout subNav={subNav}>
       <MainContent>
         <PageHeading subHeading="Here you can view when the next era is, and how your staking performs among other validators.">
           <PageTitleWrapper>
-            <div>Staking overview</div>
+            <TextTitleWrapper>
+              <div>Staking overview</div>
+              {toShowNextUpHintText && (
+                <NextUpHintText>You will join validator list from next era</NextUpHintText>
+              )}
+            </TextTitleWrapper>
             <Button size="lg" onClick={() => onClickStakeButton()}>
               Stake
             </Button>

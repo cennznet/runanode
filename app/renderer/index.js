@@ -18,6 +18,7 @@ import {
   faQuestionCircle,
   faWallet,
   faExternalLinkAlt,
+  faLock,
 } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
@@ -59,7 +60,8 @@ library.add(
   faQuestionCircle,
   faWallet,
   faArrowAltCircleRight,
-  faExternalLinkAlt
+  faExternalLinkAlt,
+  faLock
 );
 
 const initializeOdin = async () => {
