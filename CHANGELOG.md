@@ -4,6 +4,19 @@
 
 ### Features
 
+### Fixes
+
+### Improvements
+
+# v0.6.1 (2019.03.12)
+
+### Fixes
+- add local net option back
+
+# v0.6.0 (2019.03.12)
+
+### Features
+
 - able to get seed from wallet json
 - able to stake and unstake
 - Add Staking routes;
@@ -11,7 +24,7 @@
 - User able to unstake
 - able to save staking preference
 - able to view staking preference
-- User friendly skaking flow;
+- User friendly staking flow;
 - Add Notification bar;
 - Make Toaster configurable;
 - Staking Overview;
@@ -31,7 +44,7 @@
 - able to run cennznet-node cluster locally
 - upgrade cenznet-api to v0.7.4
 - isDevOrDebugProd works for renderer
-- hight light self-own staking account;
+- height light self-own staking account;
 - use stored staking wallet/account info for manage stake page
 
 # v0.5.2 (2019.02.25)
