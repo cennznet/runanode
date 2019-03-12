@@ -8,8 +8,12 @@ import history from 'renderer/history';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
 
-const mapStateToProps = ({ localStorage, transaction }) => ({
-  wallets: localStorage[storageKeys.WALLETS],
+const mapStateToProps = ({
+  localStorage: { WALLETS, STAKING_STASH_ACCOUNT_ADDRESS },
+  transaction,
+}) => ({
+  wallets: WALLETS,
+  stakingStashAccountAddress: STAKING_STASH_ACCOUNT_ADDRESS,
   transaction,
 });
 

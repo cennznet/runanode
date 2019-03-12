@@ -10,12 +10,25 @@ import withContainer from './container';
 import WalletDetailsSubNav from './WalletDetailsSubNav';
 import AccountDetails from './AccountDetails';
 
-const WalletDetailsPage = ({ wallets, transaction, match, onTransfer, ...otherProps }) => {
+const WalletDetailsPage = ({
+  wallets,
+  stakingStashAccountAddress,
+  transaction,
+  match,
+  onTransfer,
+  ...otherProps
+}) => {
   const { walletId, accountPublicAddress } = match.params;
   const wallet = wallets && R.find(R.propEq('id', walletId))(wallets);
   return wallet ? (
     <MainLayout
-      subNav={<WalletDetailsSubNav currentWallet={wallet} {...{ wallets }} {...otherProps} />}
+      subNav={
+        <WalletDetailsSubNav
+          currentWallet={wallet}
+          {...{ wallets, stakingStashAccountAddress }}
+          {...otherProps}
+        />
+      }
     >
       <MainContent display="flex">
         <AccountDetails
@@ -23,6 +36,7 @@ const WalletDetailsPage = ({ wallets, transaction, match, onTransfer, ...otherPr
           onTransfer={onTransfer}
           currentWallet={wallet}
           transaction={{ ...transaction }}
+          stakingStashAccountAddress={stakingStashAccountAddress}
         />
       </MainContent>
     </MainLayout>
