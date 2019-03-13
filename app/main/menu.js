@@ -1,6 +1,7 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
 import { environment } from 'common/environment';
+import config from 'app/config';
 
 const { isDevOrDebugProd } = environment;
 
@@ -43,17 +44,17 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'Odin',
+      label: config.app.name,
       submenu: [
         {
-          label: 'About Odin',
+          label: 'About ' + config.app.name,
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide Odin',
+          label: 'Hide ' + config.app.name,
           accelerator: 'Command+H',
           selector: 'hide:',
         },
