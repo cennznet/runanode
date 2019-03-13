@@ -2,19 +2,46 @@
 
 Thank you for your interest in contributing to rUN. We've written up some guidelines to help you get your issues looked into faster, and pull requests merged in a timely manner.
 
-## Issue Guidelines
+## What?
 
-- Before you file an issue, make sure to have read the [README](https://github.com/cennznet/rUN/blob/master/README.md) and followed the instructions correctly.
-- Please label the issue either bug or proposal according to its purpose.
-- Please state the version (or commit) of the UI.
-- Please describe the bug or your proposed change to the software in as much detail as possible. The faster we can reproduce the bug, the faster we can fix it.
-- When screenshots can be used to describe the bug/proposal, please include them.
-- If you report a bug, please provide the log content and the steps required to reproduce the bug. The logs can be found at `~/Library/Logs/AppName/*log`.
+Individuals making significant and valuable contributions are given commit-access to a project to contribute as they see fit.
+A project is more like an open wiki than a standard guarded open source project.
 
-## Pull Request Guidelines
+## Rules
 
-- Please confirm that your pull request will pass our linting and unit tests.
-- Please make sure your code is properly tested, so that the code coverage is not decreasing.
-- Please write `closes #123` somewhere in the pull request. #123 is the issue number you are attempting to fix with this PR. This string will automatically close the issue when the PR is merged.
-- If this PR produces a visible change, please provide screenshots showing these changes.
-- If the change is difficult to understand, please provide a description on why and how the change helps improve the application.
+There are a few basic ground-rules for contributors (including the maintainer(s) of the project):
+
+1. **No `--force` pushes** or modifying the Git history in any way. If you need to rebase, ensure you do it in your own repo.
+2. **Non-master branches**, prefixed with a short name moniker (e.g. `<initials>-<feature>`) must be used for ongoing work.
+3. **All modifications** must be made in a **pull-request** to solicit feedback from other contributors.
+4. A pull-request *must not be merged until CI* has finished successfully.
+
+#### Merging pull requests once CI is successful:
+- A pull request with no large change to logic that is an urgent fix may be merged after a non-author contributor has reviewed it well.
+- No PR should be merged until all reviews' comments are addressed.
+
+#### Reviewing pull requests:
+When reviewing a pull request, the end-goal is to suggest useful changes to the author. Reviews should finish with approval unless there are issues that would result in:
+
+- Buggy behaviour.
+- Undue maintenance burden.
+- Breaking with house coding style.
+- Pessimisation (i.e. reduction of speed as measured in the projects benchmarks).
+- Feature reduction (i.e. it removes some aspect of functionality that a significant minority of users rely on).
+- Uselessness (i.e. it does not strictly add a feature or fix a known issue).
+
+#### Reviews may not be used as an effective veto for a PR because:
+- There exists a somewhat cleaner/better/faster way of accomplishing the same feature/fix.
+- It does not fit well with some other contributors' longer-term vision for the project.
+
+## Releases
+
+Declaring formal releases remains the prerogative of the project maintainer(s).
+
+## Changes to this arrangement
+
+This is an experiment and feedback is welcome! This document may also be subject to pull-requests or changes by contributors where you believe you have something valuable to add or change.
+
+## Heritage
+
+These contributing guidelines are modified from the "OPEN Open Source Project" guidelines for the Level project: [https://github.com/Level/community/blob/master/CONTRIBUTING.md](https://github.com/Level/community/blob/master/CONTRIBUTING.md)
