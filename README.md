@@ -1,23 +1,23 @@
-# cennz-node-ui
+# rUN
 
 ---
 
-The Electron App for CENNZ node
+👋 Welcome to [rUN](https://runanode.io/), the official wallet and UI for the [CENNZNet](https://centrality.ai/), power by [Plug](https://www.plugblockchain.com/).
 
 ## Get Started
 
-```shell
+```bash
 ./scripts/init.sh
 yarn install
 ```
 
-```shell
+```bash
 yarn dev
 ```
 
 ## Building
 
-```shell
+```bash
 yarn build
 or
 OPEN_ANALYZER=true yarn build
@@ -25,53 +25,59 @@ OPEN_ANALYZER=true yarn build
 
 ## Packaging
 
-```shell
+```bash
 yarn package
 or
 yarn package --[option]
 ```
 
-```shell
+```bash
 yarn package-all
 ```
 
 ## Testing
 
-```shell
+```bash
 yarn test
 yarn test -u
 yarn test -w
 ```
 
-```shell
+```bash
 yarn build-e2e or START_MINIMIZED=true yarn build-e2e
 yarn test-e2e
 ```
 
 ## Release
 
-```shell
+```bash
 export GITHUB_TOKEN=xxx
 yarn release:github
 ```
 
 ## Debug/Logging for packaged app
 
-```shell
+```bash
 open release/mac/Odin.app
 tail -f ~/Library/Logs/Odin/*
 ```
 
 CennzNet Node log:
+```bash
 ~/Library/Logs/Odin/cennznet-node.log
+```
 
 Odin application log:
+```bash
 ~/Library/Logs/Odin/log.log
+```
 
 Variable can be use in launcher-config.yaml
+```bash
 ODIN_DIST_DIRECTORY=Odin.app/Contents/dist
 ODIN_LOG_DATA_DIRECTORY=~/Library/Logs/Odin
 ODIN_USER_DATA_DIRECTORY=~/Library/Application Support/Odin
+```
 
 Packaged app structure for mac:
 
@@ -98,7 +104,7 @@ Start `Debug Main Process` in VSCode
 
 Install debugger-for-chrome
 
-```shell
+```bash
 yarn start-renderer-dev
 ```
 
