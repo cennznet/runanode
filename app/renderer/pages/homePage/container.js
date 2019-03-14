@@ -1,9 +1,5 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle, withState } from 'recompose';
-
-import type { CennzNetNodeState, CennzNetStatus } from 'common/types/cennznet-node.types';
 import { Logger } from 'renderer/utils/logging';
-import { cennznetStateChangeChannel, cennznetStatusChannel } from 'renderer/ipc/cennznet.ipc';
 import types from 'renderer/types';
 import ROUTES from '../../constants/routes';
 
