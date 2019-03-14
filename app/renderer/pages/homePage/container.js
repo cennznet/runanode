@@ -12,43 +12,21 @@ const mapStateToProps = ({ syncStream, syncRemoteStream }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onPageLoad: () => {
+  onPageNavigation: () => {
+    Logger.info(`HomePage: calling <onPageNavigation>`);
     dispatch({
-      type: types.homePageLoad.triggered,
+      type: types.homePageNavigation.triggered,
     });
   },
 
-  // TODO: Move this subcription into Epic
-  onCennznetStatusChange: (status: CennzNetStatus) => {
-    Logger.info(`onCennznetStatusChange: handling cennznet status <${status}>`);
-    if (status.isNodeSafeExisting) {
-      Logger.info(`isNodeSafeExisting, status: ${JSON.stringify(status)}`);
-      dispatch({
-        type: types.navigation.triggered,
-        payload: ROUTES.WAIT,
-      });
-    }
+  onSubscribeCennznetStatus: () => {
     dispatch({
-      type: types.cenznetStatusChange.triggered,
-      payload: status,
+      type: types.subscribeStatusChange.triggered,
     });
   },
 });
 
-const enhance = lifecycle({
-  componentDidMount() {
-    cennznetStatusChannel.onReceive(this.props.onCennznetStatusChange);
-  },
-
-  componentDidUpdate() {
-    this.props.hasBlockNumbers && this.props.onPageLoad();
-  },
-});
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  enhance
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 );
