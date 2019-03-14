@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 
   onSubscribeCennznetStatus: () => {
     dispatch({
-      type: types.subscribeStatusChange.triggered,
+      type: types.subscribeCenznetStatusChange.triggered,
     });
   },
 });

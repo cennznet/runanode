@@ -40,10 +40,10 @@ const homePageNavigationEpic = (action$, state$) =>
     })
   );
 
-const subscribeStatusChangeEpic = action$ =>
-  action$.ofType(types.subscribeStatusChange.triggered).pipe(
+const subscribeCenznetStatusChangeEpic = action$ =>
+  action$.ofType(types.subscribeCenznetStatusChange.triggered).pipe(
     mergeMap(() => {
-      Logger.debug(`subscribeStatusChangeEpic call::`);
+      Logger.debug(`SubscribeCenznetStatusChange call::`);
       return new Observable(async observer => {
         cennznetStatusChannel.onReceive(status => {
           observer.next(status);
@@ -65,4 +65,4 @@ const subscribeStatusChangeEpic = action$ =>
     })
   );
 
-export default [homePageNavigationEpic, subscribeStatusChangeEpic];
+export default [homePageNavigationEpic, subscribeCenznetStatusChangeEpic];
