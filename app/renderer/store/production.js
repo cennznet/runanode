@@ -10,6 +10,7 @@ const epicMiddleware = createEpicMiddleware();
 const composedEnhancers = compose(
   applyMiddleware(epicMiddleware, routerMiddleware(history), gaMiddleware({ logger: false }))
 );
+
 const store = createStore(rootReducer, composedEnhancers);
 
 epicMiddleware.run(epics);
