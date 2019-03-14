@@ -1,8 +1,8 @@
 // @flow
 import _ from 'lodash';
-import { SimpleKeyring, Wallet, HDKeyring } from 'cennznet-wallet';
-import { GenericAsset } from 'cennznet-generic-asset';
-import { Api } from 'cennznet-api';
+import { SimpleKeyring, Wallet, HDKeyring } from '@cennznet/wallet';
+import { GenericAsset } from '@cennznet/generic-asset';
+import { Api } from '@cennznet/api';
 import uuid from 'uuid/v4';
 import BN from 'bn.js';
 import { u32, Balance, AccountId, ValidatorPrefs } from '@polkadot/types';
