@@ -7,7 +7,6 @@ import { colors } from 'renderer/theme';
 const SettingsTosPage = ({ subNav }) => (
   <MainLayout subNav={subNav}>
     <MainContent>
-      <PageHeading>Terms & Conditions</PageHeading>
       <Scrollable>
         <TosContent />
       </Scrollable>
