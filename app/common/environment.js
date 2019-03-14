@@ -5,6 +5,7 @@ import parseArgs from 'minimist';
 import mergeOptions from 'merge-options';
 import { remote } from 'electron'; // TODO check is this safe?
 
+import appConfig from 'app/config';
 import { version } from '../../package.json';
 import type { Environment } from './types/environment.types';
 import {
@@ -60,8 +61,7 @@ const OS = OS_NAMES[PLATFORM] || PLATFORM;
 const BUILD = process.env.BUILD_NUMBER || 'dev';
 const BUILD_NUMBER = uniq([API_VERSION, BUILD]).join('.');
 const BUILD_LABEL = (() => {
-  const networkLabel = !(isMainnet || isDev) ? ` ${upperFirst(NETWORK)}` : '';
-  let buildLabel = `Odin${networkLabel} (${version}#${BUILD_NUMBER})`;
+  let buildLabel = `${appConfig.app.name} (${version}#${BUILD_NUMBER})`;
   if (!isProduction) buildLabel += ` ${CURRENT_NODE_ENV}`;
   return buildLabel;
 })();

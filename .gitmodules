@@ -1,6 +1,0 @@
-[submodule "centrality.deploy"]
-	path = centrality.deploy
-	url = git@bitbucket.org:centralitydev/centrality.deploy.git
-[submodule "helm/templates"]
-	path = helm/templates
-	url = git@bitbucket.org:centralitydev/templates.git

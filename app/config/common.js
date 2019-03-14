@@ -1,5 +1,8 @@
 const commonConfig = {
   // Common config shared by dev and prod comes here...
+  app: {
+    name: 'rUN',
+  },
   node: {
     startupMaxRetry: 5,
     startupTimeout: 5000,

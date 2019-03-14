@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { MainContent, MainLayout } from 'components/layout';
 import { Toggle, PageHeading } from 'components';
 import { colors } from 'renderer/theme';
+import config from 'app/config';
+
 import packageJson from '../../../../package.json';
 import withContainer from './container';
 
@@ -63,7 +65,7 @@ const SettingsGeneralPage = ({
   <MainLayout subNav={subNav}>
     <MainContent>
       <PageHeading marginBottom="0">Settings</PageHeading>
-      <VersionSection>CENNZNode version {packageJson.version}</VersionSection>
+      <VersionSection>{config.app.name} version {packageJson.version}</VersionSection>
       <PreferenceSection>
         <PreferenceHeader>Preference</PreferenceHeader>
         <PreferenceBody>
