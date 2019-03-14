@@ -40,7 +40,6 @@ class TosPage extends React.Component {
         <LayoutWrapper>
           <MainContent>
             <Scrollable>
-              <PageHeading>Terms & Conditions</PageHeading>
               <TosContent />
               <div ref={this.scrollObserver} />
             </Scrollable>

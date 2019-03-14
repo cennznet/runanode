@@ -2,7 +2,7 @@ const path = require('path');
 const webpackConfig = require('./configs/webpack.config.styleguide');
 
 module.exports = {
-  title: 'ODIN UI',
+  title: 'rUN UI',
   theme: {
     color: {
       link: '#FFFFFF',
