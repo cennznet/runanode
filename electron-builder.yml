@@ -1,5 +1,5 @@
-productName: 'Odin'
-appId: 'com.centrality.odin'
+productName: 'rUN'
+appId: 'com.centrality.run'
 artifactName: '${name}-${version}-${os}-${arch}.${ext}'
 copyright: 'Copyright © 2019 Centrality'
 

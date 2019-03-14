@@ -7,6 +7,7 @@
 ### Fixes
 
 ### Improvements
+- ready for github release
 
 # v0.6.1 (2019.03.12)
 
