@@ -7,11 +7,13 @@
 ### Fixes
 
 ### Improvements
+
 - ready for github release
 
 # v0.6.1 (2019.03.12)
 
 ### Fixes
+
 - add local net option back
 
 # v0.6.0 (2019.03.12)
@@ -31,10 +33,10 @@
 - Staking Overview;
 - Able to start to stake;
 - able to listen to reward events
-- Label for staking account
 
 ### Fixes
 
+- loading issue in homePage
 - fix setInterval timer issue
 
 ### Improvements
