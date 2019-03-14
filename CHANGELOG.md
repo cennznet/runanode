@@ -3,6 +3,7 @@
 # vNext
 
 ### Features
+- upgrade to latest SDK and cennzet-node 
 
 ### Fixes
 
