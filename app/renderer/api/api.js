@@ -11,7 +11,7 @@ import decode from '@polkadot/keyring/pair/decode';
 import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
 import assert from 'assert';
 
-import config from 'app/config';
+import appConfig from 'app/config';
 import { storageKeys, clearStorage } from 'renderer/api/utils/storage';
 import { WALLET_TYPE } from 'renderer/constants/wallet';
 import { generateMnemonic } from 'renderer/utils/crypto';
@@ -125,7 +125,7 @@ export default class CennzApi {
         walletAddressLabel: request.name,
         recoveryPhraseLabel: 'SEED PHRASE',
         infoTitle: 'Paper Wallet',
-        infoAuthor: config.app.name,
+        infoAuthor: appConfig.app.name,
       },
     });
 
