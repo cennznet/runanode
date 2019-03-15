@@ -20,10 +20,6 @@ const SpinnerWrapper = styled.div`
 
 const HomePage = ({ hasBlockNumbers, onPageNavigation, onSubscribeCennznetStatus }) => {
   useEffect(() => {
-    onSubscribeCennznetStatus();
-  }, []);
-
-  useEffect(() => {
     if (hasBlockNumbers) {
       onPageNavigation();
     }
