@@ -1,6 +1,6 @@
 import { EMPTY, from, of, empty } from 'rxjs';
 import { ofType } from 'redux-observable';
-import { Wallet } from 'cennznet-wallet';
+import { Wallet } from '@cennznet/wallet';
 import { mergeMap } from 'rxjs/operators';
 
 import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
