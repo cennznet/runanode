@@ -7,7 +7,7 @@ import ROUTES from 'renderer/constants/routes';
 import streamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
-import { ApiPromise } from '@polkadot/api';
+import { ApiPromise } from '@cennznet/api';
 
 const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, nodeStateStore }) => ({
   nodeSystem,

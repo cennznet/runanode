@@ -1,7 +1,7 @@
 import { EMPTY, from, of, empty } from 'rxjs';
 import { concat, mergeMap, mapTo, filter } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { Wallet } from 'cennznet-wallet';
+import { Wallet } from '@cennznet/wallet';
 import ROUTES from 'renderer/constants/routes';
 import { WALLET_TYPE } from 'renderer/constants/wallet';
 import chainEpics from 'renderer/epics/chainEpics';
