@@ -14,12 +14,6 @@ const mapDispatchToProps = dispatch => ({
       type: types.homePageNavigation.triggered,
     });
   },
-
-  onSubscribeCennznetStatus: () => {
-    dispatch({
-      type: types.subscribeCenznetStatusChange.triggered,
-    });
-  },
 });
 
 export default connect(
