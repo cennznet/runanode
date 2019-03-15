@@ -40,29 +40,4 @@ const homePageNavigationEpic = (action$, state$) =>
     })
   );
 
-const subscribeCenznetStatusChangeEpic = action$ =>
-  action$.ofType(types.subscribeCenznetStatusChange.triggered).pipe(
-    mergeMap(() => {
-      Logger.debug(`SubscribeCenznetStatusChange call::`);
-      return new Observable(async observer => {
-        cennznetStatusChannel.onReceive(status => {
-          observer.next(status);
-        });
-      }).pipe(
-        map(status => {
-          if (status.isNodeSafeExisting) {
-            return {
-              type: types.navigation.triggered,
-              payload: ROUTES.WAIT,
-            };
-          }
-          return {
-            type: types.cenznetStatusChange.triggered,
-            payload: status,
-          };
-        })
-      );
-    })
-  );
-
-export default [homePageNavigationEpic, subscribeCenznetStatusChangeEpic];
+export default [homePageNavigationEpic];
