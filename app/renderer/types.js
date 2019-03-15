@@ -13,7 +13,7 @@ const {
 const actionTypes = {
   init: triggerActionTypes('init'),
   testPage: triggerActionTypes('test_page'),
-  homePageLoad: triggerActionTypes('home_page_load'),
+  homePageNavigation: triggerActionTypes('home_page_navigation'),
   navigation: triggerActionTypes('navigation'),
   changeAppUiState: triggerActionTypes('change_app_ui_state'),
   resetAppUiState: triggerActionTypes('reset_app_ui_state'),
@@ -45,6 +45,7 @@ const actionTypes = {
   switchNetwork: triggerActionTypes('switch_network'),
   stopStream: apiActionTypes('stop_stream'),
   restartNode: triggerActionTypes('restart_network'),
+  subscribeCenznetStatusChange: triggerActionTypes('subscribe_cennznet_status_change'),
 
   /* Staking */
   stake: triggerActionTypes('stake'),
