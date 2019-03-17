@@ -10,6 +10,7 @@
 ### Improvements
 
 - ready for github release
+- able to release as rUN
 
 # v0.6.1 (2019.03.12)
 
