@@ -8,9 +8,12 @@
 
 ### Improvements
 
+- Chain getting balances with new header
+
 # v0.6.1 (2019.03.12)
 
 ### Fixes
+
 - add local net option back
 
 # v0.6.0 (2019.03.12)
