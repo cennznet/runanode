@@ -68,20 +68,17 @@ const sendStakingExtrinsicEpic = action$ =>
         } = pendingToSendStakingExtrinsicAction.payload;
 
         return new Observable(async observer => {
-          const originalWallet = window.odin.api.cennz.reloadWallet(wallet);
-          await originalWallet.unlock(passphrase);
-          await window.odin.api.cennz.api.setSigner(originalWallet);
-
-          await window.odin.api.cennz.api.tx.staking
-            .stake()
-            .signAndSend(stashAccountAddress, ({ events, status, type }) => {
-              observer.next(type);
-              if (type === 'Finalised') {
-                observer.complete();
-              }
-            });
+          const txHash = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, passphrase);
+          Logger.debug(`sendStakingExtrinsicEpic, txHash: ${txHash}`);
+          if(txHash) {
+            observer.next('Finalised');
+            observer.complete();
+          } else {
+            // TODO error handling
+          }
         }).pipe(
           map(type => {
+            Logger.debug(`sendStakingExtrinsicEpic, type: ${type}`);
             if (type === 'Finalised') {
               return {
                 type: types.stakingExtrinsicCompleted.triggered,
