@@ -68,7 +68,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
         <PageHeading>Start to stake</PageHeading>
         <div className="content">
           <SelectStakingAccount
-            wallets={wallets}
+            wallets={wallets || []}
             onSelectFn={setStakingOption}
             stakingOption={stakingOption}
           />
