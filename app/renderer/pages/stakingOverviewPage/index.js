@@ -58,7 +58,7 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
     'getSessionProgress',
     'getSessionLength',
     'getValidators',
-    'getIntentions'
+    'getValidators'
     // Working Exmaple
     // [
     //   'getGenericAssetFreeBalance',

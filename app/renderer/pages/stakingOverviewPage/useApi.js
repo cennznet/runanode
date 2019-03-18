@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import BlockNumber from '@polkadot/types/type/BlockNumber';
 import { ValidatorPrefs } from '@polkadot/types';
 import BN from 'bn.js';
+import _ from 'lodash';
 
 import { Logger } from 'renderer/utils/logging';
 
@@ -64,7 +65,7 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
 
     // useEffect clean up
     return () => {
-      if (unsubscribeFn) {
+      if (_.isFunction(unsubscribeFn)) {
         Logger.debug(
           `useApi, useEffect clean up, apiSection: ${apiSection}, unsubscribeFn: ${unsubscribeFn}`
         );
