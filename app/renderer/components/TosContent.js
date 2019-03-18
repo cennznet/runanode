@@ -187,7 +187,7 @@ const TosContent = () => {
         </p>
         <p>User acknowledges and agrees that the Company shall not be responsible
       for any aspect of the information, content, or services contained in any third-party materials or on any third
-      party sites accessible or linked to Daedalus and/or the Company.
+      party sites accessible or linked to Centrality and/or the Company.
         </p>
         <p>By using this
       software, User acknowledges and agrees: (i) that the Company is not responsible for operation of the underlying
