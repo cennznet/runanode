@@ -620,8 +620,6 @@ export default class CennzApi {
       const validateTxHash = await this.api.tx.staking.validate(preferences).signAndSend(controllerAccount, { nonce: newNonce });
       Logger.debug(`CennznetApi::doStake validateTxHash: ${validateTxHash}`);
 
-      // const txHash = await this.api.tx.staking.stake().signAndSend(stashAccountAddress);
-      // Logger.debug(`CennznetApi::doStake txHash ${txHash}`);
       return validateTxHash;
     } catch (error) {
       Logger.error('CennznetApi::doStake error: ' + stringifyError(error));
