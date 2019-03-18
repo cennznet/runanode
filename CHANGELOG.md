@@ -11,6 +11,7 @@
 
 - ready for github release
 - able to release as rUN
+- mask username from telemetry
 
 # v0.6.1 (2019.03.12)
 
