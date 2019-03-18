@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, map, mergeMap } from 'rxjs/operators';
 import types from 'renderer/types';
-import { storageKeys } from '../api/utils/storage';
+import { storageKeys } from 'renderer/api/utils/storage';
 
-const validatorEpic = (action$, state$) => {
+const subscribeValidatorsEpic = (action$, state$) => {
   return action$.ofType(types.subscribeValidators.triggered).pipe(
     debounceTime(6000),
     mergeMap(() => {
@@ -37,4 +37,4 @@ const validatorEpic = (action$, state$) => {
   );
 };
 
-export default [validatorEpic];
+export default [subscribeValidatorsEpic];
