@@ -141,27 +141,71 @@ export default class CennzApi {
     this.ga = ga;
   };
 
+  getBalancesByWallet = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
+    try {
+      const walletAccountAddresses = window.odin.api.cennz.getWalletAccountAddresses(wallet);
+
+      // @return [{address1: {}}, {address2: {}}, ...]
+      const balanceList = await Promise.all(
+        walletAccountAddresses.map(async accountAddress => {
+          const assets = {};
+          const stakingTokenAsset = await this.getCennznetWalletAsset(
+            PreDefinedAssetIdObj.STAKING_TOKEN.BN,
+            accountAddress
+          );
+          assets[PreDefinedAssetIdObj.STAKING_TOKEN.BN] = stakingTokenAsset;
+
+          const spendingTokenAsset = await this.getCennznetWalletAsset(
+            PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
+            accountAddress
+          );
+          assets[PreDefinedAssetIdObj.SPENDING_TOKEN.BN] = spendingTokenAsset;
+
+          for (const customToken of CustomTokenAssetId) {
+            const customTokenAssetIdAsBN = new BN(customToken, 10);
+            // eslint-disable-next-line no-await-in-loop
+            const customTokenAsset = await this.getCennznetWalletAsset(
+              customTokenAssetIdAsBN,
+              accountAddress
+            );
+            assets[customTokenAssetIdAsBN] = customTokenAsset;
+          }
+
+          return {
+            [accountAddress]: assets,
+          };
+        })
+      );
+
+      // [{address1: {}}, {address2: {}}, ...] ==> {address1: {}, address2: {}}
+      return balanceList.reduce((acc, curr) => Object.assign(curr, acc), {});
+    } catch (error) {
+      Logger.error('CennznetApi::getBalancesByWallet error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
   syncWalletData = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
     Logger.debug('CennznetApi::syncWalletData called');
     try {
       const resultWallet = wallet;
-      const walletAddresses = window.odin.api.cennz.getWalletAccountAddresses(resultWallet);
+      const walletAccountAddresses = window.odin.api.cennz.getWalletAccountAddresses(resultWallet);
 
       // extract data from wallet to accounts
       const accounts = resultWallet.accounts || {};
-      for (const walletAddress of walletAddresses) {
+      for (const accountAddress of walletAccountAddresses) {
         const assets = {};
         // eslint-disable-next-line no-await-in-loop
         const stakingTokenAsset = await this.getCennznetWalletAsset(
           PreDefinedAssetIdObj.STAKING_TOKEN.BN,
-          walletAddress
+          accountAddress
         );
         assets[PreDefinedAssetIdObj.STAKING_TOKEN.BN] = stakingTokenAsset;
 
         // eslint-disable-next-line no-await-in-loop
         const spendingTokenAsset = await this.getCennznetWalletAsset(
           PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
-          walletAddress
+          accountAddress
         );
         assets[PreDefinedAssetIdObj.SPENDING_TOKEN.BN] = spendingTokenAsset;
 
@@ -171,22 +215,22 @@ export default class CennzApi {
           // eslint-disable-next-line no-await-in-loop
           const customTokenAsset = await this.getCennznetWalletAsset(
             customTokenAssetIdAsBN,
-            walletAddress
+            accountAddress
           );
           assets[customTokenAssetIdAsBN] = customTokenAsset;
         }
 
         // fetch wallet balance
         // eslint-disable-next-line no-await-in-loop
-        // const accountFreeBalance = await this.getBalancesFreeBalance(walletAddress);
+        // const accountFreeBalance = await this.getBalancesFreeBalance(accountAddress);
 
         const account = new CennznetWalletAccount({
-          address: walletAddress,
-          name: accounts[walletAddress] && accounts[walletAddress].name,
+          address: accountAddress,
+          name: accounts[accountAddress] && accounts[accountAddress].name,
           // freeBalance: accountFreeBalance,
           assets,
         });
-        accounts[walletAddress] = account;
+        accounts[accountAddress] = account;
       }
 
       resultWallet.accounts = accounts;
