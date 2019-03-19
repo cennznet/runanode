@@ -3,7 +3,7 @@ import { Button, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
 import { colors } from 'renderer/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 
 const ModalWarningWrapper = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ const SwitchNetworkWarningModal = ({
           color="warning"
           onClick={() => {
             setIsOpenNetworkWarningModal(false);
-            if (selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET) {
+            if (selectedNetwork && selectedNetwork.value === NetworkNameMapping.Development) {
               setIsOpenUploadGenesisModal(true);
             } else {
               onSwitchNetwork({ selectedNetwork });
