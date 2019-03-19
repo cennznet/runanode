@@ -10,6 +10,8 @@
 ### Improvements
 
 - ready for github release
+- able to release as rUN
+- mask username from telemetry
 
 - Chain getting balances with new header
 
