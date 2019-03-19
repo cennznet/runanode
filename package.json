@@ -1,7 +1,7 @@
 {
-  "name": "Odin",
-  "version": "0.6.1",
-  "description": "Odin digital wallet power by Centrality.ai",
+  "name": "rUN",
+  "version": "0.6.3",
+  "description": "rUN digital wallet power by Centrality.ai",
   "homepage": "https://bitbucket.org/centralitydev/cennz-node-ui#readme",
   "repository": {
     "type": "git",
