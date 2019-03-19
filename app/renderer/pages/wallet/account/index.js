@@ -1,16 +1,13 @@
 import React from 'react';
 import R from 'ramda';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading, PageFooter } from 'components';
-import StartOverLink from 'renderer/pages/wallet/StartOverLink';
-import ROUTES from 'renderer/constants/routes';
+import { PageHeading } from 'components';
 import withContainer from './container';
 import WalletDetailsSubNav from './WalletDetailsSubNav';
 import AccountDetails from './AccountDetails';
 
 const WalletDetailsPage = ({
+  balances,
   wallets,
   stakingStashAccountAddress,
   transaction,
@@ -33,6 +30,7 @@ const WalletDetailsPage = ({
       <MainContent display="flex">
         <AccountDetails
           account={wallet.accounts[accountPublicAddress]}
+          accountBalances={balances[accountPublicAddress]}
           onTransfer={onTransfer}
           currentWallet={wallet}
           transaction={{ ...transaction }}

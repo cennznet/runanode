@@ -13,6 +13,8 @@
 - able to release as rUN
 - mask username from telemetry
 
+- Chain getting balances with new header
+
 # v0.6.1 (2019.03.12)
 
 ### Fixes
