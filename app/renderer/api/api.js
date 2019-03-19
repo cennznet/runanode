@@ -578,13 +578,14 @@ export default class CennzApi {
    * @param wallet
    * @param stashAccountAddress
    * @param passphrase
-   * @returns {Promise<Hash>}
+   * @returns {Promise<Function>}
    */
   doStake = async (
     wallet: CennznetWallet,
     stashAccountAddress: string,
-    passphrase: string
-  ): Promise<Hash> => {
+    passphrase: string,
+    statusCb: Function
+  ): Promise<Function> => {
     Logger.debug('CennznetApi::doStake called');
     try {
       const originalWallet = this.reloadWallet(wallet);
@@ -617,10 +618,11 @@ export default class CennzApi {
       const preferences = {"unstakeThreshold":3,"validatorPayment":0};
       const newNonce = Number(String(accountNonce)) + 1;
       Logger.debug(`CennznetApi::doStake newNonce: ${newNonce}`);
-      const validateTxHash = await this.api.tx.staking.validate(preferences).signAndSend(controllerAccount, { nonce: newNonce });
-      Logger.debug(`CennznetApi::doStake validateTxHash: ${validateTxHash}`);
+      const unsubscribeFn = await this.api.tx.staking.validate(preferences).signAndSend(controllerAccount, { nonce: newNonce },
+        statusCb);
+      Logger.debug(`CennznetApi::doStake unsubscribeFn: ${unsubscribeFn}`);
 
-      return validateTxHash;
+      return unsubscribeFn;
     } catch (error) {
       Logger.error('CennznetApi::doStake error: ' + stringifyError(error));
       throw new GenericApiError();
