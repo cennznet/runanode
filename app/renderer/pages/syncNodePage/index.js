@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import { colors } from 'renderer/theme';
-
 import { environment } from 'common/environment';
-import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { chainNameMapping, NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SideNav from 'components/layout/SideNav';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
@@ -14,7 +13,7 @@ import { storageKeys } from 'renderer/api/utils/storage';
 import Spinner from 'components/Spinner';
 import withContainer from './container';
 
-const  { isDevOrDebugProd } = environment;
+const { isDevOrDebugProd } = environment;
 
 const SpinnerWrapper = styled.div`
   height: 100%;
@@ -52,20 +51,57 @@ const TextWrapper = styled.div`
   color: ${colors.N0};
 `;
 
-const networkOptionMapping = {
-  globalTestNet: 'Global test net',
-  localTestNet: 'Local test net',
-  mainNet: 'Main net',
-};
-
-const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }) => {
+const SyncNodePage = ({
+  nodeSystem: { localNode },
+  syncStream,
+  syncRemoteStream,
+  localStorage,
+  onRestartNode,
+  navigateToCreateWallet,
+}) => {
   const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
-  const { localNode } = nodeSystem;
   const { chain } = localNode;
-  const isNetworkSwitched = selectedNetwork && selectedNetwork.value === NetworkNameMapping[chain];
+  const isNetworkSwitched = selectedNetwork && selectedNetwork.value === chainNameMapping(chain);
+  const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
+  const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
   Logger.debug(`selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
   Logger.debug(`chain: ${chain}`);
   Logger.debug(`isNetworkSwitched: ${isNetworkSwitched}`);
+
+  useEffect(() => {
+    Logger.debug(`SyncNode page: check whether to restart node`);
+    if (selectedNetwork && selectedNetwork.value) {
+      const targetChain =
+        selectedNetwork.value === NetworkNameMapping.Development && genesisConfigFilePath
+          ? genesisConfigFilePath
+          : selectedNetwork.value;
+      const currentNetwork = chainNameMapping(chain);
+      if (currentNetwork !== targetChain) {
+        Logger.debug(`restart node to use ${targetChain}`);
+        onRestartNode({ chain: targetChain });
+      } else {
+        Logger.debug(`same network skip restart. ${currentNetwork}`);
+      }
+    } else {
+      onRestartNode();
+    }
+  }, []);
+
+  useEffect(() => {
+    // TODO: Error display in precentage bar
+    Logger.debug(`SyncNode page: precentage cal`);
+    if (isNetworkSwitched) {
+      const { blockNum: localBestBlock } = syncStream;
+      const { blockNum: remoteBestBlock } = syncRemoteStream;
+      if (localBestBlock !== null && remoteBestBlock !== null) {
+        const syncPercentage = localBestBlock / remoteBestBlock;
+        if (syncPercentage >= 1) {
+          navigateToCreateWallet();
+        }
+      }
+    }
+  });
+
   if (!isNetworkSwitched) {
     return (
       <Layout sidebar={isDevOrDebugProd ? <SideNav /> : <SimpleSidebar />}>
@@ -90,7 +126,7 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
       ? 100
       : (syncNodeProgress * 100).toFixed(2);
 
-  const estimateMin = (bestBlock - syncedBlock)/bps/60;
+  const estimateMin = (bestBlock - syncedBlock) / bps / 60;
 
   Logger.info(`
   ===========================================
@@ -120,9 +156,11 @@ const SyncNodePage = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }
               />
             </SyncNodeProgress>
             <SyncNodeInfo>
-              <TextWrapper>{syncNodePercentage}% synced, {bps?bps.toFixed(2):0} bps</TextWrapper>
+              <TextWrapper>
+                {syncNodePercentage}% synced, {bps ? bps.toFixed(2) : 0} bps
+              </TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
-              <TextWrapper>estimate: {estimateMin?estimateMin.toFixed(2):0} min</TextWrapper>
+              <TextWrapper>estimate: {estimateMin ? estimateMin.toFixed(2) : 0} min</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
         </MainContent>

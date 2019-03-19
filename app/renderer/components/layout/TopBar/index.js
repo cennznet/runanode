@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { environment } from 'common/environment';
-import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping, chainNameMapping } from 'common/types/cennznet-node.types';
 import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/centrality-logo.svg';
 import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
@@ -89,7 +89,7 @@ const TopBar = ({
     isSynced,
     health,
   } = nodeSystem;
-  const networkName = chain ? `${chain}` : 'Not connected';
+  const networkName = chain ? chainNameMapping(chain) : 'Not connected';
   // const isSynced = false;
 
   const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
@@ -113,7 +113,7 @@ const TopBar = ({
               fontWeight="600"
               fontSize="16px"
               borderColor="transparent"
-              value={getNetworkOptionPair(NetworkNameMapping[networkName], 'value')}
+              value={getNetworkOptionPair(networkName)}
               onChange={selected => {
                 setIsOpenNetworkWarningModal(true);
                 setSelectedNetwork(selected);

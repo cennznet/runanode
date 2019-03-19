@@ -24,7 +24,7 @@ const subscribeFinalisedHeadsEpic = action$ =>
 const getAllAccoutsBalancesEpic = (action$, state$) =>
   action$.ofType(types.getAllAccountsBalances.requested).pipe(
     mergeMap(async () => {
-      const wallets = state$.value.localStorage[storageKeys.WALLETS];
+      const wallets = state$.value.localStorage[storageKeys.WALLETS] || [];
 
       const allWalletBalances = await Promise.all(
         wallets.map(async wallet => {

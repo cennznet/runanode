@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
@@ -6,7 +6,7 @@ import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Button, FileUploader, Select, PageHeading } from 'components';
 import { Logger } from 'renderer/utils/logging';
-import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 
 const ChooseNetworkWrapper = styled.div`
@@ -42,29 +42,22 @@ const ButtonWrapper = styled.div`
   flex-direction: row-reverse;
 `;
 
-// TODO: Keep label the same as loaclNode-chain
-// TODO: Find a place to place variable
 export const NETWORK_OPTIONS = [
-  // { label: 'CENNZnet DEV(OLD)', value: NetworkNameOptions.CENNZNET_DEV },
-  // { label: 'CENNZnet UAT(OLD)', value: NetworkNameOptions.CENNZNET_UAT },
-  { label: 'CENNZnet RIMU(UAT)', value: NetworkNameOptions.CENNZNET_RIMU }, // TODO should we add *-latest runtime option?
-  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameOptions.CENNZNET_KAURI },
-  { label: 'Local test net', value: NetworkNameOptions.LOCAL_TESTNET },
+  { label: 'CENNZnet RIMU(UAT)', value: NetworkNameMapping.CENNZNET_RIMU },
+  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameMapping.CENNZNET_KAURI },
+  { label: 'Local test net', value: NetworkNameMapping.Development },
 ];
 
 export const getNetworkOptionPair = (value, param = 'value') => {
   return NETWORK_OPTIONS.find(option => option[param] === value);
 };
 
-const ChooseNetWork = ({
-  selectedNetwork,
-  setSelectedNetwork,
-  genesisFile,
-  setUpGenesisFile,
-  onJoinNetwork,
-}) => {
+const ChooseNetWork = ({ onJoinNetwork }) => {
+  const [selectedNetwork, setSelectedNetwork] = useState(null);
+  const [genesisFile, setUpGenesisFile] = useState(null);
+
   const selectedLocalNetwork =
-    selectedNetwork && selectedNetwork.value === NetworkNameOptions.LOCAL_TESTNET;
+    selectedNetwork && selectedNetwork.value === NetworkNameMapping.Development;
   const canJoinLocalNetwork = selectedLocalNetwork && genesisFile;
   const canJoinNetwork = canJoinLocalNetwork || (selectedNetwork && !selectedLocalNetwork);
 

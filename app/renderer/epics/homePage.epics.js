@@ -4,7 +4,7 @@ import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys, getStorage } from 'renderer/api/utils/storage';
-import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { Logger } from 'renderer/utils/logging';
 import { Observable } from 'rxjs/Observable';
 import { cennznetStatusChannel } from 'renderer/ipc/cennznet.ipc';
@@ -26,8 +26,8 @@ const homePageNavigationEpic = (action$, state$) =>
 
       if (
         isNetworkRemembered &&
-        ((selectedNetwork === NetworkNameOptions.LOCAL_TESTNET && genesisConfigFilePath) ||
-          selectedNetwork !== NetworkNameOptions.LOCAL_TESTNET)
+        ((selectedNetwork === NetworkNameMapping.Development && genesisConfigFilePath) ||
+          selectedNetwork !== NetworkNameMapping.Development)
       ) {
         return { type: types.navigation.triggered, payload: ROUTES.SYNC_NODE };
       }
