@@ -5,7 +5,7 @@ import { Input } from 'components';
 import { colors } from 'renderer/theme';
 
 const Label = styled.label`
-  margin: 0.5rem 0.5rem 0 0;
+  padding-right: 0.4rem;
   color: ${colors.N200};
 `;
 
