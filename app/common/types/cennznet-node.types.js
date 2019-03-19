@@ -15,11 +15,31 @@ export const PreDefinedAssetIdName = {
   '100': 'Sylo Token',
 };
 
-// Network option to network name mapping, check cennznet-node chain_spec.rs cennznet_dev_config_latest and cennznet_uat_config_latest
+// check cennznet-node chain_spec.rs cennznet_dev_config_latest and cennznet_uat_config_latest
+/**
+ * NOTE:
+ * NetworkName is the key string of chain. Use in Network option select component
+ * Example: chain - Rimu CENNZnet 0.9.13
+ */
 export const NetworkNameMapping = {
-  'Rimu CENNZnet': 'rimu',
-  'Kauri CENNZnet': 'kauri',
-  'Development': 'local-testnet',
+  CENNZNET_RIMU: 'rimu',
+  CENNZNET_KAURI: 'kauri',
+  Development: 'development',
+};
+
+/**
+ * NOTE:
+ * Convert chain name .
+ * Example: chain - Rimu CENNZnet 0.9.13
+ */
+export const chainNameMapping = chainName => {
+  const lowerCaseChainName = (chainName && chainName.toLowerCase()) || '';
+  const networkNameKeys = Object.keys(NetworkNameMapping);
+  const sortedKey = networkNameKeys.find(networkNameKey =>
+    lowerCaseChainName.includes(NetworkNameMapping[networkNameKey])
+  );
+
+  return NetworkNameMapping[sortedKey];
 };
 
 export const CENNZScanTxUrl = {
