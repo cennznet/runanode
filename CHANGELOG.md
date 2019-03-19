@@ -15,6 +15,8 @@
 - mask username from telemetry
 - fix duplicated console log by upgrade electron-log to 3.0.1
 
+- Chain getting balances with new header
+
 # v0.6.1 (2019.03.12)
 
 ### Fixes

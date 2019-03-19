@@ -44,26 +44,13 @@ const reoderList = (arryList, fromIndex, toIndex = 0) => {
 };
 
 const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAddress }) => {
-  const [
-    eraProgress,
-    eraLength,
-    sessionProgress,
-    sessionLength,
-    validators,
-    intentions,
-    // freeBalances,
-  ] = useApis(
+  const [eraProgress, eraLength, sessionProgress, sessionLength, validators, intentions] = useApis(
     'getEraProgress',
     'getEraLength',
     'getSessionProgress',
     'getSessionLength',
     'getValidators',
-    'getValidators'
-    // Working Exmaple
-    // [
-    //   'getGenericAssetFreeBalance',
-    //   { noSubscription: true, params: ['0', '5FPGbDkvDaRDQTzqzs87PjLxDbM98p9hph3wp3KceiikF6Sy'] },
-    // ]
+    'getValidators' // TODO: Confirm whether intentions concept still exist
   );
 
   /**
