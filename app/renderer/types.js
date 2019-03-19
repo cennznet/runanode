@@ -21,7 +21,6 @@ const actionTypes = {
   finalisedHeader: changedActionTypes('finalised_header'),
 
   getAllAccountsBalances: apiActionTypes('get_all_accounts_balances'),
-  walletCreate: apiActionTypes('wallet_create'),
   walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
   walletCreatWithHDKR: apiActionTypes('wallet_create_with_HD_keyring'),
   walletRestoreWithHDKR: apiActionTypes('wallet_restore_with_HD_keyring'),
