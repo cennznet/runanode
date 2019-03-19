@@ -58,31 +58,31 @@ yarn release:github
 ## Debug/Logging for packaged app
 
 ```bash
-open release/mac/Odin.app
-tail -f ~/Library/Logs/Odin/*
+open release/mac/rUN.app
+tail -f ~/Library/Logs/rUN/*
 ```
 
 CennzNet Node log:
 ```bash
-~/Library/Logs/Odin/cennznet-node.log
+~/Library/Logs/rUN/cennznet-node.log
 ```
 
-Odin application log:
+Application log:
 ```bash
-~/Library/Logs/Odin/log.log
+~/Library/Logs/rUN/log.log
 ```
 
 Variable can be use in launcher-config.yaml
 ```bash
-ODIN_DIST_DIRECTORY=Odin.app/Contents/dist
-ODIN_LOG_DATA_DIRECTORY=~/Library/Logs/Odin
-ODIN_USER_DATA_DIRECTORY=~/Library/Application Support/Odin
+ODIN_DIST_DIRECTORY=rUN.app/Contents/dist
+ODIN_LOG_DATA_DIRECTORY=~/Library/Logs/rUN
+ODIN_USER_DATA_DIRECTORY=~/Library/Application Support/rUN
 ```
 
 Packaged app structure for mac:
 
 ```
-─ Odin.app
+─ rUN.app
 └── Contents
     ├── PkgInfo
     ├── Info.plist
@@ -113,10 +113,10 @@ Start `Debug Renderer Process` in VSCode
 ## Pass args on app start
 
 Mac:
-open -a /Applications/Odin.app --args --XXXX=true
+open -a /Applications/rUN.app --args --XXXX=true
 
 Windows:
-Odin.exe --XXXX=true
+rUN.exe --XXXX=true
 
 ## Component development
 
