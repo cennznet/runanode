@@ -4,6 +4,7 @@
 
 ### Features
 - upgrade to latest SDK and cennzet-node 
+- support new staking APIs
 
 ### Fixes
 
@@ -12,6 +13,7 @@
 - ready for github release
 - able to release as rUN
 - mask username from telemetry
+- fix duplicated console log by upgrade electron-log to 3.0.1
 
 - Chain getting balances with new header
 

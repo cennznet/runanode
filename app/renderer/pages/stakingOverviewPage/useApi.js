@@ -64,7 +64,7 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
 
     // useEffect clean up
     return () => {
-      if (unsubscribeFn) {
+      if (typeof unsubscribeFn === 'function' ) {
         Logger.debug(
           `useApi, useEffect clean up, apiSection: ${apiSection}, unsubscribeFn: ${unsubscribeFn}`
         );
