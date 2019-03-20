@@ -6,5 +6,5 @@ nodeArgs:
   - --pruning=archive
 #  - --name
 #  - Odin-test
-  - --chain
-  - ./genesis/local/local.json
+#  - --chain
+#  - ./genesis/local/local.json
