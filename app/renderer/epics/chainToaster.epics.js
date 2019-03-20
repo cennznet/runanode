@@ -43,15 +43,15 @@ const chainToasterAfterSavePreferencesCompletedEpic = chainEpics(
   payload => {
 
     // TODD how to format tx in toaster?
-    const children = payload.toString();
-    const substrLength = 12;
-    const formattedText =
-      children.length > 17
-        ? children.substr(0, substrLength) +
-        ' ... ' +
-        children.substr(children.length - 5, children.length)
-        : children;
-    return `Preference saved. ${formattedText}`;
+    // const children = payload.toString();
+    // const substrLength = 12;
+    // const formattedText =
+    //   children.length > 17
+    //     ? children.substr(0, substrLength) +
+    //     ' ... ' +
+    //     children.substr(children.length - 5, children.length)
+    //     : children;
+    return `Preference saved.`;
   },
 );
 

@@ -21,9 +21,7 @@ import ClipboardShareLinks from '../wallet/account/transferSectionPage/Clipboard
 import UnStakeWarningModal from './UnStakeWarningModal';
 import CennznetWallet from '../../api/wallets/CennznetWallet';
 import CennznetWalletAccount from '../../api/wallets/CennznetWalletAccount';
-import ChangeStakingPreferenceModal from './ChangeStakingPreferenceModal';
 import useApis from '../stakingOverviewPage/useApis';
-import SavePreferenceSection from './SavePreferenceSection';
 
 const CentrapayIcon = styled(SVGInline).attrs({
   svg: centrapayIcon,
@@ -179,8 +177,7 @@ const Subheading = ({ account, wallet }) => {
     </div>
   );
 };
-
-const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, stakingStashWalletId, stakingStashAccountAddress, wallets, onSyncWalletData }) => {
+const StakingStakePage = ({ subNav, onUnStake, stakingStashWalletId, stakingStashAccountAddress, wallets, onSyncWalletData }) => {
 
   const [warningValue, setWarningValue] = useState(0);
   const [punishmentValue, setPunishmentValue] = useState(0);
@@ -192,13 +189,9 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking
   const stakingWallet: CennznetWallet = wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
   const stakingAccount: CennznetWalletAccount = stakingWallet.accounts[stakingStashAccountAddress];
 
-  const [intentions, validators, validatorPreferences] = useApis(
+  const [intentions, validators] = useApis(
     'getIntentions',
     'getValidators',
-    [
-      'getValidatorPreferences',
-      { noSubscription: false, params: [stakingStashAccountAddress] },
-    ],
   );
 
   // TODO for demo only
@@ -274,7 +267,6 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking
 
   const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
   const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
-  const [isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen] = useState(false);
 
   const AnimatedInnerSectionItemDiff = ({value}) => {
     return (
@@ -318,7 +310,6 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking
                   <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} />
                 </InnerSectionWrapper>
               </SectionLayoutInnerWrapper>
-              <SavePreferenceSection {...{validatorPreferences, setChangeStakingPreferenceModalOpen, intentionsIndex}} />
             </Left>
             <Right>
               <Item>
@@ -353,13 +344,6 @@ const StakingStakePage = ({ subNav, onUnStake, onSaveStakingPreferences, staking
         onUnStake,
         stakingWallet,
         stakingAccount,
-      }} />
-      <ChangeStakingPreferenceModal {...{
-        isChangeStakingPreferenceModalOpen,
-        setChangeStakingPreferenceModalOpen,
-        stakingWallet,
-        stakingAccount,
-        onSaveStakingPreferences,
       }} />
     </MainLayout>
   );

@@ -17,10 +17,6 @@ const mapDispatchToProps = dispatch => ({
   onUnStake: value => {
     window.odin.api.cennz.doUnStake(value.wallet, value.stashAccountAddress, value.passphrase);
   },
-  onSaveStakingPreferences: value => {
-    Logger.debug(`onSaveStakingPreferences: ${JSON.stringify(value)}`);
-    dispatch({ type: types.stakingSavePreferences.requested, payload: value });
-  },
   onSyncWalletData: payload => {
     Logger.debug('onSyncWalletData');
     dispatch({ type: types.syncWalletData.requested, payload });

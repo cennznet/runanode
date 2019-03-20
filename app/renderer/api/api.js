@@ -621,16 +621,22 @@ export default class CennzApi {
   /**
    * @param wallet
    * @param stashAccountAddress
+   * @param balances
+   * @param stakingPreference
    * @param passphrase
    * @returns {Promise<Function>}
    */
   doStake = async (
     wallet: CennznetWallet,
     stashAccountAddress: string,
+    balances,
+    stakingPreference,
     passphrase: string,
     statusCb: Function
   ): Promise<Function> => {
     Logger.debug('CennznetApi::doStake called');
+    Logger.debug(`CennznetApi::doStake called, balances ${JSON.stringify(balances)}`);
+    Logger.debug(`CennznetApi::doStake called, stakingPreference ${JSON.stringify(stakingPreference)}`);
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
@@ -696,6 +702,7 @@ export default class CennzApi {
   };
 
   /**
+   * @deprecated
    * @param wallet
    * @param prefs
    * @param accountAddress
@@ -730,6 +737,7 @@ export default class CennzApi {
   };
 
   /**
+   * @deprecated
    * @param accountAddress
    * @param callbackFn
    * @returns {Promise<ValidatorPrefs>}
