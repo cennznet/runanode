@@ -115,7 +115,7 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onStake: payload => {
-    window.odin.api.cennz.doStake(payload.wallet, payload.stashAccountAddress, '');
+    // window.odin.api.cennz.doStake(payload.wallet, payload.stashAccountAddress, '');
   },
   onStakeAndRestart: payload => {
     const { cennzNetRestartOptions, wallet, stashAccountAddress } = payload;
