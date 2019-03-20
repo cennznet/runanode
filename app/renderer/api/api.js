@@ -621,16 +621,22 @@ export default class CennzApi {
   /**
    * @param wallet
    * @param stashAccountAddress
+   * @param balances
+   * @param stakingPreference
    * @param passphrase
    * @returns {Promise<Function>}
    */
   doStake = async (
     wallet: CennznetWallet,
     stashAccountAddress: string,
+    balances,
+    stakingPreference,
     passphrase: string,
     statusCb: Function
   ): Promise<Function> => {
     Logger.debug('CennznetApi::doStake called');
+    Logger.debug(`CennznetApi::doStake called, balances ${JSON.stringify(balances)}`);
+    Logger.debug(`CennznetApi::doStake called, stakingPreference ${JSON.stringify(stakingPreference)}`);
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
@@ -640,13 +646,13 @@ export default class CennzApi {
       Logger.debug('CennznetApi::doStake setSigner');
 
       // bound
-      const freeStakingToken = new BN(wallet.accounts[stashAccountAddress].assets[PreDefinedAssetId.stakingToken].freeBalance.toString, 10);
-      Logger.debug(`CennznetApi::doStake freeStakingToken: ${freeStakingToken}`);
+      const stakingAmount = new BN(balances[PreDefinedAssetId.stakingToken].freeBalance.toString, 10);
+      Logger.debug(`CennznetApi::doStake stakingAmount: ${stakingAmount}`);
       const controllerAccount = stashAccountAddress;
       const payee = [stashAccountAddress];
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
       Logger.debug(`CennznetApi::doStake accountNonce: ${accountNonce}`);
-      const bondTxHash = await this.api.tx.staking.bond(controllerAccount, freeStakingToken, payee).signAndSend(controllerAccount, { nonce: accountNonce });
+      const bondTxHash = await this.api.tx.staking.bond(controllerAccount, stakingAmount, payee).signAndSend(controllerAccount, { nonce: accountNonce });
       Logger.debug(`CennznetApi::doStake bondTxHash: ${bondTxHash}`);
 
       // query staking bonded account
@@ -696,6 +702,7 @@ export default class CennzApi {
   };
 
   /**
+   * @deprecated
    * @param wallet
    * @param prefs
    * @param accountAddress
@@ -730,6 +737,7 @@ export default class CennzApi {
   };
 
   /**
+   * @deprecated
    * @param accountAddress
    * @param callbackFn
    * @returns {Promise<ValidatorPrefs>}

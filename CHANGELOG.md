@@ -14,8 +14,9 @@
 - able to release as rUN
 - mask username from telemetry
 - fix duplicated console log by upgrade electron-log to 3.0.1
-
 - Chain getting balances with new header
+- move save staking preference to start to stake page
+- remove `Validator Payment` option from save staking preference modal
 
 # v0.6.1 (2019.03.12)
 

@@ -1,5 +1,5 @@
 import { EMPTY, of, from } from 'rxjs';
-import { concat, map, mergeMap, withLatestFrom, catchError } from 'rxjs/operators';
+import { concat, map, mergeMap, withLatestFrom, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import assert from 'assert';
@@ -65,6 +65,8 @@ const sendStakingExtrinsicEpic = action$ =>
           wallet,
           stashAccountAddress,
           passphrase,
+          stakingPreference,
+          balances,
         } = pendingToSendStakingExtrinsicAction.payload;
 
         return new Observable(async observer => {
@@ -75,7 +77,7 @@ const sendStakingExtrinsicEpic = action$ =>
               observer.complete();
             }
           }
-          const unsubscribeFn = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, passphrase, statusCb);
+          const unsubscribeFn = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, balances, stakingPreference, passphrase, statusCb);
           Logger.debug(`sendStakingExtrinsicEpic, unsubscribeFn: ${unsubscribeFn}`);
         }).pipe(
           map(type => {
@@ -156,24 +158,25 @@ const stakingSavePreferenceEpic = action$ =>
   action$.pipe(
     ofType(types.stakingSavePreferences.requested),
     mergeMap(async ({ payload }) => {
-      Logger.debug(`stakingSavePreferenceEpic: ${JSON.stringify(payload)}`);
-      const intentionIndex = await window.odin.api.cennz.getIntentionIndex(payload.address);
-      Logger.debug(`intentionIndex: ${intentionIndex}`);
-      if (intentionIndex > 0) {
-        const { wallet, address } = payload;
-        const prefs = {
-          unstakeThreshold: payload.unStakeThreshold,
-          validatorPayment: payload.paymentPreferences,
-        };
-        const txHash = await window.odin.api.cennz.saveStakingPreferences(wallet, prefs, address);
-        Logger.debug(`txHash: ${txHash}`);
-        assert(txHash, 'missing txHash');
-        return {
-          type: types.stakingSavePreferences.completed,
-          payload: txHash,
-        };
-      }
-      return { type: types.stakingSavePreferences.failed };
+      Logger.debug(`stakingSavePreferenceEpic, payload: ${JSON.stringify(payload)}`);
+      const { wallet, address } = payload;
+      const prefs = {
+        unstakeThreshold: payload.unStakeThreshold,
+        validatorPayment: payload.paymentPreferences,
+      };
+      Logger.debug(`stakingSavePreferenceEpic, prefs: ${JSON.stringify(prefs)}`);
+      return {
+        type: types.setStorage.requested,
+        payload: { key: storageKeys.STAKING_PREFERENCE, value: prefs },
+      };
+    })
+  );
+
+const stakingSavePreferenceCompletedEpic = action$ =>
+  action$.ofType(types.setStorage.completed).pipe(
+    filter(({ payload }) => payload.key === storageKeys.STAKING_PREFERENCE),
+    mapTo({
+      type: types.stakingSavePreferences.completed,
     })
   );
 
@@ -183,4 +186,5 @@ export default [
   sendStakingExtrinsicEpic,
   sendStakingTxCompletedEpic,
   stakingSavePreferenceEpic,
+  stakingSavePreferenceCompletedEpic,
 ];
