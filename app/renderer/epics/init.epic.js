@@ -47,6 +47,14 @@ const initEpic = action$ =>
           payload: { key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS },
         },
         {
+          type: types.getStorage.requested,
+          payload: { key: storageKeys.STAKING_STASH_WALLET_ID },
+        },
+        {
+          type: types.getStorage.requested,
+          payload: { key: storageKeys.STAKING_PREFERENCE },
+        },
+        {
           type: types.subscribeValidators.triggered,
         },
         {

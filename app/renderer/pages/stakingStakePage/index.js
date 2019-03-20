@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading, PageFooter, PageSpinner } from 'components';
+import { PageHeading, PageFooter, PageSpinner, Scrollable } from 'components';
 import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
 import StakingAccountBalances from './StakingAccountBalances';
 import Stake from './Stake';
+import SavePreferenceSection from './SavePreferenceSection';
+import ChangeStakingPreferenceModal from './ChangeStakingPreferenceModal';
 
 const cennzAssetId = PreDefinedAssetId.stakingToken;
 const cpayAssetId = PreDefinedAssetId.spendingToken;
 
-const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
+const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balances, onStake, onSaveStakingPreferences }) => {
+  const validatorPreferences = stakingPreference;
   const [stakingOption, setStakingOption] = useState(null);
   const [cennzStakingBalance, setCennzStakingBalance] = useState(null);
   const [cpayStakingBalance, setCpayStakingBalance] = useState(null);
   const [gasFee, setGasFee] = useState(null);
   const [sufficientGasFee, setSufficientGasFee] = useState(true);
   const [stakingAccount, setStakingAccount] = useState(null);
+  const [stakingWallet, setStakingWallet] = useState(null);
+  const [isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen] = useState(false);
 
   useEffect(() => {
     if (stakingOption) {
       const {
         value: stakingAccountAddress,
-        wallet: { accounts },
+        wallet,
       } = stakingOption;
+      const { accounts } = wallet;
 
       const stakingAccountObject = accounts[stakingAccountAddress];
       const { assets } = stakingAccountObject;
@@ -42,6 +48,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
       setGasFee(sortedGasFee);
       setSufficientGasFee(isSufficientGasFee);
       setStakingAccount(stakingAccountObject);
+      setStakingWallet(wallet);
     }
   }, [stakingOption]);
 
@@ -50,6 +57,8 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
       wallet: stakingOption.wallet,
       stashAccountAddress: stakingOption.value,
       passphrase: '',
+      stakingPreference,
+      balances,
     });
 
   if (uiState.isProcessing) {
@@ -66,23 +75,29 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
         <PageHeading>Start to stake</PageHeading>
-        <div className="content">
-          <SelectStakingAccount
-            wallets={wallets || []}
-            onSelectFn={setStakingOption}
-            stakingOption={stakingOption}
-          />
-          {stakingOption && (
-            <StakingAccountBalances
-              cennzStakingBalance={cennzStakingBalance}
-              cpayStakingBalance={cpayStakingBalance}
-              gasFee={gasFee}
-              sufficientGasFee={sufficientGasFee}
+        <Scrollable styles={{height: '70vh'}}>
+          <div className="content" style={{height: '70vh'}}>
+            <SelectStakingAccount
+              wallets={wallets || []}
+              onSelectFn={setStakingOption}
+              stakingOption={stakingOption}
             />
-          )}
-        </div>
+            {stakingOption && (
+              <StakingAccountBalances
+                cennzStakingBalance={cennzStakingBalance}
+                cpayStakingBalance={cpayStakingBalance}
+                gasFee={gasFee}
+                sufficientGasFee={sufficientGasFee}
+              />
+            )}
+
+            {stakingOption && (
+            <SavePreferenceSection {...{ validatorPreferences, setChangeStakingPreferenceModalOpen }} />
+            )}
+          </div>
+        </Scrollable>
         <PageFooter>
-          <div />
+          <div/>
           <Stake
             {...{
               onStakeConfirmed,
@@ -95,6 +110,14 @@ const StakingStakePage = ({ subNav, uiState, wallets, onStake }) => {
           />
         </PageFooter>
       </MainContent>
+
+      <ChangeStakingPreferenceModal {...{
+        isChangeStakingPreferenceModalOpen,
+        setChangeStakingPreferenceModalOpen,
+        stakingWallet,
+        stakingAccount,
+        onSaveStakingPreferences,
+      }} />
     </MainLayout>
   );
 };

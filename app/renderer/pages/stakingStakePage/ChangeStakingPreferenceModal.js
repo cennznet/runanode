@@ -70,18 +70,10 @@ const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setC
                         key="unStakeThreshold"
                         name="unStakeThreshold"
                         labelText="Unstake threshold"
-                        width='45%'
+                        width='100%'
                         component={TextField}
                         append="times of warning"
                         placeholder=""
-                      />
-                      <Field
-                        key="paymentPreferences"
-                        name="paymentPreferences"
-                        labelText="Validator Payment"
-                        width='45%'
-                        component={TextField}
-                        append="CENNZ"
                       />
                     </InputGroup>
                   </ModalBody>

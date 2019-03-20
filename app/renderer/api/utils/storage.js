@@ -10,6 +10,8 @@ export const storageKeys = {
   STAKING_STASH_WALLET_ID: 'STAKING_STASH_WALLET_ID',
   TERMS_OF_USE_ACCEPTANCE: 'TERMS_OF_USE_ACCEPTANCE',
   WALLETS: 'WALLETS',
+  STAKING_PREFERENCE: 'STAKING_PREFERENCE',
+  // TODO any new storage key need to update localStorage.epics.js resetLocalStorageEpic and init.epic.js initEpic, this could be done automatically
 };
 
 export const getStorage = (key: string): Promise<any> =>
