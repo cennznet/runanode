@@ -5,6 +5,7 @@ import BN from "bn.js";
 import { Balance, BlockNumber } from "@polkadot/types";
 import R from 'ramda';
 
+import PageSpinner from 'components/PageSpinner';
 import {
   CENNZScanAddressUrl,
   PreDefinedAssetId,
@@ -22,6 +23,7 @@ import UnStakeWarningModal from './UnStakeWarningModal';
 import CennznetWallet from '../../api/wallets/CennznetWallet';
 import CennznetWalletAccount from '../../api/wallets/CennznetWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
+
 
 const CentrapayIcon = styled(SVGInline).attrs({
   svg: centrapayIcon,
@@ -177,7 +179,7 @@ const Subheading = ({ account, wallet }) => {
     </div>
   );
 };
-const StakingStakePage = ({ subNav, onUnStake, stakingStashWalletId, stakingStashAccountAddress, wallets, onSyncWalletData }) => {
+const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, stakingStashAccountAddress, wallets, onSyncWalletData }) => {
 
   if(!stakingStashAccountAddress) {
     return (
@@ -191,6 +193,16 @@ const StakingStakePage = ({ subNav, onUnStake, stakingStashWalletId, stakingStas
               missing stakingStashAccountAddress
             </div>
           </div>
+        </MainContent>
+      </MainLayout>
+    );
+  }
+
+  if (uiState.isProcessing) {
+    return (
+      <MainLayout subNav={subNav}>
+        <MainContent display="flex">
+          <PageSpinner message={uiState.message} />
         </MainContent>
       </MainLayout>
     );

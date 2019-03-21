@@ -7,6 +7,7 @@
 - support new staking APIs
 
 ### Fixes
+- fix incorrect spending token balance in start to stake page
 
 ### Improvements
 
@@ -18,6 +19,7 @@
 - move save staking preference to start to stake page
 - remove `Validator Payment` option from save staking preference modal
 - add new unstake epic
+- add transition status `changeAppUiState` for unstake in manage stake page
 
 # v0.6.1 (2019.03.12)
 

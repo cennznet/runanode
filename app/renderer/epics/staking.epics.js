@@ -255,11 +255,21 @@ const sendUnStakeTxCompletedEpic = action$ =>
               },
             },
             { type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW },
+            { type: types.resetAppUiState.triggered },
           ),
         )
       );
     })
   );
+
+const chainSendUnStakeTxToChangeUistatus = chainEpics(
+  types.unStake.triggered,
+  types.changeAppUiState.triggered,
+  {
+    isProcessing: true,
+    message: 'Sending unstake request...',
+  }
+);
 
 export default [
   startToStakeEpic,
@@ -270,4 +280,5 @@ export default [
   stakingSavePreferenceCompletedEpic,
   unStakeEpic,
   sendUnStakeTxCompletedEpic,
+  chainSendUnStakeTxToChangeUistatus,
 ];
