@@ -76,8 +76,15 @@ const sendStakingExtrinsicEpic = action$ =>
             if (type === 'Finalised') {
               observer.complete();
             }
-          }
-          const unsubscribeFn = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, balances, stakingPreference, passphrase, statusCb);
+          };
+          const unsubscribeFn = await window.odin.api.cennz.doStake(
+            wallet,
+            stashAccountAddress,
+            balances,
+            stakingPreference,
+            passphrase,
+            statusCb
+          );
           Logger.debug(`sendStakingExtrinsicEpic, unsubscribeFn: ${unsubscribeFn}`);
         }).pipe(
           map(type => {
@@ -143,7 +150,7 @@ const sendStakingTxCompletedEpic = action$ =>
             type: types.successToaster.triggered,
             payload: {
               message:
-                'Your stake is successfully submitted to network. Before your stake goes to validator list, you can unstake without account being locked.',
+                'Your stake has been successfully submitted to network. Before your stake goes to validator list, you can unstake without account being locked.',
               options: {
                 autoClose: 12000,
               },
