@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import { colors } from 'renderer/theme';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
-import { Button, FileUploader, Select, PageHeading } from 'components';
+import { Button, FileUploader, Select, PageFooter } from 'components';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import withContainer from './container';

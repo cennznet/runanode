@@ -53,7 +53,7 @@ const PortfolioSection = ({ accountBalances }) => {
                 textAlign: 'right',
               }}
             >
-              Reserved
+              Outgoing
             </div>
           ),
           // accessor: 'reservedBalance',
@@ -81,7 +81,7 @@ const PortfolioSection = ({ accountBalances }) => {
                 textAlign: 'right',
               }}
             >
-              Free
+              Free balance
             </div>
           ),
           id: 'freeBalance',

@@ -25,20 +25,26 @@ const SubHeading = () => {
       </div>
       <SubHeadingText>
         <p>
-          Once you confirm unstake,your account will stop to stake. It will keep locked until 72 hours later for security reason.
+          Once confirmed that you would like to unstake, your account will stop staking at the end
+          of the current era. Your account will still remain locked for an additional 72 hours after
+          unstaking for security reasons.
         </p>
       </SubHeadingText>
     </Flex>
   );
 };
 
-const UnStakeWarningModal = ({ isUnStakeWarningModalOpen, setUnStakeWarningModalOpen, onUnStake, stakingWallet, stakingAccount }) => {
+const UnStakeWarningModal = ({
+  isUnStakeWarningModalOpen,
+  setUnStakeWarningModalOpen,
+  onUnStake,
+  stakingWallet,
+  stakingAccount,
+}) => {
   return (
-    <Modal isOpen={isUnStakeWarningModalOpen} style={{maxHeight: '20vh'}}>
+    <Modal isOpen={isUnStakeWarningModalOpen} style={{ maxHeight: '20vh' }}>
       <ModalBody>
-        <PageHeading subHeading={<SubHeading />}>
-          Are you sure you want to unstake?
-        </PageHeading>
+        <PageHeading subHeading={<SubHeading />}>Are you sure you want to unstake?</PageHeading>
       </ModalBody>
       <ModalFooter>
         <ButtonGroup>

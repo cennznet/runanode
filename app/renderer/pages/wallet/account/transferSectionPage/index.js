@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import BN from 'bn.js';
 import * as Yup from 'yup';
 
-import {Button, Form, PageHeading, PageFooter, Select} from 'components';
+import { Button, Form, PageHeading, PageFooter, Select } from 'components';
 import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
 import SelectField from 'renderer/components/Field/SelectField';
 import TextField from 'renderer/components/Field/TextField';
@@ -18,7 +18,6 @@ const InputGroup = styled.div`
 `;
 
 const TransferSection = ({ account, onTransfer, currentWallet, transaction }) => {
-
   const [isTransferConfirmModalOpen, setTransferConfirmModalOpen] = useState(false);
   const [isTransferSentModalOpen, setTransferSentModalOpen] = useState(false);
   const [getSendTxPayload, setSendTxPayload] = useState({});
@@ -36,25 +35,22 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
   };
 
   const ValidateSchema = Yup.object().shape({
-    assetId: Yup.object()
-      .required('Required'),
+    assetId: Yup.object().required('Required'),
     amount: Yup.string()
       .matches(/^[0-9]*$/, 'Amount should a number')
       .when('assetId', (assetId, passSchema) => {
-        return passSchema.test('test-name', 'Amount greater than account balance',
-          (value) => {
-            const freeBalance = new BN(account.assets[assetId.value].freeBalance.toString, 10);
-            return new BN(value, 10).lte(freeBalance);
-          });
+        return passSchema.test('test-name', 'Amount greater than account balance', value => {
+          const freeBalance = new BN(account.assets[assetId.value].freeBalance.toString, 10);
+          return new BN(value, 10).lte(freeBalance);
+        });
       })
       .required('Required'),
     toAddress: Yup.string()
       .min(48, 'Invalid address, length must be 48')
       .max(48, 'Invalid address, length must be 48')
-      .test('test-name', 'Can\'t send to your own address',
-        (value) => {
-          return account.address !== value;
-        })
+      .test('test-name', "Can't send to your own address", value => {
+        return account.address !== value;
+      })
       .required('Required'),
   });
 
@@ -63,23 +59,24 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
       <Formik
         validationSchema={ValidateSchema}
         initialValues={{
-          assetId: { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: 0 }
+          assetId: { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: 0 },
         }}
         {...{ onSubmit }}
         render={({ handleSubmit, ...formProps }) => {
           const { isValid } = formProps;
           return (
-            <Form onSubmit={handleSubmit} style={{height: 'calc(100vh - 290px)'}}>
+            <Form onSubmit={handleSubmit} style={{ height: 'calc(100vh - 290px)' }}>
               <div className="content">
                 <InputGroup>
                   <Field
                     key="assetId"
                     name="assetId"
                     labelText="Asset"
-                    width='45%'
+                    width="45%"
                     options={[
                       { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: 0 },
-                      { label: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], value: 10 }]}
+                      { label: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], value: 10 },
+                    ]}
                     component={SelectField}
                   />
                   <Field
@@ -87,7 +84,7 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
                     name="amount"
                     labelText="Amount"
                     placeholder=""
-                    width='45%'
+                    width="45%"
                     component={TextField}
                   />
                 </InputGroup>
@@ -97,7 +94,7 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
                     name="toAddress"
                     labelText="Recipient Address"
                     placeholder=""
-                    width='100%'
+                    width="100%"
                     component={TextField}
                   />
                 </InputGroup>
@@ -105,19 +102,27 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
               <PageFooter>
                 <div />
                 <Button type="submit" color="primary" disabled={!isValid}>
-                  Make Payment
+                  Send
                 </Button>
               </PageFooter>
             </Form>
-
           );
         }}
       />
-      <TransferConfirmModal {...{isTransferConfirmModalOpen, setTransferConfirmModalOpen, setTransferSentModalOpen, getSendTxPayload, onTransfer}} />
-      <TransferSentModal {...{isTransferSentModalOpen, setTransferSentModalOpen, getSendTxPayload, transaction}} />
+      <TransferConfirmModal
+        {...{
+          isTransferConfirmModalOpen,
+          setTransferConfirmModalOpen,
+          setTransferSentModalOpen,
+          getSendTxPayload,
+          onTransfer,
+        }}
+      />
+      <TransferSentModal
+        {...{ isTransferSentModalOpen, setTransferSentModalOpen, getSendTxPayload, transaction }}
+      />
     </React.Fragment>
   );
 };
 
 export default TransferSection;
-
