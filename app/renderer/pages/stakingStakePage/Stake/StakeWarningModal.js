@@ -27,8 +27,8 @@ const SubHeading = () => {
           from the validator list.
         </p>
         <p>
-          While staking, this account will be completely locked. This means you won't be able to
-          send any transactions until you've unstaked.
+          While staking, this account will be completely locked. This means you won&#39;t be able to
+          send any transactions until you&#39;ve unstaked.
         </p>
       </SubHeadingText>
     </Flex>
