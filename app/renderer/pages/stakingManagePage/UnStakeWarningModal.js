@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { colors } from 'renderer/theme';
+import { Logger } from 'renderer/utils/logging';
 
 const ButtonGroup = styled.div`
   display: flex;
@@ -49,6 +50,7 @@ const UnStakeWarningModal = ({ isUnStakeWarningModalOpen, setUnStakeWarningModal
             color="danger"
             style={{ marginLeft: '0.5rem' }}
             onClick={() => {
+              Logger.debug('unStake yes click');
               setUnStakeWarningModalOpen(false);
               onUnStake({
                 wallet: stakingWallet,

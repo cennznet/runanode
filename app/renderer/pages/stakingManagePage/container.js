@@ -16,6 +16,7 @@ const mapStateToProps = ({ appStore: { uiState }, staking, localStorage }) => ({
 
 const mapDispatchToProps = dispatch => ({
   onUnStake: payload => {
+    Logger.debug('onUnStake');
     dispatch({ type: types.unStake.triggered, payload });
   },
   onSyncWalletData: payload => {
