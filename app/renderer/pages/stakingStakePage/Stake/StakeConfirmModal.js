@@ -41,7 +41,7 @@ const StakeConfirmModal = ({
   return (
     <Modal isOpen={isStakeConfirmModalOpen}>
       <ModalBody>
-        <PageHeading subHeading="Once confirm, your staking order will be seated in the pool, and be executed in the beginning of next Era.">
+        <PageHeading subHeading="Once confirmed, your stake will be added to the pool and you will become a validator at the beginning of the next era.">
           Confirm staking summary
         </PageHeading>
         <Grid rows={2} columns={2}>
