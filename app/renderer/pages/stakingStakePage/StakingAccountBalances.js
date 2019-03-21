@@ -112,8 +112,9 @@ const StakingAccountBalances = ({
               </div>
               {!sufficientGasFee && (
                 <InsufficientGasFeeErr>
-                  You don't have enough funds to pay the transaction fee required to stake. Choose
-                  another account or <DespositLink to={ROUTES.WALLET.ROOT}>deposit</DespositLink>
+                  You don&#39;t have enough funds to pay the transaction fee required to stake.
+                  Choose another account or{' '}
+                  <DespositLink to={ROUTES.WALLET.ROOT}>deposit</DespositLink>
                   more tokens into the selected account.
                 </InsufficientGasFeeErr>
               )}
