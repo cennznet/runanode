@@ -77,8 +77,13 @@ const sendStakingExtrinsicEpic = action$ =>
               observer.complete();
             }
           }
-          const unsubscribeFn = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, balances, stakingPreference, passphrase, statusCb);
-          Logger.debug(`sendStakingExtrinsicEpic, unsubscribeFn: ${unsubscribeFn}`);
+          try {
+            const unsubscribeFn = await window.odin.api.cennz.doStake(wallet, stashAccountAddress, balances, stakingPreference, passphrase, statusCb);
+            Logger.debug(`sendStakingExtrinsicEpic, unsubscribeFn: ${unsubscribeFn}`);
+          } catch (err) {
+            Logger.debug(`sendStakingExtrinsicEpic, err: ${err}`);
+            observer.error(err);
+          }
         }).pipe(
           map(type => {
             Logger.debug(`sendStakingExtrinsicEpic, type: ${type}`);
@@ -92,19 +97,24 @@ const sendStakingExtrinsicEpic = action$ =>
               };
             }
             return { type: '' };
+          }),
+          catchError(err => {
+            Logger.debug(`sendStakingExtrinsicEpic catchError, err: ${err}`);
+            return throwError(err);
           })
-        );
+        )
       }
-
       return of({ type: '' });
     }),
     catchError(err => {
+      Logger.error(`sendStakingExtrinsicEpic catchError, err: ${err}`);
       if (err) {
         return of({
-          type: types.errorToaster.triggered,
-          payload:
-            err instanceof assert.AssertionError ? err.message : 'Failed to send staking extrinsic',
-        });
+            type: types.errorToaster.triggered,
+            payload:
+              err instanceof assert.AssertionError ? err.message : 'Failed to send staking extrinsic',
+          },
+          { type: types.resetAppUiState.triggered });
       }
       return EMPTY;
     })
@@ -194,8 +204,13 @@ const unStakeEpic = action$ =>
             observer.complete();
           }
         };
-        const unsubscribeFn = await window.odin.api.cennz.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
-        Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
+        try {
+          const unsubscribeFn = await window.odin.api.cennz.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
+          Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
+        } catch (err) {
+          Logger.debug(`unStakeEpic, err: ${err}`);
+          observer.error(err);
+        }
       }).pipe(
         map(type => {
           Logger.debug(`unStakeEpic pipe, type: ${type}`);
@@ -210,16 +225,20 @@ const unStakeEpic = action$ =>
           }
           return { type: '' };
         }),
+        catchError(err => {
+          Logger.debug(`unStakeEpic catchError, err: ${err}`);
+          return throwError(err);
+        })
       );
     }),
     catchError(err => {
-      Logger.debug(`catchErrorFn err: ${err}`);
+      Logger.debug(`unStakeEpic catchError, err: ${err}`);
       if (err) {
-        return {
+        return of({
           type: types.errorToaster.triggered,
           payload:
-            err instanceof assert.AssertionError ? err.message : 'Failed to send extrinsic',
-        };
+            err instanceof assert.AssertionError ? err.message : 'Failed to send unstake extrinsic',
+        }, { type: types.resetAppUiState.triggered });
       }
       return { type: '' };
     }),

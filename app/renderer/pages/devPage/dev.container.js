@@ -109,6 +109,7 @@ const mapDispatchToProps = dispatch => ({
         },
       },
     });
+    dispatch({ type: types.resetAppUiState.triggered });
   },
 
   onStake: payload => {
