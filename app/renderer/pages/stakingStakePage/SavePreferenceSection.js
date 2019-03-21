@@ -9,8 +9,7 @@ const StepDescription = styled.div`
   margin: 1.5rem 0;
 `;
 
-const ChangePreferenceButton = styled(Button)`
-`;
+const ChangePreferenceButton = styled(Button)``;
 
 const StakingPreferenceWrapper = styled.div`
   display: flex;
@@ -25,7 +24,7 @@ const StakingPreferenceWrapper = styled.div`
 const Header = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
-  width: 100%
+  width: 100%;
 `;
 
 const Item = styled.div`
@@ -33,36 +32,41 @@ const Item = styled.div`
   justify-content: space-between;
   margin-top: 1rem;
   font-weight: 600;
-  width: 100%
+  width: 100%;
 `;
 
-const Left = styled.div`
-`;
+const Left = styled.div``;
 
-const Right = styled.div`
-`;
+const Right = styled.div``;
 
 const SavePreferenceSection = ({ validatorPreferences, setChangeStakingPreferenceModalOpen }) => {
   return (
     <div>
       <StepDescription>Step 4: Update staking preference.</StepDescription>
       <StakingPreferenceWrapper>
-        <Header>
-          Staking preference
-        </Header>
+        <Header>Staking preference</Header>
         <Item>
           <Left>Unstake threshold</Left>
-          <Right>{validatorPreferences && validatorPreferences.unstakeThreshold ? validatorPreferences.unstakeThreshold.toString() : ''} warnings</Right>
+          <Right>
+            {validatorPreferences && validatorPreferences.unstakeThreshold
+              ? validatorPreferences.unstakeThreshold.toString()
+              : ''}
+            warnings
+          </Right>
         </Item>
-        <Item style={{display: 'none'}}>
+        <Item style={{ display: 'none' }}>
           <Left>Validator payment</Left>
-          <Right>{validatorPreferences && validatorPreferences.validatorPayment ? validatorPreferences.validatorPayment.toString() : ''} {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}</Right>
+          <Right>
+            {validatorPreferences && validatorPreferences.validatorPayment
+              ? validatorPreferences.validatorPayment.toString()
+              : ''}
+            {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
+          </Right>
         </Item>
         <Item>
-          <Left/>
+          <Left />
           <Right>
-            <ChangePreferenceButton
-              onClick={() => setChangeStakingPreferenceModalOpen(true)}>
+            <ChangePreferenceButton onClick={() => setChangeStakingPreferenceModalOpen(true)}>
               Change preference
             </ChangePreferenceButton>
           </Right>
