@@ -86,7 +86,8 @@ const seedPhraseRecoverPage = ({
             >
               <div>HD Wallet</div>
               <ReocveryOptionExplain>
-                Choose this one if you created it on CENNZNode
+                You can generate multiple public address in HD wallet. Choose this one if you
+                created it on CENNZNode
               </ReocveryOptionExplain>
             </Radio>
             <Radio
@@ -94,7 +95,10 @@ const seedPhraseRecoverPage = ({
               value={WALLET_TYPE.SIMPLE}
               onChange={() => setRecoverWalletType(WALLET_TYPE.SIMPLE)}
             >
-              Simple Wallet
+              <div> Simple Wallet</div>
+              <ReocveryOptionExplain>
+                This wallet only has one address, and can not generate more.
+              </ReocveryOptionExplain>
             </Radio>
           </RadioGroup>
         </ReocveryOptionWrapper>
