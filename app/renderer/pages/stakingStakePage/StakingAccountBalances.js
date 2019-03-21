@@ -62,12 +62,12 @@ const StakingAccountBalances = ({
     <BalancesWrapper>
       <BalanceDetailsWrapper>
         <StepDescription>
-          Step 2: Check the staking amount (CENNZ) All free balance of CENNZ from the account will
-          be used for staking, so make sure you have the amount you desire
+          Step 2: Check your available staking amount Before staking, make sure you have the right
+          amount of tokens that you wish to stake available.
         </StepDescription>
         <Card
-          title="Staking token free balance"
-          hint="CENNZ is required to join CENNZNet as Validator, contributing to securing and governing the network."
+          title="Staking token available balance"
+          hint="In order to participate in CENNZnet as a validator you need to have CENNZ token(s) in your account."
         >
           <BalanceDetail>
             <div>
@@ -81,13 +81,14 @@ const StakingAccountBalances = ({
       </BalanceDetailsWrapper>
       <BalanceDetailsWrapper>
         <StepDescription>
-          Step 3: Check spending token balance (CENTRAPAY) You need enough CENTRAPAY balance to
-          cover estimated total transaction fee. It’s used for staking and unstake.
+          Step 3: Check your spending token balance In order to stake you need to have enough
+          CENTRAPAY tokens. CENTRAPAY tokens are used to cover your transaction fee for staking and
+          unstaking.
         </StepDescription>
         <div>
           <Card
-            title="Spending token free balance"
-            hint="CENTRAPAY is set as base Spending Token for paying network fees to counter attacks like DDos, and as the block reward for validators."
+            title="Spending token available balance"
+            hint="CENTRAPAY is used for paying network fees. It is also used as the block reward for validators."
           >
             <BalanceDetail>
               <div>
@@ -100,7 +101,7 @@ const StakingAccountBalances = ({
           </Card>
           <Card
             title="Estimated transaction fee (stake + unstake)"
-            hint="Transaction fee is paid for maintaining a healthy network utilization."
+            hint="Transaction fees are required as they are needed for maintaining a healthy network."
           >
             <BalanceDetail err={!sufficientGasFee}>
               <div>
@@ -111,8 +112,9 @@ const StakingAccountBalances = ({
               </div>
               {!sufficientGasFee && (
                 <InsufficientGasFeeErr>
-                  You don’t have enough funds to pay transaction fee. You can choose another account
-                  or <DespositLink to={ROUTES.WALLET.ROOT}>deposit</DespositLink>
+                  You don't have enough funds to pay the transaction fee required to stake. Choose
+                  another account or <DespositLink to={ROUTES.WALLET.ROOT}>deposit</DespositLink>
+                  more tokens into the selected account.
                 </InsufficientGasFeeErr>
               )}
             </BalanceDetail>
