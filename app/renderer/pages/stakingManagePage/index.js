@@ -179,6 +179,23 @@ const Subheading = ({ account, wallet }) => {
 };
 const StakingStakePage = ({ subNav, onUnStake, stakingStashWalletId, stakingStashAccountAddress, wallets, onSyncWalletData }) => {
 
+  if(!stakingStashAccountAddress) {
+    return (
+      <MainLayout subNav={subNav}>
+        <MainContent display="flex">
+          <PageHeading>
+            Manage Staking
+          </PageHeading>
+          <div className="content">
+            <div>
+              missing stakingStashAccountAddress
+            </div>
+          </div>
+        </MainContent>
+      </MainLayout>
+    );
+  }
+
   const [warningValue, setWarningValue] = useState(0);
   const [punishmentValue, setPunishmentValue] = useState(0);
   const [rewardValue, setRewardValue] = useState('0');

@@ -17,6 +17,7 @@
 - Chain getting balances with new header
 - move save staking preference to start to stake page
 - remove `Validator Payment` option from save staking preference modal
+- add new unstake epic
 
 # v0.6.1 (2019.03.12)
 

@@ -20,10 +20,10 @@ const InputGroup = styled.div`
   justify-content: space-between;
 `;
 
-const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen, stakingWallet, stakingAccount, onSaveStakingPreferences }) => {
+const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen, stakingWallet, stakingAccount, onSaveStakingPreferences, validatorPreferences }) => {
   const initialValues = {
-    unStakeThreshold: '3',
-    paymentPreferences: '0',
+    unStakeThreshold: validatorPreferences.unstakeThreshold,
+    paymentPreferences: validatorPreferences.validatorPayment,
   };
 
   const onSubmit = (values, actions) => {
