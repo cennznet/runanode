@@ -65,13 +65,15 @@ const SettingsGeneralPage = ({
   <MainLayout subNav={subNav}>
     <MainContent>
       <PageHeading marginBottom="0">Settings</PageHeading>
-      <VersionSection>{config.app.name} version {packageJson.version}</VersionSection>
+      <VersionSection>
+        {config.app.name} version {packageJson.version}
+      </VersionSection>
       <PreferenceSection>
         <PreferenceHeader>Preference</PreferenceHeader>
         <PreferenceBody>
           <PreferenceItem>
             <Label>
-              Remember my network preference the app
+              Remember my network preference
               <span>Remember network choices between sessions.</span>
             </Label>
             <Toggle

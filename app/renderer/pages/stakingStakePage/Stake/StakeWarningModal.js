@@ -22,13 +22,13 @@ const SubHeading = () => {
       </div>
       <SubHeadingText>
         <p>
-          Once confirm, this account will be entirely frozen, which means you can not make any
-          transaction until you unstake.
+          While staking it is important to not go offline. Leaving the network, or quitting the
+          application will result in a loss of some of your staking assets. You will also be removed
+          from the validator list.
         </p>
         <p>
-          Please be careful, if your network is offline or you quit this node application, you will
-          be removed from validator list and be punished by losing some amount of your staking
-          assets.
+          While staking, this account will be completely locked. This means you won&#39;t be able to
+          send any transactions until you&#39;ve unstaked.
         </p>
       </SubHeadingText>
     </Flex>

@@ -97,7 +97,7 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
   return (
     <MainLayout subNav={subNav}>
       <MainContent>
-        <PageHeading subHeading="Here you can view when the next era is, and how your staking performs among other validators.">
+        <PageHeading subHeading="Here you can view when the next era is, and how your stake is performing amongst other validators.">
           <PageTitleWrapper>
             <TextTitleWrapper>
               <div>Staking overview</div>
