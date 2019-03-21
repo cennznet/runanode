@@ -624,6 +624,7 @@ export default class CennzApi {
    * @param balances
    * @param stakingPreference
    * @param passphrase
+   * @param statusCb
    * @returns {Promise<Function>}
    */
   doStake = async (
@@ -646,7 +647,7 @@ export default class CennzApi {
       Logger.debug('CennznetApi::doStake setSigner');
 
       // bound
-      const stakingAmount = new BN(balances[PreDefinedAssetId.stakingToken].freeBalance.toString, 10);
+      const stakingAmount = new BN(balances[stashAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString, 10);
       Logger.debug(`CennznetApi::doStake stakingAmount: ${stakingAmount}`);
       const controllerAccount = stashAccountAddress;
       const payee = [stashAccountAddress];
@@ -665,7 +666,7 @@ export default class CennzApi {
 
       // validate
       // TODO preferences should pass in as param
-      const preferences = {"unstakeThreshold":3,"validatorPayment":0};
+      const preferences = stakingPreference;
       const newNonce = Number(String(accountNonce)) + 1;
       Logger.debug(`CennznetApi::doStake newNonce: ${newNonce}`);
       const unsubscribeFn = await this.api.tx.staking.validate(preferences).signAndSend(controllerAccount, { nonce: newNonce },
@@ -766,13 +767,15 @@ export default class CennzApi {
    * @param wallet
    * @param stashAccountAddress
    * @param passphrase
-   * @returns {Promise<Hash>}
+   * @param statusCb
+   * @returns {Promise<Function>}
    */
   doUnStake = async (
     wallet: CennznetWallet,
     stashAccountAddress: string,
-    passphrase: string
-  ): Promise<Hash> => {
+    passphrase: string,
+    statusCb: Function,
+  ): Promise<Function> => {
     Logger.debug('CennznetApi::doUnStake called');
     try {
       const originalWallet = this.reloadWallet(wallet);
@@ -799,13 +802,15 @@ export default class CennzApi {
 
       // chill
       const newNonce = Number(String(accountNonce)) + 1;
-      const chillTxHash = await this.api.tx.staking.chill().signAndSend(controllerAccount, { nonce: newNonce });
-      Logger.debug(`CennznetApi::doUnStake chillTxHash: ${chillTxHash}`);
+      Logger.debug(`CennznetApi::doUnStake newNonce: ${newNonce}`);
+      const unsubscribeFn = await this.api.tx.staking.chill().signAndSend(controllerAccount, { nonce: newNonce }, statusCb);
+      Logger.debug(`CennznetApi::doUnStake unsubscribeFn: ${unsubscribeFn}`);
 
       // TODO: Chain epic to reflect the changes in reducer immediately
       await clearStorage(storageKeys.STAKING_STASH_ACCOUNT_ADDRESS);
+      await clearStorage(storageKeys.STAKING_STASH_WALLET_ID);
 
-      return chillTxHash;
+      return unsubscribeFn;
     } catch (error) {
       Logger.error('CennznetApi::doUnStake error: ' + stringifyError(error));
       throw new GenericApiError();

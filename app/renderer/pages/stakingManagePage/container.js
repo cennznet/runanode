@@ -14,8 +14,8 @@ const mapStateToProps = ({ staking, localStorage }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onUnStake: value => {
-    window.odin.api.cennz.doUnStake(value.wallet, value.stashAccountAddress, value.passphrase);
+  onUnStake: payload => {
+    dispatch({ type: types.unStake.triggered, payload });
   },
   onSyncWalletData: payload => {
     Logger.debug('onSyncWalletData');

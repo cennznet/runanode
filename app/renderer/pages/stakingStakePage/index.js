@@ -29,7 +29,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
         value: stakingAccountAddress,
         wallet,
       } = stakingOption;
-      const { accounts } = wallet;
+      const { accounts } = wallet; // TODO fix this Cherry, incorrect spending token free balance
 
       const stakingAccountObject = accounts[stakingAccountAddress];
       const { assets } = stakingAccountObject;
@@ -117,6 +117,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
         stakingWallet,
         stakingAccount,
         onSaveStakingPreferences,
+        validatorPreferences,
       }} />
     </MainLayout>
   );
