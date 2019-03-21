@@ -105,7 +105,7 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
                 <NextUpHintText>You will join validator list from next era</NextUpHintText>
               )}
             </TextTitleWrapper>
-            <Button size="lg" onClick={() => onClickStakeButton()}>
+            <Button style={{display: stakingStashAccountAddress ? 'none' : 'block'}} size="lg" onClick={() => onClickStakeButton()}>
               Stake
             </Button>
           </PageTitleWrapper>

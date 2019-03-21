@@ -4,7 +4,6 @@
 
 ### Issues
 - stake epic error handling can only handle once, 2nd time no action fire for some reason...
-- Staking overview page stake button need to hide after stake
 
 ### Features
 - upgrade to latest SDK and cennzet-node 
@@ -26,6 +25,7 @@
 - add transition status `changeAppUiState` for unstake in manage stake page
 - conditionally show/hide stake/manage sub menu
 - improve stake epic error handling
+- hide stake button after staking started in Staking overview page
 
 # v0.6.1 (2019.03.12)
 
