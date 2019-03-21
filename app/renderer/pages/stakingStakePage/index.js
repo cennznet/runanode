@@ -34,7 +34,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
       const cpayStakingBalanceFromChain = balances[stakingAccountAddress] && balances[stakingAccountAddress][PreDefinedAssetId.spendingToken].freeBalance.toString || 0;
       // TODO: estimation code is not ready yet, would hard code first.
       // TODO: make the consistent compare unit
-      const sortedGasFee = 334;
+      const sortedGasFee = 462;
 
       const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
       const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);

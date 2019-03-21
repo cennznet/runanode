@@ -20,6 +20,7 @@
 - remove `Validator Payment` option from save staking preference modal
 - add new unstake epic
 - add transition status `changeAppUiState` for unstake in manage stake page
+- conditionally show/hide stake/manage sub menu
 
 # v0.6.1 (2019.03.12)
 
