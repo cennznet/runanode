@@ -1,5 +1,5 @@
 import { EMPTY, of, from, throwError } from 'rxjs';
-import { concat, map, mergeMap, withLatestFrom, catchError, filter, mapTo } from 'rxjs/operators';
+import { concat, map, mergeMap, withLatestFrom, combineLatest, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import assert from 'assert';
@@ -27,6 +27,7 @@ const startToStakeEpic = action$ =>
 
       await restartCennzNetNodeChannel.send({ key: seed, isValidatorMode: true });
 
+      Logger.debug(`startToStakeEpic types.pendingToSendStakingExtrinsic.triggered`);
       return { type: types.pendingToSendStakingExtrinsic.triggered, payload };
     }),
     // TODO: Extract it to be reusable
@@ -51,16 +52,30 @@ const chainSendStakingTxToChangeUistatus = chainEpics(
   }
 );
 
+const errorFn = err => {
+  Logger.debug(`errorFn, err: ${err}`);
+  if (err) {
+    return of({
+        type: types.errorToaster.triggered,
+        payload: err.message ? err.message : err,
+      },
+      { type: types.resetAppUiState.triggered });
+  }
+  return EMPTY;
+};
+
 const sendStakingExtrinsicEpic = action$ =>
   action$.pipe(
     ofType(types.nodeStateChange.triggered),
     withLatestFrom(action$.ofType(types.pendingToSendStakingExtrinsic.triggered)),
     mergeMap(([nodeStateChangeAction, pendingToSendStakingExtrinsicAction]) => {
+      Logger.debug(`sendStakingExtrinsicEpic, doStake`);
       if (
         nodeStateChangeAction.payload === 'running' &&
         R.has('wallet')(pendingToSendStakingExtrinsicAction.payload) &&
         R.has('stashAccountAddress')(pendingToSendStakingExtrinsicAction.payload)
       ) {
+        Logger.debug(`sendStakingExtrinsicEpic, doStake`);
         const {
           wallet,
           stashAccountAddress,
@@ -89,7 +104,7 @@ const sendStakingExtrinsicEpic = action$ =>
             Logger.debug(`sendStakingExtrinsicEpic, unsubscribeFn: ${unsubscribeFn}`);
           } catch (err) {
             Logger.debug(`sendStakingExtrinsicEpic, err: ${err}`);
-            observer.error(err);
+            observer.error('Failed to send staking extrinsic');
           }
         }).pipe(
           map(type => {
@@ -105,26 +120,12 @@ const sendStakingExtrinsicEpic = action$ =>
             }
             return { type: '' };
           }),
-          catchError(err => {
-            Logger.debug(`sendStakingExtrinsicEpic catchError, err: ${err}`);
-            return throwError(err);
-          })
+          catchError(errorFn)
         )
       }
       return of({ type: '' });
     }),
-    catchError(err => {
-      Logger.error(`sendStakingExtrinsicEpic catchError, err: ${err}`);
-      if (err) {
-        return of({
-            type: types.errorToaster.triggered,
-            payload:
-              err instanceof assert.AssertionError ? err.message : 'Failed to send staking extrinsic',
-          },
-          { type: types.resetAppUiState.triggered });
-      }
-      return EMPTY;
-    })
+    catchError(errorFn)
   );
 
 const sendStakingTxCompletedEpic = action$ =>
@@ -216,7 +217,7 @@ const unStakeEpic = action$ =>
           Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
         } catch (err) {
           Logger.debug(`unStakeEpic, err: ${err}`);
-          observer.error(err);
+          observer.error('Failed to send unstake extrinsic');
         }
       }).pipe(
         map(type => {
@@ -232,23 +233,10 @@ const unStakeEpic = action$ =>
           }
           return { type: '' };
         }),
-        catchError(err => {
-          Logger.debug(`unStakeEpic catchError, err: ${err}`);
-          return throwError(err);
-        })
+        catchError(errorFn)
       );
     }),
-    catchError(err => {
-      Logger.debug(`unStakeEpic catchError, err: ${err}`);
-      if (err) {
-        return of({
-          type: types.errorToaster.triggered,
-          payload:
-            err instanceof assert.AssertionError ? err.message : 'Failed to send unstake extrinsic',
-        }, { type: types.resetAppUiState.triggered });
-      }
-      return { type: '' };
-    }),
+    catchError(errorFn),
   );
 
 const sendUnStakeTxCompletedEpic = action$ =>

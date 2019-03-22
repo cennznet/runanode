@@ -2,9 +2,6 @@
 
 # vNext
 
-### Issues
-- stake epic error handling can only handle once, 2nd time no action fire for some reason...
-
 ### Features
 - upgrade to latest SDK and cennzet-node 
 - support new staking APIs
