@@ -11,7 +11,7 @@ const devConfig = {
   gaTrackId: 'UA-132943388-1',
   webSocket: {
     latency: {
-      period: 15 * 1000,
+      period: 5 * 1000,
     },
   },
 };
