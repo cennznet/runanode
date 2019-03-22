@@ -11,6 +11,7 @@
 
 ### Fixes
 - fix incorrect spending token balance in start to stake page
+- fix fail to start/stop app
 
 ### Improvements
 

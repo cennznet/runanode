@@ -109,7 +109,8 @@ const mapDispatchToProps = dispatch => ({
         },
       },
     });
-    dispatch({ type: types.resetAppUiState.triggered });
+    // dispatch({ type: types.resetAppUiState.triggered });
+    dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
   },
 
   onStake: payload => {

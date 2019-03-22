@@ -135,7 +135,7 @@ export default class CennzApi {
 
   initCennzetApi = async (): Promise<void> => {
     this.api = await Api.create({
-      provider: 'ws://localhost:9944',
+      provider: appConfig.webSocket.localStreamUrl,
     });
 
     const ga = new GenericAsset(this.api);
