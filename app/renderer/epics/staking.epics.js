@@ -1,4 +1,4 @@
-import { EMPTY, of, from } from 'rxjs';
+import { EMPTY, of, from, throwError } from 'rxjs';
 import { concat, map, mergeMap, withLatestFrom, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
@@ -187,6 +187,97 @@ const stakingSavePreferenceCompletedEpic = action$ =>
     })
   );
 
+const unStakeEpic = action$ =>
+  action$.pipe(
+    ofType(types.unStake.triggered),
+    mergeMap(({ payload }) => {
+      Logger.debug(`unStakeEpic payload: ${JSON.stringify(payload)}`);
+      const { wallet, stashAccountAddress, passphrase } = payload;
+      return new Observable(async observer => {
+        const statusCb = ({ events, status, type }) => {
+          Logger.debug(`unStakeEpic events: ${events}, status: ${status}, type: ${type}`);
+          observer.next(type);
+          if (type === 'Finalised') {
+            observer.complete();
+          }
+        };
+        const unsubscribeFn = await window.odin.api.cennz.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
+        Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
+      }).pipe(
+        map(type => {
+          Logger.debug(`unStakeEpic pipe, type: ${type}`);
+          if (type === 'Finalised') {
+            return {
+              type: types.unStakeExtrinsicCompleted.triggered,
+              payload: {
+                wallet,
+                stashAccountAddress,
+              },
+            };
+          }
+          return { type: '' };
+        }),
+      );
+    }),
+    catchError(err => {
+      Logger.debug(`catchErrorFn err: ${err}`);
+      if (err) {
+        return {
+          type: types.errorToaster.triggered,
+          payload:
+            err instanceof assert.AssertionError ? err.message : 'Failed to send extrinsic',
+        };
+      }
+      return { type: '' };
+    }),
+  );
+
+const sendUnStakeTxCompletedEpic = action$ =>
+  action$.pipe(
+    ofType(types.unStakeExtrinsicCompleted.triggered),
+    mergeMap(({ payload: { wallet, stashAccountAddress } }) => {
+      return of(
+        {
+          type: types.clearStorage.requested,
+          payload: {
+            key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS,
+          },
+        },
+        {
+          type: types.clearStorage.requested,
+          payload: {
+            key: storageKeys.STAKING_STASH_WALLET_ID,
+          },
+        }
+      ).pipe(
+        concat(
+          of({
+              type: types.successToaster.triggered,
+              payload: {
+                message:
+                  'Your unstake request is successfully submitted to network.',
+                options: {
+                  autoClose: 12000,
+                },
+              },
+            },
+            { type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW },
+            { type: types.resetAppUiState.triggered },
+          ),
+        )
+      );
+    })
+  );
+
+const chainSendUnStakeTxToChangeUistatus = chainEpics(
+  types.unStake.triggered,
+  types.changeAppUiState.triggered,
+  {
+    isProcessing: true,
+    message: 'Sending unstake request...',
+  }
+);
+
 export default [
   startToStakeEpic,
   chainSendStakingTxToChangeUistatus,
@@ -194,4 +285,7 @@ export default [
   sendStakingTxCompletedEpic,
   stakingSavePreferenceEpic,
   stakingSavePreferenceCompletedEpic,
+  unStakeEpic,
+  sendUnStakeTxCompletedEpic,
+  chainSendUnStakeTxToChangeUistatus,
 ];

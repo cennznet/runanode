@@ -16,7 +16,7 @@ const StakingNotification = () => {
         You’re currently staking. Please keep your node online and don’t quit the application. You
         can unstake
       </span>
-      <StyledLink to={ROUTES.STAKING.OVERVIEW}>here</StyledLink>
+      <StyledLink to={ROUTES.STAKING.MANAGE}>here</StyledLink>
     </div>
   );
 };
