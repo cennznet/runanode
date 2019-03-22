@@ -19,6 +19,7 @@ import StakingRoutes from 'renderer/routes/StakingRoutes';
 import SettingsRoutes from 'renderer/routes/SettingsRoutes';
 import ROUTES from 'renderer/constants/routes';
 import Route from './Route';
+import withContainer from './container';
 
 const setupLocalize = props => {
   props.initialize({
@@ -38,6 +39,7 @@ class AppRoutes extends React.Component {
   }
 
   render() {
+    const { isStakingStated } = this.props;
     return (
       <Switch>
         <Route exact path={ROUTES.ROOT} component={HomePage} />
@@ -52,7 +54,7 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.WALLET.LANDING} component={WalletLandingPage} />
         <Route exact path={ROUTES.WALLET.CREATE} component={WalletCreatePage} />
         <Route exact path={ROUTES.WALLET.CONNECT} component={WalletConnectPage} />
-        <Route path={ROUTES.STAKING.ROOT} render={StakingRoutes} />
+        <Route path={ROUTES.STAKING.ROOT} render={() => <StakingRoutes {...{ isStakingStated }} />}  />
         <Route path={ROUTES.SETTINGS.ROOT} render={SettingsRoutes} />
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
         <Route exact path={ROUTES.CHOOSE_NETWORK} render={() => <ChooseNetworkPage />} />
@@ -63,4 +65,4 @@ class AppRoutes extends React.Component {
   }
 }
 
-export default withLocalize(AppRoutes);
+export default withLocalize(withContainer(AppRoutes));

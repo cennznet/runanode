@@ -50,9 +50,11 @@ const actionTypes = {
   stake: triggerActionTypes('stake'),
   sendStakingExtrinsic: triggerActionTypes('send_staking_extrinsic'),
   stakingExtrinsicCompleted: triggerActionTypes('staking_extrinsic_completed'),
-  stakingUnStake: apiActionTypes('staking_un_stake'),
-  stakingSavePreferences: apiActionTypes('staking_save_preferences'),
   pendingToSendStakingExtrinsic: triggerActionTypes('pending_to_send_staking_extrinsic'),
+  unStake: triggerActionTypes('staking_un_stake'),
+  sendUnExtrinsic: triggerActionTypes('send_un_stake_extrinsic'),
+  unStakeExtrinsicCompleted: triggerActionTypes('un_stake_extrinsic_completed'),
+  stakingSavePreferences: apiActionTypes('staking_save_preferences'),
   stakingGetValidatorPreferences: apiActionTypes('staking_get_validator_preferences'),
   subscribeValidators: triggerActionTypes('subscribe_validators'),
 

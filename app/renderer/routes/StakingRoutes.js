@@ -7,31 +7,41 @@ import StakingStakePage from 'renderer/pages/stakingStakePage';
 import StakingManagePage from 'renderer/pages/stakingManagePage';
 import ROUTES from 'renderer/constants/routes';
 
-const navItems = [
-  { label: 'Overview', link: ROUTES.STAKING.OVERVIEW },
-  { label: 'Start to stake', link: ROUTES.STAKING.STAKE },
-  { label: 'Manage', link: ROUTES.STAKING.MANAGE },
-];
+const getNavItems = (isStakingStated) => {
+  const navItems = [
+    { label: 'Overview', link: ROUTES.STAKING.OVERVIEW }
+    ];
 
-const subNav = (
-  <SubNav>
-    <SimpleMenu {...{ navItems }} />
-  </SubNav>
-);
+  if(isStakingStated) {
+    navItems.push({ label: 'Manage', link: ROUTES.STAKING.MANAGE });
+  } else {
+    navItems.push({ label: 'Start to stake', link: ROUTES.STAKING.STAKE });
+  }
+  return navItems;
+};
 
-const StakingRoutes = () => (
+const subNav = (isStakingStated) => {
+  const navItems = getNavItems(isStakingStated);
+  return (
+    <SubNav>
+      <SimpleMenu {...{ navItems }} />
+    </SubNav>
+  );
+};
+
+const StakingRoutes = ({ isStakingStated }) => (
   <Switch>
     <Route
       path={ROUTES.STAKING.OVERVIEW}
-      component={props => <StakingOverviewPage subNav={subNav} {...props} />}
+      component={props => <StakingOverviewPage subNav={subNav(isStakingStated)} {...props} />}
     />
     <Route
       path={ROUTES.STAKING.STAKE}
-      component={props => <StakingStakePage subNav={subNav} {...props} />}
+      component={props => <StakingStakePage subNav={subNav(isStakingStated)} {...props} />}
     />
     <Route
       path={ROUTES.STAKING.MANAGE}
-      component={props => <StakingManagePage subNav={subNav} {...props} />}
+      component={props => <StakingManagePage subNav={subNav(isStakingStated)} {...props} />}
     />
   </Switch>
 );

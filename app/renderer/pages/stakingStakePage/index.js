@@ -9,9 +9,6 @@ import Stake from './Stake';
 import SavePreferenceSection from './SavePreferenceSection';
 import ChangeStakingPreferenceModal from './ChangeStakingPreferenceModal';
 
-const cennzAssetId = PreDefinedAssetId.stakingToken;
-const cpayAssetId = PreDefinedAssetId.spendingToken;
-
 const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balances, onStake, onSaveStakingPreferences }) => {
   const validatorPreferences = stakingPreference;
   const [stakingOption, setStakingOption] = useState(null);
@@ -33,11 +30,11 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
 
       const stakingAccountObject = accounts[stakingAccountAddress];
       const { assets } = stakingAccountObject;
-      const cennzStakingBalanceFromChain = assets[cennzAssetId].freeBalance.toString || 0;
-      const cpayStakingBalanceFromChain = assets[cpayAssetId].freeBalance.toString || 0;
+      const cennzStakingBalanceFromChain = balances[stakingAccountAddress] && balances[stakingAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString || 0;
+      const cpayStakingBalanceFromChain = balances[stakingAccountAddress] && balances[stakingAccountAddress][PreDefinedAssetId.spendingToken].freeBalance.toString || 0;
       // TODO: estimation code is not ready yet, would hard code first.
       // TODO: make the consistent compare unit
-      const sortedGasFee = 334;
+      const sortedGasFee = 462;
 
       const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
       const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
@@ -117,6 +114,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
         stakingWallet,
         stakingAccount,
         onSaveStakingPreferences,
+        validatorPreferences,
       }} />
     </MainLayout>
   );

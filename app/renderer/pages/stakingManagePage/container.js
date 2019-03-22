@@ -6,7 +6,8 @@ import { Logger } from 'renderer/utils/logging';
 import types from '../../types';
 import { storageKeys } from '../../api/utils/storage';
 
-const mapStateToProps = ({ staking, localStorage }) => ({
+const mapStateToProps = ({ appStore: { uiState }, staking, localStorage }) => ({
+  uiState,
   staking,
   wallets: localStorage[storageKeys.WALLETS],
   stakingStashAccountAddress: localStorage[storageKeys.STAKING_STASH_ACCOUNT_ADDRESS],
@@ -14,8 +15,8 @@ const mapStateToProps = ({ staking, localStorage }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onUnStake: value => {
-    window.odin.api.cennz.doUnStake(value.wallet, value.stashAccountAddress, value.passphrase);
+  onUnStake: payload => {
+    dispatch({ type: types.unStake.triggered, payload });
   },
   onSyncWalletData: payload => {
     Logger.debug('onSyncWalletData');

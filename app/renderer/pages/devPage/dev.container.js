@@ -46,7 +46,7 @@ const mapDispatchToProps = dispatch => ({
   },
   onRestartNodeClick: () => {
     const options: CennzNetRestartOptions = {
-      chain: NetworkNameOptions.CENNZNET_UAT,
+      chain: NetworkNameOptions.CENNZNET_RIMU,
     };
     restartCennzNetNodeChannel.send(options);
   },
