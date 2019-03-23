@@ -6,12 +6,13 @@ import { Logger } from 'renderer/utils/logging';
 
 const nodeStateChannelEpic = () =>
   new Observable(observer => {
-    Logger.debug(`cennznetStateChangeChannel onReceive call::`);
     cennznetStateChangeChannel.onReceive(state => {
+      Logger.debug(`cennznetStateChangeChannel onReceive call::`);
       observer.next(state);
     });
   }).pipe(
     map(state => {
+      Logger.debug(`nodeStateChannelEpic state: ${state}`);
       return {
         type: types.nodeStateChange.triggered,
         payload: state,
