@@ -5,7 +5,6 @@ import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys } from 'renderer/api/utils/storage';
 import chainEpics from 'renderer/epics/chainEpics';
-import streamConstants from 'renderer/constants/stream';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import { Logger } from 'renderer/utils/logging';
 
@@ -55,27 +54,6 @@ const switchNetworkChain = chainEpics(
   payload => payload
 );
 
-const stopStreamEpic = action$ =>
-  action$.pipe(
-    ofType(types.stopStream.requested),
-    mergeMap(({ payload }) => {
-      return of(
-        {
-          type: types.syncStream.requested,
-          payload: { command: streamConstants.DISCONNECT },
-        },
-        {
-          type: types.syncRemoteStream.requested,
-          payload: { command: streamConstants.DISCONNECT },
-        },
-        {
-          type: types.stopStream.completed,
-          payload,
-        }
-      );
-    })
-  );
-
 const restartNodeWithNetworkChain = chainEpics(
   types.stopStream.completed,
   types.restartNode.triggered,
@@ -92,16 +70,8 @@ const restartNodeEpic = action$ =>
     mergeMap(() =>
       of(
         {
-          type: types.syncStream.requested,
-          payload: { command: streamConstants.CONNECT },
+          type: ''
         },
-        {
-          type: types.syncRemoteStream.requested,
-          payload: { command: streamConstants.CONNECT },
-        },
-        {
-          type: types.nodeWsSystemChainPolling.requested,
-        }
       )
     )
   );
@@ -109,7 +79,6 @@ const restartNodeEpic = action$ =>
 export default [
   storeNetworkOptionEpic,
   switchNetworkChain,
-  stopStreamEpic,
   restartNodeWithNetworkChain,
   restartNodeEpic,
   navigationAfterStoreNetworkEpic,

@@ -4,15 +4,15 @@ import types from 'renderer/types';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';
-import streamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import { ApiPromise } from '@cennznet/api';
 
-const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, nodeStateStore }) => ({
+const mapStateToProps = ({ nodeSystem, blocks, blocksRemote, blocksFinalised, nodeStateStore }) => ({
   nodeSystem,
-  syncStream,
-  syncRemoteStream,
+  blocks,
+  blocksRemote,
+  blocksFinalised,
   nodeStateStore,
 });
 
@@ -49,30 +49,6 @@ const mapDispatchToProps = dispatch => ({
       chain: NetworkNameOptions.CENNZNET_RIMU,
     };
     restartCennzNetNodeChannel.send(options);
-  },
-  onStreamStart: () => {
-    dispatch({
-      type: types.syncStream.requested,
-      payload: { command: streamConstants.CONNECT },
-    });
-  },
-  onRemoteStreamStart: () => {
-    dispatch({
-      type: types.syncRemoteStream.requested,
-      payload: { command: streamConstants.CONNECT },
-    });
-  },
-  onStreamStop: () => {
-    dispatch({
-      type: types.syncStream.requested,
-      payload: { command: streamConstants.DISCONNECT },
-    });
-  },
-  onRemoteStreamStop: () => {
-    dispatch({
-      type: types.syncRemoteStream.requested,
-      payload: { command: streamConstants.DISCONNECT },
-    });
   },
   onChainSubscribeNewHead: () => {
     dispatch({
