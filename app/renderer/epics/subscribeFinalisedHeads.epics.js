@@ -5,7 +5,6 @@ import appConfig from 'app/config';
 import types from 'renderer/types';
 import { storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
-import chainEpics from './chainEpics';
 
 const subscribeFinalisedHeadsEpic = action$ =>
   action$.ofType(types.subscribeFinalisedHeads.triggered).pipe(
@@ -26,37 +25,6 @@ const subscribeFinalisedHeadsEpic = action$ =>
     })
   );
 
-// const getAllAccountsBalancesEpic = (action$, state$) =>
-//   action$.ofType(types.getAllAccountsBalances.requested).pipe(
-//     mergeMap(async () => {
-//       const wallets = state$.value.localStorage[storageKeys.WALLETS] || [];
-//
-//       const allWalletBalances = await Promise.all(
-//         wallets.map(async wallet => {
-//           const walletBalances = await window.odin.api.cennz.getBalancesByWallet(wallet);
-//           return walletBalances;
-//         })
-//       );
-//
-//       const allAccountBalances = allWalletBalances.reduce(
-//         (acc, curr) => Object.assign(curr, acc),
-//         {}
-//       );
-//
-//       return {
-//         type: types.getAllAccountsBalances.completed,
-//         payload: allAccountBalances,
-//       };
-//     })
-//   );
-
-// const chainNewHeadWithBalancesEpics = chainEpics(
-//   types.finalisedHeader.changed,
-//   types.getAllAccountsBalances.requested
-// );
-
 export default [
   subscribeFinalisedHeadsEpic,
-  // getAllAccountsBalancesEpic,
-  // chainNewHeadWithBalancesEpics,
 ];
