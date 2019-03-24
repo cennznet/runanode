@@ -3,7 +3,7 @@ import os from 'os';
 import { uniq, upperFirst } from 'lodash';
 import parseArgs from 'minimist';
 import mergeOptions from 'merge-options';
-import { remote } from 'electron'; // TODO check is this safe?
+import { remote } from 'electron';
 
 import appConfig from 'app/config';
 import { version } from '../../package.json';
@@ -22,8 +22,8 @@ import {
   WINDOWS,
 } from './types/environment.types';
 
-// config for argv
-let config = mergeOptions(
+// runTimeConfig for main process.argv
+let runTimeConfig = mergeOptions(
   {
     NODE_ENV: process.env.NODE_ENV,
     DEBUG_PROD: process.env.DEBUG_PROD,
@@ -31,12 +31,15 @@ let config = mergeOptions(
   parseArgs(process.argv.slice(1))
 );
 
-// for renderer process
+// runTimeConfig for renderer remote.process.argv
 if(remote) {
-  config = mergeOptions(
-    config,
+  runTimeConfig = mergeOptions(
+    runTimeConfig,
     parseArgs(remote.process.argv.slice(1))
   );
+  // console.log(`runTimeConfig for renderer: ${JSON.stringify(runTimeConfig)}`);
+} else {
+  // console.log(`runTimeConfig for main: ${JSON.stringify(runTimeConfig)}`);
 }
 
 // environment variables
@@ -46,7 +49,7 @@ const REPORT_URL = process.env.REPORT_URL || STAGING_REPORT_URL;
 const port = process.env.PORT || 1212;
 const isHot = process.env.HOT === '1';
 const isDev = CURRENT_NODE_ENV === DEVELOPMENT;
-const isDebugProd = config.DEBUG_PROD === 'true';
+const isDebugProd = runTimeConfig.DEBUG_PROD === 'true';
 const isDevOrDebugProd = isDev || isDebugProd;
 const isRemoteDebug = process.env.DEBUG_REMOTE === 'true';
 const isTest = CURRENT_NODE_ENV === TEST;
