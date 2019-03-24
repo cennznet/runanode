@@ -84,20 +84,6 @@ const actionTypes = {
   subscribeExtrinsicStatus: triggerActionTypes('subscribe_extrinsic_status'),
   unsubscribeExtrinsicStatus: triggerActionTypes('unsubscribe_extrinsic_status'),
 
-  /* Sync Stream */
-  // syncStream: apiActionTypes('sync_stream'),
-  // syncStreamStatus: changedActionTypes('sync_stream_status'),
-  // syncStreamPing: apiActionTypes('sync_stream_ping'),
-  // syncStreamMessage: changedActionTypes('sync_stream_message'),
-  // syncStreamError: changedActionTypes('sync_stream_error'),
-
-  /* Sync Remote Stream */
-  // syncRemoteStream: apiActionTypes('sync_remote_stream'),
-  // syncRemoteStreamStatus: changedActionTypes('sync_remote_stream_status'),
-  // syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
-  // syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
-  // syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
-
   /** Toaster */
   successToaster: triggerActionTypes('success_toaster'),
   warningToaster: triggerActionTypes('warning_toaster'),
