@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+
+import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter, PageSpinner, Scrollable } from 'components';
 import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
@@ -34,7 +36,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
       const cpayStakingBalanceFromChain = balances[stakingAccountAddress] && balances[stakingAccountAddress][PreDefinedAssetId.spendingToken].freeBalance.toString || 0;
       // TODO: estimation code is not ready yet, would hard code first.
       // TODO: make the consistent compare unit
-      const sortedGasFee = 462;
+      const sortedGasFee = 0;
 
       const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
       const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
@@ -47,7 +49,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
       setStakingAccount(stakingAccountObject);
       setStakingWallet(wallet);
     }
-  }, [stakingOption]);
+  }, [stakingOption, balances]);
 
   const onStakeConfirmed = () =>
     onStake({

@@ -81,6 +81,9 @@ const DevPage = ({
           <h1>Dev Page</h1>
         </PageTitle>
         <Flex>
+          <Button onClick={() => onTestToaster()}>Toaster Test and Reset App UI state</Button>
+        </Flex>
+        <Flex>
           <Button
             onClick={() =>
               onStake({
@@ -209,9 +212,6 @@ const DevPage = ({
           >
             Transfer
           </Button>
-        </Flex>
-        <Flex>
-          <Button onClick={() => onTestToaster()}>Toaster Test</Button>
         </Flex>
         <Flex>
           <Button onClick={() => onGetValidators()}>Validators</Button>

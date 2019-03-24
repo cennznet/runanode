@@ -1,5 +1,5 @@
 import { EMPTY, of, from, throwError } from 'rxjs';
-import { concat, map, mergeMap, withLatestFrom, catchError, filter, mapTo } from 'rxjs/operators';
+import { concat, map, mergeMap, withLatestFrom, combineLatest, catchError, filter, mapTo } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import assert from 'assert';
@@ -27,6 +27,7 @@ const startToStakeEpic = action$ =>
 
       await restartCennzNetNodeChannel.send({ key: seed, isValidatorMode: true });
 
+      Logger.debug(`startToStakeEpic types.pendingToSendStakingExtrinsic.triggered`);
       return { type: types.pendingToSendStakingExtrinsic.triggered, payload };
     }),
     // TODO: Extract it to be reusable
@@ -51,16 +52,30 @@ const chainSendStakingTxToChangeUistatus = chainEpics(
   }
 );
 
+const errorFn = err => {
+  Logger.debug(`errorFn, err: ${err}`);
+  if (err) {
+    return of({
+        type: types.errorToaster.triggered,
+        payload: err.message ? err.message : err,
+      },
+      { type: types.resetAppUiState.triggered });
+  }
+  return EMPTY;
+};
+
 const sendStakingExtrinsicEpic = action$ =>
   action$.pipe(
     ofType(types.nodeStateChange.triggered),
     withLatestFrom(action$.ofType(types.pendingToSendStakingExtrinsic.triggered)),
     mergeMap(([nodeStateChangeAction, pendingToSendStakingExtrinsicAction]) => {
+      Logger.debug(`sendStakingExtrinsicEpic, doStake`);
       if (
         nodeStateChangeAction.payload === 'running' &&
         R.has('wallet')(pendingToSendStakingExtrinsicAction.payload) &&
         R.has('stashAccountAddress')(pendingToSendStakingExtrinsicAction.payload)
       ) {
+        Logger.debug(`sendStakingExtrinsicEpic, doStake`);
         const {
           wallet,
           stashAccountAddress,
@@ -77,15 +92,20 @@ const sendStakingExtrinsicEpic = action$ =>
               observer.complete();
             }
           };
-          const unsubscribeFn = await window.odin.api.cennz.doStake(
-            wallet,
-            stashAccountAddress,
-            balances,
-            stakingPreference,
-            passphrase,
-            statusCb
-          );
-          Logger.debug(`sendStakingExtrinsicEpic, unsubscribeFn: ${unsubscribeFn}`);
+          try {
+            const unsubscribeFn = await window.odin.api.cennz.doStake(
+              wallet,
+              stashAccountAddress,
+              balances,
+              stakingPreference,
+              passphrase,
+              statusCb
+            );
+            Logger.debug(`sendStakingExtrinsicEpic, unsubscribeFn: ${unsubscribeFn}`);
+          } catch (err) {
+            Logger.debug(`sendStakingExtrinsicEpic, err: ${err}`);
+            observer.error('Failed to send staking extrinsic');
+          }
         }).pipe(
           map(type => {
             Logger.debug(`sendStakingExtrinsicEpic, type: ${type}`);
@@ -99,22 +119,13 @@ const sendStakingExtrinsicEpic = action$ =>
               };
             }
             return { type: '' };
-          })
-        );
+          }),
+          catchError(errorFn)
+        )
       }
-
       return of({ type: '' });
     }),
-    catchError(err => {
-      if (err) {
-        return of({
-          type: types.errorToaster.triggered,
-          payload:
-            err instanceof assert.AssertionError ? err.message : 'Failed to send staking extrinsic',
-        });
-      }
-      return EMPTY;
-    })
+    catchError(errorFn)
   );
 
 const sendStakingTxCompletedEpic = action$ =>
@@ -201,8 +212,13 @@ const unStakeEpic = action$ =>
             observer.complete();
           }
         };
-        const unsubscribeFn = await window.odin.api.cennz.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
-        Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
+        try {
+          const unsubscribeFn = await window.odin.api.cennz.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
+          Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
+        } catch (err) {
+          Logger.debug(`unStakeEpic, err: ${err}`);
+          observer.error('Failed to send unstake extrinsic');
+        }
       }).pipe(
         map(type => {
           Logger.debug(`unStakeEpic pipe, type: ${type}`);
@@ -217,19 +233,10 @@ const unStakeEpic = action$ =>
           }
           return { type: '' };
         }),
+        catchError(errorFn)
       );
     }),
-    catchError(err => {
-      Logger.debug(`catchErrorFn err: ${err}`);
-      if (err) {
-        return {
-          type: types.errorToaster.triggered,
-          payload:
-            err instanceof assert.AssertionError ? err.message : 'Failed to send extrinsic',
-        };
-      }
-      return { type: '' };
-    }),
+    catchError(errorFn),
   );
 
 const sendUnStakeTxCompletedEpic = action$ =>

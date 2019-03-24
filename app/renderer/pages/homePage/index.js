@@ -6,6 +6,7 @@ import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import { cennznetStatusChannel } from 'renderer/ipc/cennznet.ipc';
 import SideNav from 'components/layout/SideNav';
 import SimpleSidebar from 'components/layout/SimpleSidebar';
+import { Logger } from 'renderer/utils/logging';
 import { environment } from 'common/environment';
 import withContainer from './container';
 
@@ -20,6 +21,7 @@ const SpinnerWrapper = styled.div`
 
 const HomePage = ({ hasBlockNumbers, onPageNavigation, onSubscribeCennznetStatus }) => {
   useEffect(() => {
+    Logger.debug(`HomePage, hasBlockNumbers: ${hasBlockNumbers}`);
     if (hasBlockNumbers) {
       onPageNavigation();
     }
