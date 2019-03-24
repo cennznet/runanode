@@ -1,4 +1,7 @@
 import mergeOptions from 'merge-options';
+import { remote } from 'electron';
+import parseArgs from "minimist";
+
 import commonConfig from './common';
 
 const feature = {
@@ -11,7 +14,7 @@ const devConfig = {
   gaTrackId: 'UA-132943388-1',
   webSocket: {
     latency: {
-      period: 5 * 1000,
+      period: remote && parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD ? parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD : 5 * 1000,
     },
   },
 };

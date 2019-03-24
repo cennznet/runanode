@@ -1,3 +1,6 @@
+import { remote } from 'electron';
+import parseArgs from 'minimist';
+
 const commonConfig = {
   // Common config shared by dev and prod comes here...
   app: {
@@ -20,7 +23,7 @@ const commonConfig = {
     // TODO Should base on selected network
     remoteStreamUrl: 'wss://cennznet-node-0.centrality.cloud:9944',
     latency: {
-      period: 5 * 1000,
+      period: remote && parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD ? parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD : 5 * 1000,
       signalLevel: {
         full: {
           level: 3,
