@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+
+import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter, PageSpinner, Scrollable } from 'components';
 import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
