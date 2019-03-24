@@ -53,11 +53,11 @@ const TextWrapper = styled.div`
 
 const SyncNodePage = ({
   nodeSystem: { localNode },
-  syncStream,
-  syncRemoteStream,
   localStorage,
   onRestartNode,
   navigateToCreateWallet,
+  blocks,
+  blocksRemote,
 }) => {
   const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
   const { chain } = localNode;
@@ -91,8 +91,8 @@ const SyncNodePage = ({
     // TODO: Error display in precentage bar
     Logger.debug(`SyncNode page: precentage cal`);
     if (isNetworkSwitched) {
-      const { blockNum: localBestBlock } = syncStream;
-      const { blockNum: remoteBestBlock } = syncRemoteStream;
+      const { blockHeight: localBestBlock } = blocks;
+      const { blockHeight: remoteBestBlock } = blocksRemote;
       if (localBestBlock !== null && remoteBestBlock !== null) {
         const syncPercentage = localBestBlock / remoteBestBlock;
         if (syncPercentage >= 1) {
@@ -116,8 +116,8 @@ const SyncNodePage = ({
     );
   }
 
-  const { blockNum: bestBlock } = syncRemoteStream;
-  const { blockNum: syncedBlock, bps } = syncStream;
+  const { blockHeight: syncedBlock, bps } = blocks;
+  const { blockHeight: bestBlock } = blocksRemote;
   const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
   const syncNodePercentage =
     syncNodeProgress >= 0.995 && syncNodeProgress < 1

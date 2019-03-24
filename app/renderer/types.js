@@ -20,7 +20,11 @@ const actionTypes = {
   disableAnalytics: triggerActionTypes('disable_analytics'),
 
   subscribeFinalisedHeads: triggerActionTypes('subscribe_finalised_heads'),
+  subscribeNewHeads: triggerActionTypes('subscribe_new_heads'),
+  subscribeNewHeadsRemote: triggerActionTypes('subscribe_new_heads_remote'),
   finalisedHeader: changedActionTypes('finalised_header'),
+  newHeader: changedActionTypes('new_header'),
+  newHeaderRemote: changedActionTypes('new_header_remote'),
 
   getAllAccountsBalances: apiActionTypes('get_all_accounts_balances'),
   walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
@@ -81,18 +85,18 @@ const actionTypes = {
   unsubscribeExtrinsicStatus: triggerActionTypes('unsubscribe_extrinsic_status'),
 
   /* Sync Stream */
-  syncStream: apiActionTypes('sync_stream'),
-  syncStreamStatus: changedActionTypes('sync_stream_status'),
-  syncStreamPing: apiActionTypes('sync_stream_ping'),
-  syncStreamMessage: changedActionTypes('sync_stream_message'),
-  syncStreamError: changedActionTypes('sync_stream_error'),
+  // syncStream: apiActionTypes('sync_stream'),
+  // syncStreamStatus: changedActionTypes('sync_stream_status'),
+  // syncStreamPing: apiActionTypes('sync_stream_ping'),
+  // syncStreamMessage: changedActionTypes('sync_stream_message'),
+  // syncStreamError: changedActionTypes('sync_stream_error'),
 
   /* Sync Remote Stream */
-  syncRemoteStream: apiActionTypes('sync_remote_stream'),
-  syncRemoteStreamStatus: changedActionTypes('sync_remote_stream_status'),
-  syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
-  syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
-  syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
+  // syncRemoteStream: apiActionTypes('sync_remote_stream'),
+  // syncRemoteStreamStatus: changedActionTypes('sync_remote_stream_status'),
+  // syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
+  // syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
+  // syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
 
   /** Toaster */
   successToaster: triggerActionTypes('success_toaster'),

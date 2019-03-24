@@ -86,6 +86,7 @@ const toyKeyring = toyKeyringFromNames([
 export default class CennzApi {
   config: RequestConfig;
   api: Api;
+  apiRemote: Api;
   ga: GenericAsset;
 
   constructor(config: RequestConfig) {
@@ -136,6 +137,10 @@ export default class CennzApi {
   initCennzetApi = async (): Promise<void> => {
     this.api = await Api.create({
       provider: appConfig.webSocket.localStreamUrl,
+    });
+
+    this.apiRemote = await Api.create({
+      provider: appConfig.webSocket.remoteStreamUrl,
     });
 
     const ga = new GenericAsset(this.api);

@@ -7,20 +7,20 @@ import { storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
 import chainEpics from './chainEpics';
 
-const subscribeFinalisedHeadsEpic = action$ =>
-  action$.ofType(types.subscribeFinalisedHeads.triggered).pipe(
+const subscribeNewHeadsRemoteEpic = action$ =>
+  action$.ofType(types.subscribeNewHeadsRemote.triggered).pipe(
     debounceTime(appConfig.app.apiInitDelay), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
-        window.odin.api.cennz.api.rpc.chain.subscribeFinalisedHeads(newHead => {
-          Logger.debug(`subscribeFinalisedHeadsEpic, got FinalisedHead.`);
+        window.odin.api.cennz.apiRemote.rpc.chain.subscribeNewHead(newHead => {
+          Logger.debug(`subscribeNewHeadsRemoteEpic, got newHead.`);
           observer.next(newHead);
         });
       }).pipe(
         debounceTime(500),
         map(newHead => {
-          Logger.debug(`subscribeFinalisedHeadsEpic, types.finalisedHeader.changed.`);
-          return { type: types.finalisedHeader.changed, payload: newHead };
+          Logger.debug(`subscribeNewHeadsRemoteEpic, types.NewHeader.changed.`);
+          return { type: types.newHeaderRemote.changed, payload: newHead };
         })
       );
     })
@@ -49,14 +49,12 @@ const subscribeFinalisedHeadsEpic = action$ =>
 //       };
 //     })
 //   );
-
+//
 // const chainNewHeadWithBalancesEpics = chainEpics(
-//   types.finalisedHeader.changed,
+//   types.newHeader.changed,
 //   types.getAllAccountsBalances.requested
 // );
 
 export default [
-  subscribeFinalisedHeadsEpic,
-  // getAllAccountsBalancesEpic,
-  // chainNewHeadWithBalancesEpics,
+  subscribeNewHeadsRemoteEpic,
 ];
