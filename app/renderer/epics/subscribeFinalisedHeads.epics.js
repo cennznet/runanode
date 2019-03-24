@@ -6,7 +6,7 @@ import chainEpics from './chainEpics';
 
 const subscribeFinalisedHeadsEpic = action$ =>
   action$.ofType(types.subscribeFinalisedHeads.triggered).pipe(
-    debounceTime(6000),
+    debounceTime(6000), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
         window.odin.api.cennz.api.rpc.chain.subscribeFinalisedHeads(newHead => {
@@ -21,7 +21,7 @@ const subscribeFinalisedHeadsEpic = action$ =>
     })
   );
 
-const getAllAccoutsBalancesEpic = (action$, state$) =>
+const getAllAccountsBalancesEpic = (action$, state$) =>
   action$.ofType(types.getAllAccountsBalances.requested).pipe(
     mergeMap(async () => {
       const wallets = state$.value.localStorage[storageKeys.WALLETS] || [];
@@ -52,6 +52,6 @@ const chainNewHeadWithBalancesEpics = chainEpics(
 
 export default [
   subscribeFinalisedHeadsEpic,
-  getAllAccoutsBalancesEpic,
+  getAllAccountsBalancesEpic,
   chainNewHeadWithBalancesEpics,
 ];

@@ -101,8 +101,8 @@ const eventsMap = {
   [types.stake.triggered]: trackStakeRequested,
   [types.stakingExtrinsicCompleted.triggered]: trackStakeStarted,
   [types.stakingSavePreferences.completed]: trackStakingPreference,
-  [types.stakingUnStake.requested]: trackUnstakeRequested,
-  [types.stakingUnStake.completed]: trackUnstakeCompleted,
+  [types.unStake.triggered]: trackUnstakeRequested,
+  [types.unStakeExtrinsicCompleted.completed]: trackUnstakeCompleted,
 };
 
 export default eventsMap;

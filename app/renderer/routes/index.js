@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect, withRouter } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withLocalize } from 'react-localize-redux';
 import types from 'renderer/types';
@@ -65,4 +65,4 @@ class AppRoutes extends React.Component {
   }
 }
 
-export default withLocalize(withContainer(AppRoutes));
+export default withLocalize(withRouter(withContainer(AppRoutes)));

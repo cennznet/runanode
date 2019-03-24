@@ -1,6 +1,8 @@
 import getActionTypeCreators from 'renderer/helpers/typeCreator';
 
-const ACTION_TYPES_NAME_SPACE = 'ODIN';
+import config from 'app/config';
+
+const ACTION_TYPES_NAME_SPACE = config.app.name;
 
 const { apiActionTypes, changedActionTypes, triggerActionTypes } = getActionTypeCreators(
   ACTION_TYPES_NAME_SPACE

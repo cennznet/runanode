@@ -8,6 +8,7 @@
 
 ### Fixes
 - fix incorrect spending token balance in start to stake page
+- fix fail to start/stop app
 
 ### Improvements
 
@@ -21,6 +22,8 @@
 - add new unstake epic
 - add transition status `changeAppUiState` for unstake in manage stake page
 - conditionally show/hide stake/manage sub menu
+- improve stake epic error handling
+- hide stake button after staking started in Staking overview page
 
 # v0.6.1 (2019.03.12)
 
