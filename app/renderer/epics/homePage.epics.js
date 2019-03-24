@@ -1,5 +1,5 @@
 import { EMPTY, from, of } from 'rxjs';
-import { mergeMap, catchError, map } from 'rxjs/operators';
+import { mergeMap, catchError, map, debounceTime } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
@@ -20,6 +20,7 @@ const homePageNavigationEpic = (action$, state$) =>
       const genesisConfigFileInfo = await getStorage(storageKeys.GENESIS_CONFIG_FILE_INFO);
       const genesisConfigFilePath = genesisConfigFileInfo && genesisConfigFileInfo.path;
 
+      Logger.debug(`HomePageNavigationEpic, isTosAccepted: ${isTosAccepted} isNetworkRemembered ${isNetworkRemembered}, genesisConfigFilePath: ${genesisConfigFilePath}, selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
       if (!isTosAccepted) {
         return { type: types.navigation.triggered, payload: ROUTES.TERMS_OF_USE_ACCEPTANCE };
       }
@@ -29,6 +30,7 @@ const homePageNavigationEpic = (action$, state$) =>
         ((selectedNetwork === NetworkNameMapping.Development && genesisConfigFilePath) ||
           selectedNetwork !== NetworkNameMapping.Development)
       ) {
+        Logger.debug(`HomePageNavigationEpic,navigation to ROUTES.SYNC_NODE`);
         return { type: types.navigation.triggered, payload: ROUTES.SYNC_NODE };
       }
 
