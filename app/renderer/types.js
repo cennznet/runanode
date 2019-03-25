@@ -27,7 +27,6 @@ const actionTypes = {
   newHeadRemote: changedActionTypes('new_head_remote'),
 
   getAllAccountsBalances: apiActionTypes('get_all_accounts_balances'),
-  getChainGetHeader: apiActionTypes('get_chain_get_header'),
   walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
   walletCreatWithHDKR: apiActionTypes('wallet_create_with_HD_keyring'),
   walletRestoreWithHDKR: apiActionTypes('wallet_restore_with_HD_keyring'),
@@ -73,6 +72,7 @@ const actionTypes = {
   nodeJsonRpcSystemHealth: apiActionTypes('node_jsonrpc_system_health'),
 
   nodeWsSystemChain: apiActionTypes('node_ws_system_chain'),
+  nodeWsSystemChainRemote: apiActionTypes('node_ws_system_chain_remote'),
   nodeWsSystemChainPolling: apiActionTypes('node_ws_system_chain_polling'),
 
   /* chain apis */

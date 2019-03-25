@@ -27,23 +27,25 @@ const subscribeNewHeadRemoteEpic = action$ =>
   );
 
 const getSystemChainEpic = (action$, state$) =>
-  action$.ofType(types.nodeWsSystemChain.requested).pipe(
+  action$.ofType(types.nodeWsSystemChainRemote.requested).pipe(
     mergeMap(async () => {
       Logger.debug(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
       const data = await window.odin.api.cennz.apiRemote.rpc.system.chain();
       Logger.debug(`getSystemChainEpic, data: ${data}`);
       if (!data) {
-        return { type: types.nodeWsSystemChain.failed };
+        return { type: types.nodeWsSystemChainRemote.failed };
       }
-      return { type: types.nodeWsSystemChain.completed, payload: data };
+      return { type: types.nodeWsSystemChainRemote.completed, payload: data };
     }),
   );
 const chainGetSystemChainEpicEpics = chainEpics(
-  types.newHead.changed,
-  types.nodeWsSystemChain.requested
+  types.newHeadRemote.changed,
+  types.nodeWsSystemChainRemote.requested
 );
 
 
 export default [
   subscribeNewHeadRemoteEpic,
+  getSystemChainEpic,
+  chainGetSystemChainEpicEpics,
 ];
