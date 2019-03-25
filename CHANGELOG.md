@@ -1,8 +1,8 @@
 # Changelog
 
-# vNext
+# v0.7.0 (2019.03.26)
 
-###
+### Issues
 - multiple subscribe after switch network
 
 ### Features
