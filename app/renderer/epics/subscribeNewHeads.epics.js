@@ -64,7 +64,7 @@ const getSystemChainEpic = (action$, state$) =>
       if (!data) {
         return { type: types.nodeWsSystemChain.failed };
       }
-      return { type: types.nodeWsSystemChain.completed, payload: data };
+      return { type: types.nodeWsSystemChain.completed, payload: data.toString() };
     }),
   );
 const chainGetSystemChainEpicEpics = chainEpics(
@@ -83,7 +83,7 @@ export default [
   subscribeNewHeadEpic,
   getAllAccountsBalancesEpic,
   chainNewHeadWithBalancesEpics,
-  // chainNodeJsonRpcSystemEpics,
   getSystemChainEpic,
   chainGetSystemChainEpicEpics,
+  // chainNodeJsonRpcSystemEpics,
 ];
