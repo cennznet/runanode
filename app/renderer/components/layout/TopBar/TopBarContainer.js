@@ -5,12 +5,13 @@ import types from 'renderer/types';
 import { compose, lifecycle, withState } from 'recompose';
 import TopBar from ".";
 
-const mapStateToProps = ({ nodeSystem, remoteStream, syncStream, syncRemoteStream, nodeStateStore }) => ({
+const mapStateToProps = ({ nodeSystem, remoteStream, nodeStateStore, blocksNew, blocksFinalised, blocksRemote }) => ({
   nodeSystem,
   remoteStream,
-  syncStream,
-  syncRemoteStream,
   nodeStateStore,
+  blocksNew,
+  blocksFinalised,
+  blocksRemote,
 });
 
 const mapDispatchToProps = dispatch => ({

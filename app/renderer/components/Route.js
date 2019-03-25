@@ -3,8 +3,8 @@ import { Route as ReactRoute } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 
-const mapStateToProps = ({ syncStream, syncRemoteStream }) => ({
-  hasBlockNumbers: syncStream.blockNum !== null && syncRemoteStream.blockNum !== null,
+const mapStateToProps = ({ blocksNew, blocksRemote }) => ({
+  hasBlockNumbers: blocksNew.blockHeight !== null && blocksRemote.blockHeight !== null,
 });
 
 const mapDispatchToProps = dispatch => ({});

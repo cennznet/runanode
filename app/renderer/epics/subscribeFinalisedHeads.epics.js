@@ -1,20 +1,25 @@
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, map, mergeMap } from 'rxjs/operators';
+
+import appConfig from 'app/config';
 import types from 'renderer/types';
 import { storageKeys } from 'renderer/api/utils/storage';
+import { Logger } from 'renderer/utils/logging';
 import chainEpics from './chainEpics';
 
 const subscribeFinalisedHeadsEpic = action$ =>
   action$.ofType(types.subscribeFinalisedHeads.triggered).pipe(
-    debounceTime(6000), // wait for api init
+    debounceTime(appConfig.app.apiInitDebounceTime), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
         window.odin.api.cennz.api.rpc.chain.subscribeFinalisedHeads(newHead => {
+          // Logger.trace(`subscribeFinalisedHeadsEpic, got FinalisedHead.`);
           observer.next(newHead);
         });
       }).pipe(
-        debounceTime(500),
+        debounceTime(appConfig.app.defaultDebounceTime),
         map(newHead => {
+          Logger.debug(`subscribeFinalisedHeadsEpic, types.finalisedHeader.changed.`);
           return { type: types.finalisedHeader.changed, payload: newHead };
         })
       );
@@ -46,7 +51,7 @@ const getAllAccountsBalancesEpic = (action$, state$) =>
   );
 
 const chainNewHeadWithBalancesEpics = chainEpics(
-  types.finalisedHeader.changed,
+  types.newHead.changed,
   types.getAllAccountsBalances.requested
 );
 

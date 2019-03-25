@@ -1,7 +1,12 @@
+import { remote } from 'electron';
+import parseArgs from 'minimist';
+
 const commonConfig = {
   // Common config shared by dev and prod comes here...
   app: {
     name: 'rUN',
+    apiInitDebounceTime: 6000,
+    defaultDebounceTime: 500,
   },
   node: {
     startupMaxRetry: 5,
@@ -19,8 +24,13 @@ const commonConfig = {
     // remoteStreamUrl: 'ws://10.9.30.55:19944',
     // TODO Should base on selected network
     remoteStreamUrl: 'wss://cennznet-node-0.centrality.cloud:9944',
+    remoteStreamUrlMap: {
+      'rimu' : 'wss://cennznet-node-0.centrality.cloud:9944',
+      'kauri' : 'wss://cennznet-node-0.centrality.me:9944',
+      'development' : 'ws://localhost:9944',
+    },
     latency: {
-      period: 5 * 1000,
+      period: remote && parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD ? parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD : 5 * 1000,
       signalLevel: {
         full: {
           level: 3,

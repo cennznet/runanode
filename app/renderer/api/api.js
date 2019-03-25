@@ -86,6 +86,7 @@ const toyKeyring = toyKeyringFromNames([
 export default class CennzApi {
   config: RequestConfig;
   api: Api;
+  apiRemote: Api;
   ga: GenericAsset;
 
   constructor(config: RequestConfig) {
@@ -137,14 +138,29 @@ export default class CennzApi {
     this.api = await Api.create({
       provider: appConfig.webSocket.localStreamUrl,
     });
+    // eslint-disable-next-line
+    const selectedNetwork = electronStore.get(storageKeys.SELECTED_NETWORK);
+    this.apiRemote = await Api.create({
+      provider: selectedNetwork ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value] : appConfig.webSocket.remoteStreamUrl,
+    });
 
     const ga = new GenericAsset(this.api);
     this.ga = ga;
   };
 
+  switchNetwork = async(network: string): Promise<void> => {
+    Logger.debug(`switchNetwork, network: ${network}`);
+    Logger.debug(`disconnect apiRemote`);
+    this.apiRemote.disconnect();
+    this.apiRemote = await Api.create({
+      provider: appConfig.webSocket.remoteStreamUrlMap[network],
+    });
+    Logger.debug(`connect to new apiRemote: ${appConfig.webSocket.remoteStreamUrlMap[network]}`);
+  };
+
   getBalancesByWallet = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
     try {
-      const walletAccountAddresses = window.odin.api.cennz.getWalletAccountAddresses(wallet);
+      const walletAccountAddresses = this.getWalletAccountAddresses(wallet);
 
       // @return [{address1: {}}, {address2: {}}, ...]
       const balanceList = await Promise.all(
@@ -190,7 +206,7 @@ export default class CennzApi {
     Logger.debug('CennznetApi::syncWalletData called');
     try {
       const resultWallet = wallet;
-      const walletAccountAddresses = window.odin.api.cennz.getWalletAccountAddresses(resultWallet);
+      const walletAccountAddresses = this.getWalletAccountAddresses(resultWallet);
 
       // extract data from wallet to accounts
       const accounts = resultWallet.accounts || {};
@@ -246,14 +262,14 @@ export default class CennzApi {
     assetId: BN,
     walletAddress: String
   ): Promise<CennznetWalletAsset> => {
-    Logger.debug('CennznetApi::getCennznetWalletAsset called');
+    // Logger.trace('CennznetApi::getCennznetWalletAsset called');
     try {
-      const freeBalanceBN = await window.odin.api.cennz.getGenericAssetFreeBalance(
+      const freeBalanceBN = await this.getGenericAssetFreeBalance(
         assetId,
         walletAddress
       );
       const freeBalance = { toBN: freeBalanceBN, toString: freeBalanceBN.toString(10) };
-      const reservedBalanceBN = await window.odin.api.cennz.getGenericAssetReservedBalance(
+      const reservedBalanceBN = await this.getGenericAssetReservedBalance(
         assetId,
         walletAddress
       );
@@ -389,10 +405,10 @@ export default class CennzApi {
    * @returns {string[]}
    */
   getWalletAccountAddresses = (request: CennznetWallet): string[] => {
-    Logger.debug('CennznetApi::getWalletAccountAddresses called');
+    // Logger.trace('CennznetApi::getWalletAccountAddresses called');
     try {
       const walletAccountAddresses = Object.keys(request.wallet._accountKeyringMap);
-      Logger.debug(`CennznetApi::getWalletAccountAddresses success: ${walletAccountAddresses}`);
+      // Logger.trace(`CennznetApi::getWalletAccountAddresses success: ${walletAccountAddresses}`);
       return walletAccountAddresses;
     } catch (error) {
       Logger.error('CennznetApi::getWalletAccountAddresses error: ' + stringifyError(error));
@@ -432,12 +448,12 @@ export default class CennzApi {
    * @returns {Promise<number>}
    */
   getGenericAssetFreeBalance = async (assetId: BN, walletAddress: string): Promise<BN> => {
-    Logger.debug('CennznetApi::getGenericAssetFreeBalance called');
+    // Logger.trace('CennznetApi::getGenericAssetFreeBalance called');
     try {
       const freeBalance = await this.ga.getFreeBalance(assetId, walletAddress);
-      Logger.debug(
-        `CennznetApi::getGenericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`
-      );
+      // Logger.trace(
+      //   `CennznetApi::getGenericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`
+      // );
       return new BN(freeBalance.toString(10), 10);
     } catch (error) {
       Logger.error('CennznetApi::getGenericAssetFreeBalance error: ' + stringifyError(error));
@@ -452,10 +468,10 @@ export default class CennzApi {
    * @returns {Promise<Balance>}
    */
   getGenericAssetReservedBalance = async (assetId: BN, walletAddress: string): Promise<Balance> => {
-    Logger.debug('CennznetApi::getGenericAssetReservedBalance called');
+    // Logger.trace('CennznetApi::getGenericAssetReservedBalance called');
     try {
       const reservedBalance = await this.ga.getReservedBalance(assetId, walletAddress);
-      Logger.debug(`CennznetApi::getGenericAssetReservedBalance freeBalance: ${reservedBalance}`);
+      // Logger.trace(`CennznetApi::getGenericAssetReservedBalance freeBalance: ${reservedBalance}`);
       return reservedBalance;
     } catch (error) {
       Logger.error('CennznetApi::getGenericAssetReservedBalance error: ' + stringifyError(error));

@@ -4,15 +4,15 @@ import types from 'renderer/types';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';
-import streamConstants from 'renderer/constants/stream';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import { ApiPromise } from '@cennznet/api';
 
-const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, nodeStateStore }) => ({
+const mapStateToProps = ({ nodeSystem, blocksNew, blocksRemote, blocksFinalised, nodeStateStore }) => ({
   nodeSystem,
-  syncStream,
-  syncRemoteStream,
+  blocksNew,
+  blocksRemote,
+  blocksFinalised,
   nodeStateStore,
 });
 
@@ -50,30 +50,6 @@ const mapDispatchToProps = dispatch => ({
     };
     restartCennzNetNodeChannel.send(options);
   },
-  onStreamStart: () => {
-    dispatch({
-      type: types.syncStream.requested,
-      payload: { command: streamConstants.CONNECT },
-    });
-  },
-  onRemoteStreamStart: () => {
-    dispatch({
-      type: types.syncRemoteStream.requested,
-      payload: { command: streamConstants.CONNECT },
-    });
-  },
-  onStreamStop: () => {
-    dispatch({
-      type: types.syncStream.requested,
-      payload: { command: streamConstants.DISCONNECT },
-    });
-  },
-  onRemoteStreamStop: () => {
-    dispatch({
-      type: types.syncRemoteStream.requested,
-      payload: { command: streamConstants.DISCONNECT },
-    });
-  },
   onChainSubscribeNewHead: () => {
     dispatch({
       type: types.nodeWsChainSubscribeNewHead.requested,
@@ -109,8 +85,8 @@ const mapDispatchToProps = dispatch => ({
         },
       },
     });
-    dispatch({ type: types.resetAppUiState.triggered });
-    dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
+    // dispatch({ type: types.resetAppUiState.triggered });
+    // dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
   },
 
   onStake: payload => {
@@ -147,7 +123,7 @@ const mapDispatchToProps = dispatch => ({
     );
   },
 
-  onGetSessioProgress: () => {
+  onGetSessionProgress: () => {
     window.odin.api.cennz.getSessionProgress(sessionProgress =>
       Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`)
     );
