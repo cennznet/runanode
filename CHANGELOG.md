@@ -2,6 +2,9 @@
 
 # vNext
 
+###
+- multiple subscribe after switch network
+
 ### Features
 - upgrade to latest SDK and cennzet-node 
 - support new staking APIs
