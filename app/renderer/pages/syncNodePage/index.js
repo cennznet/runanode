@@ -157,10 +157,10 @@ const SyncNodePage = ({
             </SyncNodeProgress>
             <SyncNodeInfo>
               <TextWrapper>
-                {syncNodePercentage}% synced, {bps ? bps.toFixed(2) : 0} bps
+                {syncNodePercentage}% synced, {bps && bps>=0 ? bps.toFixed(2) : 0} bps
               </TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
-              <TextWrapper>estimate: {estimateMin ? estimateMin.toFixed(2) : 0} min</TextWrapper>
+              <TextWrapper>estimate: {estimateMin && estimateMin>=0 ? estimateMin.toFixed(2) : 0} min</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
         </MainContent>

@@ -48,14 +48,8 @@ const navigationAfterStoreNetworkEpic = action$ =>
     })
   );
 
-const switchNetworkChain = chainEpics(
-  types.switchNetwork.triggered,
-  types.stopStream.requested,
-  payload => payload
-);
-
 const restartNodeWithNetworkChain = chainEpics(
-  types.stopStream.completed,
+  types.switchNetwork.triggered,
   types.restartNode.triggered,
   payload => payload
 );
@@ -78,7 +72,6 @@ const restartNodeEpic = action$ =>
 
 export default [
   storeNetworkOptionEpic,
-  switchNetworkChain,
   restartNodeWithNetworkChain,
   restartNodeEpic,
   navigationAfterStoreNetworkEpic,

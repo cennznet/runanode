@@ -5,7 +5,8 @@ const commonConfig = {
   // Common config shared by dev and prod comes here...
   app: {
     name: 'rUN',
-    apiInitDelay: 6000,
+    apiInitDebounceTime: 6000,
+    defaultDebounceTime: 500,
   },
   node: {
     startupMaxRetry: 5,

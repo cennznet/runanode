@@ -149,7 +149,7 @@ export default class CennzApi {
 
   getBalancesByWallet = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
     try {
-      const walletAccountAddresses = window.odin.api.cennz.getWalletAccountAddresses(wallet);
+      const walletAccountAddresses = this.getWalletAccountAddresses(wallet);
 
       // @return [{address1: {}}, {address2: {}}, ...]
       const balanceList = await Promise.all(
@@ -195,7 +195,7 @@ export default class CennzApi {
     Logger.debug('CennznetApi::syncWalletData called');
     try {
       const resultWallet = wallet;
-      const walletAccountAddresses = window.odin.api.cennz.getWalletAccountAddresses(resultWallet);
+      const walletAccountAddresses = this.getWalletAccountAddresses(resultWallet);
 
       // extract data from wallet to accounts
       const accounts = resultWallet.accounts || {};
@@ -253,12 +253,12 @@ export default class CennzApi {
   ): Promise<CennznetWalletAsset> => {
     Logger.debug('CennznetApi::getCennznetWalletAsset called');
     try {
-      const freeBalanceBN = await window.odin.api.cennz.getGenericAssetFreeBalance(
+      const freeBalanceBN = await this.getGenericAssetFreeBalance(
         assetId,
         walletAddress
       );
       const freeBalance = { toBN: freeBalanceBN, toString: freeBalanceBN.toString(10) };
-      const reservedBalanceBN = await window.odin.api.cennz.getGenericAssetReservedBalance(
+      const reservedBalanceBN = await this.getGenericAssetReservedBalance(
         assetId,
         walletAddress
       );

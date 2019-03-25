@@ -5,10 +5,7 @@ import { of } from 'rxjs/observable/of';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { mergeMap, tap, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-// import types from 'common/types/types';
 import { DEFAULT_HEADER } from './apiHelper';
-// import { authorizedMiddleware } from './authorizedAjax';
-// import { isTokenExpired } from './tokenHelper';
 
 const defaultAjax = (options, store) => ajax(options);
 
@@ -170,28 +167,12 @@ const createAPICallEpic = ({
     action$.pipe(
       ofType(type.requested),
       mergeMap(({ payload }) => {
-        // if (isTokenExpired() === true) {
-        //   return of({ type: types.token.failed });
-        // }
-
         const { request, deferred, responsePromise } = createRequest(payload, store);
         return doAjax(request, store).pipe(
           tap(xhr => deferred.resolve({ ajaxResponse: xhr })),
           mergeMap(xhr => {
             const promise = responsePromise
               .then(data => {
-                // if (data.ajaxResponse
-                //   && data.ajaxResponse.response
-                //   && data.ajaxResponse.response.jsonrpc
-                //   && data.ajaxResponse.response.error) {
-                //   // check jsonrpc response
-                //   return ({
-                //     type: type.failed,
-                //     payload: data.payload,
-                //     meta: xhr,
-                //     error: true,
-                //   });
-                // }
                 return {
                   type: type.completed,
                   payload: data.payload,
@@ -222,19 +203,6 @@ const createAPICallEpic = ({
     );
 };
 
-// /**
-//  * @param {typeof createAPICallEpic} base
-//  * @param  {...MiddlewareHandler} middlewares
-//  * @returns {typeof createAPICallEpic}
-//  */
-// export const withMiddleware = (base, ...middlewares) => options =>
-//   base({
-//     ...options,
-//     middlewares: options.middlewares ? [...middlewares, ...options.middlewares] : middlewares,
-//   });
-
-// export const createAuthorizedAPICallEpic = withMiddleware(createAPICallEpic, authorizedMiddleware);
-
 export const withJsonRpcMiddleware = base => options =>
   base({
     ...options,
@@ -250,19 +218,3 @@ export const withJsonRpcMiddleware = base => options =>
 export const createJsonRpcAPICallEpic = withJsonRpcMiddleware(createAPICallEpic);
 
 export default createAPICallEpic;
-
-// const addId = (key, value) => ({ payload }) => ({ ...payload, [key]: value });
-//
-// export const addIdMiddleware = (key = 'id') => ({ body, response }) => ({
-//   response: response.then(addId(key, body[key]), x => Promise.reject(addId(key, body[key])(x)))
-// });
-//
-// export const addMFAMiddleware = () => ({ body: { mfa, ...body }, headers }) => ({
-//   body,
-//   headers: mfa
-//     ? {
-//       ...headers,
-//       'x-ev-mfa': JSON.stringify(mfa)
-//     }
-//     : null
-// });

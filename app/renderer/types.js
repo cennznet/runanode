@@ -20,13 +20,14 @@ const actionTypes = {
   disableAnalytics: triggerActionTypes('disable_analytics'),
 
   subscribeFinalisedHeads: triggerActionTypes('subscribe_finalised_heads'),
-  subscribeNewHeads: triggerActionTypes('subscribe_new_heads'),
-  subscribeNewHeadsRemote: triggerActionTypes('subscribe_new_heads_remote'),
+  subscribeNewHead: triggerActionTypes('subscribe_new_head'),
+  subscribeNewHeadRemote: triggerActionTypes('subscribe_new_head_remote'),
   finalisedHeader: changedActionTypes('finalised_header'),
-  newHeader: changedActionTypes('new_header'),
-  newHeaderRemote: changedActionTypes('new_header_remote'),
+  newHead: changedActionTypes('new_head'),
+  newHeadRemote: changedActionTypes('new_head_remote'),
 
   getAllAccountsBalances: apiActionTypes('get_all_accounts_balances'),
+  getChainGetHeader: apiActionTypes('get_chain_get_header'),
   walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
   walletCreatWithHDKR: apiActionTypes('wallet_create_with_HD_keyring'),
   walletRestoreWithHDKR: apiActionTypes('wallet_restore_with_HD_keyring'),
