@@ -73,7 +73,7 @@ const WalletDetailsSubNav = ({
         const account = wallet.accounts[address];
         const icon = account.address === stakingStashAccountAddress ? { icon: 'lock' } : {};
         return {
-          label: account.name || account.address,
+          label: account.name || 'Account',
           link: `${ROUTES.WALLET.ROOT}/${wallet.id}/accounts/${account.address}`,
           ...icon,
         };
