@@ -60,7 +60,7 @@ const AccountDetails = ({
     <React.Fragment>
       <PageHeading subHeading={<Subheading {...{ account }} />}>
         <MainTitleWrapper>
-          {account.name || 'Account name here...'}
+          {account.name || 'Account'}
           {stakingStashAccountAddress && stakingStashAccountAddress === account.address && (
             <LockIconWrapper>
               <FontAwesomeIcon
