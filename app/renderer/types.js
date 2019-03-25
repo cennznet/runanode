@@ -73,7 +73,6 @@ const actionTypes = {
 
   nodeWsSystemChain: apiActionTypes('node_ws_system_chain'),
   nodeWsSystemChainRemote: apiActionTypes('node_ws_system_chain_remote'),
-  nodeWsSystemChainPolling: apiActionTypes('node_ws_system_chain_polling'),
 
   /* chain apis */
   nodeWsChainSubscribeNewHead: apiActionTypes('node_ws_chain_subscribeNewHead'),

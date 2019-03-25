@@ -78,7 +78,7 @@ const TopBar = ({
   setIsOpenNetworkWarningModal,
   setSelectedNetwork,
   nodeStateStore,
-  blocks,
+  blocksNew,
   blocksFinalised,
   blocksRemote,
   ...otherProps
@@ -92,7 +92,7 @@ const TopBar = ({
   } = nodeSystem;
   const networkName = chain ? chainNameMapping(chain) : 'Not connected';
 
-  const { blockHeight: localBlockNum, bps: localBps } = blocks;
+  const { blockHeight: localBlockNum, bps: localBps } = blocksNew;
   const { blockHeight: remoteBlockNum, bps: remoteBps } = blocksRemote;
   const { blockHeight: finalisedBlockNum, bps: finalisedBps } = blocksFinalised;
   const blockNum = `L:#${localBlockNum} / R:#${remoteBlockNum} / F:#${finalisedBlockNum}`;

@@ -5,11 +5,11 @@ import types from 'renderer/types';
 import { compose, lifecycle, withState } from 'recompose';
 import TopBar from ".";
 
-const mapStateToProps = ({ nodeSystem, remoteStream, nodeStateStore, blocks, blocksFinalised, blocksRemote }) => ({
+const mapStateToProps = ({ nodeSystem, remoteStream, nodeStateStore, blocksNew, blocksFinalised, blocksRemote }) => ({
   nodeSystem,
   remoteStream,
   nodeStateStore,
-  blocks,
+  blocksNew,
   blocksFinalised,
   blocksRemote,
 });

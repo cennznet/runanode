@@ -62,6 +62,7 @@ const switchNetworkEpic = action$ =>
         { type: types.subscribeNewHead.triggered },
         { type: types.subscribeNewHeadRemote.triggered },
         { type: types.subscribeFinalisedHeads.triggered },
+        { type: types.switchNetwork.triggered, payload: {} },
       );
     })
   );
@@ -76,8 +77,11 @@ const restartNodeEpic = action$ =>
   action$.pipe(
     ofType(types.restartNode.triggered),
     tap(({ payload }) => {
+      const { chain } = payload;
       const options: CennzNetRestartOptions = payload;
-      restartCennzNetNodeChannel.send(options);
+      if(chain) {
+        restartCennzNetNodeChannel.send(options);
+      }
     }),
     mergeMap(() =>
       of(

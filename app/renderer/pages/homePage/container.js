@@ -3,8 +3,8 @@ import { Logger } from 'renderer/utils/logging';
 import types from 'renderer/types';
 import ROUTES from '../../constants/routes';
 
-const mapStateToProps = ({ blocks, blocksRemote }) => ({
-  hasBlockNumbers: blocks.blockHeight !== null && blocksRemote.blockHeight !== null,
+const mapStateToProps = ({ blocksNew, blocksRemote }) => ({
+  hasBlockNumbers: blocksNew.blockHeight !== null && blocksRemote.blockHeight !== null,
 });
 
 const mapDispatchToProps = dispatch => ({

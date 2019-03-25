@@ -43,7 +43,7 @@ const DevPage = ({
   onStake,
   onUnStake,
   onGetEraProgress,
-  onGetSessioProgress,
+  onGetSessionProgress,
   onGetEraLength,
   onGetIntentionsBalances,
   onStakeAndRestart,
@@ -189,7 +189,7 @@ const DevPage = ({
           <Button onClick={() => onGetIntentionsBalances()}>IntentionsBalances</Button>
         </Flex>
         <Flex>
-          <Button onClick={() => onGetSessioProgress()}>Session Progress</Button>
+          <Button onClick={() => onGetSessionProgress()}>Session Progress</Button>
           <Button onClick={() => onGetSessionLength()}>Session Length</Button>
           <Button onClick={() => onGetEraProgress()}>EraProgress</Button>
           <Button onClick={() => onGetEraLength()}>EraLength</Button>
