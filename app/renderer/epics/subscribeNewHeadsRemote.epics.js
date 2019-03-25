@@ -35,9 +35,10 @@ const getSystemChainEpic = (action$, state$) =>
       if (!data) {
         return { type: types.nodeWsSystemChainRemote.failed };
       }
-      return { type: types.nodeWsSystemChainRemote.completed, payload: data };
+      return { type: types.nodeWsSystemChainRemote.completed, payload: data.toString() };
     }),
   );
+
 const chainGetSystemChainEpicEpics = chainEpics(
   types.newHeadRemote.changed,
   types.nodeWsSystemChainRemote.requested
