@@ -24,6 +24,11 @@ const commonConfig = {
     // remoteStreamUrl: 'ws://10.9.30.55:19944',
     // TODO Should base on selected network
     remoteStreamUrl: 'wss://cennznet-node-0.centrality.cloud:9944',
+    remoteStreamUrlMap: {
+      'rimu' : 'wss://cennznet-node-0.centrality.cloud:9944',
+      'kauri' : 'wss://cennznet-node-0.centrality.me:9944',
+      'development' : 'ws://localhost:9944',
+    },
     latency: {
       period: remote && parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD ? parseArgs(remote.process.argv).WEBSOCKET_LATENCY_PERIOD : 5 * 1000,
       signalLevel: {
