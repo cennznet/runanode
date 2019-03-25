@@ -51,8 +51,8 @@ const initEpic = action$ =>
         {
           type: types.nodeWsSystemChainPolling.requested,
         },
-        { type: types.subscribeNewHeads.triggered },
-        { type: types.subscribeNewHeadsRemote.triggered },
+        { type: types.subscribeNewHead.triggered },
+        { type: types.subscribeNewHeadRemote.triggered },
         { type: types.subscribeFinalisedHeads.triggered },
       );
     })

@@ -7,20 +7,20 @@ import { storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
 import chainEpics from './chainEpics';
 
-const subscribeNewHeadsEpic = action$ =>
-  action$.ofType(types.subscribeNewHeads.triggered).pipe(
-    debounceTime(appConfig.app.apiInitDelay), // wait for api init
+const subscribeNewHeadEpic = action$ =>
+  action$.ofType(types.subscribeNewHead.triggered).pipe(
+    debounceTime(appConfig.app.apiInitDebounceTime), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
         window.odin.api.cennz.api.rpc.chain.subscribeNewHead(newHead => {
-          Logger.debug(`subscribeNewHeadsEpic, got newHead.`);
+          Logger.debug(`subscribeNewHeadEpic, got newHead.`);
           observer.next(newHead);
         });
       }).pipe(
-        debounceTime(500),
+        debounceTime(appConfig.app.defaultDebounceTime),
         map(newHead => {
-          Logger.debug(`subscribeNewHeadsEpic, types.NewHeader.changed.`);
-          return { type: types.newHeader.changed, payload: newHead };
+          Logger.debug(`subscribeNewHeadEpic, types.NewHeader.changed.`);
+          return { type: types.newHead.changed, payload: newHead };
         })
       );
     })
@@ -51,12 +51,39 @@ const getAllAccountsBalancesEpic = (action$, state$) =>
   );
 
 const chainNewHeadWithBalancesEpics = chainEpics(
-  types.newHeader.changed,
+  types.newHead.changed,
   types.getAllAccountsBalances.requested
 );
 
+const getSystemChainEpic = (action$, state$) =>
+  action$.ofType(types.nodeWsSystemChain.requested).pipe(
+    mergeMap(async () => {
+      Logger.debug(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
+      const data = await window.odin.api.cennz.api.rpc.system.chain();
+      Logger.debug(`getSystemChainEpic, data: ${data}`);
+      if (!data) {
+        return { type: types.nodeWsSystemChain.failed };
+      }
+      return { type: types.nodeWsSystemChain.completed, payload: data };
+    }),
+  );
+const chainGetSystemChainEpicEpics = chainEpics(
+  types.newHead.changed,
+  types.nodeWsSystemChain.requested
+);
+
+
+// For JSON RPC Calls
+// const chainNodeJsonRpcSystemEpics = chainEpics(
+//   types.newHead.changed,
+//   types.nodeJsonRpcSystem.requested
+// );
+
 export default [
-  subscribeNewHeadsEpic,
+  subscribeNewHeadEpic,
   getAllAccountsBalancesEpic,
   chainNewHeadWithBalancesEpics,
+  // chainNodeJsonRpcSystemEpics,
+  getSystemChainEpic,
+  chainGetSystemChainEpicEpics,
 ];
