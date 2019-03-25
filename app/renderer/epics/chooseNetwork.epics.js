@@ -1,5 +1,5 @@
 import { EMPTY, from, of, zip } from 'rxjs';
-import { mergeMap, map, concat, tap, mapTo, filter } from 'rxjs/operators';
+import { mergeMap, map, concat, tap, mapTo, filter, withLatestFrom, debounceTime } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
@@ -48,6 +48,24 @@ const navigationAfterStoreNetworkEpic = action$ =>
     })
   );
 
+const switchNetworkEpic = action$ =>
+  action$.pipe(
+    ofType(types.nodeStateChange.triggered),
+    withLatestFrom(action$.ofType(types.switchNetwork.triggered)),
+    mergeMap(([nodeStateChangeAction, switchNetworkAction]) => {
+      Logger.debug(`switchNetworkEpic, nodeStateChangeAction: ${nodeStateChangeAction.payload}, switchNetworkAction: ${JSON.stringify(switchNetworkAction)}`);
+      const { chain } = switchNetworkAction.payload;
+      if ( nodeStateChangeAction.payload === 'running' && chain ) {
+        window.odin.api.cennz.switchNetwork(chain);
+      }
+      return of(
+        { type: types.subscribeNewHead.triggered },
+        { type: types.subscribeNewHeadRemote.triggered },
+        { type: types.subscribeFinalisedHeads.triggered },
+      );
+    })
+  );
+
 const restartNodeWithNetworkChain = chainEpics(
   types.switchNetwork.triggered,
   types.restartNode.triggered,
@@ -75,4 +93,5 @@ export default [
   restartNodeWithNetworkChain,
   restartNodeEpic,
   navigationAfterStoreNetworkEpic,
+  switchNetworkEpic,
 ];

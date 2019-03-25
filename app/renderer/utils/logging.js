@@ -10,4 +10,5 @@ export const Logger = {
   info: logToLevel('info'),
   error: logToLevel('error'),
   warn: logToLevel('warn'),
+  trace: logToLevel('verbose'),
 };

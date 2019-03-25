@@ -29,9 +29,9 @@ const subscribeNewHeadRemoteEpic = action$ =>
 const getSystemChainEpic = (action$, state$) =>
   action$.ofType(types.nodeWsSystemChainRemote.requested).pipe(
     mergeMap(async () => {
-      Logger.debug(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
+      // Logger.trace(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
       const data = await window.odin.api.cennz.apiRemote.rpc.system.chain();
-      Logger.debug(`getSystemChainEpic, data: ${data}`);
+      // Logger.trace(`getSystemChainEpic, data: ${data}`);
       if (!data) {
         return { type: types.nodeWsSystemChainRemote.failed };
       }
