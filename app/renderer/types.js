@@ -20,7 +20,11 @@ const actionTypes = {
   disableAnalytics: triggerActionTypes('disable_analytics'),
 
   subscribeFinalisedHeads: triggerActionTypes('subscribe_finalised_heads'),
+  subscribeNewHead: triggerActionTypes('subscribe_new_head'),
+  subscribeNewHeadRemote: triggerActionTypes('subscribe_new_head_remote'),
   finalisedHeader: changedActionTypes('finalised_header'),
+  newHead: changedActionTypes('new_head'),
+  newHeadRemote: changedActionTypes('new_head_remote'),
 
   getAllAccountsBalances: apiActionTypes('get_all_accounts_balances'),
   walletCreatWithSKR: apiActionTypes('wallet_create_with_simple_keyring'),
@@ -68,7 +72,7 @@ const actionTypes = {
   nodeJsonRpcSystemHealth: apiActionTypes('node_jsonrpc_system_health'),
 
   nodeWsSystemChain: apiActionTypes('node_ws_system_chain'),
-  nodeWsSystemChainPolling: apiActionTypes('node_ws_system_chain_polling'),
+  nodeWsSystemChainRemote: apiActionTypes('node_ws_system_chain_remote'),
 
   /* chain apis */
   nodeWsChainSubscribeNewHead: apiActionTypes('node_ws_chain_subscribeNewHead'),
@@ -79,20 +83,6 @@ const actionTypes = {
   /** Extrinsic */
   subscribeExtrinsicStatus: triggerActionTypes('subscribe_extrinsic_status'),
   unsubscribeExtrinsicStatus: triggerActionTypes('unsubscribe_extrinsic_status'),
-
-  /* Sync Stream */
-  syncStream: apiActionTypes('sync_stream'),
-  syncStreamStatus: changedActionTypes('sync_stream_status'),
-  syncStreamPing: apiActionTypes('sync_stream_ping'),
-  syncStreamMessage: changedActionTypes('sync_stream_message'),
-  syncStreamError: changedActionTypes('sync_stream_error'),
-
-  /* Sync Remote Stream */
-  syncRemoteStream: apiActionTypes('sync_remote_stream'),
-  syncRemoteStreamStatus: changedActionTypes('sync_remote_stream_status'),
-  syncRemoteStreamPing: apiActionTypes('sync_remote_stream_ping'),
-  syncRemoteStreamMessage: changedActionTypes('sync_remote_stream_message'),
-  syncRemoteStreamError: changedActionTypes('sync_remote_stream_error'),
 
   /** Toaster */
   successToaster: triggerActionTypes('success_toaster'),

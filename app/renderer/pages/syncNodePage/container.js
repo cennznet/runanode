@@ -7,14 +7,13 @@ import { Logger } from 'renderer/utils/logging';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import types from 'renderer/types';
 import { NetworkNameMapping, chainNameMapping } from 'common/types/cennznet-node.types';
-import sreamConstants from 'renderer/constants/stream';
 import ROUTES from 'renderer/constants/routes';
 import { NETWORK_OPTIONS } from 'renderer/pages/chooseNetworkPage';
 
-const mapStateToProps = ({ nodeSystem, syncStream, syncRemoteStream, localStorage }) => ({
+const mapStateToProps = ({ nodeSystem, blocksNew, blocksRemote, localStorage }) => ({
   nodeSystem,
-  syncStream,
-  syncRemoteStream,
+  blocksNew,
+  blocksRemote,
   localStorage,
 });
 

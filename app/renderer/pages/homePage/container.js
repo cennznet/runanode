@@ -3,8 +3,8 @@ import { Logger } from 'renderer/utils/logging';
 import types from 'renderer/types';
 import ROUTES from '../../constants/routes';
 
-const mapStateToProps = ({ syncStream, syncRemoteStream }) => ({
-  hasBlockNumbers: syncStream.blockNum !== null && syncRemoteStream.blockNum !== null,
+const mapStateToProps = ({ blocksNew, blocksRemote }) => ({
+  hasBlockNumbers: blocksNew.blockHeight !== null && blocksRemote.blockHeight !== null,
 });
 
 const mapDispatchToProps = dispatch => ({

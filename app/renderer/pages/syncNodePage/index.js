@@ -53,11 +53,11 @@ const TextWrapper = styled.div`
 
 const SyncNodePage = ({
   nodeSystem: { localNode },
-  syncStream,
-  syncRemoteStream,
   localStorage,
   onRestartNode,
   navigateToCreateWallet,
+  blocksNew,
+  blocksRemote,
 }) => {
   const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
   const { chain } = localNode;
@@ -91,8 +91,8 @@ const SyncNodePage = ({
     // TODO: Error display in precentage bar
     Logger.debug(`SyncNode page: precentage cal`);
     if (isNetworkSwitched) {
-      const { blockNum: localBestBlock } = syncStream;
-      const { blockNum: remoteBestBlock } = syncRemoteStream;
+      const { blockHeight: localBestBlock } = blocksNew;
+      const { blockHeight: remoteBestBlock } = blocksRemote;
       if (localBestBlock !== null && remoteBestBlock !== null) {
         const syncPercentage = localBestBlock / remoteBestBlock;
         if (syncPercentage >= 1) {
@@ -116,8 +116,8 @@ const SyncNodePage = ({
     );
   }
 
-  const { blockNum: bestBlock } = syncRemoteStream;
-  const { blockNum: syncedBlock, bps } = syncStream;
+  const { blockHeight: syncedBlock, bps } = blocksNew;
+  const { blockHeight: bestBlock } = blocksRemote;
   const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
   const syncNodePercentage =
     syncNodeProgress >= 0.995 && syncNodeProgress < 1
@@ -157,10 +157,10 @@ const SyncNodePage = ({
             </SyncNodeProgress>
             <SyncNodeInfo>
               <TextWrapper>
-                {syncNodePercentage}% synced, {bps ? bps.toFixed(2) : 0} bps
+                {syncNodePercentage}% synced, {bps && bps>=0 ? bps.toFixed(2) : 0} bps
               </TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
-              <TextWrapper>estimate: {estimateMin ? estimateMin.toFixed(2) : 0} min</TextWrapper>
+              <TextWrapper>estimate: {estimateMin && estimateMin>=0 ? estimateMin.toFixed(2) : 0} min</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
         </MainContent>

@@ -2,6 +2,9 @@
 
 # vNext
 
+###
+- multiple subscribe after switch network
+
 ### Features
 - upgrade to latest SDK and cennzet-node 
 - support new staking APIs
@@ -24,6 +27,8 @@
 - conditionally show/hide stake/manage sub menu
 - improve stake epic error handling
 - hide stake button after staking started in Staking overview page
+- able to overwrite WEBSOCKET_LATENCY_PERIOD from runtime via cli args
+- able to switch network with different remote api settings
 
 # v0.6.1 (2019.03.12)
 

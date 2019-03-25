@@ -74,12 +74,13 @@ const DevInfo = ({ isSynced, syncPercentage, blockNum, blockSpeed, nodeStateStor
 
 const TopBar = ({
   nodeSystem,
-  remoteStream,
-  syncStream,
   syncRemoteStream,
   setIsOpenNetworkWarningModal,
   setSelectedNetwork,
   nodeStateStore,
+  blocksNew,
+  blocksFinalised,
+  blocksRemote,
   ...otherProps
 }) => {
   const {
@@ -90,14 +91,14 @@ const TopBar = ({
     health,
   } = nodeSystem;
   const networkName = chain ? chainNameMapping(chain) : 'Not connected';
-  // const isSynced = false;
 
-  const { blockNum: remoteBlockNum, bps: remoteBps } = syncRemoteStream;
-  const { blockNum: localBlockNum, bps: localBps } = syncStream;
-  const blockNum = `#${localBlockNum} / #${remoteBlockNum}`;
-  const blockSpeed = `${localBps ? localBps.toFixed(2) : 0}bps / ${
-    remoteBps ? remoteBps.toFixed(2) : 0
-  }bps`;
+  const { blockHeight: localBlockNum, bps: localBps } = blocksNew;
+  const { blockHeight: remoteBlockNum, bps: remoteBps } = blocksRemote;
+  const { blockHeight: finalisedBlockNum, bps: finalisedBps } = blocksFinalised;
+  const blockNum = `L:#${localBlockNum} / R:#${remoteBlockNum} / F:#${finalisedBlockNum}`;
+  const blockSpeed = `${localBps ? localBps.toFixed(2) : 0}bps / 
+  ${finalisedBps ? finalisedBps.toFixed(2) : 0}  / 
+  ${remoteBps ? remoteBps.toFixed(2) : 0}bps`;
 
   const percentage = remoteBlockNum > 0 ? ((localBlockNum / remoteBlockNum) * 100).toFixed(2) : 0;
   const syncPercentage = `${percentage}%`;
@@ -131,7 +132,7 @@ const TopBar = ({
             <InfoDesc>block height</InfoDesc>
           </div>
           <div>
-            <InfoValue>{localBps ? localBps.toFixed(2) : 0}</InfoValue>
+            <InfoValue>{localBps && localBps >= 0 ? localBps.toFixed(2) : 0}</InfoValue>
             <InfoDesc>bps</InfoDesc>
           </div>
         </InfoWrapper>

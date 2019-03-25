@@ -1,11 +1,10 @@
 import { EMPTY, from, of, zip } from 'rxjs';
-import { mergeMap, map, concat, tap, mapTo, filter } from 'rxjs/operators';
+import { mergeMap, map, concat, tap, mapTo, filter, withLatestFrom, debounceTime } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys } from 'renderer/api/utils/storage';
 import chainEpics from 'renderer/epics/chainEpics';
-import streamConstants from 'renderer/constants/stream';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import { Logger } from 'renderer/utils/logging';
 
@@ -49,35 +48,27 @@ const navigationAfterStoreNetworkEpic = action$ =>
     })
   );
 
-const switchNetworkChain = chainEpics(
-  types.switchNetwork.triggered,
-  types.stopStream.requested,
-  payload => payload
-);
-
-const stopStreamEpic = action$ =>
+const switchNetworkEpic = action$ =>
   action$.pipe(
-    ofType(types.stopStream.requested),
-    mergeMap(({ payload }) => {
+    ofType(types.nodeStateChange.triggered),
+    withLatestFrom(action$.ofType(types.switchNetwork.triggered)),
+    mergeMap(([nodeStateChangeAction, switchNetworkAction]) => {
+      Logger.debug(`switchNetworkEpic, nodeStateChangeAction: ${nodeStateChangeAction.payload}, switchNetworkAction: ${JSON.stringify(switchNetworkAction)}`);
+      const { chain } = switchNetworkAction.payload;
+      if ( nodeStateChangeAction.payload === 'running' && chain ) {
+        window.odin.api.cennz.switchNetwork(chain);
+      }
       return of(
-        {
-          type: types.syncStream.requested,
-          payload: { command: streamConstants.DISCONNECT },
-        },
-        {
-          type: types.syncRemoteStream.requested,
-          payload: { command: streamConstants.DISCONNECT },
-        },
-        {
-          type: types.stopStream.completed,
-          payload,
-        }
+        { type: types.subscribeNewHead.triggered },
+        { type: types.subscribeNewHeadRemote.triggered },
+        { type: types.subscribeFinalisedHeads.triggered },
+        { type: types.switchNetwork.triggered, payload: {} },
       );
     })
   );
 
 const restartNodeWithNetworkChain = chainEpics(
-  types.stopStream.completed,
+  types.switchNetwork.triggered,
   types.restartNode.triggered,
   payload => payload
 );
@@ -86,31 +77,25 @@ const restartNodeEpic = action$ =>
   action$.pipe(
     ofType(types.restartNode.triggered),
     tap(({ payload }) => {
+      const { chain } = payload;
       const options: CennzNetRestartOptions = payload;
-      restartCennzNetNodeChannel.send(options);
+      if(chain) {
+        restartCennzNetNodeChannel.send(options);
+      }
     }),
     mergeMap(() =>
       of(
         {
-          type: types.syncStream.requested,
-          payload: { command: streamConstants.CONNECT },
+          type: ''
         },
-        {
-          type: types.syncRemoteStream.requested,
-          payload: { command: streamConstants.CONNECT },
-        },
-        {
-          type: types.nodeWsSystemChainPolling.requested,
-        }
       )
     )
   );
 
 export default [
   storeNetworkOptionEpic,
-  switchNetworkChain,
-  stopStreamEpic,
   restartNodeWithNetworkChain,
   restartNodeEpic,
   navigationAfterStoreNetworkEpic,
+  switchNetworkEpic,
 ];

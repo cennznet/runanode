@@ -30,16 +30,10 @@ const DevPage = ({
   onGetHeaderClick,
   onGetRemoteHeaderClick,
   onRestartNodeClick,
-  onStreamStart,
-  onRemoteStreamStart,
-  onStreamStop,
-  onRemoteStreamStop,
   onChainSubscribeNewHead,
   onNavToChooseNetwork,
   onWalletPaperGenerate,
   nodeSystem,
-  syncStream,
-  syncRemoteStream,
   nodeStateStore,
   onTransfer,
   onTestToaster,
@@ -49,7 +43,7 @@ const DevPage = ({
   onStake,
   onUnStake,
   onGetEraProgress,
-  onGetSessioProgress,
+  onGetSessionProgress,
   onGetEraLength,
   onGetIntentionsBalances,
   onStakeAndRestart,
@@ -64,15 +58,6 @@ const DevPage = ({
   const networkStatusLabel = `${chain} ${version} (status:${health.message}, sync:${
     health.isSyncing
   }, peers:${health.peers}, name:${name})`;
-
-  function getStreamStatus(streamState) {
-    const { isConnected, latency, signalLevel, blockNum, previousBlockNum, bps } = streamState;
-    const steamStatus = `bps: ${bps}, previousBlockNum: ${previousBlockNum}, blockNum: ${blockNum}, isConnected: ${isConnected}, latency: ${latency}, signalLevel: ${signalLevel}`;
-    return steamStatus;
-  }
-
-  const syncSteamStatus = getStreamStatus(syncStream);
-  const syncRemoteSteamStatus = getStreamStatus(syncRemoteStream);
 
   return (
     <MainLayout>
@@ -128,26 +113,11 @@ const DevPage = ({
           <div>{networkStatusLabel}</div>
         </Flex>
         <Flex>
-          <Button onClick={onGetHeaderClick}>Get Header</Button>
-          <div>{syncSteamStatus}</div>
-        </Flex>
-        <Flex>
           <Button onClick={onGetRemoteHeaderClick}>Get RemoteHeader</Button>
-          <div>{syncRemoteSteamStatus}</div>
         </Flex>
         <Flex>
           <Button onClick={onRestartNodeClick}>Restart node</Button>
           <div>{JSON.stringify(nodeStateStore)}</div>
-        </Flex>
-        <Flex>
-          <Button onClick={onStreamStart}>Start stream</Button>
-          <Button onClick={onRemoteStreamStart}>Start remote stream</Button>
-          <Button onClick={onStreamStop}>Stop stream</Button>
-          <Button onClick={onRemoteStreamStop}>Stop remote stream</Button>
-        </Flex>
-        <Flex>
-          <div>{syncSteamStatus}</div>
-          <div>{syncRemoteSteamStatus}</div>
         </Flex>
         <Flex>
           <Button onClick={onChainSubscribeNewHead}>start chainSubscribeNewHead</Button>
@@ -219,7 +189,7 @@ const DevPage = ({
           <Button onClick={() => onGetIntentionsBalances()}>IntentionsBalances</Button>
         </Flex>
         <Flex>
-          <Button onClick={() => onGetSessioProgress()}>Session Progress</Button>
+          <Button onClick={() => onGetSessionProgress()}>Session Progress</Button>
           <Button onClick={() => onGetSessionLength()}>Session Length</Button>
           <Button onClick={() => onGetEraProgress()}>EraProgress</Button>
           <Button onClick={() => onGetEraLength()}>EraLength</Button>
