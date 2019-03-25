@@ -22,8 +22,8 @@ const InputGroup = styled.div`
 
 const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen, stakingWallet, stakingAccount, onSaveStakingPreferences, validatorPreferences }) => {
   const initialValues = {
-    unStakeThreshold: validatorPreferences.unstakeThreshold,
-    paymentPreferences: validatorPreferences.validatorPayment,
+    unStakeThreshold: validatorPreferences ? validatorPreferences.unstakeThreshold : 3,
+    paymentPreferences: validatorPreferences ? validatorPreferences.validatorPayment : 0,
   };
 
   const onSubmit = (values, actions) => {
