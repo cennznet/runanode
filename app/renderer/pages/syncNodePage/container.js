@@ -10,9 +10,9 @@ import { NetworkNameMapping, chainNameMapping } from 'common/types/cennznet-node
 import ROUTES from 'renderer/constants/routes';
 import { NETWORK_OPTIONS } from 'renderer/pages/chooseNetworkPage';
 
-const mapStateToProps = ({ nodeSystem, blocks, blocksRemote, localStorage }) => ({
+const mapStateToProps = ({ nodeSystem, blocksNew, blocksRemote, localStorage }) => ({
   nodeSystem,
-  blocks,
+  blocksNew,
   blocksRemote,
   localStorage,
 });

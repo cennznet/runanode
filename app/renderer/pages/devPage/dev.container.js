@@ -8,9 +8,9 @@ import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import { ApiPromise } from '@cennznet/api';
 
-const mapStateToProps = ({ nodeSystem, blocks, blocksRemote, blocksFinalised, nodeStateStore }) => ({
+const mapStateToProps = ({ nodeSystem, blocksNew, blocksRemote, blocksFinalised, nodeStateStore }) => ({
   nodeSystem,
-  blocks,
+  blocksNew,
   blocksRemote,
   blocksFinalised,
   nodeStateStore,
@@ -123,7 +123,7 @@ const mapDispatchToProps = dispatch => ({
     );
   },
 
-  onGetSessioProgress: () => {
+  onGetSessionProgress: () => {
     window.odin.api.cennz.getSessionProgress(sessionProgress =>
       Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`)
     );

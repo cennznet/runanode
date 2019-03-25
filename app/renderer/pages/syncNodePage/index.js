@@ -56,7 +56,7 @@ const SyncNodePage = ({
   localStorage,
   onRestartNode,
   navigateToCreateWallet,
-  blocks,
+  blocksNew,
   blocksRemote,
 }) => {
   const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
@@ -91,7 +91,7 @@ const SyncNodePage = ({
     // TODO: Error display in precentage bar
     Logger.debug(`SyncNode page: precentage cal`);
     if (isNetworkSwitched) {
-      const { blockHeight: localBestBlock } = blocks;
+      const { blockHeight: localBestBlock } = blocksNew;
       const { blockHeight: remoteBestBlock } = blocksRemote;
       if (localBestBlock !== null && remoteBestBlock !== null) {
         const syncPercentage = localBestBlock / remoteBestBlock;
@@ -116,7 +116,7 @@ const SyncNodePage = ({
     );
   }
 
-  const { blockHeight: syncedBlock, bps } = blocks;
+  const { blockHeight: syncedBlock, bps } = blocksNew;
   const { blockHeight: bestBlock } = blocksRemote;
   const syncNodeProgress = bestBlock && bestBlock > 0 ? syncedBlock / bestBlock : 0;
   const syncNodePercentage =
