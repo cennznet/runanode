@@ -12,7 +12,7 @@ const subscribeFinalisedHeadsEpic = action$ =>
     mergeMap(() => {
       return new Observable(observer => {
         window.odin.api.cennz.api.rpc.chain.subscribeFinalisedHeads(newHead => {
-          Logger.debug(`subscribeFinalisedHeadsEpic, got FinalisedHead.`);
+          // Logger.trace(`subscribeFinalisedHeadsEpic, got FinalisedHead.`);
           observer.next(newHead);
         });
       }).pipe(

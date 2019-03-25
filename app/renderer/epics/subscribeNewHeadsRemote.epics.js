@@ -13,7 +13,7 @@ const subscribeNewHeadRemoteEpic = action$ =>
     mergeMap(() => {
       return new Observable(observer => {
         window.odin.api.cennz.apiRemote.rpc.chain.subscribeNewHead(newHead => {
-          Logger.debug(`subscribeNewHeadRemoteEpic, got newHead.`);
+          // Logger.trace(`subscribeNewHeadRemoteEpic, got newHead.`);
           observer.next(newHead);
         });
       }).pipe(

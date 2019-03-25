@@ -13,7 +13,7 @@ const subscribeNewHeadEpic = action$ =>
     mergeMap(() => {
       return new Observable(observer => {
         window.odin.api.cennz.api.rpc.chain.subscribeNewHead(newHead => {
-          Logger.debug(`subscribeNewHeadEpic, got newHead.`);
+          // Logger.trace(`subscribeNewHeadEpic, got newHead.`);
           observer.next(newHead);
         });
       }).pipe(
@@ -58,9 +58,9 @@ const chainNewHeadWithBalancesEpics = chainEpics(
 const getSystemChainEpic = (action$, state$) =>
   action$.ofType(types.nodeWsSystemChain.requested).pipe(
     mergeMap(async () => {
-      Logger.debug(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
+      // Logger.trace(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
       const data = await window.odin.api.cennz.api.rpc.system.chain();
-      Logger.debug(`getSystemChainEpic, data: ${data}`);
+      // Logger.trace(`getSystemChainEpic, data: ${data}`);
       if (!data) {
         return { type: types.nodeWsSystemChain.failed };
       }
