@@ -95,7 +95,7 @@ const TopBar = ({
   const { blockHeight: localBlockNum, bps: localBps } = blocks;
   const { blockHeight: remoteBlockNum, bps: remoteBps } = blocksRemote;
   const { blockHeight: finalisedBlockNum, bps: finalisedBps } = blocksFinalised;
-  const blockNum = `L:#${localBlockNum} / R:#${finalisedBlockNum} / F:#${remoteBlockNum}`;
+  const blockNum = `L:#${localBlockNum} / R:#${remoteBlockNum} / F:#${finalisedBlockNum}`;
   const blockSpeed = `${localBps ? localBps.toFixed(2) : 0}bps / 
   ${finalisedBps ? finalisedBps.toFixed(2) : 0}  / 
   ${remoteBps ? remoteBps.toFixed(2) : 0}bps`;
