@@ -72,6 +72,12 @@ export default function localStorage(state = DEFAULT_STATE, { type, payload }) {
         ...state,
         localNode: { ...state.localNode, chain: payload },
       };
+
+    case types.nodeWsSystemChainRemote.completed:
+      return {
+        ...state,
+        remoteNode: { ...state.remoteNode, chain: payload },
+      };
     default:
       return state;
   }
