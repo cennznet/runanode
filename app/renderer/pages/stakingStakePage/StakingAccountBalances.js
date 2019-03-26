@@ -74,7 +74,7 @@ const StakingAccountBalances = ({
               <Ellipsis substrLength={6}>
                 <Balance>{cennzStakingBalance}</Balance>
               </Ellipsis>
-              Cennz
+              CENNZ
             </div>
           </BalanceDetail>
         </Card>
