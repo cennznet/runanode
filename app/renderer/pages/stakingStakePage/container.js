@@ -6,7 +6,7 @@ import { Logger } from 'renderer/utils/logging';
 const mapStateToProps = ({ appStore: { uiState }, localStorage: { WALLETS, STAKING_PREFERENCE }, balances }) => ({
   uiState,
   wallets: WALLETS,
-  stakingPreference: STAKING_PREFERENCE,
+  stakingPreference: STAKING_PREFERENCE || { unstakeThreshold: 3 , validatorPayment: 0 },
   balances,
 });
 

@@ -1,5 +1,17 @@
 # Changelog
 
+# vNext
+
+### Features
+
+### Fixes
+- fix not able to stake without default validator preference
+- update cennzscan links
+- fix not able to start in linux issue
+- fix sync node page local block num not update issue
+
+### Improvements
+
 # v0.7.0 (2019.03.26)
 
 ### Issues

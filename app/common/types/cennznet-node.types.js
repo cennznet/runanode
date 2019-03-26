@@ -43,13 +43,13 @@ export const chainNameMapping = chainName => {
 };
 
 export const CENNZScanTxUrl = {
-  rimu: 'https://service.centrality.me/cennzscan/tx',
-  kauri: 'https://service.centrality.me/cennzscan/tx', // TODO CENNZScan not support DEV yet
+  rimu: 'https://cennzscan.centrality.me/tx',
+  kauri: 'https://cennzscan.centrality.cloud/tx', // TODO CENNZScan not support DEV yet
 };
 
 export const CENNZScanAddressUrl = {
-  rimu: 'https://service.centrality.me/cennzscan/addresses',
-  kauri: 'https://service.centrality.me/cennzscan/addresses', // TODO CENNZScan not support DEV yet
+  rimu: 'https://cennzscan.centrality.me/addresses',
+  kauri: 'https://cennzscan.centrality.cloud/addresses', // TODO CENNZScan not support DEV yet
 };
 
 export const PreDefinedAssetIdObj = {
