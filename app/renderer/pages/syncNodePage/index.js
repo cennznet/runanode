@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Line } from 'rc-progress';
+import BN from "bn.js";
+
 import { colors } from 'renderer/theme';
 import { environment } from 'common/environment';
 import { chainNameMapping, NetworkNameMapping } from 'common/types/cennznet-node.types';
@@ -58,6 +60,7 @@ const SyncNodePage = ({
   navigateToCreateWallet,
   blocksNew,
   blocksRemote,
+  onGetChainGetHeader,
 }) => {
   const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
   const { chain } = localNode;
@@ -67,6 +70,15 @@ const SyncNodePage = ({
   Logger.debug(`selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
   Logger.debug(`chain: ${chain}`);
   Logger.debug(`isNetworkSwitched: ${isNetworkSwitched}`);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      onGetChainGetHeader();
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     Logger.debug(`SyncNode page: check whether to restart node`);
@@ -127,6 +139,10 @@ const SyncNodePage = ({
       : (syncNodeProgress * 100).toFixed(2);
 
   const estimateMin = (bestBlock - syncedBlock) / bps / 60;
+  let estimateText = estimateMin && estimateMin>=0 ? estimateMin.toFixed(2) : 0;
+  if ( estimateMin > 60 ) {
+    estimateText = '>60';
+  }
 
   Logger.info(`
   ===========================================
@@ -160,7 +176,7 @@ const SyncNodePage = ({
                 {syncNodePercentage}% synced, {bps && bps>=0 ? bps.toFixed(2) : 0} bps
               </TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
-              <TextWrapper>estimate: {estimateMin && estimateMin>=0 ? estimateMin.toFixed(2) : 0} min</TextWrapper>
+              <TextWrapper>estimate: {estimateText} min</TextWrapper>
             </SyncNodeInfo>
           </SyncNodeProgressWarpper>
         </MainContent>

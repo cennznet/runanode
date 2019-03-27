@@ -21,12 +21,15 @@ const mapDispatchToProps = dispatch => ({
   onRestartNode: (payload: CennzNetRestartOptions) => {
     dispatch({ type: types.switchNetwork.triggered, payload });
   },
-
   navigateToCreateWallet: () => {
     dispatch({
       type: types.navigation.triggered,
       payload: ROUTES.WALLET.ROOT,
     });
+  },
+  onGetChainGetHeader: () => {
+    Logger.debug(`onGetChainGetHeader`);
+    dispatch({ type: types.nodeWsChainGetHeader.requested });
   },
 });
 

@@ -17,6 +17,7 @@ export const createMainWindow = isInSafeMode => {
   Logger.info(`isHot: ${isHot}`);
   Logger.info(`isDebugProd: ${isDebugProd}`);
   Logger.info(`isTest: ${isTest}`);
+  Logger.info(`__dirname: ${__dirname}`);
 
   // https://github.com/dovk/electron-security-example/blob/master/README.md
   const windowOptions = {
@@ -32,10 +33,6 @@ export const createMainWindow = isInSafeMode => {
       preload: path.join(__dirname, isDev ? '../../dist/preload.js' : './dist/preload.prod.js'),
     },
   };
-
-  if (isLinux) {
-    windowOptions.icon = path.join(launcherConfig.statePath, 'icon.png');
-  }
 
   // Construct new BrowserWindow
   const window = new BrowserWindow(windowOptions);
@@ -58,17 +55,6 @@ export const createMainWindow = isInSafeMode => {
     if (event.sender !== window.webContents) return;
     window.close();
   });
-
-  if (isDev) {
-    // window.webContents.openDevTools();
-    // // Focus the main window after dev tools opened
-    // window.webContents.on('devtools-opened', () => {
-    //   window.focus();
-    //   setImmediate(() => {
-    //     window.focus();
-    //   });
-    // });
-  }
 
   window.loadURL(isDev ? `file://${__dirname}/../../app.html` : `file://${__dirname}/app.html`);
 
