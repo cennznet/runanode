@@ -19,10 +19,21 @@ const subscribeNewHeadEpic = action$ =>
       }).pipe(
         debounceTime(appConfig.app.defaultDebounceTime),
         map(newHead => {
-          Logger.debug(`subscribeNewHeadEpic, types.NewHeader.changed.`);
+          Logger.debug(`subscribeNewHeadEpic, types.NewHeader.changed. ${JSON.stringify(newHead)}`);
           return { type: types.newHead.changed, payload: newHead };
         })
       );
+    })
+  );
+
+const chainGetHeaderEpic = action$ =>
+  action$.ofType(types.nodeWsChainGetHeader.requested).pipe(
+    mergeMap(async () => {
+      const header = await window.odin.api.cennz.api.rpc.chain.getHeader();
+      Logger.debug(`chainGetHeaderEpic, header: ${JSON.stringify(header)}`);
+      if (header) {
+        return { type: types.newHead.changed, payload: header };
+      }
     })
   );
 
@@ -56,4 +67,5 @@ export default [
   getSystemChainEpic,
   chainGetSystemChainEpicEpics,
   // chainNodeJsonRpcSystemEpics,
+  chainGetHeaderEpic,
 ];
