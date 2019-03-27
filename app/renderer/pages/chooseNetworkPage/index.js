@@ -44,7 +44,7 @@ const ButtonWrapper = styled.div`
 
 export const NETWORK_OPTIONS = [
   { label: 'CENNZnet RIMU(UAT)', value: NetworkNameMapping.CENNZNET_RIMU },
-  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameMapping.CENNZNET_KAURI },
+  // { label: 'CENNZnet KAURI(DEV)', value: NetworkNameMapping.CENNZNET_KAURI }, // TODO disable DEV network for now to avoid blank page
   { label: 'Local test net', value: NetworkNameMapping.Development },
 ];
 
