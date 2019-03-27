@@ -9,6 +9,7 @@
 - update cennzscan links
 - fix not able to start in linux issue
 - fix sync node page local block num not update issue
+- remove access to `CENNZnet KAURI(DEV)` to avoid blank page issue
 
 ### Improvements
 
