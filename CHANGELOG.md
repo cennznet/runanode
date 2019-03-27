@@ -5,13 +5,17 @@
 ### Features
 
 ### Fixes
+
+### Improvements
+
+# v0.7.1 (2019.03.27)
+
+### Fixes
 - fix not able to stake without default validator preference
 - update cennzscan links
 - fix not able to start in linux issue
 - fix sync node page local block num not update issue
 - remove access to `CENNZnet KAURI(DEV)` to avoid blank page issue
-
-### Improvements
 
 # v0.7.0 (2019.03.26)
 
