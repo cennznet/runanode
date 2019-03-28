@@ -3,11 +3,15 @@
 # vNext
 
 ### Features
-- upgrade cennznet sdk to 0.9.4
 
 ### Fixes
 
 ### Improvements
+
+# v0.8.0 (2019.03.29)
+
+### Features
+- upgrade cennznet sdk to 0.9.4
 
 # v0.7.1 (2019.03.27)
 
