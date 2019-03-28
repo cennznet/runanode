@@ -74,6 +74,8 @@ const IconWrapper = styled.div`
   text-align: center;
 `;
 
+const FAQ_URL = 'http://help.runanode.io/support/home';
+
 const SideNav = () => {
   return (
     <Wrapper>
@@ -104,7 +106,7 @@ const SideNav = () => {
               <FontAwesomeIcon icon={['fab', 'dev']} />
             </IconLink>
           )}
-          <IconDiv onClick={() => openExternalLink(appConfig.app.faqLink)}>
+          <IconDiv onClick={() => openExternalLink(FAQ_URL)}>
             <IconWrapper>
               <FontAwesomeIcon icon="question-circle" />
               <IconText>FAQ</IconText>
