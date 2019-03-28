@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { environment } from 'common/environment';
 import { colors } from 'renderer/theme';
 import ROUTES from 'renderer/constants/routes';
+import { openExternalLink } from 'renderer/utils/utils';
+import appConfig from 'app/config';
 
 const { isDevOrDebugProd } = environment;
 
@@ -13,6 +15,25 @@ const Wrapper = styled.div`
   height: 100%;
   width: 5rem;
 `;
+
+const IconDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  font-size: 1rem;
+  color: ${colors.textMuted};
+  text-decoration: none;
+
+  &.active {
+    color: ${colors.N0};
+  }
+
+  &:hover:not(.active) {
+    background-color: ${colors.V500};
+  }
+`;
+
 
 const IconLink = styled(NavLink)`
   display: flex;
@@ -83,12 +104,12 @@ const SideNav = () => {
               <FontAwesomeIcon icon={['fab', 'dev']} />
             </IconLink>
           )}
-          <IconLink to={ROUTES.TERMS_OF_USE_ACCEPTANCE}>
+          <IconDiv onClick={() => openExternalLink(appConfig.app.faqLink)}>
             <IconWrapper>
               <FontAwesomeIcon icon="question-circle" />
               <IconText>FAQ</IconText>
             </IconWrapper>
-          </IconLink>
+          </IconDiv>
         </BottomIcons>
       </IconNav>
     </Wrapper>
