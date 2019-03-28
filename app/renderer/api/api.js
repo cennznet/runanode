@@ -144,7 +144,7 @@ export default class CennzApi {
       provider: selectedNetwork ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value] : appConfig.webSocket.remoteStreamUrl,
     });
 
-    const ga = new GenericAsset(this.api);
+    const ga = await GenericAsset.create(this.api);
     this.ga = ga;
   };
 
