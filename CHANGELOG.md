@@ -3,6 +3,7 @@
 # vNext
 
 ### Features
+- upgrade cennznet sdk to 0.9.4
 
 ### Fixes
 
