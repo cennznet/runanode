@@ -8,6 +8,11 @@
 
 ### Improvements
 
+# v0.8.1 (2019.03.29)
+
+### Improvements
+- add cennznet-node debug flag
+
 # v0.8.0 (2019.03.29)
 
 ### Features
