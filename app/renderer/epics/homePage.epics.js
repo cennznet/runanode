@@ -20,13 +20,17 @@ const homePageNavigationEpic = (action$, state$) =>
       const genesisConfigFileInfo = await getStorage(storageKeys.GENESIS_CONFIG_FILE_INFO);
       const genesisConfigFilePath = genesisConfigFileInfo && genesisConfigFileInfo.path;
 
-      Logger.debug(`HomePageNavigationEpic, isTosAccepted: ${isTosAccepted} isNetworkRemembered ${isNetworkRemembered}, genesisConfigFilePath: ${genesisConfigFilePath}, selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
+      Logger.debug(
+        `HomePageNavigationEpic, isTosAccepted: ${isTosAccepted} isNetworkRemembered ${isNetworkRemembered}, genesisConfigFilePath: ${genesisConfigFilePath}, selectedNetwork: ${JSON.stringify(
+          selectedNetwork
+        )}`
+      );
       if (!isTosAccepted) {
         return { type: types.navigation.triggered, payload: ROUTES.TERMS_OF_USE_ACCEPTANCE };
       }
 
       if (
-        isNetworkRemembered &&
+        isNetworkRemembered !== false &&
         ((selectedNetwork === NetworkNameMapping.Development && genesisConfigFilePath) ||
           selectedNetwork !== NetworkNameMapping.Development)
       ) {
