@@ -57,8 +57,6 @@ import {
 import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
 
-
-
 const { buildLabel } = environment;
 
 // Generate toy keys from name, toy keys is only for play or tests
@@ -527,13 +525,18 @@ export default class CennzApi {
     address: string,
     passphrase: string
   ): Promise<string> => {
+    Logger.debug('CennznetApi::getSeedFromWalletAccount called');
     const originalWallet = this.reloadWallet(wallet);
     await originalWallet.unlock(passphrase);
     assert(wallet.accounts, `missing accounts`);
     assert(address, `missing address`);
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for address: ${address}`);
     const json = await originalWallet.exportAccount(address, passphrase);
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for json: ${JSON.stringify(json)}`);
     const decodeMsg = decode(passphrase, hexToU8a(json.encoded));
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for decodeMsg: ${JSON.stringify(decodeMsg)}`);
     const seed = u8aToHex(decodeMsg.seed);
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for seed: ${seed}`);
     return seed;
   };
 
