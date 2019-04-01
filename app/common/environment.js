@@ -32,14 +32,8 @@ let runTimeConfig = mergeOptions(
 );
 
 // runTimeConfig for renderer remote.process.argv
-if(remote) {
-  runTimeConfig = mergeOptions(
-    runTimeConfig,
-    parseArgs(remote.process.argv.slice(1))
-  );
-  // console.log(`runTimeConfig for renderer: ${JSON.stringify(runTimeConfig)}`);
-} else {
-  // console.log(`runTimeConfig for main: ${JSON.stringify(runTimeConfig)}`);
+if (remote) {
+  runTimeConfig = mergeOptions(runTimeConfig, parseArgs(remote.process.argv.slice(1)));
 }
 
 // environment variables

@@ -1,5 +1,14 @@
 import { EMPTY, of, from, throwError } from 'rxjs';
-import { concat, map, mergeMap, withLatestFrom, combineLatest, catchError, filter, mapTo } from 'rxjs/operators';
+import {
+  concat,
+  map,
+  mergeMap,
+  withLatestFrom,
+  combineLatest,
+  catchError,
+  filter,
+  mapTo,
+} from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import assert from 'assert';
@@ -55,11 +64,13 @@ const chainSendStakingTxToChangeUistatus = chainEpics(
 const errorFn = err => {
   Logger.debug(`errorFn, err: ${err}`);
   if (err) {
-    return of({
+    return of(
+      {
         type: types.errorToaster.triggered,
         payload: err.message ? err.message : err,
       },
-      { type: types.resetAppUiState.triggered });
+      { type: types.resetAppUiState.triggered }
+    );
   }
   return EMPTY;
 };
@@ -121,7 +132,7 @@ const sendStakingExtrinsicEpic = action$ =>
             return { type: '' };
           }),
           catchError(errorFn)
-        )
+        );
       }
       return of({ type: '' });
     }),
@@ -153,7 +164,8 @@ const sendStakingTxCompletedEpic = action$ =>
             // Call the action with empty payload to avoid accident excuting when users change network while staking
             { type: types.pendingToSendStakingExtrinsic.triggered, payload: {} },
             { type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW },
-            { type: types.resetAppUiState.triggered }
+            { type: types.resetAppUiState.triggered },
+            { type: types.sendNodeStatusToIpcMain.requested, payload: { isStaking: true } }
           )
         ),
         concat(
@@ -213,7 +225,13 @@ const unStakeEpic = action$ =>
           }
         };
         try {
-          const unsubscribeFn = await window.appApi.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
+          const unsubscribeFn = await window.appApi.doUnStake(
+            wallet,
+            stashAccountAddress,
+            passphrase,
+            statusCb
+          );
+
           Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
         } catch (err) {
           Logger.debug(`unStakeEpic, err: ${err}`);
@@ -236,7 +254,7 @@ const unStakeEpic = action$ =>
         catchError(errorFn)
       );
     }),
-    catchError(errorFn),
+    catchError(errorFn)
   );
 
 const sendUnStakeTxCompletedEpic = action$ =>
@@ -258,19 +276,19 @@ const sendUnStakeTxCompletedEpic = action$ =>
         }
       ).pipe(
         concat(
-          of({
+          of(
+            {
               type: types.successToaster.triggered,
               payload: {
-                message:
-                  'Your unstake request is successfully submitted to network.',
+                message: 'Your unstake request is successfully submitted to network.',
                 options: {
                   autoClose: 12000,
                 },
               },
             },
             { type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW },
-            { type: types.resetAppUiState.triggered },
-          ),
+            { type: types.resetAppUiState.triggered }
+          )
         )
       );
     })

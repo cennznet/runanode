@@ -4,7 +4,6 @@ import { compose, lifecycle, withState } from 'recompose';
 import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
 import { storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
-import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import types from 'renderer/types';
 import { NetworkNameMapping, chainNameMapping } from 'common/types/cennznet-node.types';
 import ROUTES from 'renderer/constants/routes';

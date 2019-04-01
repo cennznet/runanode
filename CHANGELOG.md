@@ -5,6 +5,7 @@
 ### Features
 
 - Add GlobalModal component;
+- Handle exiting app while staking;
 
 ### Fixes
 
