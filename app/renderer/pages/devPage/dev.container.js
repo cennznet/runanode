@@ -9,12 +9,12 @@ import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import { ApiPromise } from '@cennznet/api';
 
 const mapStateToProps = ({
-  localStorage: { WALLETS },
-  nodeSystem,
   blocksNew,
   blocksRemote,
   blocksFinalised,
+  localStorage: { WALLETS },
   nodeStateStore,
+  nodeSystem,
 }) => ({
   nodeSystem,
   blocksNew,
@@ -106,6 +106,9 @@ const mapDispatchToProps = dispatch => ({
 
   onStake: payload => {
     // window.appApi.doStake(payload.wallet, payload.stashAccountAddress, '');
+  },
+  onSendNodeStatus: payload => {
+    dispatch({ type: types.sendNodeStatusToIpcMain.requested, payload });
   },
   onStakeAndRestart: payload => {
     const { cennzNetRestartOptions, wallet, stashAccountAddress } = payload;
