@@ -8,19 +8,28 @@
 
 ### Improvements
 
+# v0.8.2 (2019.04.01)
+
+### Fixes
+
+- Add GA tracking id in prod
+
 # v0.8.1 (2019.03.29)
 
 ### Improvements
+
 - add cennznet-node debug flag
 
 # v0.8.0 (2019.03.29)
 
 ### Features
+
 - upgrade cennznet sdk to 0.9.4
 
 # v0.7.1 (2019.03.27)
 
 ### Fixes
+
 - fix not able to stake without default validator preference
 - update cennzscan links
 - fix not able to start in linux issue
@@ -30,13 +39,16 @@
 # v0.7.0 (2019.03.26)
 
 ### Issues
+
 - multiple subscribe after switch network
 
 ### Features
-- upgrade to latest SDK and cennzet-node 
+
+- upgrade to latest SDK and cennzet-node
 - support new staking APIs
 
 ### Fixes
+
 - fix incorrect spending token balance in start to stake page
 - fix fail to start/stop app
 
