@@ -18,6 +18,8 @@ import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
 import { environment } from 'common/environment';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
+// import * as Types from '@cennznet/types';
+import * as CustomTypes from './runtime';
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
 // Common Types
@@ -54,6 +56,8 @@ import {
 } from '../../common/types/cennznet-node.types';
 import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
+
+
 
 const { buildLabel } = environment;
 
@@ -135,13 +139,16 @@ export default class CennzApi {
   };
 
   initCennzetApi = async (): Promise<void> => {
+    const types = {...CustomTypes};
     this.api = await Api.create({
       provider: appConfig.webSocket.localStreamUrl,
+      types,
     });
     // eslint-disable-next-line
     const selectedNetwork = electronStore.get(storageKeys.SELECTED_NETWORK);
     this.apiRemote = await Api.create({
       provider: selectedNetwork ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value] : appConfig.webSocket.remoteStreamUrl,
+      types,
     });
 
     const ga = await GenericAsset.create(this.api);
