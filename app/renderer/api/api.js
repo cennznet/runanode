@@ -525,18 +525,22 @@ export default class CennzApi {
     address: string,
     passphrase: string
   ): Promise<string> => {
-    Logger.debug('CennznetApi::getSeedFromWalletAccount called');
     const originalWallet = this.reloadWallet(wallet);
     await originalWallet.unlock(passphrase);
     assert(wallet.accounts, `missing accounts`);
     assert(address, `missing address`);
-    Logger.debug(`CennznetApi::getSeedFromWalletAccount for address: ${address}`);
     const json = await originalWallet.exportAccount(address, passphrase);
-    Logger.debug(`CennznetApi::getSeedFromWalletAccount for json: ${JSON.stringify(json)}`);
     const decodeMsg = decode(passphrase, hexToU8a(json.encoded));
-    Logger.debug(`CennznetApi::getSeedFromWalletAccount for decodeMsg: ${JSON.stringify(decodeMsg)}`);
-    const seed = u8aToHex(decodeMsg.seed);
-    Logger.debug(`CennznetApi::getSeedFromWalletAccount for seed: ${seed}`);
+    const { publicKey, secretKey } = decodeMsg;
+    const SEC_LENGTH = 64;
+    const SEED_LENGTH = 32;
+    const ZERO_STR = '0x00';
+    const seedU8a = secretKey.subarray(0, SEC_LENGTH - SEED_LENGTH);
+    const seed = u8aToHex(seedU8a);
+    assert(publicKey && publicKey.length === 32, 'Expected valid publicKey, 32-bytes');
+    assert(secretKey && secretKey.length === 64, 'Expected valid secretKey, 64-bytes');
+    assert(seed && seed.length > ZERO_STR.length, 'Expected valid seed, 32-bytes');
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount seed: ${seed.length}`);
     return seed;
   };
 
