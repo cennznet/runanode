@@ -29,6 +29,13 @@ const LockIconWrapper = styled.div`
   align-items: center;
 `;
 
+const Icon = styled(FontAwesomeIcon)`
+  width: 14px;
+  height: 14px;
+  color: ${p => p.color || colors.N0};
+  margin: ${p => p.margin || '0 1rem'};
+`;
+
 const Subheading = ({ account }) => {
   const url = CENNZScanAddressUrl.rimu; // TODO should base on selected network
   return (
@@ -64,7 +71,7 @@ const AccountDetails = ({
 }) => {
   const defaultAccountName = account.name || 'Account';
   const [accountName, setAccountName] = useState(defaultAccountName);
-  const [accountNameeditable, setAccountNameeditable] = useState(false);
+  const [isAccountNameEditable, setIsAccountNameEditable] = useState(false);
 
   const { accounts = {} } = currentWallet;
   const existingAccountIds = Object.keys(accounts);
@@ -73,25 +80,25 @@ const AccountDetails = ({
     : [];
 
   const iconPairs =
-    !accountName || (accountNameeditable && existingAccountNames.includes(accountName))
+    !accountName || (isAccountNameEditable && existingAccountNames.includes(accountName))
       ? { icon: 'times', iconColor: colors.R500 }
-      : accountNameeditable
+      : isAccountNameEditable
       ? { icon: 'check', iconColor: colors.G500 }
       : { icon: 'edit', iconColor: colors.N0 };
   const { icon, iconColor } = iconPairs;
 
   const onClickFunc = () => {
     if (icon === 'edit') {
-      setAccountNameeditable(true);
+      setIsAccountNameEditable(true);
     }
 
     if (icon === 'times') {
       setAccountName(defaultAccountName);
-      setAccountNameeditable(false);
+      setIsAccountNameEditable(false);
     }
 
     if (icon === 'check') {
-      setAccountNameeditable(false);
+      setIsAccountNameEditable(false);
       onUpdateAccountName({
         toUpdateWallet: currentWallet,
         toUpdateAccount: account.address,
@@ -105,7 +112,7 @@ const AccountDetails = ({
       <PageHeading subHeading={<Subheading {...{ account }} />}>
         <MainTitleWrapper>
           <AccountNameWrapper>
-            {accountNameeditable ? (
+            {isAccountNameEditable ? (
               <Input
                 value={accountName}
                 onChange={e => e.target && setAccountName(e.target.value)}
@@ -118,19 +125,12 @@ const AccountDetails = ({
             )}
 
             <div>
-              <FontAwesomeIcon
-                icon={icon}
-                style={{ margin: '0 1rem', width: '14px', height: '14px', color: iconColor }}
-                onClick={() => onClickFunc()}
-              />
+              <Icon icon={icon} color={iconColor} onClick={() => onClickFunc()} />
             </div>
           </AccountNameWrapper>
           {stakingStashAccountAddress && stakingStashAccountAddress === account.address && (
             <LockIconWrapper>
-              <FontAwesomeIcon
-                icon="lock"
-                style={{ margin: '0.3rem', width: '14px', height: '14px' }}
-              />
+              <Icon icon="lock" margin="0.3rem" />
               Your account is staking
             </LockIconWrapper>
           )}
