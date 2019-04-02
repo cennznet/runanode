@@ -525,7 +525,6 @@ export default class CennzApi {
     address: string,
     passphrase: string
   ): Promise<string> => {
-    Logger.debug('CennznetApi::getSeedFromWalletAccount called');
     const originalWallet = this.reloadWallet(wallet);
     await originalWallet.unlock(passphrase);
     assert(wallet.accounts, `missing accounts`);
