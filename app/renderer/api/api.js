@@ -18,6 +18,8 @@ import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
 import { environment } from 'common/environment';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
+// import * as Types from '@cennznet/types';
+import * as CustomTypes from './runtime';
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
 // Common Types
@@ -135,13 +137,16 @@ export default class CennzApi {
   };
 
   initCennzetApi = async (): Promise<void> => {
+    const types = {...CustomTypes};
     this.api = await Api.create({
       provider: appConfig.webSocket.localStreamUrl,
+      types,
     });
     // eslint-disable-next-line
     const selectedNetwork = electronStore.get(storageKeys.SELECTED_NETWORK);
     this.apiRemote = await Api.create({
       provider: selectedNetwork ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value] : appConfig.webSocket.remoteStreamUrl,
+      types,
     });
 
     const ga = await GenericAsset.create(this.api);
@@ -520,13 +525,18 @@ export default class CennzApi {
     address: string,
     passphrase: string
   ): Promise<string> => {
+    Logger.debug('CennznetApi::getSeedFromWalletAccount called');
     const originalWallet = this.reloadWallet(wallet);
     await originalWallet.unlock(passphrase);
     assert(wallet.accounts, `missing accounts`);
     assert(address, `missing address`);
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for address: ${address}`);
     const json = await originalWallet.exportAccount(address, passphrase);
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for json: ${JSON.stringify(json)}`);
     const decodeMsg = decode(passphrase, hexToU8a(json.encoded));
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for decodeMsg: ${JSON.stringify(decodeMsg)}`);
     const seed = u8aToHex(decodeMsg.seed);
+    Logger.debug(`CennznetApi::getSeedFromWalletAccount for seed: ${seed}`);
     return seed;
   };
 

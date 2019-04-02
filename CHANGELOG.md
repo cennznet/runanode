@@ -5,6 +5,7 @@
 ### Features
 
 ### Fixes
+- fix type issue when switch from Rimu to local test net
 
 ### Improvements
 
