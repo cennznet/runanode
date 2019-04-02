@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { CENNZScanAddressUrl } from 'common/types/cennznet-node.types';
-import { Clipboard, PageHeading, PageFooter, Tabs, TabPane } from 'components';
-import theme from 'renderer/theme';
+import { Clipboard, PageHeading, PageFooter, Tabs, TabPane, Input } from 'components';
+import theme, { colors } from 'renderer/theme';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';
 import TransferSection from './transferSectionPage';
@@ -11,6 +11,11 @@ import ClipboardShareLinks from './transferSectionPage/ClipboardShareLinks';
 
 const MainTitleWrapper = styled.div`
   display: flex;
+`;
+
+const AccountNameWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
 `;
 
 const LockIconWrapper = styled.div`
@@ -55,12 +60,71 @@ const AccountDetails = ({
   currentWallet,
   transaction,
   stakingStashAccountAddress,
+  onUpdateAccountName,
 }) => {
+  const defaultAccountName = account.name || 'Account';
+  const [accountName, setAccountName] = useState(defaultAccountName);
+  const [accountNameeditable, setAccountNameeditable] = useState(false);
+
+  const { accounts = {} } = currentWallet;
+  const existingAccountIds = Object.keys(accounts);
+  const existingAccountNames = existingAccountIds.length
+    ? existingAccountIds.map(accountId => accounts[accountId].name && accounts[accountId].name)
+    : [];
+
+  const iconPairs =
+    !accountName || (accountNameeditable && existingAccountNames.includes(accountName))
+      ? { icon: 'times', iconColor: colors.R500 }
+      : accountNameeditable
+      ? { icon: 'check', iconColor: colors.G500 }
+      : { icon: 'edit', iconColor: colors.N0 };
+  const { icon, iconColor } = iconPairs;
+
+  const onClickFunc = () => {
+    if (icon === 'edit') {
+      setAccountNameeditable(true);
+    }
+
+    if (icon === 'times') {
+      setAccountName(defaultAccountName);
+      setAccountNameeditable(false);
+    }
+
+    if (icon === 'check') {
+      setAccountNameeditable(false);
+      onUpdateAccountName({
+        toUpdateWallet: currentWallet,
+        toUpdateAccount: account.address,
+        newAccountName: accountName,
+      });
+    }
+  };
+
   return account ? (
     <React.Fragment>
       <PageHeading subHeading={<Subheading {...{ account }} />}>
         <MainTitleWrapper>
-          {account.name || 'Account'}
+          <AccountNameWrapper>
+            {accountNameeditable ? (
+              <Input
+                value={accountName}
+                onChange={e => e.target && setAccountName(e.target.value)}
+                valid={accountName && !existingAccountNames.includes(accountName) ? null : false}
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                autoFocus
+              />
+            ) : (
+              <div> {defaultAccountName} </div>
+            )}
+
+            <div>
+              <FontAwesomeIcon
+                icon={icon}
+                style={{ margin: '0 1rem', width: '14px', height: '14px', color: iconColor }}
+                onClick={() => onClickFunc()}
+              />
+            </div>
+          </AccountNameWrapper>
           {stakingStashAccountAddress && stakingStashAccountAddress === account.address && (
             <LockIconWrapper>
               <FontAwesomeIcon
