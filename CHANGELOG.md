@@ -4,7 +4,10 @@
 
 ### Features
 
+- Add GlobalModal component;
+
 ### Fixes
+
 - fix type issue when switch from Rimu to local test net
 
 ### Improvements

@@ -9,6 +9,10 @@ const DEFAULT_STATE = {
   notificationBar: {
     type: '',
   },
+  globalModal: {
+    isOpen: false,
+    type: '',
+  },
 };
 
 export default function appStore(state = DEFAULT_STATE, { type, payload }) {
@@ -26,6 +30,14 @@ export default function appStore(state = DEFAULT_STATE, { type, payload }) {
     case types.notificationBar.triggered:
       return R.merge(state, {
         notificationBar: payload,
+      });
+
+    case types.toggleGlobalModal.triggered:
+      return R.merge(state, {
+        globalModal: {
+          isOpen: payload.isOpen,
+          type: payload.type,
+        },
       });
 
     default:

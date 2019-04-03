@@ -91,8 +91,9 @@ const actionTypes = {
   errorToaster: triggerActionTypes('error_toaster'),
   infoToaster: triggerActionTypes('info_toaster'),
 
-  /** Notification bar */
+  /** Global components */
   notificationBar: triggerActionTypes('notification_bar'),
+  toggleGlobalModal: triggerActionTypes('toggle_global_modal'),
 };
 
 export default actionTypes;

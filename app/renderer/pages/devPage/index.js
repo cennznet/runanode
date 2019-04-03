@@ -46,6 +46,7 @@ const DevPage = ({
   onGetSessionProgress,
   onGetEraLength,
   onGetIntentionsBalances,
+  onToggleGlobalModal,
   onStakeAndRestart,
   onUnStakeAndRestart,
 }) => {
@@ -67,6 +68,13 @@ const DevPage = ({
         </PageTitle>
         <Flex>
           <Button onClick={() => onTestToaster()}>Toaster Test and Reset App UI state</Button>
+          <Button
+            onClick={() =>
+              onToggleGlobalModal({ isOpen: true, type: 'EXIT_APP_WHILE_STAKING_MODAL' })
+            }
+          >
+            Global Modal
+          </Button>
         </Flex>
         <Flex>
           <Button
