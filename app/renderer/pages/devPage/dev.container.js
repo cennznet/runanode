@@ -89,6 +89,13 @@ const mapDispatchToProps = dispatch => ({
     // dispatch({ type: types.navigation.triggered, payload: ROUTES.SYNC_NODE });
   },
 
+  onToggleGlobalModal: payload => {
+    dispatch({
+      type: types.toggleGlobalModal.triggered,
+      payload,
+    });
+  },
+
   onStake: payload => {
     // window.odin.api.cennz.doStake(payload.wallet, payload.stashAccountAddress, '');
   },
