@@ -86,4 +86,25 @@ const addAccountEpic = (action$, state$) =>
     })
   );
 
-export default [syncWalletDataEpic, transferEpic, addAccountEpic];
+const updateAccountNameEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(types.updateAccountName.requested),
+    mergeMap(async ({ payload }) => {
+      const { toUpdateWallet, toUpdateAccount, newAccountName } = payload;
+      toUpdateWallet.accounts[toUpdateAccount].name = newAccountName;
+
+      const storedWallets = state$.value.localStorage[storageKeys.WALLETS];
+      const toUpdateWalletIndex = R.findIndex(R.propEq('id', toUpdateWallet.id))(storedWallets);
+      const wallets = R.update(toUpdateWalletIndex, toUpdateWallet, storedWallets);
+
+      return { type: types.updateAccountName.completed, payload: wallets };
+    }),
+    catchError(err => {
+      return of({
+        type: types.updateAccountName.failed,
+        payload: err,
+      });
+    })
+  );
+
+export default [syncWalletDataEpic, transferEpic, addAccountEpic, updateAccountNameEpic];

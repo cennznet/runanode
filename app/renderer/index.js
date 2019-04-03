@@ -19,6 +19,9 @@ import {
   faWallet,
   faExternalLinkAlt,
   faLock,
+  faEdit,
+  faTimes,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
@@ -61,7 +64,10 @@ library.add(
   faWallet,
   faArrowAltCircleRight,
   faExternalLinkAlt,
-  faLock
+  faLock,
+  faEdit,
+  faCheck,
+  faTimes
 );
 
 const initializeOdin = async () => {

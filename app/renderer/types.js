@@ -32,6 +32,7 @@ const actionTypes = {
   walletRestoreWithHDKR: apiActionTypes('wallet_restore_with_HD_keyring'),
   walletPaperGenerate: apiActionTypes('wallet_paper_generate'),
   addAccount: apiActionTypes('add_account'),
+  updateAccountName: apiActionTypes('update_account_name'),
 
   /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
