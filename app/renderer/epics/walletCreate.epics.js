@@ -78,7 +78,8 @@ const storeWalletEpic = action$ =>
         action.type === types.walletCreatWithSKR.completed ||
         action.type === types.walletRestoreWithHDKR.completed ||
         action.type === types.walletCreatWithHDKR.completed ||
-        action.type === types.addAccount.completed
+        action.type === types.addAccount.completed ||
+        action.type === types.updateAccountName.completed
     ),
     mergeMap(({ payload: wallets }) => {
       return of({
