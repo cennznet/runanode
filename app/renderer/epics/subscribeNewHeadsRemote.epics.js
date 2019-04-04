@@ -12,7 +12,7 @@ const subscribeNewHeadRemoteEpic = action$ =>
     debounceTime(appConfig.app.apiInitDebounceTime), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
-        window.odin.api.cennz.apiRemote.rpc.chain.subscribeNewHead(newHead => {
+        window[APP_BRAND].api.cennz.apiRemote.rpc.chain.subscribeNewHead(newHead => {
           // Logger.trace(`subscribeNewHeadRemoteEpic, got newHead.`);
           observer.next(newHead);
         });
@@ -30,7 +30,7 @@ const getSystemChainEpic = (action$, state$) =>
   action$.ofType(types.nodeWsSystemChainRemote.requested).pipe(
     mergeMap(async () => {
       // Logger.trace(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
-      const data = await window.odin.api.cennz.apiRemote.rpc.system.chain();
+      const data = await window[APP_BRAND].api.cennz.apiRemote.rpc.system.chain();
       // Logger.trace(`getSystemChainEpic, data: ${data}`);
       if (!data) {
         return { type: types.nodeWsSystemChainRemote.failed };

@@ -69,12 +69,13 @@ library.add(
   faCheck,
   faTimes
 );
+console.log('App', APP_BRAND);
 
-const initializeOdin = async () => {
+const initializeApp = async () => {
   const api = setupApi();
-  await api.cennz.initCennzetApi();
+  await api.cennz.initApi();
 
-  window.odin = {
+  window[APP_BRAND] = {
     api,
     store,
   };
@@ -89,7 +90,7 @@ const initializeOdin = async () => {
   );
 };
 
-window.addEventListener('load', initializeOdin);
+window.addEventListener('load', initializeApp);
 window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 

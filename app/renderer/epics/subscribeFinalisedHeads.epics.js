@@ -12,7 +12,7 @@ const subscribeFinalisedHeadsEpic = action$ =>
     debounceTime(appConfig.app.apiInitDebounceTime), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
-        window.odin.api.cennz.api.rpc.chain.subscribeFinalisedHeads(newHead => {
+        window[APP_BRAND].api.cennz.api.rpc.chain.subscribeFinalisedHeads(newHead => {
           // Logger.trace(`subscribeFinalisedHeadsEpic, got FinalisedHead.`);
           observer.next(newHead);
         });
@@ -33,7 +33,7 @@ const getAllAccountsBalancesEpic = (action$, state$) =>
 
       const allWalletBalances = await Promise.all(
         wallets.map(async wallet => {
-          const walletBalances = await window.odin.api.cennz.getBalancesByWallet(wallet);
+          const walletBalances = await window[APP_BRAND].api.cennz.getBalancesByWallet(wallet);
           return walletBalances;
         })
       );
