@@ -22,9 +22,7 @@
   "plugins": ["prettier", "flowtype", "import", "promise", "react"],
   "globals": {
     "shallow": true,
-    "var2": false,
-    "APP_BRAND": "readonly",
-    "APP_NETWORK": "readonly"
+    "var2": false
   },
   "rules": {
     "no-nested-ternary": 0,

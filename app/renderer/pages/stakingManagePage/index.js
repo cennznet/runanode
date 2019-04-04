@@ -277,7 +277,7 @@ const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, st
   // handle system event effect
   useEffect(() => {
     let unsubscribeFn;
-    window[APP_BRAND].api.cennz.getSystemEvents(callbackFn)
+    window.appApi.getSystemEvents(callbackFn)
       .then(value => {
         unsubscribeFn = value;
       });

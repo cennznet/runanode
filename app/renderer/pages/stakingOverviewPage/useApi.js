@@ -9,7 +9,7 @@ import { Logger } from 'renderer/utils/logging';
  * Only apply to pokadolt-api
  * Except when the cennz-sdk accept callbackFn and require subscribe
  *
- * Naming Convention in window[APP_BRAND].api
+ * Naming Convention in window.appApi.api
  * action-section : getEraLength
  *
  * Futuer TODO List:
@@ -26,7 +26,7 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
     let unsubscribeFn;
 
     if (noSubscription) {
-      window[APP_BRAND].api.cennz[apiSection](...params).then(
+      window.appApi[apiSection](...params).then(
         value => !didCancel && value && setSectionData(value.toString(10))
       );
     } else {
@@ -52,11 +52,11 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
         }
       };
       if (params) {
-        window[APP_BRAND].api.cennz[apiSection](...params, callbackFn).then(value => {
+        window.appApi[apiSection](...params, callbackFn).then(value => {
           unsubscribeFn = value;
         });
       } else {
-        window[APP_BRAND].api.cennz[apiSection](callbackFn).then(value => {
+        window.appApi[apiSection](callbackFn).then(value => {
           unsubscribeFn = value;
         });
       }
