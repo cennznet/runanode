@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
 
   onValidateHDKRWallet: async payload => {
     try {
-      const wallet = await window.odin.api.cennz.restoreWallet({
+      const wallet = await window.appApi.restoreWallet({
         mnemonic: payload,
         passphrase: '',
       });
@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
 
   onValidateSKRWallet: async payload => {
     try {
-      const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
+      const wallet = await window.appApi.createWalletWithSimpleKeyRing({
         mnemonic: payload,
         passphrase: '',
       });

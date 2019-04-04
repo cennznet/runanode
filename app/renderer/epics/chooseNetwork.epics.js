@@ -56,7 +56,7 @@ const switchNetworkEpic = action$ =>
       Logger.debug(`switchNetworkEpic, nodeStateChangeAction: ${nodeStateChangeAction.payload}, switchNetworkAction: ${JSON.stringify(switchNetworkAction)}`);
       const { chain } = switchNetworkAction.payload;
       if ( nodeStateChangeAction.payload === 'running' && chain ) {
-        window.odin.api.cennz.switchNetwork(chain);
+        window.appApi.switchNetwork(chain);
       }
       return of(
         { type: types.subscribeNewHead.triggered },
