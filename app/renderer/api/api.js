@@ -200,16 +200,16 @@ export default class CennzApi {
     Logger.debug(`initApi done`);
   };
 
-  initRemoteApi = (): Promise<void> => {
+  initRemoteApi = async (): Promise<void> => {
     Logger.debug(`initRemoteApi start`);
     // eslint-disable-next-line
     const selectedNetwork = electronStore.get(storageKeys.SELECTED_NETWORK);
     const remoteStreamUrl = selectedNetwork ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value] : appConfig.webSocket.remoteStreamUrl;
-    this.initRemoteApiWithUrl(remoteStreamUrl);
+    await this.initRemoteApiWithUrl(remoteStreamUrl);
     Logger.debug(`initRemoteApi done`);
   };
 
-  initRemoteApiWithUrl = (remoteStreamUrl): Promise<void> => {
+  initRemoteApiWithUrl = async (remoteStreamUrl): Promise<void> => {
     Logger.debug(`initRemoteApiWithUrl start`);
     const types = {...CustomTypes};
     // eslint-disable-next-line
