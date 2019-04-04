@@ -32,7 +32,7 @@ import { Logger } from 'renderer/utils/logging';
 import { enableGoogleAnalytics, disableGoogleAnalytics } from 'renderer/analytics';
 import types from './types';
 import store from './store';
-import App from './App';
+import Main from './main';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
 
@@ -93,7 +93,7 @@ const initializeApp = async () => {
   if (!rootElement) throw new Error('No #root element found.');
   render(
     <AppContainer>
-      <App />
+      <Main />
     </AppContainer>,
     rootElement
   );
@@ -113,9 +113,9 @@ document.addEventListener('click', event => {
 });
 
 if (module.hot) {
-  module.hot.accept('./App', () => {
+  module.hot.accept('./main/index', () => {
     // eslint-disable-next-line global-require
-    const NextApp = require('./App').default;
+    const NextApp = require('./main').default;
     render(
       <AppContainer>
         <NextApp />
