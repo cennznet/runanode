@@ -3,6 +3,7 @@
 # vNext
 
 ### Features
+- Able to handle WebSocket connection error
 
 ### Fixes
 - fix type issue when switch from Rimu to local test net

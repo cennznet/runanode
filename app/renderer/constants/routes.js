@@ -20,6 +20,7 @@ export default {
     CONNECT: '/wallet/connect',
   },
   DEV: '/dev',
+  ERROR: '/error',
   TERMS_OF_USE_ACCEPTANCE: '/terms-of-use-acceptance',
   SYNC_NODE: '/sync-node',
   CHOOSE_NETWORK: '/choose-network',
