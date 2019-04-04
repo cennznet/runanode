@@ -12,7 +12,7 @@ const subscribeNewHeadEpic = action$ =>
     debounceTime(appConfig.app.apiInitDebounceTime), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
-        window.odin.api.cennz.api.rpc.chain.subscribeNewHead(newHead => {
+        window[APP_BRAND].api.cennz.api.rpc.chain.subscribeNewHead(newHead => {
           // Logger.trace(`subscribeNewHeadEpic, got newHead.`);
           observer.next(newHead);
         });
@@ -29,7 +29,7 @@ const subscribeNewHeadEpic = action$ =>
 const chainGetHeaderEpic = action$ =>
   action$.ofType(types.nodeWsChainGetHeader.requested).pipe(
     mergeMap(async () => {
-      const header = await window.odin.api.cennz.api.rpc.chain.getHeader();
+      const header = await window[APP_BRAND].api.cennz.api.rpc.chain.getHeader();
       Logger.debug(`chainGetHeaderEpic, header: ${JSON.stringify(header)}`);
       if (header) {
         return { type: types.newHead.changed, payload: header };
@@ -41,7 +41,7 @@ const getSystemChainEpic = (action$, state$) =>
   action$.ofType(types.nodeWsSystemChain.requested).pipe(
     mergeMap(async () => {
       // Logger.trace(`getSystemChainEpic, types.nodeWsSystemChain.requested`);
-      const data = await window.odin.api.cennz.api.rpc.system.chain();
+      const data = await window[APP_BRAND].api.cennz.api.rpc.system.chain();
       // Logger.trace(`getSystemChainEpic, data: ${data}`);
       if (!data) {
         return { type: types.nodeWsSystemChain.failed };

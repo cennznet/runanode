@@ -67,7 +67,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.walletPaperGenerate.requested, payload });
   },
   onTransfer: payload => {
-    window.odin.api.cennz.doGenericAssetTransfer(
+    window[APP_BRAND].api.cennz.doGenericAssetTransfer(
       payload.assetId,
       payload.fromAddress,
       payload.toAddress,
@@ -90,7 +90,7 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onStake: payload => {
-    // window.odin.api.cennz.doStake(payload.wallet, payload.stashAccountAddress, '');
+    // window[APP_BRAND].api.cennz.doStake(payload.wallet, payload.stashAccountAddress, '');
   },
   onStakeAndRestart: payload => {
     const { cennzNetRestartOptions, wallet, stashAccountAddress } = payload;
@@ -98,7 +98,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.stake.triggered, payload });
   },
   onUnStake: payload => {
-    window.odin.api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
+    window[APP_BRAND].api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
   },
   onUnStakeAndRestart: payload => {
     const { cennzNetRestartOptions } = payload;
@@ -106,43 +106,43 @@ const mapDispatchToProps = dispatch => ({
     // no-op for now
   },
   onGetEraLength: () => {
-    window.odin.api.cennz.getEraLength(eraLength =>
+    window[APP_BRAND].api.cennz.getEraLength(eraLength =>
       Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`)
     );
   },
 
   onGetEraProgress: () => {
-    window.odin.api.cennz.getEraProgress(EraProgress =>
+    window[APP_BRAND].api.cennz.getEraProgress(EraProgress =>
       Logger.debug(`CennznetApi::getEraProgress success: ${EraProgress}`)
     );
   },
 
   onGetValidators: () => {
-    window.odin.api.cennz.getValidators(validators =>
+    window[APP_BRAND].api.cennz.getValidators(validators =>
       Logger.debug(`CennznetApi::getValidators success: ${validators}`)
     );
   },
 
   onGetSessionProgress: () => {
-    window.odin.api.cennz.getSessionProgress(sessionProgress =>
+    window[APP_BRAND].api.cennz.getSessionProgress(sessionProgress =>
       Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`)
     );
   },
 
   onGetSessionLength: () => {
-    window.odin.api.cennz.getSessionLength(sessionLength =>
+    window[APP_BRAND].api.cennz.getSessionLength(sessionLength =>
       Logger.debug(`CennznetApi::getSessionLength success: ${sessionLength}`)
     );
   },
 
   onGetIntensions: () => {
-    window.odin.api.cennz.getIntentions(intensions =>
+    window[APP_BRAND].api.cennz.getIntentions(intensions =>
       Logger.debug(`CennznetApi::getIntentions success: ${intensions}`)
     );
   },
 
   // onGetIntentionsBalances: () => {
-  //   window.odin.api.cennz.getIntentionsBalances(intensionsBalances =>
+  //   window[APP_BRAND].api.cennz.getIntentionsBalances(intensionsBalances =>
   //     Logger.debug(`CennznetApi::getIntentionsBalances success: ${intensionsBalances}`)
   //   );
   // },
