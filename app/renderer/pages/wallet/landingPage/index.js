@@ -77,7 +77,7 @@ const WalletLandingPage = () => (
   <MainLayout>
     <MainContent>
       <PageHeading subHeading="You haven't got an active wallet yet. Create a new one, or connect one of your existing ones.">
-        Walllet
+        Wallet
       </PageHeading>
       <GenWallteMethodsWrapper>
         <GenerateWalletMethods>
