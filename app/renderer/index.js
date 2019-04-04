@@ -65,8 +65,10 @@ library.add(
 );
 
 const initializeOdin = async () => {
-  const api = setupApi();
-  await api.cennz.initCennzetApi();
+  const api = setupApi({dispatch: store.dispatch});
+
+  await api.cennz.initApi();
+  await api.cennz.initRemoteApi();
 
   window.odin = {
     api,
