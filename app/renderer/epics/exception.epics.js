@@ -1,5 +1,5 @@
 import { EMPTY, from, of } from 'rxjs';
-import { catchError, debounceTime, filter, map, mapTo, mergeMap } from 'rxjs/operators';
+import { catchError, debounceTime, filter, map, mapTo, mergeMap, withLatestFrom } from 'rxjs/operators';
 
 import types from 'renderer/types';
 import { storageKeys } from 'renderer/api/utils/storage';
@@ -8,7 +8,8 @@ import ROUTES from '../constants/routes';
 
 const wsConnectionErrorEpic = action$ => {
   return action$.ofType(types.wsLocalStatusChange.triggered, types.wsRemoteStatusChange.triggered).pipe(
-    filter(({ payload }) => payload.type === 'error' ),
+    withLatestFrom(action$.ofType(types.nodeStateChange.triggered)),
+    filter(([{ payload }, nodeStateChangeAction]) => payload.type === 'error' && nodeStateChangeAction.payload === 'running' ),
     mapTo({
       type: types.navigation.triggered,
       payload: ROUTES.ERROR,
