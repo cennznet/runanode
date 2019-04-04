@@ -91,9 +91,7 @@ export default class CennzApi {
 
   config: RequestConfig;
   api: Api;
-  apiWsProvider: WsProvider;
   apiRemote: Api;
-  apiRemoteWsProvider: WsProvider;
   ga: GenericAsset;
   dispatch;
 
@@ -150,20 +148,17 @@ export default class CennzApi {
     Logger.debug(`initGa done`);
   };
 
-  initApi = async (dispatch): Promise<void> => {
+  initApi = async (): Promise<void> => {
     Logger.debug(`initApi start`);
     const types = {...CustomTypes};
     Logger.debug(`initApi streamUrl: ${appConfig.webSocket.localStreamUrl}`);
     const wsProvider = new WsProvider(appConfig.webSocket.localStreamUrl);
-    this.apiWsProvider = wsProvider;
     this.api = new Api({
       provider: wsProvider,
       types
     });
-    wsProvider.on('connected', async () => {
+    this.api.on('connected', () => {
       Logger.debug(`initApi connected`);
-      await this.initGa();
-
       this.dispatch({
         type: actionTypes.wsLocalStatusChange.triggered,
         payload: {
@@ -171,7 +166,18 @@ export default class CennzApi {
         },
       });
     });
-    wsProvider.on('disconnected', () => {
+    this.api.on('ready', async () => {
+      Logger.debug(`initApi ready`);
+      await this.initGa();
+
+      this.dispatch({
+        type: actionTypes.wsLocalStatusChange.triggered,
+        payload: {
+          type: 'ready',
+        },
+      });
+    });
+    this.api.on('disconnected', () => {
       Logger.debug(`initApi disconnected`);
       this.dispatch({
         type: actionTypes.wsLocalStatusChange.triggered,
@@ -180,7 +186,7 @@ export default class CennzApi {
         },
       });
     });
-    wsProvider.on('error', (err) => {
+    this.api.on('error', (err) => {
       Logger.debug(`initApi error`);
       Logger.debug(JSON.stringify(err));
       this.dispatch({
@@ -209,13 +215,12 @@ export default class CennzApi {
     // eslint-disable-next-line
     Logger.debug(`initRemoteApiWithUrl remoteStreamUrl: ${remoteStreamUrl}`);
     const wsProvider = new WsProvider(remoteStreamUrl);
-    this.apiRemoteWsProvider = wsProvider;
     this.apiRemote = new Api({
       provider: wsProvider,
       types,
     });
-    wsProvider.on('connected', () => {
-      Logger.debug(`initRemoteApiWithUrl connected`);
+    this.apiRemote.on('connected', () => {
+      Logger.debug(`initRemoteApiWithUrl apiRemote connected`);
       this.dispatch({
         type: actionTypes.wsRemoteStatusChange.triggered,
         payload: {
@@ -223,7 +228,16 @@ export default class CennzApi {
         },
       });
     });
-    wsProvider.on('disconnected', () => {
+    this.apiRemote.on('ready', () => {
+      Logger.debug(`initRemoteApiWithUrl ready`);
+      this.dispatch({
+        type: actionTypes.wsRemoteStatusChange.triggered,
+        payload: {
+          type: 'ready',
+        },
+      });
+    });
+    this.apiRemote.on('disconnected', () => {
       Logger.debug(`initRemoteApiWithUrl disconnected`);
       this.dispatch({
         type: actionTypes.wsRemoteStatusChange.triggered,
@@ -232,7 +246,7 @@ export default class CennzApi {
         },
       });
     });
-    wsProvider.on('error', (err) => {
+    this.apiRemote.on('error', (err) => {
       Logger.debug(`initRemoteApiWithUrl error`);
       Logger.debug(JSON.stringify(err));
       this.dispatch({
