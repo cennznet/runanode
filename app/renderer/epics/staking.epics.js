@@ -17,7 +17,7 @@ const startToStakeEpic = action$ =>
     mergeMap(async ({ payload }) => {
       const { wallet, stashAccountAddress, passphrase } = payload;
 
-      const seed = await window[APP_BRAND].api.cennz.getSeedFromWalletAccount(
+      const seed = await window.appApi.getSeedFromWalletAccount(
         wallet,
         stashAccountAddress,
         passphrase
@@ -93,7 +93,7 @@ const sendStakingExtrinsicEpic = action$ =>
             }
           };
           try {
-            const unsubscribeFn = await window[APP_BRAND].api.cennz.doStake(
+            const unsubscribeFn = await window.appApi.doStake(
               wallet,
               stashAccountAddress,
               balances,
@@ -213,7 +213,7 @@ const unStakeEpic = action$ =>
           }
         };
         try {
-          const unsubscribeFn = await window[APP_BRAND].api.cennz.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
+          const unsubscribeFn = await window.appApi.doUnStake(wallet, stashAccountAddress, passphrase, statusCb);
           Logger.debug(`unStakeEpic, unsubscribeFn: ${unsubscribeFn}`);
         } catch (err) {
           Logger.debug(`unStakeEpic, err: ${err}`);

@@ -8,12 +8,20 @@ import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/cennznet-node.types';
 import { ApiPromise } from '@cennznet/api';
 
-const mapStateToProps = ({ nodeSystem, blocksNew, blocksRemote, blocksFinalised, nodeStateStore }) => ({
+const mapStateToProps = ({
+  localStorage: { WALLETS },
   nodeSystem,
   blocksNew,
   blocksRemote,
   blocksFinalised,
   nodeStateStore,
+}) => ({
+  nodeSystem,
+  blocksNew,
+  blocksRemote,
+  blocksFinalised,
+  nodeStateStore,
+  wallets: WALLETS,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -67,7 +75,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.walletPaperGenerate.requested, payload });
   },
   onTransfer: payload => {
-    window[APP_BRAND].api.cennz.doGenericAssetTransfer(
+    window.appApi.doGenericAssetTransfer(
       payload.assetId,
       payload.fromAddress,
       payload.toAddress,
@@ -90,7 +98,7 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onStake: payload => {
-    // window[APP_BRAND].api.cennz.doStake(payload.wallet, payload.stashAccountAddress, '');
+    // window.appApi.doStake(payload.wallet, payload.stashAccountAddress, '');
   },
   onStakeAndRestart: payload => {
     const { cennzNetRestartOptions, wallet, stashAccountAddress } = payload;
@@ -98,7 +106,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.stake.triggered, payload });
   },
   onUnStake: payload => {
-    window[APP_BRAND].api.cennz.doUnStake(payload.wallet, payload.fromAddress, '');
+    window.appApi.doUnStake(payload.wallet, payload.fromAddress, '');
   },
   onUnStakeAndRestart: payload => {
     const { cennzNetRestartOptions } = payload;
@@ -106,43 +114,43 @@ const mapDispatchToProps = dispatch => ({
     // no-op for now
   },
   onGetEraLength: () => {
-    window[APP_BRAND].api.cennz.getEraLength(eraLength =>
+    window.appApi.getEraLength(eraLength =>
       Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`)
     );
   },
 
   onGetEraProgress: () => {
-    window[APP_BRAND].api.cennz.getEraProgress(EraProgress =>
+    window.appApi.getEraProgress(EraProgress =>
       Logger.debug(`CennznetApi::getEraProgress success: ${EraProgress}`)
     );
   },
 
   onGetValidators: () => {
-    window[APP_BRAND].api.cennz.getValidators(validators =>
+    window.appApi.getValidators(validators =>
       Logger.debug(`CennznetApi::getValidators success: ${validators}`)
     );
   },
 
   onGetSessionProgress: () => {
-    window[APP_BRAND].api.cennz.getSessionProgress(sessionProgress =>
+    window.appApi.getSessionProgress(sessionProgress =>
       Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`)
     );
   },
 
   onGetSessionLength: () => {
-    window[APP_BRAND].api.cennz.getSessionLength(sessionLength =>
+    window.appApi.getSessionLength(sessionLength =>
       Logger.debug(`CennznetApi::getSessionLength success: ${sessionLength}`)
     );
   },
 
   onGetIntensions: () => {
-    window[APP_BRAND].api.cennz.getIntentions(intensions =>
+    window.appApi.getIntentions(intensions =>
       Logger.debug(`CennznetApi::getIntentions success: ${intensions}`)
     );
   },
 
   // onGetIntentionsBalances: () => {
-  //   window[APP_BRAND].api.cennz.getIntentionsBalances(intensionsBalances =>
+  //   window.appApi.getIntentionsBalances(intensionsBalances =>
   //     Logger.debug(`CennznetApi::getIntentionsBalances success: ${intensionsBalances}`)
   //   );
   // },

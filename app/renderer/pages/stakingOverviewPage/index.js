@@ -67,7 +67,7 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
 
       Promise.all(
         reoderIntentions.map(async intention => {
-          const cennzBalance = await window[APP_BRAND].api.cennz.getGenericAssetFreeBalance(
+          const cennzBalance = await window.appApi.getGenericAssetFreeBalance(
             '0',
             intention
           );

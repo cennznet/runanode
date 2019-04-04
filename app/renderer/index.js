@@ -69,15 +69,24 @@ library.add(
   faCheck,
   faTimes
 );
-console.log('App', APP_BRAND);
 
 const initializeApp = async () => {
   const api = setupApi();
   await api.cennz.initApi();
 
-  window[APP_BRAND] = {
-    api,
-    store,
+  /**
+   * window varibles
+   * - window.appApi
+   * - window.ga
+   * - window.translation
+   * ....
+   *
+   * If more than one Api options,
+   * take it to app.config levels,
+   * enable window[`${net}.api`] to be more dynamics
+   */
+  window.appApi = {
+    ...api.cennz, // TODO: improve this, remove `api.cenz` keys
   };
 
   const rootElement = document.getElementById('root');
