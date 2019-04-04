@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { compose, withState, withStateHandlers } from 'recompose';
 import types from 'renderer/types';
 
 const mapStateToProps = ({
@@ -21,26 +20,13 @@ const mapDispatchToProps = dispatch => ({
   onConfirmAddAccount: payload => {
     dispatch({ type: types.addAccount.requested, payload });
   },
+
+  onUpdateAccountName: payload => {
+    dispatch({ type: types.updateAccountName.requested, payload });
+  },
 });
 
-const enhance = compose(
-  withState('isAddAccountModalOpen', 'setAddAccountModalOpen', false),
-  withState('initAccountNameInput', 'setInitAccountNameInput', true),
-
-  withStateHandlers(
-    ({ initToUpdateWallet = null }) => ({
-      toUpdateWallet: initToUpdateWallet,
-    }),
-    {
-      setToUpdateWallet: () => val => ({ toUpdateWallet: val }),
-    }
-  )
-);
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  enhance
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 );

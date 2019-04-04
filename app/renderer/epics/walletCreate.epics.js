@@ -20,7 +20,7 @@ const recomposeWallet = async (actionType, payload) => {
   }
 
   // sync wallet data
-  const syncedWallet = await window.odin.api.cennz.syncWalletData(wallet);
+  const syncedWallet = await window.appApi.syncWalletData(wallet);
 
   // store new wallet into storage
   let wallets = await getStorage(storageKeys.WALLETS);
@@ -46,7 +46,7 @@ const createWalletWithSKREpic = action$ =>
     ofType(types.walletCreatWithSKR.requested),
     mergeMap(async ({ payload }) => {
       const { name, mnemonic, passphrase } = payload;
-      const wallet = await window.odin.api.cennz.createWalletWithSimpleKeyRing({
+      const wallet = await window.appApi.createWalletWithSimpleKeyRing({
         name,
         mnemonic,
         passphrase: passphrase || '',
@@ -61,7 +61,7 @@ const restoreHDKRWalletEpic = action$ =>
     ofType(types.walletRestoreWithHDKR.requested),
     mergeMap(async ({ payload }) => {
       const { name, mnemonic, passphrase } = payload;
-      const wallet = await window.odin.api.cennz.restoreWallet({
+      const wallet = await window.appApi.restoreWallet({
         name,
         mnemonic,
         passphrase: passphrase || '',
@@ -78,7 +78,8 @@ const storeWalletEpic = action$ =>
         action.type === types.walletCreatWithSKR.completed ||
         action.type === types.walletRestoreWithHDKR.completed ||
         action.type === types.walletCreatWithHDKR.completed ||
-        action.type === types.addAccount.completed
+        action.type === types.addAccount.completed ||
+        action.type === types.updateAccountName.completed
     ),
     mergeMap(({ payload: wallets }) => {
       return of({
@@ -103,7 +104,7 @@ const walletPaperGenerateEpic = action$ =>
     ofType(types.walletPaperGenerate.requested),
     mergeMap(async ({ payload }) => {
       Logger.debug(`walletPaperGenerateEpic, payload: ${JSON.stringify(payload)}`);
-      const savedFilePath = await window.odin.api.cennz.generatePaperWallet({
+      const savedFilePath = await window.appApi.generatePaperWallet({
         mnemonic: payload.mnemonic,
         address: payload.address,
         name: payload.name,

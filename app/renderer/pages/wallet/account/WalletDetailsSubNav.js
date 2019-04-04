@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import R from 'ramda';
 import uuid from 'uuid/v4';
 import styled from 'styled-components';
@@ -35,11 +35,12 @@ const WalletDetailsSubNav = ({
   currentWallet,
   onAddAccount,
   setNewAccount,
-  setToUpdateWallet,
-  setAddAccountModalOpen,
   stakingStashAccountAddress,
   ...otherProps
 }) => {
+  const [isAddAccountModalOpen, setAddAccountModalOpen] = useState(false);
+  const [toUpdateWallet, setToUpdateWallet] = useState(false);
+
   const addAccountButton = wallet => {
     if (wallet.type === WALLET_TYPE.SIMPLE) {
       return null;
@@ -85,7 +86,10 @@ const WalletDetailsSubNav = ({
   return (
     <SubNav {...{ footer }}>
       <CollapsibleMenu {...{ menuList }} />
-      <AddAccountModal {...{ setAddAccountModalOpen }} {...otherProps} />
+      <AddAccountModal
+        {...{ setAddAccountModalOpen, isAddAccountModalOpen, toUpdateWallet }}
+        {...otherProps}
+      />
     </SubNav>
   );
 };

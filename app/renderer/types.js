@@ -34,6 +34,7 @@ const actionTypes = {
   walletRestoreWithHDKR: apiActionTypes('wallet_restore_with_HD_keyring'),
   walletPaperGenerate: apiActionTypes('wallet_paper_generate'),
   addAccount: apiActionTypes('add_account'),
+  updateAccountName: apiActionTypes('update_account_name'),
 
   /* Local storage */
   resetLocalStorage: triggerActionTypes('reset_local_storage'),
@@ -92,8 +93,9 @@ const actionTypes = {
   errorToaster: triggerActionTypes('error_toaster'),
   infoToaster: triggerActionTypes('info_toaster'),
 
-  /** Notification bar */
+  /** Global components */
   notificationBar: triggerActionTypes('notification_bar'),
+  toggleGlobalModal: triggerActionTypes('toggle_global_modal'),
 };
 
 export default actionTypes;

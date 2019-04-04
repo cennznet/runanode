@@ -15,7 +15,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => ({
   onCreateWallet: payload => {
-    return window.odin.api.cennz.createWalletWithHDKeyRing(payload);
+    return window.appApi.createWalletWithHDKeyRing(payload);
   },
 
   onCreatePaperWallet: payload => {

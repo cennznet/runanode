@@ -14,6 +14,10 @@ const globalStyles = `
     color: ${colors.N0};
     background-color: ${colors.V800};
   }
+
+  p {
+    line-height: 1.25rem;
+  }
 `;
 
 export default globalStyles;
