@@ -260,7 +260,7 @@ export default class CennzApi {
     Logger.debug(`initRemoteApiWithUrl done`);
   };
 
-  switchNetwork = async(network: string): Promise<void> => {
+  switchNetwork = async (network: string): Promise<void> => {
     Logger.debug(`switchNetwork, network: ${network}`);
     Logger.debug(`disconnect apiRemote`);
     this.apiRemote.disconnect();
@@ -376,15 +376,9 @@ export default class CennzApi {
   ): Promise<CennznetWalletAsset> => {
     // Logger.trace('CennznetApi::getCennznetWalletAsset called');
     try {
-      const freeBalanceBN = await this.getGenericAssetFreeBalance(
-        assetId,
-        walletAddress
-      );
+      const freeBalanceBN = await this.getGenericAssetFreeBalance(assetId, walletAddress);
       const freeBalance = { toBN: freeBalanceBN, toString: freeBalanceBN.toString(10) };
-      const reservedBalanceBN = await this.getGenericAssetReservedBalance(
-        assetId,
-        walletAddress
-      );
+      const reservedBalanceBN = await this.getGenericAssetReservedBalance(assetId, walletAddress);
       const reservedBalance = { toBN: reservedBalanceBN, toString: reservedBalanceBN.toString(10) };
       const totalBalanceBN = freeBalanceBN.add(reservedBalanceBN);
       const totalBalance = { toBN: totalBalanceBN, toString: totalBalanceBN.toString(10) };
@@ -651,7 +645,6 @@ export default class CennzApi {
     return seed;
   };
 
-
   /**
    * TODO untested
    * @param wallet
@@ -664,7 +657,7 @@ export default class CennzApi {
     wallet: CennznetWallet,
     stashAccountAddress: string,
     amount: number,
-    passphrase: string,
+    passphrase: string
   ): Promise<Hash> => {
     Logger.debug('CennznetApi::doBond called');
     try {
@@ -678,7 +671,9 @@ export default class CennzApi {
       const controllerAccount = stashAccountAddress;
       const payee = [stashAccountAddress];
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
-      const bondTxHash = await this.api.tx.staking.bond(controllerAccount, amount, payee).signAndSend(controllerAccount, { nonce: accountNonce });
+      const bondTxHash = await this.api.tx.staking
+        .bond(controllerAccount, amount, payee)
+        .signAndSend(controllerAccount, { nonce: accountNonce });
       Logger.debug(`CennznetApi::doBond bondTxHash: ${bondTxHash}`);
       return bondTxHash;
     } catch (error) {
@@ -699,7 +694,7 @@ export default class CennzApi {
     wallet: CennznetWallet,
     stashAccountAddress: string,
     amount: number,
-    passphrase: string,
+    passphrase: string
   ): Promise<Hash> => {
     Logger.debug('CennznetApi::doBondExtra called');
     try {
@@ -712,7 +707,9 @@ export default class CennzApi {
 
       const controllerAccount = stashAccountAddress;
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
-      const bondTxHash = await this.api.tx.staking.doBondExtra(amount).signAndSend(controllerAccount, { nonce: accountNonce });
+      const bondTxHash = await this.api.tx.staking
+        .doBondExtra(amount)
+        .signAndSend(controllerAccount, { nonce: accountNonce });
       Logger.debug(`CennznetApi::doBondExtra bondTxHash: ${bondTxHash}`);
       return bondTxHash;
     } catch (error) {
@@ -733,7 +730,7 @@ export default class CennzApi {
     wallet: CennznetWallet,
     stashAccountAddress: string,
     amount: number,
-    passphrase: string,
+    passphrase: string
   ): Promise<Hash> => {
     Logger.debug('CennznetApi::doUnBond called');
     try {
@@ -746,7 +743,9 @@ export default class CennzApi {
 
       const controllerAccount = stashAccountAddress;
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
-      const unBondTxHash = await this.api.tx.staking.unbond(amount).signAndSend(controllerAccount, { nonce: accountNonce });
+      const unBondTxHash = await this.api.tx.staking
+        .unbond(amount)
+        .signAndSend(controllerAccount, { nonce: accountNonce });
       Logger.debug(`CennznetApi::doUnBond unBondTxHash: ${unBondTxHash}`);
       return unBondTxHash;
     } catch (error) {
@@ -774,7 +773,9 @@ export default class CennzApi {
   ): Promise<Function> => {
     Logger.debug('CennznetApi::doStake called');
     Logger.debug(`CennznetApi::doStake called, balances ${JSON.stringify(balances)}`);
-    Logger.debug(`CennznetApi::doStake called, stakingPreference ${JSON.stringify(stakingPreference)}`);
+    Logger.debug(
+      `CennznetApi::doStake called, stakingPreference ${JSON.stringify(stakingPreference)}`
+    );
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
@@ -784,13 +785,18 @@ export default class CennzApi {
       Logger.debug('CennznetApi::doStake setSigner');
 
       // bound
-      const stakingAmount = new BN(balances[stashAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString, 10);
+      const stakingAmount = new BN(
+        balances[stashAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString,
+        10
+      );
       Logger.debug(`CennznetApi::doStake stakingAmount: ${stakingAmount}`);
       const controllerAccount = stashAccountAddress;
       const payee = [stashAccountAddress];
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
       Logger.debug(`CennznetApi::doStake accountNonce: ${accountNonce}`);
-      const bondTxHash = await this.api.tx.staking.bond(controllerAccount, stakingAmount, payee).signAndSend(controllerAccount, { nonce: accountNonce });
+      const bondTxHash = await this.api.tx.staking
+        .bond(controllerAccount, stakingAmount, payee)
+        .signAndSend(controllerAccount, { nonce: accountNonce });
       Logger.debug(`CennznetApi::doStake bondTxHash: ${bondTxHash}`);
 
       // query staking bonded account
@@ -806,8 +812,9 @@ export default class CennzApi {
       const preferences = stakingPreference;
       const newNonce = Number(String(accountNonce)) + 1;
       Logger.debug(`CennznetApi::doStake newNonce: ${newNonce}`);
-      const unsubscribeFn = await this.api.tx.staking.validate(preferences).signAndSend(controllerAccount, { nonce: newNonce },
-        statusCb);
+      const unsubscribeFn = await this.api.tx.staking
+        .validate(preferences)
+        .signAndSend(controllerAccount, { nonce: newNonce }, statusCb);
       Logger.debug(`CennznetApi::doStake unsubscribeFn: ${unsubscribeFn}`);
 
       return unsubscribeFn;
@@ -911,7 +918,7 @@ export default class CennzApi {
     wallet: CennznetWallet,
     stashAccountAddress: string,
     passphrase: string,
-    statusCb: Function,
+    statusCb: Function
   ): Promise<Function> => {
     Logger.debug('CennznetApi::doUnStake called');
     try {
@@ -934,13 +941,17 @@ export default class CennzApi {
       // unbond all amount from staking ledger
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
       Logger.debug(`CennznetApi::doUnStake accountNonce: ${accountNonce}`);
-      const unBondTxHash = await this.api.tx.staking.unbond(bondedBalance).signAndSend(controllerAccount, { nonce: accountNonce });
+      const unBondTxHash = await this.api.tx.staking
+        .unbond(bondedBalance)
+        .signAndSend(controllerAccount, { nonce: accountNonce });
       Logger.debug(`CennznetApi::doUnStake unBondTxHash: ${unBondTxHash}`);
 
       // chill
       const newNonce = Number(String(accountNonce)) + 1;
       Logger.debug(`CennznetApi::doUnStake newNonce: ${newNonce}`);
-      const unsubscribeFn = await this.api.tx.staking.chill().signAndSend(controllerAccount, { nonce: newNonce }, statusCb);
+      const unsubscribeFn = await this.api.tx.staking
+        .chill()
+        .signAndSend(controllerAccount, { nonce: newNonce }, statusCb);
       Logger.debug(`CennznetApi::doUnStake unsubscribeFn: ${unsubscribeFn}`);
 
       // TODO: Chain epic to reflect the changes in reducer immediately

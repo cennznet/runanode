@@ -6,17 +6,19 @@ import AppThemeProvider from 'components/AppThemeProvider';
 import { Toaster } from 'components';
 import theme from 'renderer/theme';
 import history from 'renderer/history';
-import globalStyles from './globalStyles';
-import AppRoutes from './routes';
-import store from './store';
+import globalStyles from 'renderer/globalStyles';
+import AppRoutes from 'renderer/routes';
+import store from 'renderer/store';
+import GlobalModal from './GlobalModal';
 
-const AppWithProviders = () => (
+const Main = () => (
   <Provider store={store}>
     <AppThemeProvider {...{ theme, globalStyles }}>
       <LocalizeProvider store={store}>
         <ConnectedRouter {...{ history }}>
           <React.Fragment>
             <Toaster />
+            <GlobalModal />
             <AppRoutes />
           </React.Fragment>
         </ConnectedRouter>
@@ -25,6 +27,4 @@ const AppWithProviders = () => (
   </Provider>
 );
 
-const App = AppWithProviders;
-
-export default App;
+export default Main;

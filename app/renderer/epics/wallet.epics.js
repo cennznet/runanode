@@ -24,7 +24,7 @@ const syncWalletDataEpic = action$ =>
         Logger.debug(`myWallet: ${myWallet}`);
         const myWalletIndex = wallets.findIndex(x => x.id === payload.id);
         Logger.debug(`myWalletIndex: ${myWalletIndex}`);
-        const syncedWallet = await window.odin.api.cennz.syncWalletData(myWallet);
+        const syncedWallet = await window.appApi.syncWalletData(myWallet);
         Logger.debug(`wallets[myWalletIndex]: ${myWalletIndex}, ${syncedWallet}`);
         wallets[myWalletIndex] = syncedWallet;
       }
@@ -43,7 +43,7 @@ const transferEpic = action$ =>
       const assetId = new BN(payload.assetId, 10);
       const { toAddress, fromAddress, wallet } = payload;
       const amount = new BN(payload.amount, 10);
-      const txHash = await window.odin.api.cennz.doGenericAssetTransfer(
+      const txHash = await window.appApi.doGenericAssetTransfer(
         assetId,
         fromAddress,
         toAddress,
@@ -67,9 +67,9 @@ const addAccountEpic = (action$, state$) =>
     mergeMap(async ({ payload }) => {
       const { toUpdateWallet, newAccountName } = payload;
       const { wallet } = toUpdateWallet;
-      const { updatedWallet, newAccount } = await window.odin.api.cennz.addAccount({ wallet });
+      const { updatedWallet, newAccount } = await window.appApi.addAccount({ wallet });
       const resolvedWalletItem = R.set(R.lensProp('wallet'), updatedWallet, toUpdateWallet);
-      const syncedWallet = await window.odin.api.cennz.syncWalletData(resolvedWalletItem);
+      const syncedWallet = await window.appApi.syncWalletData(resolvedWalletItem);
       syncedWallet.accounts[newAccount].name = newAccountName;
 
       const storedWallets = state$.value.localStorage[storageKeys.WALLETS];
@@ -86,4 +86,25 @@ const addAccountEpic = (action$, state$) =>
     })
   );
 
-export default [syncWalletDataEpic, transferEpic, addAccountEpic];
+const updateAccountNameEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(types.updateAccountName.requested),
+    mergeMap(async ({ payload }) => {
+      const { toUpdateWallet, toUpdateAccount, newAccountName } = payload;
+      toUpdateWallet.accounts[toUpdateAccount].name = newAccountName;
+
+      const storedWallets = state$.value.localStorage[storageKeys.WALLETS];
+      const toUpdateWalletIndex = R.findIndex(R.propEq('id', toUpdateWallet.id))(storedWallets);
+      const wallets = R.update(toUpdateWalletIndex, toUpdateWallet, storedWallets);
+
+      return { type: types.updateAccountName.completed, payload: wallets };
+    }),
+    catchError(err => {
+      return of({
+        type: types.updateAccountName.failed,
+        payload: err,
+      });
+    })
+  );
+
+export default [syncWalletDataEpic, transferEpic, addAccountEpic, updateAccountNameEpic];

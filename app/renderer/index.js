@@ -19,6 +19,9 @@ import {
   faWallet,
   faExternalLinkAlt,
   faLock,
+  faEdit,
+  faTimes,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
@@ -29,7 +32,7 @@ import { Logger } from 'renderer/utils/logging';
 import { enableGoogleAnalytics, disableGoogleAnalytics } from 'renderer/analytics';
 import types from './types';
 import store from './store';
-import App from './App';
+import Main from './main';
 import './scss/styles.scss';
 import { setupApi } from './api/index';
 
@@ -61,31 +64,44 @@ library.add(
   faWallet,
   faArrowAltCircleRight,
   faExternalLinkAlt,
-  faLock
+  faLock,
+  faEdit,
+  faCheck,
+  faTimes
 );
 
-const initializeOdin = async () => {
+const initializeApp = async () => {
   const api = setupApi({dispatch: store.dispatch});
 
   await api.cennz.initApi();
   await api.cennz.initRemoteApi();
 
-  window.odin = {
-    api,
-    store,
+  /**
+   * window varibles
+   * - window.appApi
+   * - window.ga
+   * - window.translation
+   * ....
+   *
+   * If more than one Api options,
+   * take it to app.config levels,
+   * enable window[`${net}.api`] to be more dynamics
+   */
+  window.appApi = {
+    ...api.cennz, // TODO: improve this, remove `api.cenz` keys
   };
 
   const rootElement = document.getElementById('root');
   if (!rootElement) throw new Error('No #root element found.');
   render(
     <AppContainer>
-      <App />
+      <Main />
     </AppContainer>,
     rootElement
   );
 };
 
-window.addEventListener('load', initializeOdin);
+window.addEventListener('load', initializeApp);
 window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 
@@ -99,9 +115,9 @@ document.addEventListener('click', event => {
 });
 
 if (module.hot) {
-  module.hot.accept('./App', () => {
+  module.hot.accept('./main/index', () => {
     // eslint-disable-next-line global-require
-    const NextApp = require('./App').default;
+    const NextApp = require('./main').default;
     render(
       <AppContainer>
         <NextApp />

@@ -74,9 +74,9 @@ const StyledModal = styled(Modal)`
 `;
 
 StyledModal.defaultProps = {
-  minHeight: '25vh',
-  maxHeight: '50vh',
-  backgroundColor: '#040C40',
+  minHeight: '10rem',
+  maxHeight: '80vh',
+  backgroundColor: colors.V900,
   boxShadow: `0 2px 4px 0 ${colors.N900}`,
   overlayBgColor: 'rgba(54, 58, 61, 0.7)',
 };

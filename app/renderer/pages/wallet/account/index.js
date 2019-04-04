@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import R from 'ramda';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading } from 'components';
@@ -13,6 +13,7 @@ const WalletDetailsPage = ({
   transaction,
   match,
   onTransfer,
+  onUpdateAccountName,
   ...otherProps
 }) => {
   const { walletId, accountPublicAddress } = match.params;
@@ -35,6 +36,7 @@ const WalletDetailsPage = ({
           currentWallet={wallet}
           transaction={{ ...transaction }}
           stakingStashAccountAddress={stakingStashAccountAddress}
+          onUpdateAccountName={onUpdateAccountName}
         />
       </MainContent>
     </MainLayout>

@@ -5,7 +5,10 @@
 ### Features
 - Able to handle WebSocket connection error
 
+- Add GlobalModal component;
+
 ### Fixes
+
 - fix type issue when switch from Rimu to local test net
 
 ### Improvements
