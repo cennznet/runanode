@@ -70,13 +70,23 @@ library.add(
   faTimes
 );
 
-const initializeOdin = async () => {
+const initializeApp = async () => {
   const api = setupApi();
-  await api.cennz.initCennzetApi();
+  await api.cennz.initApi();
 
-  window.odin = {
-    api,
-    store,
+  /**
+   * window varibles
+   * - window.appApi
+   * - window.ga
+   * - window.translation
+   * ....
+   *
+   * If more than one Api options,
+   * take it to app.config levels,
+   * enable window[`${net}.api`] to be more dynamics
+   */
+  window.appApi = {
+    ...api.cennz, // TODO: improve this, remove `api.cenz` keys
   };
 
   const rootElement = document.getElementById('root');
@@ -89,7 +99,7 @@ const initializeOdin = async () => {
   );
 };
 
-window.addEventListener('load', initializeOdin);
+window.addEventListener('load', initializeApp);
 window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 

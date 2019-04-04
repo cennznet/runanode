@@ -10,7 +10,7 @@ const subscribeValidatorsEpic = (action$, state$) => {
     debounceTime(appConfig.app.apiInitDebounceTime),
     mergeMap(() => {
       return new Observable(async observer => {
-        await window.odin.api.cennz.api.query.session.validators(validators => {
+        await window.appApi.api.query.session.validators(validators => {
           observer.next(validators);
         });
       }).pipe(

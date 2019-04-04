@@ -48,6 +48,7 @@ const DevPage = ({
   onGetIntentionsBalances,
   onStakeAndRestart,
   onUnStakeAndRestart,
+  wallets,
 }) => {
   const {
     localNode: { chain },
@@ -72,10 +73,8 @@ const DevPage = ({
           <Button
             onClick={() =>
               onStake({
-                stashAccountAddress: Object.keys(
-                  window.odin.store.getState().localStorage.WALLETS[0].accounts
-                )[0],
-                wallet: window.odin.store.getState().localStorage.WALLETS[0],
+                stashAccountAddress: Object.keys(wallets[0].accounts)[0],
+                wallet: wallets[0],
               })
             }
           >
@@ -84,10 +83,8 @@ const DevPage = ({
           <Button
             onClick={() =>
               onUnStake({
-                fromAddress: Object.keys(
-                  window.odin.store.getState().localStorage.WALLETS[0].accounts
-                )[0],
-                wallet: window.odin.store.getState().localStorage.WALLETS[0],
+                fromAddress: Object.keys(wallets[0].accounts)[0],
+                wallet: wallets[0],
               })
             }
           >
@@ -98,10 +95,8 @@ const DevPage = ({
           <Button
             onClick={() =>
               onStakeAndRestart({
-                wallet: window.odin.store.getState().localStorage.WALLETS[0],
-                stashAccountAddress: Object.keys(
-                  window.odin.store.getState().localStorage.WALLETS[0].accounts
-                )[0],
+                wallet: wallets[0],
+                stashAccountAddress: Object.keys(wallets[0].accounts)[0],
               })
             }
           >
@@ -147,7 +142,7 @@ const DevPage = ({
         <Flex>
           <Button
             onClick={() =>
-              window.odin.api.cennz.createWalletWithHDKeyRing({
+              window.appApi.createWalletWithHDKeyRing({
                 passphrase: '',
               })
             }
@@ -158,7 +153,7 @@ const DevPage = ({
         <Flex>
           <Button
             onClick={() =>
-              window.odin.api.cennz.restoreWallet({
+              window.appApi.restoreWallet({
                 mnemonic:
                   'dove pull aerobic reason husband electric egg ceiling castle swear tank proud',
                 passphrase: '',
@@ -176,7 +171,7 @@ const DevPage = ({
                 fromAddress: '5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE',
                 toAddress: '5F1XzAhQGNcapqm666QNU2cMUnj9DRAKB6vGXoVTkxWMLhPs',
                 amount: new BN('13', 10),
-                wallet: window.odin.store.getState().localStorage.WALLETS[0].wallet,
+                wallet: wallets[0].wallet,
               })
             }
           >
