@@ -7,7 +7,6 @@ import { storageKeys, getStorage } from 'renderer/api/utils/storage';
 import { NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { Logger } from 'renderer/utils/logging';
 import { Observable } from 'rxjs/Observable';
-import { cennznetStatusChannel } from 'renderer/ipc/cennznet.ipc';
 
 const homePageNavigationEpic = (action$, state$) =>
   action$.pipe(

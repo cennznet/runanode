@@ -1,11 +1,13 @@
 # Changelog
 
-# vNext
+# v0.9.0 (2019.04.05)
 
 ### Features
+
 - Able to handle WebSocket connection error
 
 - Add GlobalModal component;
+- Handle exiting app while staking;
 
 ### Fixes
 
