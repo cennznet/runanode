@@ -73,8 +73,10 @@ library.add(
 );
 
 const initializeApp = async () => {
-  const api = setupApi();
+  const api = setupApi({dispatch: store.dispatch});
+
   await api.cennz.initApi();
+  await api.cennz.initRemoteApi();
 
   /**
    * window varibles

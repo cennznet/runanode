@@ -10,6 +10,7 @@ import { Keyring } from '@polkadot/keyring';
 import decode from '@polkadot/keyring/pair/decode';
 import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
 import assert from 'assert';
+import WsProvider from '@polkadot/rpc-provider/ws';
 
 import appConfig from 'app/config';
 import { storageKeys, clearStorage } from 'renderer/api/utils/storage';
@@ -38,6 +39,7 @@ import type {
 } from './wallets/types';
 
 import CennznetWallet from './wallets/CennznetWallet';
+import actionTypes from '../types';
 
 // Common errors
 import {
@@ -86,13 +88,16 @@ const toyKeyring = toyKeyringFromNames([
 ]);
 
 export default class CennzApi {
+
   config: RequestConfig;
   api: Api;
   apiRemote: Api;
   ga: GenericAsset;
+  dispatch;
 
-  constructor(config: RequestConfig) {
+  constructor(config: RequestConfig, dispatch) {
     this.setRequestConfig(config);
+    this.dispatch = dispatch;
   }
 
   setRequestConfig(config: RequestConfig) {
@@ -136,32 +141,132 @@ export default class CennzApi {
     return filePath;
   };
 
-  initApi = async (): Promise<void> => {
-    const types = { ...CustomTypes };
-    this.api = await Api.create({
-      provider: appConfig.webSocket.localStreamUrl,
-      types,
-    });
-    // eslint-disable-next-line
-    const selectedNetwork = electronStore.get(storageKeys.SELECTED_NETWORK);
-    this.apiRemote = await Api.create({
-      provider: selectedNetwork
-        ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value]
-        : appConfig.webSocket.remoteStreamUrl,
-      types,
-    });
-
+  initGa = async (): Promise<void> => {
+    Logger.debug(`initGa start`);
     const ga = await GenericAsset.create(this.api);
     this.ga = ga;
+    Logger.debug(`initGa done`);
+  };
+
+  initApi = async (): Promise<void> => {
+    Logger.debug(`initApi start`);
+    const types = {...CustomTypes};
+    Logger.debug(`initApi streamUrl: ${appConfig.webSocket.localStreamUrl}`);
+    const wsProvider = new WsProvider(appConfig.webSocket.localStreamUrl);
+    this.api = new Api({
+      provider: wsProvider,
+      types
+    });
+    this.api.on('connected', () => {
+      Logger.debug(`initApi connected`);
+      this.dispatch({
+        type: actionTypes.wsLocalStatusChange.triggered,
+        payload: {
+          type: 'connected',
+        },
+      });
+    });
+    this.api.on('ready', async () => {
+      Logger.debug(`initApi ready`);
+      await this.initGa();
+
+      this.dispatch({
+        type: actionTypes.wsLocalStatusChange.triggered,
+        payload: {
+          type: 'ready',
+        },
+      });
+    });
+    this.api.on('disconnected', () => {
+      Logger.debug(`initApi disconnected`);
+      this.dispatch({
+        type: actionTypes.wsLocalStatusChange.triggered,
+        payload: {
+          type: 'disconnected',
+        },
+      });
+    });
+    this.api.on('error', (err) => {
+      Logger.debug(`initApi error`);
+      Logger.debug(JSON.stringify(err));
+      this.dispatch({
+        type: actionTypes.wsLocalStatusChange.triggered,
+        payload: {
+          type: 'error',
+          err,
+        },
+      });
+    });
+    Logger.debug(`initApi done`);
+  };
+
+  initRemoteApi = async (): Promise<void> => {
+    Logger.debug(`initRemoteApi start`);
+    // eslint-disable-next-line
+    const selectedNetwork = electronStore.get(storageKeys.SELECTED_NETWORK);
+    const remoteStreamUrl = selectedNetwork ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value] : appConfig.webSocket.remoteStreamUrl;
+    await this.initRemoteApiWithUrl(remoteStreamUrl);
+    Logger.debug(`initRemoteApi done`);
+  };
+
+  initRemoteApiWithUrl = async (remoteStreamUrl): Promise<void> => {
+    Logger.debug(`initRemoteApiWithUrl start`);
+    const types = {...CustomTypes};
+    // eslint-disable-next-line
+    Logger.debug(`initRemoteApiWithUrl remoteStreamUrl: ${remoteStreamUrl}`);
+    const wsProvider = new WsProvider(remoteStreamUrl);
+    this.apiRemote = new Api({
+      provider: wsProvider,
+      types,
+    });
+    this.apiRemote.on('connected', () => {
+      Logger.debug(`initRemoteApiWithUrl apiRemote connected`);
+      this.dispatch({
+        type: actionTypes.wsRemoteStatusChange.triggered,
+        payload: {
+          type: 'connected',
+        },
+      });
+    });
+    this.apiRemote.on('ready', () => {
+      Logger.debug(`initRemoteApiWithUrl ready`);
+      this.dispatch({
+        type: actionTypes.wsRemoteStatusChange.triggered,
+        payload: {
+          type: 'ready',
+        },
+      });
+    });
+    this.apiRemote.on('disconnected', () => {
+      Logger.debug(`initRemoteApiWithUrl disconnected`);
+      this.dispatch({
+        type: actionTypes.wsRemoteStatusChange.triggered,
+        payload: {
+          type: 'disconnected',
+        },
+      });
+    });
+    this.apiRemote.on('error', (err) => {
+      Logger.debug(`initRemoteApiWithUrl error`);
+      Logger.debug(JSON.stringify(err));
+      this.dispatch({
+        type: actionTypes.wsRemoteStatusChange.triggered,
+        payload: {
+          type: 'error',
+          err,
+        },
+      });
+    });
+    Logger.debug(`initRemoteApiWithUrl done`);
   };
 
   switchNetwork = async (network: string): Promise<void> => {
     Logger.debug(`switchNetwork, network: ${network}`);
     Logger.debug(`disconnect apiRemote`);
     this.apiRemote.disconnect();
-    this.apiRemote = await Api.create({
-      provider: appConfig.webSocket.remoteStreamUrlMap[network],
-    });
+
+    const remoteStreamUrl = appConfig.webSocket.remoteStreamUrlMap[network];
+    this.initRemoteApiWithUrl(remoteStreamUrl);
     Logger.debug(`connect to new apiRemote: ${appConfig.webSocket.remoteStreamUrlMap[network]}`);
   };
 

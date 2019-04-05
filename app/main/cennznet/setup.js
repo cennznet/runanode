@@ -101,8 +101,10 @@ export const setupCennzNet = (
   });
 
   cennznetStatusChannel.onReceive((status: CennzNetStatus) => {
-    Logger.info('ipcMain: Received request from renderer to cache cennznet status.');
     cennzNetNode.saveStatus(status);
+    Logger.info(
+      `ipcMain: nodeStatus was received and saved: ${JSON.stringify(cennzNetNode.status)}`
+    );
     return Promise.resolve(cennzNetNode.status);
   });
 

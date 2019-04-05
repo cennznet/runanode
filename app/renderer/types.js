@@ -10,6 +10,8 @@ const { apiActionTypes, changedActionTypes, triggerActionTypes } = getActionType
 
 const actionTypes = {
   init: triggerActionTypes('init'),
+  wsLocalStatusChange: triggerActionTypes('ws_local_status_change'),
+  wsRemoteStatusChange: triggerActionTypes('ws_remote_status_change'),
   testPage: triggerActionTypes('test_page'),
   homePageNavigation: triggerActionTypes('home_page_navigation'),
   navigation: triggerActionTypes('navigation'),
@@ -45,9 +47,13 @@ const actionTypes = {
   syncWalletData: apiActionTypes('sync_wallet_data'),
   transfer: apiActionTypes('transfer'),
 
+  /** IPC */
+  sendNodeStatusToIpcMain: apiActionTypes('send_node_status_to_ipc_main'),
+
   /* Network */
   nodeStateChange: triggerActionTypes('network_state_change'),
   cenznetStatusChange: triggerActionTypes('cennznet_status_change'),
+
   switchNetwork: triggerActionTypes('switch_network'),
   stopStream: apiActionTypes('stop_stream'),
   restartNode: triggerActionTypes('restart_network'),

@@ -8,6 +8,7 @@ import TosPage from 'renderer/pages/tosPage';
 import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import SyncNodePage from 'renderer/pages/syncNodePage';
 import DevPage from 'renderer/pages/devPage';
+import ErrorPage from 'renderer/pages/errorPage';
 import HomePage from 'renderer/pages/homePage';
 import WaitPage from 'renderer/pages/waitPage';
 import WalletLandingPage from 'renderer/pages/wallet/landingPage';
@@ -60,6 +61,7 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.CHOOSE_NETWORK} render={() => <ChooseNetworkPage />} />
         <Route exact path={ROUTES.SYNC_NODE} component={SyncNodePage} />
         <Route exact path={ROUTES.DEV} component={DevPage} />
+        <Route exact path={ROUTES.ERROR} component={ErrorPage} />
       </Switch>
     );
   }
