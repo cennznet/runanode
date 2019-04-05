@@ -1,8 +1,9 @@
 # Changelog
 
-# vNext
+# v0.8.3 (2019.04.05)
 
 ### Features
+
 - Able to handle WebSocket connection error
 
 - Add GlobalModal component;
