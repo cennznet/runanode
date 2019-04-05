@@ -82,22 +82,30 @@ export const createDefaultWindow = () => {
 };
 
 const safeExit = async () => {
-  if (cennzNetNode.state === CennzNetNodeStates.STOPPING) return;
+  if (cennzNetNode.state === CennzNetNodeStates.STOPPING) {
+    return;
+  }
+
+  if (cennzNetNode.status && cennzNetNode.status.isNodeInStaking) {
+    await cennznetStatusChannel.send(cennzNetNode.status, mainWindow);
+    return;
+  }
+
   try {
     cennzNetNode.saveStatus(
-      Object.assign(cennzNetNode.status ? cennzNetNode.status : {}, {
+      Object.assign(cennzNetNode.status || {}, {
         isNodeSafeExisting: true,
       })
     );
     await cennznetStatusChannel.send(cennzNetNode.status, mainWindow);
-    Logger.info(`Odin:safeExit: cennzNetNode.status ${cennzNetNode.status}`);
+    Logger.info(`Node:safeExit: cennzNetNode.status ${cennzNetNode.status}`);
+    Logger.info(`Node:safeExit: stopping cennznet-node with PID ${cennzNetNode.pid || 'null'}`);
 
-    Logger.info(`Odin:safeExit: stopping cennznet-node with PID ${cennzNetNode.pid || 'null'}`);
     await cennzNetNode.stop();
-    Logger.info('Odin:safeExit: exiting Odin with code 0.');
+    Logger.info('Node:safeExit: exiting Node with code 0.');
     safeExitWithCode(0);
   } catch (stopError) {
-    Logger.info(`Odin:safeExit: cennznet-node did not exit correctly: ${stopError}`);
+    Logger.info(`Node:safeExit: cennznet-node did not exit correctly: ${stopError}`);
     safeExitWithCode(0);
   }
 };

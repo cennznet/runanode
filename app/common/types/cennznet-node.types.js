@@ -193,11 +193,7 @@ export type FaultInjectionIpcRequest = [FaultInjection, boolean];
 
 export type CennzNetStatus = {
   isNodeSafeExisting: boolean,
-  isNodeResponding: boolean,
-  isNodeSubscribed: boolean,
-  isNodeSyncing: boolean,
-  isNodeInSync: boolean,
-  hasBeenConnected: boolean,
+  isNodeInStaking: boolean,
 };
 
 export type CennzNetRestartOptions = {

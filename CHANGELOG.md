@@ -6,6 +6,7 @@
 - Able to handle WebSocket connection error
 
 - Add GlobalModal component;
+- Handle exiting app while staking;
 
 ### Fixes
 
