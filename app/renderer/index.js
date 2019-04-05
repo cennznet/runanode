@@ -22,6 +22,7 @@ import {
   faEdit,
   faTimes,
   faCheck,
+  faPen,
 } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
@@ -67,7 +68,8 @@ library.add(
   faLock,
   faEdit,
   faCheck,
-  faTimes
+  faTimes,
+  faPen
 );
 
 const initializeApp = async () => {

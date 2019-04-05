@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { CENNZScanAddressUrl } from 'common/types/cennznet-node.types';
 import { Clipboard, PageHeading, PageFooter, Tabs, TabPane, Input } from 'components';
 import theme, { colors } from 'renderer/theme';
+import useOnClickOutside from 'use-onclickoutside';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';
 import TransferSection from './transferSectionPage';
@@ -16,6 +17,7 @@ const MainTitleWrapper = styled.div`
 const AccountNameWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  color: ${colors.textMuted};
 `;
 
 const LockIconWrapper = styled.div`
@@ -73,6 +75,12 @@ const AccountDetails = ({
   const [accountName, setAccountName] = useState(defaultAccountName);
   const [isAccountNameEditable, setIsAccountNameEditable] = useState(false);
 
+  const ref = React.useRef();
+  useOnClickOutside(ref, event => {
+    console.log('clickOutside', event);
+    setIsAccountNameEditable(false);
+  });
+
   const { accounts = {} } = currentWallet;
   const existingAccountIds = Object.keys(accounts);
   const existingAccountNames = existingAccountIds.length
@@ -113,20 +121,27 @@ const AccountDetails = ({
         <MainTitleWrapper>
           <AccountNameWrapper>
             {isAccountNameEditable ? (
-              <Input
-                value={accountName}
-                onChange={e => e.target && setAccountName(e.target.value)}
-                valid={accountName && !existingAccountNames.includes(accountName) ? null : false}
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
-              />
+              <div ref={ref}>
+                {/* <Input
+                  value={accountName}
+                  onChange={e => e.target && setAccountName(e.target.value)}
+                  valid={accountName && !existingAccountNames.includes(accountName) ? null : false}
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
+                  autoFocus
+                /> */}
+                test
+              </div>
             ) : (
-              <div> {defaultAccountName} </div>
+              <React.Fragment>
+                <div>{defaultAccountName} </div>
+                <Icon
+                  icon="pen"
+                  color={colors.textMuted}
+                  margin="0 0.3rem"
+                  onClick={() => onClickFunc()}
+                />
+              </React.Fragment>
             )}
-
-            <div>
-              <Icon icon={icon} color={iconColor} onClick={() => onClickFunc()} />
-            </div>
           </AccountNameWrapper>
           {stakingStashAccountAddress && stakingStashAccountAddress === account.address && (
             <LockIconWrapper>
