@@ -42,6 +42,7 @@ const DevPage = ({
   onGetIntensions,
   onStake,
   onUnStake,
+  onSendNodeStatus,
   onGetEraProgress,
   onGetSessionProgress,
   onGetEraLength,
@@ -97,6 +98,12 @@ const DevPage = ({
             }
           >
             UnStake
+          </Button>
+          <Button onClick={() => onSendNodeStatus({ isNodeInStaking: true })}>
+            Set IpcMain staking status
+          </Button>
+          <Button onClick={() => onSendNodeStatus({ isNodeInStaking: false })}>
+            Set IpcMain non-staking status
           </Button>
         </Flex>
         <Flex>

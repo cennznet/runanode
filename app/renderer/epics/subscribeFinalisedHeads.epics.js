@@ -14,12 +14,12 @@ const subscribeFinalisedHeadsEpic = action$ =>
       return new Observable(observer => {
         window.appApi.api.rpc.chain.subscribeFinalisedHeads(newHead => {
           // Logger.trace(`subscribeFinalisedHeadsEpic, got FinalisedHead.`);
+
           observer.next(newHead);
         });
       }).pipe(
         debounceTime(appConfig.app.defaultDebounceTime),
         map(newHead => {
-          Logger.debug(`subscribeFinalisedHeadsEpic, types.finalisedHeader.changed.`);
           return { type: types.finalisedHeader.changed, payload: newHead };
         })
       );
