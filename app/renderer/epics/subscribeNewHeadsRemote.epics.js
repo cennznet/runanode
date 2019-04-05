@@ -19,7 +19,6 @@ const subscribeNewHeadRemoteEpic = action$ =>
       }).pipe(
         debounceTime(appConfig.app.defaultDebounceTime),
         map(newHead => {
-          Logger.debug(`subscribeNewHeadRemoteEpic, types.NewHeader.changed.`);
           return { type: types.newHeadRemote.changed, payload: newHead };
         })
       );
@@ -36,7 +35,7 @@ const getSystemChainEpic = (action$, state$) =>
         return { type: types.nodeWsSystemChainRemote.failed };
       }
       return { type: types.nodeWsSystemChainRemote.completed, payload: data.toString() };
-    }),
+    })
   );
 
 const chainGetSystemChainEpicEpics = chainEpics(
@@ -44,9 +43,4 @@ const chainGetSystemChainEpicEpics = chainEpics(
   types.nodeWsSystemChainRemote.requested
 );
 
-
-export default [
-  subscribeNewHeadRemoteEpic,
-  getSystemChainEpic,
-  chainGetSystemChainEpicEpics,
-];
+export default [subscribeNewHeadRemoteEpic, getSystemChainEpic, chainGetSystemChainEpicEpics];

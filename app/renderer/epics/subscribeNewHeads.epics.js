@@ -19,7 +19,6 @@ const subscribeNewHeadEpic = action$ =>
       }).pipe(
         debounceTime(appConfig.app.defaultDebounceTime),
         map(newHead => {
-          Logger.debug(`subscribeNewHeadEpic, types.NewHeader.changed. ${JSON.stringify(newHead)}`);
           return { type: types.newHead.changed, payload: newHead };
         })
       );
@@ -47,14 +46,13 @@ const getSystemChainEpic = (action$, state$) =>
         return { type: types.nodeWsSystemChain.failed };
       }
       return { type: types.nodeWsSystemChain.completed, payload: data.toString() };
-    }),
+    })
   );
 
 const chainGetSystemChainEpicEpics = chainEpics(
   types.newHead.changed,
   types.nodeWsSystemChain.requested
 );
-
 
 // For JSON RPC Calls
 // const chainNodeJsonRpcSystemEpics = chainEpics(
