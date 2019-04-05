@@ -3,6 +3,7 @@
 # vNext
 
 ### Features
+- Able to handle WebSocket connection error
 
 - Add GlobalModal component;
 

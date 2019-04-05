@@ -10,6 +10,8 @@ const { apiActionTypes, changedActionTypes, triggerActionTypes } = getActionType
 
 const actionTypes = {
   init: triggerActionTypes('init'),
+  wsLocalStatusChange: triggerActionTypes('ws_local_status_change'),
+  wsRemoteStatusChange: triggerActionTypes('ws_remote_status_change'),
   testPage: triggerActionTypes('test_page'),
   homePageNavigation: triggerActionTypes('home_page_navigation'),
   navigation: triggerActionTypes('navigation'),
