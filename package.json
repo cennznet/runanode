@@ -154,6 +154,7 @@
     "styled-props": "^1.1.2",
     "transform-loader": "^0.2.4",
     "unorm": "^1.4.1",
+    "use-onclickoutside": "0.3.1",
     "uuid": "^3.3.2",
     "wait-port": "^0.2.2",
     "yup": "^0.26.10"
