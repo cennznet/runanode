@@ -38,6 +38,8 @@ const Icon = styled(FontAwesomeIcon)`
   margin: ${p => p.margin || '0 1rem'};
 `;
 
+const nameInput = styled.input``;
+
 const Subheading = ({ account }) => {
   const url = CENNZScanAddressUrl.rimu; // TODO should base on selected network
   return (
