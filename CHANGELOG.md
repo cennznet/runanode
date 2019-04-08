@@ -1,5 +1,18 @@
 # Changelog
 
+# vNext
+
+### Features
+
+### Fixes
+
+### Improvements
+
+# v0.9.1 (2019.04.08)
+
+### Features
+- upgrade cennznet-node to 0.9.17
+
 # v0.9.0 (2019.04.05)
 
 ### Features
