@@ -5,6 +5,7 @@
 ### Features
 
 ### Fixes
+- change staking and spending token ids
 
 ### Improvements
 
