@@ -77,11 +77,11 @@ const initializeApp = async () => {
 
   await api.cennz.initApi();
   await api.cennz.initRemoteApi();
+  await api.cennz.initGa();
 
   /**
    * window varibles
    * - window.appApi
-   * - window.ga
    * - window.translation
    * ....
    *
@@ -89,9 +89,7 @@ const initializeApp = async () => {
    * take it to app.config levels,
    * enable window[`${net}.api`] to be more dynamics
    */
-  window.appApi = {
-    ...api.cennz, // TODO: improve this, remove `api.cenz` keys
-  };
+  window.appApi = api.cennz;
 
   const rootElement = document.getElementById('root');
   if (!rootElement) throw new Error('No #root element found.');

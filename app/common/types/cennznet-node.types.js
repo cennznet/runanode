@@ -7,12 +7,27 @@ export const PreDefinedAssetId = {
   reserveTokenStart: '1000000',
 };
 
-export const CustomTokenAssetId = ['100'];
+export const CustomTokenAssetId = [
+  '16002',
+  '16003',
+  '16004',
+  '16005',
+];
 
+// https://centralitydev.atlassian.net/wiki/spaces/CNET/pages/675348824/Generic+Asset+Module
 export const PreDefinedAssetIdName = {
-  '16000': 'CENNZ',
-  '16001': 'CPAY',
-  '100': 'Sylo Token',
+  '0': 'CENNZ',
+  '1': 'CENTRAPAY',
+  '2': 'PLUG',
+  '3': 'SYLO',
+  '4': 'CERTI',
+  '5': 'ARDA',
+  '16000': 'CENNZ-T',
+  '16001': 'CPAY-T',
+  '16002': 'PLUG-T',
+  '16003': 'SYLO-T',
+  '16004': 'CERTI-T',
+  '16005': 'ARDA-T',
 };
 
 // check cennznet-node chain_spec.rs cennznet_dev_config_latest and cennznet_uat_config_latest
