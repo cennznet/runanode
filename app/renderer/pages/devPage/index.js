@@ -1,6 +1,7 @@
 import React from 'react';
 import BN from 'bn.js';
 
+import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import Button from 'components/Button';
 import { MainContent } from 'components/layout';
 import MainLayout from 'renderer/components/layout/MainLayout';
@@ -182,7 +183,7 @@ const DevPage = ({
           <Button
             onClick={() =>
               onTransfer({
-                assetId: new BN('0', 10),
+                assetId: new BN(PreDefinedAssetId.stakingToken, 10),
                 fromAddress: '5Gw3s7q4QLkSWwknsiPtjujPv3XM4Trxi5d4PgKMMk3gfGTE',
                 toAddress: '5F1XzAhQGNcapqm666QNU2cMUnj9DRAKB6vGXoVTkxWMLhPs',
                 amount: new BN('13', 10),
