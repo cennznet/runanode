@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { CENNZScanAddressUrl } from 'common/types/cennznet-node.types';
@@ -92,10 +92,17 @@ const AccountDetails = ({
   stakingStashAccountAddress,
   onUpdateAccountName,
 }) => {
+  console.log('AccountDetails', account);
   const defaultAccountName = account.name || 'Account';
+  console.log('DefaultAccountName', defaultAccountName);
+  // const [defaultAccountName, setDefaultAccountName] = useState(account.name || 'Account');
   const currentAccountId = account.address || '';
-  const [accountName, setAccountName] = useState(defaultAccountName);
+  const [accountName, setAccountName] = useState();
   const [isAccountNameEditable, setIsAccountNameEditable] = useState(false);
+
+  useEffect(() => {
+    setAccountName(defaultAccountName);
+  }, [defaultAccountName]);
 
   // TODO: Refactor the accounts object in localStorage
   const { accounts = {} } = currentWallet;
@@ -109,10 +116,14 @@ const AccountDetails = ({
     existingAccountNames.includes(accountName) &&
     'You’ve already used this account name. Please name it something else.';
 
+  const emptyAccountNameErr = !accountName && 'The account name can not be empty.';
+
+  const AccountNameErr = emptyAccountNameErr || existingAccountNameErr;
+
   const ref = React.useRef();
   useOnClickOutside(ref, event => {
     if (!existingAccountNameErr) {
-      !accountName && setAccountName(defaultAccountName);
+      // !accountName && setAccountName(defaultAccountName);
       setIsAccountNameEditable(false);
       onUpdateAccountName({
         toUpdateWallet: currentWallet,
@@ -135,7 +146,7 @@ const AccountDetails = ({
                     e.target && setAccountName(e.target.value);
                   }}
                 />
-                {existingAccountNameErr && <ErrHint>{existingAccountNameErr}</ErrHint>}
+                {AccountNameErr && <ErrHint>{AccountNameErr}</ErrHint>}
               </div>
             ) : (
               <React.Fragment>
