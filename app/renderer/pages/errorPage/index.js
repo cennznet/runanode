@@ -68,7 +68,7 @@ class TosPage extends React.Component {
               <FlexItem>
                 <Note>
                   Try restart the application again, or feel free
-                  to <a href='mailto:support@runanode.io' style={{color: colors.N0}}>contract us</a> if
+                  to <a href='mailto:support@runanode.io' style={{color: colors.N0}}>contact us</a> if
                   the problem persists
                 </Note>
               </FlexItem>
