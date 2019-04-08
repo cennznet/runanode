@@ -92,10 +92,7 @@ const AccountDetails = ({
   stakingStashAccountAddress,
   onUpdateAccountName,
 }) => {
-  console.log('AccountDetails', account);
   const defaultAccountName = account.name || 'Account';
-  console.log('DefaultAccountName', defaultAccountName);
-  // const [defaultAccountName, setDefaultAccountName] = useState(account.name || 'Account');
   const currentAccountId = account.address || '';
   const [accountName, setAccountName] = useState();
   const [isAccountNameEditable, setIsAccountNameEditable] = useState(false);
@@ -123,7 +120,6 @@ const AccountDetails = ({
   const ref = React.useRef();
   useOnClickOutside(ref, event => {
     if (!existingAccountNameErr) {
-      // !accountName && setAccountName(defaultAccountName);
       setIsAccountNameEditable(false);
       onUpdateAccountName({
         toUpdateWallet: currentWallet,
