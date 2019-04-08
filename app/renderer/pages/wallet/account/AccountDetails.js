@@ -38,7 +38,26 @@ const Icon = styled(FontAwesomeIcon)`
   margin: ${p => p.margin || '0 1rem'};
 `;
 
-const nameInput = styled.input``;
+const NameInput = styled.input`
+  background: transparent;
+  border: 0;
+  color: ${colors.textMuted};
+  font-size: 24px;
+  padding: 0 0 0.5rem 0;
+  autofocus: trye;
+  border-bottom: 2px dashed ${colors.V400};
+  margin-bottom: 0.5rem;
+
+  &:focus {
+    outline-width: 0;
+  }
+`;
+
+const ErrHint = styled.div`
+  color: ${colors.R500};
+  font-size: 12px;
+  line-height: 1.2rem;
+`;
 
 const Subheading = ({ account }) => {
   const url = CENNZScanAddressUrl.rimu; // TODO should base on selected network
@@ -74,40 +93,26 @@ const AccountDetails = ({
   onUpdateAccountName,
 }) => {
   const defaultAccountName = account.name || 'Account';
+  const currentAccountId = account.address || '';
   const [accountName, setAccountName] = useState(defaultAccountName);
   const [isAccountNameEditable, setIsAccountNameEditable] = useState(false);
 
-  const ref = React.useRef();
-  useOnClickOutside(ref, event => {
-    console.log('clickOutside', event);
-    setIsAccountNameEditable(false);
-  });
-
+  // TODO: Refactor the accounts object in localStorage
   const { accounts = {} } = currentWallet;
   const existingAccountIds = Object.keys(accounts);
   const existingAccountNames = existingAccountIds.length
     ? existingAccountIds.map(accountId => accounts[accountId].name && accounts[accountId].name)
     : [];
 
-  const iconPairs =
-    !accountName || (isAccountNameEditable && existingAccountNames.includes(accountName))
-      ? { icon: 'times', iconColor: colors.R500 }
-      : isAccountNameEditable
-      ? { icon: 'check', iconColor: colors.G500 }
-      : { icon: 'edit', iconColor: colors.N0 };
-  const { icon, iconColor } = iconPairs;
+  const existingAccountNameErr =
+    defaultAccountName !== accountName &&
+    existingAccountNames.includes(accountName) &&
+    'You’ve already used this account name. Please name it something else.';
 
-  const onClickFunc = () => {
-    if (icon === 'edit') {
-      setIsAccountNameEditable(true);
-    }
-
-    if (icon === 'times') {
-      setAccountName(defaultAccountName);
-      setIsAccountNameEditable(false);
-    }
-
-    if (icon === 'check') {
+  const ref = React.useRef();
+  useOnClickOutside(ref, event => {
+    if (!existingAccountNameErr) {
+      !accountName && setAccountName(defaultAccountName);
       setIsAccountNameEditable(false);
       onUpdateAccountName({
         toUpdateWallet: currentWallet,
@@ -115,7 +120,7 @@ const AccountDetails = ({
         newAccountName: accountName,
       });
     }
-  };
+  });
 
   return account ? (
     <React.Fragment>
@@ -124,23 +129,22 @@ const AccountDetails = ({
           <AccountNameWrapper>
             {isAccountNameEditable ? (
               <div ref={ref}>
-                {/* <Input
+                <NameInput
                   value={accountName}
-                  onChange={e => e.target && setAccountName(e.target.value)}
-                  valid={accountName && !existingAccountNames.includes(accountName) ? null : false}
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
-                  autoFocus
-                /> */}
-                test
+                  onChange={e => {
+                    e.target && setAccountName(e.target.value);
+                  }}
+                />
+                {existingAccountNameErr && <ErrHint>{existingAccountNameErr}</ErrHint>}
               </div>
             ) : (
               <React.Fragment>
-                <div>{defaultAccountName} </div>
+                <div>{accountName} </div>
                 <Icon
                   icon="pen"
                   color={colors.textMuted}
                   margin="0 0.3rem"
-                  onClick={() => onClickFunc()}
+                  onClick={() => setIsAccountNameEditable(true)}
                 />
               </React.Fragment>
             )}
