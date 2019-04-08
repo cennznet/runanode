@@ -55,6 +55,7 @@ import {
   PreDefinedAssetIdName,
   CustomTokenAssetId,
   PreDefinedAssetId,
+  NetworkNameOptions,
 } from '../../common/types/cennznet-node.types';
 import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
@@ -259,13 +260,17 @@ export default class CennzApi {
   };
 
   switchNetwork = async (network: string): Promise<void> => {
-    Logger.debug(`switchNetwork, network: ${network}`);
+    let _network = network;
+    if(network.endsWith('json')) {
+      _network = NetworkNameOptions.development;
+    }
+    Logger.debug(`switchNetwork, network: ${_network}`);
     Logger.debug(`disconnect apiRemote`);
     this.apiRemote.disconnect();
 
-    const remoteStreamUrl = appConfig.webSocket.remoteStreamUrlMap[network];
+    const remoteStreamUrl = appConfig.webSocket.remoteStreamUrlMap[_network];
     this.initRemoteApiWithUrl(remoteStreamUrl);
-    Logger.debug(`connect to new apiRemote: ${appConfig.webSocket.remoteStreamUrlMap[network]}`);
+    Logger.debug(`connect to new apiRemote: ${appConfig.webSocket.remoteStreamUrlMap[_network]}`);
   };
 
   getBalancesByWallet = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
