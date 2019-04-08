@@ -7,6 +7,7 @@
 - Able to change/edit account name in accountDetails page
 
 ### Fixes
+- change staking and spending token ids
 
 ### Improvements
 
