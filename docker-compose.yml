@@ -1,7 +1,7 @@
 version: '3'
 services:
   node-0:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-7e3788b2
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
     volumes:
       - "./target/node_0:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
@@ -25,7 +25,7 @@ services:
       - "19944:9944"
       - "30334:30333"
   node-1:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-7e3788b2
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
     volumes:
       - "./target/node_1:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
@@ -47,7 +47,7 @@ services:
     ports:
       - "30335:30333"
   node-2:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-7e3788b2
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
     volumes:
       - "./target/node_2:/mnt/node"
       - "./genesis/:/mnt/genesis:ro"
