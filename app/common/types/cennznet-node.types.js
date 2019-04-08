@@ -2,16 +2,16 @@
 import BN from 'bn.js';
 
 export const PreDefinedAssetId = {
-  stakingToken: '0',
-  spendingToken: '10',
+  stakingToken: '16000',
+  spendingToken: '16001',
   reserveTokenStart: '1000000',
 };
 
 export const CustomTokenAssetId = ['100'];
 
 export const PreDefinedAssetIdName = {
-  '0': 'CENNZ',
-  '10': 'CPAY',
+  '16000': 'CENNZ',
+  '16001': 'CPAY',
   '100': 'Sylo Token',
 };
 
