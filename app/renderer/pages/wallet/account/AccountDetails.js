@@ -53,7 +53,7 @@ const NameInput = styled.input`
   }
 `;
 
-const ErrHint = styled.div`
+const ErrorMessage = styled.div`
   color: ${colors.R500};
   font-size: 12px;
   line-height: 1.2rem;
@@ -149,7 +149,7 @@ const AccountDetails = ({
                     e.target && setAccountName(e.target.value);
                   }}
                 />
-                {AccountNameErr && <ErrHint>{AccountNameErr}</ErrHint>}
+                {AccountNameErr && <ErrorMessage>{AccountNameErr}</ErrorMessage>}
               </div>
             ) : (
               <React.Fragment>
