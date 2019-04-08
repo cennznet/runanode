@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { CENNZScanAddressUrl } from 'common/types/cennznet-node.types';
-import { Clipboard, PageHeading, PageFooter, Tabs, TabPane, Input } from 'components';
+import { Clipboard, PageHeading, PageFooter, Tabs, TabPane, Input, Ellipsis } from 'components';
 import theme, { colors } from 'renderer/theme';
+import useOnClickOutside from 'use-onclickoutside';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';
 import TransferSection from './transferSectionPage';
@@ -16,6 +17,7 @@ const MainTitleWrapper = styled.div`
 const AccountNameWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  color: ${colors.textMuted};
 `;
 
 const LockIconWrapper = styled.div`
@@ -34,6 +36,34 @@ const Icon = styled(FontAwesomeIcon)`
   height: 14px;
   color: ${p => p.color || colors.N0};
   margin: ${p => p.margin || '0 1rem'};
+`;
+
+const NameInput = styled.input`
+  background: transparent;
+  border: 0;
+  color: ${colors.textMuted};
+  font-size: 24px;
+  padding: 0 0 0.5rem 0;
+  autofocus: trye;
+  border-bottom: 2px dashed ${colors.V400};
+  margin-bottom: 0.5rem;
+
+  &:focus {
+    outline-width: 0;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: ${colors.R500};
+  font-size: 12px;
+  line-height: 1.2rem;
+`;
+
+const AccountName = styled.div`
+  max-width: 20rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Subheading = ({ account }) => {
@@ -70,34 +100,33 @@ const AccountDetails = ({
   onUpdateAccountName,
 }) => {
   const defaultAccountName = account.name || 'Account';
-  const [accountName, setAccountName] = useState(defaultAccountName);
+  const currentAccountId = account.address || '';
+  const [accountName, setAccountName] = useState();
   const [isAccountNameEditable, setIsAccountNameEditable] = useState(false);
 
+  useEffect(() => {
+    setAccountName(defaultAccountName);
+  }, [defaultAccountName]);
+
+  // TODO: Refactor the accounts object in localStorage
   const { accounts = {} } = currentWallet;
   const existingAccountIds = Object.keys(accounts);
   const existingAccountNames = existingAccountIds.length
     ? existingAccountIds.map(accountId => accounts[accountId].name && accounts[accountId].name)
     : [];
 
-  const iconPairs =
-    !accountName || (isAccountNameEditable && existingAccountNames.includes(accountName))
-      ? { icon: 'times', iconColor: colors.R500 }
-      : isAccountNameEditable
-      ? { icon: 'check', iconColor: colors.G500 }
-      : { icon: 'edit', iconColor: colors.N0 };
-  const { icon, iconColor } = iconPairs;
+  const existingAccountNameErr =
+    defaultAccountName !== accountName &&
+    existingAccountNames.includes(accountName) &&
+    'You’ve already used this account name. Please name it something else.';
 
-  const onClickFunc = () => {
-    if (icon === 'edit') {
-      setIsAccountNameEditable(true);
-    }
+  const emptyAccountNameErr = !accountName && 'The account name can not be empty.';
 
-    if (icon === 'times') {
-      setAccountName(defaultAccountName);
-      setIsAccountNameEditable(false);
-    }
+  const AccountNameErr = emptyAccountNameErr || existingAccountNameErr;
 
-    if (icon === 'check') {
+  const ref = React.useRef();
+  useOnClickOutside(ref, event => {
+    if (!existingAccountNameErr) {
       setIsAccountNameEditable(false);
       onUpdateAccountName({
         toUpdateWallet: currentWallet,
@@ -105,7 +134,7 @@ const AccountDetails = ({
         newAccountName: accountName,
       });
     }
-  };
+  });
 
   return account ? (
     <React.Fragment>
@@ -113,20 +142,26 @@ const AccountDetails = ({
         <MainTitleWrapper>
           <AccountNameWrapper>
             {isAccountNameEditable ? (
-              <Input
-                value={accountName}
-                onChange={e => e.target && setAccountName(e.target.value)}
-                valid={accountName && !existingAccountNames.includes(accountName) ? null : false}
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
-              />
+              <div ref={ref}>
+                <NameInput
+                  value={accountName}
+                  onChange={e => {
+                    e.target && setAccountName(e.target.value);
+                  }}
+                />
+                {AccountNameErr && <ErrorMessage>{AccountNameErr}</ErrorMessage>}
+              </div>
             ) : (
-              <div> {defaultAccountName} </div>
+              <React.Fragment>
+                <AccountName>{accountName}</AccountName>
+                <Icon
+                  icon="pen"
+                  color={colors.textMuted}
+                  margin="0 0.3rem"
+                  onClick={() => setIsAccountNameEditable(true)}
+                />
+              </React.Fragment>
             )}
-
-            <div>
-              <Icon icon={icon} color={iconColor} onClick={() => onClickFunc()} />
-            </div>
           </AccountNameWrapper>
           {stakingStashAccountAddress && stakingStashAccountAddress === account.address && (
             <LockIconWrapper>
