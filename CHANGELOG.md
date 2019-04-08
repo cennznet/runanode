@@ -4,6 +4,14 @@
 
 ### Features
 
+### Fixes
+
+### Improvements
+
+# v0.9.2 (2019.04.09)
+
+### Features
+
 - Able to change/edit account name in accountDetails page
 
 ### Fixes
@@ -12,8 +20,6 @@
 - Fix switch local network some time not working issue
 - Fix switch network apiRemote not re-connect issue
 - Able to display custom tokens
-
-### Improvements
 
 # v0.9.1 (2019.04.08)
 
