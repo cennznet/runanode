@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, Button } from 'components';
 import styled from 'styled-components';
+
 import theme from 'renderer/theme';
+import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import StakingProgressCard from './StakingProgressCard';
 import withContainer from './container';
 import ValidatorsList from './ValidatorsList';
@@ -68,7 +70,7 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
       Promise.all(
         reoderIntentions.map(async intention => {
           const cennzBalance = await window.appApi.getGenericAssetFreeBalance(
-            '0',
+            PreDefinedAssetId.stakingToken,
             intention
           );
           return cennzBalance && { address: intention, cennzBalance: cennzBalance.toString(10) };

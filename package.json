@@ -1,6 +1,6 @@
 {
   "name": "rUN",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "rUN digital wallet power by Centrality.ai",
   "homepage": "https://bitbucket.org/centralitydev/cennz-node-ui#readme",
   "repository": {
@@ -155,6 +155,7 @@
     "styled-props": "^1.1.2",
     "transform-loader": "^0.2.4",
     "unorm": "^1.4.1",
+    "use-onclickoutside": "0.3.1",
     "uuid": "^3.3.2",
     "wait-port": "^0.2.2",
     "yup": "^0.26.10"
