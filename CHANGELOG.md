@@ -4,6 +4,8 @@
 
 ### Features
 
+- Able to change/edit account name in accountDetails page
+
 ### Fixes
 - change staking and spending token ids
 
@@ -12,6 +14,7 @@
 # v0.9.1 (2019.04.08)
 
 ### Features
+
 - upgrade cennznet-node to 0.9.17
 
 # v0.9.0 (2019.04.05)
