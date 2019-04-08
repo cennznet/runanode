@@ -7,7 +7,11 @@
 - Able to change/edit account name in accountDetails page
 
 ### Fixes
+
 - change staking and spending token ids
+- Fix switch local network some time not working issue
+- Fix switch network apiRemote not re-connect issue
+- Able to display custom tokens
 
 ### Improvements
 

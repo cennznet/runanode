@@ -24,16 +24,17 @@ const storeNetworkOptionEpic = action$ =>
       return of(
         {
           type: types.setStorage.requested,
-          payload: { key: storageKeys.SELECTED_NETWORK, value: selectedNetwork },
-        },
-        {
-          type: types.setStorage.requested,
           payload: {
             key: storageKeys.GENESIS_CONFIG_FILE_INFO,
             value: filterGenesisFile(genesisFile),
           },
         }
-      );
+      ).pipe(concat(of( // wait for save GENESIS_CONFIG_FILE_INFO finish
+        {
+          type: types.setStorage.requested,
+          payload: { key: storageKeys.SELECTED_NETWORK, value: selectedNetwork },
+        },
+      )));
     })
   );
 
@@ -55,7 +56,7 @@ const switchNetworkEpic = action$ =>
     mergeMap(([nodeStateChangeAction, switchNetworkAction]) => {
       Logger.debug(`switchNetworkEpic, nodeStateChangeAction: ${nodeStateChangeAction.payload}, switchNetworkAction: ${JSON.stringify(switchNetworkAction)}`);
       const { chain } = switchNetworkAction.payload;
-      if ( nodeStateChangeAction.payload === 'running' && chain ) {
+      if ( nodeStateChangeAction.payload === 'stopping' && chain ) {
         window.appApi.switchNetwork(chain);
       }
       return of(
@@ -77,6 +78,7 @@ const restartNodeEpic = action$ =>
   action$.pipe(
     ofType(types.restartNode.triggered),
     tap(({ payload }) => {
+      Logger.debug(`restartNodeEpic, payload: ${JSON.stringify(payload)}`);
       const { chain } = payload;
       const options: CennzNetRestartOptions = payload;
       if(chain) {

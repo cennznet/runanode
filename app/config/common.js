@@ -23,10 +23,10 @@ const commonConfig = {
     localStreamUrl: 'ws://localhost:9944',
     // remoteStreamUrl: 'ws://10.9.30.55:19944',
     // TODO Should base on selected network
-    remoteStreamUrl: 'wss://cennznet-node-0.centrality.cloud:9944',
+    remoteStreamUrl: 'wss://cennznet-node-1.centrality.cloud:9944',
     remoteStreamUrlMap: {
-      'rimu' : 'wss://cennznet-node-0.centrality.cloud:9944',
-      'kauri' : 'wss://cennznet-node-0.centrality.me:9944',
+      'rimu' : 'wss://cennznet-node-1.centrality.cloud:9944',
+      'kauri' : 'wss://cennznet-node-1.centrality.me:9944',
       'development' : 'ws://10.9.30.55:19944',
     },
     latency: {

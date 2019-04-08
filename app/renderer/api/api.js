@@ -168,8 +168,6 @@ export default class CennzApi {
     });
     this.api.on('ready', async () => {
       Logger.debug(`initApi ready`);
-      await this.initGa();
-
       this.dispatch({
         type: actionTypes.wsLocalStatusChange.triggered,
         payload: {
