@@ -67,9 +67,9 @@ defineSupportCode(({ BeforeAll, Before, After, AfterAll, setDefaultTimeout }) =>
     // await this.client.executeAsync((done) => {
     //   const resetBackend = () => {
     //
-    //     // if (odin.stores.networkStatus.isConnected) {
-    //     //   odin.api.ada.testReset()
-    //     //     .then(odin.api.localStorage.reset)
+    //     // if (app.stores.networkStatus.isConnected) {
+    //     //   app.api.ada.testReset()
+    //     //     .then(app.api.localStorage.reset)
     //     //     .then(done)
     //     //     .catch((error) => { throw error; });
     //     // } else {
@@ -85,7 +85,7 @@ defineSupportCode(({ BeforeAll, Before, After, AfterAll, setDefaultTimeout }) =>
     // Ensure that frontend is synced and ready before test case
     // await this.client.executeAsync((done) => {
     //   const waitUntilSyncedAndReady = () => {
-    //     // if (odin.stores.networkStatus.isSynced) {
+    //     // if (app.stores.networkStatus.isSynced) {
     //     //   done();
     //     // } else {
     //     //   setTimeout(waitUntilSyncedAndReady, 60);

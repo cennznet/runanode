@@ -145,7 +145,7 @@ app.on('ready', async () => {
   setupLogging();
   mainErrorHandler();
 
-  Logger.info(`========== Odin is starting at ${new Date().toString()} ==========`);
+  Logger.info(`========== App is starting at ${new Date().toString()} ==========`);
 
   Logger.info(`!!! ${buildLabel} is running on ${os.platform()} version ${os.release()}
             with CPU: ${JSON.stringify(os.cpus(), null, 2)} with
@@ -155,8 +155,8 @@ app.on('ready', async () => {
   try {
     await acquireAppInstanceLock();
   } catch (e) {
-    const dialogTitle = 'Odin is unable to start!';
-    const dialogMessage = 'Another Odin instance is already running.';
+    const dialogTitle = 'App is unable to start!';
+    const dialogMessage = 'Another App instance is already running.';
     dialog.showErrorBox(dialogTitle, dialogMessage);
     app.exit(1);
   }
@@ -179,7 +179,7 @@ app.on('ready', async () => {
   new AppUpdater();
 
   mainWindow.on('close', async event => {
-    Logger.info('mainWindow received <close> event. Safe exiting Odin now.');
+    Logger.info('mainWindow received <close> event. Safe exiting App now.');
     event.preventDefault();
     await safeExit();
   });
@@ -198,8 +198,8 @@ app.on('ready', async () => {
 
   // Wait for controlled cennznet-node shutdown before quitting the app
   app.on('before-quit', async event => {
-    Logger.info('app received <before-quit> event. Safe exiting Odin now.');
-    event.preventDefault(); // prevent Odin from quitting immediately
+    Logger.info('app received <before-quit> event. Safe exiting App now.');
+    event.preventDefault(); // prevent App from quitting immediately
     await safeExit();
   });
 });
