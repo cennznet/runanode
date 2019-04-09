@@ -34,6 +34,7 @@ const { isDevOrDebugProd, buildLabel } = environment;
 
 export default class AppUpdater {
   constructor() {
+    log.transports.file.level = "debug"
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
   }

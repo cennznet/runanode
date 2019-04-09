@@ -44,7 +44,7 @@
     "release": "yarn clean && yarn build && electron-builder -mwl --publish never",
     "release:mac": "yarn clean && yarn build && electron-builder -m --publish never",
     "release:github": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=github --config.publish.owner=cennznet --config.publish.repo=cennz-node-release --config.publish.private=true --config.publish.releaseType=release",
-    "release:minio": "yarn clean && yarn build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=s3 --config.publish.endpoint=http://10.9.30.50:9000 --config.publish.bucket=test-update",
+    "release:minio": "yarn clean && yarn build && electron-builder -ml --publish always --config.compression=store --config.publish.provider=s3 --config.publish.endpoint=http://10.9.30.50:9000 --config.publish.bucket=auto-update",
     "start": "yarn build-preload && cross-env NODE_ENV=production LAUNCHER_CONFIG=./launcher-config.yaml electron ./app/main.prod.js",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./app/main.dev.js",
     "start-renderer-dev": "cross-env NODE_ENV=development LAUNCHER_CONFIG=./launcher-config.yaml webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
