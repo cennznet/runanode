@@ -122,7 +122,7 @@ export const setupCennzNet = (
     Logger.info('ipcMain: Received request from renderer to await update.');
     setTimeout(async () => {
       await cennzNetNode.expectNodeUpdate();
-      Logger.info('CennzNetNode applied an update. Exiting Odin with code 20.');
+      Logger.info('CennzNetNode applied an update. Exiting App with code 20.');
       // safeExitWithCode(20);
     });
     return Promise.resolve();
