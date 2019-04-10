@@ -69,14 +69,14 @@ export type CennzNetNodeConfig = {
 };
 
 const CENNZNET_UPDATE_EXIT_CODE = 20;
-// grab the current network on which Odin is running
+// grab the current network on which App is running
 const network = String(environment.network);
 const platform = String(environment.platform);
 // derive storage keys based on current network
 const { PREVIOUS_CENNZNET_PID } = deriveStorageKeys(network);
 // derive CennzNet process name based on current platform
 const { CENNZNET_PROCESS_NAME } = deriveProcessNames(platform);
-// create store for persisting CennzNetNode and Odin PID's in fs
+// create store for persisting CennzNetNode and App PID's in fs
 const store = new Store();
 
 export class CennzNetNode {
@@ -407,7 +407,6 @@ export class CennzNetNode {
 
     // TODO remove/mask --key value
     _log.info(`before ${JSON.stringify(_config)}`);
-
 
     if (options.chain) {
       this._removeArgs(nodeArgs, '--chain', 2);
@@ -762,7 +761,7 @@ export class CennzNetNode {
     }
   }
 
-  // stores the current port/pid on which cennznet-node or Odin is running
+  // stores the current port/pid on which cennznet-node or App is running
   _storeData = (identifier: string, data: number): Promise<void> =>
     new Promise((resolve, reject) => {
       try {
@@ -778,7 +777,7 @@ export class CennzNetNode {
       }
     });
 
-  // retrieves the last known port/pid on which cennznet-node or Odin was running
+  // retrieves the last known port/pid on which cennznet-node or App was running
   _retrieveData = (identifier: string): Promise<?number> =>
     new Promise((resolve, reject) => {
       try {
@@ -818,10 +817,10 @@ export class CennzNetNode {
 
   _isUnrecoverable = (config: CennzNetNodeConfig) => this._startupTries >= config.startupMaxRetries;
 
-  _removeArgs = ( nodeArgs, argName, space ) => {
+  _removeArgs = (nodeArgs, argName, space) => {
     const validatorArgIndex = nodeArgs.findIndex(item => item === argName);
     if (validatorArgIndex >= 0) {
       nodeArgs.splice(validatorArgIndex, space);
     }
-  }
+  };
 }

@@ -25,7 +25,7 @@ export type LauncherConfig = {
   },
 };
 
-export const APP_NAME = 'Odin';
+export const APP_NAME = 'App';
 export const launcherConfig: LauncherConfig = readLauncherConfig(LAUNCHER_CONFIG);
 export const appLogsFolderPath = launcherConfig.logsPrefix;
 export const pubLogsFolderPath = path.join(appLogsFolderPath, 'pub');

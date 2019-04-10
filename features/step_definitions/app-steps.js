@@ -2,41 +2,41 @@
 import { Given, When, Then } from 'cucumber';
 // $FlowFixMe
 import { expect } from 'chai';
-import type { Odin } from '../support/global-types';
+import type { App } from '../support/global-types';
 import { waitUntilTextInSelector } from '../support/helpers/shared-helpers';
 import { waitForCennzNetNodeToExit } from '../support/helpers/cennznet-node-helpers';
-import { refreshClient, waitForOdinToExit } from '../support/helpers/app-helpers';
+import { refreshClient, waitForAppToExit } from '../support/helpers/app-helpers';
 
 const assert = require('assert');
 
-declare var odin: Odin;
+declare var app: App;
 
-Given(/^Odin is running$/, function () {
+Given(/^App is running$/, function() {
   expect(this.app.isRunning()).to.be.true;
 });
 
-When(/^I refresh the main window$/, async function () {
+When(/^I refresh the main window$/, async function() {
   await refreshClient(this.client);
 });
 
-When(/^I close the main window$/, async function () {
-  // TODO refactor to use odin
-  // await this.client.execute(() => odin.stores.window.closeWindow());
+When(/^I close the main window$/, async function() {
+  // TODO refactor to use app
+  // await this.client.execute(() => app.stores.window.closeWindow());
   await this.client.execute(() => window.ipcRenderer.send('close-window'));
 });
 
-Then(/^Odin process is not running$/, async function () {
-  await waitForOdinToExit(this.client);
+Then(/^App process is not running$/, async function() {
+  await waitForAppToExit(this.client);
 });
 
-Then(/^Odin should quit$/, { timeout: 70000 }, async function () {
+Then(/^App should quit$/, { timeout: 70000 }, async function() {
   await waitForCennzNetNodeToExit(this.client);
-  await waitForOdinToExit(this.client);
+  await waitForAppToExit(this.client);
 });
 
-Then(/^I should see the loading screen with "([^"]*)"$/, async function (message) {
+Then(/^I should see the loading screen with "([^"]*)"$/, async function(message) {
   await waitUntilTextInSelector(this.client, {
     selector: '.Loading_connecting h1',
-    text: message
+    text: message,
   });
 });
