@@ -8,6 +8,8 @@
 
 ### Improvements
 
+- Code rebranding, replace `Odin` in code
+
 # v0.9.2 (2019.04.09)
 
 ### Features

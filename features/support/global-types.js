@@ -5,7 +5,7 @@ import type { Api } from '../../app/renderer/api';
 // import type { ActionsMap } from '../../source/renderer/actions';
 // import type { StoresMap } from '../../source/renderer/stores';
 
-export type Odin = {
+export type App = {
   api: Api,
   store: Store,
   // environment: Object,

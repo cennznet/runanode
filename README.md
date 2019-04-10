@@ -63,20 +63,23 @@ tail -f ~/Library/Logs/rUN/*
 ```
 
 CennzNet Node log:
+
 ```bash
 ~/Library/Logs/rUN/cennznet-node.log
 ```
 
 Application log:
+
 ```bash
 ~/Library/Logs/rUN/log.log
 ```
 
 Variable can be use in launcher-config.yaml
+
 ```bash
-ODIN_DIST_DIRECTORY=rUN.app/Contents/dist
-ODIN_LOG_DATA_DIRECTORY=~/Library/Logs/rUN
-ODIN_USER_DATA_DIRECTORY=~/Library/Application Support/rUN
+APP_DIST_DIRECTORY=rUN.app/Contents/dist
+APP_LOG_DATA_DIRECTORY=~/Library/Logs/rUN
+APP_USER_DATA_DIRECTORY=~/Library/Application Support/rUN
 ```
 
 Packaged app structure for mac:
@@ -131,27 +134,33 @@ Install docker and docker-compose
 Follow cennzne-node instruction login to centrality docker registry
 
 Start multiple nodes
+
 ```bash
 make up
 ```
 
 Check logs
+
 ```bash
 make logs
 or
 make logs telemetry
 ```
+
 Open telemetry UI
+
 ```bash
 open http://localhost:5000
 ```
 
 Stop all nodes
+
 ```bash
 make stop
 ```
 
 update docker-compose.yml for different node configurations, then run
+
 ```bash
 make up
 ```

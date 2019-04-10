@@ -49,20 +49,20 @@ export default (configPath: ?string): LauncherConfig => {
   /*
 [2018-12-26 21:40:56.855] [info] ********************************************************
 [2018-12-26 21:40:56.861] [info] readLauncherConfig, configPath: undefined
-[2018-12-26 21:40:56.861] [info] resourcesPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources
+[2018-12-26 21:40:56.861] [info] resourcesPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources
 [2018-12-26 21:40:56.861] [info] process.cwd(): /
-[2018-12-26 21:40:56.861] [info] app.getAppPath(): /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources/app.asar
-[2018-12-26 21:40:56.861] [info] app.getPath('userData'): /Users/kenhuang/Library/Application Support/Odin
-[2018-12-26 21:40:56.863] [info] Logger.findLogPath(): /Users/kenhuang/Library/Logs/Odin/log.log
-[2018-12-26 21:40:56.863] [info] __dirname: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources/app.asar/app
-[2018-12-26 21:40:56.863] [info] distPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources/../dist
-[2018-12-26 21:40:56.864] [info] distPathNew: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/dist
+[2018-12-26 21:40:56.861] [info] app.getAppPath(): /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/app.asar
+[2018-12-26 21:40:56.861] [info] app.getPath('userData'): /Users/kenhuang/Library/Application Support/App
+[2018-12-26 21:40:56.863] [info] Logger.findLogPath(): /Users/kenhuang/Library/Logs/App/log.log
+[2018-12-26 21:40:56.863] [info] __dirname: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/app.asar/app
+[2018-12-26 21:40:56.863] [info] distPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/../dist
+[2018-12-26 21:40:56.864] [info] distPathNew: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/dist
 [2018-12-26 21:40:56.864] [info] ********************************************************
 
-[2018-12-26 21:40:56.864] [info] [main] ODIN_DIST_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources/../dist
-[2018-12-26 21:40:56.865] [info] [main] ODIN_LOG_DATA_DIRECTORY /Users/kenhuang/Library/Logs/Odin
-[2018-12-26 21:40:56.865] [info] [main] ODIN_USER_DATA_DIRECTORY: /Users/kenhuang/Library/Application Support/Odin
-[2018-12-26 21:40:56.866] [info] [main] ODIN_INSTALL_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/Odin.app/Contents/Resources/app.asar
+[2018-12-26 21:40:56.864] [info] [main] APP_DIST_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/../dist
+[2018-12-26 21:40:56.865] [info] [main] APP_LOG_DATA_DIRECTORY /Users/kenhuang/Library/Logs/App
+[2018-12-26 21:40:56.865] [info] [main] APP_USER_DATA_DIRECTORY: /Users/kenhuang/Library/Application Support/App
+[2018-12-26 21:40:56.866] [info] [main] APP_INSTALL_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/app.asar
 */
   const inputYaml = configPath
     ? readFileSync(configPath, 'utf8')
@@ -71,32 +71,32 @@ export default (configPath: ?string): LauncherConfig => {
     if (process.env[b]) {
       return process.env[b];
     }
-    if (b === 'ODIN_INSTALL_DIRECTORY') {
-      const ODIN_INSTALL_DIRECTORY = !app.isPackaged ? process.cwd() : app.getAppPath();
-      Logger.info(`ODIN_INSTALL_DIRECTORY: ${ODIN_INSTALL_DIRECTORY}`);
-      return ODIN_INSTALL_DIRECTORY;
+    if (b === 'APP_INSTALL_DIRECTORY') {
+      const APP_INSTALL_DIRECTORY = !app.isPackaged ? process.cwd() : app.getAppPath();
+      Logger.info(`APP_INSTALL_DIRECTORY: ${APP_INSTALL_DIRECTORY}`);
+      return APP_INSTALL_DIRECTORY;
     }
-    if (b === 'ODIN_RESOURCE_DIRECTORY') {
-      const ODIN_RESOURCE_DIRECTORY = resourcesPath;
-      Logger.info(`ODIN_RESOURCE_DIRECTORY: ${ODIN_RESOURCE_DIRECTORY}`);
-      return ODIN_RESOURCE_DIRECTORY;
+    if (b === 'APP_RESOURCE_DIRECTORY') {
+      const APP_RESOURCE_DIRECTORY = resourcesPath;
+      Logger.info(`APP_RESOURCE_DIRECTORY: ${APP_RESOURCE_DIRECTORY}`);
+      return APP_RESOURCE_DIRECTORY;
     }
-    if (b === 'ODIN_DIST_DIRECTORY') {
-      const ODIN_DIST_DIRECTORY = !app.isPackaged ? process.cwd() + '/dist' : distPath;
-      Logger.info(`ODIN_DIST_DIRECTORY: ${ODIN_DIST_DIRECTORY}`);
-      return ODIN_DIST_DIRECTORY;
+    if (b === 'APP_DIST_DIRECTORY') {
+      const APP_DIST_DIRECTORY = !app.isPackaged ? process.cwd() + '/dist' : distPath;
+      Logger.info(`APP_DIST_DIRECTORY: ${APP_DIST_DIRECTORY}`);
+      return APP_DIST_DIRECTORY;
     }
-    if (b === 'ODIN_USER_DATA_DIRECTORY') {
-      const ODIN_USER_DATA_DIRECTORY = !app.isPackaged
+    if (b === 'APP_USER_DATA_DIRECTORY') {
+      const APP_USER_DATA_DIRECTORY = !app.isPackaged
         ? process.cwd() + '/dist/user_data'
         : app.getPath('userData');
-      Logger.info(`ODIN_USER_DATA_DIRECTORY: ${ODIN_USER_DATA_DIRECTORY}`);
-      return ODIN_USER_DATA_DIRECTORY;
+      Logger.info(`APP_USER_DATA_DIRECTORY: ${APP_USER_DATA_DIRECTORY}`);
+      return APP_USER_DATA_DIRECTORY;
     }
-    if (b === 'ODIN_LOG_DATA_DIRECTORY') {
-      const ODIN_LOG_DATA_DIRECTORY = GetLogDir();
-      Logger.info(`ODIN_LOG_DATA_DIRECTORY ${ODIN_LOG_DATA_DIRECTORY}`);
-      return ODIN_LOG_DATA_DIRECTORY;
+    if (b === 'APP_LOG_DATA_DIRECTORY') {
+      const APP_LOG_DATA_DIRECTORY = GetLogDir();
+      Logger.info(`APP_LOG_DATA_DIRECTORY ${APP_LOG_DATA_DIRECTORY}`);
+      return APP_LOG_DATA_DIRECTORY;
     }
     if (app.getPath(b)) {
       return app.getPath(b);
