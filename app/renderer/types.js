@@ -1,12 +1,27 @@
-import getActionTypeCreators from 'renderer/helpers/typeCreator';
+const apiActionTypes = name => {
+  const prefix = name.toUpperCase();
+  return {
+    requested: `${prefix}_REQUESTED`,
+    completed: `${prefix}_COMPLETED`,
+    failed: `${prefix}_FAILED`,
+    cancelled: `${prefix}_CANCELLED`,
+  };
+};
 
-import config from 'app/config';
+const changedActionTypes = name => {
+  const prefix = name.toUpperCase();
+  return {
+    changeRequested: `${prefix}_CHANGE_REQUESTED`,
+    changed: `${prefix}_CHANGED`,
+  };
+};
 
-const ACTION_TYPES_NAME_SPACE = config.app.name;
-
-const { apiActionTypes, changedActionTypes, triggerActionTypes } = getActionTypeCreators(
-  ACTION_TYPES_NAME_SPACE
-);
+const triggerActionTypes = name => {
+  const prefix = name.toUpperCase();
+  return {
+    triggered: `${prefix}_TRIGGERED`,
+  };
+};
 
 const actionTypes = {
   init: triggerActionTypes('init'),
