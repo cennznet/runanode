@@ -8,6 +8,7 @@ import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/la
 import { Button, PageHeading, Scrollable } from 'components';
 import MainLayout from 'renderer/components/layout/MainLayout';
 import { environment } from 'common/environment';
+import { openExternalLink } from 'renderer/utils/utils';
 import withContainer from './container';
 
 const { isDevOrDebugProd } = environment;
@@ -72,7 +73,7 @@ class ErrorPage extends React.Component {
                   settings <a href='javascript:void(0);' onClick={() => onNavToSettingGeneralPage()} style={{ color: colors.N0 }}>here</a> and
                   restart the application again, or
                   feel free
-                  to <a href='mailto:support@runanode.io' style={{ color: colors.N0 }}>contact us</a> if
+                  to <a href='javascript:void(0);' onClick={() => this.props.handleClick ? this.props.handleClick() : openExternalLink('mailto:support@runanode.io')} style={{ color: colors.N0 }}>contact us</a> if
                   the problem persists
                 </Note>
                 {isDevOrDebugProd && (
