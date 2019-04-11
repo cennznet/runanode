@@ -1,0 +1,71 @@
+.sentry-error-embed {
+  background: #020835 !important;
+  border: 1px solid #020835 !important;
+  padding-bottom: 20px !important;
+}
+
+.sentry-error-embed h2 {
+  color: #fff !important;
+}
+
+.sentry-error-embed .form-field input, .sentry-error-embed .form-field textarea {
+  background: rgba(114, 94, 255, 0.5) !important;
+  border: none !important;
+}
+
+.sentry-error-embed .form-field input, .sentry-error-embed .form-field {
+  color: #fff !important;
+}
+
+.powered-by {
+  display: none;
+}
+
+.form-submit {
+  display: flex;
+  flex-direction: row-reverse;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sentry-error-embed .form-submit .btn {
+  margin-top: 1rem;
+  background: rgba(17, 48, 255, 0.9) !important;
+  border: 1px solid rgba(17,48,255,0.9) !important;
+  font-size: 14px !important;
+}
+
+.sentry-error-embed .form-submit .close {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  padding-top: 1rem !important;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  color: #fff !important;
+  border: 1px solid transparent !important;
+  background-color: transparent;
+}
+
+.sentry-error-embed .form-field label {
+  color: #fff !important;
+  font-size: 1rem !important;;
+  font-weight: 600 !important;;
+  margin-bottom: 0.5rem !important;
+  text-transform: none !important;
+}
+
+.sentry-error-embed header {
+  text-align: left !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.sentry-error-embed .message-success {
+  background: rgba(114, 94, 255, 0.5) !important;
+  border: none !important;
+  color: #fff;
+}
+
+.sentry-error-embed .message-error {
+  background: rgba(114, 94, 255, 0.5) !important;
+  border: none !important;
+  color: red;
+}
