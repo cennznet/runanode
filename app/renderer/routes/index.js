@@ -9,6 +9,7 @@ import ChooseNetworkPage from 'renderer/pages/chooseNetworkPage';
 import SyncNodePage from 'renderer/pages/syncNodePage';
 import DevPage from 'renderer/pages/devPage';
 import ErrorPage from 'renderer/pages/errorPage';
+import ErrorBoundary from 'renderer/pages/errorPage/ErrorBoundary';
 import HomePage from 'renderer/pages/homePage';
 import WaitPage from 'renderer/pages/waitPage';
 import WalletLandingPage from 'renderer/pages/wallet/landingPage';
@@ -55,10 +56,13 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.WALLET.LANDING} component={WalletLandingPage} />
         <Route exact path={ROUTES.WALLET.CREATE} component={WalletCreatePage} />
         <Route exact path={ROUTES.WALLET.CONNECT} component={WalletConnectPage} />
-        <Route path={ROUTES.STAKING.ROOT} render={() => <StakingRoutes {...{ isStakingStated }} />}  />
+        <Route
+          path={ROUTES.STAKING.ROOT}
+          render={() => <ErrorBoundary><StakingRoutes {...{ isStakingStated }} /></ErrorBoundary>}
+        />
         <Route path={ROUTES.SETTINGS.ROOT} render={SettingsRoutes} />
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
-        <Route exact path={ROUTES.CHOOSE_NETWORK} render={() => <ChooseNetworkPage />} />
+        <Route exact path={ROUTES.CHOOSE_NETWORK} render={() => <ErrorBoundary><ChooseNetworkPage /></ErrorBoundary>} />
         <Route exact path={ROUTES.SYNC_NODE} component={SyncNodePage} />
         <Route exact path={ROUTES.DEV} component={DevPage} />
         <Route exact path={ROUTES.ERROR} component={ErrorPage} />

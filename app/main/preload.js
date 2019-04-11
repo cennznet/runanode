@@ -53,10 +53,11 @@ process.once('loaded', () => {
     global.spectronRequire = __non_webpack_require__; // eslint-disable-line
   }
   if (!isDev) {
+    // Lottie animate.destroy() use global.eval() when showing error page, comment out this for now until better solution
     // ESLint will warn about any use of eval(), even this one
     // eslint-disable-next-line
-    global.eval = () => {
-      throw new Error('This app does not support window.eval().');
-    };
+    // global.eval = () => {
+    //   throw new Error('This app does not support window.eval().');
+    // };
   }
 });
