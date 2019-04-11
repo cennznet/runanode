@@ -71,6 +71,8 @@
     "no-return-assign": 0,
     "no-restricted-syntax": 0,
     "react/prefer-stateless-function": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "no-script-url": 0,
+    "jsx-a11y/anchor-is-valid": 0
   }
 }

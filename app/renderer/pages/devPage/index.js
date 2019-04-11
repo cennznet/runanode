@@ -52,6 +52,7 @@ const DevPage = ({
   onStakeAndRestart,
   onUnStakeAndRestart,
   wallets,
+  balances,
 }) => {
   const {
     localNode: { chain },
@@ -85,6 +86,7 @@ const DevPage = ({
               onStake({
                 stashAccountAddress: Object.keys(wallets[0].accounts)[0],
                 wallet: wallets[0],
+                balances,
               })
             }
           >
@@ -113,6 +115,7 @@ const DevPage = ({
               onStakeAndRestart({
                 wallet: wallets[0],
                 stashAccountAddress: Object.keys(wallets[0].accounts)[0],
+                balances,
               })
             }
           >
