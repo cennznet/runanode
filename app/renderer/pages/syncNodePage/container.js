@@ -27,7 +27,6 @@ const mapDispatchToProps = dispatch => ({
     });
   },
   onGetChainGetHeader: () => {
-    Logger.debug(`onGetChainGetHeader`);
     dispatch({ type: types.nodeWsChainGetHeader.requested });
   },
 });
