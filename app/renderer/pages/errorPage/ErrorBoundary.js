@@ -44,9 +44,12 @@ class ErrorBoundaryPage extends React.Component {
     this.state = { error: null, errorInfo: null };
   }
 
-  _handleClick = () => {
+  _handleContactUsClick = () => {
     if (Raven.lastEventId()) {
-      Raven.showReportDialog();
+      // https://docs.sentry.io/enriching-error-data/user-feedback/?platform=javascript
+      Raven.showReportDialog({
+        labelSubmit: 'Submit',
+      });
     }
   };
 
@@ -64,7 +67,7 @@ class ErrorBoundaryPage extends React.Component {
     if (this.state.errorInfo) {
       return (
         <div>
-          <ErrorPage error={this.state.error} errorInfo={this.state.errorInfo} handleClick={this._handleClick} />
+          <ErrorPage error={this.state.error} errorInfo={this.state.errorInfo} handleContactUsClick={this._handleContactUsClick} />
         </div>
       );
     }

@@ -5,11 +5,13 @@
 ### Features
 
 ### Fixes
+- Fix mac icon issue
 
 ### Improvements
 - Better error handling using ErrorBoundary, allow user self recover from error state
 - Code rebranding, replace `Odin` in code
 - Add sentry integration
+- Customized sentry feedback form
 
 # v0.9.2 (2019.04.09)
 
