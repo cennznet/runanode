@@ -28,6 +28,7 @@ const actionTypes = {
   wsLocalStatusChange: triggerActionTypes('ws_local_status_change'),
   wsRemoteStatusChange: triggerActionTypes('ws_remote_status_change'),
   testPage: triggerActionTypes('test_page'),
+  errorPage: triggerActionTypes('error_page'),
   homePageNavigation: triggerActionTypes('home_page_navigation'),
   navigation: triggerActionTypes('navigation'),
   changeAppUiState: triggerActionTypes('change_app_ui_state'),
