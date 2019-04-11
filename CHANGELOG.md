@@ -7,6 +7,7 @@
 ### Fixes
 
 ### Improvements
+- Better error handling using ErrorBoundary, allow user self recover from error state
 
 - Code rebranding, replace `Odin` in code
 
