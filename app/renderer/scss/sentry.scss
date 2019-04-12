@@ -55,7 +55,8 @@
 
 .sentry-error-embed header {
   text-align: left !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
 }
 
 .sentry-error-embed .message-success {
@@ -65,7 +66,7 @@
 }
 
 .sentry-error-embed .message-error {
-  background: rgba(114, 94, 255, 0.5) !important;
+  background: none !important;
   border: none !important;
   color: red;
 }
