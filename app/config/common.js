@@ -7,6 +7,7 @@ const commonConfig = {
     name: 'rUN',
     apiInitDebounceTime: 6000,
     defaultDebounceTime: 500,
+    sentryDSN: 'https://0c4aa4aa53f1494e87d532890cb59529@sentry.io/1436322',
   },
   node: {
     startupMaxRetry: 5,
