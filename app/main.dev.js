@@ -28,8 +28,6 @@ import { createMainWindow } from 'main/windows/mainWindow';
 import { cennznetStatusChannel } from 'main/ipc/cennznet.ipc';
 import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
 import { environment } from 'common/environment';
-// import autoUpdater from './auto-updater';
-import packageJson from '../package.json';
 
 const { isDevOrDebugProd, buildLabel } = environment;
 
@@ -57,7 +55,7 @@ export const createDefaultWindow = () => {
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   window.webContents.on('did-finish-load', () => {
-    Logger.info('#####window.webContents');
+    Logger.info('window.webContents');
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
@@ -141,9 +139,8 @@ app.on('ready', async () => {
   setupLogging();
   mainErrorHandler();
 
-  Logger.info(`========== AutoUpdater feedURL: ${autoUpdater.getFeedURL() || ''} ==========`);
+  Logger.info(`========== App is starting at ${new Date().toString()} ==========`);
 
-  log.transports.file.level = "info";
   autoUpdater.logger = log;
   autoUpdater.checkForUpdatesAndNotify();
 
@@ -195,7 +192,6 @@ app.on('ready', async () => {
 
   // Wait for controlled cennznet-node shutdown before quitting the app
   app.on('before-quit', async event => {
-    Logger.info('#####before-quit');
     Logger.info('app received <before-quit> event. Safe exiting App now.');
     event.preventDefault(); // prevent App from quitting immediately
     await safeExit();
