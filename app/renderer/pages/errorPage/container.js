@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+
 import types from 'renderer/types';
+import { Logger } from 'renderer/utils/logging';
+import ROUTES from '../../constants/routes';
 
 const mapStateToProps = () => ({});
 
@@ -8,16 +10,18 @@ const mapDispatchToProps = dispatch => ({
   onAcceptTermsOfUse: () => {
     dispatch({ type: types.acceptTermsOfUse.triggered });
   },
+  onNavToSettingGeneralPage: () => {
+    Logger.debug(`onNavToSettingGeneralPage`);
+    dispatch(
+      {
+        type: types.navigation.triggered,
+        payload: ROUTES.SETTINGS.GENERAL,
+      }
+    )
+  }
 });
 
-const enhance = lifecycle({
-  componentDidMount() {},
-});
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  enhance
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 );

@@ -31,4 +31,13 @@ const wsConnectionReadyEpic = action$ => {
   );
 };
 
-export default [wsConnectionReadyEpic, wsConnectionErrorEpic];
+const errorPageEpic = action$ => {
+  return action$.ofType(types.errorPage.triggered).pipe(
+    mapTo({
+      type: types.navigation.triggered,
+      payload: ROUTES.ERROR,
+    }),
+  );
+};
+
+export default [errorPageEpic, wsConnectionReadyEpic, wsConnectionErrorEpic];
