@@ -1,5 +1,5 @@
 // @flow
-import log from 'electron-log';
+const log = global.electronLog;
 
 const prefixProcessType = (str: string) => '[renderer] ' + str;
 
