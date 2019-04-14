@@ -365,13 +365,21 @@ const StakingStakePage = ({
                     {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
                   </InnerSectionItem>
                   <InnerSectionItemNum>
-                    {stakingTokenBalances.totalBalance.toString}
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {stakingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItemNum>
                   <InnerSectionItem>
-                    Reserved: {stakingTokenBalances.reservedBalance.toString}
+                    Reserved:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {stakingTokenBalances.reservedBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <InnerSectionItem>
-                    Total: {stakingTokenBalances.totalBalance.toString}
+                    Total:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {stakingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardValueDiff} />
                 </InnerSectionWrapper>
@@ -385,13 +393,21 @@ const StakingStakePage = ({
                     {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
                   </InnerSectionItem>
                   <InnerSectionItemNum>
-                    {spendingTokenBalances.totalBalance.toString}
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {spendingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItemNum>
                   <InnerSectionItem>
-                    Reserved: {spendingTokenBalances.reservedBalance.toString}
+                    Reserved:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {spendingTokenBalances.reservedBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <InnerSectionItem>
-                    Total: {spendingTokenBalances.totalBalance.toString}
+                    Total:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {spendingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} />
                 </InnerSectionWrapper>
