@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import Table from 'components/Table';
 import { colors } from 'renderer/theme';
-import Scrollable from 'components/Scrollable';
+import { Ellipsis, Scrollable } from 'components';
 
 const AssetIdIcon = ({ value }) => {
   const SVG = styled(SVGInline).attrs({
@@ -22,7 +22,7 @@ const PortfolioSection = ({ accountBalances }) => {
   }
 
   return (
-    <Scrollable styles={{height: '60vh'}}>
+    <Scrollable styles={{ height: '60vh' }}>
       <Table
         data={(accountBalances && Object.values(accountBalances)) || [{}]}
         page={0}
@@ -60,7 +60,15 @@ const PortfolioSection = ({ accountBalances }) => {
             ),
             // accessor: 'reservedBalance',
             id: 'reservedBalance',
-            accessor: d => (d && d.reservedBalance ? d.reservedBalance.toString : ''),
+            accessor: ({ reservedBalance }) => {
+              return (
+                reservedBalance && (
+                  <Ellipsis substrLength="5" maxLength="15" tailLength="5">
+                    {reservedBalance.toString || ''}
+                  </Ellipsis>
+                )
+              );
+            },
             Cell: row => {
               return (
                 <div
@@ -87,7 +95,15 @@ const PortfolioSection = ({ accountBalances }) => {
               </div>
             ),
             id: 'freeBalance',
-            accessor: d => (d && d.freeBalance ? d.freeBalance.toString : ''),
+            accessor: ({ freeBalance }) => {
+              return (
+                freeBalance && (
+                  <Ellipsis substrLength="5" maxLength="15" tailLength="5">
+                    {freeBalance.toString || ''}
+                  </Ellipsis>
+                )
+              );
+            },
             Cell: row => {
               return (
                 <div
@@ -114,7 +130,12 @@ const PortfolioSection = ({ accountBalances }) => {
               </div>
             ),
             id: 'totalBalance',
-            accessor: d => (d && d.totalBalance ? d.totalBalance.toString : ''),
+            accessor: ({ totalBalance }) =>
+              totalBalance && (
+                <Ellipsis substrLength="5" maxLength="15" tailLength="5">
+                  {totalBalance.toString || ''}
+                </Ellipsis>
+              ),
             Cell: row => {
               return (
                 <div
