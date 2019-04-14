@@ -775,6 +775,8 @@ export default class CennzApi {
     statusCb: Function
   ): Promise<Function> => {
     Logger.debug('CennznetApi::doStake called');
+    Logger.debug(`CennznetApi::doStake called, wallet ${JSON.stringify(wallet)}`);
+    Logger.debug(`CennznetApi::doStake called, stashAccountAddress ${JSON.stringify(stashAccountAddress)}`);
     Logger.debug(`CennznetApi::doStake called, balances ${JSON.stringify(balances)}`);
     Logger.debug(
       `CennznetApi::doStake called, stakingPreference ${JSON.stringify(stakingPreference)}`

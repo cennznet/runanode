@@ -290,7 +290,7 @@ export class CennzNetNode {
               .catch(err => {
                 _log.error(`An unknown error occurred while waiting for the port: ${err}`);
               });
-          }, 5 * 1000);
+          }, 10 * 1000);
 
           _log.info(`CennzNetNode#start: cennznet-node child process spawned with PID ${node.pid}`);
           resolve();

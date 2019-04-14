@@ -88,6 +88,7 @@
     "@fortawesome/react-fontawesome": "^0.1.3",
     "@redux-beacon/google-analytics": "^1.2.1",
     "@redux-beacon/logger": "^1.0.0",
+    "@sentry/webpack-plugin": "^1.6.2",
     "bignumber.js": "^8.0.2",
     "bip39": "^2.5.0",
     "blakejs": "^1.1.0",

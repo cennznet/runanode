@@ -116,10 +116,10 @@ Start `Debug Renderer Process` in VSCode
 ## Pass args on app start
 
 Mac:
-open -a /Applications/rUN.app --args --XXXX=true
+open -a /Applications/rUN.app --args --DEBUG_PROD=true
 
 Windows:
-rUN.exe --XXXX=true
+rUN.exe --DEBUG_PROD=true
 
 ## Component development
 

@@ -96,7 +96,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
           </div>
         </Scrollable>
         <PageFooter>
-          <div/>
+          <div />
           <Stake
             {...{
               onStakeConfirmed,

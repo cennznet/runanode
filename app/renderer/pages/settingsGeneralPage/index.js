@@ -7,6 +7,8 @@ import config from 'app/config';
 
 import packageJson from '../../../../package.json';
 import withContainer from './container';
+import Button from '../../components/Button';
+import Scrollable from '../../components/Scrollable';
 
 const Label = styled.div`
   display: flex;
@@ -28,9 +30,15 @@ const PreferenceSection = styled.div`
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: ${colors.border};
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: ${colors.border};
+    
+  & + & { 
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: ${colors.border};
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: ${colors.border};
+  }
 `;
 
 const PreferenceHeader = styled.div`
@@ -61,6 +69,7 @@ const SettingsGeneralPage = ({
   onToggleRememberNetwork,
   enableAnalytics,
   onToggleEnableAnalytics,
+  onResetStakingOption,
 }) => (
   <MainLayout subNav={subNav}>
     <MainContent>
@@ -68,39 +77,53 @@ const SettingsGeneralPage = ({
       <VersionSection>
         {config.app.name} version {packageJson.version}
       </VersionSection>
-      <PreferenceSection>
-        <PreferenceHeader>Preference</PreferenceHeader>
-        <PreferenceBody>
-          <PreferenceItem>
-            <Label>
-              Remember my network preference
-              <span>Remember network choices between sessions.</span>
-            </Label>
-            <Toggle
-              defaultChecked={rememberNetwork === null ? true : rememberNetwork}
-              onChange={e => {
-                onToggleRememberNetwork(rememberNetwork === null ? false : !rememberNetwork);
-              }}
-            />
-          </PreferenceItem>
-          <PreferenceItem>
-            <Label>
-              Enable analytics
-              <span>
-                We collect basic information (for example country of origin, operation system,
-                application version number) to help improve our user experiences. Data is only used
-                in aggregate and is never shared with any third parties.
-              </span>
-            </Label>
-            <Toggle
-              defaultChecked={enableAnalytics === null ? true : enableAnalytics}
-              onChange={e => {
-                onToggleEnableAnalytics(enableAnalytics === null ? false : !enableAnalytics);
-              }}
-            />
-          </PreferenceItem>
-        </PreferenceBody>
-      </PreferenceSection>
+      <Scrollable styles={{height: '70vh'}}>
+        <PreferenceSection>
+          <PreferenceHeader>Preference</PreferenceHeader>
+          <PreferenceBody>
+            <PreferenceItem>
+              <Label>
+                Remember my network preference
+                <span>Remember network choices between sessions.</span>
+              </Label>
+              <Toggle
+                defaultChecked={rememberNetwork === null ? true : rememberNetwork}
+                onChange={e => {
+                  onToggleRememberNetwork(rememberNetwork === null ? false : !rememberNetwork);
+                }}
+              />
+            </PreferenceItem>
+            <PreferenceItem>
+              <Label>
+                Enable analytics
+                <span>
+                  We collect basic information (for example country of origin, operation system,
+                  application version number) to help improve our user experiences. Data is only used
+                  in aggregate and is never shared with any third parties.
+                </span>
+              </Label>
+              <Toggle
+                defaultChecked={enableAnalytics === null ? true : enableAnalytics}
+                onChange={e => {
+                  onToggleEnableAnalytics(enableAnalytics === null ? false : !enableAnalytics);
+                }}
+              />
+            </PreferenceItem>
+          </PreferenceBody>
+        </PreferenceSection>
+        <PreferenceSection>
+          <PreferenceHeader>Danger Zone</PreferenceHeader>
+          <PreferenceBody>
+            <PreferenceItem>
+              <Label>
+                Reset staking option
+                <span>You can reset staking option here.</span>
+              </Label>
+              <Button color="danger" onClick={() => onResetStakingOption()}>Reset</Button>
+            </PreferenceItem>
+          </PreferenceBody>
+        </PreferenceSection>
+      </Scrollable>
     </MainContent>
   </MainLayout>
 );

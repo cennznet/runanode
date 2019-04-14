@@ -1,11 +1,14 @@
 import React from 'react';
 
-const Ellipsis = ({ substrLength = 12, children }) => {
+const Ellipsis = ({ maxLength = 17, substrLength = 12, tailLength = 5, children }) => {
+  if (!children) {
+    return null;
+  }
   const formattedText =
-    children.length > 17
+    children.length > maxLength
       ? children.substr(0, substrLength) +
         ' ... ' +
-        children.substr(children.length - 5, children.length)
+        children.substr(children.length - tailLength, children.length)
       : children;
   return <span>{formattedText}</span>;
 };

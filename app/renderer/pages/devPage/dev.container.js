@@ -15,6 +15,7 @@ const mapStateToProps = ({
   localStorage: { WALLETS },
   nodeStateStore,
   nodeSystem,
+  balances,
 }) => ({
   nodeSystem,
   blocksNew,
@@ -22,6 +23,7 @@ const mapStateToProps = ({
   blocksFinalised,
   nodeStateStore,
   wallets: WALLETS,
+  balances,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -105,7 +107,23 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onStake: payload => {
-    // window.appApi.doStake(payload.wallet, payload.stashAccountAddress, '');
+    const stakingPreference = { unstakeThreshold: 3 , validatorPayment: 0 };
+    const passphrase = '';
+    const statusCb = ({ events, status, type }) => {
+      Logger.debug(`onStake status: ${status}`);
+      // observer.next(type);
+      if (type === 'Finalised') {
+        // observer.complete();
+      }
+    };
+    window.appApi.doStake(
+      payload.wallet,
+      payload.stashAccountAddress,
+      payload.balances,
+      stakingPreference,
+      passphrase,
+      statusCb
+    );
   },
   onSendNodeStatus: payload => {
     dispatch({ type: types.sendNodeStatusToIpcMain.requested, payload });
