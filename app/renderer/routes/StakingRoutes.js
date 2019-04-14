@@ -9,12 +9,10 @@ import StakingStakePage from 'renderer/pages/stakingStakePage';
 import StakingManagePage from 'renderer/pages/stakingManagePage';
 import ROUTES from 'renderer/constants/routes';
 
-const getNavItems = (isStakingStated) => {
-  const navItems = [
-    { label: 'Overview', link: ROUTES.STAKING.OVERVIEW }
-    ];
+const getNavItems = isStakingStated => {
+  const navItems = [{ label: 'Overview', link: ROUTES.STAKING.OVERVIEW }];
 
-  if(isStakingStated) {
+  if (isStakingStated) {
     navItems.push({ label: 'Manage', link: ROUTES.STAKING.MANAGE });
   } else {
     navItems.push({ label: 'Start to stake', link: ROUTES.STAKING.STAKE });
@@ -22,7 +20,7 @@ const getNavItems = (isStakingStated) => {
   return navItems;
 };
 
-const subNav = (isStakingStated) => {
+const subNav = isStakingStated => {
   const navItems = getNavItems(isStakingStated);
   return (
     <SubNav>

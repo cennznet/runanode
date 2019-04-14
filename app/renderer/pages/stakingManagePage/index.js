@@ -208,6 +208,7 @@ const Subheading = ({ account, wallet }) => {
   );
 };
 const StakingStakePage = ({
+  balances,
   subNav,
   uiState,
   onUnStake,
@@ -336,6 +337,10 @@ const StakingStakePage = ({
     return <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value}</InnerSectionItemDiff>;
   };
 
+  const stakingTokenBalances = balances[stakingStashAccountAddress][PreDefinedAssetId.stakingToken];
+  const spendingTokenBalances =
+    balances[stakingStashAccountAddress][PreDefinedAssetId.spendingToken];
+
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
@@ -360,15 +365,13 @@ const StakingStakePage = ({
                     {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
                   </InnerSectionItem>
                   <InnerSectionItemNum>
-                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}
+                    {stakingTokenBalances.totalBalance.toString}
                   </InnerSectionItemNum>
                   <InnerSectionItem>
-                    Reserved:{' '}
-                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].reservedBalance.toString}
+                    Reserved: {stakingTokenBalances.reservedBalance.toString}
                   </InnerSectionItem>
                   <InnerSectionItem>
-                    Total:{' '}
-                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}
+                    Total: {stakingTokenBalances.totalBalance.toString}
                   </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardValueDiff} />
                 </InnerSectionWrapper>
@@ -382,18 +385,13 @@ const StakingStakePage = ({
                     {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
                   </InnerSectionItem>
                   <InnerSectionItemNum>
-                    {stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}
+                    {spendingTokenBalances.totalBalance.toString}
                   </InnerSectionItemNum>
                   <InnerSectionItem>
-                    Reserved:{' '}
-                    {
-                      stakingAccount.assets[PreDefinedAssetId.spendingToken].reservedBalance
-                        .toString
-                    }
+                    Reserved: {spendingTokenBalances.reservedBalance.toString}
                   </InnerSectionItem>
                   <InnerSectionItem>
-                    Total:{' '}
-                    {stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}
+                    Total: {spendingTokenBalances.totalBalance.toString}
                   </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} />
                 </InnerSectionWrapper>
