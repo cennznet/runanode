@@ -36,43 +36,6 @@ const { isDevOrDebugProd, buildLabel } = environment;
 let mainWindow: BrowserWindow;
 let cennzNetNode: CennzNetNode;
 
-autoUpdater.on('error', (ev, err) => {
-  Logger.info('autoUpdater error:', JSON.stringify(err));
-});
-
-autoUpdater.on('checking-for-update', (ev, err) => {
-  Logger.info('autoUpdater checking-for-update: ', JSON.stringify(err));
-});
-
-autoUpdater.on('update-available', (ev, err) => {
-  Logger.info('autoUpdater update-available: ', JSON.stringify(ev));
-});
-
-autoUpdater.on('update-not-available', (ev, err) => {
-  Logger.info('autoUpdater update-not-available: ', JSON.stringify(ev));
-});
-
-autoUpdater.on('download-progress', (ev, err) => {
-  Logger.info('autoUpdater download-progress: ', JSON.stringify(ev));
-});
-
-autoUpdater.on('update-downloaded', (ev, err) => {
-  Logger.info('autoUpdater update-downloaded: ', JSON.stringify(ev));
-  dialog.showMessageBox(
-    {
-      type: 'info',
-      title: 'Update Ready',
-      message: 'A new version of app is ready. Quit and Install now?',
-      buttons: ['Yes', 'Later'],
-    },
-    index => {
-      if (!index) {
-        autoUpdater.quitAndInstall();
-      }
-    }
-  );
-});
-
 export const createDefaultWindow = () => {
   Logger.info('createDefaultWindow');
 
@@ -180,6 +143,8 @@ app.on('ready', async () => {
 
   Logger.info(`========== AutoUpdater feedURL: ${autoUpdater.getFeedURL() || ''} ==========`);
 
+  log.transports.file.level = "info";
+  autoUpdater.logger = log;
   autoUpdater.checkForUpdatesAndNotify();
 
   Logger.info(`!!! ${buildLabel} is running on ${os.platform()} version ${os.release()}
@@ -204,7 +169,7 @@ app.on('ready', async () => {
   mainWindow = createMainWindow(isInSafeMode);
   // mainWindow = createDefaultWindow();
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  const menuBuilder = new MenuBuilder(mainWindow, autoUpdater);
   menuBuilder.buildMenu();
 
   cennzNetNode = setupCennzNet(launcherConfig, mainWindow);
@@ -237,27 +202,27 @@ app.on('ready', async () => {
   });
 
   autoUpdater.on('error', (ev, err) => {
-    Logger.info('autoUpdater error:', JSON.stringify(err));
+    Logger.info(`autoUpdater error: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
   });
 
   autoUpdater.on('checking-for-update', (ev, err) => {
-    Logger.info('autoUpdater checking-for-update: ', JSON.stringify(err));
+    Logger.info(`autoUpdater checking-for-update: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
   });
 
   autoUpdater.on('update-available', (ev, err) => {
-    Logger.info('autoUpdater update-available: ', JSON.stringify(ev));
+    Logger.info(`autoUpdater update-available: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
   });
 
   autoUpdater.on('update-not-available', (ev, err) => {
-    Logger.info('autoUpdater update-not-available: ', JSON.stringify(ev));
+    Logger.info(`autoUpdater update-not-available: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
   });
 
   autoUpdater.on('download-progress', (ev, err) => {
-    Logger.info('autoUpdater download-progress: ', JSON.stringify(ev));
+    Logger.info(`autoUpdater download-progress: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
   });
 
   autoUpdater.on('update-downloaded', (ev, err) => {
-    Logger.info('autoUpdater update-downloaded: ', JSON.stringify(ev));
+    Logger.info(`autoUpdater update-downloaded: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
     dialog.showMessageBox(
       {
         type: 'info',

@@ -2,14 +2,17 @@
 import { app, Menu, shell, BrowserWindow } from 'electron';
 import { environment } from 'common/environment';
 import config from 'app/config';
+import { AppUpdater } from 'electron-updater';
 
 const { isDevOrDebugProd } = environment;
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
+  autoUpdater: AppUpdater;
 
-  constructor(mainWindow: BrowserWindow) {
+  constructor(mainWindow: BrowserWindow, myAutoUpdater: AppUpdater) {
     this.mainWindow = mainWindow;
+    this.autoUpdater = myAutoUpdater;
   }
 
   buildMenu() {
@@ -49,6 +52,12 @@ export default class MenuBuilder {
         {
           label: 'About ' + config.app.name,
           selector: 'orderFrontStandardAboutPanel:',
+        },
+        {
+          label: 'Check for Updates...',
+          click: () => {
+            this.autoUpdater.checkForUpdatesAndNotify();
+          },
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },

@@ -164,3 +164,20 @@ update docker-compose.yml for different node configurations, then run
 ```bash
 make up
 ```
+
+## Auto upgrade
+
+Test auto upgrade with minio
+
+```bash
+brew install minio/stable/minio
+brew services stop minio/stable/minio
+minio server ~/minio-data
+
+export CSC_LINK=xxx
+export CSC_KEY_PASSWORD=xxx
+export AWS_ACCESS_KEY_ID=xxx
+export AWS_SECRET_ACCESS_KEY=xxx
+
+yarn release:minio
+```
