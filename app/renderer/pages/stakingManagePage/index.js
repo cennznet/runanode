@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import SVGInline from "react-svg-inline";
-import BN from "bn.js";
-import { Balance, BlockNumber } from "@polkadot/types";
+import SVGInline from 'react-svg-inline';
+import BN from 'bn.js';
+import { Balance, BlockNumber } from '@polkadot/types';
 import R from 'ramda';
 
 import PageSpinner from 'components/PageSpinner';
@@ -16,14 +16,13 @@ import cennzIcon from 'renderer/assets/icon/cennz.svg';
 import { colors } from 'renderer/theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
-import { Button, PageHeading } from 'components';
+import { Button, PageHeading, Ellipsis } from 'components';
 import withContainer from './container';
 import ClipboardShareLinks from '../wallet/account/transferSectionPage/ClipboardShareLinks';
 import UnStakeWarningModal from './UnStakeWarningModal';
 import CennznetWallet from '../../api/wallets/CennznetWallet';
 import CennznetWalletAccount from '../../api/wallets/CennznetWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
-
 
 const CentrapayIcon = styled(SVGInline).attrs({
   svg: centrapayIcon,
@@ -69,7 +68,7 @@ const Right = styled.div`
 
 const ItemTitle = styled.div`
   color: ${colors.textMuted};
-  line-height: 1.8rem;;
+  line-height: 1.8rem;
 `;
 
 const ItemNum = styled.span`
@@ -81,7 +80,7 @@ const Item = styled.div`
   border-radius: 3px;
   padding: 1rem 1rem 1rem 1rem;
   line-height: 1.5rem;
-  &+& {
+  & + & {
     margin-top: 1rem;
   }
 `;
@@ -137,9 +136,9 @@ const fadeOut = keyframes`
   }
 `;
 const InnerSectionItemDiff = styled(InnerSectionItem)`
-  color: ${p => p.children < 0 ? colors.danger : colors.success };
-  visibility: ${p => p.children === '0' ? 'hidden' : 'visible'};
-  animation: ${p => p.children === '0' ? fadeOut : fadeIn} 1s linear;
+  color: ${p => (p.children < 0 ? colors.danger : colors.success)};
+  visibility: ${p => (p.children === '0' ? 'hidden' : 'visible')};
+  animation: ${p => (p.children === '0' ? fadeOut : fadeIn)} 1s linear;
   transition: visibility 1s linear;
 `;
 
@@ -155,13 +154,41 @@ const SectionHDivider = styled.div`
   width: 10%;
 `;
 
+const SubheadingWrapper = styled.div`
+  display: flex;
+  line-height: 1.5rem;
+`;
+
+const NameInfo = styled.div`
+  margin-right: 0.5rem;
+`;
+
+const NameText = styled.span`
+  padding: 0 0.2rem;
+`;
+
 const Subheading = ({ account, wallet }) => {
   const url = CENNZScanAddressUrl.rimu; // TODO should base on selected network
   const { name: walletName } = wallet;
   const { name: accountName } = account;
+
   return (
-    <div style={{ display: 'flex' }}>
-      <span>Staking account:{walletName || 'N/A'}:{accountName || 'N/A'}:</span>
+    <SubheadingWrapper>
+      <NameInfo>
+        Staking account:
+        <NameText>
+          <Ellipsis substrLength="3" maxLength="6" tailLength="3">
+            {walletName || 'N/A'}
+          </Ellipsis>
+        </NameText>
+        :
+        <NameText>
+          <Ellipsis substrLength="3" maxLength="6" tailLength="3">
+            {accountName || 'N/A'}
+          </Ellipsis>
+        </NameText>
+        :
+      </NameInfo>
       <ClipboardShareLinks
         url={url}
         styles={{
@@ -173,25 +200,29 @@ const Subheading = ({ account, wallet }) => {
           icon2MarginLeft: '1rem',
           textPaddingTop: null,
           textMinWidth: null,
-        }}>
+        }}
+      >
         {account.address}
       </ClipboardShareLinks>
-    </div>
+    </SubheadingWrapper>
   );
 };
-const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, stakingStashAccountAddress, wallets, onSyncWalletData }) => {
-
-  if(!stakingStashAccountAddress) {
+const StakingStakePage = ({
+  subNav,
+  uiState,
+  onUnStake,
+  stakingStashWalletId,
+  stakingStashAccountAddress,
+  wallets,
+  onSyncWalletData,
+}) => {
+  if (!stakingStashAccountAddress) {
     return (
       <MainLayout subNav={subNav}>
         <MainContent display="flex">
-          <PageHeading>
-            Manage Staking
-          </PageHeading>
+          <PageHeading>Manage Staking</PageHeading>
           <div className="content">
-            <div>
-              missing stakingStashAccountAddress
-            </div>
+            <div>missing stakingStashAccountAddress</div>
           </div>
         </MainContent>
       </MainLayout>
@@ -215,18 +246,16 @@ const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, st
   const [rewardSpendingValue, setRewardSpendingValue] = useState('0');
   const [rewardSpendingValueDiff, setRewardSpendingValueDiff] = useState('0');
 
-  const stakingWallet: CennznetWallet = wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
+  const stakingWallet: CennznetWallet =
+    wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
   const stakingAccount: CennznetWalletAccount = stakingWallet.accounts[stakingStashAccountAddress];
 
-  const [intentions, validators] = useApis(
-    'getIntentions',
-    'getValidators',
-  );
+  const [intentions, validators] = useApis('getIntentions', 'getValidators');
 
   // TODO for demo only
-  const getRandomInt = (max) => {
+  const getRandomInt = max => {
     return Math.floor(Math.random() * Math.floor(max));
-  }
+  };
   useEffect(() => {
     const interval = setInterval(() => {
       const val = getRandomInt(10);
@@ -239,26 +268,33 @@ const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, st
   }, [rewardSpendingValue, rewardSpendingValueDiff]);
 
   const callbackFn = value => {
-    if(Array.isArray(value)) {
+    if (Array.isArray(value)) {
       // for system events
-      if(value.Type && value.Type === 'EventRecord') {
+      if (value.Type && value.Type === 'EventRecord') {
         value
           .filter(({ event }) => event.section !== 'system')
-          .filter((record) => record.event) // event.section !== 'system')
+          .filter(record => record.event) // event.section !== 'system')
           .map(({ event }, index) => {
-            const {  method, section } = event;
-            const document = event.meta && event.meta.documentation
-              ? event.meta.documentation.join(' ')
-              : '';
+            const { method, section } = event;
+            const document =
+              event.meta && event.meta.documentation ? event.meta.documentation.join(' ') : '';
             const defaultType = event.data.typeDef[0].type;
             const defaultData = event.data.toArray()[0];
-            if(`${section}.${method}` === 'staking.Reward') {
+            if (`${section}.${method}` === 'staking.Reward') {
               const balance: Balance = defaultData;
               const balanceValue = balance.toString() === '0' ? '3' : balance.toString(); // TODO DEMO only, after stake balance become 0
               const validatorNum = 3;
-              Logger.debug(`balanceValue: ${balanceValue}, validators: ${JSON.stringify(validators)}`);
-              setRewardValue(myValue => new BN(myValue, 10).add(new BN(balanceValue, 10).div(new BN(validatorNum))).toString(10));
-              setRewardValueDiff(new BN(balanceValue.toString(), 10).div(new BN(validatorNum)).toString(10));
+              Logger.debug(
+                `balanceValue: ${balanceValue}, validators: ${JSON.stringify(validators)}`
+              );
+              setRewardValue(myValue =>
+                new BN(myValue, 10)
+                  .add(new BN(balanceValue, 10).div(new BN(validatorNum)))
+                  .toString(10)
+              );
+              setRewardValueDiff(
+                new BN(balanceValue.toString(), 10).div(new BN(validatorNum)).toString(10)
+              );
             }
             // if(`${section}.${method}` === 'session.NewSession') {
             //   const blockNumber: BlockNumber = defaultData;
@@ -277,38 +313,38 @@ const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, st
   // handle system event effect
   useEffect(() => {
     let unsubscribeFn;
-    window.appApi.getSystemEvents(callbackFn)
-      .then(value => {
-        unsubscribeFn = value;
-      });
+    window.appApi.getSystemEvents(callbackFn).then(value => {
+      unsubscribeFn = value;
+    });
     // useEffect clean up
     return () => {
-      if(unsubscribeFn) {
+      if (unsubscribeFn) {
         unsubscribeFn();
       }
     };
-  },[]);
+  }, []);
 
   // sync wallet data
   useEffect(() => {
     onSyncWalletData({ id: stakingStashWalletId, stakingWallet });
-  },[]);
+  }, []);
 
   const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
   const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
 
-  const AnimatedInnerSectionItemDiff = ({value}) => {
-    return (
-      <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value }</InnerSectionItemDiff>
-    );
+  const AnimatedInnerSectionItemDiff = ({ value }) => {
+    return <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value}</InnerSectionItemDiff>;
   };
 
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
-        <UnStakeButton color="danger" onClick={() => setUnStakeWarningModalOpen(true)}>Unstake</UnStakeButton>
+        <UnStakeButton color="danger" onClick={() => setUnStakeWarningModalOpen(true)}>
+          Unstake
+        </UnStakeButton>
         <PageHeading
-          subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />}>
+          subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />}
+        >
           Manage Staking
         </PageHeading>
         <div className="content">
@@ -320,10 +356,20 @@ const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, st
                   <InnerSectionItemIcon>
                     <CennzIcon />
                   </InnerSectionItemIcon>
-                  <InnerSectionItem>{PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}</InnerSectionItem>
-                  <InnerSectionItemNum>{stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}</InnerSectionItemNum>
-                  <InnerSectionItem>Reserved: {stakingAccount.assets[PreDefinedAssetId.stakingToken].reservedBalance.toString}</InnerSectionItem>
-                  <InnerSectionItem>Total: {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}</InnerSectionItem>
+                  <InnerSectionItem>
+                    {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
+                  </InnerSectionItem>
+                  <InnerSectionItemNum>
+                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}
+                  </InnerSectionItemNum>
+                  <InnerSectionItem>
+                    Reserved:{' '}
+                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].reservedBalance.toString}
+                  </InnerSectionItem>
+                  <InnerSectionItem>
+                    Total:{' '}
+                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}
+                  </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardValueDiff} />
                 </InnerSectionWrapper>
                 <SectionHDivider />
@@ -332,10 +378,23 @@ const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, st
                   <InnerSectionItemIcon>
                     <CentrapayIcon />
                   </InnerSectionItemIcon>
-                  <InnerSectionItem>{PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}</InnerSectionItem>
-                  <InnerSectionItemNum>{stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}</InnerSectionItemNum>
-                  <InnerSectionItem>Reserved: {stakingAccount.assets[PreDefinedAssetId.spendingToken].reservedBalance.toString}</InnerSectionItem>
-                  <InnerSectionItem>Total: {stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}</InnerSectionItem>
+                  <InnerSectionItem>
+                    {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
+                  </InnerSectionItem>
+                  <InnerSectionItemNum>
+                    {stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}
+                  </InnerSectionItemNum>
+                  <InnerSectionItem>
+                    Reserved:{' '}
+                    {
+                      stakingAccount.assets[PreDefinedAssetId.spendingToken].reservedBalance
+                        .toString
+                    }
+                  </InnerSectionItem>
+                  <InnerSectionItem>
+                    Total:{' '}
+                    {stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}
+                  </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} />
                 </InnerSectionWrapper>
               </SectionLayoutInnerWrapper>
@@ -350,30 +409,34 @@ const StakingStakePage = ({ subNav, uiState, onUnStake, stakingStashWalletId, st
               <Item>
                 <ItemTitle>Punishment</ItemTitle>
                 <PunishmentContent>
-                  <ItemNum>{punishmentValue}</ItemNum> {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
+                  <ItemNum>{punishmentValue}</ItemNum>{' '}
+                  {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
                 </PunishmentContent>
               </Item>
               <Item>
                 <ItemTitle>Reward</ItemTitle>
                 <RewardContent>
-                  <ItemNum>{rewardValue}</ItemNum> {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
+                  <ItemNum>{rewardValue}</ItemNum>{' '}
+                  {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
                 </RewardContent>
                 <RewardContent>
-                  <ItemNum>{rewardSpendingValue}</ItemNum> {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
+                  <ItemNum>{rewardSpendingValue}</ItemNum>{' '}
+                  {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
                 </RewardContent>
               </Item>
             </Right>
-
           </SectionLayoutWrapper>
         </div>
       </MainContent>
-      <UnStakeWarningModal {...{
-        isUnStakeWarningModalOpen,
-        setUnStakeWarningModalOpen,
-        onUnStake,
-        stakingWallet,
-        stakingAccount,
-      }} />
+      <UnStakeWarningModal
+        {...{
+          isUnStakeWarningModalOpen,
+          setUnStakeWarningModalOpen,
+          onUnStake,
+          stakingWallet,
+          stakingAccount,
+        }}
+      />
     </MainLayout>
   );
 };
