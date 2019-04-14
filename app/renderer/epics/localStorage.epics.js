@@ -44,6 +44,10 @@ const resetLocalStorageEpic = action$ =>
         },
         {
           type: types.clearStorage.requested,
+          payload: { key: storageKeys.STAKING_STATUS },
+        },
+        {
+          type: types.clearStorage.requested,
           payload: { key: storageKeys.STAKING_STASH_WALLET_ID },
         },
         {
@@ -69,7 +73,7 @@ const resetLocalStorageEpic = action$ =>
         {
           type: types.clearStorage.requested,
           payload: { key: storageKeys.WALLETS },
-        },
+        }
       );
     })
   );
