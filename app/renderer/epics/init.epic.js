@@ -35,6 +35,10 @@ const initEpic = action$ =>
         },
         {
           type: types.getStorage.requested,
+          payload: { key: storageKeys.STAKING_STATUS },
+        },
+        {
+          type: types.getStorage.requested,
           payload: { key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS },
         },
         {
@@ -50,7 +54,7 @@ const initEpic = action$ =>
         },
         { type: types.subscribeNewHead.triggered },
         { type: types.subscribeNewHeadRemote.triggered },
-        { type: types.subscribeFinalisedHeads.triggered },
+        { type: types.subscribeFinalisedHeads.triggered }
       );
     })
   );

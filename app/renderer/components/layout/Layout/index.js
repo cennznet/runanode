@@ -8,6 +8,18 @@ import SideNav from '../SideNav';
 import withContainer from './container';
 import getNotificationByType from './notificationBarTemplates';
 
+const calcContentViewHeight = p => {
+  if (p.hasTopBar) {
+    if (p.isNodeInStaking) {
+      return 'calc(100% - 80px - 48px)';
+    }
+
+    return 'calc(100% - 80px)';
+  }
+
+  return '100%';
+};
+
 const PageWrapper = styled.div`
   height: 100vh;
   overflow: hidden;
@@ -15,7 +27,7 @@ const PageWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   display: flex;
-  height: ${p => (p.hasTopBar ? 'calc(100% - 80px)' : '100%')};
+  height: ${p => calcContentViewHeight(p)};
   min-height: 40rem;
 `;
 
@@ -24,12 +36,20 @@ const Content = styled.div`
   flex: 1 auto;
 `;
 
-const Layout = ({ topBar, defaultTopBar, sidebar, defaultSidebar, notificationType, children }) => {
+const Layout = ({
+  isNodeInStaking,
+  topBar,
+  defaultTopBar,
+  sidebar,
+  defaultSidebar,
+  notificationType,
+  children,
+}) => {
   return (
     <PageWrapper>
       {defaultTopBar ? <TopBar /> : topBar}
       {notificationType && <Notification>{getNotificationByType(notificationType)}</Notification>}
-      <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar}>
+      <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar} {...{ isNodeInStaking }}>
         {defaultSidebar ? <SideNav /> : sidebar}
         <Content>{children}</Content>
       </ContentWrapper>
