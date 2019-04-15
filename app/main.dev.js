@@ -10,12 +10,11 @@
  *
  * @flow
  */
-import { app, BrowserWindow, globalShortcut, Menu, dialog, shell } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import { app, BrowserWindow, globalShortcut, Menu, dialog, shell, ipcMain } from 'electron';
 import log from 'electron-log';
 import { includes } from 'lodash';
 import os from 'os';
-
+import { autoUpdater } from 'electron-updater';
 import mainErrorHandler from 'main/utils/mainErrorHandler';
 import { setupLogging } from 'main/utils/setupLogging';
 import MenuBuilder from 'main/menu';
@@ -31,13 +30,6 @@ import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
 import { environment } from 'common/environment';
 
 const { isDevOrDebugProd, buildLabel } = environment;
-
-export default class AppUpdater {
-  constructor() {
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
 
 let mainWindow: BrowserWindow;
 let cennzNetNode: CennzNetNode;
@@ -63,9 +55,11 @@ export const createDefaultWindow = () => {
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   window.webContents.on('did-finish-load', () => {
+    Logger.info('window.webContents');
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+
     if (process.env.START_MINIMIZED) {
       window.minimize();
     } else {
@@ -147,6 +141,9 @@ app.on('ready', async () => {
 
   Logger.info(`========== App is starting at ${new Date().toString()} ==========`);
 
+  autoUpdater.logger = log;
+  autoUpdater.checkForUpdatesAndNotify();
+
   Logger.info(`!!! ${buildLabel} is running on ${os.platform()} version ${os.release()}
             with CPU: ${JSON.stringify(os.cpus(), null, 2)} with
             ${JSON.stringify(os.totalmem(), null, 2)} total RAM !!!`);
@@ -169,14 +166,10 @@ app.on('ready', async () => {
   mainWindow = createMainWindow(isInSafeMode);
   // mainWindow = createDefaultWindow();
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  const menuBuilder = new MenuBuilder(mainWindow, autoUpdater);
   menuBuilder.buildMenu();
 
   cennzNetNode = setupCennzNet(launcherConfig, mainWindow);
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
 
   mainWindow.on('close', async event => {
     Logger.info('mainWindow received <close> event. Safe exiting App now.');
@@ -187,6 +180,7 @@ app.on('ready', async () => {
   // Security feature: Prevent creation of new browser windows
   // https://github.com/electron/electron/blob/master/docs/tutorial/security.md#14-disable-or-limit-creation-of-new-windows
   app.on('web-contents-created', (_, contents) => {
+    Logger.info('web-contents-created');
     contents.on('new-window', (event, url) => {
       // Prevent creation of new BrowserWindows via links / window.open
       event.preventDefault();
@@ -202,4 +196,45 @@ app.on('ready', async () => {
     event.preventDefault(); // prevent App from quitting immediately
     await safeExit();
   });
+
+  autoUpdater.on('error', (ev, err) => {
+    Logger.info(`autoUpdater error: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
+  });
+
+  autoUpdater.on('checking-for-update', (ev, err) => {
+    Logger.info(`autoUpdater checking-for-update: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
+  });
+
+  autoUpdater.on('update-available', (ev, err) => {
+    Logger.info(`autoUpdater update-available: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
+  });
+
+  autoUpdater.on('update-not-available', (ev, err) => {
+    Logger.info(`autoUpdater update-not-available: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
+  });
+
+  autoUpdater.on('download-progress', (ev, err) => {
+    Logger.info(`autoUpdater download-progress: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
+  });
+
+  autoUpdater.on('update-downloaded', (ev, err) => {
+    Logger.info(`autoUpdater update-downloaded: ${JSON.stringify(ev)} ${JSON.stringify(err)}`);
+    dialog.showMessageBox(
+      {
+        type: 'info',
+        title: 'Update Ready',
+        message: 'A new version of app is ready. Quit and Install now?',
+        buttons: ['Yes', 'Later'],
+      },
+      index => {
+        if (!index) {
+          autoUpdater.quitAndInstall();
+        }
+      }
+    );
+  });
+});
+
+ipcMain.on('quitAndInstall', () => {
+  autoUpdater.quitAndInstall();
 });
