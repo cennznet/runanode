@@ -10,7 +10,7 @@ import getNotificationByType from './notificationBarTemplates';
 
 const calcContentViewHeight = p => {
   if (p.hasTopBar) {
-    if (p.isNodeInStaking) {
+    if (p.isInStaking) {
       return 'calc(100% - 80px - 48px)';
     }
 
@@ -37,7 +37,7 @@ const Content = styled.div`
 `;
 
 const Layout = ({
-  isNodeInStaking,
+  isInStaking,
   topBar,
   defaultTopBar,
   sidebar,
@@ -49,7 +49,7 @@ const Layout = ({
     <PageWrapper>
       {defaultTopBar ? <TopBar /> : topBar}
       {notificationType && <Notification>{getNotificationByType(notificationType)}</Notification>}
-      <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar} {...{ isNodeInStaking }}>
+      <ContentWrapper hasTopBar={!!topBar || !!defaultTopBar} {...{ isInStaking }}>
         {defaultSidebar ? <SideNav /> : sidebar}
         <Content>{children}</Content>
       </ContentWrapper>
