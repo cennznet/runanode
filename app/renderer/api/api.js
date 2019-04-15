@@ -960,6 +960,7 @@ export default class CennzApi {
       Logger.debug(`CennznetApi::doUnStake unsubscribeFn: ${unsubscribeFn}`);
 
       // TODO: Chain epic to reflect the changes in reducer immediately
+      await clearStorage(storageKeys.STAKING_STATUS);
       await clearStorage(storageKeys.STAKING_STASH_ACCOUNT_ADDRESS);
       await clearStorage(storageKeys.STAKING_STASH_WALLET_ID);
 

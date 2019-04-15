@@ -19,6 +19,7 @@ import chainEpics from 'renderer/epics/chainEpics';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import { Logger } from 'renderer/utils/logging';
 import ROUTES from 'renderer/constants/routes';
+import stakingStatus from 'renderer/constants/stakingStatus';
 
 const startToStakeEpic = action$ =>
   action$.pipe(
@@ -147,6 +148,13 @@ const sendStakingTxCompletedEpic = action$ =>
         {
           type: types.setStorage.requested,
           payload: {
+            key: storageKeys.STAKING_STATUS,
+            value: stakingStatus.NEXT_UP,
+          },
+        },
+        {
+          type: types.setStorage.requested,
+          payload: {
             key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS,
             value: stashAccountAddress,
           },
@@ -165,7 +173,7 @@ const sendStakingTxCompletedEpic = action$ =>
             { type: types.pendingToSendStakingExtrinsic.triggered, payload: {} },
             { type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW },
             { type: types.resetAppUiState.triggered },
-            { type: types.sendNodeStatusToIpcMain.requested, payload: { isStaking: true } }
+            { type: types.sendNodeStatusToIpcMain.requested, payload: { isNodeInStaking: true } }
           )
         ),
         concat(
@@ -262,6 +270,12 @@ const sendUnStakeTxCompletedEpic = action$ =>
     ofType(types.unStakeExtrinsicCompleted.triggered),
     mergeMap(({ payload: { wallet, stashAccountAddress } }) => {
       return of(
+        {
+          type: types.clearStorage.requested,
+          payload: {
+            key: storageKeys.STAKING_STATUS,
+          },
+        },
         {
           type: types.clearStorage.requested,
           payload: {

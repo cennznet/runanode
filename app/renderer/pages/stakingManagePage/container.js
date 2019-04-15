@@ -6,7 +6,8 @@ import { Logger } from 'renderer/utils/logging';
 import types from '../../types';
 import { storageKeys } from '../../api/utils/storage';
 
-const mapStateToProps = ({ appStore: { uiState }, staking, localStorage }) => ({
+const mapStateToProps = ({ appStore: { uiState }, balances, staking, localStorage }) => ({
+  balances,
   uiState,
   staking,
   wallets: localStorage[storageKeys.WALLETS],
