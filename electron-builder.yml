@@ -37,7 +37,7 @@ extraFiles:
 mac:
   icon: 'resources/icon.png'
   target:
-    #    - 'zip'
+    - 'zip'
     - 'pkg'
     - 'dmg'
   extendInfo:
@@ -58,9 +58,9 @@ dmg:
 win:
   icon: 'resources/icon.ico'
   target:
-#    - 'zip'
-#    - 'nsis'
-    - 'msi'
+    - 'zip'
+    # - 'msi'
+    - 'nsis'
   extraFiles:
     - from: 'dist/cennznet-node-win'
       to: 'dist/cennznet-node.exe'
@@ -73,13 +73,13 @@ nsis:
 # Linux configuration
 linux:
   category: Development
-  icon: 'resources/icons/32x32.png'
+  icon: 'resources/icons/256x256.png'
   target:
+    - 'AppImage'
     - 'zip'
-    #    - 'AppImage'
     - 'deb'
-#    - 'rpm'
-#    - 'snap'
+    # - 'rpm'
+    # - 'snap'
 
 #deb:
 #  depends:

@@ -29,7 +29,6 @@ const chainGetHeaderEpic = action$ =>
   action$.ofType(types.nodeWsChainGetHeader.requested).pipe(
     mergeMap(async () => {
       const header = await window.appApi.api.rpc.chain.getHeader();
-      Logger.debug(`chainGetHeaderEpic, header: ${JSON.stringify(header)}`);
       if (header) {
         return { type: types.newHead.changed, payload: header };
       }

@@ -27,7 +27,7 @@ export const createMainWindow = isInSafeMode => {
     webPreferences: {
       nodeIntegration: true, // TODO for security might need to change this to isTest, but will require refactor on app.html without access to nodejs api
       webviewTag: false,
-      enableRemoteModule: isTest,
+      enableRemoteModule: true,
       devTools: !(isDev && isRemoteDebug), // set devTools: false when is remote debug
       // preload: path.join(__dirname, '../../dist/preload.js')
       preload: path.join(__dirname, isDev ? '../../dist/preload.js' : './dist/preload.prod.js'),

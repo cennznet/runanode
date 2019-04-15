@@ -31,21 +31,3 @@ export const GetCennzNodeLogFullPath = () => {
   return GetLogDir() + '/cennznet-node.log';
 };
 
-if (isDevOrDebugProd) {
-  log.transports.console.level = 'info';
-  log.transports.file.level = 'info';
-
-  Logger.info('In development mode');
-  Logger.info("Logging to console at 'info' level");
-  Logger.info("Logging to file at 'info' level");
-  Logger.info(`app log file: ${log.transports.file.findLogPath()}`);
-  Logger.info(`cennznet-node log file: ${GetCennzNodeLogFullPath()}`);
-} else {
-  log.transports.console.level = false;
-  log.transports.file.level = 'info';
-
-  Logger.info('In non-development mode');
-  Logger.info("Logging to file at 'info' level");
-  Logger.info(`log file: ${log.transports.file.findLogPath()}`);
-  Logger.info(`cennznet-node log file: ${GetCennzNodeLogFullPath()}`);
-}

@@ -4,6 +4,8 @@
 
 ### Features
 
+- Able to auto upgrade or manual check for upgrade
+
 ### Fixes
 - Fix mac icon issue
 

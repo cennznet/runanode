@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Line } from 'rc-progress';
-import BN from "bn.js";
+import BN from 'bn.js';
 
 import { colors } from 'renderer/theme';
 import { environment } from 'common/environment';
@@ -67,9 +67,6 @@ const SyncNodePage = ({
   const isNetworkSwitched = selectedNetwork && selectedNetwork.value === chainNameMapping(chain);
   const genesisConfigFile = localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO];
   const genesisConfigFilePath = genesisConfigFile && genesisConfigFile.path;
-  Logger.debug(`selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
-  Logger.debug(`chain: ${chain}`);
-  Logger.debug(`isNetworkSwitched: ${isNetworkSwitched}`);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -81,7 +78,6 @@ const SyncNodePage = ({
   }, []);
 
   useEffect(() => {
-    Logger.debug(`SyncNode page: check whether to restart node`);
     if (selectedNetwork && selectedNetwork.value) {
       const targetChain =
         selectedNetwork.value === NetworkNameMapping.Development && genesisConfigFilePath
@@ -101,7 +97,6 @@ const SyncNodePage = ({
 
   useEffect(() => {
     // TODO: Error display in precentage bar
-    Logger.debug(`SyncNode page: precentage cal`);
     if (isNetworkSwitched) {
       const { blockHeight: localBestBlock } = blocksNew;
       const { blockHeight: remoteBestBlock } = blocksRemote;
@@ -139,20 +134,10 @@ const SyncNodePage = ({
       : (syncNodeProgress * 100).toFixed(2);
 
   const estimateMin = (bestBlock - syncedBlock) / bps / 60;
-  let estimateText = estimateMin && estimateMin>=0 ? estimateMin.toFixed(2) : 0;
-  if ( estimateMin > 60 ) {
+  let estimateText = estimateMin && estimateMin >= 0 ? estimateMin.toFixed(2) : 0;
+  if (estimateMin > 60) {
     estimateText = '>60';
   }
-
-  Logger.info(`
-  ===========================================
-  Best block in MainNet #${bestBlock}
-  ===========================================`);
-  Logger.info(`
-  ===========================================
-  Best block in Local #${syncedBlock}
-  ===========================================`);
-  Logger.info(`  Sync progress in Local ${syncNodePercentage}%`);
 
   return (
     <Layout sidebar={isDevOrDebugProd ? <SideNav /> : <SimpleSidebar />}>
@@ -173,7 +158,7 @@ const SyncNodePage = ({
             </SyncNodeProgress>
             <SyncNodeInfo>
               <TextWrapper>
-                {syncNodePercentage}% synced, {bps && bps>=0 ? bps.toFixed(2) : 0} bps
+                {syncNodePercentage}% synced, {bps && bps >= 0 ? bps.toFixed(2) : 0} bps
               </TextWrapper>
               <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
               <TextWrapper>estimate: {estimateText} min</TextWrapper>
