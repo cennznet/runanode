@@ -1,3 +1,4 @@
+import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime, map, mergeMap } from 'rxjs/operators';
 
@@ -14,7 +15,7 @@ const subscribeValidatorsEpic = (action$, state$) => {
           observer.next(validators);
         });
       }).pipe(
-        map(validators => {
+        mergeMap(validators => {
           const stakingStashAccountAddress =
             state$.value.localStorage[storageKeys.STAKING_STASH_ACCOUNT_ADDRESS];
 
@@ -23,16 +24,24 @@ const subscribeValidatorsEpic = (action$, state$) => {
             validators &&
             validators.map(v => v.toString(10)).includes(stakingStashAccountAddress);
 
+          // TODO: Handle coming back from accident
+
           if (isStaking) {
-            return {
-              type: types.notificationBar.triggered,
-              payload: { type: 'STAKING_STARTED_NOTIFICATION' },
-            };
+            return of(
+              {
+                type: types.notificationBar.triggered,
+                payload: { type: 'STAKING_STARTED_NOTIFICATION' },
+              },
+              {
+                type: types.setStorage.requested,
+                payload: { key: storageKeys.STAKING_STATUS, value: 'STAKING' },
+              }
+            );
           }
-          return {
+          return of({
             type: types.notificationBar.triggered,
             payload: { type: '' },
-          };
+          });
         })
       );
     })

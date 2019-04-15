@@ -208,6 +208,7 @@ const Subheading = ({ account, wallet }) => {
   );
 };
 const StakingStakePage = ({
+  balances,
   subNav,
   uiState,
   onUnStake,
@@ -336,6 +337,10 @@ const StakingStakePage = ({
     return <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value}</InnerSectionItemDiff>;
   };
 
+  const stakingTokenBalances = balances[stakingStashAccountAddress][PreDefinedAssetId.stakingToken];
+  const spendingTokenBalances =
+    balances[stakingStashAccountAddress][PreDefinedAssetId.spendingToken];
+
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
@@ -360,15 +365,21 @@ const StakingStakePage = ({
                     {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
                   </InnerSectionItem>
                   <InnerSectionItemNum>
-                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {stakingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItemNum>
                   <InnerSectionItem>
-                    Reserved:{' '}
-                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].reservedBalance.toString}
+                    Reserved:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {stakingTokenBalances.reservedBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <InnerSectionItem>
-                    Total:{' '}
-                    {stakingAccount.assets[PreDefinedAssetId.stakingToken].totalBalance.toString}
+                    Total:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {stakingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardValueDiff} />
                 </InnerSectionWrapper>
@@ -382,18 +393,21 @@ const StakingStakePage = ({
                     {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
                   </InnerSectionItem>
                   <InnerSectionItemNum>
-                    {stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {spendingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItemNum>
                   <InnerSectionItem>
-                    Reserved:{' '}
-                    {
-                      stakingAccount.assets[PreDefinedAssetId.spendingToken].reservedBalance
-                        .toString
-                    }
+                    Reserved:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {spendingTokenBalances.reservedBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <InnerSectionItem>
-                    Total:{' '}
-                    {stakingAccount.assets[PreDefinedAssetId.spendingToken].totalBalance.toString}
+                    Total:
+                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
+                      {spendingTokenBalances.totalBalance.toString}
+                    </Ellipsis>
                   </InnerSectionItem>
                   <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} />
                 </InnerSectionWrapper>

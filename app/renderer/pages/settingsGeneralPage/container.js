@@ -25,14 +25,18 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       {
         type: types.clearStorage.requested,
+        payload: { key: storageKeys.STAKING_STATUS },
+      },
+      {
+        type: types.clearStorage.requested,
         payload: { key: storageKeys.STAKING_STASH_ACCOUNT_ADDRESS },
       },
       {
         type: types.clearStorage.requested,
         payload: { key: storageKeys.STAKING_STASH_WALLET_ID },
-      },
-    )
-  }
+      }
+    );
+  },
 });
 
 const enhance = lifecycle({
