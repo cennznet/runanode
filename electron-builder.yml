@@ -73,7 +73,7 @@ nsis:
 # Linux configuration
 linux:
   category: Development
-  icon: 'resources/icons/32x32.png'
+  icon: 'resources/icons/256x256.png'
   target:
     - 'AppImage'
     - 'zip'

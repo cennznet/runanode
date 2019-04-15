@@ -180,7 +180,7 @@ app.on('ready', async () => {
   // Security feature: Prevent creation of new browser windows
   // https://github.com/electron/electron/blob/master/docs/tutorial/security.md#14-disable-or-limit-creation-of-new-windows
   app.on('web-contents-created', (_, contents) => {
-    Logger.info('#####web-contents-created');
+    Logger.info('web-contents-created');
     contents.on('new-window', (event, url) => {
       // Prevent creation of new BrowserWindows via links / window.open
       event.preventDefault();
