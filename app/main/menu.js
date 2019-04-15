@@ -191,6 +191,13 @@ export default class MenuBuilder {
         label: '&File',
         submenu: [
           {
+            label: 'Check for Updates...',
+            click: () => {
+              this.autoUpdater.checkForUpdatesAndNotify();
+            },
+          },
+          { type: 'separator' },
+          {
             label: '&Open',
             accelerator: 'Ctrl+O',
           },
