@@ -19,6 +19,7 @@ import chainEpics from 'renderer/epics/chainEpics';
 import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
 import { Logger } from 'renderer/utils/logging';
 import ROUTES from 'renderer/constants/routes';
+import stakingStatus from 'renderer/constants/stakingStatus';
 
 const startToStakeEpic = action$ =>
   action$.pipe(
@@ -148,7 +149,7 @@ const sendStakingTxCompletedEpic = action$ =>
           type: types.setStorage.requested,
           payload: {
             key: storageKeys.STAKING_STATUS,
-            value: 'NEXT_UP', // TODO: Change to STAKING_REQUESTED, and set NEXT_UP when intention list refactoring work is done
+            value: stakingStatus.NEXT_UP,
           },
         },
         {

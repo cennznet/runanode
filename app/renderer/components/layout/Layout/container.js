@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import stakingStatus from 'renderer/constants/stakingStatus';
 
 const mapStateToProps = ({
   appStore: {
@@ -7,7 +8,7 @@ const mapStateToProps = ({
   localStorage: { STAKING_STATUS },
 }) => ({
   notificationType: type,
-  isNodeInStaking: STAKING_STATUS === 'NEXT_UP' || STAKING_STATUS === 'STAKING',
+  isInStaking: STAKING_STATUS === stakingStatus.NEXT_UP || STAKING_STATUS === stakingStatus.STAKING,
 });
 
 const mapDispatchToProps = dispatch => ({});
