@@ -58,7 +58,7 @@ type NodeArgs = Array<string>;
 
 export type CennzNetNodeConfig = {
   nodePath: string, // Path to cennznet-node executable
-  logFilePath: string, // Log file path for cennznet-sl
+  logFilePath: string, // Log file path for cennznet
   tlsPath: string, // Path to cennznet-node TLS folder
   nodeArgs: NodeArgs, // Arguments that are used to spwan cennznet-node
   startupTimeout: number, // Milliseconds to wait for cennznet-node to startup
@@ -241,6 +241,9 @@ export class CennzNetNode {
     _log.info(
       `CennzNetNode#start: trying to start cennznet-node for the ${this._startupTries}. time.`
     );
+    _log.info(`nodePath: ${JSON.stringify(nodePath)}`);
+    _log.info(`newNodeArgs: ${JSON.stringify(newNodeArgs)}`);
+    _log.info(`startupTimeout: ${JSON.stringify(startupTimeout)}`);
 
     return new Promise((resolve, reject) => {
       const logFile = createWriteStream(config.logFilePath, { flags: 'a' });

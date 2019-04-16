@@ -84,7 +84,15 @@ const SyncNodePage = ({
           ? genesisConfigFilePath
           : selectedNetwork.value;
       const currentNetwork = chainNameMapping(chain);
-      if (currentNetwork !== targetChain) {
+      Logger.debug(`selectedNetwork: ${JSON.stringify(selectedNetwork)}`);
+      Logger.debug(`targetChain: ${targetChain}`);
+      Logger.debug(`currentNetwork: ${currentNetwork}`);
+      Logger.debug(`genesisConfigFilePath: ${genesisConfigFilePath}`);
+      Logger.debug(`genesisConfigFile: ${JSON.stringify(genesisConfigFile)}`);
+      Logger.debug(`localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO]: ${JSON.stringify(localStorage[storageKeys.GENESIS_CONFIG_FILE_INFO])}`);
+      if (!targetChain.endsWith('json') && currentNetwork !== targetChain || // for non-dev chain restart when they are different
+          targetChain.endsWith('json') // always restart for dev chain
+      ) {
         Logger.debug(`restart node to use ${targetChain}`);
         onRestartNode({ chain: targetChain });
       } else {

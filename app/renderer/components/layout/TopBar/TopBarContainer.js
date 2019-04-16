@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import types from 'renderer/types';
 import { compose, lifecycle, withState } from 'recompose';
-import TopBar from ".";
+import { Logger } from 'renderer/utils/logging';
 
 const mapStateToProps = ({ nodeSystem, remoteStream, nodeStateStore, blocksNew, blocksFinalised, blocksRemote }) => ({
   nodeSystem,
@@ -16,6 +16,7 @@ const mapStateToProps = ({ nodeSystem, remoteStream, nodeStateStore, blocksNew, 
 
 const mapDispatchToProps = dispatch => ({
   onSwitchNetwork: payload => {
+    Logger.debug(`onSwitchNetwork, payload: ${JSON.stringify(payload)}`);
     dispatch({ type: types.storeNetworkOption.triggered, payload });
   },
 });

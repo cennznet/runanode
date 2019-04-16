@@ -4,7 +4,120 @@
 
 👋 Welcome to [rUN](https://runanode.io/), the official wallet and UI for the [CENNZNet](https://centrality.ai/), power by [Plug](https://www.plugblockchain.com/).
 
-## Get Started
+## Quick start guide
+
+### Start with pre-build docker image
+
+Install docker and docker-compose
+
+Login to docker registry
+
+Start multiple nodes
+
+```bash
+make up
+```
+
+Check logs
+
+```bash
+make logs
+or
+make logs telemetry
+```
+
+Open telemetry UI
+
+```bash
+open http://localhost:5000
+```
+
+Stop all nodes
+
+```bash
+make stop
+```
+
+update docker-compose.yml for different node configurations, then run
+
+```bash
+make up
+```
+
+remove all previous local chain data
+
+```bash
+rm -rf  ~/Library/Application\ Support/Substrate/chains/development/
+```
+
+start application
+
+```bash
+yarn install
+./scripts/init.sh
+
+yarn dev
+or
+yarn start
+```
+
+## Local test net config
+
+you can update local chain spec under
+
+```bash
+./genesis/local/local.json
+```
+
+to reset local test net data
+
+```bash
+make stop
+rm -rf ./target/node_*
+make up
+```
+
+also after reset local teset net data, make sure remove all previous local chain data
+
+```bash
+rm -rf  ~/Library/Application\ Support/Substrate/chains/development/
+```
+
+
+You can host local test net on different machine via the following steps, `10.9.30.55` is the remote machine IP as example
+
+* update local.json localhost to remote server IP address
+
+```javascript
+  "bootNodes": [
+    "/ip4/10.9.30.55/tcp/30333/p2p/QmReKRKXsWc5T6gQ6EkLqYy6FFzZwi1CMXWUKmE6bMy6JV",
+    "/ip4/10.9.30.55/tcp/30334/p2p/QmQZ8TjTqeDj3ciwr93EJ95hxfDsb9pEYDizUAbWpigtQN",
+    "/ip4/10.9.30.55/tcp/30335/p2p/QmXiB3jqqn2rpiKU7k1h7NJYeBg8WNSx9DiTRKz9ti2KSK",
+    "/ip4/10.9.30.55/tcp/30336/p2p/QmYcHeEWuqtr6Gb5EbK7zEhnaCm5p6vA2kWcVjFKbhApaC"
+  ],
+  "telemetryEndpoints": [
+    [
+      "ws://10.9.30.55:1024",
+      0
+    ]
+  ],
+```
+
+
+* update common.js `remoteStreamUrlMap`
+
+```javascript
+    remoteStreamUrlMap: {
+      ...
+      // 'development' : 'ws://localhost:19944',
+      'development' : 'ws://10.9.30.55:19944', // for other local test net
+    },
+```
+
+* restart and choose `Local test net` -> select the modified version of local.json
+
+
+## Get Started for dev
 
 ```bash
 ./scripts/init.sh
@@ -62,10 +175,10 @@ open release/mac/rUN.app
 tail -f ~/Library/Logs/rUN/*
 ```
 
-CennzNet Node log:
+rUN Node log:
 
 ```bash
-~/Library/Logs/rUN/cennznet-node.log
+~/Library/Logs/rUN/xxx-node.log
 ```
 
 Application log:
@@ -124,46 +237,6 @@ rUN.exe --DEBUG_PROD=true
 ## Component development
 
 `yarn styleguide`
-
-## Quick start guide
-
-### Start with pre-build docker image
-
-Install docker and docker-compose
-
-Follow cennzne-node instruction login to centrality docker registry
-
-Start multiple nodes
-
-```bash
-make up
-```
-
-Check logs
-
-```bash
-make logs
-or
-make logs telemetry
-```
-
-Open telemetry UI
-
-```bash
-open http://localhost:5000
-```
-
-Stop all nodes
-
-```bash
-make stop
-```
-
-update docker-compose.yml for different node configurations, then run
-
-```bash
-make up
-```
 
 ## Auto upgrade
 

@@ -1,8 +1,10 @@
 // @flow
 import os from 'os';
+import path from 'path';
 
 import appConfig from 'app/config';
-import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { NetworkNameOptions, NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { Logger } from '../utils/logging';
 import type { LauncherConfig } from '../launcherConfig';
 
 /**
@@ -32,8 +34,15 @@ export const prepareArgs = (config: LauncherConfig) => {
 
   // default chain
   const chainArgIndex = args.findIndex(item => item === '--chain');
+  Logger.info(`chainArgIndex, chainArgIndex: ${chainArgIndex}`);
   if (chainArgIndex < 0) {
-    args.push('--chain', NetworkNameOptions.CENNZNET_RIMU);
+    let targetChain = appConfig.app.networkOptions[0];
+    Logger.info(`chainArgIndex, targetChain: ${targetChain}`);
+    // check default config chain is `development` will start with `appConfig.app.developmentGenesisFile` by default
+    if(targetChain === NetworkNameMapping.Development) {
+      targetChain = path.resolve(appConfig.app.developmentGenesisFile);
+    }
+    args.push('--chain', targetChain);
   }
   return args;
 };
