@@ -21,7 +21,7 @@ const commonConfig = {
   },
   jsonRpc: {
     localUrl: 'http://localhost:9933',
-    remoteUrl: 'http://cennznet-node-0.centrality.cloud:9933',
+    remoteUrl: 'http://localhost:19933',
   },
   webSocket: {
     localStreamUrl: 'ws://localhost:9944',
