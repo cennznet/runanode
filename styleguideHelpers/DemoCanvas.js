@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import theme, { colors } from '../app/renderer/theme';
 
 const DemoCanvas = styled.div`
-  background-color: ${colors.N50};
+  background: ${colors.N50};
   padding: 2rem;
 `;
 

@@ -28,13 +28,13 @@ const ScrollContent = styled.div`
 
   &::-webkit-scrollbar {
     width: 5px;
-    background-color: ${p => (p.isHovered ? colors.V800 : 'transparent')};
+    background: ${p => (p.isHovered ? colors.V800 : 'transparent')};
     border-radius: 3px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${p => (p.isHovered ? 'rgba(255, 255, 255, 0.4)' : 'transparent')};
-    transition: background-color 1000ms linear;
+    background: ${p => (p.isHovered ? 'rgba(255, 255, 255, 0.4)' : 'transparent')};
+    transition: background 1000ms linear;
     border-radius: 3px;
   }
 `;

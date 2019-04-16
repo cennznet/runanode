@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   max-width: 15rem;
   height: 100%;
   font-weight: 500;
-  background-color: ${colors.V900};
+  background: ${colors.V900};
   overflow: hidden;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5), 4px 0 8px 0 rgba(0, 0, 0, 0.14);
 `;

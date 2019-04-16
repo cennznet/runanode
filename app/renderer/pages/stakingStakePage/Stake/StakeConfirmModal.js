@@ -16,7 +16,7 @@ const Label = styled.div`
 `;
 
 const Value = styled.div`
-  background-color: ${colors.V900};
+  background: ${colors.V900};
   padding: 1rem;
 `;
 
