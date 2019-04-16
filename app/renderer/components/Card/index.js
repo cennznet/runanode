@@ -6,7 +6,7 @@ import { colors } from 'renderer/theme';
 const CardWrapper = styled.div`
   min-height: 3rem;
   border-radius: 3px;
-  background-color: ${colors.V900};
+  background: ${colors.V900};
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   display: flex;
   padding: 1rem;

@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 1rem;
   height: 3rem;
-  background-color: ${colors.V800};
+  background: ${colors.V800};
 `;
 
 const HeaderWrapper = styled.div`
@@ -28,7 +28,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   padding: 1rem;
   height: 3rem;
-  background-color: ${colors.V800};
+  background: ${colors.V800};
   flex: 1 1 auto;
 `;
 

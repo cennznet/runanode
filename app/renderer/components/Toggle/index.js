@@ -31,7 +31,7 @@ const Toggle = styled(CustomToggle)`
     .react-toggle-track {
       width: 40px;
       height: 20px;
-      background-color: ${p => p.theme.colors.N300};
+      background: ${p => p.theme.colors.N300};
     }
 
     .react-toggle-thumb {
@@ -42,7 +42,7 @@ const Toggle = styled(CustomToggle)`
 
     &.react-toggle--checked {
       .react-toggle-track {
-        background-color: ${p => styledProps(styling(p).color, 'color')};
+        background: ${p => styledProps(styling(p).color, 'color')};
       }
 
       .react-toggle-thumb {
@@ -70,12 +70,12 @@ const Toggle = styled(CustomToggle)`
 
     &:hover&:not(.react-toggle--disabled) {
       .react-toggle-track {
-        background-color: ${p => styledProps(styling(p).color, 'color')};
+        background: ${p => styledProps(styling(p).color, 'color')};
       }
 
       :not(.react-toggle--checked) {
         .react-toggle-track {
-          background-color: ${p => p.theme.colors.N300};
+          background: ${p => p.theme.colors.N300};
         }
       }
     }

@@ -104,7 +104,7 @@ const buttonStyles = props => {
 
   return `
     align-items: center;
-    background-color: ${buttonBgColor(p, styling)};
+    background: ${buttonBgColor(p, styling)};
     border-radius: ${p.circle ? '50%' : '3px'};
     border: ${buttonBorder(p, styling)};
     color: ${buttonColor(p, styling)};
@@ -121,7 +121,7 @@ const buttonStyles = props => {
     width: ${p.block ? '100%' : p.circle ? styledProps(styling.size, 'size')(p) : ''};
 
     &:hover {
-      background-color: ${hoverBgColor(p, styling)};
+      background: ${hoverBgColor(p, styling)};
       color: ${hoverColor(p, styling)};
       border: ${hoverBorderColor(p, styling)};
     }

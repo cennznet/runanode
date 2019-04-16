@@ -30,7 +30,7 @@ const IconDiv = styled.div`
   }
 
   &:hover:not(.active) {
-    background-color: ${colors.V500};
+    background: ${colors.V500};
   }
 `;
 
@@ -49,7 +49,7 @@ const IconLink = styled(NavLink)`
   }
 
   &:hover:not(.active) {
-    background-color: ${colors.V500};
+    background: ${colors.V500};
   }
 `;
 
@@ -64,7 +64,7 @@ const IconNav = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 5rem;
-  background-color: ${colors.V900};
+  background: ${colors.V900};
   box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.14);
 `;
 
