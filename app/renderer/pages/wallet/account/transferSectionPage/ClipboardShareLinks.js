@@ -13,7 +13,7 @@ import { Logger } from 'renderer/utils/logging';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${p => p.styles.backgroundColor};
+  background: ${p => p.styles.backgroundColor};
   padding: ${p => p.styles.padding};
 `;
 

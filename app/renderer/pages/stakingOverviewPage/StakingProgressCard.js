@@ -7,7 +7,7 @@ import { colors } from 'renderer/theme';
 const StakingProgressWrapper = styled.div`
   height: 5.5rem;
   border-radius: 3px;
-  background-color: #020835;
+  background: #020835;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;

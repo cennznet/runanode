@@ -19,7 +19,7 @@ const NavItem = styled(NavLink)`
   }
 
   &:hover:not(.active) {
-    background-color: ${colors.V500};
+    background: ${colors.V500};
   }
 `;
 
