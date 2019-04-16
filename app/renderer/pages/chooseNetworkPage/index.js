@@ -7,6 +7,7 @@ import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import l
 import { Button, FileUploader, Select, PageFooter } from 'components';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import appConfig from 'app/config';
 import withContainer from './container';
 
 const ChooseNetworkWrapper = styled.div`
@@ -42,11 +43,33 @@ const ButtonWrapper = styled.div`
   flex-direction: row-reverse;
 `;
 
-export const NETWORK_OPTIONS = [
+const NETWORK_OPTIONS = [
   { label: 'CENNZnet RIMU(UAT)', value: NetworkNameMapping.CENNZNET_RIMU },
-  // { label: 'CENNZnet KAURI(DEV)', value: NetworkNameMapping.CENNZNET_KAURI }, // TODO disable DEV network for now to avoid blank page
+  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameMapping.CENNZNET_KAURI },
   { label: 'Local test net', value: NetworkNameMapping.Development },
 ];
+
+const getNetworkOptions = () => {
+  let items = NETWORK_OPTIONS;
+  const sorting = appConfig.app.networkOptions;
+  const result = [];
+  sorting.forEach(key => {
+    let found = false;
+    items = items.filter(item => {
+      if (!found && item.value === key) {
+        result.push(item);
+        found = true;
+        return false;
+      }
+      return true;
+    });
+  });
+  Logger.debug(`getNetworkOptions, result: ${JSON.stringify(result)}`);
+  return result;
+};
+
+const sortedNetworkOptions = getNetworkOptions();
+export const NETWORK_OPTIONS_SORTED = sortedNetworkOptions;
 
 export const getNetworkOptionPair = (value, param = 'value') => {
   return NETWORK_OPTIONS.find(option => option[param] === value);
@@ -79,7 +102,7 @@ const ChooseNetWork = ({ onJoinNetwork }) => {
                   Logger.info('selected value', selected);
                   setSelectedNetwork(selected);
                 }}
-                options={NETWORK_OPTIONS}
+                options={NETWORK_OPTIONS_SORTED}
               />
             </NetworkOptionWrapper>
             {selectedLocalNetwork && (

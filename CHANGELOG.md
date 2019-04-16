@@ -5,6 +5,7 @@
 ### Features
 
 - Able to auto upgrade or manual check for upgrade
+- make rUN works with local test net by default
 
 ### Fixes
 - Fix mac icon issue

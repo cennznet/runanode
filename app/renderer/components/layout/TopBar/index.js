@@ -5,7 +5,7 @@ import { environment } from 'common/environment';
 import { NetworkNameMapping, chainNameMapping } from 'common/types/cennznet-node.types';
 import { colors } from 'renderer/theme';
 import logoImg from 'renderer/assets/img/centrality-logo.svg';
-import { NETWORK_OPTIONS, getNetworkOptionPair } from 'renderer/pages/chooseNetworkPage';
+import { getNetworkOptionPair, NETWORK_OPTIONS_SORTED } from 'renderer/pages/chooseNetworkPage';
 import { Select } from 'components';
 import SwitchNetworkWarningModal from './TopBarWarningModal';
 import UploadGenesisFileModal from './UploadGenesisModal';
@@ -119,7 +119,7 @@ const TopBar = ({
                 setIsOpenNetworkWarningModal(true);
                 setSelectedNetwork(selected);
               }}
-              options={NETWORK_OPTIONS}
+              options={NETWORK_OPTIONS_SORTED}
             />
           </NetworkSectionWrapper>
         </NetworkSectionContainer>
