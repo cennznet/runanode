@@ -10,14 +10,14 @@ const Title = styled.div`
   align-items: center;
   justify-content: space-between;
   color: ${colors.textMuted};
-  background-color: 'transparent';
+  background: 'transparent';
   border: 0;
   height: 5rem;
   padding: 0 1rem;
   user-select: none;
 
   &:hover {
-    background-color: ${colors.primary};
+    background: ${colors.primary};
     color: ${colors.N0};
   }
 `;

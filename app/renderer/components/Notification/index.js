@@ -11,7 +11,7 @@ const NotificationWrapper = styled(animated.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${colors.warning};
+  background: ${colors.warning};
   color: ${colors.N800};
 `;
 

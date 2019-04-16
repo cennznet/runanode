@@ -14,7 +14,7 @@ const Tooltip = styled(ReactTooltip)`
     user-select: none;
 
     &.type-dark {
-      background-color: rgba(78, 84, 88, 0.9);
+      background: rgba(78, 84, 88, 0.9);
 
       &.place-bottom {
         &:after {

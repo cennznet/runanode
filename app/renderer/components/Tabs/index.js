@@ -35,7 +35,7 @@ const StyledTabs = styled(RcTabs)`
       }
 
       .rc-tabs-ink-bar {
-        background-color: ${colors.primary};
+        background: ${colors.primary};
         bottom: -1px;
         z-index: 0;
       }

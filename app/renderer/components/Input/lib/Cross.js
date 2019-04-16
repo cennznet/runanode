@@ -13,7 +13,7 @@ const Stem = styled.div`
   position: absolute;
   width: 3px;
   height: 12px;
-  background-color: ${p => p.color};
+  background: ${p => p.color};
   left: 11px;
   top: 3px;
 `;
@@ -22,7 +22,7 @@ const Kick = styled.div`
   position: absolute;
   width: 5px;
   height: 3px;
-  background-color: ${p => p.color};
+  background: ${p => p.color};
   left: 7px;
   top: 12px;
 `;
@@ -38,7 +38,7 @@ const Cross = styled.div`
     content: ' ';
     height: 1rem;
     width: 2px;
-    background-color: ${p => p.color};
+    background: ${p => p.color};
   }
 
   &:before {

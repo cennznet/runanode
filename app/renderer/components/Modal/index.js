@@ -37,7 +37,7 @@ const StyledModal = styled(Modal)`
     left: 0px;
     right: 0px;
     bottom: 0px;
-    background-color: ${p => p.overlayBgColor};
+    background: ${p => p.overlayBgColor};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,7 +48,7 @@ const StyledModal = styled(Modal)`
     border-radius: 3px;
     min-height: ${p => p.minHeight};
     max-height: ${p => p.maxHeight};
-    background-color: ${p => p.backgroundColor};
+    background: ${p => p.backgroundColor};
     box-shadow: ${p => p.boxShadow};
     color: ${p => p.color || colors.N0};
     display: flex;

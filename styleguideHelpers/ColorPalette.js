@@ -14,7 +14,7 @@ const Title = styled.div`
 
 const ColorItem = styled.div`
   color: ${p => p.color.textColor || '#FFFFFF'};
-  background-color: ${p => p.color.code};
+  background: ${p => p.color.code};
   display: flex;
   justify-content: space-between;
   align-items: center;
