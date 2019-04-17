@@ -76,7 +76,7 @@ const ItemNum = styled.span`
 `;
 
 const Item = styled.div`
-  background-color: ${colors.V900};
+  background: ${colors.V900};
   border-radius: 3px;
   padding: 1rem 1rem 1rem 1rem;
   line-height: 1.5rem;
@@ -103,7 +103,7 @@ const InnerSectionWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2rem 2rem 2rem 2rem;
-  background-color: ${colors.V900};
+  background: ${colors.V900};
   border-radius: 3px;
   width: 45%;
 `;

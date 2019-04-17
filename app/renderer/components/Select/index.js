@@ -11,7 +11,7 @@ const StyledSelect = styled(ReactSelect)`
     border-color: ${p => p.borderColor};
     font-weight: ${p => p.fontWeight};
     font-size: ${p => p.fontSize};
-    background-color: ${p => p.backgroundColor};
+    background: ${p => p.backgroundColor};
     
     &:hover {
       border-color: ${p => p.borderHoverColor};
@@ -20,20 +20,20 @@ const StyledSelect = styled(ReactSelect)`
 
   .react-select__menu {
     border: 1px solid ${p => p.menuBorderColor};
-    background-color: ${p => p.menuBackgroundColor};
+    background: ${p => p.menuBackgroundColor};
   }
 
   .react-select__option--is-focused {
     color: ${p => p.focusColor};
-    background-color: ${p => p.focusBackgroundColor};
+    background: ${p => p.focusBackgroundColor};
   }
 
   .react-select__indicator-separator {
-    background-color: ${p => p.borderColor || p.indicatorBackgroundColor};
+    background: ${p => p.borderColor || p.indicatorBackgroundColor};
   }
 
   .react-select__option--is-selected {
-    background-color: ${p => p.selectedBackgroundColor};
+    background: ${p => p.selectedBackgroundColor};
     color: ${p => p.selectedColor};
     font-weight: ${p => p.selectedFontWeight};
   }

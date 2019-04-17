@@ -8,7 +8,7 @@ const MainContent = styled.div`
   flex-direction: ${p => (p.display === 'flex' ? 'column' : 'none')};
   justify-content: ${p => (p.display === 'flex' ? 'space-between' : 'none')};
   margin: 0 auto;
-  background-color: transparent;
+  background: transparent;
   padding: 3rem 0 0 3rem;
   min-width: 45rem;
   max-width: 45rem;

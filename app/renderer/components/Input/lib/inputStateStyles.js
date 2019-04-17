@@ -11,7 +11,7 @@ const inputStateStyles = (
   color: ${p.styles.color};
   border: ${getInputBorderColor(p)};
 
-  background-color: ${p.readOnly ? p.theme.colors.V900 : p.styles.backgroundColor};
+  background: ${p.readOnly ? p.theme.colors.V900 : p.styles.backgroundColor};
 
   &::placeholder {
     color: ${p.theme.colors.N200};
@@ -24,7 +24,7 @@ const inputStateStyles = (
 
   &:disabled {
     color: ${p.theme.colors.N700};
-    background-color: ${`${p.theme.colors.N100}`};
+    background: ${`${p.theme.colors.N100}`};
     cursor: not-allowed;
   }
 `;

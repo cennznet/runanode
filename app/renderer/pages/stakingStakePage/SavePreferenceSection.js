@@ -15,7 +15,7 @@ const StakingPreferenceWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  background-color: ${colors.V900};
+  background: ${colors.V900};
   border-radius: 3px;
   padding: 2rem 2rem 4rem 1rem;
   margin-top: 2rem;
