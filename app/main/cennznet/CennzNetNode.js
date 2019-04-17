@@ -5,6 +5,7 @@ import type { WriteStream } from 'fs';
 import { toInteger } from 'lodash';
 import waitPort from 'wait-port';
 import assert from 'assert';
+import fs from 'fs';
 
 import { environment } from 'common/environment';
 
@@ -245,6 +246,15 @@ export class CennzNetNode {
     _log.info(`newNodeArgs: ${JSON.stringify(newNodeArgs)}`);
     _log.info(`startupTimeout: ${JSON.stringify(startupTimeout)}`);
 
+    // check chain file exists, if not change node state to crash, then we can let user select network again
+    const chainSpecFile = this._getArgs(newNodeArgs, '--chain');
+    _log.info(`chainSpecFile: ${chainSpecFile}`);
+    if(chainSpecFile.endsWith('json') && !fs.existsSync(chainSpecFile)) {
+      _log.info(`chainSpecFile not exists.`);
+      // TODO UI not fully initialize, not able to receive CRASHED state
+      this._changeToState(CennzNetNodeStates.CRASHED);
+    }
+
     return new Promise((resolve, reject) => {
       const logFile = createWriteStream(config.logFilePath, { flags: 'a' });
       logFile.on('open', async () => {
@@ -256,7 +266,7 @@ export class CennzNetNode {
         this._node = node;
         try {
           await promisedCondition(() => node.connected, startupTimeout);
-          // Setup livecycle event handlers
+          // Setup lifecycle event handlers
 
           node.on('exit', this._handleCennzNetNodeExit);
           node.on('error', this._handleCennzNetNodeError);
@@ -821,9 +831,17 @@ export class CennzNetNode {
   _isUnrecoverable = (config: CennzNetNodeConfig) => this._startupTries >= config.startupMaxRetries;
 
   _removeArgs = (nodeArgs, argName, space) => {
-    const validatorArgIndex = nodeArgs.findIndex(item => item === argName);
-    if (validatorArgIndex >= 0) {
-      nodeArgs.splice(validatorArgIndex, space);
+    const argIndex = nodeArgs.findIndex(item => item === argName);
+    if (argIndex >= 0) {
+      nodeArgs.splice(argIndex, space);
     }
+  };
+
+  _getArgs = (nodeArgs, argName) => {
+    const argIndex = nodeArgs.findIndex(item => item === argName);
+    if (argIndex >= 0) {
+      return nodeArgs[argIndex + 1];
+    }
+    return null;
   };
 }
