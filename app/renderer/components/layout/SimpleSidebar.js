@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   max-width: 20rem;
   padding: 5rem;
-  background-color: ${colors.V900};
+  background: ${colors.V900};
 `;
 
 const Sidebar = () => (

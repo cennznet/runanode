@@ -10,7 +10,7 @@ const ContentWrapper = styled.span`
   min-width: 3rem;
   height: 3rem;
   border: ${p => `1px solid ${p.styles.borderColor}`};
-  background-color: ${p => p.styles.backgroundColor};
+  background: ${p => p.styles.backgroundColor};
   border-radius: 0.2rem;
   box-sizing: border-box;
 `;

@@ -9,7 +9,7 @@ const Table = styled(ReactTable)`
     .rt-thead {
       &.-header {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
-        background-color: ${colors.V900};
+        background: ${colors.V900};
 
         .rt-resizable-header {
           font-size: 16px;
@@ -46,11 +46,11 @@ const Table = styled(ReactTable)`
 
         .rt-tr {
           &.-odd {
-            background-color: rgba(8, 24, 127, 0.7);
+            background: rgba(8, 24, 127, 0.7);
           }
 
           &.-even {
-            background-color: rgba(8, 24, 127, 0.3);
+            background: rgba(8, 24, 127, 0.3);
           }
         }
         .rt-td {

@@ -31,7 +31,7 @@ const StyledCheckbox = styled(RcCheckbox)`
 
   &.rc-checkbox {
     .rc-checkbox-inner {
-      background-color: ${p => p.theme.colors.N50};
+      background: ${p => p.theme.colors.N50};
       transition: none;
 
       &::after {
@@ -57,7 +57,7 @@ const StyledCheckbox = styled(RcCheckbox)`
   &.rc-checkbox-checked {
     .rc-checkbox-inner {
       border-color: ${p => styledProps(styling(p).color, 'color')(p)};
-      background-color: ${p => styledProps(styling(p).color, 'color')(p)};
+      background: ${p => styledProps(styling(p).color, 'color')(p)};
 
       &::after {
         width: 4px;
@@ -79,7 +79,7 @@ const StyledCheckbox = styled(RcCheckbox)`
 
     .rc-checkbox-inner {
       border-color: ${p => p.theme.colors.N300};
-      background-color: ${p => p.theme.colors.N100};
+      background: ${p => p.theme.colors.N100};
 
       &::after {
         border-color: ${p => p.theme.colors.N100};
