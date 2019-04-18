@@ -75,6 +75,11 @@ services:
       - "1024:1024"
       - "5000:5000"
       - "8080:8080"
+  dev-ui:
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet-ui:1.0.108
+    entrypoint: "bash scripts/deploy.sh"
+    ports:
+      - "3000:3000"
 volumes:
   node_0:
   node_1:
