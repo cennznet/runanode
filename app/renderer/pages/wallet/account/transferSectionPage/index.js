@@ -59,7 +59,7 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
       <Formik
         validationSchema={ValidateSchema}
         initialValues={{
-          assetId: { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: 0 },
+          assetId: { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: PreDefinedAssetId.stakingToken },
         }}
         {...{ onSubmit }}
         render={({ handleSubmit, ...formProps }) => {
@@ -74,8 +74,8 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
                     labelText="Asset"
                     width="45%"
                     options={[
-                      { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: 0 },
-                      { label: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], value: 10 },
+                      { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: PreDefinedAssetId.stakingToken },
+                      { label: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], value: PreDefinedAssetId.spendingToken },
                     ]}
                     component={SelectField}
                   />
