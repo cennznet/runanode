@@ -9,6 +9,7 @@ const defaultThemeStyle = p => {
 
   return {
     height: '3rem',
+    fontSize: '14px',
     background: 'rgba(114,94,255,0.5)', // TODO: move to colcors
     borderColor: colors.V400,
     color: colors.N0,
@@ -32,6 +33,7 @@ const computedThemeStyle = p =>
 const StyledSelect = styled(ReactSelect)`
   .react-select__control {
     box-shadow: none;
+    fontsize: ${p => computedThemeStyle(p).fontSize};
     height: ${p => computedThemeStyle(p).height};
     color: ${p => computedThemeStyle(p).color};
     border-color: ${p => computedThemeStyle(p).borderColor};
