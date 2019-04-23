@@ -110,10 +110,13 @@ const TopBar = ({
         <NetworkSectionContainer>
           <NetworkSectionWrapper>
             <Select
-              backgroundColor={colors.V800}
-              fontWeight="600"
-              fontSize="16px"
-              borderColor="transparent"
+              themeSpace="headerSelect"
+              themeStyle={{
+                background: colors.V800,
+                fontWeight: '600',
+                fontSize: '16px',
+                borderColor: 'transparent',
+              }}
               value={getNetworkOptionPair(networkName)}
               onChange={selected => {
                 setIsOpenNetworkWarningModal(true);
