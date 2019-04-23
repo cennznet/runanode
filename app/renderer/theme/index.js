@@ -4,13 +4,9 @@ import defaultTheme, {
   colors as defaultColors,
 } from 'components/defaultTheme';
 
-const customColors = {
-  // override colors here...
-  // brandPrimary: '#191919',
-  // brandSecondary: defaultColors.R500,
-};
+import * as appColors from './appColors';
 
-const colors = R.mergeDeepRight(defaultColors, customColors);
+const colors = R.mergeDeepRight(defaultColors, appColors);
 
 const customTheme = {
   /** Components themeSpace */
