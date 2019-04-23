@@ -1,61 +1,73 @@
 import React from 'react';
 import ReactSelect from 'react-select';
 import styled from 'styled-components';
-import themeObj, { colors } from 'renderer/theme';
+import mergeOptions from 'merge-options';
+import theme from 'renderer/theme';
+
+const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+
+  return {
+    height: '3rem',
+    background: 'rgba(114,94,255,0.5)', // TODO: move to colcors
+    borderColor: colors.V400,
+    color: colors.N0,
+
+    indicatorBackground: colors.N100,
+    selectedFontWeight: 'bolder',
+    selectedBackground: 'transparent',
+    selectedColor: colors.N0,
+
+    menuBackground: colors.V800,
+    menuBorderColor: colors.N100,
+
+    focusBackground: colors.V500,
+    focusColor: colors.N0,
+  };
+};
+
+const computedThemeStyle = p =>
+  mergeOptions({}, defaultThemeStyle(p), p.themeStyle, p.theme[p.themeSpace]);
 
 const StyledSelect = styled(ReactSelect)`
   .react-select__control {
     box-shadow: none;
-    height: ${p => p.height};
-    color: ${p => p.color};
-    border-color: ${p => p.borderColor};
-    font-weight: ${p => p.fontWeight};
-    font-size: ${p => p.fontSize};
-    background: ${p => p.backgroundColor};
-    
+    height: ${p => computedThemeStyle(p).height};
+    color: ${p => computedThemeStyle(p).color};
+    border-color: ${p => computedThemeStyle(p).borderColor};
+    font-weight: ${p => computedThemeStyle(p).fontWeight};
+    background: ${p => computedThemeStyle(p).background};
+
     &:hover {
-      border-color: ${p => p.borderHoverColor};
+      border-color: ${p => computedThemeStyle(p).borderHoverColor};
     }
   }
 
   .react-select__menu {
-    border: 1px solid ${p => p.menuBorderColor};
-    background: ${p => p.menuBackgroundColor};
+    border: 1px solid ${p => computedThemeStyle(p).menuBorderColor};
+    background: ${p => computedThemeStyle(p).menuBackground};
   }
 
   .react-select__option--is-focused {
-    color: ${p => p.focusColor};
-    background: ${p => p.focusBackgroundColor};
+    color: ${p => computedThemeStyle(p).focusColor};
+    background: ${p => computedThemeStyle(p).focusBackground};
   }
 
   .react-select__indicator-separator {
-    background: ${p => p.borderColor || p.indicatorBackgroundColor};
+    background: ${p =>
+      computedThemeStyle(p).borderColor || computedThemeStyle(p).indicatorBackground};
   }
 
   .react-select__option--is-selected {
-    background: ${p => p.selectedBackgroundColor};
-    color: ${p => p.selectedColor};
-    font-weight: ${p => p.selectedFontWeight};
+    background: ${p => computedThemeStyle(p).selectedBackground};
+    color: ${p => computedThemeStyle(p).selectedColor};
+    font-weight: ${p => computedThemeStyle(p).selectedFontWeight};
   }
 `;
 
 StyledSelect.defaultProps = {
-  theme: themeObj,
+  theme,
   themeSpace: 'select',
-
-  fontSize: '14px',
-  backgroundColor: 'rgba(114,94,255,0.5)',
-  menuBackgroundColor: colors.V800,
-  borderColor: colors.V400,
-  height: '3rem',
-  color: colors.N0,
-  selectedFontWeight: 'bolder',
-  selectedBackgroundColor: 'transparent',
-  selectedColor: colors.N0,
-  focusBackgroundColor: colors.V500,
-  focusColor: colors.N0,
-  indicatorBackgroundColor: colors.N100,
-  menuBorderColor: colors.N100,
 };
 
 const Select = ({ disabled, ...props }) => (
