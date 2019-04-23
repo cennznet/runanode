@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import mergeOptions from 'merge-options';
+import theme from 'renderer/theme';
 import { ToastContainer, Slide } from 'react-toastify';
-import { colors } from 'renderer/theme';
 import { IconCross } from 'components/icons';
 
 const IconButton = styled.button`
@@ -34,15 +35,34 @@ const CustomToast = ({ children, ...props }) => {
   );
 };
 
+const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+
+  return {
+    background: colors.V900,
+    boxShadow:
+      '0 2px 1px -1px rgba(0, 0, 0, 0.18), 0 1px 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+
+    color: {
+      info: colors.info,
+      danger: colors.danger,
+      success: colors.success,
+      warning: colors.warning,
+    },
+  };
+};
+
+const computedThemeStyle = p =>
+  mergeOptions({}, defaultThemeStyle(p), p.themeStyle, p.theme[p.themeSpace]);
+
 const Toaster = styled(CustomToast)`
   margin-top: 4.5rem;
 
   .Toastify__toast {
     font-weight: 500;
     padding: 0;
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.18), 0 1px 1px 0 rgba(0, 0, 0, 0.12),
-      0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    background: #020835;
+    box-shadow: ${p => computedThemeStyle(p).boxShadow};
+    background: ${p => computedThemeStyle(p).background};
     border-radius: 3px;
 
     .Toastify__toast-body {
@@ -58,28 +78,33 @@ const Toaster = styled(CustomToast)`
 
     &.Toastify__toast--success {
       .Toastify__progress-bar {
-        background: ${colors.success};
+        background: ${p => computedThemeStyle(p).color.success};
       }
     }
 
     &.Toastify__toast--error {
       .Toastify__progress-bar {
-        background: ${colors.danger};
+        background: ${p => computedThemeStyle(p).color.danger};
       }
     }
 
     &.Toastify__toast--warning {
       .Toastify__progress-bar {
-        background: ${colors.warning};
+        background: ${p => computedThemeStyle(p).color.warning};
       }
     }
 
     &.Toastify__toast--info {
       .Toastify__progress-bar {
-        background: ${colors.info};
+        background: ${p => computedThemeStyle(p).color.info};
       }
     }
   }
 `;
+
+Toaster.defaultProps = {
+  theme,
+  themeSpace: 'toaster',
+};
 
 export default Toaster;
