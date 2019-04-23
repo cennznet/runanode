@@ -100,4 +100,5 @@ Button.propTypes = {
 
 Button.displayName = 'Button';
 
+/** @component */
 export default Button;
