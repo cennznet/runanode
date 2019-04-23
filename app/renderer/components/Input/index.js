@@ -73,4 +73,5 @@ Input.propTypes = {
   suffix: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.string]),
 };
 
+/** @component */
 export default Input;
