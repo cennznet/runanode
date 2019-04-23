@@ -64,6 +64,11 @@ module.exports = {
         color: '#FFFFFF',
       },
     },
+    Table: {
+      cell: {
+        background: '#FFFFFF',
+      },
+    },
     TableOfContents: {
       input: {
         backgroundColor: 'transparent',
@@ -72,6 +77,12 @@ module.exports = {
     Playground: {
       preview: {
         border: '1px solid #1130FF',
+      },
+    },
+    Pre: {
+      pre: {
+        background: '#040C40',
+        color: '#FFFFFF !important',
       },
     },
   },
@@ -103,6 +114,10 @@ module.exports = {
     {
       name: 'Introduction',
       content: `styleguideHelpers/docs/introduction.md`,
+    },
+    {
+      name: 'Colors',
+      content: `styleguideHelpers/docs/colors.md`,
     },
     {
       name: 'Theming',
