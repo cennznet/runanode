@@ -1,34 +1,58 @@
-import * as colors from './colors';
-import media from './media';
+import R from 'ramda';
+import defaultTheme, {
+  media as mediaQueries,
+  colors as defaultColors,
+} from 'components/defaultTheme';
 
-const theme = {
-  borderRadius: '3px',
-  colors: { ...colors },
-  fontSizeSm: '12px',
-  fontSize: '14px',
-  fontSizeLg: '1rem',
-  fontFamily: `
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    'Roboto',
-    'Fira Sans',
-    Oxygen-Sans,
-    'Ubuntu',
-    'Helvetica Neue',
-    sans-serif
-  `,
-  pageGradient: 'linear-gradient(180deg, #0B1E73 0%, #040C40 50%)',
-  listitemHighlightGradient:
-    'linear-gradient(90deg, rgba(210,38,242,0.5) 0%, rgba(8,24,127,0.5) 100%)',
-  zIndex: {
-    overlay: 20,
-    above: 10,
-    bump: 1,
-    below: -1,
-  },
+const customColors = {
+  // override colors here...
+  // brandPrimary: '#191919',
+  // brandSecondary: defaultColors.R500,
 };
 
-export { colors, media };
+const colors = R.mergeDeepRight(defaultColors, customColors);
 
+const customTheme = {
+  /** Components themeSpace */
+
+  // button: {
+  //   fontSize: {
+  //     sm: '14px',
+  //     md: '14px',
+  //     lg: '1rem'
+  //   },
+  //   height: {
+  //     sm: '1.5rem',
+  //     md: '2rem',
+  //     lg: '2.5rem'
+  //   },
+  //   color: {
+  //     primary: colors.primary,
+  //     danger: colors.danger,
+  //     success: colors.success,
+  //     warning: colors.warning,
+  //     info: colors.info
+  //   },
+  //   hoverColor: {
+  //     primary: colors.B600,
+  //     danger: colors.R600,
+  //     success: colors.G600,
+  //     warning: colors.Y600,
+  //     info: colors.B600
+  //   },
+  //   contrastColor: {
+  //     primary: colors.N0,
+  //     danger: colors.N0,
+  //     success: colors.N0,
+  //     warning: colors.N800,
+  //     info: colors.N0
+  //   }
+  // },
+  colors,
+};
+
+const theme = R.mergeDeepRight(defaultTheme, customTheme);
+const media = mediaQueries(theme.breakPoints);
+
+export { colors, media };
 export default theme;
