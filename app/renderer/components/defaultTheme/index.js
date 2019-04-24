@@ -1,9 +1,11 @@
 import * as colors from './colors';
 import media from './media';
+import * as utils from './utils';
 
 const theme = {
   borderRadius: '3px',
   colors: { ...colors },
+  utils: { ...utils },
   fontSizeSm: '12px',
   fontSize: '14px',
   fontSizeLg: '1rem',
@@ -27,8 +29,9 @@ const theme = {
     bump: 1,
     below: -1,
   },
+  components: {},
 };
 
-export { colors, media };
+export { colors, media, utils };
 
 export default theme;
