@@ -27,8 +27,7 @@ const defaultThemeStyle = p => {
   };
 };
 
-const computedThemeStyle = p =>
-  mergeOptions({}, defaultThemeStyle(p), p.themeStyle, p.theme[p.themeSpace]);
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const StyledSelect = styled(ReactSelect)`
   .react-select__control {
@@ -69,7 +68,7 @@ const StyledSelect = styled(ReactSelect)`
 
 StyledSelect.defaultProps = {
   theme,
-  themeSpace: 'select',
+  themeKey: 'Select',
 };
 
 const Select = ({ disabled, ...props }) => (
