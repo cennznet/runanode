@@ -52,8 +52,7 @@ const defaultThemeStyle = p => {
   };
 };
 
-const computedThemeStyle = p =>
-  mergeOptions({}, defaultThemeStyle(p), p.themeStyle, p.theme[p.themeSpace]);
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const Toaster = styled(CustomToast)`
   margin-top: 4.5rem;
@@ -104,7 +103,7 @@ const Toaster = styled(CustomToast)`
 
 Toaster.defaultProps = {
   theme,
-  themeSpace: 'toaster',
+  themeKey: 'Toaster',
 };
 
 export default Toaster;
