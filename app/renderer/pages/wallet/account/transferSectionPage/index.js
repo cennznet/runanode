@@ -59,7 +59,10 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
       <Formik
         validationSchema={ValidateSchema}
         initialValues={{
-          assetId: { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: PreDefinedAssetId.stakingToken },
+          assetId: {
+            label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken],
+            value: PreDefinedAssetId.stakingToken,
+          },
         }}
         {...{ onSubmit }}
         render={({ handleSubmit, ...formProps }) => {
@@ -74,8 +77,14 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
                     labelText="Asset"
                     width="45%"
                     options={[
-                      { label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken], value: PreDefinedAssetId.stakingToken },
-                      { label: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken], value: PreDefinedAssetId.spendingToken },
+                      {
+                        label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken],
+                        value: PreDefinedAssetId.stakingToken,
+                      },
+                      {
+                        label: PreDefinedAssetIdName[PreDefinedAssetId.spendingToken],
+                        value: PreDefinedAssetId.spendingToken,
+                      },
                     ]}
                     component={SelectField}
                   />
@@ -101,7 +110,7 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
               </div>
               <PageFooter>
                 <div />
-                <Button type="submit" color="primary" disabled={!isValid}>
+                <Button type="submit" disabled={!isValid}>
                   Send
                 </Button>
               </PageFooter>

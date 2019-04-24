@@ -72,7 +72,7 @@ const StakeConfirmModal = ({
           <Button
             onClick={() => setStakeConfirmModalOpen(false)}
             style={{ marginRight: '0.5rem' }}
-            color="nuetral"
+            variant="nuetral"
             flat
           >
             Cancel

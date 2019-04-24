@@ -1,21 +1,21 @@
 ```jsx
 <DemoFlex>
   <Button>Primary</Button>
-  <Button color="secondary">Secondary</Button>
-  <Button color="success">Success</Button>
-  <Button color="warning">Warning</Button>
-  <Button color="danger">Danger</Button>
+  <Button variant="secondary">Secondary</Button>
+  <Button variant="success">Success</Button>
+  <Button variant="warning">Warning</Button>
+  <Button variant="danger">Danger</Button>
   <Button disabled>Disabled</Button>
 </DemoFlex>
 ```
 
 ```jsx
 <DemoFlex>
-  <Button circle size="sm" outline color="success">
+  <Button circle size="sm" outline variant="success">
     X
   </Button>
   <Button circle>X</Button>
-  <Button circle size="lg" color="warning">
+  <Button circle size="lg" variant="warning">
     X
   </Button>
 </DemoFlex>
@@ -24,13 +24,13 @@
 ```jsx
 <DemoFlex>
   <Button outline>Primary</Button>
-  <Button color="warning" outline>
+  <Button variant="warning" outline>
     Warning
   </Button>
-  <Button color="danger" outline>
+  <Button variant="danger" outline>
     Danger
   </Button>
-  <Button color="info" outline>
+  <Button variant="info" outline>
     Info
   </Button>
   <Button outline disabled>
@@ -50,13 +50,13 @@
 ```jsx
 <DemoFlex>
   <Button loading>Primary</Button>
-  <Button color="warning" loading>
+  <Button variant="warning" loading>
     Loading
   </Button>
-  <Button color="danger" loading>
+  <Button variant="danger" loading>
     Danger
   </Button>
-  <Button color="info" loading>
+  <Button variant="info" loading>
     Info
   </Button>
 </DemoFlex>
@@ -65,16 +65,16 @@
 ```jsx
 <DemoFlex>
   <Button flat>Primary</Button>
-  <Button color="warning" flat>
+  <Button variant="warning" flat>
     Warning flat
   </Button>
-  <Button color="danger" flat>
+  <Button variant="danger" flat>
     Danger flat
   </Button>
-  <Button color="info" flat>
+  <Button variant="info" flat>
     Info flat
   </Button>
-  <Button color="nuetral" flat>
+  <Button variant="nuetral" flat>
     Nuetral flat
   </Button>
 </DemoFlex>

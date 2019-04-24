@@ -50,7 +50,7 @@ const SeedPhraseQuizPage = props => {
               </div>
               <PageFooter>
                 <StartOverLink />
-                <Button type="submit" color="primary" disabled={!isValid}>
+                <Button type="submit" disabled={!isValid}>
                   Next
                 </Button>
               </PageFooter>

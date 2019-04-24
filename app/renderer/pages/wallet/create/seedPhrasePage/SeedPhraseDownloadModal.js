@@ -29,12 +29,12 @@ const StoreWarningModal = ({
       <ModalFooter>
         <React.Fragment>
           <ButtonGroup>
-            <Button flat color="nuetral" onClick={() => setSeedPhaseDownloadModalOpen(false)}>
+            <Button flat variant="nuetral" onClick={() => setSeedPhaseDownloadModalOpen(false)}>
               Cancel
             </Button>
             <Button
               disabled={!isSeedPhaseDownloadModalConfirmCheck}
-              color="warning"
+              variant="warning"
               style={{ marginLeft: '0.5rem' }}
               onClick={() => {
                 onCreatePaperWallet({
