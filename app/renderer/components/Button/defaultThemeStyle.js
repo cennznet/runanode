@@ -1,6 +1,6 @@
 import { darken } from 'polished';
 
-const defaultStyling = theme => {
+const defaultStyling = ({ theme }) => {
   const { colors } = theme;
 
   return {

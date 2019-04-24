@@ -1,6 +1,5 @@
 import styledProps from 'styled-props';
-import mergeOptions from 'merge-options';
-import defaultStyling from './defaultStyling';
+import defaultThemeStyle from './defaultThemeStyle';
 
 const buttonColor = (p, styling) => {
   const { colors } = p.theme;
@@ -87,12 +86,14 @@ const hoverBorderColor = (p, styling) => {
 };
 
 const buttonStyles = props => {
-  const styling = mergeOptions(
-    {},
-    defaultStyling(props.theme),
-    props.theme[props.themeSpace],
-    props.themeStyles
-  );
+  // const styling = (
+  //   {},
+  //   defaultStyling(props.theme),
+  //   props.theme[props.themeSpace],
+  //   props.themeStyles
+  // );
+
+  const styling = props.theme.utils.createThemeStyle(props, defaultThemeStyle);
 
   const p = Object.assign(
     {

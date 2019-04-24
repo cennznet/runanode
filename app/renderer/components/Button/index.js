@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import styledProps from 'styled-props';
 import Spinner from 'components/Spinner';
 import defaultTheme from 'renderer/theme';
-import defaultStyling from './defaultStyling';
+import defaultThemeStyle from './defaultThemeStyle';
 import buttonStyles from './buttonStyles';
 
 const StyledButton = styled.button`
@@ -26,7 +26,7 @@ const IconWrapper = styled.div`
 
 const IconAfter = ({ iconAfter, loading, color, theme }) => {
   const icon = loading ? (
-    <Spinner color={styledProps(defaultStyling(theme).contrastColor, 'color')({ color })} />
+    <Spinner color={styledProps(defaultThemeStyle({ theme }).contrastColor, 'color')({ color })} />
   ) : (
     iconAfter
   );
@@ -66,7 +66,7 @@ Button.defaultProps = {
   outline: false,
   size: 'md',
   theme: defaultTheme,
-  themeSpace: 'button',
+  themeKey: 'Button',
   themeStyles: {},
   type: 'button',
 };
