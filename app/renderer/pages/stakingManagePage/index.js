@@ -344,7 +344,7 @@ const StakingStakePage = ({
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
-        <UnStakeButton color="danger" onClick={() => setUnStakeWarningModalOpen(true)}>
+        <UnStakeButton variant="danger" onClick={() => setUnStakeWarningModalOpen(true)}>
           Unstake
         </UnStakeButton>
         <PageHeading
