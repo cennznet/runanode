@@ -110,7 +110,7 @@ const TopBar = ({
         <NetworkSectionContainer>
           <NetworkSectionWrapper>
             <Select
-              themeSpace="headerSelect"
+              themeKey="HeaderSelect"
               themeStyle={{
                 background: colors.V800,
                 fontWeight: '600',
