@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { colors } from 'renderer/theme';
+import theme from 'renderer/theme';
+import styledProps from 'styled-props';
 import { IconSuccess, IconWarning, IconDanger, IconInfo } from 'components/icons';
 
 const ToasterInfoWrapper = styled.div`
@@ -12,8 +13,23 @@ const ToasterInfoWrapper = styled.div`
 
 const ToasterInfoContent = styled.div``;
 
+const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+
+  return {
+    color: {
+      info: colors.info,
+      error: colors.danger,
+      success: colors.success,
+      warning: colors.warning,
+    },
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
+
 const ToasterTitle = styled.div`
-  color: ${p => p.color};
+  color: ${p => styledProps(computedThemeStyle(p).color, 'status')(p)};
 `;
 
 const IconBox = styled.div`
@@ -32,25 +48,32 @@ const ToasterMessage = styled.div`
 `;
 
 const statusMap = {
-  success: { color: colors.success, title: 'Success', Icon: IconSuccess },
-  warning: { color: colors.warning, title: 'Warning', Icon: IconWarning },
-  info: { color: colors.info, title: 'Information', Icon: IconInfo },
-  error: { color: colors.danger, title: 'Error', Icon: IconDanger },
+  success: { title: 'Success', Icon: IconSuccess },
+  warning: { title: 'Warning', Icon: IconWarning },
+  info: { title: 'Information', Icon: IconInfo },
+  error: { title: 'Error', Icon: IconDanger },
 };
 
 export default (toasterStatus = 'info', toasterText, options) => {
-  const { color, title, Icon } = statusMap[toasterStatus];
+  const { title, Icon } = statusMap[toasterStatus];
+  const iconColor = computedThemeStyle({ theme }).color[toasterStatus];
+
   toast[toasterStatus](
     <ToasterInfoWrapper>
       <IconBox>
-        <Icon color={color} />
+        <Icon color={iconColor} />
       </IconBox>
 
       <ToasterInfoContent>
-        <ToasterTitle color={color}>{title}</ToasterTitle>
+        <ToasterTitle status={toasterStatus}>{title}</ToasterTitle>
         <ToasterMessage>{toasterText}</ToasterMessage>
       </ToasterInfoContent>
     </ToasterInfoWrapper>,
     options
   );
+};
+
+ToasterTitle.defaultProps = {
+  theme,
+  themeKey: 'Toaster',
 };
