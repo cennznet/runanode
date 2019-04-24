@@ -45,7 +45,7 @@ const defaultThemeStyle = p => {
 
     color: {
       info: colors.info,
-      danger: colors.danger,
+      error: colors.danger,
       success: colors.success,
       warning: colors.warning,
     },
@@ -83,7 +83,7 @@ const Toaster = styled(CustomToast)`
 
     &.Toastify__toast--error {
       .Toastify__progress-bar {
-        background: ${p => computedThemeStyle(p).color.danger};
+        background: ${p => computedThemeStyle(p).color.error};
       }
     }
 
