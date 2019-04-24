@@ -20,7 +20,14 @@ const InputGroup = styled.div`
   justify-content: space-between;
 `;
 
-const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen, stakingWallet, stakingAccount, onSaveStakingPreferences, validatorPreferences }) => {
+const ChangeStakingPreferenceModal = ({
+  isChangeStakingPreferenceModalOpen,
+  setChangeStakingPreferenceModalOpen,
+  stakingWallet,
+  stakingAccount,
+  onSaveStakingPreferences,
+  validatorPreferences,
+}) => {
   const initialValues = {
     unStakeThreshold: validatorPreferences ? validatorPreferences.unstakeThreshold : 3,
     paymentPreferences: validatorPreferences ? validatorPreferences.validatorPayment : 0,
@@ -33,7 +40,7 @@ const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setC
       address: stakingAccount.address,
       unStakeThreshold: parseInt(values.unStakeThreshold, 10),
       paymentPreferences: parseInt(values.paymentPreferences, 10),
-    }
+    };
     onSaveStakingPreferences(payload);
     // TODO unable to reset form
     // actions.resetForm();
@@ -54,7 +61,7 @@ const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setC
         validationSchema={ValidateSchema}
         initialValues={initialValues}
         onSubmit={onSubmit}
-        render={({handleSubmit, ...formProps}) => {
+        render={({ handleSubmit, ...formProps }) => {
           const { isValid, values, errors, touched } = formProps;
           return (
             <Form
@@ -70,7 +77,7 @@ const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setC
                         key="unStakeThreshold"
                         name="unStakeThreshold"
                         labelText="Unstake threshold"
-                        width='100%'
+                        width="100%"
                         component={TextField}
                         append="times of warning"
                         placeholder=""
@@ -81,7 +88,7 @@ const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setC
                     <ButtonGroup>
                       <Button
                         flat
-                        color="nuetral"
+                        variant="nuetral"
                         onClick={() => {
                           setChangeStakingPreferenceModalOpen(false);
                         }}
@@ -90,7 +97,6 @@ const ChangeStakingPreferenceModal = ({ isChangeStakingPreferenceModalOpen, setC
                       </Button>
                       <Button
                         type="submit"
-                        color="primary"
                         style={{ marginLeft: '0.5rem' }}
                         disabled={!R.isEmpty(errors)}
                         onClick={() => {

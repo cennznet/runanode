@@ -45,12 +45,12 @@ const SwitchNetworkWarningModal = ({
     </ModalBody>
     <ModalFooter>
       <ButtonGroup>
-        <Button flat color="nuetral" onClick={() => setIsOpenNetworkWarningModal(false)}>
+        <Button flat variant="nuetral" onClick={() => setIsOpenNetworkWarningModal(false)}>
           Cancel
         </Button>
         <Button
           style={{ marginLeft: '0.5rem' }}
-          color="warning"
+          variant="warning"
           onClick={() => {
             setIsOpenNetworkWarningModal(false);
             if (selectedNetwork && selectedNetwork.value === NetworkNameMapping.Development) {

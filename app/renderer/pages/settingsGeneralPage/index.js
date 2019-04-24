@@ -30,8 +30,8 @@ const PreferenceSection = styled.div`
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: ${colors.border};
-    
-  & + & { 
+
+  & + & {
     border-top-width: 1px;
     border-top-style: solid;
     border-top-color: ${colors.border};
@@ -77,7 +77,7 @@ const SettingsGeneralPage = ({
       <VersionSection>
         {config.app.name} version {packageJson.version}
       </VersionSection>
-      <Scrollable styles={{height: '70vh'}}>
+      <Scrollable styles={{ height: '70vh' }}>
         <PreferenceSection>
           <PreferenceHeader>Preference</PreferenceHeader>
           <PreferenceBody>
@@ -98,8 +98,8 @@ const SettingsGeneralPage = ({
                 Enable analytics
                 <span>
                   We collect basic information (for example country of origin, operation system,
-                  application version number) to help improve our user experiences. Data is only used
-                  in aggregate and is never shared with any third parties.
+                  application version number) to help improve our user experiences. Data is only
+                  used in aggregate and is never shared with any third parties.
                 </span>
               </Label>
               <Toggle
@@ -119,7 +119,9 @@ const SettingsGeneralPage = ({
                 Reset staking option
                 <span>You can reset staking option here.</span>
               </Label>
-              <Button color="danger" onClick={() => onResetStakingOption()}>Reset</Button>
+              <Button variant="danger" onClick={() => onResetStakingOption()}>
+                Reset
+              </Button>
             </PreferenceItem>
           </PreferenceBody>
         </PreferenceSection>

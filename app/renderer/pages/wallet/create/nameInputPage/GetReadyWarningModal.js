@@ -71,10 +71,14 @@ const GetReadyWarningModal = ({
       </ModalBody>
       <ModalFooter>
         <ButtonGroup>
-          <Button flat color="nuetral" onClick={() => setIsOpenPenPrepareModal(false)}>
+          <Button flat variant="nuetral" onClick={() => setIsOpenPenPrepareModal(false)}>
             Go back
           </Button>
-          <Button style={{ marginLeft: '0.5rem' }} color="warning" onClick={() => onClickButton()}>
+          <Button
+            style={{ marginLeft: '0.5rem' }}
+            variant="warning"
+            onClick={() => onClickButton()}
+          >
             I am prepared
           </Button>
         </ButtonGroup>

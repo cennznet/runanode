@@ -33,7 +33,7 @@ const SeedPhrasePage = props => {
       </PageHeading>
       <ButtonPanelContainer>
         <Button
-          color="secondary"
+          variant="secondary"
           onClick={() => {
             setSeedPhaseDownloadModalOpen(true);
           }}
