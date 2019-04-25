@@ -9,13 +9,13 @@ const InputCore = styled.input`
 
 InputCore.defaultProps = {
   valid: true,
-  theme,
-  themeSpace: 'input',
 };
 
 InputCore.propTypes = {
   valid: PropTypes.bool,
-  theme: PropTypes.object,
+  theme: PropTypes.object.isRequired,
+  themeKey: PropTypes.string.isRequired,
+  computedThemeStyle: PropTypes.object.isRequired,
 };
 
 export default InputCore;
