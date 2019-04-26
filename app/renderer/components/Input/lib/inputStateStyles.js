@@ -1,25 +1,21 @@
-import theme from 'renderer/theme';
-
 import getInputBorderColor from './getInputBorderColor';
 
-const inputStateStyles = (
-  p = {
-    theme,
-    themeSpace: 'input',
-  }
-) => `
-  color: ${p.styles.color};
+const inputStateStyles = p => `
+  color: ${p.computedThemeStyle.color};
   border: ${getInputBorderColor(p)};
 
-  background: ${p.readOnly ? p.theme.colors.V900 : p.styles.backgroundColor};
+  background: ${
+    p.readOnly ? p.computedThemeStyle.readOnlyBackground : p.computedThemeStyle.background
+  };
 
-  &::placeholder {
-    color: ${p.theme.colors.N200};
+  &::placeholder{
+    color: ${p.computedThemeStyle.placeholderColor};
+    opacity: 1; /* Firefox */
   }
 
   &:focus {
     outline: none;
-    border: ${`1px solid ${p.readOnly ? p.theme.colors.border : getInputBorderColor(p)}`};
+    border: ${getInputBorderColor(Object.assign(p, { isFocused: true }))};
   }
 
   &:disabled {
