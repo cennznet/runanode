@@ -1,7 +1,8 @@
 ```jsx
 <DemoFlex>
   <Input prepend="prepend" append="append" prefix="prefix" suffix="suffix" />
-  <Input placeholder="Normal input" />
+  <Input placeholder="Placehoder..." />
+  <Input placeholder="Read only" readOnly />
 </DemoFlex>
 ```
 
@@ -12,8 +13,9 @@ const button = (
   </Button>
 );
 <DemoFlex>
+  <Input suffix="spinner" size='sm' placeholder='small' />
   <Input suffix={button} />
-  <Input suffix="spinner" />
+  <Input size='lg' placeholder='large' />
 </DemoFlex>;
 ```
 
