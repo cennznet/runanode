@@ -27,7 +27,7 @@ const ExitAppWhileStakingModal = ({ isOpen, onToggleGlobalModal, modalType }) =>
       <ModalFooter>
         <div style={{ display: 'flex' }}>
           <Button
-            color="nuetral"
+            variant="nuetral"
             onClick={() => {
               onToggleGlobalModal({ isOpen: false, type: modalType });
             }}

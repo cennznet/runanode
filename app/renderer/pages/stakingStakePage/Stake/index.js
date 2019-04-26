@@ -20,7 +20,6 @@ const Stake = ({
     <div>
       <Button
         type="submit"
-        color="primary"
         onClick={() => setStakeWarningModalOpen(true)}
         disabled={!isStakingEnabled}
       >

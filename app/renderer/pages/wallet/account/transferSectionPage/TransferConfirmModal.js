@@ -112,7 +112,7 @@ const TransferConfirmModal = ({
       </ModalBody>
       <ModalFooter>
         <ButtonGroup>
-          <Button flat color="nuetral" onClick={() => setTransferConfirmModalOpen(false)}>
+          <Button flat variant="nuetral" onClick={() => setTransferConfirmModalOpen(false)}>
             Cancel
           </Button>
           <Button

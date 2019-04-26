@@ -54,7 +54,7 @@ const StakeWarningModal = ({
               setStakeWarningModalOpen(false);
             }}
             style={{ marginRight: '0.5rem' }}
-            color="nuetral"
+            variant="nuetral"
             flat
           >
             Cancel

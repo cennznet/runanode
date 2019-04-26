@@ -9,14 +9,14 @@ module.exports = {
       linkHover: '#CCCCCC',
 
       codeBracket: '#e2777a',
-      codeComment: '#999',
+      codeComment: '#DDDDDD',
       codeDeleted: '#f8c555',
       codeFunction: '#f08d49',
       codeInserted: '#690',
       codeKeyword: '#cc99cd',
       codeOperator: '#67cdcc',
       codeProperty: '#f8c555',
-      codePunctuation: '#ccc',
+      codePunctuation: '#DDDDDD',
       codeString: '#690',
       codeTag: '#e2777a',
       codeVariable: '#7ec699',
@@ -26,6 +26,9 @@ module.exports = {
     Editor: {
       root: {
         background: '#040C40',
+        color: '#FFFFFF !important',
+        lineHeight: '1.25rem',
+        fontSize: '14px',
       },
     },
     Heading: {
@@ -93,7 +96,7 @@ module.exports = {
   ignore: [
     '**/app/renderer/components/**/lib/**/*.{js,jsx}',
     '**/app/renderer/components/Button/buttonStyles.js',
-    '**/app/renderer/components/Button/defaultStyling.js',
+    '**/app/renderer/components/Button/defaultThemeStyle.js',
     '**/app/renderer/components/Table/tableExpander.js',
     '**/app/renderer/components/Tabs/TabPane.js',
     '**/app/renderer/components/Modal/ModalBody.js',

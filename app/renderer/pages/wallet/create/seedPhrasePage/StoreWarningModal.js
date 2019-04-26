@@ -19,7 +19,7 @@ const StoreWarningModal = ({ isStoreWarningModalOpen, setStoreWarningModalOpen, 
       </ModalBody>
       <ModalFooter>
         <ButtonGroup>
-          <Button flat color="nuetral" onClick={() => setStoreWarningModalOpen(false)}>
+          <Button flat variant="nuetral" onClick={() => setStoreWarningModalOpen(false)}>
             Go back
           </Button>
           <Button

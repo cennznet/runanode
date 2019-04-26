@@ -49,11 +49,11 @@ const UnStakeWarningModal = ({
       </ModalBody>
       <ModalFooter>
         <ButtonGroup>
-          <Button flat color="nuetral" onClick={() => setUnStakeWarningModalOpen(false)}>
+          <Button flat variant="nuetral" onClick={() => setUnStakeWarningModalOpen(false)}>
             Cancel
           </Button>
           <Button
-            color="danger"
+            variant="danger"
             style={{ marginLeft: '0.5rem' }}
             onClick={() => {
               Logger.debug('unStake yes click');

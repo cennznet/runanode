@@ -8,7 +8,7 @@ initialState = { isOpen: false };
     <ModalBody>This is the example modal</ModalBody>
     <ModalFooter>
       <div style={{ display: 'flex' }}>
-        <Button color="nuetral" onClick={() => setState({ isOpen: false })}>
+        <Button variant="nuetral" onClick={() => setState({ isOpen: false })}>
           Close
         </Button>
         <Button style={{ marginLeft: '0.5rem' }} onClick={() => setState({ isOpen: false })}>

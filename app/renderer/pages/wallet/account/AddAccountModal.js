@@ -109,7 +109,6 @@ const AddAccountModal = ({
                             onClick={() => onAddAccountClick(values[fieldName])}
                             style={{ marginLeft: '0.5rem' }}
                             disabled={!values[fieldName]}
-                            color="primary"
                           >
                             Add
                           </Button>
