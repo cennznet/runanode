@@ -49,7 +49,7 @@ const WalletDetailsSubNav = ({
     return (
       <AddAccountButtonWrapper>
         <Button
-          color="secondary"
+          variant="secondary"
           size="lg"
           block
           onClick={() => {

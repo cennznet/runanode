@@ -1,8 +1,7 @@
 import styledProps from 'styled-props';
-import mergeOptions from 'merge-options';
-import defaultStyling from './defaultStyling';
+import defaultThemeStyle from './defaultThemeStyle';
 
-const buttonColor = (p, styling) => {
+const buttonColor = (p, computedThemeStyle) => {
   const { colors } = p.theme;
 
   if (p.disabled) {
@@ -10,13 +9,13 @@ const buttonColor = (p, styling) => {
   }
 
   if (p.flat || p.outline) {
-    return styledProps(styling.color, 'color')(p);
+    return styledProps(computedThemeStyle.color, 'variant')(p);
   }
 
-  return styledProps(styling.contrastColor, 'color')(p);
+  return styledProps(computedThemeStyle.contrastColor, 'variant')(p);
 };
 
-const buttonBgColor = (p, styling) => {
+const buttonBackground = (p, computedThemeStyle) => {
   const { colors } = p.theme;
 
   if (p.flat) {
@@ -31,22 +30,22 @@ const buttonBgColor = (p, styling) => {
     return colors.N0;
   }
 
-  return styledProps(styling.color, 'color')(p);
+  return styledProps(computedThemeStyle.color, 'variant')(p);
 };
 
-const buttonBorder = (p, styling) => {
+const buttonBorder = (p, computedThemeStyle) => {
   if (p.outline && !p.disabled) {
-    return `1px solid ${styledProps(styling.borderColor, 'color')(p)}`;
+    return `1px solid ${styledProps(computedThemeStyle.borderColor, 'variant')(p)}`;
   }
 
   if (p.disabled) {
     return 0;
   }
 
-  return `1px solid ${styledProps(styling.borderColor, 'color')(p)}`;
+  return `1px solid ${styledProps(computedThemeStyle.borderColor, 'variant')(p)}`;
 };
 
-const hoverBgColor = (p, styling) => {
+const hoverBackground = (p, computedThemeStyle) => {
   const { colors } = p.theme;
 
   if (p.flat) {
@@ -61,10 +60,10 @@ const hoverBgColor = (p, styling) => {
     return '';
   }
 
-  return styledProps(styling.hoverColor, 'color')(p);
+  return styledProps(computedThemeStyle.hoverColor, 'variant')(p);
 };
 
-const hoverColor = (p, styling) => {
+const hoverColor = (p, computedThemeStyle) => {
   const { colors } = p.theme;
 
   if (p.disabled) {
@@ -72,58 +71,46 @@ const hoverColor = (p, styling) => {
   }
 
   if (p.flat || p.outline) {
-    return styledProps(styling.hoverColor, 'color')(p);
+    return styledProps(computedThemeStyle.hoverColor, 'variant')(p);
   }
 
   return '';
 };
 
-const hoverBorderColor = (p, styling) => {
+const hoverBorderColor = (p, computedThemeStyle) => {
   if (p.disabled) {
     return 0;
   }
 
-  return `1px solid ${styledProps(styling.hoverBorderColor, 'color')(p)}`;
+  return `1px solid ${styledProps(computedThemeStyle.hoverBorderColor, 'variant')(p)}`;
 };
 
 const buttonStyles = props => {
-  const styling = mergeOptions(
-    {},
-    defaultStyling(props.theme),
-    props.theme[props.themeSpace],
-    props.themeStyles
-  );
-
-  const p = Object.assign(
-    {
-      color: 'primary',
-      size: 'md',
-    },
-    props
-  );
+  const computedThemeStyle = props.theme.utils.createThemeStyle(props, defaultThemeStyle);
+  const p = Object.assign({ color: 'primary', size: 'md' }, props);
 
   return `
     align-items: center;
-    background: ${buttonBgColor(p, styling)};
+    background: ${buttonBackground(p, computedThemeStyle)};
     border-radius: ${p.circle ? '50%' : '3px'};
-    border: ${buttonBorder(p, styling)};
-    color: ${buttonColor(p, styling)};
+    border: ${buttonBorder(p, computedThemeStyle)};
+    color: ${buttonColor(p, computedThemeStyle)};
     cursor: ${p.disabled ? 'not-allowed' : 'pointer'};
     display: flex;
-    font-size: ${styledProps(styling.fontSize, 'size')(p)};
-    height: ${styledProps(styling.size, 'size')(p)};
+    font-size: ${styledProps(computedThemeStyle.fontSize, 'size')(p)};
+    height: ${styledProps(computedThemeStyle.size, 'size')(p)};
     justify-content: center;
     outline: none;
     padding-left: ${p.iconBefore || p.circle ? '0' : '1rem'};
     padding-right: ${p.iconAfter || p.loading || p.circle ? '0' : '1rem'};
     text-decoration: none;
     user-select: none;
-    width: ${p.block ? '100%' : p.circle ? styledProps(styling.size, 'size')(p) : ''};
+    width: ${p.block ? '100%' : p.circle ? styledProps(computedThemeStyle.size, 'size')(p) : ''};
 
     &:hover {
-      background: ${hoverBgColor(p, styling)};
-      color: ${hoverColor(p, styling)};
-      border: ${hoverBorderColor(p, styling)};
+      background: ${hoverBackground(p, computedThemeStyle)};
+      color: ${hoverColor(p, computedThemeStyle)};
+      border: ${hoverBorderColor(p, computedThemeStyle)};
     }
   `;
 };
