@@ -66,7 +66,7 @@ const UploadGenesisModal = ({
       </ModalBody>
       <ModalFooter>
         <ButtonGroup>
-          <Button flat color="nuetral" onClick={() => setIsOpenUploadGenesisModal(false)}>
+          <Button flat variant="nuetral" onClick={() => setIsOpenUploadGenesisModal(false)}>
             Cancel
           </Button>
           <Button

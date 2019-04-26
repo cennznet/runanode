@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import styledProps from 'styled-props';
 import Spinner from 'components/Spinner';
 import defaultTheme from 'renderer/theme';
-import defaultStyling from './defaultStyling';
+import defaultThemeStyle from './defaultThemeStyle';
 import buttonStyles from './buttonStyles';
 
 const StyledButton = styled.button`
@@ -24,9 +24,11 @@ const IconWrapper = styled.div`
   padding: 0 0.5rem;
 `;
 
-const IconAfter = ({ iconAfter, loading, color, theme }) => {
+const IconAfter = ({ iconAfter, loading, variant, theme }) => {
   const icon = loading ? (
-    <Spinner color={styledProps(defaultStyling(theme).contrastColor, 'color')({ color })} />
+    <Spinner
+      color={styledProps(defaultThemeStyle({ theme }).contrastColor, 'variant')({ variant })}
+    />
   ) : (
     iconAfter
   );
@@ -39,15 +41,15 @@ const CustomButton = ({
   iconBefore,
   iconAfter,
   theme,
-  color,
+  variant,
   loading,
   themeStyles,
   ...restProps
 }) => (
-  <StyledButton {...restProps} {...{ iconBefore, iconAfter, loading, theme, themeStyles, color }}>
+  <StyledButton {...restProps} {...{ iconBefore, iconAfter, loading, theme, themeStyles, variant }}>
     {iconBefore && <IconWrapper>{iconBefore}</IconWrapper>}
     {children}
-    {(iconAfter || loading) && <IconAfter {...{ iconAfter, loading, color, theme }} />}
+    {(iconAfter || loading) && <IconAfter {...{ iconAfter, loading, variant, theme }} />}
   </StyledButton>
 );
 
@@ -56,7 +58,6 @@ const Button = styled(CustomButton)``;
 Button.defaultProps = {
   block: false,
   circle: false,
-  color: 'primary',
   disabled: false,
   flat: false,
   iconAfter: '',
@@ -66,24 +67,16 @@ Button.defaultProps = {
   outline: false,
   size: 'md',
   theme: defaultTheme,
-  themeSpace: 'button',
+  themeKey: 'Button',
   themeStyles: {},
   type: 'button',
+  variant: 'primary',
 };
 
 Button.propTypes = {
   block: PropTypes.bool,
   circle: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.string]).isRequired,
-  color: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'info',
-    'success',
-    'warning',
-    'danger',
-    'nuetral',
-  ]),
   disabled: PropTypes.bool,
   flat: PropTypes.bool,
   iconAfter: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
@@ -92,10 +85,19 @@ Button.propTypes = {
   loading: PropTypes.bool,
   outline: PropTypes.bool,
   size: PropTypes.string,
-  type: PropTypes.string,
   theme: PropTypes.object,
-  themeSpace: PropTypes.string,
+  themeKey: PropTypes.string,
   themeStyles: PropTypes.object,
+  type: PropTypes.string,
+  variant: PropTypes.oneOf([
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'nuetral',
+  ]),
 };
 
 Button.displayName = 'Button';
