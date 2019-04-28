@@ -26,7 +26,7 @@ const PageSpinner = ({ message }) => {
   return (
     <SpinnerContainer>
       <SpinnerWrapper>
-        <Spinner size="2.5rem" />
+        <Spinner size="xl" />
         {message && <Message>{message}</Message>}
       </SpinnerWrapper>
     </SpinnerContainer>
