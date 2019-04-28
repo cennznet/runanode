@@ -71,6 +71,9 @@ module.exports = {
       cell: {
         background: '#FFFFFF',
       },
+      cellHeading: {
+        color: '#FFFFFF',
+      },
     },
     TableOfContents: {
       input: {

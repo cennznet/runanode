@@ -28,6 +28,7 @@ const IconAfter = ({ iconAfter, loading, variant, theme }) => {
   const icon = loading ? (
     <Spinner
       color={styledProps(defaultThemeStyle({ theme }).contrastColor, 'variant')({ variant })}
+      size="sm"
     />
   ) : (
     iconAfter
@@ -68,7 +69,7 @@ Button.defaultProps = {
   size: 'md',
   theme: defaultTheme,
   themeKey: 'Button',
-  themeStyles: {},
+  themeStyle: {},
   type: 'button',
   variant: 'primary',
 };
@@ -87,7 +88,7 @@ Button.propTypes = {
   size: PropTypes.string,
   theme: PropTypes.object,
   themeKey: PropTypes.string,
-  themeStyles: PropTypes.object,
+  themeStyle: PropTypes.object,
   type: PropTypes.string,
   variant: PropTypes.oneOf([
     'primary',
