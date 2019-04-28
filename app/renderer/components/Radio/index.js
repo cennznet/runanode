@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
-import theme, { colors } from 'renderer/components/defaultTheme';
+import theme, { colors } from 'components/defaultTheme';
 
 const Wrapper = styled.div``;
 
