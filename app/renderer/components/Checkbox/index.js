@@ -5,7 +5,7 @@ import styledProps from 'styled-props';
 import mergeOptions from 'merge-options';
 import RcCheckbox from 'rc-checkbox';
 import 'rc-checkbox/assets/index.css';
-import theme from 'renderer/components/defaultTheme';
+import theme from 'components/defaultTheme';
 
 const defaultThemeStyle = p => {
   const { colors } = p.theme;

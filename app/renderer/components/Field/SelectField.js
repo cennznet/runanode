@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import styled from 'styled-components';
 import { Select } from 'components';
-import { colors } from 'renderer/components/defaultTheme';
+import { colors } from 'components/defaultTheme';
 
 const Label = styled.label`
   display: block;

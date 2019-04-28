@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import styled from 'styled-components';
 import { Input } from 'components';
-import { colors } from 'renderer/components/defaultTheme';
+import { colors } from 'components/defaultTheme';
 
 const Label = styled.label`
   margin: 0.5rem 0.5rem 0 0;
