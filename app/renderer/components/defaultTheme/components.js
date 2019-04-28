@@ -54,23 +54,36 @@ const configComponentStyle = colors => ({
   //     lg: '4rem',
   //   },
   // },
+  // Notification: {
+  //   background: {
+  //     info: colors.info,
+  //     danger: colors.danger,
+  //     success: colors.success,
+  //     warning: colors.warning,
+  //   },
+  //   variant: {
+  //     info: colors.N800,
+  //     danger: colors.N0,
+  //     success: colors.N0,
+  //     warning: colors.N800,
+  //   },
+  // },
   // Spinner: {
   //   color: colors.primary,
-  //  size: {
-  //   xs: '10px',
-  //   sm: '12px',
-  //   md: '16px',
-  //   lg: '24px',
-  //   xl: '40px',
-  // },
-  // thickness: {
-  //   xs: '2px',
-  //   sm: '2px',
-  //   md: '2px',
-  //   lg: '2px',
-  //   xl: '4px',
-  // },
-  //   thickness: '2px',
+  //   size: {
+  //     xs: '10px',
+  //     sm: '12px',
+  //     md: '16px',
+  //     lg: '24px',
+  //     xl: '40px',
+  //   },
+  //   thickness: {
+  //     xs: '2px',
+  //     sm: '2px',
+  //     md: '2px',
+  //     lg: '2px',
+  //     xl: '4px',
+  //   },
   //   speed: '0.7s',
   // },
 });

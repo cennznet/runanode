@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
-import { colors } from 'renderer/theme';
+import theme, { colors } from 'components/defaultTheme';
 
 const Wrapper = styled.div``;
 
@@ -77,4 +77,13 @@ const Radio = ({ onChange, value, selected, children }) => {
   );
 };
 
+Radio.defaultProps = {
+  theme,
+  themeKey: 'Radio',
+  themeStyle: {},
+};
+
+Radio.displayName = 'Radio';
+
+/** @components */
 export default Radio;

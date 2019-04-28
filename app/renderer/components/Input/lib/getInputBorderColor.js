@@ -1,4 +1,4 @@
-import defaultTheme from 'renderer/components/defaultTheme';
+import defaultTheme from 'components/defaultTheme';
 
 const getInputBorderColor = ({
   valid,
