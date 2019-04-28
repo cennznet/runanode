@@ -16,7 +16,7 @@ const defaultThemeStyle = p => {
       warning: colors.warning,
     },
     color: {
-      info: colors.N0,
+      info: colors.N800,
       danger: colors.N0,
       success: colors.N0,
       warning: colors.N800,
@@ -26,7 +26,6 @@ const defaultThemeStyle = p => {
 
 const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
-// const NotificationWrapper = styled(animated.div)`
 const NotificationWrapper = styled(animated.div)`
   width: 100%;
   height: ${p => (p.haschildren === 'true' ? '3rem' : 0)};
