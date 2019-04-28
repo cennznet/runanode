@@ -62,7 +62,7 @@ const configComponentStyle = colors => ({
   //     warning: colors.warning,
   //   },
   //   variant: {
-  //     info: colors.N0,
+  //     info: colors.N800,
   //     danger: colors.N0,
   //     success: colors.N0,
   //     warning: colors.N800,

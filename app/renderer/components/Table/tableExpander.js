@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import theme from 'renderer/theme';
+import theme from 'renderer/components/defaultTheme';
 
 const ChevronUp = styled.div`
   border: 1px solid ${p => p.theme.colors.N700};
