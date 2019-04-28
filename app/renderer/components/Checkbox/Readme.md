@@ -10,7 +10,7 @@ initialState = { selected: false };
     Hello
   </Checkbox>
   <Checkbox
-    color="danger"
+    variant="danger"
     checked={state.selected}
     onChange={e => {
       setState({ selected: !state.selected });
@@ -19,6 +19,6 @@ initialState = { selected: false };
     Danger
   </Checkbox>
   <Checkbox disabled>Disabled</Checkbox>
-  <Checkbox themeStyles={{ color: { primary: 'black' } }}>Custom</Checkbox>
+  <Checkbox themeStyle={{ color: { primary: 'pink' } }}>Custom</Checkbox>
 </DemoFlex>;
 ```

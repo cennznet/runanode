@@ -1,16 +1,31 @@
 import styled, { keyframes } from 'styled-components';
+import styledProps from 'styled-props';
 import { rgba } from 'polished';
-import mergeOptions from 'merge-options';
-import themeObj from 'renderer/theme';
+import theme from 'renderer/components/defaultTheme';
 
-const defaultStyling = p => {
+const defaultThemeStyle = p => {
   const { colors } = p.theme;
   return {
     color: colors.N200,
+    size: {
+      xs: '10px',
+      sm: '12px',
+      md: '16px',
+      lg: '24px',
+      xl: '40px',
+    },
+    thickness: {
+      xs: '2px',
+      sm: '2px',
+      md: '2px',
+      lg: '2px',
+      xl: '4px',
+    },
+    speed: '0.7s',
   };
 };
 
-const styling = p => mergeOptions({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const spinnerRotate = keyframes`
   from {
@@ -23,20 +38,25 @@ const spinnerRotate = keyframes`
 `;
 
 const Spinner = styled.div`
-  width: ${p => p.size};
-  height: ${p => p.size};
-  border: ${p => `${p.thickness} solid ${rgba(p.color || styling(p).color, 0.15)}`};
-  border-left: ${p => p.thickness} solid ${p => p.color || styling(p).color};
+  width: ${p => styledProps(computedThemeStyle(p).size, 'size')(p)};
+  height: ${p => styledProps(computedThemeStyle(p).size, 'size')(p)};
+  border: ${p =>
+    `${styledProps(computedThemeStyle(p).thickness, 'size')(p)} solid ${rgba(
+      p.color || computedThemeStyle(p).color,
+      0.15
+    )}`};
+  border-left: ${p => styledProps(computedThemeStyle(p).thickness, 'size')(p)} solid
+    ${p => p.color || computedThemeStyle(p).color};
   border-radius: 50%;
-  animation: ${spinnerRotate} ${p => p.speed} infinite linear;
+  animation: ${spinnerRotate} ${p => computedThemeStyle(p).speed} infinite linear;
 `;
 
 Spinner.defaultProps = {
-  size: '12px',
-  thickness: '2px',
-  speed: '0.7s',
-  theme: themeObj,
-  themeSpace: 'spinner',
+  size: 'md',
+  theme,
+  themeKey: 'Spinner',
+  themeStyle: {},
 };
 
+/** @component */
 export default Spinner;
