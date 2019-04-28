@@ -5,12 +5,12 @@ const configComponentStyle = colors => ({
   //     md: '14px',
   //     lg: '1rem',
   //   },
-  //   height: {
+  //   size: {
   //     sm: '1.5rem',
   //     md: '2rem',
   //     lg: '2.5rem',
   //   },
-  //   color: {
+  //   variant: {
   //     primary: colors.primary,
   //     danger: colors.danger,
   //     success: colors.success,
