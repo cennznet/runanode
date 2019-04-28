@@ -37,7 +37,7 @@ const SuffixContent = ({ suffix, valid, showValidIcon }) => {
   }
 
   if (suffix === 'spinner') {
-    return <Spinner size="1rem" />;
+    return <Spinner />;
   }
 
   return suffix;
