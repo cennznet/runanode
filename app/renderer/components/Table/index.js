@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
-import theme, { colors } from 'renderer/theme';
+import theme, { colors } from 'components/defaultTheme';
 
 const Table = styled(ReactTable)`
   &.ReactTable {
@@ -70,6 +70,11 @@ Table.defaultProps = {
   intensive: false,
   minRows: 0,
   theme,
+  themeKey: 'Table',
+  themeStyle: {},
 };
 
+Table.displayName = 'Table';
+
+/** @component */
 export default Table;
