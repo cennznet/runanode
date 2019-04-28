@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import styledProps from 'styled-props';
 import mergeOptions from 'merge-options';
 import RcCheckbox from 'rc-checkbox';
 import 'rc-checkbox/assets/index.css';
-import theme from 'renderer/theme';
+import theme from 'renderer/components/defaultTheme';
 
-const defaultStyling = p => {
+const defaultThemeStyle = p => {
   const { colors } = p.theme;
 
   return {
@@ -19,7 +20,7 @@ const defaultStyling = p => {
   };
 };
 
-const styling = p => mergeOptions({}, defaultStyling(p), p.theme[p.themeSpace], p.themeStyles);
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const StyledLabel = styled.label`
   display: flex;
@@ -43,21 +44,21 @@ const StyledCheckbox = styled(RcCheckbox)`
 
     &:hover {
       .rc-checkbox-inner {
-        border-color: ${p => styledProps(styling(p).color, 'color')(p)};
+        border-color: ${p => styledProps(computedThemeStyle(p).color, 'variant')(p)};
       }
     }
   }
 
   .rc-checkbox-input {
     &:focus + .rc-checkbox-inner {
-      border-color: ${p => styledProps(styling(p).color, 'color')(p)};
+      border-color: ${p => styledProps(computedThemeStyle(p).color, 'variant')(p)};
     }
   }
 
   &.rc-checkbox-checked {
     .rc-checkbox-inner {
-      border-color: ${p => styledProps(styling(p).color, 'color')(p)};
-      background: ${p => styledProps(styling(p).color, 'color')(p)};
+      border-color: ${p => styledProps(computedThemeStyle(p).color, 'variant')(p)};
+      background: ${p => styledProps(computedThemeStyle(p).color, 'variant')(p)};
 
       &::after {
         width: 4px;
@@ -98,10 +99,20 @@ const CustomCheckbox = ({ children, ...props }) => (
 const Checkbox = styled(CustomCheckbox)``;
 
 Checkbox.defaultProps = {
-  color: 'primary',
   theme,
-  themeSpace: 'checkbox',
-  themeStyles: {},
+  themeKey: 'Checkbox',
+  themeStyle: {},
+  variant: 'primary',
 };
 
+Checkbox.propTypes = {
+  theme: PropTypes.object,
+  themeKey: PropTypes.string,
+  themeStyle: PropTypes.object,
+  variant: PropTypes.oneOf(['primary', 'success', 'warning', 'danger']),
+};
+
+Checkbox.displayName = 'Checkbox';
+
+/** @component */
 export default Checkbox;

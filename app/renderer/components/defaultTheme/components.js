@@ -5,12 +5,12 @@ const configComponentStyle = colors => ({
   //     md: '14px',
   //     lg: '1rem',
   //   },
-  //   height: {
+  //   size: {
   //     sm: '1.5rem',
   //     md: '2rem',
   //     lg: '2.5rem',
   //   },
-  //   color: {
+  //   variant: {
   //     primary: colors.primary,
   //     danger: colors.danger,
   //     success: colors.success,
@@ -32,6 +32,14 @@ const configComponentStyle = colors => ({
   //     info: colors.N0,
   //   },
   // },
+  // Checkbox: {
+  //   color: {
+  //     primary: colors.primary,
+  //     danger: colors.danger,
+  //     success: colors.success,
+  //     warning: colors.warning,
+  //   },
+  // },
   // Input: {
   //   borderColor: colors.border,
   //   background: '#FFFFFF',
@@ -45,6 +53,25 @@ const configComponentStyle = colors => ({
   //     md: '3rem',
   //     lg: '4rem',
   //   },
+  // },
+  // Spinner: {
+  //   color: colors.primary,
+  //  size: {
+  //   xs: '10px',
+  //   sm: '12px',
+  //   md: '16px',
+  //   lg: '24px',
+  //   xl: '40px',
+  // },
+  // thickness: {
+  //   xs: '2px',
+  //   sm: '2px',
+  //   md: '2px',
+  //   lg: '2px',
+  //   xl: '4px',
+  // },
+  //   thickness: '2px',
+  //   speed: '0.7s',
   // },
 });
 
