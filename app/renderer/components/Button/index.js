@@ -28,6 +28,7 @@ const IconAfter = ({ iconAfter, loading, variant, theme }) => {
   const icon = loading ? (
     <Spinner
       color={styledProps(defaultThemeStyle({ theme }).contrastColor, 'variant')({ variant })}
+      size="sm"
     />
   ) : (
     iconAfter
