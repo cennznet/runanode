@@ -67,6 +67,14 @@ const configComponentStyle = colors => ({
   //     success: colors.N0,
   //     warning: colors.N800,
   //   },
+  // Modal: {
+  //   backgroundColor: colors.V900,
+  //   boxShadow: `0 2px 4px 0 ${colors.N900}`,
+  //   overlayBgColor: 'rgba(54, 58, 61, 0.7)',
+  //   color: colors.N0,
+  //   contentPadding: '2rem',
+  //   footerPadding: '1rem',
+  //   footerBorderTopColor: `1px solid ${colors.border}`,
   // },
   // Spinner: {
   //   color: colors.primary,
@@ -85,6 +93,18 @@ const configComponentStyle = colors => ({
   //     xl: '4px',
   //   },
   //   speed: '0.7s',
+  // },
+  // Toggle: {
+  //   variant: {
+  //     primary: colors.primary,
+  //     danger: colors.danger,
+  //     success: colors.success,
+  //     warning: colors.warning,
+  //   },
+  //   trackBackground: colors.N300,
+  //   thumbBorderCorlor: colors.N300,
+  //   thumbCheckedBorderColor: colors.N0,
+  //   thumbDisabledBackground: colors.N300,
   // },
 });
 

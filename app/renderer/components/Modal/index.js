@@ -1,7 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
-import { colors, media } from 'renderer/theme';
+// import { colors, media } from 'renderer/theme';
+import theme, { media } from 'components/defaultTheme';
+
+const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+
+  return {
+    backgroundColor: colors.V900,
+    boxShadow: `0 2px 4px 0 ${colors.N900}`,
+    overlayBackgroundColor: 'rgba(54, 58, 61, 0.7)', // TODO: move to colcors
+    color: colors.N0,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const Modal = ({
   isOpen,
@@ -37,7 +52,7 @@ const StyledModal = styled(Modal)`
     left: 0px;
     right: 0px;
     bottom: 0px;
-    background: ${p => p.overlayBgColor};
+    background: ${p => computedThemeStyle(p).overlayBackgroundColor};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,11 +61,11 @@ const StyledModal = styled(Modal)`
   &__content {
     position: absolute;
     border-radius: 3px;
-    min-height: ${p => p.minHeight};
-    max-height: ${p => p.maxHeight};
-    background: ${p => p.backgroundColor};
-    box-shadow: ${p => p.boxShadow};
-    color: ${p => p.color || colors.N0};
+    min-height: 10rem;
+    max-height: 80vh;
+    background: ${p => computedThemeStyle(p).backgroundColor};
+    box-shadow: ${p => computedThemeStyle(p).boxShadow};
+    color: ${p => computedThemeStyle(p).color};
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -74,11 +89,8 @@ const StyledModal = styled(Modal)`
 `;
 
 StyledModal.defaultProps = {
-  minHeight: '10rem',
-  maxHeight: '80vh',
-  backgroundColor: colors.V900,
-  boxShadow: `0 2px 4px 0 ${colors.N900}`,
-  overlayBgColor: 'rgba(54, 58, 61, 0.7)',
+  theme,
+  themeKey: 'Modal',
 };
 
 export default StyledModal;

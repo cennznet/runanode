@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactSelect from 'react-select';
 import styled from 'styled-components';
-import mergeOptions from 'merge-options';
 import theme from 'renderer/theme';
 
 const defaultThemeStyle = p => {
