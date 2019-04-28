@@ -68,7 +68,7 @@ Button.defaultProps = {
   size: 'md',
   theme: defaultTheme,
   themeKey: 'Button',
-  themeStyles: {},
+  themeStyle: {},
   type: 'button',
   variant: 'primary',
 };
@@ -87,7 +87,7 @@ Button.propTypes = {
   size: PropTypes.string,
   theme: PropTypes.object,
   themeKey: PropTypes.string,
-  themeStyles: PropTypes.object,
+  themeStyle: PropTypes.object,
   type: PropTypes.string,
   variant: PropTypes.oneOf([
     'primary',
