@@ -6,8 +6,8 @@ export const createThemeStyle = (componentProps, defaultThemeStyle) => {
       theme: {
         components: {},
       },
-      themeStyle: {},
       themeKey: '',
+      themeStyle: {},
     },
     componentProps
   );
