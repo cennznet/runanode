@@ -4,7 +4,7 @@ initialState = {
 };
 
 <div>
-  <Notification>{state.content}</Notification>
+  <Notification variant='warning'>{state.content}</Notification>
   <DemoFlex>
     <Button
       onClick={() =>

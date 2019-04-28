@@ -2,18 +2,17 @@ import React from 'react';
 import R from 'ramda';
 import styled from 'styled-components';
 import { Select } from 'components';
-import { colors } from 'renderer/theme';
+import { colors } from 'renderer/components/defaultTheme';
 
 const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
   color: ${colors.N0};
-  font-size: 16px;	
-  font-weight: 600;	
+  font-size: 16px;
+  font-weight: 600;
 `;
 
-const Wrapper = styled.div`
-`;
+const Wrapper = styled.div``;
 
 const ErrorMessage = styled.div`
   margin-top: 0.5rem;
@@ -40,7 +39,7 @@ const SelectField = ({
   const fieldError = R.path(R.split('.')(name))(errors);
   const fieldTouched = R.path(R.split('.')(name))(touched);
   return (
-    <Wrapper style={{width}}>
+    <Wrapper style={{ width }}>
       {labelText && <Label htmlFor={name}>{labelText}</Label>}
       <Select
         value={value}
@@ -49,7 +48,11 @@ const SelectField = ({
           return setFieldValue(name, option);
         }}
       />
-      {fieldError && fieldTouched ? <ErrorMessage>{fieldError}</ErrorMessage> : <ErrorMessagePleaceHolder />}
+      {fieldError && fieldTouched ? (
+        <ErrorMessage>{fieldError}</ErrorMessage>
+      ) : (
+        <ErrorMessagePleaceHolder />
+      )}
     </Wrapper>
   );
 };
