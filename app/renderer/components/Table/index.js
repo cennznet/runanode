@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
-import theme, { colors } from 'renderer/components/defaultTheme';
+import theme, { colors } from 'components/defaultTheme';
 
 const Table = styled(ReactTable)`
   &.ReactTable {

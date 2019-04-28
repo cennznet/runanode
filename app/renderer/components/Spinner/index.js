@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import styledProps from 'styled-props';
 import { rgba } from 'polished';
-import theme from 'renderer/components/defaultTheme';
+import theme from 'components/defaultTheme';
 
 const defaultThemeStyle = p => {
   const { colors } = p.theme;

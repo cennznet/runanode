@@ -1,5 +1,5 @@
 import styledProps from 'styled-props';
-import defaultTheme from 'renderer/components/defaultTheme';
+import defaultTheme from 'components/defaultTheme';
 import inputStateStyles from './inputStateStyles';
 
 const inputCoreStyles = (p = { theme: defaultTheme }) => {

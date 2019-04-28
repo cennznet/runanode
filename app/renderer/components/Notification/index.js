@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import styledProps from 'styled-props';
 import { useSpring, animated } from 'react-spring';
 import { IconWarning } from 'components/icons';
-import theme from 'renderer/components/defaultTheme';
+import theme from 'components/defaultTheme';
 
 const defaultThemeStyle = p => {
   const { colors } = p.theme;
