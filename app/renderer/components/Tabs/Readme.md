@@ -1,9 +1,9 @@
 ```jsx
 <Tabs defaultActiveKey="2">
-  <TabPane tab="Portfolio" key="1" styles={{ scrollHeight: '10rem' }}>
+  <TabPane tab="Portfolio" key="1" themeStyle={{ tabPaneHeight: '2rem' }}>
     <div>Content of Portfolio</div>
   </TabPane>
-  <TabPane tab="Received" key="2" styles={{ scrollHeight: '10rem' }}>
+  <TabPane tab="Received" key="2" themeStyle={{ tabPaneHeight: '2rem' }}>
     <div>
       <p>
         At ourselves direction believing do he departure. Celebrated her had sentiments understood
@@ -49,7 +49,7 @@
       <br />
     </div>
   </TabPane>
-  <TabPane tab="Details" key="3" styles={{ scrollHeight: '10rem' }}>
+  <TabPane tab="Details" key="3" themeStyle={{ tabPaneHeight: '2rem' }}>
     <div>Content of Details</div>
   </TabPane>
 </Tabs>
