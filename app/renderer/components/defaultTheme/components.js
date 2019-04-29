@@ -76,6 +76,11 @@ const configComponentStyle = colors => ({
   //     success: colors.N0,
   //     warning: colors.N800,
   //   },
+  // Scrollable: {
+  //   background: colors.V800,
+  //   thumbBackground: 'rgba(255, 255, 255, 0.4)',
+  //   gradientBottomBackground: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%)',
+  // },
   // Spinner: {
   //   color: colors.primary,
   //   size: {
