@@ -1,5 +1,5 @@
 import * as colors from './colors';
-import media from './media';
+import mediaQueries from './media';
 import * as utils from './utils';
 import components from './components';
 
@@ -32,6 +32,8 @@ const theme = {
   },
   components: components(colors),
 };
+
+const media = mediaQueries();
 
 export { colors, media, utils };
 
