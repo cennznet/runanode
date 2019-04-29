@@ -26,7 +26,11 @@ const defaultThemeStyle = p => {
 
 const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
-const NotificationWrapper = styled(animated.div)`
+const AnimatedDiv = ({ children, themeKey, themeStyle, ...props }) => {
+  return <animated.div {...props}>{children}</animated.div>;
+};
+
+const NotificationWrapper = styled(AnimatedDiv)`
   width: 100%;
   height: ${p => (p.haschildren === 'true' ? '3rem' : 0)};
   display: flex;
