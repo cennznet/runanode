@@ -31,7 +31,7 @@ const HomePage = ({ hasBlockNumbers, onPageNavigation, onSubscribeCennznetStatus
       <LayoutWrapper>
         <MainContent>
           <SpinnerWrapper>
-            <Spinner size="2.5rem" />
+            <Spinner size="xl" />
           </SpinnerWrapper>
         </MainContent>
       </LayoutWrapper>
