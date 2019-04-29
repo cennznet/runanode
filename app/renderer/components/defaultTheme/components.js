@@ -10,7 +10,7 @@ const configComponentStyle = colors => ({
   //     md: '2rem',
   //     lg: '2.5rem',
   //   },
-  //   variant: {
+  //   color: {
   //     primary: colors.primary,
   //     danger: colors.danger,
   //     success: colors.success,
@@ -118,6 +118,10 @@ const configComponentStyle = colors => ({
   //   thumbBorderCorlor: colors.N300,
   //   thumbCheckedBorderColor: colors.N0,
   //   thumbDisabledBackground: colors.N300,
+  // },
+  // Tooltip: {
+  //   background: '#A99DFF',
+  //   color: colors.V900,
   // },
 });
 
