@@ -7,7 +7,7 @@ import ReactToggle from 'react-toggle';
 import 'react-toggle/style.css';
 import theme from 'components/defaultTheme';
 
-const CustomToggle = ({ themeStyles, themeSpace, color, ...restProps }) => (
+const CustomToggle = ({ themeStyle, themeKey, variant, ...restProps }) => (
   <ReactToggle icons={false} {...restProps} />
 );
 
@@ -91,6 +91,7 @@ Toggle.defaultProps = {
   variant: 'success',
   theme,
   themeKey: 'Toggle',
+  themeStyle: {},
 };
 
 Toggle.propTypes = {
@@ -103,6 +104,8 @@ Toggle.propTypes = {
   thumbCheckedBorderColor: PropTypes.string,
   thumbDisabledBackground: PropTypes.string,
 };
+
+Toggle.displayName = 'Toggle';
 
 /** @component */
 export default Toggle;
