@@ -22,7 +22,7 @@ const PortfolioSection = ({ accountBalances }) => {
   }
 
   return (
-    <Scrollable styles={{ height: '60vh' }}>
+    <Scrollable themeStyle={{ height: '60vh' }}>
       <Table
         data={(accountBalances && Object.values(accountBalances)) || [{}]}
         page={0}

@@ -27,7 +27,7 @@ const Footer = styled.div`
 
 const SubNav = ({ navItems, children, footer, ...props }) => (
   <Wrapper {...props}>
-    <Scrollable styles={{ height: `${footer ? 'calc(100% - 6rem)' : '100%'}` }}>
+    <Scrollable themeStyle={{ height: `${footer ? 'calc(100% - 6rem)' : '100%'}` }}>
       {children}
     </Scrollable>
     {footer && <Footer>{footer}</Footer>}

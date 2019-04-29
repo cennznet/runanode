@@ -21,7 +21,7 @@ const StyledPane = styled(RcTabPane)`
 const TabPane = ({ children, withScrollable, ...props }) => (
   <StyledPane {...props}>
     {withScrollable ? (
-      <Scrollable styles={{ height: computedThemeStyle(props).tabPaneHeight }} gradientBottom>
+      <Scrollable themeStyle={{ height: computedThemeStyle(props).tabPaneHeight }} gradientBottom>
         {children}
       </Scrollable>
     ) : (
