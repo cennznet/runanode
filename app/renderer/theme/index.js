@@ -1,10 +1,6 @@
 import R from 'ramda';
-import defaultTheme, {
-  media as mediaQueries,
-  colors as defaultColors,
-  utils,
-} from 'components/defaultTheme';
-
+import defaultTheme, { colors as defaultColors, utils } from 'components/defaultTheme';
+import mediaQueries from 'components/defaultTheme/media';
 import * as appThemeColors from './appThemeColors';
 import appComponentStyle from './appComponentStyle';
 
@@ -16,6 +12,7 @@ const customTheme = {
 };
 
 const theme = R.mergeDeepRight(defaultTheme, customTheme);
+
 const media = mediaQueries(theme.breakPoints);
 
 export { colors, media, utils };
