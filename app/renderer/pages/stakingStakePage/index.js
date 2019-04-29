@@ -74,7 +74,7 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
         <PageHeading>Start to stake</PageHeading>
-        <Scrollable styles={{height: '70vh'}}>
+        <Scrollable themeStyle={{height: '70vh'}}>
           <div className="content" style={{height: '70vh'}}>
             <SelectStakingAccount
               wallets={wallets || []}
