@@ -70,7 +70,7 @@ const configComponentStyle = colors => ({
   //     success: colors.success,
   //     warning: colors.warning,
   //   },
-  //   variant: {
+  //   color: {
   //     info: colors.N800,
   //     danger: colors.N0,
   //     success: colors.N0,
@@ -93,6 +93,11 @@ const configComponentStyle = colors => ({
   //     xl: '4px',
   //   },
   //   speed: '0.7s',
+  // },
+  // Table: {
+  //   headerBackground: colors.V900,
+  //   rowOddLineBackground: 'rgba(8, 24, 127, 0.7)',
+  //   rowEvenLineBackground: 'rgba(8, 24, 127, 0.3)',
   // },
   // Tabs: {
   //   activeColor: colors.text,
