@@ -109,8 +109,7 @@ const configComponentStyle = colors => ({
   //   color: colors.textMuted,
   //   inkBarActiveColor: colors.primary,
   //   inkBarColor: colors.border,
-  //   maxHeight: '100%',
-  //   tabPaneHeight: '100vh',
+  //   tabPaneHeight: '80vh',
   // },
   // Toggle: {
   //   variant: {
