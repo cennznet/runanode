@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
-// import { colors, media } from 'renderer/theme';
-import theme, { media } from 'components/defaultTheme';
+import { media } from 'renderer/theme';
+import theme from 'components/defaultTheme';
 
 const defaultThemeStyle = p => {
   const { colors } = p.theme;
