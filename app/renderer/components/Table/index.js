@@ -2,14 +2,25 @@ import styled from 'styled-components';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
-import theme, { colors } from 'components/defaultTheme';
+import theme from 'components/defaultTheme';
+
+const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+  return {
+    headerBackground: colors.V900,
+    rowOddLineBackground: 'rgba(8, 24, 127, 0.7)',
+    rowEvenLineBackground: 'rgba(8, 24, 127, 0.3)',
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const Table = styled(ReactTable)`
   &.ReactTable {
     .rt-thead {
       &.-header {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
-        background: ${colors.V900};
+        background: ${p => computedThemeStyle(p).headerBackground};
 
         .rt-resizable-header {
           font-size: 16px;
@@ -46,11 +57,11 @@ const Table = styled(ReactTable)`
 
         .rt-tr {
           &.-odd {
-            background: rgba(8, 24, 127, 0.7);
+            background: ${p => computedThemeStyle(p).rowOddLineBackground};
           }
 
           &.-even {
-            background: rgba(8, 24, 127, 0.3);
+            background: ${p => computedThemeStyle(p).rowEvenLineBackground};
           }
         }
         .rt-td {

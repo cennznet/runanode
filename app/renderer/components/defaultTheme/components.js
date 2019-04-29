@@ -10,7 +10,7 @@ const configComponentStyle = colors => ({
   //     md: '2rem',
   //     lg: '2.5rem',
   //   },
-  //   variant: {
+  //   color: {
   //     primary: colors.primary,
   //     danger: colors.danger,
   //     success: colors.success,
@@ -70,12 +70,17 @@ const configComponentStyle = colors => ({
   //     success: colors.success,
   //     warning: colors.warning,
   //   },
-  //   variant: {
+  //   color: {
   //     info: colors.N800,
   //     danger: colors.N0,
   //     success: colors.N0,
   //     warning: colors.N800,
   //   },
+  // Scrollable: {
+  //   background: colors.V800,
+  //   thumbBackground: 'rgba(255, 255, 255, 0.4)',
+  //   gradientBottomBackground: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%)',
+  // },
   // Spinner: {
   //   color: colors.primary,
   //   size: {
@@ -94,13 +99,17 @@ const configComponentStyle = colors => ({
   //   },
   //   speed: '0.7s',
   // },
+  // Table: {
+  //   headerBackground: colors.V900,
+  //   rowOddLineBackground: 'rgba(8, 24, 127, 0.7)',
+  //   rowEvenLineBackground: 'rgba(8, 24, 127, 0.3)',
+  // },
   // Tabs: {
   //   activeColor: colors.text,
   //   color: colors.textMuted,
   //   inkBarActiveColor: colors.primary,
   //   inkBarColor: colors.border,
-  //   maxHeight: '100%',
-  //   tabPaneHeight: '100vh',
+  //   tabPaneHeight: '80vh',
   // },
   // Toggle: {
   //   variant: {
@@ -113,6 +122,10 @@ const configComponentStyle = colors => ({
   //   thumbBorderCorlor: colors.N300,
   //   thumbCheckedBorderColor: colors.N0,
   //   thumbDisabledBackground: colors.N300,
+  // },
+  // Tooltip: {
+  //   background: '#A99DFF',
+  //   color: colors.V900,
   // },
 });
 
