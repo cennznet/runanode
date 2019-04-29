@@ -1,29 +1,40 @@
 import ReactTooltip from 'react-tooltip';
 import styled from 'styled-components';
-import theme, { colors } from 'renderer/theme';
+import theme from 'components/defaultTheme';
+
+const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+
+  return {
+    background: '#A99DFF',
+    color: colors.V900,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const Tooltip = styled(ReactTooltip)`
   &.__react_component_tooltip {
     font-size: 12px;
-    color: ${colors.N0};
-    min-width: ${p => p.styles.minWidth};
-    max-width: ${p => p.styles.maxWidth};
+    color: ${p => computedThemeStyle(p).color};
+    min-width: ${p => computedThemeStyle(p).minWidth};
+    max-width: ${p => computedThemeStyle(p).maxWidth};
     padding: 0.5rem;
     opacity: 1;
     transform: none;
     user-select: none;
 
     &.type-dark {
-      background: rgba(78, 84, 88, 0.9);
+      background: ${p => computedThemeStyle(p).background};
 
       &.place-bottom {
         &:after {
-          border-bottom-color: rgba(78, 84, 88, 0.9);
+          border-bottom-color: ${p => computedThemeStyle(p).background};
         }
       }
       &.place-right {
         &:after {
-          border-right-color: rgba(78, 84, 88, 0.9);
+          border-right-color: ${p => computedThemeStyle(p).background};
         }
       }
     }
@@ -31,10 +42,11 @@ const Tooltip = styled(ReactTooltip)`
 `;
 
 Tooltip.defaultProps = {
-  theme,
   place: 'bottom',
   effect: 'solid',
-  styles: {
+  theme,
+  themeKey: 'Tooltip',
+  themeStyle: {
     minWidth: '0',
   },
 };
