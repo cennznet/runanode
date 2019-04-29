@@ -77,7 +77,7 @@ const SettingsGeneralPage = ({
       <VersionSection>
         {config.app.name} version {packageJson.version}
       </VersionSection>
-      <Scrollable styles={{ height: '70vh' }}>
+      <Scrollable themeStyle={{ height: '70vh' }}>
         <PreferenceSection>
           <PreferenceHeader>Preference</PreferenceHeader>
           <PreferenceBody>
