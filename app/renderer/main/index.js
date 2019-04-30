@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { LocalizeProvider } from 'react-localize-redux';
 import AppThemeProvider from 'components/AppThemeProvider';
 import { Toaster } from 'components';
-import theme from 'renderer/theme';
+import theme from 'theme';
 import history from 'renderer/history';
 import globalStyles from 'renderer/globalStyles';
 import AppRoutes from 'renderer/routes';

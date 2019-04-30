@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import iconCross from 'renderer/assets/icon/cross.svg';
 
 const StyledSVGInline = styled(SVGInline).attrs({

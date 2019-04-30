@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import iconExclamation from 'renderer/assets/icon/exclamation.svg';
 
 import iconExclamationLight from 'renderer/assets/icon/exclamation-light.svg';

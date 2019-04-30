@@ -8,7 +8,7 @@ import MainLayout from 'renderer/components/layout/MainLayout';
 import styled from 'styled-components';
 import { toast, ToastContainer } from 'react-toastify';
 import Toaster from 'components/Toaster';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import withContainer from './dev.container';
 
 const PageTitle = styled.div`

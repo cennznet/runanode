@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Button, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { NetworkNameMapping, CENNZScanTxUrl } from 'common/types/cennznet-node.types';
 import ClipboardShareLinks from './ClipboardShareLinks';
 

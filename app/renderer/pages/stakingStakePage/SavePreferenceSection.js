@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Button } from 'components';
 
 const StepDescription = styled.div`

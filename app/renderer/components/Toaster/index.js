@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import mergeOptions from 'merge-options';
-import theme from 'renderer/theme';
+import theme from 'components/defaultTheme';
 import { ToastContainer, Slide } from 'react-toastify';
 import { IconCross } from 'components/icons';
 

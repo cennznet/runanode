@@ -3,7 +3,7 @@ import { Button, PageHeading, Modal, ModalFooter, ModalBody } from 'components';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 
 const ButtonGroup = styled.div`
