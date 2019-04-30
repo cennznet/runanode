@@ -7,12 +7,7 @@
     "/ip4/127.0.0.1/tcp/30335/p2p/QmXiB3jqqn2rpiKU7k1h7NJYeBg8WNSx9DiTRKz9ti2KSK",
     "/ip4/127.0.0.1/tcp/30336/p2p/QmYcHeEWuqtr6Gb5EbK7zEhnaCm5p6vA2kWcVjFKbhApaC"
   ],
-  "telemetryEndpoints": [
-    [
-      "ws://127.0.0.1:1024",
-      0
-    ]
-  ],
+  "telemetryEndpoints": [["ws://127.0.0.1:1024", 0]],
   "protocolId": null,
   "consensusEngine": null,
   "properties": null,
@@ -28,14 +23,7 @@
         "transferFee": 480000000000000,
         "stakingAssetId": 16000,
         "spendingAssetId": 16001,
-        "assets": [
-          16000,
-          16001,
-          16002,
-          16003,
-          16004,
-          16005
-        ],
+        "assets": [16000, 16001, 16002, 16003, 16004, 16005],
         "initialBalance": 1000000000000000000000000000,
         "endowedAccounts": [
           "0x639404ecb02a5069c62c17f755ae0473388ea9698c7475db58e77e5eed980a63",
@@ -107,11 +95,11 @@
       "staking": {
         "validatorCount": 10,
         "minimumValidatorCount": 4,
-        "sessionsPerEra": 6,
+        "sessionsPerEra": 2,
         "sessionReward": 1000,
         "offlineSlash": 1000000,
         "offlineSlashGrace": 3,
-        "bondingDuration": 300,
+        "bondingDuration": 20,
         "invulnerables": [
           "0x639404ecb02a5069c62c17f755ae0473388ea9698c7475db58e77e5eed980a63",
           "0x446eb9b558e39f370ed36d65b4d00e1ac8ada8c207af68263806ee7948129198",
@@ -167,50 +155,20 @@
         "termDuration": 43200,
         "desiredSeats": 11,
         "activeCouncil": [
-          [
-            "0x7ef949ad89e034475e9efe31e089c426ed8e224d27b88818239dffb9f75a378c",
-            1000000
-          ],
-          [
-            "0xfdc52dc8e0dcbf669ba8acdf67c20ad1770ca81d6a7797f222d58d9fe0a31d5d",
-            1000000
-          ],
-          [
-            "0x0ba839842024e4f70144c8da19ef554d85e527bb242d998dc05247aaa02917f4",
-            1000000
-          ],
-          [
-            "0xbae936eafde0fd412169200c9968eff1db8adb9456ed262f685241c9311aae59",
-            1000000
-          ],
-          [
-            "0xb03eb5d8ddf1b984904589ef8fd8f9914b3e97e252bc30ef3b205bcf516ae6ef",
-            1000000
-          ],
-          [
-            "0xdea4311a57ec197b6cce9b42bf1bf548f0f93e3d1a0ce73881c17fe612df35c5",
-            1000000
-          ]
+          ["0x7ef949ad89e034475e9efe31e089c426ed8e224d27b88818239dffb9f75a378c", 1000000],
+          ["0xfdc52dc8e0dcbf669ba8acdf67c20ad1770ca81d6a7797f222d58d9fe0a31d5d", 1000000],
+          ["0x0ba839842024e4f70144c8da19ef554d85e527bb242d998dc05247aaa02917f4", 1000000],
+          ["0xbae936eafde0fd412169200c9968eff1db8adb9456ed262f685241c9311aae59", 1000000],
+          ["0xb03eb5d8ddf1b984904589ef8fd8f9914b3e97e252bc30ef3b205bcf516ae6ef", 1000000],
+          ["0xdea4311a57ec197b6cce9b42bf1bf548f0f93e3d1a0ce73881c17fe612df35c5", 1000000]
         ]
       },
       "grandpa": {
         "authorities": [
-          [
-            "5EKGZwAuwvVpVaGWZJ3hYDqTSxQCDDUgeMv36M4qLq7wtWLH",
-            1
-          ],
-          [
-            "5DcS1HEPFaPJVwoU52HLZNkuikoP5Qey2eU5B26v6D7qjkiB",
-            1
-          ],
-          [
-            "5G6tDRK9KSWLx3zL4gMnzh2K6QUNAb6EGCiyPMTAzCmt45A4",
-            1
-          ],
-          [
-            "5G39vCzSK17vWyD3xMN2NgeefMngiLBdMMiGGBgEjiz5jGCi",
-            1
-          ]
+          ["5EKGZwAuwvVpVaGWZJ3hYDqTSxQCDDUgeMv36M4qLq7wtWLH", 1],
+          ["5DcS1HEPFaPJVwoU52HLZNkuikoP5Qey2eU5B26v6D7qjkiB", 1],
+          ["5G6tDRK9KSWLx3zL4gMnzh2K6QUNAb6EGCiyPMTAzCmt45A4", 1],
+          ["5G39vCzSK17vWyD3xMN2NgeefMngiLBdMMiGGBgEjiz5jGCi", 1]
         ]
       },
       "treasury": {
