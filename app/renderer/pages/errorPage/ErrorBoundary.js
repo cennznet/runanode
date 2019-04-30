@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 
 import ErrorPage from 'renderer/pages/errorPage';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import { Button, PageHeading, Scrollable } from 'components';
 import appConfig from 'app/config';

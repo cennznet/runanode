@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import { Accordion } from 'react-sanfona';
 import { NavLink } from 'react-router-dom';
 import Ellipsis from 'components/Ellipsis';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AccordionItem from './AccordionItem';
 import AccordionItemTitle from './AccordionItemTitle';

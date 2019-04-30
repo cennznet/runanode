@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import iconInfo from 'renderer/assets/icon/info.svg';
 
 const StyledSVGInline = styled(SVGInline).attrs({

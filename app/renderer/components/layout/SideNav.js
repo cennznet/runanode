@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { environment } from 'common/environment';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import ROUTES from 'renderer/constants/routes';
 import { openExternalLink } from 'renderer/utils/utils';
 import appConfig from 'app/config';
@@ -33,7 +33,6 @@ const IconDiv = styled.div`
     background: ${colors.V500};
   }
 `;
-
 
 const IconLink = styled(NavLink)`
   display: flex;

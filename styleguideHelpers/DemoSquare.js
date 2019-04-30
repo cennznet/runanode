@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import theme, { colors } from '../app/renderer/theme';
+import theme, { colors } from 'theme';
 
 const DemoSquare = styled.div`
   background: ${colors.primary};

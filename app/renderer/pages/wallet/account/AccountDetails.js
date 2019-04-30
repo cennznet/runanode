@@ -13,7 +13,7 @@ import {
   Hint,
   Tooltip,
 } from 'components';
-import theme, { colors } from 'renderer/theme';
+import theme, { colors } from 'theme';
 import useOnClickOutside from 'use-onclickoutside';
 import PortfolioSection from './PortfolioSection';
 import ReceiveSection from './ReceiveSection';

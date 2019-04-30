@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Line } from 'rc-progress';
 import BN from 'bn.js';
 
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { environment } from 'common/environment';
 import { chainNameMapping, NetworkNameMapping } from 'common/types/cennznet-node.types';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hint, Ellipsis } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const CardWrapper = styled.div`
   min-height: 3rem;

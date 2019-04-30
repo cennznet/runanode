@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Button, FileUploader, Select, PageFooter } from 'components';
@@ -15,7 +15,7 @@ const ChooseNetworkWrapper = styled.div`
 `;
 
 const JoinNetworkTitle = styled.div`
-  color: ${colors.N0};
+  color: ${colors.text};
   font-weight: 600;
   font-size: 1.7rem;
   margin: 3rem auto;
