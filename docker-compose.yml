@@ -3,12 +3,12 @@ services:
   node-0:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
     volumes:
-      - "./target/node_0:/mnt/node"
-      - "./genesis/:/mnt/genesis:ro"
+      - './target/node_0:/mnt/node'
+      - './genesis/:/mnt/genesis:ro'
     depends_on:
-      - "telemetry"
+      - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/local.json
+      - --chain=/mnt/genesis/local/local-testnet1.json
       - --base-path=/mnt/node
       - --key=Andrea
       - --name=‼️${HOSTNAME:-localhost}-0
@@ -21,18 +21,18 @@ services:
       - --telemetry-url=ws://telemetry:1024
       - --pruning=archive
     ports:
-      - "19933:9933"
-      - "19944:9944"
-      - "30334:30333"
+      - '19933:9933'
+      - '19944:9944'
+      - '30334:30333'
   node-1:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
     volumes:
-      - "./target/node_1:/mnt/node"
-      - "./genesis/:/mnt/genesis:ro"
+      - './target/node_1:/mnt/node'
+      - './genesis/:/mnt/genesis:ro'
     depends_on:
-      - "telemetry"
+      - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/local.json
+      - --chain=/mnt/genesis/local/local-testnet1.json
       - --base-path=/mnt/node
       - --key=Brooke
       - --name=❤️${HOSTNAME:-localhost}-1
@@ -45,16 +45,16 @@ services:
       - --telemetry-url=ws://telemetry:1024
       - --pruning=archive
     ports:
-      - "30335:30333"
+      - '30335:30333'
   node-2:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
     volumes:
-      - "./target/node_2:/mnt/node"
-      - "./genesis/:/mnt/genesis:ro"
+      - './target/node_2:/mnt/node'
+      - './genesis/:/mnt/genesis:ro'
     depends_on:
-      - "telemetry"
+      - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/local.json
+      - --chain=/mnt/genesis/local/local-testnet1.json
       - --base-path=/mnt/node
       - --key=Courtney
       - --name=☺️${HOSTNAME:-localhost}-2
@@ -67,19 +67,19 @@ services:
       - --telemetry-url=ws://telemetry:1024
       - --pruning=archive
     ports:
-      - "30336:30333"
+      - '30336:30333'
   telemetry:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet-telemetry:1.0.19
-    entrypoint: "bash scripts/deploy.sh"
+    entrypoint: 'bash scripts/deploy.sh'
     ports:
-      - "1024:1024"
-      - "5000:5000"
-      - "8080:8080"
+      - '1024:1024'
+      - '5000:5000'
+      - '8080:8080'
   dev-ui:
     image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet-ui:1.0.108
-    entrypoint: "bash scripts/deploy.sh"
+    entrypoint: 'bash scripts/deploy.sh'
     ports:
-      - "3000:3000"
+      - '3000:3000'
 volumes:
   node_0:
   node_1:
