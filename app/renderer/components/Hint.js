@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from 'components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const Wrapper = styled.div`
   margin-left: 0.5rem;

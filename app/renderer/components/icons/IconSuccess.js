@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import iconTick from 'renderer/assets/icon/tick.svg';
 
 const StyledSVGInline = styled(SVGInline).attrs({

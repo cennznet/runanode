@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import styledProps from 'styled-props';
 import Spinner from 'components/Spinner';
-import defaultTheme from 'renderer/theme';
+import defaultTheme from 'components/defaultTheme';
 import defaultThemeStyle from './defaultThemeStyle';
 import buttonStyles from './buttonStyles';
 

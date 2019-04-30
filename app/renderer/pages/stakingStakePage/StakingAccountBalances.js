@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Select, Hint, Ellipsis, Card } from 'components';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import ROUTES from 'renderer/constants/routes';
 import useApis from '../stakingOverviewPage/useApis';
 

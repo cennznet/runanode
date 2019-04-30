@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 import { WALLET_TYPE } from 'renderer/constants/wallet';
 import { recoverySeedPhrases } from './utils';

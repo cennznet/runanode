@@ -13,7 +13,7 @@ import {
 } from 'common/types/cennznet-node.types';
 import centrapayIcon from 'renderer/assets/icon/centrapay.svg';
 import cennzIcon from 'renderer/assets/icon/cennz.svg';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { Button, PageHeading, Ellipsis } from 'components';

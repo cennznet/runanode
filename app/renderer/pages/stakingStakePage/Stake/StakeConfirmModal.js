@@ -3,7 +3,7 @@ import { Grid, Cell } from 'styled-css-grid';
 import { PreDefinedAssetIdName, PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import { Button, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const FieldWrapper = styled.div`
   font-size: 1rem;

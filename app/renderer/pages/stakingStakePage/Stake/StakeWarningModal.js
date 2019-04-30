@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Button, Checkbox, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const Flex = styled.div`
   display: flex;

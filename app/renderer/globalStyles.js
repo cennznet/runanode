@@ -1,4 +1,4 @@
-import theme, { colors } from 'renderer/theme';
+import theme, { colors } from 'theme';
 
 /**
  * Only app level global styles comes here,
@@ -11,7 +11,7 @@ const globalStyles = `
     box-sizing: border-box;
     font-size: ${theme.fontSize};
     font-family: ${theme.fontFamily};
-    color: ${colors.N0};
+    color: ${colors.text};
     background: ${colors.V800};
   }
 

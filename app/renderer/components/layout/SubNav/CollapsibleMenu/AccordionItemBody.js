@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const AccordionItemBody = styled.div`
   min-height: 3rem;

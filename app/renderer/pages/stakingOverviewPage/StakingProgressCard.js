@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const StakingProgressWrapper = styled.div`
   height: 5.5rem;
