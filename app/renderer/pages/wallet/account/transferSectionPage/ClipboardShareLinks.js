@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import R from 'ramda';
 
 import { Tooltip } from 'components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { environment } from 'common/environment';
 import { NetworkNameMapping, chainNameMapping } from 'common/types/cennznet-node.types';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import logoImg from 'renderer/assets/img/centrality-logo.svg';
 import { getNetworkOptionPair, NETWORK_OPTIONS_SORTED } from 'renderer/pages/chooseNetworkPage';
 import { Select } from 'components';

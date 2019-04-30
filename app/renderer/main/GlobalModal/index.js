@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import withContainer from './container';
 import ExitAppWhileStakingModal from './ExitAppWhileStakingModal';

@@ -4,7 +4,7 @@ import qr from 'qr-image';
 import SVGInline from 'react-svg-inline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Hint } from 'components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import QRFocusBox from './QRFocusBox';
 
 const Wrapper = styled.div``;

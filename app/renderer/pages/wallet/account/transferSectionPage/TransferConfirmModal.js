@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
 import { Button, PageHeading, Modal, ModalFooter, ModalBody, Form } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import SVGInline from 'react-svg-inline';
 import arrowCycleRightIcon from '../../../../assets/icon/arrow-cycle-right.svg';
 

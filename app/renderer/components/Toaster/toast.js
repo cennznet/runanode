@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import theme from 'renderer/theme';
+import theme from 'components/defaultTheme';
 import styledProps from 'styled-props';
 import { IconSuccess, IconWarning, IconDanger, IconInfo } from 'components/icons';
 

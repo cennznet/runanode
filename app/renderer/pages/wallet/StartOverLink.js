@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ROUTES from 'renderer/constants/routes';
 

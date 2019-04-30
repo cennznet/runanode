@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactSelect from 'react-select';
 import styled from 'styled-components';
-import theme from 'renderer/theme';
+import theme from 'theme';
 
 const defaultThemeStyle = p => {
   const { colors } = p.theme;

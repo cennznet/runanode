@@ -3,7 +3,7 @@ import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, Button } from 'components';
 import styled from 'styled-components';
 
-import theme from 'renderer/theme';
+import theme from 'theme';
 import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
 import StakingProgressCard from './StakingProgressCard';
 import withContainer from './container';
@@ -107,7 +107,11 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
                 <NextUpHintText>You will join validator list from next era</NextUpHintText>
               )}
             </TextTitleWrapper>
-            <Button style={{display: stakingStashAccountAddress ? 'none' : 'block'}} size="lg" onClick={() => onClickStakeButton()}>
+            <Button
+              style={{ display: stakingStashAccountAddress ? 'none' : 'block' }}
+              size="lg"
+              onClick={() => onClickStakeButton()}
+            >
               Stake
             </Button>
           </PageTitleWrapper>

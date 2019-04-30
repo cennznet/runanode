@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, PageHeading, Modal, ModalFooter, ModalBody } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { STEPS } from '../constants';
 

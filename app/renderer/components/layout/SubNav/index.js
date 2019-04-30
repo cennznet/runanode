@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Scrollable } from 'components';
 
 const Wrapper = styled.div`

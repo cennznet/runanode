@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Button, PageHeading, PageFooter, Input, Modal } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 

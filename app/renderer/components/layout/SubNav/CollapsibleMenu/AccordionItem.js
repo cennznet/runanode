@@ -1,6 +1,6 @@
 import { AccordionItem } from 'react-sanfona';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const StyledAccordionItem = styled(AccordionItem)`
   .react-sanfona-item__chevron {

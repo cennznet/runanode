@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import theme from '../app/renderer/theme';
+import theme from 'theme';
 
 const DemoFlex = styled.div`
   display: flex;
