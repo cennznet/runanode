@@ -55,7 +55,7 @@ const ValidatorsList = ({ validators, stakingStashAccountAddress }) => {
               return (
                 <div
                   style={{
-                    color: colors.N300,
+                    color: colors.text,
                     width: '100%',
                     textAlign: 'left',
                     display: 'flex',
