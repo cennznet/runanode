@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const Index = styled.div`
   margin-right: 0.5rem;
-  color: ${colors.N300};
+  color: ${colors.textMuted};
 `;
 
 const WordWrapper = styled.div`
