@@ -38,7 +38,7 @@ const PortfolioSection = ({ accountBalances }) => {
                 <div
                   style={{
                     display: 'flex',
-                    color: colors.N0,
+                    color: colors.text,
                   }}
                 >
                   <AssetIdIcon value={row.value.assetId} />
@@ -73,7 +73,7 @@ const PortfolioSection = ({ accountBalances }) => {
               return (
                 <div
                   style={{
-                    color: colors.N300,
+                    color: colors.text,
                     width: '100%',
                     textAlign: 'right',
                   }}
@@ -108,7 +108,7 @@ const PortfolioSection = ({ accountBalances }) => {
               return (
                 <div
                   style={{
-                    color: colors.N300,
+                    color: colors.text,
                     width: '100%',
                     textAlign: 'right',
                   }}
@@ -140,7 +140,7 @@ const PortfolioSection = ({ accountBalances }) => {
               return (
                 <div
                   style={{
-                    color: colors.N300,
+                    color: colors.text,
                     width: '100%',
                     textAlign: 'right',
                   }}
