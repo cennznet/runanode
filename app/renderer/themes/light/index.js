@@ -7,6 +7,7 @@ import appComponentStyle from './appComponentStyle';
 const colors = R.mergeDeepRight(defaultColors, appThemeColors);
 
 const customTheme = {
+  pageBackground: colors.N50,
   colors,
   components: appComponentStyle(colors),
 };

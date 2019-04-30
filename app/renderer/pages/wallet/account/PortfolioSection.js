@@ -4,7 +4,7 @@ import jdenticon from 'jdenticon';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import Table from 'components/Table';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Ellipsis, Scrollable } from 'components';
 
 const AssetIdIcon = ({ value }) => {

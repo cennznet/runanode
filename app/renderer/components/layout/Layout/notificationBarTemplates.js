@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Link } from 'react-router-dom';
 import ROUTES from 'renderer/constants/routes';
 

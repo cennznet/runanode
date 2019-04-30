@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { MainContent, MainLayout } from 'components/layout';
 import { Scrollable, TosContent, PageHeading } from 'components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const SettingsTosPage = ({ subNav }) => (
   <MainLayout subNav={subNav}>

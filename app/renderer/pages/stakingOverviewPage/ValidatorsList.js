@@ -3,7 +3,7 @@ import jdenticon from 'jdenticon';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { Ellipsis, Table } from 'components';
-import theme, { colors } from 'renderer/theme';
+import theme, { colors } from 'theme';
 
 const ListWrapper = styled.div`
   width: 49%;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Spinner } from 'components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const SpinnerContainer = styled.div`
   display: flex;

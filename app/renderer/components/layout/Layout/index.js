@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from 'renderer/theme';
+import theme from 'theme';
 import R from 'ramda';
 import Notification from 'components/Notification';
 import TopBar from '../TopBar';
@@ -32,7 +32,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Content = styled.div`
-  background: ${theme.pageGradient};
+  background: ${theme.pageBackground};
   flex: 1 auto;
 `;
 
