@@ -9,7 +9,6 @@ import { Tooltip } from 'components';
 import { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 
-
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -20,7 +19,7 @@ const Wrapper = styled.div`
 const Text = styled.textarea`
   overflow: hidden;
   background: transparent;
-  color: ${colors.N0};
+  color: ${colors.text};
   border: 0;
   outline: none;
   box-shadow: 0;
@@ -57,12 +56,11 @@ const defaultStyling = () => {
   };
 };
 
-
 const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customStyles }) => {
   const id = uuid();
   const [message, setMessage] = useState('Copy address');
   const textRef = useRef(null);
-  const styles = R.merge(defaultStyling(),customStyles);
+  const styles = R.merge(defaultStyling(), customStyles);
 
   function copyToClipboard(e) {
     textRef.current.select();
@@ -72,12 +70,12 @@ const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customS
 
   function openExternalLink(e) {
     Logger.debug(`openExternalLink: ${textRef.current.value}`);
-    shell.openExternal(url+'/'+textRef.current.value);
+    shell.openExternal(url + '/' + textRef.current.value);
   }
 
   return (
-    <Wrapper {...{styles}}>
-      <Text ref={textRef} value={children} onChange={() => {}} {...{styles}} />
+    <Wrapper {...{ styles }}>
+      <Text ref={textRef} value={children} onChange={() => {}} {...{ styles }} />
       <Icon
         {...icon}
         onClick={copyToClipboard}
@@ -91,7 +89,7 @@ const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customS
         onMouseEnter={() => setMessage('Check on CENNZScan')}
         data-for={id}
         data-tip
-        style={{marginLeft: styles.icon2MarginLeft}}
+        style={{ marginLeft: styles.icon2MarginLeft }}
       />
       <Tooltip id={id}>{message}</Tooltip>
     </Wrapper>

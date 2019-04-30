@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 5rem;
-  border-top: ${p => (p.blank ? 0 : `1px solid ${colors.border}`)};
+  border-top: ${p => (p.blank ? 0 : `1px solid ${colors.borderLight || colors.border}`)};
 `;
 
 const PageFooter = ({ blank, children }) => {
