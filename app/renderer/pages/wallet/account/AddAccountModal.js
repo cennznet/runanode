@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, PageHeading, Modal, ModalFooter, ModalBody, Input, Form } from 'components';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NameInput from 'renderer/pages/wallet/NameInput';
 import { Formik, Field } from 'formik';

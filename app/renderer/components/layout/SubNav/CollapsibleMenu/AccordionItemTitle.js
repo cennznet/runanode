@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Translate } from 'react-localize-redux';
 import { ellipsis } from 'polished';
-import defaultTheme, { colors } from 'renderer/theme';
+import defaultTheme, { colors } from 'components/defaultTheme';
 
 const Title = styled.div`
   display: flex;

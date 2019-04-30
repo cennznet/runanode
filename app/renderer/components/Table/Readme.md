@@ -1,6 +1,6 @@
 ```jsx
 const util = require('../../../../styleguideHelpers/tableDataUtil');
-const { colors } = require('../../theme');
+const { colors } = require('../../themes');
 
 initialState = {
   page: 0,

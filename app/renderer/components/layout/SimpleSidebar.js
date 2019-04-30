@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import logoImg from '../../assets/img/cennznode-logo.png';
 import packageJson from '../../../../package.json';
 

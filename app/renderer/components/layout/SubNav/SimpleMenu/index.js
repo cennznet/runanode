@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import { NavLink } from 'react-router-dom';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const NavItem = styled(NavLink)`
   display: block;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 
 const Wrapper = styled.div`
   display: flex;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Select } from 'components';
 import { components } from 'react-select';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { getConstantValue } from 'typescript';
 
 const StepDescription = styled.div`

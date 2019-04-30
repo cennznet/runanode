@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Lottie from 'react-lottie';
 
 import * as animationData from 'renderer/assets/lottie/error.json';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import { Layout, LayoutWrapper, MainContent, SimpleSidebar } from 'components/layout';
 import { Button, PageHeading, Scrollable } from 'components';
 import MainLayout from 'renderer/components/layout/MainLayout';

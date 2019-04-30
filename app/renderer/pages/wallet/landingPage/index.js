@@ -5,7 +5,7 @@ import SVGInline from 'react-svg-inline';
 import { Button, PageHeading } from 'components';
 import ROUTES from 'renderer/constants/routes';
 import styled from 'styled-components';
-import { colors } from 'renderer/theme';
+import { colors } from 'theme';
 import connectIcon from 'renderer/assets/icon/connect.svg';
 import plusIcon from 'renderer/assets/icon/plus.svg';
 import withContainer from './container';
