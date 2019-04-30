@@ -11,9 +11,8 @@ const defaultThemeStyle = p => {
     fontSize: '14px',
     background: 'rgba(114,94,255,0.5)', // TODO: move to colcors
     borderColor: colors.V400,
-    color: colors.N0,
 
-    indicatorBackground: colors.N100,
+    separatorBackground: colors.N100,
     selectedFontWeight: 'bolder',
     selectedBackground: 'transparent',
     selectedColor: colors.N0,
@@ -53,9 +52,13 @@ const StyledSelect = styled(ReactSelect)`
     background: ${p => computedThemeStyle(p).focusBackground};
   }
 
+  .react-select__indicator {
+    color: ${p => computedThemeStyle(p).borderColor || computedThemeStyle(p).indicatorBackground};
+  }
+
   .react-select__indicator-separator {
     background: ${p =>
-      computedThemeStyle(p).borderColor || computedThemeStyle(p).indicatorBackground};
+      computedThemeStyle(p).borderColor || computedThemeStyle(p).separatorBackground};
   }
 
   .react-select__option--is-selected {
