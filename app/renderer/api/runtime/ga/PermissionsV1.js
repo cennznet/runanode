@@ -1,4 +1,4 @@
-import { Struct } from '@polkadot/types';
+import { Struct } from '@plugnet/types';
 import Owner from './Owner';
 
 /**
