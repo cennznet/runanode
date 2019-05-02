@@ -5,12 +5,12 @@ import types from 'renderer/types';
 import { compose, lifecycle, withState } from 'recompose';
 import { Logger } from 'renderer/utils/logging';
 
-const mapStateToProps = ({ nodeSystem, remoteStream, nodeStateStore, blocksNew, blocksFinalised, blocksRemote }) => ({
+const mapStateToProps = ({ nodeSystem, remoteStream, nodeStateStore, blocksNew, blocksFinalized, blocksRemote }) => ({
   nodeSystem,
   remoteStream,
   nodeStateStore,
   blocksNew,
-  blocksFinalised,
+  blocksFinalized,
   blocksRemote,
 });
 

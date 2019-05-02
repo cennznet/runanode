@@ -62,7 +62,7 @@ const switchNetworkEpic = action$ =>
       return of(
         { type: types.subscribeNewHead.triggered },
         { type: types.subscribeNewHeadRemote.triggered },
-        { type: types.subscribeFinalisedHeads.triggered },
+        { type: types.subscribeFinalizedHeads.triggered },
         { type: types.switchNetwork.triggered, payload: {} },
       );
     })
