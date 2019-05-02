@@ -7,20 +7,20 @@ import { storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
 import chainEpics from './chainEpics';
 
-const subscribeFinalisedHeadsEpic = action$ =>
-  action$.ofType(types.subscribeFinalisedHeads.triggered).pipe(
+const subscribeFinalizedHeadsEpic = action$ =>
+  action$.ofType(types.subscribeFinalizedHeads.triggered).pipe(
     debounceTime(appConfig.app.apiInitDebounceTime), // wait for api init
     mergeMap(() => {
       return new Observable(observer => {
-        window.appApi.api.rpc.chain.subscribeFinalisedHeads(newHead => {
-          // Logger.trace(`subscribeFinalisedHeadsEpic, got FinalisedHead.`);
+        window.appApi.api.rpc.chain.subscribeFinalizedHeads(newHead => {
+          // Logger.trace(`subscribeFinalizedHeadsEpic, got FinalizedHead.`);
 
           observer.next(newHead);
         });
       }).pipe(
         debounceTime(appConfig.app.defaultDebounceTime),
         map(newHead => {
-          return { type: types.finalisedHeader.changed, payload: newHead };
+          return { type: types.finalizedHeader.changed, payload: newHead };
         })
       );
     })
@@ -56,7 +56,7 @@ const chainNewHeadWithBalancesEpics = chainEpics(
 );
 
 export default [
-  subscribeFinalisedHeadsEpic,
+  subscribeFinalizedHeadsEpic,
   getAllAccountsBalancesEpic,
   chainNewHeadWithBalancesEpics,
 ];

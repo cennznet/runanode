@@ -54,7 +54,7 @@ const initEpic = action$ =>
         },
         { type: types.subscribeNewHead.triggered },
         { type: types.subscribeNewHeadRemote.triggered },
-        { type: types.subscribeFinalisedHeads.triggered }
+        { type: types.subscribeFinalizedHeads.triggered }
       );
     })
   );
