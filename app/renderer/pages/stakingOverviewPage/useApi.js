@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import BlockNumber from '@polkadot/types/type/BlockNumber';
-import { ValidatorPrefs } from '@polkadot/types';
+import BlockNumber from '@plugnet/types/type/BlockNumber';
+import { ValidatorPrefs } from '@plugnet/types';
 import BN from 'bn.js';
 
 import { Logger } from 'renderer/utils/logging';

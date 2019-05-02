@@ -92,9 +92,9 @@ const TopBar = ({
   } = nodeSystem;
   const networkName = chain ? chainNameMapping(chain) : 'Not connected';
 
-  const { blockHeight: localBlockNum, bps: localBps } = blocksNew;
-  const { blockHeight: remoteBlockNum, bps: remoteBps } = blocksRemote;
-  const { blockHeight: finalizedBlockNum, bps: finalizedBps } = blocksFinalized;
+  const { blockHeight: localBlockNum, bps: localBps } = blocksNew || {};
+  const { blockHeight: remoteBlockNum, bps: remoteBps } = blocksRemote || {};
+  const { blockHeight: finalizedBlockNum, bps: finalizedBps } = blocksFinalized || {};
   const blockNum = `L:#${localBlockNum} / R:#${remoteBlockNum} / F:#${finalizedBlockNum}`;
   const blockSpeed = `${localBps ? localBps.toFixed(2) : 0}bps /
   ${finalizedBps ? finalizedBps.toFixed(2) : 0}  /
