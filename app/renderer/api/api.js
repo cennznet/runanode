@@ -8,6 +8,7 @@ import BN from 'bn.js';
 import { u32, Balance, AccountId, ValidatorPrefs } from '@plugnet/types';
 import { Keyring } from '@plugnet/keyring';
 import decode from '@plugnet/keyring/pair/decode';
+import addressDecode from '@plugnet/keyring/address/decode';
 import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@plugnet/util/index';
 import assert from 'assert';
 import WsProvider from '@plugnet/rpc-provider/ws';
@@ -997,10 +998,10 @@ export default class CennzApi {
       Logger.debug('unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('setSigner');
+      Logger.debug('addressDecode', addressDecode(toWalletAddress, true));
 
       const txHash = await this.ga
-        .transfer(assetId, toWalletAddress, amount)
+        .transfer(assetId, addressDecode(toWalletAddress, true), amount)
         .signAndSend(fromWalletAddress);
       Logger.debug(`api::doGenericAssetTransfer txHash ${txHash}`);
       return txHash;
