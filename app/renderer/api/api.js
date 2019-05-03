@@ -63,32 +63,6 @@ import CennznetWalletAsset from './wallets/CennznetWalletAsset';
 
 const { buildLabel } = environment;
 
-// Generate toy keys from name, toy keys is only for play or tests
-const toyKeyringFromNames = (names: string[]) => {
-  const seeds = names.map(name => stringToU8a(name.padEnd(32, ' ')));
-  const keyring: any = new Keyring();
-  seeds.forEach((seed, index) => {
-    const key = keyring.addFromSeed(seed);
-    keyring[names[index].toLowerCase()] = key;
-  });
-  return keyring;
-};
-
-const toyKeyring = toyKeyringFromNames([
-  'Alice',
-  'Bob',
-  'Charlie',
-  'Dave',
-  'Eve',
-  'Ferdie',
-  'Andrea',
-  'Brooke',
-  'Courtney',
-  'Drew',
-  'Emily',
-  'Frank',
-]);
-
 export default class CennzApi {
   config: RequestConfig;
   api: Api;
