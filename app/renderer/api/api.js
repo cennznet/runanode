@@ -89,7 +89,6 @@ const toyKeyring = toyKeyringFromNames([
 ]);
 
 export default class CennzApi {
-
   config: RequestConfig;
   api: Api;
   apiRemote: Api;
@@ -111,7 +110,7 @@ export default class CennzApi {
   };
 
   generatePaperWallet = async (request: GeneratePaperRequest): Promise<String> => {
-    Logger.debug('CennznetApi::generatePaperWallet called');
+    Logger.debug('api::generatePaperWallet called');
     const filePath = global.dialog.showSaveDialog({
       defaultPath: 'paper-wallet-certificate.pdf',
       filters: [
@@ -151,12 +150,12 @@ export default class CennzApi {
 
   initApi = async (): Promise<void> => {
     Logger.debug(`initApi start`);
-    const types = {...CustomTypes};
+    const types = { ...CustomTypes };
     Logger.debug(`initApi streamUrl: ${appConfig.webSocket.localStreamUrl}`);
     const wsProvider = new WsProvider(appConfig.webSocket.localStreamUrl);
     this.api = new Api({
       provider: wsProvider,
-      types
+      types,
     });
     this.api.on('connected', () => {
       Logger.debug(`initApi connected`);
@@ -185,7 +184,7 @@ export default class CennzApi {
         },
       });
     });
-    this.api.on('error', (err) => {
+    this.api.on('error', err => {
       Logger.debug(`initApi error`);
       Logger.debug(JSON.stringify(err));
       this.dispatch({
@@ -203,14 +202,16 @@ export default class CennzApi {
     Logger.debug(`initRemoteApi start`);
     // eslint-disable-next-line
     const selectedNetwork = electronStore.get(storageKeys.SELECTED_NETWORK);
-    const remoteStreamUrl = selectedNetwork ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value] : appConfig.webSocket.remoteStreamUrl;
+    const remoteStreamUrl = selectedNetwork
+      ? appConfig.webSocket.remoteStreamUrlMap[selectedNetwork.value]
+      : appConfig.webSocket.remoteStreamUrl;
     await this.initRemoteApiWithUrl(remoteStreamUrl);
     Logger.debug(`initRemoteApi done`);
   };
 
   initRemoteApiWithUrl = async (remoteStreamUrl): Promise<void> => {
     Logger.debug(`initRemoteApiWithUrl start`);
-    const types = {...CustomTypes};
+    const types = { ...CustomTypes };
     // eslint-disable-next-line
     Logger.debug(`initRemoteApiWithUrl remoteStreamUrl: ${remoteStreamUrl}`);
     const wsProvider = new WsProvider(remoteStreamUrl);
@@ -245,7 +246,7 @@ export default class CennzApi {
         },
       });
     });
-    this.apiRemote.on('error', (err) => {
+    this.apiRemote.on('error', err => {
       Logger.debug(`initRemoteApiWithUrl error`);
       Logger.debug(JSON.stringify(err));
       this.dispatch({
@@ -261,7 +262,7 @@ export default class CennzApi {
 
   switchNetwork = async (network: string): Promise<void> => {
     let _network = network;
-    if(network.endsWith('json')) {
+    if (network.endsWith('json')) {
       _network = NetworkNameOptions.development;
     }
     Logger.debug(`switchNetwork, network: ${_network}`);
@@ -312,13 +313,13 @@ export default class CennzApi {
       // [{address1: {}}, {address2: {}}, ...] ==> {address1: {}, address2: {}}
       return balanceList.reduce((acc, curr) => Object.assign(curr, acc), {});
     } catch (error) {
-      Logger.error('CennznetApi::getBalancesByWallet error: ' + stringifyError(error));
+      Logger.error('api::getBalancesByWallet error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
   syncWalletData = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
-    Logger.debug('CennznetApi::syncWalletData called');
+    Logger.debug('api::syncWalletData called');
     try {
       const resultWallet = wallet;
       const walletAccountAddresses = this.getWalletAccountAddresses(resultWallet);
@@ -368,7 +369,7 @@ export default class CennzApi {
       resultWallet.accounts = accounts;
       return resultWallet;
     } catch (error) {
-      Logger.error('CennznetApi::syncWalletData error: ' + stringifyError(error));
+      Logger.error('api::syncWalletData error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -377,7 +378,7 @@ export default class CennzApi {
     assetId: BN,
     walletAddress: String
   ): Promise<CennznetWalletAsset> => {
-    // Logger.trace('CennznetApi::getCennznetWalletAsset called');
+    // Logger.trace('api::getCennznetWalletAsset called');
     try {
       const freeBalanceBN = await this.getGenericAssetFreeBalance(assetId, walletAddress);
       const freeBalance = { toBN: freeBalanceBN, toString: freeBalanceBN.toString(10) };
@@ -395,13 +396,13 @@ export default class CennzApi {
       });
       return asset;
     } catch (error) {
-      Logger.error('CennznetApi::getCennznetWalletAsset error: ' + stringifyError(error));
+      Logger.error('api::getCennznetWalletAsset error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
   createWalletWithSimpleKeyRing = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
-    Logger.debug('CennznetApi::createWalletWithSimpleKeyRing called');
+    Logger.debug('api::createWalletWithSimpleKeyRing called');
     try {
       const wallet = new Wallet();
       await wallet.createNewVault(request.passphrase);
@@ -416,16 +417,16 @@ export default class CennzApi {
         hasPassword: request.passphrase !== null,
         wallet,
       });
-      Logger.debug('CennznetApi::createWalletWithSimpleKeyRing success');
+      Logger.debug('api::createWalletWithSimpleKeyRing success');
       return cennznetWallet;
     } catch (error) {
-      Logger.error('CennznetApi::createWalletWithSimpleKeyRing error: ' + stringifyError(error));
+      Logger.error('api::createWalletWithSimpleKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
   createWalletWithHDKeyRing = async (request: CreateHDKRWalletRequest): Promise<CennznetWallet> => {
-    Logger.debug('CennznetApi::createWalletWithHDKeyRing called');
+    Logger.debug('api::createWalletWithHDKeyRing called');
     try {
       const wallet = new Wallet();
       await wallet.createNewVault(request.passphrase);
@@ -440,16 +441,16 @@ export default class CennzApi {
         mnemonic,
         wallet,
       });
-      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      Logger.debug('api::createWalletWithHDKeyRing success');
       return cennznetWallet;
     } catch (error) {
-      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
+      Logger.error('api::createWalletWithHDKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
   restoreWallet = async (request: RestoreHDKRWalletRequest): Promise<CennznetWallet> => {
-    Logger.debug('CennznetApi::restoreWalletWithHDKeyRing called');
+    Logger.debug('api::restoreWalletWithHDKeyRing called');
     try {
       const wallet = new Wallet();
       await wallet.createNewVault(request.passphrase);
@@ -464,16 +465,16 @@ export default class CennzApi {
         hasPassword: request.passphrase !== null,
         wallet,
       });
-      Logger.debug('CennznetApi::createWalletWithHDKeyRing success');
+      Logger.debug('api::createWalletWithHDKeyRing success');
       return cennznetWallet;
     } catch (error) {
-      Logger.error('CennznetApi::createWalletWithHDKeyRing error: ' + stringifyError(error));
+      Logger.error('api::createWalletWithHDKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
   addAccount = async (request: AddAccountRequest): Promise<CennznetWallet> => {
-    Logger.debug('CennznetApi::addAccount called');
+    Logger.debug('api::addAccount called');
     try {
       // reload wallet object
       const originalWallet = new Wallet({
@@ -483,10 +484,10 @@ export default class CennzApi {
       await originalWallet.unlock('');
 
       const newAccount = await originalWallet.addAccount();
-      Logger.debug('CennznetApi::addAccount success');
+      Logger.debug('api::addAccount success');
       return { updatedWallet: originalWallet, newAccount };
     } catch (error) {
-      Logger.error('CennznetApi::addAccount error: ' + stringifyError(error));
+      Logger.error('api::addAccount error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -498,13 +499,13 @@ export default class CennzApi {
    * @returns {Promise<*|Array<string>>}
    */
   getWalletAddress = async (request: GetWalletAddressRequest): Promise<string[]> => {
-    Logger.debug('CennznetApi::getWalletAddress called');
+    Logger.debug('api::getWalletAddress called');
     try {
       const walletAddress = Object.keys(request.accountKeyringMap);
-      Logger.debug(`CennznetApi::getWalletAddress success: ${walletAddress}`);
+      Logger.debug(`api::getWalletAddress success: ${walletAddress}`);
       return walletAddress;
     } catch (error) {
-      Logger.error('CennznetApi::getWalletAddress error: ' + stringifyError(error));
+      Logger.error('api::getWalletAddress error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -514,19 +515,19 @@ export default class CennzApi {
    * @returns {string[]}
    */
   getWalletAccountAddresses = (request: CennznetWallet): string[] => {
-    // Logger.trace('CennznetApi::getWalletAccountAddresses called');
+    // Logger.trace('api::getWalletAccountAddresses called');
     try {
       const walletAccountAddresses = Object.keys(request.wallet._accountKeyringMap);
-      // Logger.trace(`CennznetApi::getWalletAccountAddresses success: ${walletAccountAddresses}`);
+      // Logger.trace(`api::getWalletAccountAddresses success: ${walletAccountAddresses}`);
       return walletAccountAddresses;
     } catch (error) {
-      Logger.error('CennznetApi::getWalletAccountAddresses error: ' + stringifyError(error));
+      Logger.error('api::getWalletAccountAddresses error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
   getSystemHealth = async (queryParams?: NodeQueryParams): Promise<SystemHealth> => {
-    const loggerText = `CennznetApi::getSystemHealth`;
+    const loggerText = `api::getSystemHealth`;
     Logger.debug(`${loggerText} called`);
     try {
       const status: SystemHealth = await getSystemHealth(this.config, queryParams);
@@ -539,13 +540,13 @@ export default class CennzApi {
   };
 
   getGenericAssetNextAssetId = async (): Promise<u32> => {
-    Logger.debug('CennznetApi::getNextAssetId called');
+    Logger.debug('api::getNextAssetId called');
     try {
       const nextAssetId = await this.ga.getNextAssetId();
-      Logger.debug(`CennznetApi::getNextAssetId nextAssetId: ${nextAssetId}`);
+      Logger.debug(`api::getNextAssetId nextAssetId: ${nextAssetId}`);
       return nextAssetId;
     } catch (error) {
-      Logger.error('CennznetApi::getNextAssetId error: ' + stringifyError(error));
+      Logger.error('api::getNextAssetId error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -557,15 +558,15 @@ export default class CennzApi {
    * @returns {Promise<number>}
    */
   getGenericAssetFreeBalance = async (assetId: BN, walletAddress: string): Promise<BN> => {
-    // Logger.trace('CennznetApi::getGenericAssetFreeBalance called');
+    // Logger.trace('api::getGenericAssetFreeBalance called');
     try {
       const freeBalance = await this.ga.getFreeBalance(assetId, walletAddress);
       // Logger.trace(
-      //   `CennznetApi::getGenericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`
+      //   `api::getGenericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`
       // );
       return new BN(freeBalance.toString(10), 10);
     } catch (error) {
-      Logger.error('CennznetApi::getGenericAssetFreeBalance error: ' + stringifyError(error));
+      Logger.error('api::getGenericAssetFreeBalance error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -577,13 +578,13 @@ export default class CennzApi {
    * @returns {Promise<Balance>}
    */
   getGenericAssetReservedBalance = async (assetId: BN, walletAddress: string): Promise<Balance> => {
-    // Logger.trace('CennznetApi::getGenericAssetReservedBalance called');
+    // Logger.trace('api::getGenericAssetReservedBalance called');
     try {
       const reservedBalance = await this.ga.getReservedBalance(assetId, walletAddress);
-      // Logger.trace(`CennznetApi::getGenericAssetReservedBalance freeBalance: ${reservedBalance}`);
+      // Logger.trace(`api::getGenericAssetReservedBalance freeBalance: ${reservedBalance}`);
       return reservedBalance;
     } catch (error) {
-      Logger.error('CennznetApi::getGenericAssetReservedBalance error: ' + stringifyError(error));
+      Logger.error('api::getGenericAssetReservedBalance error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -594,13 +595,13 @@ export default class CennzApi {
    * @returns {Promise<Balance>}
    */
   getGenericAssetTotalSupply = async (assetId: BN): Promise<Balance> => {
-    Logger.debug('CennznetApi::getGenericAssetTotalSupply called');
+    Logger.debug('api::getGenericAssetTotalSupply called');
     try {
       const totalSupply = await this.ga.getTotalSupply(assetId);
-      Logger.debug(`CennznetApi::getGenericAssetTotalSupply freeBalance: ${totalSupply}`);
+      Logger.debug(`api::getGenericAssetTotalSupply freeBalance: ${totalSupply}`);
       return totalSupply;
     } catch (error) {
-      Logger.error('CennznetApi::getGenericAssetTotalSupply error: ' + stringifyError(error));
+      Logger.error('api::getGenericAssetTotalSupply error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -644,7 +645,7 @@ export default class CennzApi {
     assert(publicKey && publicKey.length === 32, 'Expected valid publicKey, 32-bytes');
     assert(secretKey && secretKey.length === 64, 'Expected valid secretKey, 64-bytes');
     assert(seed && seed.length > ZERO_STR.length, 'Expected valid seed, 32-bytes');
-    Logger.debug(`CennznetApi::getSeedFromWalletAccount seed: ${seed.length}`);
+    Logger.debug(`api::getSeedFromWalletAccount seed: ${seed.length}`);
     return seed;
   };
 
@@ -662,14 +663,14 @@ export default class CennzApi {
     amount: number,
     passphrase: string
   ): Promise<Hash> => {
-    Logger.debug('CennznetApi::doBond called');
+    Logger.debug('api::doBond called');
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
-      Logger.debug('CennznetApi::doBond unlock');
+      Logger.debug('api::doBond unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('CennznetApi::doBond setSigner');
+      Logger.debug('api::doBond setSigner');
 
       const controllerAccount = stashAccountAddress;
       const payee = [stashAccountAddress];
@@ -677,10 +678,10 @@ export default class CennzApi {
       const bondTxHash = await this.api.tx.staking
         .bond(controllerAccount, amount, payee)
         .signAndSend(controllerAccount, { nonce: accountNonce });
-      Logger.debug(`CennznetApi::doBond bondTxHash: ${bondTxHash}`);
+      Logger.debug(`api::doBond bondTxHash: ${bondTxHash}`);
       return bondTxHash;
     } catch (error) {
-      Logger.error('CennznetApi::doBond error: ' + stringifyError(error));
+      Logger.error('api::doBond error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -699,24 +700,24 @@ export default class CennzApi {
     amount: number,
     passphrase: string
   ): Promise<Hash> => {
-    Logger.debug('CennznetApi::doBondExtra called');
+    Logger.debug('api::doBondExtra called');
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
-      Logger.debug('CennznetApi::doBondExtra unlock');
+      Logger.debug('api::doBondExtra unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('CennznetApi::doBondExtra setSigner');
+      Logger.debug('api::doBondExtra setSigner');
 
       const controllerAccount = stashAccountAddress;
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
       const bondTxHash = await this.api.tx.staking
         .doBondExtra(amount)
         .signAndSend(controllerAccount, { nonce: accountNonce });
-      Logger.debug(`CennznetApi::doBondExtra bondTxHash: ${bondTxHash}`);
+      Logger.debug(`api::doBondExtra bondTxHash: ${bondTxHash}`);
       return bondTxHash;
     } catch (error) {
-      Logger.error('CennznetApi::doBondExtra error: ' + stringifyError(error));
+      Logger.error('api::doBondExtra error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -735,24 +736,24 @@ export default class CennzApi {
     amount: number,
     passphrase: string
   ): Promise<Hash> => {
-    Logger.debug('CennznetApi::doUnBond called');
+    Logger.debug('api::doUnBond called');
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
-      Logger.debug('CennznetApi::doUnBond unlock');
+      Logger.debug('api::doUnBond unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('CennznetApi::doUnBond setSigner');
+      Logger.debug('api::doUnBond setSigner');
 
       const controllerAccount = stashAccountAddress;
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
       const unBondTxHash = await this.api.tx.staking
         .unbond(amount)
         .signAndSend(controllerAccount, { nonce: accountNonce });
-      Logger.debug(`CennznetApi::doUnBond unBondTxHash: ${unBondTxHash}`);
+      Logger.debug(`api::doUnBond unBondTxHash: ${unBondTxHash}`);
       return unBondTxHash;
     } catch (error) {
-      Logger.error('CennznetApi::doUnBond error: ' + stringifyError(error));
+      Logger.error('api::doUnBond error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -774,57 +775,55 @@ export default class CennzApi {
     passphrase: string,
     statusCb: Function
   ): Promise<Function> => {
-    Logger.debug('CennznetApi::doStake called');
-    Logger.debug(`CennznetApi::doStake called, wallet ${JSON.stringify(wallet)}`);
-    Logger.debug(`CennznetApi::doStake called, stashAccountAddress ${JSON.stringify(stashAccountAddress)}`);
-    Logger.debug(`CennznetApi::doStake called, balances ${JSON.stringify(balances)}`);
-    Logger.debug(
-      `CennznetApi::doStake called, stakingPreference ${JSON.stringify(stakingPreference)}`
-    );
+    Logger.debug('api::doStake called');
+    Logger.debug(`api::doStake called, wallet ${JSON.stringify(wallet)}`);
+    Logger.debug(`api::doStake called, stashAccountAddress ${JSON.stringify(stashAccountAddress)}`);
+    Logger.debug(`api::doStake called, balances ${JSON.stringify(balances)}`);
+    Logger.debug(`api::doStake called, stakingPreference ${JSON.stringify(stakingPreference)}`);
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
-      Logger.debug('CennznetApi::doStake unlock');
+      Logger.debug('api::doStake unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('CennznetApi::doStake setSigner');
+      Logger.debug('api::doStake setSigner');
 
       // bound
       const stakingAmount = new BN(
         balances[stashAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString,
         10
       );
-      Logger.debug(`CennznetApi::doStake stakingAmount: ${stakingAmount}`);
+      Logger.debug(`api::doStake stakingAmount: ${stakingAmount}`);
       const controllerAccount = stashAccountAddress;
       const payee = [stashAccountAddress];
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
-      Logger.debug(`CennznetApi::doStake accountNonce: ${accountNonce}`);
+      Logger.debug(`api::doStake accountNonce: ${accountNonce}`);
       const bondTxHash = await this.api.tx.staking
         .bond(controllerAccount, stakingAmount, payee)
         .signAndSend(controllerAccount, { nonce: accountNonce });
-      Logger.debug(`CennznetApi::doStake bondTxHash: ${bondTxHash}`);
+      Logger.debug(`api::doStake bondTxHash: ${bondTxHash}`);
 
       // query staking bonded account
       const bondedAccount = await this.api.query.staking.bonded(controllerAccount);
-      Logger.debug(`CennznetApi::doStake bondedAccount: ${bondedAccount}`);
+      Logger.debug(`api::doStake bondedAccount: ${bondedAccount}`);
 
       // query staking ledger
       const ledger = await this.api.query.staking.ledger(controllerAccount);
-      Logger.debug(`CennznetApi::doStake ledger: ${JSON.stringify(ledger)}`);
+      Logger.debug(`api::doStake ledger: ${JSON.stringify(ledger)}`);
 
       // validate
       // TODO preferences should pass in as param
       const preferences = stakingPreference;
       const newNonce = Number(String(accountNonce)) + 1;
-      Logger.debug(`CennznetApi::doStake newNonce: ${newNonce}`);
+      Logger.debug(`api::doStake newNonce: ${newNonce}`);
       const unsubscribeFn = await this.api.tx.staking
         .validate(preferences)
         .signAndSend(controllerAccount, { nonce: newNonce }, statusCb);
-      Logger.debug(`CennznetApi::doStake unsubscribeFn: ${unsubscribeFn}`);
+      Logger.debug(`api::doStake unsubscribeFn: ${unsubscribeFn}`);
 
       return unsubscribeFn;
     } catch (error) {
-      Logger.error('CennznetApi::doStake error: ' + stringifyError(error));
+      Logger.error('api::doStake error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -835,7 +834,7 @@ export default class CennzApi {
    * @returns {Promise<number>}
    */
   getIntentionIndex = async (accountAddress: string): Promise<number> => {
-    Logger.debug('CennznetApi::getIntentionIndex called');
+    Logger.debug('api::getIntentionIndex called');
     // try {
     //   const intentions = await this.api.query.staking.intentions();
     //   Logger.debug(`intentions: ${intentions}`);
@@ -845,7 +844,7 @@ export default class CennzApi {
     //   const intentionsIndex = intentionsStr.indexOf(accountAddress);
     //   return intentionsIndex;
     // } catch (error) {
-    //   Logger.error('CennznetApi::getIntentionIndex error: ' + stringifyError(error));
+    //   Logger.error('api::getIntentionIndex error: ' + stringifyError(error));
     //   throw new GenericApiError();
     // }
     return -1;
@@ -863,25 +862,25 @@ export default class CennzApi {
     prefs: any,
     accountAddress: string
   ): Promise<any> => {
-    Logger.debug('CennznetApi::saveStakingPreferences called');
+    Logger.debug('api::saveStakingPreferences called');
     Logger.debug(`wallet: ${JSON.stringify(wallet)}`);
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(''); // TODO switch to pin code
-      Logger.debug('CennznetApi::saveStakingPreferences unlock');
+      Logger.debug('api::saveStakingPreferences unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('CennznetApi::saveStakingPreferences setSigner');
+      Logger.debug('api::saveStakingPreferences setSigner');
 
       const validatorPrefs = new ValidatorPrefs(prefs);
       const intentionIndex = await this.getIntentionIndex(accountAddress);
       const txHash = await this.api.tx.staking
         .registerPreferences(intentionIndex, validatorPrefs)
         .signAndSend(accountAddress);
-      Logger.debug(`CennznetApi::saveStakingPreferences txHash ${txHash}`);
+      Logger.debug(`api::saveStakingPreferences txHash ${txHash}`);
       return txHash;
     } catch (error) {
-      Logger.error('CennznetApi::saveStakingPreferences error: ' + stringifyError(error));
+      Logger.error('api::saveStakingPreferences error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -896,7 +895,7 @@ export default class CennzApi {
     accountAddress: string,
     callbackFn: Function
   ): Promise<ValidatorPrefs> => {
-    Logger.debug('CennznetApi::getValidatorPreferences called');
+    Logger.debug('api::getValidatorPreferences called');
     Logger.debug(`accountAddress: ${accountAddress}`);
     Logger.debug(`callbackFn: ${callbackFn}`);
     try {
@@ -907,7 +906,7 @@ export default class CennzApi {
       Logger.debug(`validatorPreferences: ${JSON.stringify(validatorPreferences)}`);
       return validatorPreferences;
     } catch (error) {
-      Logger.error('CennznetApi::getValidatorPreferences error: ' + stringifyError(error));
+      Logger.error('api::getValidatorPreferences error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -925,39 +924,39 @@ export default class CennzApi {
     passphrase: string,
     statusCb: Function
   ): Promise<Function> => {
-    Logger.debug('CennznetApi::doUnStake called');
+    Logger.debug('api::doUnStake called');
     try {
       const originalWallet = this.reloadWallet(wallet);
       await originalWallet.unlock(passphrase);
-      Logger.debug('CennznetApi::doUnStake unlock');
+      Logger.debug('api::doUnStake unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('CennznetApi::doUnStake setSigner');
+      Logger.debug('api::doUnStake setSigner');
 
       const controllerAccount = stashAccountAddress;
 
       // query staking ledger
       const ledger = await this.api.query.staking.ledger(controllerAccount);
-      Logger.debug(`CennznetApi::doUnStake ledger: ${JSON.stringify(ledger)}`);
+      Logger.debug(`api::doUnStake ledger: ${JSON.stringify(ledger)}`);
       const bondedBalance = new BN(ledger.raw.active.toString(), 10);
-      Logger.debug(`CennznetApi::doUnStake bondedBalance: ${bondedBalance}`);
+      Logger.debug(`api::doUnStake bondedBalance: ${bondedBalance}`);
 
       // TODO not sure why bondedBalance always showing as 100?
       // unbond all amount from staking ledger
       const accountNonce = await this.api.query.system.accountNonce(controllerAccount);
-      Logger.debug(`CennznetApi::doUnStake accountNonce: ${accountNonce}`);
+      Logger.debug(`api::doUnStake accountNonce: ${accountNonce}`);
       const unBondTxHash = await this.api.tx.staking
         .unbond(bondedBalance)
         .signAndSend(controllerAccount, { nonce: accountNonce });
-      Logger.debug(`CennznetApi::doUnStake unBondTxHash: ${unBondTxHash}`);
+      Logger.debug(`api::doUnStake unBondTxHash: ${unBondTxHash}`);
 
       // chill
       const newNonce = Number(String(accountNonce)) + 1;
-      Logger.debug(`CennznetApi::doUnStake newNonce: ${newNonce}`);
+      Logger.debug(`api::doUnStake newNonce: ${newNonce}`);
       const unsubscribeFn = await this.api.tx.staking
         .chill()
         .signAndSend(controllerAccount, { nonce: newNonce }, statusCb);
-      Logger.debug(`CennznetApi::doUnStake unsubscribeFn: ${unsubscribeFn}`);
+      Logger.debug(`api::doUnStake unsubscribeFn: ${unsubscribeFn}`);
 
       // TODO: Chain epic to reflect the changes in reducer immediately
       await clearStorage(storageKeys.STAKING_STATUS);
@@ -966,7 +965,7 @@ export default class CennzApi {
 
       return unsubscribeFn;
     } catch (error) {
-      Logger.error('CennznetApi::doUnStake error: ' + stringifyError(error));
+      Logger.error('api::doUnStake error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -986,7 +985,7 @@ export default class CennzApi {
     amount: BN,
     wallet: CennznetWallet
   ): Promise<Hash> => {
-    Logger.debug('CennznetApi::doGenericAssetTransfer called');
+    Logger.debug('api::doGenericAssetTransfer called');
     Logger.debug(
       `assetId: ${assetId.toString(10)}, amount: ${amount.toString(
         10
@@ -1003,10 +1002,10 @@ export default class CennzApi {
       const txHash = await this.ga
         .transfer(assetId, toWalletAddress, amount)
         .signAndSend(fromWalletAddress);
-      Logger.debug(`CennznetApi::doGenericAssetTransfer txHash ${txHash}`);
+      Logger.debug(`api::doGenericAssetTransfer txHash ${txHash}`);
       return txHash;
     } catch (error) {
-      Logger.error('CennznetApi::doGenericAssetTransfer error: ' + stringifyError(error));
+      Logger.error('api::doGenericAssetTransfer error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -1016,13 +1015,13 @@ export default class CennzApi {
    * @returns {Promise<List>}
    */
   getValidators = async (callbackFn: Function): Promise<List> => {
-    Logger.debug('CennznetApi::getValidators called');
+    Logger.debug('api::getValidators called');
     try {
       const validators = await this.api.query.session.validators(callbackFn);
-      Logger.debug(`CennznetApi::getValidators validators: ${JSON.stringify(validators)}`);
+      Logger.debug(`api::getValidators validators: ${JSON.stringify(validators)}`);
       return validators;
     } catch (error) {
-      Logger.error('CennznetApi::getValidators error: ' + stringifyError(error));
+      Logger.error('api::getValidators error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -1032,13 +1031,13 @@ export default class CennzApi {
    * @returns {Promise<any>}
    */
   getSystemEvents = async (callbackFn: Function): Promise<any> => {
-    Logger.debug('CennznetApi::getSystemEvents called');
+    Logger.debug('api::getSystemEvents called');
     try {
       const systemEvents = await this.api.query.system.events(callbackFn);
-      Logger.debug(`CennznetApi::getSystemEvents success: ${systemEvents}`);
+      Logger.debug(`api::getSystemEvents success: ${systemEvents}`);
       return systemEvents;
     } catch (error) {
-      Logger.error('CennznetApi::getSystemEvents error: ' + stringifyError(error));
+      Logger.error('api::getSystemEvents error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -1054,7 +1053,7 @@ export default class CennzApi {
     //   const intentions = await this.api.query.staking.intentions(callbackFn);
     //   return intentions;
     // } catch (error) {
-    //   Logger.error('CennznetApi::getIntentions error: ' + stringifyError(error));
+    //   Logger.error('api::getIntentions error: ' + stringifyError(error));
     //   throw new GenericApiError();
     // }
   };
@@ -1064,16 +1063,16 @@ export default class CennzApi {
    * @returns {Promise<AccountIdList>}
    */
   // getIntentionsBalances = async (callbackFn: Function): Promise<AccountIdList> => {
-  //   Logger.debug('CennznetApi::getIntentionsBalances called');
+  //   Logger.debug('api::getIntentionsBalances called');
   //   try {
   //     const intentionsBalances = await this.api.derive.staking.intentionsBalances(
   //       ...['balances'],
   //       callbackFn
   //     );
-  //     Logger.debug(`CennznetApi::getIntentionsBalances success: ${intentionsBalances}`);
+  //     Logger.debug(`api::getIntentionsBalances success: ${intentionsBalances}`);
   //     return intentionsBalances;
   //   } catch (error) {
-  //     Logger.error('CennznetApi::getIntentionsBalances error: ' + stringifyError(error));
+  //     Logger.error('api::getIntentionsBalances error: ' + stringifyError(error));
   //     throw new GenericApiError();
   //   }
   // };
@@ -1087,7 +1086,7 @@ export default class CennzApi {
       const sessionLength = await this.api.query.session.sessionLength(callbackFn);
       return sessionLength;
     } catch (error) {
-      Logger.error('CennznetApi::getSessions error: ' + stringifyError(error));
+      Logger.error('api::getSessions error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -1101,7 +1100,7 @@ export default class CennzApi {
       const sessionProgress = await this.api.derive.session.sessionProgress(callbackFn);
       return sessionProgress;
     } catch (error) {
-      Logger.error('CennznetApi::getSessionProgress error: ' + stringifyError(error));
+      Logger.error('api::getSessionProgress error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -1115,7 +1114,7 @@ export default class CennzApi {
       const sessionLength = await this.api.query.session.sessionLength(callbackFn);
       return sessionLength;
     } catch (error) {
-      Logger.error('CennznetApi::getSessionLength error: ' + stringifyError(error));
+      Logger.error('api::getSessionLength error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -1129,7 +1128,7 @@ export default class CennzApi {
       const eraProgress = await this.api.derive.session.eraProgress(callbackFn);
       return eraProgress;
     } catch (error) {
-      Logger.error('CennznetApi::getEraProgress error: ' + stringifyError(error));
+      Logger.error('api::getEraProgress error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
@@ -1143,7 +1142,7 @@ export default class CennzApi {
       const eraLength = await this.api.derive.session.eraLength(callbackFn);
       return eraLength;
     } catch (error) {
-      Logger.error('CennznetApi::getEraLength error: ' + stringifyError(error));
+      Logger.error('api::getEraLength error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
