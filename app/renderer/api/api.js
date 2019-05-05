@@ -974,8 +974,8 @@ export default class CennzApi {
       this.api.setSigner(originalWallet);
       Logger.debug('addressDecode', addressDecode(toWalletAddress, true));
 
-      const txHash = await this.ga
-        .transfer(assetId, addressDecode(toWalletAddress, true), amount)
+      const txHash = await this.api.tx.genericAsset
+        .transfer(assetId, toWalletAddress, amount)
         .signAndSend(fromWalletAddress);
       Logger.debug(`api::doGenericAssetTransfer txHash ${txHash}`);
       return txHash;
