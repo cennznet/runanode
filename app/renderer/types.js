@@ -37,10 +37,10 @@ const actionTypes = {
   enableAnalytics: triggerActionTypes('enable_analytics'),
   disableAnalytics: triggerActionTypes('disable_analytics'),
 
-  subscribeFinalisedHeads: triggerActionTypes('subscribe_finalised_heads'),
+  subscribeFinalizedHeads: triggerActionTypes('subscribe_Finalized_heads'),
   subscribeNewHead: triggerActionTypes('subscribe_new_head'),
   subscribeNewHeadRemote: triggerActionTypes('subscribe_new_head_remote'),
-  finalisedHeader: changedActionTypes('finalised_header'),
+  finalizedHeader: changedActionTypes('finalized_header'),
   newHead: changedActionTypes('new_head'),
   newHeadRemote: changedActionTypes('new_head_remote'),
 

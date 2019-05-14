@@ -100,7 +100,7 @@ const sendStakingExtrinsicEpic = action$ =>
           const statusCb = ({ events, status, type }) => {
             Logger.debug(`sendStakingExtrinsicEpic status: ${status}`);
             observer.next(type);
-            if (type === 'Finalised') {
+            if (status.isFinalized) {
               observer.complete();
             }
           };
@@ -121,7 +121,7 @@ const sendStakingExtrinsicEpic = action$ =>
         }).pipe(
           map(type => {
             Logger.debug(`sendStakingExtrinsicEpic, type: ${type}`);
-            if (type === 'Finalised') {
+            if (status.isFinalized) {
               return {
                 type: types.stakingExtrinsicCompleted.triggered,
                 payload: {
@@ -228,7 +228,7 @@ const unStakeEpic = action$ =>
         const statusCb = ({ events, status, type }) => {
           Logger.debug(`unStakeEpic events: ${events}, status: ${status}, type: ${type}`);
           observer.next(type);
-          if (type === 'Finalised') {
+          if (status.isFinalized) {
             observer.complete();
           }
         };
@@ -248,7 +248,7 @@ const unStakeEpic = action$ =>
       }).pipe(
         map(type => {
           Logger.debug(`unStakeEpic pipe, type: ${type}`);
-          if (type === 'Finalised') {
+          if (status.isFinalized) {
             return {
               type: types.unStakeExtrinsicCompleted.triggered,
               payload: {

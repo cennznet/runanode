@@ -32,8 +32,8 @@ const commonConfig = {
     remoteStreamUrlMap: {
       rimu: 'wss://cennznet-node-1.centrality.cloud:9944',
       kauri: 'wss://cennznet-node-1.centrality.me:9944',
-      // 'development' : 'ws://localhost:19944',
-      development: 'ws://10.9.30.55:19944', // for other local test net
+      'development' : 'ws://localhost:19944',
+      // development: 'ws://10.9.30.55:19944', // for other local test net
     },
     latency: {
       period:
