@@ -10,7 +10,7 @@ const DEFAULT_STATE = {
 
 export default function blocks(state = DEFAULT_STATE, { type, payload }) {
   switch (type) {
-    case types.finalisedHeader.changed:
+    case types.finalizedHeader.changed:
       return R.merge(state, {
         blockHeight: parseInt(payload.get('number'), 10),
         previousBlockHeight: state.blockHeight,

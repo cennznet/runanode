@@ -79,7 +79,7 @@ const TopBar = ({
   setSelectedNetwork,
   nodeStateStore,
   blocksNew,
-  blocksFinalised,
+  blocksFinalized,
   blocksRemote,
   ...otherProps
 }) => {
@@ -92,12 +92,12 @@ const TopBar = ({
   } = nodeSystem;
   const networkName = chain ? chainNameMapping(chain) : 'Not connected';
 
-  const { blockHeight: localBlockNum, bps: localBps } = blocksNew;
-  const { blockHeight: remoteBlockNum, bps: remoteBps } = blocksRemote;
-  const { blockHeight: finalisedBlockNum, bps: finalisedBps } = blocksFinalised;
-  const blockNum = `L:#${localBlockNum} / R:#${remoteBlockNum} / F:#${finalisedBlockNum}`;
-  const blockSpeed = `${localBps ? localBps.toFixed(2) : 0}bps / 
-  ${finalisedBps ? finalisedBps.toFixed(2) : 0}  / 
+  const { blockHeight: localBlockNum, bps: localBps } = blocksNew || {};
+  const { blockHeight: remoteBlockNum, bps: remoteBps } = blocksRemote || {};
+  const { blockHeight: finalizedBlockNum, bps: finalizedBps } = blocksFinalized || {};
+  const blockNum = `L:#${localBlockNum} / R:#${remoteBlockNum} / F:#${finalizedBlockNum}`;
+  const blockSpeed = `${localBps ? localBps.toFixed(2) : 0}bps /
+  ${finalizedBps ? finalizedBps.toFixed(2) : 0}  /
   ${remoteBps ? remoteBps.toFixed(2) : 0}bps`;
 
   const percentage = remoteBlockNum > 0 ? ((localBlockNum / remoteBlockNum) * 100).toFixed(2) : 0;
