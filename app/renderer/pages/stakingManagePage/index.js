@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import BN from 'bn.js';
-import { Balance, BlockNumber } from '@polkadot/types';
+import { Balance, BlockNumber } from '@plugnet/types';
 import R from 'ramda';
 
 import PageSpinner from 'components/PageSpinner';

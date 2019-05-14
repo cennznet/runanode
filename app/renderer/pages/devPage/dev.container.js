@@ -11,7 +11,7 @@ import { ApiPromise } from '@cennznet/api';
 const mapStateToProps = ({
   blocksNew,
   blocksRemote,
-  blocksFinalised,
+  blocksFinalized,
   localStorage: { WALLETS },
   nodeStateStore,
   nodeSystem,
@@ -20,7 +20,7 @@ const mapStateToProps = ({
   nodeSystem,
   blocksNew,
   blocksRemote,
-  blocksFinalised,
+  blocksFinalized,
   nodeStateStore,
   wallets: WALLETS,
   balances,
@@ -107,12 +107,12 @@ const mapDispatchToProps = dispatch => ({
   },
 
   onStake: payload => {
-    const stakingPreference = { unstakeThreshold: 3 , validatorPayment: 0 };
+    const stakingPreference = { unstakeThreshold: 3, validatorPayment: 0 };
     const passphrase = '';
     const statusCb = ({ events, status, type }) => {
       Logger.debug(`onStake status: ${status}`);
       // observer.next(type);
-      if (type === 'Finalised') {
+      if (status.isFinalized) {
         // observer.complete();
       }
     };

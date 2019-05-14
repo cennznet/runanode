@@ -5,12 +5,13 @@ import { GenericAsset } from '@cennznet/generic-asset';
 import { Api } from '@cennznet/api';
 import uuid from 'uuid/v4';
 import BN from 'bn.js';
-import { u32, Balance, AccountId, ValidatorPrefs } from '@polkadot/types';
-import { Keyring } from '@polkadot/keyring';
-import decode from '@polkadot/keyring/pair/decode';
-import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
+import { u32, Balance, AccountId, ValidatorPrefs } from '@plugnet/types';
+import { Keyring } from '@plugnet/keyring';
+import decode from '@plugnet/keyring/pair/decode';
+import addressDecode from '@plugnet/keyring/address/decode';
+import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@plugnet/util/index';
 import assert from 'assert';
-import WsProvider from '@polkadot/rpc-provider/ws';
+import WsProvider from '@plugnet/rpc-provider/ws';
 
 import appConfig from 'app/config';
 import { storageKeys, clearStorage } from 'renderer/api/utils/storage';
@@ -61,32 +62,6 @@ import CennznetWalletAccount from './wallets/CennznetWalletAccount';
 import CennznetWalletAsset from './wallets/CennznetWalletAsset';
 
 const { buildLabel } = environment;
-
-// Generate toy keys from name, toy keys is only for play or tests
-const toyKeyringFromNames = (names: string[]) => {
-  const seeds = names.map(name => stringToU8a(name.padEnd(32, ' ')));
-  const keyring: any = new Keyring();
-  seeds.forEach((seed, index) => {
-    const key = keyring.addFromSeed(seed);
-    keyring[names[index].toLowerCase()] = key;
-  });
-  return keyring;
-};
-
-const toyKeyring = toyKeyringFromNames([
-  'Alice',
-  'Bob',
-  'Charlie',
-  'Dave',
-  'Eve',
-  'Ferdie',
-  'Andrea',
-  'Brooke',
-  'Courtney',
-  'Drew',
-  'Emily',
-  'Frank',
-]);
 
 export default class CennzApi {
   config: RequestConfig;
@@ -997,9 +972,9 @@ export default class CennzApi {
       Logger.debug('unlock');
 
       this.api.setSigner(originalWallet);
-      Logger.debug('setSigner');
+      Logger.debug('addressDecode', addressDecode(toWalletAddress, true));
 
-      const txHash = await this.ga
+      const txHash = await this.api.tx.genericAsset
         .transfer(assetId, toWalletAddress, amount)
         .signAndSend(fromWalletAddress);
       Logger.debug(`api::doGenericAssetTransfer txHash ${txHash}`);
