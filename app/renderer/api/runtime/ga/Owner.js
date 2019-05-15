@@ -1,4 +1,3 @@
-import { AccountId, Option } from '@plugnet/types';
+import { AccountId, Option } from '@polkadot/types';
 
-export default class Owner extends Option.with(AccountId) {
-}
+export default class Owner extends Option.with(AccountId) {}

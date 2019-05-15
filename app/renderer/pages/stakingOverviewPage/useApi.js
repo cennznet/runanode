@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import BlockNumber from '@plugnet/types/type/BlockNumber';
-import { ValidatorPrefs } from '@plugnet/types';
+import BlockNumber from '@polkadot/types/type/BlockNumber';
+import { ValidatorPrefs } from '@polkadot/types';
 import BN from 'bn.js';
 
 import { Logger } from 'renderer/utils/logging';
@@ -64,7 +64,7 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
 
     // useEffect clean up
     return () => {
-      if (typeof unsubscribeFn === 'function' ) {
+      if (typeof unsubscribeFn === 'function') {
         Logger.debug(
           `useApi, useEffect clean up, apiSection: ${apiSection}, unsubscribeFn: ${unsubscribeFn}`
         );
