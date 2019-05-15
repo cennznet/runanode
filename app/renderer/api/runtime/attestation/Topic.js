@@ -1,7 +1,6 @@
 /*
     Custom `Topic` type for Attestation module.
  */
-import { U256 } from '@plugnet/types';
+import { U256 } from '@polkadot/types';
 
-export default class AttestationTopic extends U256 {
-}
+export default class AttestationTopic extends U256 {}
