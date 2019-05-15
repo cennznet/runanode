@@ -2,7 +2,7 @@
  Custom `AssetOptions` type for generic asset module.
 */
 
-import { Balance, Compact, Struct } from '@plugnet/types';
+import { Balance, Compact, Struct } from '@polkadot/types';
 import { PermissionLatest } from '.';
 
 export default class AssetOptions extends Struct {
