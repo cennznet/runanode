@@ -1327,21 +1327,6 @@
     "@plugnet/types" "^0.78.100"
     "@plugnet/util" "^0.90.100"
 
-"@plugnet/rpc-provider@^0.77.101":
-  version "0.77.101"
-  resolved "https://npm-proxy.fury.io/zns5F9Pw8SWSpytqCuxj/centrality/~/d/%40plugnet%2Frpc-provider/%40plugnet%2Frpc-provider-0.77.101#6aeaddb72403f912e1cb99a2912d4f5b2a2600c1"
-  integrity sha1-aurdtyQD+RLhy5mikS1PWyomAME=
-  dependencies:
-    "@babel/runtime" "^7.4.3"
-    "@plugnet/keyring" "^0.76.2-beta.0"
-    "@plugnet/storage" "^0.77.101"
-    "@plugnet/util" "^0.76.2-beta.0"
-    "@plugnet/util-crypto" "^0.76.2-beta.0"
-    "@types/nock" "^9.3.1"
-    eventemitter3 "^3.1.0"
-    isomorphic-fetch "^2.2.1"
-    websocket "^1.0.28"
-
 "@plugnet/rpc-provider@^0.78.100":
   version "0.78.100"
   resolved "https://npm-proxy.fury.io/zns5F9Pw8SWSpytqCuxj/centrality/~/d/%40plugnet%2Frpc-provider/%40plugnet%2Frpc-provider-0.78.100#741a0243a6919837f6b8eb8f20bb93f2a04c8b34"
@@ -1370,17 +1355,6 @@
     memoizee "^0.4.14"
     rxjs "6.4.0"
 
-"@plugnet/storage@^0.77.101":
-  version "0.77.101"
-  resolved "https://npm-proxy.fury.io/zns5F9Pw8SWSpytqCuxj/centrality/~/d/%40plugnet%2Fstorage/%40plugnet%2Fstorage-0.77.101#83ac67f44e108de75e5348e8c5eff6183130d834"
-  integrity sha1-g6xn9E4QjedeU0joxe/2GDEw2DQ=
-  dependencies:
-    "@babel/runtime" "^7.4.3"
-    "@plugnet/keyring" "^0.76.2-beta.0"
-    "@plugnet/types" "^0.77.101"
-    "@plugnet/util" "^0.76.2-beta.0"
-    "@plugnet/util-crypto" "^0.76.2-beta.0"
-
 "@plugnet/storage@^0.78.100":
   version "0.78.100"
   resolved "https://npm-proxy.fury.io/zns5F9Pw8SWSpytqCuxj/centrality/~/d/%40plugnet%2Fstorage/%40plugnet%2Fstorage-0.78.100#f873efb88adbec6e1b410d2140c94fde7eb653d2"
@@ -1391,15 +1365,6 @@
     "@plugnet/types" "^0.78.100"
     "@plugnet/util" "^0.90.100"
     "@plugnet/util-crypto" "^0.90.100"
-
-"@plugnet/types@^0.77.101":
-  version "0.77.101"
-  resolved "https://npm-proxy.fury.io/zns5F9Pw8SWSpytqCuxj/centrality/~/d/%40plugnet%2Ftypes/%40plugnet%2Ftypes-0.77.101#c7059b63bfa8e65cd280299f4dac40a01b853fd9"
-  integrity sha1-xwWbY7+o5lzSgCmfTaxAoBuFP9k=
-  dependencies:
-    "@babel/runtime" "^7.4.3"
-    "@plugnet/keyring" "^0.76.2-beta.0"
-    "@plugnet/util" "^0.76.2-beta.0"
 
 "@plugnet/types@^0.78.100":
   version "0.78.100"
