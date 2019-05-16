@@ -1,7 +1,7 @@
 version: '3'
 services:
   node-0:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-6d5e2c4f
     volumes:
       - './target/node_0:/mnt/node'
       - './genesis/:/mnt/genesis:ro'
@@ -10,7 +10,7 @@ services:
     command:
       - --chain=/mnt/genesis/local/local-testnet1.json
       - --base-path=/mnt/node
-      - --key=Andrea
+      - --key=//Andrea
       - --name=‼️${HOSTNAME:-localhost}-0
       - --node-key=0000000000000000000000000000000000000000000000000000000000000001
       - --bootnodes=/dns4/node-1/tcp/30333/p2p/QmXiB3jqqn2rpiKU7k1h7NJYeBg8WNSx9DiTRKz9ti2KSK
@@ -25,7 +25,7 @@ services:
       - '19944:9944'
       - '30334:30333'
   node-1:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-6d5e2c4f
     volumes:
       - './target/node_1:/mnt/node'
       - './genesis/:/mnt/genesis:ro'
@@ -34,7 +34,7 @@ services:
     command:
       - --chain=/mnt/genesis/local/local-testnet1.json
       - --base-path=/mnt/node
-      - --key=Brooke
+      - --key=//Brooke
       - --name=❤️${HOSTNAME:-localhost}-1
       - --node-key=0000000000000000000000000000000000000000000000000000000000000002
       - --validator
@@ -47,7 +47,7 @@ services:
     ports:
       - '30335:30333'
   node-2:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-0c417004
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-6d5e2c4f
     volumes:
       - './target/node_2:/mnt/node'
       - './genesis/:/mnt/genesis:ro'
@@ -56,7 +56,7 @@ services:
     command:
       - --chain=/mnt/genesis/local/local-testnet1.json
       - --base-path=/mnt/node
-      - --key=Courtney
+      - --key=//Courtney
       - --name=☺️${HOSTNAME:-localhost}-2
       - --node-key=0000000000000000000000000000000000000000000000000000000000000003
       - --validator
@@ -76,7 +76,7 @@ services:
       - '5000:5000'
       - '8080:8080'
   dev-ui:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet-ui:1.0.108
+    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet-ui:1.0.127
     entrypoint: 'bash scripts/deploy.sh'
     ports:
       - '3000:3000'
