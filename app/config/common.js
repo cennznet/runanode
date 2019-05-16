@@ -22,9 +22,8 @@ const commonConfig = {
     updateTimeout: 10000,
   },
   jsonRpc: {
-    // localUrl: 'http://localhost:19933',
-    localUrl: 'http://10.9.30.55:19933',
-    remoteUrl: 'http://cennznet-node-0.centrality.cloud:9933',
+    localUrl: 'http://localhost:9933',
+    remoteUrl: 'http://cennznet-node-1.centrality.cloud:9933',
   },
   webSocket: {
     // localUrl: 'http://localhost:19933',
