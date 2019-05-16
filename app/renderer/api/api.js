@@ -6,6 +6,7 @@ import { Api } from '@cennznet/api';
 import uuid from 'uuid/v4';
 import BN from 'bn.js';
 import { u32, Balance, AccountId, ValidatorPrefs } from '@polkadot/types';
+import { naclKeypairFromSeed as naclFromSeed } from '@polkadot/util-crypto';
 import { Keyring } from '@polkadot/keyring';
 import decode from '@polkadot/keyring/pair/decode';
 import addressDecode from '@polkadot/keyring/address/decode';
@@ -605,23 +606,60 @@ export default class CennzApi {
     address: string,
     passphrase: string
   ): Promise<string> => {
-    const originalWallet = this.reloadWallet(wallet);
-    await originalWallet.unlock(passphrase);
-    assert(wallet.accounts, `missing accounts`);
-    assert(address, `missing address`);
-    const json = await originalWallet.exportAccount(address, passphrase);
-    const decodeMsg = decode(passphrase, hexToU8a(json.encoded));
-    const { publicKey, secretKey } = decodeMsg;
-    const SEC_LENGTH = 64;
-    const SEED_LENGTH = 32;
-    const ZERO_STR = '0x00';
-    const seedU8a = secretKey.subarray(0, SEC_LENGTH - SEED_LENGTH);
-    const seed = u8aToHex(seedU8a);
-    assert(publicKey && publicKey.length === 32, 'Expected valid publicKey, 32-bytes');
-    assert(secretKey && secretKey.length === 64, 'Expected valid secretKey, 64-bytes');
-    assert(seed && seed.length > ZERO_STR.length, 'Expected valid seed, 32-bytes');
-    Logger.debug(`api::getSeedFromWalletAccount seed: ${seed.length}`);
-    return seed;
+    try {
+      const originalWallet = this.reloadWallet(wallet);
+      await originalWallet.unlock(passphrase);
+      assert(wallet.accounts, `missing accounts`);
+      assert(address, `missing address`);
+      const json = await originalWallet.exportAccount(address, passphrase);
+      const decodeMsg = decode(passphrase, hexToU8a(json.encoded));
+      let publicKey =null;
+      let  secretKey =null;
+      if (decodeMsg.secretKey.length === 64) {
+        publicKey = decodeMsg.publicKey;
+        secretKey = decodeMsg.secretKey;
+        Logger.debug(`api::getSeedFromWalletAccount decoded length: ${decodeMsg.secretKey.length}`);
+      } else {
+        // default is sr
+        const pair = naclFromSeed(decodeMsg.secretKey);
+
+        publicKey = pair.publicKey;
+        secretKey = pair.secretKey;
+        Logger.debug(`api::getSeedFromWalletAccount ed : ${pair}`);
+      }
+
+      // const { publicKey, secretKey } = decodeMsg;
+      const SEC_LENGTH = 64;
+      const SEED_LENGTH = 32;
+      const ZERO_STR = '0x00';
+      const seedU8a = secretKey.subarray(0, SEC_LENGTH - SEED_LENGTH);
+      const seed = u8aToHex(seedU8a);
+      assert(publicKey && publicKey.length === 32, 'Expected valid publicKey, 32-bytes');
+      assert(secretKey && secretKey.length === 64, 'Expected valid secretKey, 64-bytes');
+      assert(seed && seed.length > ZERO_STR.length, 'Expected valid seed, 32-bytes');
+      Logger.debug(`api::getSeedFromWalletAccount seed: ${seed.length}`);
+      return seed;
+    } catch (error) {
+      Logger.error('api::getSeedFromWalletAccount error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
+  };
+
+  getAddressFromSeed = async (seed, keyType = 'ed25519') => {
+    try {
+      const keyring = new SimpleKeyring();
+      Logger.debug(`api::getAddressFromSeed seed: ${seed}`);
+
+      const seedHex = hexToU8a(seed);
+      const account = await keyring.addFromSeed(seedHex, {}, keyType);
+      const address = account.address()
+      Logger.debug(`api::getAddressFromSeed: ${address}`);
+
+      return address;
+    } catch (error) {
+      Logger.error('api::getAddressFromSeed error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
   };
 
   /**
@@ -786,10 +824,27 @@ export default class CennzApi {
       const ledger = await this.api.query.staking.ledger(controllerAccount);
       Logger.debug(`api::doStake ledger: ${JSON.stringify(ledger)}`);
 
+      //sessionKey account
+      const seed = await this.getSeedFromWalletAccount(wallet, stashAccountAddress, passphrase);
+      Logger.debug(`api::doStake seed: ${seed}`);
+      const sessionKey = await this.getAddressFromSeed(seed);
+      Logger.debug(`api::doStake sessionKey: ${sessionKey}`);
+
+      // const sessionKey = '5Cgbad6GpEbsdb4YPLKgQ12qMW2gCie1FfqR7zBZdhynj257';
+      // set sessionKey
+      const setSessionKeyNonce = Number(String(accountNonce)) + 1;
+      Logger.debug(`api::doStake newNonce: ${setSessionKeyNonce}`);
+
+      const setSessionKeyTx = await this.api.tx.session
+        .setKey(sessionKey)
+        .signAndSend(controllerAccount, { nonce: setSessionKeyNonce });
+      Logger.debug(`api::sessionKey setSessionKey: ${setSessionKeyTx}`);
+
       // validate
       // TODO preferences should pass in as param
       const preferences = stakingPreference;
-      const newNonce = Number(String(accountNonce)) + 1;
+      Logger.debug(`api::sessionKey stakingPreference: ${preferences}`);
+      const newNonce = Number(String(accountNonce)) + 2;
       Logger.debug(`api::doStake newNonce: ${newNonce}`);
       const unsubscribeFn = await this.api.tx.staking
         .validate(preferences)

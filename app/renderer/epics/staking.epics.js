@@ -97,7 +97,9 @@ const sendStakingExtrinsicEpic = action$ =>
         } = pendingToSendStakingExtrinsicAction.payload;
 
         return new Observable(async observer => {
-          const statusCb = ({ events, status, type }) => {
+          const statusCb = (payload) => {
+            const { events, status, type } = payload;
+            console.log('statusCb', payload);
             Logger.debug(`sendStakingExtrinsicEpic status: ${status}`);
             observer.next(type);
             if (status.isFinalized) {
