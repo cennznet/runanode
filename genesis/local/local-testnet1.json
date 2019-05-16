@@ -1,13 +1,13 @@
 {
-  "name": "Kauri CENNZnet",
-  "id": "kauri",
-   "bootNodes": [
+  "name": "Entrenet",
+  "id": "entrenet",
+  "bootNodes": [
     "/ip4/10.9.30.55/tcp/30333/p2p/QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR",
     "/ip4/10.9.30.55/tcp/30334/p2p/QmSVnNf9HwVMT1Y4cK1P6aoJcEZjmoTXpjKBmAABLMnZEk",
     "/ip4/10.9.30.55/tcp/30335/p2p/QmV7EhW6J6KgmNdr558RH1mPx2xGGznW7At4BhXzntRFsi"
   ],
   "telemetryEndpoints": [["ws://10.9.30.55:1024", 0]],
-  "protocolId": "kauri",
+  "protocolId": "entrenet",
   "consensusEngine": null,
   "properties": null,
   "genesis": {
@@ -21,14 +21,7 @@
         "createAssetStake": 1000,
         "stakingAssetId": 16000,
         "spendingAssetId": 16001,
-        "assets": [
-          16000,
-          16001,
-          16002,
-          16003,
-          16004,
-          16005
-        ],
+        "assets": [16000, 16001, 16002, 16003, 16004, 16005],
         "initialBalance": 1000000000000000000000000000,
         "endowedAccounts": [
           "5DqMKyro24J7AWzZRjcb1ovKWynwFDKQAFAorTMY82epJyDT",
@@ -105,8 +98,8 @@
       },
       "staking": {
         "validatorCount": 10,
-        "minimumValidatorCount": 4,
-        "sessionsPerEra": 5,
+        "minimumValidatorCount": 3,
+        "sessionsPerEra": 2,
         "sessionReward": 1000,
         "offlineSlash": 1000000,
         "offlineSlashGrace": 3,
@@ -155,90 +148,30 @@
         "termDuration": 43200,
         "desiredSeats": 11,
         "activeCouncil": [
-          [
-            "5E25sVMBcUnuT9BwNrv5XqZ9a8UEXFLpA43oNWppZxFApjmi",
-            1000000
-          ],
-          [
-            "5GEmNWMa2hEYtABaZuvNSLqfjsCEA1mpZ1AHBpwYTEuJNxUw",
-            1000000
-          ],
-          [
-            "5GjvJYu1WJSWz4MN52wqtBkZmoJpXXcsLk6wypr6LrwfCQxG",
-            1000000
-          ],
-          [
-            "5HGiumVNPXBWB4ikWzwYxQ8miNJUiiHwUqupZQ3T8sYPE21k",
-            1000000
-          ],
-          [
-            "5Cfi3s5oFypVtcSut1SLLyomz86nnZbG3YuR3CL2XwuJKFLw",
-            1000000
-          ],
-          [
-            "5CD9dQpdW7bcJ5DoNbUdKXpz757Nx8Rg4oHwUVhumP8suc4o",
-            1000000
-          ],
-          [
-            "5DAFZeCzLufSjhLTCM9hAEMUgSdnpLpyqiSCjuDPRNtYUZhu",
-            1000000
-          ],
-          [
-            "5DXUeE5N5LtkW97F2PzqYPyqNkxqSWESdGSPTX6AvkUAhwKP",
-            1000000
-          ],
-          [
-            "5FHB614sM9mSXNVd1gW26Y1Dn12Mj3cgXoztxRQSNgJTjmo4",
-            1000000
-          ],
-          [
-            "5HjoZrbs73ZCK4UXXsdzAzgU541jiCuxv7a9W2phoK2HuvuR",
-            1000000
-          ],
-          [
-            "5DPasos1NUvjoztVrtsPTniofqkrKg3AMoB6eC8FR7sDnn67",
-            1000000
-          ],
-          [
-            "5Da1ngY4FJoSZgbWAU3ovBzD4zxhmc7bmzXJBmXmJb5hBL2G",
-            1000000
-          ],
-          [
-            "5FjrK73SxwRVudXymnsyzDqRvEKWowHV1536eaznRXRPUGcB",
-            1000000
-          ],
-          [
-            "5GRCNcFp3fSRq8FjDYrtjUnpqsyWmPfvDnG4RoZ63BzsR7f3",
-            1000000
-          ],
-          [
-            "5GWkDari7QmUMTZ4GhUsPyZwjFqyfqUzf5UeRuddmRsqNMKZ",
-            1000000
-          ],
-          [
-            "5CA3KZnD7ZXavdpobV6YiSLahMth766qStRmAVPHcJhAxhBM",
-            1000000
-          ],
-          [
-            "5Gdq8YbRYLSVa3RaSf5dPQ9VMvFZS7dfKLdFgMsHYudMQqij",
-            1000000
-          ],
-          [
-            "5HgZ5zLV2fbe1RwR5ER5L7WDAJhqoTkhWcEgwFBsvjQSce6c",
-            1000000
-          ]
+          ["5E25sVMBcUnuT9BwNrv5XqZ9a8UEXFLpA43oNWppZxFApjmi", 1000000],
+          ["5GEmNWMa2hEYtABaZuvNSLqfjsCEA1mpZ1AHBpwYTEuJNxUw", 1000000],
+          ["5GjvJYu1WJSWz4MN52wqtBkZmoJpXXcsLk6wypr6LrwfCQxG", 1000000],
+          ["5HGiumVNPXBWB4ikWzwYxQ8miNJUiiHwUqupZQ3T8sYPE21k", 1000000],
+          ["5Cfi3s5oFypVtcSut1SLLyomz86nnZbG3YuR3CL2XwuJKFLw", 1000000],
+          ["5CD9dQpdW7bcJ5DoNbUdKXpz757Nx8Rg4oHwUVhumP8suc4o", 1000000],
+          ["5DAFZeCzLufSjhLTCM9hAEMUgSdnpLpyqiSCjuDPRNtYUZhu", 1000000],
+          ["5DXUeE5N5LtkW97F2PzqYPyqNkxqSWESdGSPTX6AvkUAhwKP", 1000000],
+          ["5FHB614sM9mSXNVd1gW26Y1Dn12Mj3cgXoztxRQSNgJTjmo4", 1000000],
+          ["5HjoZrbs73ZCK4UXXsdzAzgU541jiCuxv7a9W2phoK2HuvuR", 1000000],
+          ["5DPasos1NUvjoztVrtsPTniofqkrKg3AMoB6eC8FR7sDnn67", 1000000],
+          ["5Da1ngY4FJoSZgbWAU3ovBzD4zxhmc7bmzXJBmXmJb5hBL2G", 1000000],
+          ["5FjrK73SxwRVudXymnsyzDqRvEKWowHV1536eaznRXRPUGcB", 1000000],
+          ["5GRCNcFp3fSRq8FjDYrtjUnpqsyWmPfvDnG4RoZ63BzsR7f3", 1000000],
+          ["5GWkDari7QmUMTZ4GhUsPyZwjFqyfqUzf5UeRuddmRsqNMKZ", 1000000],
+          ["5CA3KZnD7ZXavdpobV6YiSLahMth766qStRmAVPHcJhAxhBM", 1000000],
+          ["5Gdq8YbRYLSVa3RaSf5dPQ9VMvFZS7dfKLdFgMsHYudMQqij", 1000000],
+          ["5HgZ5zLV2fbe1RwR5ER5L7WDAJhqoTkhWcEgwFBsvjQSce6c", 1000000]
         ]
       },
       "grandpa": {
         "authorities": [
-          [
-            "5C84Sz6GmdUEqDKRepevi4vTxVRgd3fdy76oeDQQHWmRp7Pr",
-            1
-          ],
-          [
-            "5EcCMNNMzxWhiZNM4CvHYPiVVZN7nUqyonw8J56y1w5zh6HL",
-            1
-          ]
+          ["5C84Sz6GmdUEqDKRepevi4vTxVRgd3fdy76oeDQQHWmRp7Pr", 1],
+          ["5EcCMNNMzxWhiZNM4CvHYPiVVZN7nUqyonw8J56y1w5zh6HL", 1]
         ]
       },
       "treasury": {
