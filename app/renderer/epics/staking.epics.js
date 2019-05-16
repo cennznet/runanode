@@ -97,9 +97,9 @@ const sendStakingExtrinsicEpic = action$ =>
         } = pendingToSendStakingExtrinsicAction.payload;
 
         return new Observable(async observer => {
-          const statusCb = (payload) => {
-            const { events, status, type } = payload;
-            console.log('statusCb', payload);
+          const statusCb = payload => {
+            const { events, status } = payload;
+            const { type } = status;
             Logger.debug(`sendStakingExtrinsicEpic status: ${status}`);
             observer.next(type);
             if (status.isFinalized) {
@@ -123,7 +123,7 @@ const sendStakingExtrinsicEpic = action$ =>
         }).pipe(
           map(type => {
             Logger.debug(`sendStakingExtrinsicEpic, type: ${type}`);
-            if (status.isFinalized) {
+            if (type === 'Finalized') {
               return {
                 type: types.stakingExtrinsicCompleted.triggered,
                 payload: {
@@ -227,7 +227,8 @@ const unStakeEpic = action$ =>
       Logger.debug(`unStakeEpic payload: ${JSON.stringify(payload)}`);
       const { wallet, stashAccountAddress, passphrase } = payload;
       return new Observable(async observer => {
-        const statusCb = ({ events, status, type }) => {
+        const statusCb = ({ events, status }) => {
+          const { type } = status;
           Logger.debug(`unStakeEpic events: ${events}, status: ${status}, type: ${type}`);
           observer.next(type);
           if (status.isFinalized) {
@@ -250,7 +251,7 @@ const unStakeEpic = action$ =>
       }).pipe(
         map(type => {
           Logger.debug(`unStakeEpic pipe, type: ${type}`);
-          if (status.isFinalized) {
+          if (type === 'Finalized') {
             return {
               type: types.unStakeExtrinsicCompleted.triggered,
               payload: {

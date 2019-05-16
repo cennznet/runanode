@@ -33,6 +33,9 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
       const callbackFn = value => {
         if (value) {
           let sortedValue;
+          if (Array.isArray(value) && value[0].constructor === Array) {
+            sortedValue = value[0].map(item => item.toString(10));
+          }
           if (Array.isArray(value)) {
             sortedValue = value.map(item => item.toString(10));
           }
