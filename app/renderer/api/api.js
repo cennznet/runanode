@@ -613,8 +613,8 @@ export default class CennzApi {
       assert(address, `missing address`);
       const json = await originalWallet.exportAccount(address, passphrase);
       const decodeMsg = decode(passphrase, hexToU8a(json.encoded));
-      let publicKey =null;
-      let  secretKey =null;
+      let publicKey = null;
+      let secretKey = null;
       if (decodeMsg.secretKey.length === 64) {
         publicKey = decodeMsg.publicKey;
         secretKey = decodeMsg.secretKey;
@@ -652,7 +652,7 @@ export default class CennzApi {
 
       const seedHex = hexToU8a(seed);
       const account = await keyring.addFromSeed(seedHex, {}, keyType);
-      const address = account.address()
+      const address = account.address();
       Logger.debug(`api::getAddressFromSeed: ${address}`);
 
       return address;
@@ -824,7 +824,7 @@ export default class CennzApi {
       const ledger = await this.api.query.staking.ledger(controllerAccount);
       Logger.debug(`api::doStake ledger: ${JSON.stringify(ledger)}`);
 
-      //sessionKey account
+      // sessionKey account
       const seed = await this.getSeedFromWalletAccount(wallet, stashAccountAddress, passphrase);
       Logger.debug(`api::doStake seed: ${seed}`);
       const sessionKey = await this.getAddressFromSeed(seed);
@@ -1078,14 +1078,15 @@ export default class CennzApi {
    * @returns {Promise<AccountIdList>}
    */
   getIntentions = async (callbackFn: Function): Promise<AccountIdList> => {
-    return [];
     // try {
-    //   const intentions = await this.api.query.staking.intentions(callbackFn);
+    //   const intentions = await this.api.query.staking.validators(callbackFn);
+    //   Logger.error('api::getIntentions intentions: ', intentions);
     //   return intentions;
     // } catch (error) {
     //   Logger.error('api::getIntentions error: ' + stringifyError(error));
     //   throw new GenericApiError();
     // }
+    return [];
   };
 
   /**
