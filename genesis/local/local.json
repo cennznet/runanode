@@ -1,5 +1,5 @@
 {
-  "name": "Local",
+  "name": "Local-testnet",
   "id": "local",
   "bootNodes": [
     "/ip4/127.0.0.1/tcp/30333/p2p/QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR",

@@ -8,10 +8,11 @@ services:
     depends_on:
       - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/local-testnet1.json
+      - --chain=/mnt/genesis/local/intra-testnet.json
+      # - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
       - --key=//Andrea
-      - --name=‼️${HOSTNAME:-localhost}-0
+      - --name=${HOSTNAME:-validator}-0
       - --node-key=0000000000000000000000000000000000000000000000000000000000000001
       - --bootnodes=/dns4/node-1/tcp/30333/p2p/QmXiB3jqqn2rpiKU7k1h7NJYeBg8WNSx9DiTRKz9ti2KSK
       - --bootnodes=/dns4/node-2/tcp/30333/p2p/QmYcHeEWuqtr6Gb5EbK7zEhnaCm5p6vA2kWcVjFKbhApaC
@@ -32,10 +33,11 @@ services:
     depends_on:
       - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/local-testnet1.json
+      - --chain=/mnt/genesis/local/intra-testnet.json
+      # - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
       - --key=//Brooke
-      - --name=❤️${HOSTNAME:-localhost}-1
+      - --name=${HOSTNAME:-validator}-1
       - --node-key=0000000000000000000000000000000000000000000000000000000000000002
       - --validator
       - --bootnodes=/dns4/node-0/tcp/30333/p2p/QmQZ8TjTqeDj3ciwr93EJ95hxfDsb9pEYDizUAbWpigtQN
@@ -54,10 +56,11 @@ services:
     depends_on:
       - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/local-testnet1.json
+      - --chain=/mnt/genesis/local/intra-testnet.json
+      # - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
       - --key=//Courtney
-      - --name=☺️${HOSTNAME:-localhost}-2
+      - --name=${HOSTNAME:-validator}-2
       - --node-key=0000000000000000000000000000000000000000000000000000000000000003
       - --validator
       - --bootnodes=/dns4/node-0/tcp/30333/p2p/QmQZ8TjTqeDj3ciwr93EJ95hxfDsb9pEYDizUAbWpigtQN
