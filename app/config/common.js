@@ -9,8 +9,10 @@ const commonConfig = {
     apiInitDebounceTime: 10000, // after clean local chain data, api init need more than 6s
     defaultDebounceTime: 500,
     sentryDSN: 'https://0c4aa4aa53f1494e87d532890cb59529@sentry.io/1436322',
-    networkOptions: [NetworkNameMapping.CENNZNET_RIMU, NetworkNameMapping.Development],
-    developmentGenesisFile: './genesis/local/local.json',
+    networkOptions: [NetworkNameMapping.Development, NetworkNameMapping.CENNZNET_RIMU],
+    // networkOptions: [NetworkNameMapping.CENNZNET_RIMU, NetworkNameMapping.Development], // networkOptions[0] is the default network to be joined in, in this case, Rimu is by default to be connected.
+    // developmentGenesisFile: './genesis/local/local.json',
+    developmentGenesisFile: './genesis/local/intra-testnet.json',
   },
   node: {
     startupMaxRetry: 5,
@@ -20,17 +22,19 @@ const commonConfig = {
     updateTimeout: 10000,
   },
   jsonRpc: {
-    localUrl: 'http://localhost:9933',
+    // localUrl: 'http://localhost:19933',
+    localUrl: 'http://10.9.30.55:19933',
     remoteUrl: 'http://cennznet-node-0.centrality.cloud:9933',
   },
   webSocket: {
-    localStreamUrl: 'ws://localhost:9944',
+    // localUrl: 'http://localhost:19933',
+    localStreamUrl: 'ws://10.9.30.55:19944',
     remoteStreamUrl: 'wss://cennznet-node-0.centrality.cloud:9944',
     remoteStreamUrlMap: {
       rimu: 'wss://cennznet-node-0.centrality.cloud:9944',
       kauri: 'wss://cennznet-node-1.centrality.me:9944',
       // development: 'ws://localhost:19944',
-      development: 'ws://10.9.30.55:19944', // for other local test net
+      development: 'ws://10.9.30.55:19944', // for intra-testnet
     },
     latency: {
       period:
