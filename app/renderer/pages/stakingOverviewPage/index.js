@@ -29,6 +29,7 @@ const NextUpHintText = styled.div`
   height: 1.2rem;
   line-height: 1.2rem;
   margin-left: 0.5rem;
+  padding-left: 0.5rem;
 `;
 
 const ListsWrapper = styled.div`
