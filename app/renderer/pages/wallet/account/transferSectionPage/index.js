@@ -57,7 +57,7 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
   return (
     <React.Fragment>
       <Formik
-        validationSchema={ValidateSchema}
+        // validationSchema={ValidateSchema}
         initialValues={{
           assetId: {
             label: PreDefinedAssetIdName[PreDefinedAssetId.stakingToken],
