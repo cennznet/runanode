@@ -216,6 +216,7 @@ const StakingStakePage = ({
   stakingStashAccountAddress,
   wallets,
   onSyncWalletData,
+  wsLocalStatus,
 }) => {
   if (!stakingStashAccountAddress) {
     return (

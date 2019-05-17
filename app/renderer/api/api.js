@@ -1077,16 +1077,16 @@ export default class CennzApi {
    * All the accounts with a desire to stake.
    * @returns {Promise<AccountIdList>}
    */
+
   getIntentions = async (callbackFn: Function): Promise<AccountIdList> => {
-    // try {
-    //   const intentions = await this.api.query.staking.validators(callbackFn);
-    //   Logger.error('api::getIntentions intentions: ', intentions);
-    //   return intentions;
-    // } catch (error) {
-    //   Logger.error('api::getIntentions error: ' + stringifyError(error));
-    //   throw new GenericApiError();
-    // }
-    return [];
+    try {
+      const intentions = await this.api.query.staking.validators(callbackFn);
+      Logger.debug('api::getIntentions intentions: ', intentions);
+      return intentions;
+    } catch (error) {
+      Logger.error('api::getIntentions error: ' + stringifyError(error));
+      throw new GenericApiError();
+    }
   };
 
   /**
