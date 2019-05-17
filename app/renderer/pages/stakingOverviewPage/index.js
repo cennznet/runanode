@@ -45,14 +45,35 @@ const reoderList = (arryList, fromIndex, toIndex = 0) => {
   return [];
 };
 
-const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAddress }) => {
+const sortedListWithBalances = (accountList, premierAccount, setValueFn) => {
+  if (accountList) {
+    const index = accountList.indexOf(premierAccount);
+    const reoderAccountList = index === -1 ? accountList : reoderList(accountList, index);
+    Promise.all(
+      reoderAccountList.map(async account => {
+        const cennzBalance = await window.appApi.getGenericAssetFreeBalance(
+          PreDefinedAssetId.stakingToken,
+          account
+        );
+        return cennzBalance && { address: account, cennzBalance: cennzBalance.toString(10) };
+      })
+    ).then(result => setValueFn(result));
+  }
+};
+
+const StakingOverviewPage = ({
+  subNav,
+  onClickStakeButton,
+  stakingStashAccountAddress,
+  wsLocalStatus,
+}) => {
   const [eraProgress, eraLength, sessionProgress, sessionLength, validators, intentions] = useApis(
     'getEraProgress',
     'getEraLength',
     'getSessionProgress',
     'getSessionLength',
     'getValidators',
-    'getValidators' // TODO: Confirm whether intentions concept still exist
+    'getIntentions'
   );
 
   /**
@@ -62,35 +83,16 @@ const StakingOverviewPage = ({ subNav, onClickStakeButton, stakingStashAccountAd
    */
 
   const [intentionsWithBalances, setIntentionsWithBalances] = useState(null);
+  const [validatorsWithBalances, setValidatorsWithBalances] = useState(null);
+
   useEffect(() => {
-    if (intentions) {
-      const index = intentions.indexOf(stakingStashAccountAddress);
-      const reoderIntentions = index === -1 ? intentions : reoderList(intentions, index);
+    sortedListWithBalances(intentions, stakingStashAccountAddress, setIntentionsWithBalances);
+    sortedListWithBalances(validators, stakingStashAccountAddress, setValidatorsWithBalances);
+  }, [validators, intentions]);
 
-      Promise.all(
-        reoderIntentions.map(async intention => {
-          const cennzBalance = await window.appApi.getGenericAssetFreeBalance(
-            PreDefinedAssetId.stakingToken,
-            intention
-          );
-          return cennzBalance && { address: intention, cennzBalance: cennzBalance.toString(10) };
-        })
-      ).then(result => setIntentionsWithBalances(result));
-    }
-  }, [intentions]);
+  const sortedValidators = validatorsWithBalances || [];
 
-  const sortedValidators =
-    intentionsWithBalances && validators
-      ? intentionsWithBalances.filter(intentionWithBalance =>
-          validators.includes(intentionWithBalance.address)
-        )
-      : [];
-
-  const sortedWaitingList = intentionsWithBalances
-    ? intentionsWithBalances.filter(
-        intentionWithBalance => !sortedValidators.includes(intentionWithBalance)
-      )
-    : [];
+  const sortedWaitingList = intentionsWithBalances || [];
 
   const toShowNextUpHintText =
     sortedWaitingList.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
