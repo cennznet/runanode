@@ -53,17 +53,6 @@ const AddAccountModal = ({
 
   const fieldName = 'newAccountName';
   const onAddAccountClick = async newAccountName => {
-    // console.log('onAddAccountClick',toUpdateWallet);
-    // const seed = await window.appApi.getSeedFromWalletAccount(toUpdateWallet, '5HgZytnwHUJEUQXpa91LYcG5Ndm3EX7AegtUSz6ZqfzCpMTQ','');
-    // console.log('getSeedFromWalletAccount', seed);
-
-    // const edAddress = await window.appApi.getAddressFromSeed(seed);
-    // console.log('edAddress ', edAddress);
-    // onTestUnstake({
-    //   wallet: toUpdateWallet,
-    //   stashAccountAddress: '5ExuAc1raff659RPxAG6v8jbjWhJtqFnvUmab6YNvCMiTLLE',
-    //   passphrase: '',
-    // });
     onConfirmAddAccount({ newAccountName, toUpdateWallet });
     setAddAccountModalOpen(false);
   };
