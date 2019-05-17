@@ -304,7 +304,8 @@ const sendUnStakeTxCompletedEpic = action$ =>
               },
             },
             { type: types.navigation.triggered, payload: ROUTES.STAKING.OVERVIEW },
-            { type: types.resetAppUiState.triggered }
+            { type: types.resetAppUiState.triggered },
+            { type: types.sendNodeStatusToIpcMain.requested, payload: { isNodeInStaking: false } }
           )
         )
       );
