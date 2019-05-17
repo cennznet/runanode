@@ -39,10 +39,20 @@ const subscribeNodeStatusEpic = () =>
         );
       }
 
-      return {
+      return of({
         type: types.cenznetStatusChange.triggered,
         payload: status,
-      };
+      }).pipe(
+        concat(
+          of({
+            type: types.toggleGlobalModal.triggered,
+            payload: {
+              isOpen: false,
+              type: 'EXIT_APP_WHILE_STAKING_MODAL',
+            },
+          })
+        )
+      );
     })
   );
 
