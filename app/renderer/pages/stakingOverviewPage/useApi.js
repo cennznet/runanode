@@ -18,6 +18,7 @@ import { Logger } from 'renderer/utils/logging';
  * didCancel variables
  * https://github.com/facebook/react/issues/14369
  */
+
 const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
   const [sectionData, setSectionData] = useState(null);
 
@@ -34,7 +35,11 @@ const useApi = (apiSection, { noSubscription, params = [] } = {}) => {
         if (value) {
           let sortedValue;
           if (Array.isArray(value)) {
-            sortedValue = value.map(item => item.toString(10));
+            if (Array.isArray(value[0])) {
+              sortedValue = value[0] ? value[0].map(item => item.toString(10)) : [];
+            } else {
+              sortedValue = value ? value.map(item => item.toString(10)) : [];
+            }
           }
           if (value instanceof ValidatorPrefs) {
             sortedValue = value;
