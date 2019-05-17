@@ -4,17 +4,17 @@
 
 ### Features
 
-- Able to auto upgrade or manual check for upgrade
-- make rUN works with local test net by default
-
 ### Fixes
-- Fix mac icon issue
 
 ### Improvements
-- Better error handling using ErrorBoundary, allow user self recover from error state
-- Code rebranding, replace `Odin` in code
-- Add sentry integration
-- Customized sentry feedback form
+
+
+# v0.11.0 (2019.05.17)
+
+### Features
+
+- Upgrade towards Cennznet-node 0.9.20
+
 
 # v0.9.2 (2019.04.09)
 
