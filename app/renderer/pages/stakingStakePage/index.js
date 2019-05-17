@@ -11,7 +11,15 @@ import Stake from './Stake';
 import SavePreferenceSection from './SavePreferenceSection';
 import ChangeStakingPreferenceModal from './ChangeStakingPreferenceModal';
 
-const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balances, onStake, onSaveStakingPreferences }) => {
+const StakingStakePage = ({
+  subNav,
+  uiState,
+  wallets,
+  stakingPreference,
+  balances,
+  onStake,
+  onSaveStakingPreferences,
+}) => {
   const validatorPreferences = stakingPreference;
   const [stakingOption, setStakingOption] = useState(null);
   const [cennzStakingBalance, setCennzStakingBalance] = useState(null);
@@ -24,19 +32,22 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
 
   useEffect(() => {
     if (stakingOption) {
-      const {
-        value: stakingAccountAddress,
-        wallet,
-      } = stakingOption;
+      const { value: stakingAccountAddress, wallet } = stakingOption;
       const { accounts } = wallet;
 
       const stakingAccountObject = accounts[stakingAccountAddress];
       const { assets } = stakingAccountObject;
-      const cennzStakingBalanceFromChain = balances[stakingAccountAddress] && balances[stakingAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString || 0;
-      const cpayStakingBalanceFromChain = balances[stakingAccountAddress] && balances[stakingAccountAddress][PreDefinedAssetId.spendingToken].freeBalance.toString || 0;
+      const cennzStakingBalanceFromChain =
+        (balances[stakingAccountAddress] &&
+          balances[stakingAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString) ||
+        0;
+      const cpayStakingBalanceFromChain =
+        (balances[stakingAccountAddress] &&
+          balances[stakingAccountAddress][PreDefinedAssetId.spendingToken].freeBalance.toString) ||
+        0;
       // TODO: estimation code is not ready yet, would hard code first.
       // TODO: make the consistent compare unit
-      const sortedGasFee = 0;
+      const sortedGasFee = 27000000;
 
       const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
       const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
@@ -74,8 +85,8 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
         <PageHeading>Start to stake</PageHeading>
-        <Scrollable themeStyle={{height: '70vh'}}>
-          <div className="content" style={{height: '70vh'}}>
+        <Scrollable themeStyle={{ height: '70vh' }}>
+          <div className="content" style={{ height: '70vh' }}>
             <SelectStakingAccount
               wallets={wallets || []}
               onSelectFn={setStakingOption}
@@ -91,7 +102,9 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
             )}
 
             {stakingOption && (
-            <SavePreferenceSection {...{ validatorPreferences, setChangeStakingPreferenceModalOpen }} />
+              <SavePreferenceSection
+                {...{ validatorPreferences, setChangeStakingPreferenceModalOpen }}
+              />
             )}
           </div>
         </Scrollable>
@@ -110,14 +123,16 @@ const StakingStakePage = ({ subNav, uiState, wallets, stakingPreference, balance
         </PageFooter>
       </MainContent>
 
-      <ChangeStakingPreferenceModal {...{
-        isChangeStakingPreferenceModalOpen,
-        setChangeStakingPreferenceModalOpen,
-        stakingWallet,
-        stakingAccount,
-        onSaveStakingPreferences,
-        validatorPreferences,
-      }} />
+      <ChangeStakingPreferenceModal
+        {...{
+          isChangeStakingPreferenceModalOpen,
+          setChangeStakingPreferenceModalOpen,
+          stakingWallet,
+          stakingAccount,
+          onSaveStakingPreferences,
+          validatorPreferences,
+        }}
+      />
     </MainLayout>
   );
 };
