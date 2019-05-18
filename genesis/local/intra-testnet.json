@@ -1,6 +1,6 @@
 {
-  "name": "Intra-testnet",
-  "id": "intranet",
+  "name": "Development-intra-testnet",
+  "id": "development-intranet",
   "bootNodes": [
     "/ip4/10.9.30.55/tcp/30333/p2p/QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR",
     "/ip4/10.9.30.55/tcp/30334/p2p/QmSVnNf9HwVMT1Y4cK1P6aoJcEZjmoTXpjKBmAABLMnZEk",
