@@ -11,6 +11,7 @@ services:
       - --chain=/mnt/genesis/local/intra-testnet.json
       # - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
+      - --node-key-type=secp256k1
       - --key=//Andrea
       - --name=${HOSTNAME:-validator}-0
       - --node-key=0000000000000000000000000000000000000000000000000000000000000001
@@ -36,6 +37,7 @@ services:
       - --chain=/mnt/genesis/local/intra-testnet.json
       # - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
+      - --node-key-type=secp256k1
       - --key=//Brooke
       - --name=${HOSTNAME:-validator}-1
       - --node-key=0000000000000000000000000000000000000000000000000000000000000002
@@ -59,6 +61,7 @@ services:
       - --chain=/mnt/genesis/local/intra-testnet.json
       # - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
+      - --node-key-type=secp256k1
       - --key=//Courtney
       - --name=${HOSTNAME:-validator}-2
       - --node-key=0000000000000000000000000000000000000000000000000000000000000003
