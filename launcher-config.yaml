@@ -4,7 +4,7 @@ nodeArgs:
   #  - --validator
   #  - --key=0x0b5660f358b4c54b42ab766d51bafa76d54886e92cbd7773057448dd79f2d91d
   #  - -ldebug
-  - -l sync=trace
+  - -l afg=trace
   # - --node-key-type secp256k1
   - --pruning=archive
 #  - --name
