@@ -117,17 +117,17 @@ const AccountDetails = ({
 
   const DEFAULT_TAB = 'portfolio';
   const [tabKey, setTabKey] = useState(DEFAULT_TAB);
-  const prevAccountRef = useRef();
+  const previousAccountRef = useRef();
 
   useEffect(() => {
     setAccountName(defaultAccountName);
-    prevAccountRef.current = currentAccountId;
+    previousAccountRef.current = currentAccountId;
   }, [defaultAccountName, account]);
 
-  const preAccountId = prevAccountRef.current;
+  const previousAccountId = previousAccountRef.current;
 
   useEffect(() => {
-    const sortedIndex = preAccountId === currentAccountId ? tabKey : DEFAULT_TAB;
+    const sortedIndex = previousAccountId === currentAccountId ? tabKey : DEFAULT_TAB;
     setTabKey(sortedIndex);
   }, [tabKey, currentAccountId]);
 
