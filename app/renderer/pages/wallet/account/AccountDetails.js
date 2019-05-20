@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { CENNZScanAddressUrl } from 'common/types/cennznet-node.types';
@@ -115,9 +115,21 @@ const AccountDetails = ({
   const [accountName, setAccountName] = useState();
   const [isAccountNameEditable, setIsAccountNameEditable] = useState(false);
 
+  const DEFAULT_TAB = 'portfolio';
+  const [tabKey, setTabKey] = useState(DEFAULT_TAB);
+  const prevAccountRef = useRef();
+
   useEffect(() => {
     setAccountName(defaultAccountName);
-  }, [defaultAccountName]);
+    prevAccountRef.current = currentAccountId;
+  }, [defaultAccountName, account]);
+
+  const preAccountId = prevAccountRef.current;
+
+  useEffect(() => {
+    const sortedIndex = preAccountId === currentAccountId ? tabKey : DEFAULT_TAB;
+    setTabKey(sortedIndex);
+  }, [tabKey, currentAccountId]);
 
   // TODO: Refactor the accounts object in localStorage
   const { accounts = {} } = currentWallet;
@@ -185,14 +197,14 @@ const AccountDetails = ({
         </MainTitleWrapper>
       </PageHeading>
       <div className="content">
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Portfolio" key="1" withScrollable>
+        <Tabs defaultActiveKey={DEFAULT_TAB} activeKey={tabKey} onChange={key => setTabKey(key)}>
+          <TabPane tab="Portfolio" key="portfolio" withScrollable>
             <PortfolioSection {...{ accountBalances }} />
           </TabPane>
-          <TabPane tab="Deposit" key="2" withScrollable>
+          <TabPane tab="Deposit" key="deposit" withScrollable>
             <ReceiveSection {...{ account }} />
           </TabPane>
-          <TabPane tab="Send" key="3">
+          <TabPane tab="Send" key="send">
             <TransferSection {...{ account, onTransfer, currentWallet, transaction }} />
           </TabPane>
         </Tabs>
