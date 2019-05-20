@@ -8,8 +8,8 @@ services:
     depends_on:
       - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/intra-testnet.json
-      # - --chain=/mnt/genesis/local/local.json
+      # - --chain=/mnt/genesis/local/intra-testnet.json
+      - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
       - --node-key-type=secp256k1
       - --key=//Andrea
@@ -34,8 +34,8 @@ services:
     depends_on:
       - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/intra-testnet.json
-      # - --chain=/mnt/genesis/local/local.json
+      # - --chain=/mnt/genesis/local/intra-testnet.json
+      - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
       - --node-key-type=secp256k1
       - --key=//Brooke
@@ -58,8 +58,8 @@ services:
     depends_on:
       - 'telemetry'
     command:
-      - --chain=/mnt/genesis/local/intra-testnet.json
-      # - --chain=/mnt/genesis/local/local.json
+      # - --chain=/mnt/genesis/local/intra-testnet.json
+      - --chain=/mnt/genesis/local/local.json
       - --base-path=/mnt/node
       - --node-key-type=secp256k1
       - --key=//Courtney
