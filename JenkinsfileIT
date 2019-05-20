@@ -15,7 +15,7 @@ pipeline {
     NAMESPACE = 'cennz-node-ui'
     SSH_RSA_FILE_PATH = credentials('jenkins-ssh-key')
     GEMFURY_TOKEN = credentials('GEMFURY_TOKEN')
-    GEMFURY_URL = credentials('GEMFURY_MIRROR_URL')
+    GEMFURY_URL = credentials('GEMFURY_EXTERNAL_URL')
   }
 
   stages {
