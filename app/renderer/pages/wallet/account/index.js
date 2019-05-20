@@ -30,6 +30,7 @@ const WalletDetailsPage = ({
     >
       <MainContent display="flex">
         <AccountDetails
+          key={wallet.accounts[accountPublicAddress]}
           account={wallet.accounts[accountPublicAddress]}
           accountBalances={balances[accountPublicAddress]}
           onTransfer={onTransfer}
