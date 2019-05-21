@@ -1,3 +1,7 @@
+/** This file is part of daedalus which is released under MIT.
+ * Go to https://github.com/input-output-hk/daedalus/blob/develop/LICENSE for full license details.
+ */
+
 // @flow
 import { createWriteStream, readFileSync } from 'fs';
 import { spawn, exec } from 'child_process';

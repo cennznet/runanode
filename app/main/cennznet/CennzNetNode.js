@@ -1,4 +1,8 @@
-// @flow
+/** This file is part of daedalus which is released under MIT.
+ * Go to https://github.com/input-output-hk/daedalus/blob/develop/LICENSE for full license details.
+ */
+
+ // @flow
 import Store from 'electron-store';
 import type { ChildProcess, spawn, exec } from 'child_process';
 import type { WriteStream } from 'fs';
@@ -249,7 +253,7 @@ export class CennzNetNode {
     // check chain file exists, if not change node state to crash, then we can let user select network again
     const chainSpecFile = this._getArgs(newNodeArgs, '--chain');
     _log.info(`chainSpecFile: ${chainSpecFile}`);
-    if(chainSpecFile.endsWith('json') && !fs.existsSync(chainSpecFile)) {
+    if (chainSpecFile.endsWith('json') && !fs.existsSync(chainSpecFile)) {
       _log.info(`chainSpecFile not exists.`);
       // TODO UI not fully initialize, not able to receive CRASHED state
       this._changeToState(CennzNetNodeStates.CRASHED);
