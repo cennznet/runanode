@@ -9,6 +9,14 @@
 ### Improvements
 
 
+# v0.11.1 (2019.05.17)
+
+### Fixes
+
+- UI issues in staking validator list;
+- File path issue in genesis file selection;
+
+
 # v0.11.0 (2019.05.17)
 
 ### Features
