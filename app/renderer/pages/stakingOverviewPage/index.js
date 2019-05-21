@@ -83,20 +83,24 @@ const StakingOverviewPage = ({
    *
    */
 
-  const [intentionsWithBalances, setIntentionsWithBalances] = useState(null);
-  const [validatorsWithBalances, setValidatorsWithBalances] = useState(null);
+  const [intentionsWithBalances, setIntentionsWithBalances] = useState([]);
+  const [validatorsWithBalances, setValidatorsWithBalances] = useState([]);
 
   useEffect(() => {
-    sortedListWithBalances(intentions, stakingStashAccountAddress, setIntentionsWithBalances);
+    const sortedIntentions =
+      intentions &&
+      intentions.filter(accountId => !validators.find(validatorId => validatorId === accountId));
+
+    sortedListWithBalances(sortedIntentions, stakingStashAccountAddress, setIntentionsWithBalances);
     sortedListWithBalances(validators, stakingStashAccountAddress, setValidatorsWithBalances);
   }, [validators, intentions]);
 
-  const sortedValidators = validatorsWithBalances || [];
+  // const sortedValidatorsList = validatorsWithBalances || [];
 
-  const sortedWaitingList = intentionsWithBalances || [];
+  // const sortedWaitingList = intentionsWithBalances || [];
 
   const toShowNextUpHintText =
-    sortedWaitingList.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
+    intentionsWithBalances.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
       .length > 0;
 
   return (
@@ -127,11 +131,11 @@ const StakingOverviewPage = ({
         />
         <ListsWrapper>
           <ValidatorsList
-            validators={sortedValidators}
+            validators={validatorsWithBalances}
             stakingStashAccountAddress={stakingStashAccountAddress}
           />
           <WaitingList
-            waitingList={sortedWaitingList}
+            waitingList={intentionsWithBalances}
             stakingStashAccountAddress={stakingStashAccountAddress}
           />
         </ListsWrapper>
