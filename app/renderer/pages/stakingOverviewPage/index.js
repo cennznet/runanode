@@ -88,16 +88,13 @@ const StakingOverviewPage = ({
 
   useEffect(() => {
     const sortedIntentions =
-      intentions &&
-      intentions.filter(accountId => !validators.find(validatorId => validatorId === accountId));
+      intentions && validators
+        ? intentions.filter(accountId => !validators.find(validatorId => validatorId === accountId))
+        : [];
 
     sortedListWithBalances(sortedIntentions, stakingStashAccountAddress, setIntentionsWithBalances);
     sortedListWithBalances(validators, stakingStashAccountAddress, setValidatorsWithBalances);
   }, [validators, intentions]);
-
-  // const sortedValidatorsList = validatorsWithBalances || [];
-
-  // const sortedWaitingList = intentionsWithBalances || [];
 
   const toShowNextUpHintText =
     intentionsWithBalances.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
