@@ -6,7 +6,7 @@ import BN from 'bn.js';
 
 import { colors } from 'theme';
 import { environment } from 'common/environment';
-import { chainNameMapping, NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { chainNameMapping, NetworkNameMapping } from 'common/types/theNode.types';
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SideNav from 'components/layout/SideNav';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130

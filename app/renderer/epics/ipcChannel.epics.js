@@ -2,13 +2,13 @@ import { Observable } from 'rxjs/Observable';
 import { map, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
-import { cennznetStateChangeChannel, cennznetStatusChannel } from 'renderer/ipc/cennznet.ipc';
+import { theNodeStateChangeChannel, theNodeStatusChannel } from 'renderer/ipc/theNode.ipc';
 import { Logger } from 'renderer/utils/logging';
 
 const nodeStateChannelEpic = () =>
   new Observable(observer => {
-    cennznetStateChangeChannel.onReceive(state => {
-      Logger.debug(`cennznetStateChangeChannel.onReceive: ${state}`);
+    theNodeStateChangeChannel.onReceive(state => {
+      Logger.debug(`theNodeStateChangeChannel.onReceive: ${state}`);
       observer.next(state);
     });
   }).pipe(
@@ -24,7 +24,7 @@ const sendNodeStatusToIpcMainEpic = action$ => {
   return action$.pipe(
     ofType(types.sendNodeStatusToIpcMain.requested),
     mergeMap(async ({ payload }) => {
-      const request = await cennznetStatusChannel.send(payload);
+      const request = await theNodeStatusChannel.send(payload);
 
       return { type: types.sendNodeStatusToIpcMain.completed };
     })

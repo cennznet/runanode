@@ -23,11 +23,10 @@ export const GetLogDir = () => {
     : log.transports.file.findLogPath().replace('log.log', '');
 };
 
-export const GetCennzNodeLogFileName = () => {
+export const GetTheNodeLogFileName = () => {
   return 'cennznet-node.log';
 };
 
-export const GetCennzNodeLogFullPath = () => {
-  return GetLogDir() + '/cennznet-node.log';
-};
-
+// export const GetTheNodeLogFullPath = () => {
+//   return GetLogDir() + '/cennznet-node.log';
+// };

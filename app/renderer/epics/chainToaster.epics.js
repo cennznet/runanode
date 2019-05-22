@@ -3,7 +3,7 @@ import { ofType } from 'redux-observable';
 import { Wallet } from '@cennznet/wallet';
 import { mergeMap } from 'rxjs/operators';
 
-import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
+import { TheNodeStates } from 'common/types/theNode.types';
 import { environment } from 'common/environment';
 import types from '../types';
 import chainEpics from './chainEpics';
@@ -11,13 +11,13 @@ import chainEpics from './chainEpics';
 const { isDev } = environment;
 
 const getTosterType = state => {
-  if (state === CennzNetNodeStates.RUNNING) {
+  if (state === TheNodeStates.RUNNING) {
     return types.successToaster.triggered;
   }
   if (
-    state === CennzNetNodeStates.CRASHED ||
-    state === CennzNetNodeStates.ERRORED ||
-    state === CennzNetNodeStates.UNRECOVERABLE
+    state === TheNodeStates.CRASHED ||
+    state === TheNodeStates.ERRORED ||
+    state === TheNodeStates.UNRECOVERABLE
   ) {
     return types.errorToaster.triggered;
   }

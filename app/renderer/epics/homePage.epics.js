@@ -4,7 +4,7 @@ import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys, getStorage } from 'renderer/api/utils/storage';
-import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping } from 'common/types/theNode.types';
 import { Logger } from 'renderer/utils/logging';
 import { Observable } from 'rxjs/Observable';
 

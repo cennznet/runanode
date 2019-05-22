@@ -86,7 +86,7 @@ const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customS
       <Icon
         {...iconExtLink}
         onClick={openExternalLink}
-        onMouseEnter={() => setMessage('Check on CENNZScan')}
+        onMouseEnter={() => setMessage('Check on theScan')}
         data-for={id}
         data-tip
         style={{ marginLeft: styles.icon2MarginLeft }}

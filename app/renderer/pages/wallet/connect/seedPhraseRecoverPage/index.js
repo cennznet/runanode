@@ -87,7 +87,7 @@ const seedPhraseRecoverPage = ({
               <div>HD Wallet</div>
               <ReocveryOptionExplain>
                 You can generate multiple public address in HD wallet. Choose this one if you
-                created it on CENNZNode
+                created it on the node
               </ReocveryOptionExplain>
             </Radio>
             <Radio
