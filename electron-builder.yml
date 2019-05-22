@@ -15,15 +15,6 @@ files:
   - 'app/main.prod.js.map'
   - 'package.json'
 
-#extraResources:
-#  - from: 'app/common/assets/pdf'
-#    to: 'app/common/assets/pdf'
-#    filter: ['**/*']
-#  - from: 'dist/cennznet-node-${os}'
-#    to: 'cennznet-node'
-#  - from: 'dist/launcher-config-${os}.yaml'
-#    to: 'launcher-config.yaml'
-
 extraFiles:
   - from: 'app/common/assets/pdf'
     to: 'dist/assets'

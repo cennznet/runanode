@@ -12,7 +12,7 @@
 
 ### Improvements
 
-- Update SDK and replace polkadotjs with cennznet;
+- Update SDK and replace polkadotjs with thenet;
 
 
 # v0.11.1 (2019.05.17)
@@ -27,7 +27,7 @@
 
 ### Features
 
-- Upgrade towards Cennznet-node 0.9.20
+- Upgrade towards thenet-node 0.9.20
 
 
 # v0.9.2 (2019.04.09)
@@ -47,7 +47,7 @@
 
 ### Features
 
-- upgrade cennznet-node to 0.9.17
+- upgrade thenet-node to 0.9.17
 
 # v0.9.0 (2019.04.05)
 
@@ -74,23 +74,23 @@
 
 ### Improvements
 
-- add cennznet-node debug flag
+- add thenet-node debug flag
 
 # v0.8.0 (2019.03.29)
 
 ### Features
 
-- upgrade cennznet sdk to 0.9.4
+- upgrade sdk to 0.9.4
 
 # v0.7.1 (2019.03.27)
 
 ### Fixes
 
 - fix not able to stake without default validator preference
-- update cennzscan links
+- update the scan links
 - fix not able to start in linux issue
 - fix sync node page local block num not update issue
-- remove access to `CENNZnet KAURI(DEV)` to avoid blank page issue
+- remove access to `KAURI(DEV)` to avoid blank page issue
 - fix invalid staking key issue
 
 # v0.7.0 (2019.03.26)
@@ -101,7 +101,7 @@
 
 ### Features
 
-- upgrade to latest SDK and cennzet-node
+- upgrade to latest SDK and node
 - support new staking APIs
 
 ### Fixes
@@ -160,7 +160,7 @@
 - display node state in dev info top bar
 - skip restart node when chose same network
 - add bps to sync screen
-- able to run cennznet-node cluster locally
+- able to run node cluster locally
 - upgrade cenznet-api to v0.7.4
 - isDevOrDebugProd works for renderer
 - height light self-own staking account;
@@ -170,7 +170,7 @@
 
 ### Features
 
-- add CENNZScan address link to account public address
+- add Scan address link to account public address
 
 ### Improvements
 
@@ -209,7 +209,7 @@
 ### Fixes
 
 - fix cucumber not able to start issue
-- able to check cennznet-node process in tests
+- able to check node process in tests
 
 ### Improvements
 
@@ -217,7 +217,7 @@
 - able to run `yarn cucumber` test in CI
 - update refresh rate to 5s
 - Improved styleguide
-- upgrade to Rimu CENNZNETNode
+- upgrade to Rimu Node
 
 # v0.3.1 (2019.01.31)
 
@@ -238,7 +238,7 @@
 - able to handle hex blockNum
 - add clean.sh to fix console undefine issue
 - able to set default node args, default node name is Odin-USERNAME
-- integrated cennznet-api
+- integrated thenet-api
 - make yarn install works with gemfury
 - enable PR build with Jenkins
 - Add Google Analytics
@@ -249,14 +249,14 @@
 
 ### Fixes
 
-- fix static link issue for cennznet-node windows and mac build
+- fix static link issue for thenet-node windows and mac build
 
 ### Improvements
 
 - networkOptions && genesisFile data storage
 - default dev tools open on the right side
 - rename ./npmrc to ./npmrc.template
-- upgrade cennznet-api and cennznet-wallet to 0.5.2
+- upgrade thenet-api and thenet-wallet to 0.5.2
 - disable redux-log by default
 - Change page layout and color themes
 - support multiple wallets
@@ -287,11 +287,11 @@
 ### Improvements
 
 - Able launch app with runtime parameter
-- Able to launch app with cennznet-node in windows
+- Able to launch app with thenet-node in windows
 - Add ./scripts/init.sh to init dev env
 - Add Select, Input, Spinner components into Styleguidist
 - able to make network request
-- able to restart cennznet node with options
+- able to restart thenet node with options
 - Connect TopBarContainer to redux state
 - Add JsonRPC support
 - Add Websocket support

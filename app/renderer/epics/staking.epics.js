@@ -16,7 +16,7 @@ import R from 'ramda';
 import { storageKeys } from 'renderer/api/utils/storage';
 import types from 'renderer/types';
 import chainEpics from 'renderer/epics/chainEpics';
-import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
+import { restartTheNetNodeChannel } from 'renderer/ipc/theNode.ipc';
 import { Logger } from 'renderer/utils/logging';
 import ROUTES from 'renderer/constants/routes';
 import stakingStatus from 'renderer/constants/stakingStatus';
@@ -35,7 +35,7 @@ const startToStakeEpic = action$ =>
 
       assert(seed, 'fail to get seed from wallet account');
 
-      await restartCennzNetNodeChannel.send({ key: seed, isValidatorMode: true });
+      await restartTheNetNodeChannel.send({ key: seed, isValidatorMode: true });
 
       Logger.debug(`startToStakeEpic types.pendingToSendStakingExtrinsic.triggered`);
       return { type: types.pendingToSendStakingExtrinsic.triggered, payload };

@@ -1,7 +1,7 @@
 import React from 'react';
 import BN from 'bn.js';
 
-import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
+import { PreDefinedAssetId } from 'common/types/theNode.types';
 import Button from 'components/Button';
 import { MainContent } from 'components/layout';
 import MainLayout from 'renderer/components/layout/MainLayout';

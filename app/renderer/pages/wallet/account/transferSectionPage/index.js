@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import * as Yup from 'yup';
 
 import { Button, Form, PageHeading, PageFooter, Select } from 'components';
-import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
+import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/theNode.types';
 import SelectField from 'renderer/components/Field/SelectField';
 import TextField from 'renderer/components/Field/TextField';
 import TransferConfirmModal from './TransferConfirmModal';

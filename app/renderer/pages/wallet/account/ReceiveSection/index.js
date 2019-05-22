@@ -43,7 +43,7 @@ const ReceiveSection = ({ account }) => {
       <Warning>
         <FontAwesomeIcon icon="exclamation-triangle" size="sm" color={colors.danger} />
         <span>
-          WARNING: Only send assets that are compatible with CENNZNet. Sending other assets will
+          WARNING: Only send assets that are compatible with the net. Sending other assets will
           result in permanent loss.
         </span>
       </Warning>

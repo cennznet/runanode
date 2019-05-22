@@ -42,7 +42,7 @@ import type {
   GetWalletAddressRequest,
 } from './wallets/types';
 
-import CennznetWallet from './wallets/CennznetWallet';
+import TheWallet from './wallets/TheWallet';
 import actionTypes from '../types';
 
 // Common errors
@@ -60,13 +60,13 @@ import {
   CustomTokenAssetId,
   PreDefinedAssetId,
   NetworkNameOptions,
-} from '../../common/types/cennznet-node.types';
-import CennznetWalletAccount from './wallets/CennznetWalletAccount';
-import CennznetWalletAsset from './wallets/CennznetWalletAsset';
+} from '../../common/types/theNode.types';
+import TheWalletAccount from './wallets/TheWalletAccount';
+import TheWalletAsset from './wallets/TheWalletAsset';
 
 const { buildLabel } = environment;
 
-export default class CennzApi {
+export default class TheApi {
   config: RequestConfig;
   api: Api;
   apiRemote: Api;
@@ -246,7 +246,7 @@ export default class CennzApi {
     Logger.debug(`connect to new apiRemote: ${appConfig.webSocket.remoteStreamUrlMap[_network]}`);
   };
 
-  getBalancesByWallet = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
+  getBalancesByWallet = async (wallet: TheWallet): Promise<TheWallet> => {
     try {
       const walletAccountAddresses = this.getWalletAccountAddresses(wallet);
 
@@ -254,13 +254,13 @@ export default class CennzApi {
       const balanceList = await Promise.all(
         walletAccountAddresses.map(async accountAddress => {
           const assets = {};
-          const stakingTokenAsset = await this.getCennznetWalletAsset(
+          const stakingTokenAsset = await this.getTheWalletAsset(
             PreDefinedAssetIdObj.STAKING_TOKEN.BN,
             accountAddress
           );
           assets[PreDefinedAssetIdObj.STAKING_TOKEN.BN] = stakingTokenAsset;
 
-          const spendingTokenAsset = await this.getCennznetWalletAsset(
+          const spendingTokenAsset = await this.getTheWalletAsset(
             PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
             accountAddress
           );
@@ -269,7 +269,7 @@ export default class CennzApi {
           for (const customToken of CustomTokenAssetId) {
             const customTokenAssetIdAsBN = new BN(customToken, 10);
             // eslint-disable-next-line no-await-in-loop
-            const customTokenAsset = await this.getCennznetWalletAsset(
+            const customTokenAsset = await this.getTheWalletAsset(
               customTokenAssetIdAsBN,
               accountAddress
             );
@@ -290,7 +290,7 @@ export default class CennzApi {
     }
   };
 
-  syncWalletData = async (wallet: CennznetWallet): Promise<CennznetWallet> => {
+  syncWalletData = async (wallet: TheWallet): Promise<TheWallet> => {
     Logger.debug('api::syncWalletData called');
     try {
       const resultWallet = wallet;
@@ -301,14 +301,14 @@ export default class CennzApi {
       for (const accountAddress of walletAccountAddresses) {
         const assets = {};
         // eslint-disable-next-line no-await-in-loop
-        const stakingTokenAsset = await this.getCennznetWalletAsset(
+        const stakingTokenAsset = await this.getTheWalletAsset(
           PreDefinedAssetIdObj.STAKING_TOKEN.BN,
           accountAddress
         );
         assets[PreDefinedAssetIdObj.STAKING_TOKEN.BN] = stakingTokenAsset;
 
         // eslint-disable-next-line no-await-in-loop
-        const spendingTokenAsset = await this.getCennznetWalletAsset(
+        const spendingTokenAsset = await this.getTheWalletAsset(
           PreDefinedAssetIdObj.SPENDING_TOKEN.BN,
           accountAddress
         );
@@ -318,7 +318,7 @@ export default class CennzApi {
         for (const customToken of CustomTokenAssetId) {
           const customTokenAssetIdAsBN = new BN(customToken, 10);
           // eslint-disable-next-line no-await-in-loop
-          const customTokenAsset = await this.getCennznetWalletAsset(
+          const customTokenAsset = await this.getTheWalletAsset(
             customTokenAssetIdAsBN,
             accountAddress
           );
@@ -329,7 +329,7 @@ export default class CennzApi {
         // eslint-disable-next-line no-await-in-loop
         // const accountFreeBalance = await this.getBalancesFreeBalance(accountAddress);
 
-        const account = new CennznetWalletAccount({
+        const account = new TheWalletAccount({
           address: accountAddress,
           name: accounts[accountAddress] && accounts[accountAddress].name,
           // freeBalance: accountFreeBalance,
@@ -346,11 +346,11 @@ export default class CennzApi {
     }
   };
 
-  getCennznetWalletAsset = async (
+  getTheWalletAsset = async (
     assetId: BN,
     walletAddress: String
-  ): Promise<CennznetWalletAsset> => {
-    // Logger.trace('api::getCennznetWalletAsset called');
+  ): Promise<TheWalletAsset> => {
+    // Logger.trace('api::getTheWalletAsset called');
     try {
       const freeBalanceBN = await this.getGenericAssetFreeBalance(assetId, walletAddress);
       const freeBalance = { toBN: freeBalanceBN, toString: freeBalanceBN.toString(10) };
@@ -358,7 +358,7 @@ export default class CennzApi {
       const reservedBalance = { toBN: reservedBalanceBN, toString: reservedBalanceBN.toString(10) };
       const totalBalanceBN = freeBalanceBN.add(reservedBalanceBN);
       const totalBalance = { toBN: totalBalanceBN, toString: totalBalanceBN.toString(10) };
-      const asset = new CennznetWalletAsset({
+      const asset = new TheWalletAsset({
         assetId,
         address: walletAddress,
         name: PreDefinedAssetIdName[assetId],
@@ -368,12 +368,12 @@ export default class CennzApi {
       });
       return asset;
     } catch (error) {
-      Logger.error('api::getCennznetWalletAsset error: ' + stringifyError(error));
+      Logger.error('api::getTheWalletAsset error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
-  createWalletWithSimpleKeyRing = async (request: CreateWalletRequest): Promise<CennznetWallet> => {
+  createWalletWithSimpleKeyRing = async (request: CreateWalletRequest): Promise<TheWallet> => {
     Logger.debug('api::createWalletWithSimpleKeyRing called');
     try {
       const wallet = new Wallet();
@@ -383,21 +383,21 @@ export default class CennzApi {
       await wallet.addKeyring(keyring);
       const backup = await wallet.export(request.passphrase);
 
-      const cennznetWallet = new CennznetWallet({
+      const theWallet = new TheWallet({
         id: uuid(),
         name: request.name,
         hasPassword: request.passphrase !== null,
         wallet,
       });
       Logger.debug('api::createWalletWithSimpleKeyRing success');
-      return cennznetWallet;
+      return theWallet;
     } catch (error) {
       Logger.error('api::createWalletWithSimpleKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
-  createWalletWithHDKeyRing = async (request: CreateHDKRWalletRequest): Promise<CennznetWallet> => {
+  createWalletWithHDKeyRing = async (request: CreateHDKRWalletRequest): Promise<TheWallet> => {
     Logger.debug('api::createWalletWithHDKeyRing called');
     try {
       const wallet = new Wallet();
@@ -406,7 +406,7 @@ export default class CennzApi {
       const exportedWallet = await wallet.export(request.passphrase);
       const mnemonic = exportedWallet && exportedWallet[0].data.mnemonic;
 
-      const cennznetWallet = new CennznetWallet({
+      const theWallet = new TheWallet({
         id: uuid(),
         name: request.name,
         hasPassword: request.passphrase !== null,
@@ -414,14 +414,14 @@ export default class CennzApi {
         wallet,
       });
       Logger.debug('api::createWalletWithHDKeyRing success');
-      return cennznetWallet;
+      return theWallet;
     } catch (error) {
       Logger.error('api::createWalletWithHDKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
-  restoreWallet = async (request: RestoreHDKRWalletRequest): Promise<CennznetWallet> => {
+  restoreWallet = async (request: RestoreHDKRWalletRequest): Promise<TheWallet> => {
     Logger.debug('api::restoreWalletWithHDKeyRing called');
     try {
       const wallet = new Wallet();
@@ -431,21 +431,21 @@ export default class CennzApi {
       await wallet.addAccount();
       const backup = await wallet.export(request.passphrase);
 
-      const cennznetWallet = new CennznetWallet({
+      const theWallet = new TheWallet({
         id: uuid(),
         name: request.name,
         hasPassword: request.passphrase !== null,
         wallet,
       });
       Logger.debug('api::createWalletWithHDKeyRing success');
-      return cennznetWallet;
+      return theWallet;
     } catch (error) {
       Logger.error('api::createWalletWithHDKeyRing error: ' + stringifyError(error));
       throw new GenericApiError();
     }
   };
 
-  addAccount = async (request: AddAccountRequest): Promise<CennznetWallet> => {
+  addAccount = async (request: AddAccountRequest): Promise<TheWallet> => {
     Logger.debug('api::addAccount called');
     try {
       // reload wallet object
@@ -486,7 +486,7 @@ export default class CennzApi {
    * @param request
    * @returns {string[]}
    */
-  getWalletAccountAddresses = (request: CennznetWallet): string[] => {
+  getWalletAccountAddresses = (request: TheWallet): string[] => {
     // Logger.trace('api::getWalletAccountAddresses called');
     try {
       const walletAccountAddresses = Object.keys(request.wallet._accountKeyringMap);
@@ -582,7 +582,7 @@ export default class CennzApi {
    * @param wallet
    * @returns {Promise<Wallet>}
    */
-  reloadWallet = (wallet: CennznetWallet): Promise<Wallet> => {
+  reloadWallet = (wallet: TheWallet): Promise<Wallet> => {
     assert(wallet, `missing wallet`);
     const originalWallet = new Wallet({
       vault: wallet.wallet.vault,
@@ -598,7 +598,7 @@ export default class CennzApi {
    * @returns {Promise<*>}
    */
   getSeedFromWalletAccount = async (
-    wallet: CennznetWallet,
+    wallet: TheWallet,
     address: string,
     passphrase: string
   ): Promise<string> => {
@@ -667,7 +667,7 @@ export default class CennzApi {
    * @returns {Promise<Hash>}
    */
   doBond = async (
-    wallet: CennznetWallet,
+    wallet: TheWallet,
     stashAccountAddress: string,
     amount: number,
     passphrase: string
@@ -704,7 +704,7 @@ export default class CennzApi {
    * @returns {Promise<*>}
    */
   doBondExtra = async (
-    wallet: CennznetWallet,
+    wallet: TheWallet,
     stashAccountAddress: string,
     amount: number,
     passphrase: string
@@ -740,7 +740,7 @@ export default class CennzApi {
    * @returns {Promise<Hash>}
    */
   doUnBond = async (
-    wallet: CennznetWallet,
+    wallet: TheWallet,
     stashAccountAddress: string,
     amount: number,
     passphrase: string
@@ -777,7 +777,7 @@ export default class CennzApi {
    * @returns {Promise<Function>}
    */
   doStake = async (
-    wallet: CennznetWallet,
+    wallet: TheWallet,
     stashAccountAddress: string,
     balances,
     stakingPreference,
@@ -884,7 +884,7 @@ export default class CennzApi {
    * @returns {Promise<CodecResult>}
    */
   saveStakingPreferences = async (
-    wallet: CennznetWallet,
+    wallet: TheWallet,
     prefs: any,
     accountAddress: string
   ): Promise<any> => {
@@ -945,7 +945,7 @@ export default class CennzApi {
    * @returns {Promise<Function>}
    */
   doUnStake = async (
-    wallet: CennznetWallet,
+    wallet: TheWallet,
     stashAccountAddress: string,
     passphrase: string,
     statusCb: Function
@@ -1009,7 +1009,7 @@ export default class CennzApi {
     fromWalletAddress: string,
     toWalletAddress: string,
     amount: BN,
-    wallet: CennznetWallet
+    wallet: TheWallet
   ): Promise<Hash> => {
     Logger.debug('api::doGenericAssetTransfer called');
     Logger.debug(

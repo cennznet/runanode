@@ -4,7 +4,7 @@ import { Given, When, Then } from 'cucumber';
 import { expect } from 'chai';
 import type { App } from '../support/global-types';
 import { waitUntilTextInSelector } from '../support/helpers/shared-helpers';
-import { waitForCennzNetNodeToExit } from '../support/helpers/cennznet-node-helpers';
+import { waitForTheNetNodeToExit } from '../support/helpers/theNodeHelpers';
 import { refreshClient, waitForAppToExit } from '../support/helpers/app-helpers';
 
 const assert = require('assert');
@@ -30,7 +30,7 @@ Then(/^App process is not running$/, async function() {
 });
 
 Then(/^App should quit$/, { timeout: 70000 }, async function() {
-  await waitForCennzNetNodeToExit(this.client);
+  await waitForTheNetNodeToExit(this.client);
   await waitForAppToExit(this.client);
 });
 

@@ -2,14 +2,14 @@ import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { concat, map, mergeMap } from 'rxjs/operators';
 import types from 'renderer/types';
-import { cennznetStatusChannel } from 'renderer/ipc/cennznet.ipc';
+import { theNodeStatusChannel } from 'renderer/ipc/theNode.ipc';
 import { Logger } from 'renderer/utils/logging';
 import ROUTES from 'renderer/constants/routes';
 
 const subscribeNodeStatusEpic = () =>
   new Observable(observer => {
     Logger.debug(`subscribeNodeStatus call::`);
-    cennznetStatusChannel.onReceive(status => {
+    theNodeStatusChannel.onReceive(status => {
       observer.next(status);
     });
   }).pipe(
@@ -24,7 +24,7 @@ const subscribeNodeStatusEpic = () =>
 
       if (status.isNodeInStaking) {
         return of({
-          type: types.cenznetStatusChange.triggered,
+          type: types.theNodeStatusChange.triggered,
           payload: status,
         }).pipe(
           concat(
@@ -40,7 +40,7 @@ const subscribeNodeStatusEpic = () =>
       }
 
       return of({
-        type: types.cenznetStatusChange.triggered,
+        type: types.theNodeStatusChange.triggered,
         payload: status,
       }).pipe(
         concat(
