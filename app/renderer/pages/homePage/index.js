@@ -18,7 +18,7 @@ const SpinnerWrapper = styled.div`
   display: flex;
 `;
 
-const HomePage = ({ hasBlockNumbers, onPageNavigation, onSubscribeCennznetStatus }) => {
+const HomePage = ({ hasBlockNumbers, onPageNavigation }) => {
   useEffect(() => {
     Logger.debug(`HomePage, hasBlockNumbers: ${hasBlockNumbers}`);
     if (hasBlockNumbers) {

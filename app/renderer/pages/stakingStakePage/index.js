@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, PageFooter, PageSpinner, Scrollable } from 'components';
-import { PreDefinedAssetId } from 'common/types/cennznet-node.types';
+import { PreDefinedAssetId } from 'common/types/theNode.types';
 import withContainer from './container';
 import SelectStakingAccount from './SelectStakingAccount';
 import StakingAccountBalances from './StakingAccountBalances';
@@ -22,8 +22,8 @@ const StakingStakePage = ({
 }) => {
   const validatorPreferences = stakingPreference;
   const [stakingOption, setStakingOption] = useState(null);
-  const [cennzStakingBalance, setCennzStakingBalance] = useState(null);
-  const [cpayStakingBalance, setCpayStakingBalance] = useState(null);
+  const [stakingBalance, setStakingBalance] = useState(null);
+  const [cpayStakingBalance, setSpendingBalance] = useState(null);
   const [gasFee, setGasFee] = useState(null);
   const [sufficientGasFee, setSufficientGasFee] = useState(true);
   const [stakingAccount, setStakingAccount] = useState(null);
@@ -37,7 +37,7 @@ const StakingStakePage = ({
 
       const stakingAccountObject = accounts[stakingAccountAddress];
       const { assets } = stakingAccountObject;
-      const cennzStakingBalanceFromChain =
+      const stakingBalanceFromChain =
         (balances[stakingAccountAddress] &&
           balances[stakingAccountAddress][PreDefinedAssetId.stakingToken].freeBalance.toString) ||
         0;
@@ -49,12 +49,12 @@ const StakingStakePage = ({
       // TODO: make the consistent compare unit
       const sortedGasFee = 27000000;
 
-      const sortedCennzStakingBalance = parseInt(cennzStakingBalanceFromChain, 10);
-      const sortedCpayStakingBalance = parseInt(cpayStakingBalanceFromChain, 10);
-      const isSufficientGasFee = sortedCpayStakingBalance >= sortedGasFee;
+      const sortedStakingBalance = parseInt(stakingBalanceFromChain, 10);
+      const sortedSpendingBalance = parseInt(cpayStakingBalanceFromChain, 10);
+      const isSufficientGasFee = sortedSpendingBalance >= sortedGasFee;
 
-      setCennzStakingBalance(sortedCennzStakingBalance);
-      setCpayStakingBalance(sortedCpayStakingBalance);
+      setStakingBalance(sortedStakingBalance);
+      setSpendingBalance(sortedSpendingBalance);
       setGasFee(sortedGasFee);
       setSufficientGasFee(isSufficientGasFee);
       setStakingAccount(stakingAccountObject);
@@ -94,7 +94,7 @@ const StakingStakePage = ({
             />
             {stakingOption && (
               <StakingAccountBalances
-                cennzStakingBalance={cennzStakingBalance}
+                stakingBalance={stakingBalance}
                 cpayStakingBalance={cpayStakingBalance}
                 gasFee={gasFee}
                 sufficientGasFee={sufficientGasFee}
@@ -113,7 +113,7 @@ const StakingStakePage = ({
           <Stake
             {...{
               onStakeConfirmed,
-              cennzStakingBalance,
+              stakingBalance,
               cpayStakingBalance,
               gasFee,
               sufficientGasFee,

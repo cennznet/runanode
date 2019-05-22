@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Field } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
+import { PreDefinedAssetIdName } from 'common/types/theNode.types';
 import { Button, PageHeading, Modal, ModalFooter, ModalBody, Form } from 'components';
 import styled from 'styled-components';
 import { colors } from 'theme';

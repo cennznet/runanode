@@ -60,7 +60,7 @@ const GetReadyWarningModal = ({
           </div>
           <ModalWarningDetails>
             <div>
-              In the next step, CENNZ node will generate a random seed phrase. It is essential that
+              In the next step, The node will generate a random seed phrase. It is essential that
               you write this down and store it somewhere securely, like in a safe or safety deposit
               box. If you lose access to your wallet, this seed phrase is the only way to recover
               yours funds. Your seed phrase will only display once.

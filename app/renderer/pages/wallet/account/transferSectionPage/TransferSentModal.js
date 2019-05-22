@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
 import { colors } from 'theme';
-import { NetworkNameMapping, CENNZScanTxUrl } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping, theScanTxUrl } from 'common/types/theNode.types';
 import ClipboardShareLinks from './ClipboardShareLinks';
 
 const ButtonGroup = styled.div`
@@ -31,13 +31,13 @@ const Desc2 = styled.div`
 `;
 
 const PaymentSentForm = ({ transaction }) => {
-  const url = CENNZScanTxUrl.rimu; // TODO should base on selected network
+  const url = theScanTxUrl.rimu; // TODO should base on selected network
   const { txHash } = transaction;
   return (
     <React.Fragment>
       <PaymentSentFormWrapper>
         <Desc>
-          Your payment is processing. You can check the progress on <a href={url}>CENNZScan</a>
+          Your payment is processing. You can check the progress on <a href={url}>Scan</a>
         </Desc>
         <Desc>
           We&apos;ll send you a notification when it&apos;s completed or if something goes wrong.

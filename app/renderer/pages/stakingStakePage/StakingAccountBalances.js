@@ -53,7 +53,7 @@ const DespositLink = styled(Link)`
 `;
 
 const StakingAccountBalances = ({
-  cennzStakingBalance,
+  stakingBalance,
   cpayStakingBalance,
   gasFee,
   sufficientGasFee,
@@ -72,7 +72,7 @@ const StakingAccountBalances = ({
           <BalanceDetail>
             <div>
               <Ellipsis substrLength={6}>
-                <Balance>{cennzStakingBalance}</Balance>
+                <Balance>{stakingBalance}</Balance>
               </Ellipsis>
               CENNZ
             </div>

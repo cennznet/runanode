@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
-import { CENNZScanAddressUrl } from 'common/types/cennznet-node.types';
+import { theScanAddressUrl } from 'common/types/theNode.types';
 import {
   Clipboard,
   PageHeading,
@@ -78,7 +78,7 @@ const AccountName = styled.div`
 // text-overflow: ellipsis;
 
 const Subheading = ({ account }) => {
-  const url = CENNZScanAddressUrl.rimu; // TODO should base on selected network
+  const url = theScanAddressUrl.rimu; // TODO should base on selected network
   return (
     <div style={{ display: 'flex' }}>
       <span>Public Address: </span>

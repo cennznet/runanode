@@ -5,7 +5,7 @@ import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
 import { storageKeys } from 'renderer/api/utils/storage';
 import chainEpics from 'renderer/epics/chainEpics';
-import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
+import { restartTheNetNodeChannel } from 'renderer/ipc/theNode.ipc';
 import { Logger } from 'renderer/utils/logging';
 
 const filterGenesisFile = file => {
@@ -80,9 +80,9 @@ const restartNodeEpic = action$ =>
     tap(({ payload }) => {
       Logger.debug(`restartNodeEpic, payload: ${JSON.stringify(payload)}`);
       const { chain } = payload;
-      const options: CennzNetRestartOptions = payload;
+      const options: TheNodeRestartOptions = payload;
       if(chain) {
-        restartCennzNetNodeChannel.send(options);
+        restartTheNetNodeChannel.send(options);
       }
     }),
     mergeMap(() =>
