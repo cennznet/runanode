@@ -19,20 +19,20 @@ import mainErrorHandler from 'main/utils/mainErrorHandler';
 import { setupLogging } from 'main/utils/setupLogging';
 import MenuBuilder from 'main/menu';
 import { Logger } from 'main/utils/logging';
-import { setupCennzNet } from 'main/cennznet/setup';
-import { CennzNetNode } from 'main/cennznet/CennzNetNode';
+import { setupTheNode } from 'main/net/setup';
+import { TheNetNode } from 'main/net/TheNetNode';
 import { launcherConfig } from 'main/launcherConfig';
 import { acquireAppInstanceLock } from 'main/utils/app-instance-lock';
 import { safeExitWithCode } from 'main/utils/safeExitWithCode';
 import { createMainWindow } from 'main/windows/mainWindow';
-import { cennznetStatusChannel } from 'main/ipc/cennznet.ipc';
-import { CennzNetNodeStates } from 'common/types/cennznet-node.types';
+import { theNodeStatusChannel } from 'main/ipc/theNode.ipc';
+import { TheNodeStates } from 'common/types/theNode.types';
 import { environment } from 'common/environment';
 
 const { isDevOrDebugProd, buildLabel } = environment;
 
 let mainWindow: BrowserWindow;
-let cennzNetNode: CennzNetNode;
+let theNetNode: TheNetNode;
 
 export const createDefaultWindow = () => {
   Logger.info('createDefaultWindow');
@@ -76,30 +76,30 @@ export const createDefaultWindow = () => {
 };
 
 const safeExit = async () => {
-  if (cennzNetNode.state === CennzNetNodeStates.STOPPING) {
+  if (theNetNode.state === TheNodeStates.STOPPING) {
     return;
   }
 
-  if (cennzNetNode.status && cennzNetNode.status.isNodeInStaking) {
-    await cennznetStatusChannel.send(cennzNetNode.status, mainWindow);
+  if (theNetNode.status && theNetNode.status.isNodeInStaking) {
+    await theNodeStatusChannel.send(theNetNode.status, mainWindow);
     return;
   }
 
   try {
-    cennzNetNode.saveStatus(
-      Object.assign(cennzNetNode.status || {}, {
+    theNetNode.saveStatus(
+      Object.assign(theNetNode.status || {}, {
         isNodeSafeExisting: true,
       })
     );
-    await cennznetStatusChannel.send(cennzNetNode.status, mainWindow);
-    Logger.info(`Node:safeExit: cennzNetNode.status ${cennzNetNode.status}`);
-    Logger.info(`Node:safeExit: stopping cennznet-node with PID ${cennzNetNode.pid || 'null'}`);
+    await theNodeStatusChannel.send(theNetNode.status, mainWindow);
+    Logger.info(`Node:safeExit: theNetNode.status ${theNetNode.status}`);
+    Logger.info(`Node:safeExit: stopping net-node with PID ${theNetNode.pid || 'null'}`);
 
-    await cennzNetNode.stop();
+    await theNetNode.stop();
     Logger.info('Node:safeExit: exiting Node with code 0.');
     safeExitWithCode(0);
   } catch (stopError) {
-    Logger.info(`Node:safeExit: cennznet-node did not exit correctly: ${stopError}`);
+    Logger.info(`Node:safeExit: net-node did not exit correctly: ${stopError}`);
     safeExitWithCode(0);
   }
 };
@@ -169,7 +169,7 @@ app.on('ready', async () => {
   const menuBuilder = new MenuBuilder(mainWindow, autoUpdater);
   menuBuilder.buildMenu();
 
-  cennzNetNode = setupCennzNet(launcherConfig, mainWindow);
+  theNetNode = setupTheNode(launcherConfig, mainWindow);
 
   mainWindow.on('close', async event => {
     Logger.info('mainWindow received <close> event. Safe exiting App now.');
@@ -190,7 +190,7 @@ app.on('ready', async () => {
     });
   });
 
-  // Wait for controlled cennznet-node shutdown before quitting the app
+  // Wait for controlled theNode shutdown before quitting the app
   app.on('before-quit', async event => {
     Logger.info('app received <before-quit> event. Safe exiting App now.');
     event.preventDefault(); // prevent App from quitting immediately

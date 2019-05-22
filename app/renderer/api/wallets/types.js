@@ -1,10 +1,4 @@
 // @flow
-// export type CennznetWallet = {
-//   createdAt: string,
-//   balance: number,
-//   hasSpendingPassword: boolean,
-//   name: string,
-// };
 
 export type CreateWalletRequest = {
   name: string,

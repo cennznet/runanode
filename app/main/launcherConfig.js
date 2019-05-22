@@ -5,7 +5,7 @@ import readLauncherConfig from './utils/readLauncherConfig';
 const { LAUNCHER_CONFIG } = process.env;
 
 /**
- * The shape of the config params, usually provided to the cennznet-node launcher
+ * The shape of the config params, usually provided to the node launcher
  */
 export type LauncherConfig = {
   statePath: string,

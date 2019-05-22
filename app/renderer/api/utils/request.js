@@ -62,8 +62,8 @@ function typedRequest<Response>(
       requestBody = JSON.stringify(rawBodyParams);
       options.headers = {
         'Content-Type': 'application/json',
-        'Accept': '*/*',
-        'Connection': 'keep-alive',
+        Accept: '*/*',
+        Connection: 'keep-alive',
         // 'accept-encoding': 'gzip, deflate',
         // 'cache-control': 'no-cache',
         // 'User-Agent': 'PostmanRuntime/7.6.0',
@@ -75,15 +75,14 @@ function typedRequest<Response>(
     if (hasRequestBody) {
       httpsRequest.write(requestBody);
     }
-    httpsRequest.on('response', (response) => {
+    httpsRequest.on('response', response => {
       let body = '';
       // app returns chunked requests, so we need to concat them
-      response.on('data', (chunk) => (body += chunk));
+      response.on('data', chunk => (body += chunk));
       // Reject errors
-      response.on('error', (error) => reject(error));
+      response.on('error', error => reject(error));
       // Resolve JSON results and handle backend errors
       response.on('end', () => {
-
         try {
           // When deleting a wallet, the API does not return any data in body
           // even if it was successful
@@ -95,7 +94,7 @@ function typedRequest<Response>(
               "data": "statusCode: ${statusCode} -- statusMessage: ${statusMessage}"
             }`;
           } else if (
-            options.path === '/api/internal/next-update' && // TODO CENNZNETNode api for the next update?
+            options.path === '/api/internal/next-update' && // TODO theNode api for the next update?
             statusCode === 404
           ) {
             // when nextAdaUpdate receives a 404, it isn't an error
@@ -107,7 +106,7 @@ function typedRequest<Response>(
           }
 
           const parsedBody = JSON.parse(body);
-          if(statusCode === 200) {
+          if (statusCode === 200) {
             resolve(returnMeta ? parsedBody : parsedBody);
           }
         } catch (error) {
@@ -116,7 +115,7 @@ function typedRequest<Response>(
         }
       });
     });
-    httpsRequest.on('error', (error) => reject(error));
+    httpsRequest.on('error', error => reject(error));
     httpsRequest.end();
   });
 }

@@ -68,12 +68,11 @@ const actionTypes = {
 
   /* Network */
   nodeStateChange: triggerActionTypes('network_state_change'),
-  cenznetStatusChange: triggerActionTypes('cennznet_status_change'),
+  theNodeStatusChange: triggerActionTypes('the_node_status_change'),
 
   switchNetwork: triggerActionTypes('switch_network'),
   stopStream: apiActionTypes('stop_stream'),
   restartNode: triggerActionTypes('restart_network'),
-  subscribeCenznetStatusChange: triggerActionTypes('subscribe_cennznet_status_change'),
 
   /* Staking */
   stake: triggerActionTypes('stake'),

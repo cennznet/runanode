@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Cell } from 'styled-css-grid';
-import { PreDefinedAssetIdName, PreDefinedAssetId } from 'common/types/cennznet-node.types';
+import { PreDefinedAssetIdName, PreDefinedAssetId } from 'common/types/theNode.types';
 import { Button, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
 import { colors } from 'theme';
@@ -33,7 +33,7 @@ const StakeConfirmModal = ({
   isStakeConfirmModalOpen,
   setStakeConfirmModalOpen,
   onStakeConfirmed,
-  cennzStakingBalance,
+  stakingBalance,
   gasFee,
   stakingAccount,
   isStakingEnabled,
@@ -48,7 +48,7 @@ const StakeConfirmModal = ({
           <Cell width={1}>
             <Field
               label="Stake"
-              value={`${cennzStakingBalance} ${
+              value={`${stakingBalance} ${
                 PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]
               }`}
             />

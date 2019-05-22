@@ -1,7 +1,7 @@
 // @flow
 import BN from 'bn.js';
 
-export default class CennznetWalletAsset {
+export default class TheWalletAsset {
   assetId: BN;
   address: string;
   name: string;
@@ -27,5 +27,4 @@ export default class CennznetWalletAsset {
   // get freeBalanceDisplay(): BN {
   //   return this.freeBalance;
   // }
-
 }

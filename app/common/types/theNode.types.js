@@ -7,12 +7,7 @@ export const PreDefinedAssetId = {
   reserveTokenStart: '1000000',
 };
 
-export const CustomTokenAssetId = [
-  '16002',
-  '16003',
-  '16004',
-  '16005',
-];
+export const CustomTokenAssetId = ['16002', '16003', '16004', '16005'];
 
 // https://centralitydev.atlassian.net/wiki/spaces/CNET/pages/675348824/Generic+Asset+Module
 export const PreDefinedAssetIdName = {
@@ -30,22 +25,19 @@ export const PreDefinedAssetIdName = {
   '16005': 'ARDA-T',
 };
 
-// check cennznet-node chain_spec.rs cennznet_dev_config_latest and cennznet_uat_config_latest
 /**
  * NOTE:
  * NetworkName is the key string of chain. Use in Network option select component
- * Example: chain - Rimu CENNZnet 0.9.13
  */
 export const NetworkNameMapping = {
-  CENNZNET_RIMU: 'rimu',
-  CENNZNET_KAURI: 'kauri',
+  THENODE_RIMU: 'rimu',
+  THENODE_KAURI: 'kauri',
   Development: 'development',
 };
 
 /**
  * NOTE:
  * Convert chain name .
- * Example: chain - Rimu CENNZnet 0.9.13
  */
 export const chainNameMapping = chainName => {
   const lowerCaseChainName = (chainName && chainName.toLowerCase()) || '';
@@ -57,14 +49,14 @@ export const chainNameMapping = chainName => {
   return NetworkNameMapping[sortedKey];
 };
 
-export const CENNZScanTxUrl = {
+export const theScanTxUrl = {
   rimu: 'https://cennzscan.centrality.me/tx',
-  kauri: 'https://cennzscan.centrality.cloud/tx', // TODO CENNZScan not support DEV yet
+  kauri: 'https://cennzscan.centrality.cloud/tx', // TODO  not support DEV yet
 };
 
-export const CENNZScanAddressUrl = {
+export const theScanAddressUrl = {
   rimu: 'https://cennzscan.centrality.me/addresses',
-  kauri: 'https://cennzscan.centrality.cloud/addresses', // TODO CENNZScan not support DEV yet
+  kauri: 'https://cennzscan.centrality.cloud/addresses', // TODO  not support DEV yet
 };
 
 export const PreDefinedAssetIdObj = {
@@ -109,16 +101,16 @@ export const NetworkNameOptions = {
   staging: 'staging',
   testnet: 'testnet',
   development: 'development',
-  CENNZNET_KAURI: 'kauri',
-  CENNZNET_KAURI_LATEST: 'kauri-latest',
-  CENNZNET_RIMU: 'rimu',
-  CENNZNET_RIMU_LATEST: 'rimu-latest',
-  CENNZNET_DEV: 'cennznet-dev',
-  CENNZNET_UAT: 'cennznet-uat',
+  THENODE_KAURI: 'kauri',
+  THENODE_KAURI_LATEST: 'kauri-latest',
+  THENODE_RIMU: 'rimu',
+  THENODE_RIMU_LATEST: 'rimu-latest',
+  THENODE_DEV: 'cennznet-dev',
+  THENODE_UAT: 'cennznet-uat',
   LOCAL_TESTNET: 'local-testnet',
 };
 
-export type CennzNetNodeState =
+export type TheNodeState =
   | 'stopped'
   | 'starting'
   | 'running'
@@ -130,17 +122,17 @@ export type CennzNetNodeState =
   | 'exiting'
   | 'unrecoverable';
 
-export const CennzNetNodeStates: {
-  STARTING: CennzNetNodeState,
-  RUNNING: CennzNetNodeState,
-  EXITING: CennzNetNodeState,
-  STOPPING: CennzNetNodeState,
-  STOPPED: CennzNetNodeState,
-  UPDATING: CennzNetNodeState,
-  UPDATED: CennzNetNodeState,
-  CRASHED: CennzNetNodeState,
-  ERRORED: CennzNetNodeState,
-  UNRECOVERABLE: CennzNetNodeState,
+export const TheNodeStates: {
+  STARTING: TheNodeState,
+  RUNNING: TheNodeState,
+  EXITING: TheNodeState,
+  STOPPING: TheNodeState,
+  STOPPED: TheNodeState,
+  UPDATING: TheNodeState,
+  UPDATED: TheNodeState,
+  CRASHED: TheNodeState,
+  ERRORED: TheNodeState,
+  UNRECOVERABLE: TheNodeState,
 } = {
   STARTING: 'starting',
   RUNNING: 'running',
@@ -154,27 +146,27 @@ export const CennzNetNodeStates: {
   UNRECOVERABLE: 'unrecoverable',
 };
 
-export type CennzNetPidOptions =
-  | 'mainnet-PREVIOUS-CENNZNET-PID'
-  | 'staging-PREVIOUS-CENNZNET-PID'
-  | 'testnet-PREVIOUS-CENNZNET-PID'
-  | 'development-PREVIOUS-CENNZNET-PID'
+export type TheNodePidOptions =
+  | 'mainnet-PREVIOUS-THENODE-PID'
+  | 'staging-PREVIOUS-THENODE-PID'
+  | 'testnet-PREVIOUS-THENODE-PID'
+  | 'development-PREVIOUS-THENODE-PID'
   | string;
 
-export type CennzNetNodeStorageKeys = {
-  PREVIOUS_CENNZNET_PID: CennzNetPidOptions,
+export type TheNodeStorageKeys = {
+  PREVIOUS_THENODE_PID: TheNodePidOptions,
 };
 
-export type CennzNetNodeProcessNames = 'cennznet-node' | 'cennznet-node.exe';
+export type TheNodeProcessNames = 'cennznet-node' | 'cennznet-node.exe';
 
 export type ProcessNames = {
-  CENNZNET_PROCESS_NAME: CennzNetNodeProcessNames,
+  THENODE_PROCESS_NAME: TheNodeProcessNames,
 };
 
-export const CennzNetProcessNameOptions: {
-  win32: CennzNetNodeProcessNames,
-  linux: CennzNetNodeProcessNames,
-  darwin: CennzNetNodeProcessNames,
+export const TheNodeProcessNameOptions: {
+  win32: TheNodeProcessNames,
+  linux: TheNodeProcessNames,
+  darwin: TheNodeProcessNames,
 } = {
   win32: 'cennznet-node.exe',
   linux: 'cennznet-node',
@@ -183,7 +175,7 @@ export const CennzNetProcessNameOptions: {
 
 /**
  * Expected fault injection types that can be used to tell
- * cennznet-node to behave faulty (useful for testing)
+ * theNode to behave faulty (useful for testing)
  */
 export type FaultInjection =
   | 'FInjIgnoreShutdown'
@@ -206,12 +198,12 @@ export const FaultInjections: {
 export type FaultInjectionIpcResponse = Array<FaultInjection>;
 export type FaultInjectionIpcRequest = [FaultInjection, boolean];
 
-export type CennzNetStatus = {
+export type TheNodeStatus = {
   isNodeSafeExisting: boolean,
   isNodeInStaking: boolean,
 };
 
-export type CennzNetRestartOptions = {
+export type TheNodeRestartOptions = {
   name: string,
   chain: string,
   isValidatorMode: boolean,
