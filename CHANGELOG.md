@@ -8,6 +8,14 @@
 
 ### Improvements
 
+
+# v0.13.0 (2019.05.23)
+
+### Improvements
+
+- Refactor to decrease branding code;
+
+
 # v0.12.0 (2019.05.22)
 
 ### Improvements
