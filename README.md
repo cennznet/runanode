@@ -2,8 +2,6 @@
 
 ---
 
-👋 Welcome to [rUN](https://runanode.io/), the official wallet and UI for the [CENNZNet](https://centrality.ai/), power by [Plug](https://www.plugblockchain.com/).
-
 ## Quick start guide
 
 ### Start with pre-build docker image
@@ -206,7 +204,7 @@ Packaged app structure for mac:
     ├── MacOS
     ├── Resources
     ├── dist
-        ├── cennznet-node
+        ├── node
         └── launcher-config.yaml
 ```
 

@@ -6,7 +6,7 @@ import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
 import { Button, FileUploader, Select, PageFooter } from 'components';
 import { Logger } from 'renderer/utils/logging';
-import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping } from 'common/types/theNode.types';
 import appConfig from 'app/config';
 import withContainer from './container';
 
@@ -44,9 +44,9 @@ const ButtonWrapper = styled.div`
 `;
 
 const NETWORK_OPTIONS = [
-  { label: 'CENNZnet RIMU(UAT)', value: NetworkNameMapping.CENNZNET_RIMU },
-  { label: 'CENNZnet KAURI(DEV)', value: NetworkNameMapping.CENNZNET_KAURI },
-  { label: 'Local test net', value: NetworkNameMapping.Development },
+  { label: 'RIMU(UAT)', value: NetworkNameMapping.THENODE_RIMU },
+  { label: 'KAURI(DEV)', value: NetworkNameMapping.THENODE_KAURI },
+  { label: 'Self hosted net', value: NetworkNameMapping.Development },
 ];
 
 const getNetworkOptions = () => {

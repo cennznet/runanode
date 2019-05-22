@@ -91,7 +91,7 @@ const ValidatorsList = ({ validators, stakingStashAccountAddress }) => {
                     textAlign: 'right',
                   }}
                 >
-                  <Ellipsis substrLength={6}>{(value && value.cennzBalance) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>{(value && value.stakingTokenBalance) || 'Error'}</Ellipsis>
                 </div>
               );
             },

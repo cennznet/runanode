@@ -75,9 +75,9 @@ library.add(
 const initializeApp = async () => {
   const api = setupApi({dispatch: store.dispatch});
 
-  await api.cennz.initApi();
-  await api.cennz.initRemoteApi();
-  await api.cennz.initGa();
+  await api.appApi.initApi();
+  await api.appApi.initRemoteApi();
+  await api.appApi.initGa();
 
   /**
    * window varibles
@@ -89,7 +89,7 @@ const initializeApp = async () => {
    * take it to app.config levels,
    * enable window[`${net}.api`] to be more dynamics
    */
-  window.appApi = api.cennz;
+  window.appApi = api.appApi;
 
   const rootElement = document.getElementById('root');
   if (!rootElement) throw new Error('No #root element found.');

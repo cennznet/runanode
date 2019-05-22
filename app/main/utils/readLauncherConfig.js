@@ -45,25 +45,6 @@ export default (configPath: ?string): LauncherConfig => {
   Logger.info(`app.getPath('userData'): ${app.getPath('userData')}`);
   Logger.info(`__dirname: ${__dirname}`);
 
-  Logger.info(`********************************************************`);
-  /*
-[2018-12-26 21:40:56.855] [info] ********************************************************
-[2018-12-26 21:40:56.861] [info] readLauncherConfig, configPath: undefined
-[2018-12-26 21:40:56.861] [info] resourcesPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources
-[2018-12-26 21:40:56.861] [info] process.cwd(): /
-[2018-12-26 21:40:56.861] [info] app.getAppPath(): /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/app.asar
-[2018-12-26 21:40:56.861] [info] app.getPath('userData'): /Users/kenhuang/Library/Application Support/App
-[2018-12-26 21:40:56.863] [info] Logger.findLogPath(): /Users/kenhuang/Library/Logs/App/log.log
-[2018-12-26 21:40:56.863] [info] __dirname: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/app.asar/app
-[2018-12-26 21:40:56.863] [info] distPath: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/../dist
-[2018-12-26 21:40:56.864] [info] distPathNew: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/dist
-[2018-12-26 21:40:56.864] [info] ********************************************************
-
-[2018-12-26 21:40:56.864] [info] [main] APP_DIST_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/../dist
-[2018-12-26 21:40:56.865] [info] [main] APP_LOG_DATA_DIRECTORY /Users/kenhuang/Library/Logs/App
-[2018-12-26 21:40:56.865] [info] [main] APP_USER_DATA_DIRECTORY: /Users/kenhuang/Library/Application Support/App
-[2018-12-26 21:40:56.866] [info] [main] APP_INSTALL_DIRECTORY: /Users/kenhuang/git/CENNZNode/lunch/cennz-node-ui/release/mac/App.app/Contents/Resources/app.asar
-*/
   const inputYaml = configPath
     ? readFileSync(configPath, 'utf8')
     : readFileSync(path.join(distPath, 'launcher-config.yaml'), 'utf8');

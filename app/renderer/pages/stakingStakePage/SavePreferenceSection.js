@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/cennznet-node.types';
+import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/theNode.types';
 import { colors } from 'theme';
 import { Button } from 'components';
 

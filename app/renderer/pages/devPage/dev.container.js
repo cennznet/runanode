@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import types from 'renderer/types';
 
-import { restartCennzNetNodeChannel } from 'renderer/ipc/cennznet.ipc';
-import type { CennzNetRestartOptions } from 'common/types/cennznet-node.types';
+import { restartTheNetNodeChannel } from 'renderer/ipc/theNode.ipc';
+import type { TheNodeRestartOptions } from 'common/types/theNode.types';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
-import { NetworkNameOptions } from 'common/types/cennznet-node.types';
+import { NetworkNameOptions } from 'common/types/theNode.types';
 import { ApiPromise } from '@cennznet/api';
 
 const mapStateToProps = ({
@@ -55,10 +55,10 @@ const mapDispatchToProps = dispatch => ({
     });
   },
   onRestartNodeClick: () => {
-    const options: CennzNetRestartOptions = {
-      chain: NetworkNameOptions.CENNZNET_RIMU,
+    const options: TheNodeRestartOptions = {
+      chain: NetworkNameOptions.THENODE_RIMU,
     };
-    restartCennzNetNodeChannel.send(options);
+    restartTheNetNodeChannel.send(options);
   },
   onChainSubscribeNewHead: () => {
     dispatch({
@@ -129,57 +129,56 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.sendNodeStatusToIpcMain.requested, payload });
   },
   onStakeAndRestart: payload => {
-    const { cennzNetRestartOptions, wallet, stashAccountAddress } = payload;
-    // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
+    const { TheNodeRestartOptions, wallet, stashAccountAddress } = payload;
+    // dispatch({ type: types.switchNetwork.triggered, payload: TheNodeRestartOptions });
     dispatch({ type: types.stake.triggered, payload });
   },
   onUnStake: payload => {
     window.appApi.doUnStake(payload.wallet, payload.fromAddress, '');
   },
   onUnStakeAndRestart: payload => {
-    const { cennzNetRestartOptions } = payload;
-    // dispatch({ type: types.switchNetwork.triggered, payload: cennzNetRestartOptions });
-    // no-op for now
+    const { TheNodeRestartOptions } = payload;
+    // dispatch({ type: types.switchNetwork.triggered, payload: TheNodeRestartOptions });
   },
   onGetEraLength: () => {
     window.appApi.getEraLength(eraLength =>
-      Logger.debug(`CennznetApi::getEraLength success: ${eraLength}`)
+      Logger.debug(`devContainer::getEraLength success: ${eraLength}`)
     );
   },
 
   onGetEraProgress: () => {
     window.appApi.getEraProgress(EraProgress =>
-      Logger.debug(`CennznetApi::getEraProgress success: ${EraProgress}`)
+      Logger.debug(`devContainer::getEraProgress success: ${EraProgress}`)
     );
   },
 
   onGetValidators: () => {
     window.appApi.getValidators(validators =>
-      Logger.debug(`CennznetApi::getValidators success: ${validators}`)
+      Logger.debug(`devContainer::getValidators success: ${validators}`)
     );
   },
 
   onGetSessionProgress: () => {
     window.appApi.getSessionProgress(sessionProgress =>
-      Logger.debug(`CennznetApi::getSessionProgress success: ${sessionProgress}`)
+      Logger.debug(`devContainer::getSessionProgress success: ${sessionProgress}`)
     );
   },
 
   onGetSessionLength: () => {
     window.appApi.getSessionLength(sessionLength =>
-      Logger.debug(`CennznetApi::getSessionLength success: ${sessionLength}`)
+      Logger.debug(`devContainer::getSessionLength success: ${sessionLength}`)
     );
   },
 
   onGetIntensions: () => {
     window.appApi.getIntentions(intensions =>
-      Logger.debug(`CennznetApi::getIntentions success: ${intensions}`)
+      Logger.debug(`devContainer::getIntentions success: ${intensions}`)
     );
   },
 
   // onGetIntentionsBalances: () => {
   //   window.appApi.getIntentionsBalances(intensionsBalances =>
-  //     Logger.debug(`CennznetApi::getIntentionsBalances success: ${intensionsBalances}`)
+  //     Logger.debug(`devContainer::getIntentionsBalances success: ${intensionsBalances}`)
   //   );
   // },
 });

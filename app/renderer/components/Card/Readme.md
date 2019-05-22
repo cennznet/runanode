@@ -2,9 +2,9 @@
 <DemoFlex>
   <Card
     title="Staking token free balance"
-    hint="CENNZ is required to join CENNZNet as Validator, contributing to securing and governing the network."
+    hint="Token is required to join the network as Validator, contributing to securing and governing the network."
   >
-    10000 CENNZ
+    10000 TOKEN
   </Card>
 </DemoFlex>
 ```
