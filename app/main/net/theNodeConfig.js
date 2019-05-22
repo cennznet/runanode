@@ -3,13 +3,12 @@ import os from 'os';
 import path from 'path';
 
 import appConfig from 'app/config';
-import { NetworkNameOptions, NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { NetworkNameOptions, NetworkNameMapping } from 'common/types/theNode.types';
 import { Logger } from '../utils/logging';
 import type { LauncherConfig } from '../launcherConfig';
 
 /**
  * Transforms the launcher config to an array of string args
- * which can be passed to the cennznet-node process.
  *
  * @param config
  * @returns {NodeArgs}

@@ -1,6 +1,6 @@
 import { remote } from 'electron';
 import parseArgs from 'minimist';
-import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping } from 'common/types/theNode.types';
 
 const commonConfig = {
   // Common config shared by dev and prod comes here...
@@ -9,8 +9,8 @@ const commonConfig = {
     apiInitDebounceTime: 10000, // after clean local chain data, api init need more than 6s
     defaultDebounceTime: 500,
     sentryDSN: 'https://0c4aa4aa53f1494e87d532890cb59529@sentry.io/1436322',
-    networkOptions: [NetworkNameMapping.CENNZNET_RIMU, NetworkNameMapping.Development],
-    // networkOptions: [NetworkNameMapping.CENNZNET_RIMU, NetworkNameMapping.Development], // networkOptions[0] is the default network to be joined in, in this case, Rimu is by default to be connected.
+    networkOptions: [NetworkNameMapping.THENODE_RIMU, NetworkNameMapping.Development],
+    // networkOptions: [NetworkNameMapping.THENODE_RIMU, NetworkNameMapping.Development], // networkOptions[0] is the default network to be joined in, in this case, Rimu is by default to be connected.
     developmentGenesisFile: './genesis/local/local.json',
     // developmentGenesisFile: './genesis/local/intra-testnet.json',
   },

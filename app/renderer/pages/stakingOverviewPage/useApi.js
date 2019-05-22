@@ -7,7 +7,7 @@ import { Logger } from 'renderer/utils/logging';
 
 /**
  * Only apply to pokadolt-api
- * Except when the cennz-sdk accept callbackFn and require subscribe
+ * Except when the sdk accept callbackFn and require subscribe
  *
  * Naming Convention in window.appApi.api
  * action-section : getEraLength

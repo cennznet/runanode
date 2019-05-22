@@ -5,7 +5,7 @@ import StakeConfirmModal from './StakeConfirmModal';
 
 const Stake = ({
   onStakeConfirmed,
-  cennzStakingBalance,
+  stakingBalance,
   cpayStakingBalance,
   gasFee,
   sufficientGasFee,
@@ -14,7 +14,7 @@ const Stake = ({
   const [isStakeWarningModalOpen, setStakeWarningModalOpen] = useState(false);
   const [isStakeConfirmModalOpen, setStakeConfirmModalOpen] = useState(false);
 
-  const isStakingEnabled = stakingAccount && cennzStakingBalance && sufficientGasFee;
+  const isStakingEnabled = stakingAccount && stakingBalance && sufficientGasFee;
 
   return (
     <div>
@@ -36,7 +36,7 @@ const Stake = ({
             isStakeConfirmModalOpen,
             setStakeConfirmModalOpen,
             onStakeConfirmed,
-            cennzStakingBalance,
+            stakingBalance,
             gasFee,
             stakingAccount,
             isStakingEnabled,

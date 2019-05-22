@@ -1,14 +1,14 @@
 // @flow
-import CennzApi from './api';
+import TheApi from './api';
 // import LocalStorageApi from './utils/localStorage';
 
 export type Api = {
-  cennz: CennzApi,
+  appApi: TheApi,
   // localStorage: LocalStorageApi,
 };
 
 export const setupApi = ({ dispatch }): Api => ({
-  cennz: new CennzApi(
+  appApi: new TheApi(
     {
       port: 9933,
       // ca: Uint8Array.from([]),

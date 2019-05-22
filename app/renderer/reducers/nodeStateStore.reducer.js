@@ -2,8 +2,8 @@ import R from 'ramda';
 import types from '../types';
 
 const DEFAULT_STATE = {
-  state: '', // CENNZNETNode state
-  status: '', // CennzNetStatus status, extra status can handle by renderer, currently handle isNodeSafeExisting
+  state: '', // theNode state
+  status: '', // theNode status, extra status can handle by renderer, currently handle isNodeSafeExisting
   wsLocalStatus: '',
   wsRemoteStatus: '',
 };
@@ -14,7 +14,7 @@ export default function nodeStateStore(state = DEFAULT_STATE, { type, payload })
       return R.merge(state, {
         state: payload,
       });
-    case types.cenznetStatusChange.triggered:
+    case types.theNodeStatusChange.triggered:
       return R.merge(state, {
         status: payload,
       });

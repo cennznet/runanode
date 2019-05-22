@@ -7,12 +7,12 @@ import R from 'ramda';
 
 import PageSpinner from 'components/PageSpinner';
 import {
-  CENNZScanAddressUrl,
+  theScanAddressUrl,
   PreDefinedAssetId,
   PreDefinedAssetIdName,
-} from 'common/types/cennznet-node.types';
+} from 'common/types/theNode.types';
 import centrapayIcon from 'renderer/assets/icon/centrapay.svg';
-import cennzIcon from 'renderer/assets/icon/cennz.svg';
+import stakingTokenIcon from 'renderer/assets/icon/staking-token.svg';
 import { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
@@ -20,8 +20,8 @@ import { Button, PageHeading, Ellipsis } from 'components';
 import withContainer from './container';
 import ClipboardShareLinks from '../wallet/account/transferSectionPage/ClipboardShareLinks';
 import UnStakeWarningModal from './UnStakeWarningModal';
-import CennznetWallet from '../../api/wallets/CennznetWallet';
-import CennznetWalletAccount from '../../api/wallets/CennznetWalletAccount';
+import TheWallet from '../../api/wallets/TheWallet';
+import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
 
 const CentrapayIcon = styled(SVGInline).attrs({
@@ -30,8 +30,8 @@ const CentrapayIcon = styled(SVGInline).attrs({
   width: auto;
 `;
 
-const CennzIcon = styled(SVGInline).attrs({
-  svg: cennzIcon,
+const StakingTokenIcon = styled(SVGInline).attrs({
+  svg: stakingTokenIcon,
 })`
   width: auto;
 `;
@@ -168,7 +168,7 @@ const NameText = styled.span`
 `;
 
 const Subheading = ({ account, wallet }) => {
-  const url = CENNZScanAddressUrl.rimu; // TODO should base on selected network
+  const url = theScanAddressUrl.rimu; // TODO should base on selected network
   const { name: walletName } = wallet;
   const { name: accountName } = account;
 
@@ -248,9 +248,8 @@ const StakingStakePage = ({
   const [rewardSpendingValue, setRewardSpendingValue] = useState('0');
   const [rewardSpendingValueDiff, setRewardSpendingValueDiff] = useState('0');
 
-  const stakingWallet: CennznetWallet =
-    wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
-  const stakingAccount: CennznetWalletAccount = stakingWallet.accounts[stakingStashAccountAddress];
+  const stakingWallet: TheWallet = wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
+  const stakingAccount: TheWalletAccount = stakingWallet.accounts[stakingStashAccountAddress];
 
   const [intentions, validators] = useApis('getIntentions', 'getValidators');
 
@@ -363,7 +362,7 @@ const StakingStakePage = ({
                 <InnerSectionWrapper>
                   <ItemTitle>Stake balance</ItemTitle>
                   <InnerSectionItemIcon>
-                    <CennzIcon />
+                    <StakingTokenIcon />
                   </InnerSectionItemIcon>
                   <InnerSectionItem>
                     {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}

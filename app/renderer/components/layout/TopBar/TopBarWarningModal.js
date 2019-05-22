@@ -3,7 +3,7 @@ import { Button, PageHeading, Modal, ModalBody, ModalFooter } from 'components';
 import styled from 'styled-components';
 import { colors } from 'theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NetworkNameMapping } from 'common/types/cennznet-node.types';
+import { NetworkNameMapping } from 'common/types/theNode.types';
 
 const ModalWarningWrapper = styled.div`
   display: flex;

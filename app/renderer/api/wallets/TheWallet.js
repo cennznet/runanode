@@ -2,17 +2,16 @@
 import BN from 'bn.js';
 
 import { WALLET_TYPE } from 'renderer/constants/wallet';
-import CennznetWalletAccount from './CennznetWalletAccount';
+import TheWalletAccount from './TheWalletAccount';
 
-
-export default class CennznetWallet {
+export default class TheWallet {
   id: string = '';
   name: string = '';
   hasPassword: boolean;
   wallet: Wallet;
   passwordUpdateDate: ?Date;
 
-  accounts: Map<string, CennznetWalletAccount>;
+  accounts: Map<string, TheWalletAccount>;
 
   type: WALLET_TYPE;
 
@@ -22,7 +21,7 @@ export default class CennznetWallet {
     hasPassword: boolean,
     wallet: Wallet,
     passwordUpdateDate: ?Date,
-    accounts: ?Map<string, CennznetWalletAccount>,
+    accounts: ?Map<string, TheWalletAccount>,
   }) {
     Object.assign(this, data);
   }
