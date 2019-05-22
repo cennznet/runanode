@@ -5,14 +5,17 @@ import { GenericAsset } from '@cennznet/crml-generic-asset';
 import { Api } from '@cennznet/api';
 import uuid from 'uuid/v4';
 import BN from 'bn.js';
-import { u32, Balance, AccountId, ValidatorPrefs } from '@polkadot/types';
-import { naclKeypairFromSeed as naclFromSeed } from '@polkadot/util-crypto';
-import { Keyring } from '@polkadot/keyring';
-import decode from '@polkadot/keyring/pair/decode';
-import addressDecode from '@polkadot/keyring/address/decode';
-import { stringToU8a, u8aToString, u8aToHex, hexToU8a } from '@polkadot/util/index';
+import { u32, Balance, AccountId, ValidatorPrefs } from '@cennznet/types';
+import {
+  naclKeypairFromSeed as naclFromSeed,
+  stringToU8a,
+  u8aToString,
+  u8aToHex,
+  hexToU8a,
+} from '@cennznet/util';
+import decode from '@plugnet/keyring/pair/decode';
+import addressDecode from '@plugnet/keyring/address/decode';
 import assert from 'assert';
-import WsProvider from '@polkadot/rpc-provider/ws';
 
 import appConfig from 'app/config';
 import { storageKeys, clearStorage } from 'renderer/api/utils/storage';
@@ -21,8 +24,7 @@ import { generateMnemonic } from 'renderer/utils/crypto';
 import { stringifyData, stringifyError } from 'common/utils/logging';
 import { environment } from 'common/environment';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
-// import * as Types from '@cennznet/types';
-import * as CustomTypes from './runtime';
+
 import { getSystemHealth } from './nodes/requests/getSystemHealth';
 import { Logger } from '../utils/logging';
 // Common Types
@@ -119,19 +121,15 @@ export default class CennzApi {
 
   initGa = async (): Promise<void> => {
     Logger.debug(`initGa start`);
-    const ga = await GenericAsset.create(this.api);
-    this.ga = ga;
+    this.ga = this.api.genericAsset;
     Logger.debug(`initGa done`);
   };
 
   initApi = async (): Promise<void> => {
     Logger.debug(`initApi start`);
-    const types = { ...CustomTypes };
     Logger.debug(`initApi streamUrl: ${appConfig.webSocket.localStreamUrl}`);
-    const wsProvider = new WsProvider(appConfig.webSocket.localStreamUrl);
     this.api = new Api({
-      provider: wsProvider,
-      types,
+      provider: appConfig.webSocket.localStreamUrl,
     });
     this.api.on('connected', () => {
       Logger.debug(`initApi connected`);
@@ -187,13 +185,11 @@ export default class CennzApi {
 
   initRemoteApiWithUrl = async (remoteStreamUrl): Promise<void> => {
     Logger.debug(`initRemoteApiWithUrl start`);
-    const types = { ...CustomTypes };
     // eslint-disable-next-line
     Logger.debug(`initRemoteApiWithUrl remoteStreamUrl: ${remoteStreamUrl}`);
-    const wsProvider = new WsProvider(remoteStreamUrl);
     this.apiRemote = new Api({
-      provider: wsProvider,
-      types,
+      provider: remoteStreamUrl,
+      // types,
     });
     this.apiRemote.on('connected', () => {
       Logger.debug(`initRemoteApiWithUrl apiRemote connected`);
@@ -540,7 +536,7 @@ export default class CennzApi {
       // Logger.trace(
       //   `api::getGenericAssetFreeBalance freeBalance: ${freeBalance}, ${typeof freeBalance}`
       // );
-      return new BN(freeBalance.toString(10), 10);
+      return freeBalance;
     } catch (error) {
       Logger.error('api::getGenericAssetFreeBalance error: ' + stringifyError(error));
       throw new GenericApiError();
