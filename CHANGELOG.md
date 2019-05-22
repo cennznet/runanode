@@ -8,6 +8,12 @@
 
 ### Improvements
 
+# v0.12.0 (2019.05.22)
+
+### Improvements
+
+- Update SDK and replace polkadotjs with cennznet;
+
 
 # v0.11.1 (2019.05.17)
 
