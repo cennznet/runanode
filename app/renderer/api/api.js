@@ -235,7 +235,7 @@ export default class TheApi {
   switchNetwork = async (network: string): Promise<void> => {
     let _network = network;
     if (network.endsWith('json')) {
-      _network = NetworkNameOptions.development;
+      _network = NetworkNameOptions.DEV;
     }
     Logger.debug(`switchNetwork, network: ${_network}`);
     Logger.debug(`disconnect apiRemote`);

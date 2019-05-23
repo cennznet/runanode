@@ -48,7 +48,7 @@ export const promisedCondition = (
   });
 
 const getNetworkName = (network: NetworkNames): string =>
-  NetworkNameOptions[network] || NetworkNameOptions.development;
+  NetworkNameOptions[network] || NetworkNameOptions.DEV;
 
 export const deriveStorageKeys = (network: NetworkNames): TheNodeStorageKeys => ({
   PREVIOUS_THENODE_PID: `${getNetworkName(network)}-PREVIOUS-THENODE-PID`,

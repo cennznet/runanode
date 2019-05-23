@@ -3,7 +3,7 @@ import os from 'os';
 import path from 'path';
 
 import appConfig from 'app/config';
-import { NetworkNameOptions, NetworkNameMapping } from 'common/types/theNode.types';
+import { NetworkNameMapping } from 'common/types/theNode.types';
 import { Logger } from '../utils/logging';
 import type { LauncherConfig } from '../launcherConfig';
 
@@ -23,10 +23,10 @@ export const prepareArgs = (config: LauncherConfig) => {
     const first = os.userInfo().username.substring(0, 1);
     const last = os.userInfo().username.substring(username.length - 1);
     let maskValue = username.substring(1, username.length - 1);
-    if(maskValue.length > 10) {
+    if (maskValue.length > 10) {
       maskValue = '**********';
     }
-    const mask = maskValue.replace(/\w/g,"*");
+    const mask = maskValue.replace(/\w/g, '*');
     const maskedName = first + mask + last;
     args.push('--name', '❤️' + appConfig.app.name + '-' + maskedName);
   }
@@ -38,7 +38,7 @@ export const prepareArgs = (config: LauncherConfig) => {
     let targetChain = appConfig.app.networkOptions[0];
     Logger.info(`chainArgIndex, targetChain: ${targetChain}`);
     // check default config chain is `development` will start with `appConfig.app.developmentGenesisFile` by default
-    if(targetChain === NetworkNameMapping.Development) {
+    if (targetChain === NetworkNameMapping.Development) {
       targetChain = path.resolve(appConfig.app.developmentGenesisFile);
     }
     args.push('--chain', targetChain);

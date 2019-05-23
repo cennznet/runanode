@@ -79,35 +79,14 @@ export type TlsConfig = {
   key: Uint8Array,
 };
 
-export type NetworkNames =
-  | 'mainnet'
-  | 'staging'
-  | 'testnet'
-  | 'development'
-  | 'dev'
-  | 'kauri'
-  | 'kauri-latest'
-  | 'rimu'
-  | 'rimu-latest'
-  | 'cennznet-dev'
-  | 'cennznet-uat'
-  | 'local-testnet'
-  | string;
+export type NetworkNames = 'dev' | 'kauri' | 'rimu' | string;
 
 export type PlatformNames = 'win32' | 'linux' | 'darwin' | string;
 
 export const NetworkNameOptions = {
-  mainnet: 'mainnet',
-  staging: 'staging',
-  testnet: 'testnet',
-  development: 'development',
+  DEV: 'dev',
   THENODE_KAURI: 'kauri',
-  THENODE_KAURI_LATEST: 'kauri-latest',
   THENODE_RIMU: 'rimu',
-  THENODE_RIMU_LATEST: 'rimu-latest',
-  THENODE_DEV: 'cennznet-dev',
-  THENODE_UAT: 'cennznet-uat',
-  LOCAL_TESTNET: 'local-testnet',
 };
 
 export type TheNodeState =
