@@ -27,6 +27,12 @@ const mapDispatchToProps = dispatch => ({
   onGetChainGetHeader: () => {
     dispatch({ type: types.nodeWsChainGetHeader.requested });
   },
+  onNaviagteToChooseNetwork: () => {
+    dispatch({
+      type: types.navigation.triggered,
+      payload: ROUTES.CHOOSE_NETWORK,
+    });
+  },
 });
 
 export default connect(
