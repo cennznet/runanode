@@ -8,6 +8,16 @@
 
 ### Improvements
 
+# v0.13.1 (2019.05.23)
+
+### Improvements
+
+- Add nav button in syncing page;
+
+### Fixes
+
+- Bug fixes and code refactoring;
+
 
 # v0.13.0 (2019.05.23)
 
