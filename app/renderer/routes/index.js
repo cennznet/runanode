@@ -11,7 +11,7 @@ import DevPage from 'renderer/pages/devPage';
 import ErrorPage from 'renderer/pages/errorPage';
 import ErrorBoundary from 'renderer/pages/errorPage/ErrorBoundary';
 import HomePage from 'renderer/pages/homePage';
-import WaitPage from 'renderer/pages/waitPage';
+import ExitingPage from 'renderer/pages/exitingPage';
 import WalletLandingPage from 'renderer/pages/wallet/landingPage';
 import WalletAccountPage from 'renderer/pages/wallet/account';
 import WalletCreatePage from 'renderer/pages/wallet/create';
@@ -45,7 +45,7 @@ class AppRoutes extends React.Component {
     return (
       <Switch>
         <Route exact path={ROUTES.ROOT} component={HomePage} />
-        <Route exact path={ROUTES.WAIT} component={WaitPage} />
+        <Route exact path={ROUTES.EXITING} component={ExitingPage} />
         <Redirect exact from={ROUTES.STAKING.ROOT} to={ROUTES.STAKING.OVERVIEW} />
         <Redirect exact from={ROUTES.SETTINGS.ROOT} to={ROUTES.SETTINGS.GENERAL} />
         <Route exact from={ROUTES.WALLET.ROOT} component={WalletRootPage} />
@@ -58,11 +58,23 @@ class AppRoutes extends React.Component {
         <Route exact path={ROUTES.WALLET.CONNECT} component={WalletConnectPage} />
         <Route
           path={ROUTES.STAKING.ROOT}
-          render={() => <ErrorBoundary><StakingRoutes {...{ isStakingStated }} /></ErrorBoundary>}
+          render={() => (
+            <ErrorBoundary>
+              <StakingRoutes {...{ isStakingStated }} />
+            </ErrorBoundary>
+          )}
         />
         <Route path={ROUTES.SETTINGS.ROOT} render={SettingsRoutes} />
         <Route exact path={ROUTES.TERMS_OF_USE_ACCEPTANCE} component={TosPage} />
-        <Route exact path={ROUTES.CHOOSE_NETWORK} render={() => <ErrorBoundary><ChooseNetworkPage /></ErrorBoundary>} />
+        <Route
+          exact
+          path={ROUTES.CHOOSE_NETWORK}
+          render={() => (
+            <ErrorBoundary>
+              <ChooseNetworkPage />
+            </ErrorBoundary>
+          )}
+        />
         <Route exact path={ROUTES.SYNC_NODE} component={SyncNodePage} />
         <Route exact path={ROUTES.DEV} component={DevPage} />
         <Route exact path={ROUTES.ERROR} component={ErrorPage} />
