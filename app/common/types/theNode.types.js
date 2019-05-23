@@ -50,13 +50,11 @@ export const chainNameMapping = chainName => {
 };
 
 export const theScanTxUrl = {
-  rimu: 'https://cennzscan.centrality.me/tx',
-  kauri: 'https://cennzscan.centrality.cloud/tx', // TODO  not support DEV yet
+  rimu: 'https://uncoverexplorer.com/tx',
 };
 
 export const theScanAddressUrl = {
-  rimu: 'https://cennzscan.centrality.me/addresses',
-  kauri: 'https://cennzscan.centrality.cloud/addresses', // TODO  not support DEV yet
+  rimu: 'https://uncoverexplorer.com/addresses',
 };
 
 export const PreDefinedAssetIdObj = {
