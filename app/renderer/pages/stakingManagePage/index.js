@@ -11,8 +11,8 @@ import {
   PreDefinedAssetId,
   PreDefinedAssetIdName,
 } from 'common/types/theNode.types';
-import centrapayIcon from 'renderer/assets/icon/centrapay.svg';
 import stakingTokenIcon from 'renderer/assets/icon/staking-token.svg';
+import spendingTokenIcon from 'renderer/assets/icon/centrapay.svg';
 import { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
@@ -24,8 +24,8 @@ import TheWallet from '../../api/wallets/TheWallet';
 import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
 
-const CentrapayIcon = styled(SVGInline).attrs({
-  svg: centrapayIcon,
+const SpendingTokenIcon = styled(SVGInline).attrs({
+  svg: spendingTokenIcon,
 })`
   width: auto;
 `;
@@ -396,7 +396,7 @@ const StakingStakePage = ({
                 <InnerSectionWrapper>
                   <ItemTitle>Spending balance</ItemTitle>
                   <InnerSectionItemIcon>
-                    <CentrapayIcon />
+                    <SpendingTokenIcon />
                   </InnerSectionItemIcon>
                   <InnerSectionItem>
                     {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
@@ -425,9 +425,7 @@ const StakingStakePage = ({
             <Right>
               <Item>
                 <ItemTitle>Warning received</ItemTitle>
-                <WarningContent>
-                  {/* <ItemNum>{warningValue}</ItemNum> warning */}
-                </WarningContent>
+                <WarningContent>{/* <ItemNum>{warningValue}</ItemNum> warning */}</WarningContent>
               </Item>
               <Item>
                 <ItemTitle>Punishment</ItemTitle>
