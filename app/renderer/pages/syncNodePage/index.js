@@ -10,6 +10,7 @@ import { chainNameMapping, NetworkNameMapping } from 'common/types/theNode.types
 import { Layout, LayoutWrapper, MainContent } from 'components/layout';
 import SideNav from 'components/layout/SideNav';
 import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import like this to fix this issue: https://stackoverflow.com/questions/50428339/error-minified-react-error-130
+import { PageFooter, Button } from 'components';
 import { Logger } from 'renderer/utils/logging';
 import { storageKeys } from 'renderer/api/utils/storage';
 import Spinner from 'components/Spinner';
@@ -29,6 +30,12 @@ const SyncNodeTitle = styled.div`
   font-weight: 600;
   font-size: 1.7rem;
   margin: 3rem auto;
+`;
+
+const SyncNodeDesc = styled.div`
+  color: ${colors.textMuted};
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
 `;
 
 const SyncNodeProgressWarpper = styled.div`
@@ -61,6 +68,7 @@ const SyncNodePage = ({
   blocksNew,
   blocksRemote,
   onGetChainGetHeader,
+  onNaviagteToChooseNetwork,
 }) => {
   const selectedNetwork = localStorage[storageKeys.SELECTED_NETWORK];
   const { chain } = localNode;
@@ -155,28 +163,38 @@ const SyncNodePage = ({
   return (
     <Layout sidebar={isDevOrDebugProd ? <SideNav /> : <SimpleSidebar />}>
       <LayoutWrapper>
-        <MainContent>
-          <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
-          <SyncNodeProgressWarpper>
-            <SyncNodeProgress>
-              <Line
-                percent={syncNodePercentage}
-                trailColor="transparent"
-                trailWidth="7"
-                strokeWidth="7"
-                strokeColor={colors.primary}
-                strokeLinecap="square"
-                style={{ height: '100%', width: '100%' }}
-              />
-            </SyncNodeProgress>
-            <SyncNodeInfo>
-              <TextWrapper>
-                {syncNodePercentage}% synced, {bps && bps >= 0 ? bps.toFixed(2) : 0} bps
-              </TextWrapper>
-              <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
-              <TextWrapper>estimate: {estimateText} min</TextWrapper>
-            </SyncNodeInfo>
-          </SyncNodeProgressWarpper>
+        <MainContent display="flex">
+          <div>
+            <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
+            <SyncNodeDesc>
+              It might take a while if you connect to this network the first time.
+            </SyncNodeDesc>
+            <SyncNodeProgressWarpper>
+              <SyncNodeProgress>
+                <Line
+                  percent={syncNodePercentage}
+                  trailColor="transparent"
+                  trailWidth="7"
+                  strokeWidth="7"
+                  strokeColor={colors.primary}
+                  strokeLinecap="square"
+                  style={{ height: '100%', width: '100%' }}
+                />
+              </SyncNodeProgress>
+              <SyncNodeInfo>
+                <TextWrapper>
+                  {syncNodePercentage}% synced, {bps && bps >= 0 ? bps.toFixed(2) : 0} bps
+                </TextWrapper>
+                <TextWrapper>{`${syncedBlock} / ${bestBlock} blocks`}</TextWrapper>
+                <TextWrapper>estimate: {estimateText} min</TextWrapper>
+              </SyncNodeInfo>
+            </SyncNodeProgressWarpper>
+          </div>
+          <PageFooter>
+            <Button disabled={syncNodeProgress >= 1} onClick={() => onNaviagteToChooseNetwork()}>
+              Change network
+            </Button>
+          </PageFooter>
         </MainContent>
       </LayoutWrapper>
     </Layout>
