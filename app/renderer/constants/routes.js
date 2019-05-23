@@ -1,7 +1,7 @@
 // @flow
 export default {
   ROOT: '/',
-  WAIT: '/wait',
+  EXITING: '/exiting',
   STAKING: {
     ROOT: '/staking',
     OVERVIEW: '/staking/overview',

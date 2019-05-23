@@ -18,7 +18,7 @@ const subscribeNodeStatusEpic = () =>
       if (status.isNodeSafeExisting) {
         return of({
           type: types.navigation.triggered,
-          payload: ROUTES.WAIT,
+          payload: ROUTES.EXITING,
         });
       }
 
