@@ -14,6 +14,13 @@ const mapDispatchToProps = dispatch => ({
       type: types.homePageNavigation.triggered,
     });
   },
+
+  onResetLocalStorage: () => {
+    dispatch(
+      { type: types.navigation.triggered, payload: ROUTES.TERMS_OF_USE_ACCEPTANCE },
+      { type: types.resetLocalStorage.triggered }
+    );
+  },
 });
 
 export default connect(

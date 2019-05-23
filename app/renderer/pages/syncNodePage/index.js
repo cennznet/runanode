@@ -167,7 +167,7 @@ const SyncNodePage = ({
           <div>
             <SyncNodeTitle>{selectedNetwork ? selectedNetwork.label : 'Main net'}</SyncNodeTitle>
             <SyncNodeDesc>
-              It might take a while if you connect to this network the first time.
+              If this is your first time connecting to the network, it may take a while to load.
             </SyncNodeDesc>
             <SyncNodeProgressWarpper>
               <SyncNodeProgress>
