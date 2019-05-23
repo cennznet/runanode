@@ -25,6 +25,11 @@ const NetworkOptionWrapper = styled.div`
   margin: 1rem 0;
 `;
 
+const DevelopmentNetworkDesc = styled.div`
+  color: ${colors.textMuted};
+  line-height: 1rem;
+`;
+
 const UploadFileWrapper = styled.div`
   margin: 1.5rem 0 1rem;
 `;
@@ -106,22 +111,29 @@ const ChooseNetWork = ({ onJoinNetwork }) => {
               />
             </NetworkOptionWrapper>
             {selectedLocalNetwork && (
-              <UploadFileWrapper>
-                <div>Upload chain setting file</div>
-                <UploaderWrapper>
-                  <FileUploader
-                    value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
-                    backgroundColor="transparent"
-                    borderColor={colors.N0}
-                    focusBorderColor={colors.N0}
-                    acceptTypes=".json"
-                    onDrop={file => {
-                      setUpGenesisFile(file);
-                    }}
-                  />
-                </UploaderWrapper>
-                <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
-              </UploadFileWrapper>
+              <div>
+                <DevelopmentNetworkDesc>
+                  We suggest that you keep main net set as your default network. The other networks
+                  are designed for developers and should only be used if you are sure of what
+                  you&apos;re doing.
+                </DevelopmentNetworkDesc>
+                <UploadFileWrapper>
+                  <div>Upload chain setting file</div>
+                  <UploaderWrapper>
+                    <FileUploader
+                      value={singleFile ? `${singleFile.name} - ${singleFile.size} bytes` : null}
+                      backgroundColor="transparent"
+                      borderColor={colors.N0}
+                      focusBorderColor={colors.N0}
+                      acceptTypes=".json"
+                      onDrop={file => {
+                        setUpGenesisFile(file);
+                      }}
+                    />
+                  </UploaderWrapper>
+                  <FileAcceptNotice>Accepted format: JSON</FileAcceptNotice>
+                </UploadFileWrapper>
+              </div>
             )}
 
             <ButtonWrapper>
