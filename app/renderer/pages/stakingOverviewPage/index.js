@@ -56,7 +56,12 @@ const sortedListWithBalances = (accountList, premierAccount, setValueFn) => {
           PreDefinedAssetId.stakingToken,
           account
         );
-        return stakingTokenBalance && { address: account, stakingTokenBalance: stakingTokenBalance.toString(10) };
+        return (
+          stakingTokenBalance && {
+            address: account,
+            stakingTokenBalance: stakingTokenBalance.toString(10),
+          }
+        );
       })
     ).then(result => setValueFn(result));
   }
@@ -108,7 +113,7 @@ const StakingOverviewPage = ({
             <TextTitleWrapper>
               <div>Staking overview</div>
               {toShowNextUpHintText && (
-                <NextUpHintText>You will join validator list from next era</NextUpHintText>
+                <NextUpHintText>You may join validator list at next era</NextUpHintText>
               )}
             </TextTitleWrapper>
             <Button

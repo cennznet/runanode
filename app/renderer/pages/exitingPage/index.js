@@ -6,13 +6,14 @@ import SimpleSidebar from 'components/layout/SimpleSidebar'; // have to import l
 import withContainer from './container';
 
 const SpinnerWrapper = styled.div`
-  height: 100%;
-  justify-content: center;
-  align-items: center;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
 `;
 
-const WaitPage = ({ nodeStateStore }) => {
+const ExitingPage = ({ nodeStateStore }) => {
   return (
     <Layout sidebar={<SimpleSidebar />}>
       <LayoutWrapper>
@@ -26,4 +27,4 @@ const WaitPage = ({ nodeStateStore }) => {
     </Layout>
   );
 };
-export default withContainer(WaitPage);
+export default withContainer(ExitingPage);
