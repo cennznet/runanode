@@ -390,7 +390,7 @@ const StakingStakePage = ({
                         : 0}
                     </Ellipsis>
                   </InnerSectionItem>
-                  <AnimatedInnerSectionItemDiff value={rewardValueDiff} />
+                  {/* <AnimatedInnerSectionItemDiff value={rewardValueDiff} /> */}
                 </InnerSectionWrapper>
                 <SectionHDivider />
                 <InnerSectionWrapper>
@@ -418,7 +418,7 @@ const StakingStakePage = ({
                       {spendingTokenBalances.totalBalance.toString}
                     </Ellipsis>
                   </InnerSectionItem>
-                  <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} />
+                  {/* <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} /> */}
                 </InnerSectionWrapper>
               </SectionLayoutInnerWrapper>
             </Left>
@@ -426,30 +426,30 @@ const StakingStakePage = ({
               <Item>
                 <ItemTitle>Warning received</ItemTitle>
                 <WarningContent>
-                  <ItemNum>{warningValue}</ItemNum> warning
+                  {/* <ItemNum>{warningValue}</ItemNum> warning */}
                 </WarningContent>
               </Item>
               <Item>
                 <ItemTitle>Punishment</ItemTitle>
                 <PunishmentContent>
-                  <ItemNum>{punishmentValue}</ItemNum>{' '}
-                  {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
+                  {/* <ItemNum>{punishmentValue}</ItemNum>
+                  {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]} */}
                 </PunishmentContent>
               </Item>
               <Item>
                 <ItemTitle>Reward</ItemTitle>
                 <RewardContent>
-                  <ItemNum>
+                  {/* <ItemNum>
                     <Ellipsis substrLength="3" maxLength="10" tailLength="3">
                       {rewardValue}
                     </Ellipsis>
-                  </ItemNum>
-                  {/* <ItemNum>{rewardValue}</ItemNum>{' '} */}
-                  {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
+                  </ItemNum> */}
+                  {/* <ItemNum>{rewardValue}</ItemNum> */}
+                  {/* {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]} */}
                 </RewardContent>
                 <RewardContent>
-                  <ItemNum>{rewardSpendingValue}</ItemNum>{' '}
-                  {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
+                  {/* <ItemNum>{rewardSpendingValue}</ItemNum> */}
+                  {/* {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]} */}
                 </RewardContent>
               </Item>
             </Right>
