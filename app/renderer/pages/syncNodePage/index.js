@@ -26,7 +26,7 @@ const SpinnerWrapper = styled.div`
 `;
 
 const SyncNodeTitle = styled.div`
-  color: ${colors.N0};
+  color: ${colors.text};
   font-weight: 600;
   font-size: 1.7rem;
   margin: 3rem auto;
@@ -57,7 +57,7 @@ const SyncNodeInfo = styled.div`
 `;
 
 const TextWrapper = styled.div`
-  color: ${colors.N0};
+  color: ${colors.text};
 `;
 
 const SyncNodePage = ({

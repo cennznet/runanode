@@ -42,8 +42,9 @@ const defaultThemeStyle = p => {
     background: colors.V900,
     boxShadow:
       '0 2px 1px -1px rgba(0, 0, 0, 0.18), 0 1px 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+    color: colors.text,
 
-    color: {
+    variants: {
       info: colors.info,
       error: colors.danger,
       success: colors.success,
@@ -63,6 +64,7 @@ const Toaster = styled(CustomToast)`
     box-shadow: ${p => computedThemeStyle(p).boxShadow};
     background: ${p => computedThemeStyle(p).background};
     border-radius: 3px;
+    color: ${p => computedThemeStyle(p).color};
 
     .Toastify__toast-body {
       min-height: 3rem;
@@ -77,25 +79,25 @@ const Toaster = styled(CustomToast)`
 
     &.Toastify__toast--success {
       .Toastify__progress-bar {
-        background: ${p => computedThemeStyle(p).color.success};
+        background: ${p => computedThemeStyle(p).variants.success};
       }
     }
 
     &.Toastify__toast--error {
       .Toastify__progress-bar {
-        background: ${p => computedThemeStyle(p).color.error};
+        background: ${p => computedThemeStyle(p).variants.error};
       }
     }
 
     &.Toastify__toast--warning {
       .Toastify__progress-bar {
-        background: ${p => computedThemeStyle(p).color.warning};
+        background: ${p => computedThemeStyle(p).variants.warning};
       }
     }
 
     &.Toastify__toast--info {
       .Toastify__progress-bar {
-        background: ${p => computedThemeStyle(p).color.info};
+        background: ${p => computedThemeStyle(p).variants.info};
       }
     }
   }
