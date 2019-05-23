@@ -59,8 +59,8 @@ const StakingAccountBalances = ({
   gasFee,
   sufficientGasFee,
 }) => {
-  const StakingTokenString = PreDefinedAssetIdName[PreDefinedAssetId.stakingToken];
-  const SpendingTokenString = PreDefinedAssetIdName[PreDefinedAssetId.spendingToken];
+  const stakingTokenString = PreDefinedAssetIdName[PreDefinedAssetId.stakingToken];
+  const spendingTokenString = PreDefinedAssetIdName[PreDefinedAssetId.spendingToken];
   return (
     <BalancesWrapper>
       <BalanceDetailsWrapper>
@@ -70,14 +70,14 @@ const StakingAccountBalances = ({
         </StepDescription>
         <Card
           title="Staking token available balance"
-          hint={`In order to participate as a validator you need to have ${StakingTokenString} token(s) in your account.`}
+          hint={`In order to participate as a validator you need to have ${stakingTokenString} token(s) in your account.`}
         >
           <BalanceDetail>
             <div>
               <Ellipsis substrLength={6}>
                 <Balance>{stakingBalance}</Balance>
               </Ellipsis>
-              {`${StakingTokenString}`}
+              {`${stakingTokenString}`}
             </div>
           </BalanceDetail>
         </Card>
@@ -85,20 +85,20 @@ const StakingAccountBalances = ({
       <BalanceDetailsWrapper>
         <StepDescription>
           {`Step 3: Check your spending token balance In order to stake you need to have enough
-          ${SpendingTokenString} tokens. ${SpendingTokenString} tokens are used to cover your transaction fee for staking and
+          ${spendingTokenString} tokens. ${spendingTokenString} tokens are used to cover your transaction fee for staking and
           unstaking.`}
         </StepDescription>
         <div>
           <Card
             title="Spending token available balance"
-            hint={`${SpendingTokenString} is used for paying network fees. It is also used as the block reward for validators.`}
+            hint={`${spendingTokenString} is used for paying network fees. It is also used as the block reward for validators.`}
           >
             <BalanceDetail>
               <div>
                 <Ellipsis substrLength={6}>
                   <Balance>{cpayStakingBalance}</Balance>
                 </Ellipsis>
-                {`${SpendingTokenString}`}
+                {`${spendingTokenString}`}
               </div>
             </BalanceDetail>
           </Card>
@@ -111,7 +111,7 @@ const StakingAccountBalances = ({
                 <Ellipsis substrLength={6}>
                   <Balance>{gasFee}</Balance>
                 </Ellipsis>
-                {`${SpendingTokenString}`}
+                {`${spendingTokenString}`}
               </div>
               {!sufficientGasFee && (
                 <InsufficientGasFeeErr>
