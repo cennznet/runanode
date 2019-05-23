@@ -1,15 +1,14 @@
 version: '3'
 services:
   node-0:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-6d5e2c4f
+    image: parity/substrate:1.0.0-8e3a08940
     volumes:
       - './target/node_0:/mnt/node'
       - './genesis/:/mnt/genesis:ro'
     depends_on:
       - 'telemetry'
     command:
-      # - --chain=/mnt/genesis/local/intra-testnet.json
-      - --chain=/mnt/genesis/local/local.json
+      - --chain=/mnt/genesis/local/local-testnet.json
       - --base-path=/mnt/node
       - --node-key-type=secp256k1
       - --key=//Andrea
@@ -27,15 +26,14 @@ services:
       - '19944:9944'
       - '30334:30333'
   node-1:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-6d5e2c4f
+    image: parity/substrate:1.0.0-8e3a08940
     volumes:
       - './target/node_1:/mnt/node'
       - './genesis/:/mnt/genesis:ro'
     depends_on:
       - 'telemetry'
     command:
-      # - --chain=/mnt/genesis/local/intra-testnet.json
-      - --chain=/mnt/genesis/local/local.json
+      - --chain=/mnt/genesis/local/local-testnet.json
       - --base-path=/mnt/node
       - --node-key-type=secp256k1
       - --key=//Brooke
@@ -51,15 +49,14 @@ services:
     ports:
       - '30335:30333'
   node-2:
-    image: centralitycontainerregistry-on.azurecr.io/centrality/cennznet:rimu-6d5e2c4f
+    image: parity/substrate:1.0.0-8e3a08940
     volumes:
       - './target/node_2:/mnt/node'
       - './genesis/:/mnt/genesis:ro'
     depends_on:
       - 'telemetry'
     command:
-      # - --chain=/mnt/genesis/local/intra-testnet.json
-      - --chain=/mnt/genesis/local/local.json
+      - --chain=/mnt/genesis/local/local-testnet.json
       - --base-path=/mnt/node
       - --node-key-type=secp256k1
       - --key=//Courtney
