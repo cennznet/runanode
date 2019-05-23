@@ -2,7 +2,7 @@ const path = require('path');
 const webpackConfig = require('./configs/webpack.config.styleguide');
 
 module.exports = {
-  title: 'rUN UI',
+  title: 'React components',
   theme: {
     color: {
       link: '#FFFFFF',
