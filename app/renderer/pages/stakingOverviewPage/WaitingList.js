@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { Ellipsis, Table } from 'components';
 import theme, { colors } from 'theme';
+import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/theNode.types';
 
 const ListWrapper = styled.div`
   width: 49%;
@@ -78,7 +79,7 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
                   textAlign: 'right',
                 }}
               >
-                Amount (CENNZ)
+                {`Amount (${PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]})`}
               </div>
             ),
             id: 'balances',
@@ -92,7 +93,9 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
                     textAlign: 'right',
                   }}
                 >
-                  <Ellipsis substrLength={6}>{(value && value.stakingTokenBalance) || 'Error'}</Ellipsis>
+                  <Ellipsis substrLength={6}>
+                    {(value && value.stakingTokenBalance) || 'Error'}
+                  </Ellipsis>
                 </div>
               );
             },
