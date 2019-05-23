@@ -1,5 +1,14 @@
 import { EMPTY, from, of, zip } from 'rxjs';
-import { mergeMap, map, concat, tap, mapTo, filter, withLatestFrom, debounceTime } from 'rxjs/operators';
+import {
+  mergeMap,
+  map,
+  concat,
+  tap,
+  mapTo,
+  filter,
+  withLatestFrom,
+  debounceTime,
+} from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import types from 'renderer/types';
 import ROUTES from 'renderer/constants/routes';
@@ -21,20 +30,23 @@ const storeNetworkOptionEpic = action$ =>
     ofType(types.storeNetworkOption.triggered),
     mergeMap(({ payload }) => {
       const { selectedNetwork, genesisFile } = payload;
-      return of(
-        {
-          type: types.setStorage.requested,
-          payload: {
-            key: storageKeys.GENESIS_CONFIG_FILE_INFO,
-            value: filterGenesisFile(genesisFile),
-          },
-        }
-      ).pipe(concat(of( // wait for save GENESIS_CONFIG_FILE_INFO finish
-        {
-          type: types.setStorage.requested,
-          payload: { key: storageKeys.SELECTED_NETWORK, value: selectedNetwork },
+      return of({
+        type: types.setStorage.requested,
+        payload: {
+          key: storageKeys.GENESIS_CONFIG_FILE_INFO,
+          value: filterGenesisFile(genesisFile),
         },
-      )));
+      }).pipe(
+        concat(
+          of(
+            // wait for save GENESIS_CONFIG_FILE_INFO finish
+            {
+              type: types.setStorage.requested,
+              payload: { key: storageKeys.SELECTED_NETWORK, value: selectedNetwork },
+            }
+          )
+        )
+      );
     })
   );
 
@@ -45,7 +57,7 @@ const navigationAfterStoreNetworkEpic = action$ =>
       return of({
         type: types.navigation.triggered,
         payload: ROUTES.SYNC_NODE,
-      })
+      });
     })
   );
 
@@ -54,16 +66,20 @@ const switchNetworkEpic = action$ =>
     ofType(types.nodeStateChange.triggered),
     withLatestFrom(action$.ofType(types.switchNetwork.triggered)),
     mergeMap(([nodeStateChangeAction, switchNetworkAction]) => {
-      Logger.debug(`switchNetworkEpic, nodeStateChangeAction: ${nodeStateChangeAction.payload}, switchNetworkAction: ${JSON.stringify(switchNetworkAction)}`);
-      const { chain } = switchNetworkAction.payload;
-      if ( nodeStateChangeAction.payload === 'stopping' && chain ) {
+      Logger.debug(
+        `switchNetworkEpic, nodeStateChangeAction: ${
+          nodeStateChangeAction.payload
+        }, switchNetworkAction: ${JSON.stringify(switchNetworkAction)}`
+      );
+      const { chain } = switchNetworkAction ? switchNetworkAction.payload : {};
+      if (nodeStateChangeAction.payload === 'stopping' && chain) {
         window.appApi.switchNetwork(chain);
       }
       return of(
         { type: types.subscribeNewHead.triggered },
         { type: types.subscribeNewHeadRemote.triggered },
         { type: types.subscribeFinalizedHeads.triggered },
-        { type: types.switchNetwork.triggered, payload: {} },
+        { type: types.switchNetwork.triggered, payload: {} }
       );
     })
   );
@@ -79,18 +95,16 @@ const restartNodeEpic = action$ =>
     ofType(types.restartNode.triggered),
     tap(({ payload }) => {
       Logger.debug(`restartNodeEpic, payload: ${JSON.stringify(payload)}`);
-      const { chain } = payload;
+      const { chain } = payload || {};
       const options: TheNodeRestartOptions = payload;
-      if(chain) {
+      if (chain) {
         restartTheNetNodeChannel.send(options);
       }
     }),
     mergeMap(() =>
-      of(
-        {
-          type: ''
-        },
-      )
+      of({
+        type: '',
+      })
     )
   );
 
