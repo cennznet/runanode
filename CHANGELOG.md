@@ -8,6 +8,16 @@
 
 ### Improvements
 
+# v0.13.4 (2019.05.24)
+
+### Improvements
+
+- Add resetStorage button in homepage;
+
+### Fixes
+
+- Couple of UI issue fixes;
+
 # v0.13.1 (2019.05.23)
 
 ### Improvements
@@ -18,20 +28,17 @@
 
 - Bug fixes and code refactoring;
 
-
 # v0.13.0 (2019.05.23)
 
 ### Improvements
 
 - Refactor to decrease branding code;
 
-
 # v0.12.0 (2019.05.22)
 
 ### Improvements
 
 - Update SDK and replace polkadotjs with thenet;
-
 
 # v0.11.1 (2019.05.17)
 
@@ -40,13 +47,11 @@
 - UI issues in staking validator list;
 - File path issue in genesis file selection;
 
-
 # v0.11.0 (2019.05.17)
 
 ### Features
 
 - Upgrade towards thenet-node 0.9.20
-
 
 # v0.9.2 (2019.04.09)
 
