@@ -135,6 +135,12 @@ const configComponentStyle = colors => ({
   //   background: '#A99DFF',
   //   color: colors.V900,
   // },
+  Toaster: {
+    background: colors.N50,
+  },
+  Modal: {
+    background: colors.N50,
+  },
 });
 
 export default configComponentStyle;

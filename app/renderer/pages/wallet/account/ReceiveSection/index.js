@@ -32,7 +32,7 @@ const ReceiveSection = ({ account }) => {
     margin: 0,
   });
 
-  const refinedQR = rawQR.replace('<path', `<path fill=${colors.N0}`);
+  const refinedQR = rawQR.replace('<path', `<path fill=${colors.text}`);
 
   return (
     <Wrapper>
