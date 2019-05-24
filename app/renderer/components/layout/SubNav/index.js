@@ -12,9 +12,10 @@ const Wrapper = styled.div`
   max-width: 15rem;
   height: 100%;
   font-weight: 500;
-  background: ${colors.V900};
+  background: ${colors.N50};
   overflow: hidden;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5), 4px 0 8px 0 rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 4px 0 #d0d3d5, 4px 0 8px 0 #d0d3d5;
+  color: ${colors.N700};
 `;
 
 const Footer = styled.div`
@@ -22,7 +23,7 @@ const Footer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%);
+  background: linear-gradient(180deg, #7F878D) 0%, #7F878D 100%);
 `;
 
 const SubNav = ({ navItems, children, footer, ...props }) => (

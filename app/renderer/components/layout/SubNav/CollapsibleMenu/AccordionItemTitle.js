@@ -9,7 +9,7 @@ const Title = styled.div`
   cursor: pointer;
   align-items: center;
   justify-content: space-between;
-  color: ${colors.textMuted};
+  color: ${colors.V300};
   background: 'transparent';
   border: 0;
   height: 5rem;
@@ -17,8 +17,8 @@ const Title = styled.div`
   user-select: none;
 
   &:hover {
-    background: ${colors.primary};
     color: ${colors.N0};
+    background: ${colors.V300};
   }
 `;
 
@@ -27,8 +27,7 @@ Title.defaultProps = {
 };
 
 const TitleHeading = styled.div`
-  font-weight: ${p => (p.isTitleHighlight ? 600 : 500)};
-  color: ${p => (p.isTitleHighlight ? colors.N0 : colors.textMuted)};
+  font-weight: ${p => (p.isTitleHighlight ? 600 : 500)};ååå
   ${ellipsis('180px')}
 `;
 

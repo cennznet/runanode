@@ -7,7 +7,7 @@ import * as lightTheme from './light';
  *  restart the app if the theme has been changed
  */
 // const currentTheme = darkTheme;
-const { default: theme, colors, utils, media } = darkTheme;
+const { default: theme, colors, utils, media } = lightTheme;
 
 export { colors, utils, media };
 export default theme;

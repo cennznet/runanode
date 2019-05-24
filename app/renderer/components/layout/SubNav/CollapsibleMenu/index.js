@@ -15,18 +15,19 @@ const NavItem = styled(NavLink)`
   height: 3rem;
   line-height: 3rem;
   padding-left: 1rem;
-  color: ${colors.textMuted};
+  color: ${colors.N500};
   text-decoration: none;
   overflow: hidden;
   cursor: pointer;
 
   &.active {
-    background: linear-gradient(146.75deg, #1335b6 0%, #040c40 100%);
-    color: ${colors.N0};
+    background: rgba(91, 97, 235, 0.1);
+    color: ${colors.V300};
   }
 
   &:hover:not(.active) {
-    background: ${colors.V500};
+    background: rgba(159, 52, 244, 0.2);
+    color: #9f34f4;
   }
 `;
 
