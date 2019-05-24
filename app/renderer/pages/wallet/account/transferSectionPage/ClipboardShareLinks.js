@@ -86,7 +86,7 @@ const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customS
       <Icon
         {...iconExtLink}
         onClick={openExternalLink}
-        onMouseEnter={() => setMessage('Check on theScan')}
+        onMouseEnter={() => setMessage('Check on UNcover')}
         data-for={id}
         data-tip
         style={{ marginLeft: styles.icon2MarginLeft }}
@@ -98,12 +98,12 @@ const ClipboardShareLinks = ({ icon, iconExtLink, children, url, styles: customS
 
 ClipboardShareLinks.defaultProps = {
   icon: {
-    color: colors.N0,
+    color: colors.text,
     icon: 'copy',
     size: 'sm',
   },
   iconExtLink: {
-    color: colors.N0,
+    color: colors.text,
     icon: 'external-link-alt',
     size: 'sm',
   },
