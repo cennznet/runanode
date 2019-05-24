@@ -51,10 +51,10 @@ const Toggle = styled(CustomToggle)`
       }
 
       .react-toggle-thumb {
-        width: 16px,
-        height: 16px,
-        top: 2px,
-        left: 22px,
+        width: 16px;
+        height: 16px;
+        top: 2px;
+        left: 22px;
         border-color: ${p => computedThemeStyle(p).thumbCheckedBorderColor};
       }
     }
