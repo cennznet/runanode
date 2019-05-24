@@ -30,6 +30,7 @@ const homePageNavigationEpic = (action$, state$) =>
 
       if (
         isNetworkRemembered !== false &&
+        selectedNetwork &&
         ((selectedNetwork === NetworkNameMapping.Development && genesisConfigFilePath) ||
           selectedNetwork !== NetworkNameMapping.Development)
       ) {
