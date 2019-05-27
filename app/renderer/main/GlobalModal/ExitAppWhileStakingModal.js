@@ -32,7 +32,7 @@ const ExitAppWhileStakingModal = ({ isOpen, onToggleGlobalModal, modalType }) =>
               onToggleGlobalModal({ isOpen: false, type: modalType });
             }}
           >
-            Close
+            Cancel
           </Button>
           <Button
             style={{ marginLeft: '0.5rem' }}
