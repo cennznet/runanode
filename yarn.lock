@@ -829,7 +829,7 @@
   resolved "https://registry.yarnpkg.com/@cennznet/crml-cennzx-spot/-/crml-cennzx-spot-0.5.5.tgz#f568edfc02d5f06d82dcb15ab2f7e3b134689d2e"
   integrity sha512-b+AQdUzcJAB/blFR2RqlZCdVUcE3DJTcWJ/qsTMekfQ9Elb4sXC0D7W3cELKVsRk5akQFMKF7KAhef80tWkTAw==
 
-"@cennznet/crml-generic-asset@0.8.0":
+"@cennznet/crml-generic-asset@0.8.1":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cennznet/crml-generic-asset/-/crml-generic-asset-0.8.1.tgz#e9db5d499eb8f2b51d1b8295320b21c627b4149d"
   integrity sha512-OZc48HmdJQyBD5xjUEdsTy3K5PrHWrc+X6d8IMYPUUtWJqs7YLxwgiYxKeMlM3Uh3GFm08PJNfyM2Z6vFO0udA==
