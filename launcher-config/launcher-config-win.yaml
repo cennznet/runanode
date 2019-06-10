@@ -1,0 +1,4 @@
+nodePath: ${APP_DIST_DIRECTORY}\cennznet-node
+logsPrefix: ${APP_LOG_DATA_DIRECTORY}
+nodeArgs:
+  - --pruning=archive
