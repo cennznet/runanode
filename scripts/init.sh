@@ -2,40 +2,26 @@
 
 set -ex
 
-rm -rf ./dists
-mkdir -p ./dists/logs
-cd ./dists
-# wget -O launcher-config-win.yaml http://cennz-node-ui.s3.amazonaws.com/launcher-config-win.yaml
-# wget -O launcher-config-mac.yaml http://cennz-node-ui.s3.amazonaws.com/launcher-config-mac.yaml
-# wget -O launcher-config-linux.yaml http://cennz-node-ui.s3.amazonaws.com/launcher-config-linux.yaml
+rm -rf ./dist
+mkdir -p ./dist/logs
+cd ./dist
 
-# wget -O cennznet-node-win http://cennz-node-ui.s3.amazonaws.com/cennznet-node-win
-# wget -O cennznet-node-mac http://cennz-node-ui.s3.amazonaws.com/cennznet-node-mac
-# wget -O cennznet-node-linux http://cennz-node-ui.s3.amazonaws.com/cennznet-node-linux
-
-# chmod -R 777 ./
-# cp ./cennznet-node-mac ./cennznet-node
+wget -O launcher-config-mac.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-mac.yaml
+wget -O launcher-config-linux.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-linux.yaml
+wget -O launcher-config-win.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-win.yaml
 
 
-
-
-
-GITHUB_API_TOKEN=34287c23e74cea73ed884e460eaa758914da8e6f
+GITHUB_TOKEN=$1
 owner=cennznet
 repo=cennznet-node-bin
-# tag=v$RELEASE_VERSION
 name_mac=cennznet-node-mac
 name_linux=cennznet-node-linux
 name_windows=cennznet-node-win.exe
 
 GH_API="https://api.github.com"
 GH_REPO="$GH_API/repos/$owner/$repo"
-# GH_TAGS="$GH_REPO/releases/tags/$tag"
 GH_LATEST_RELEASE="$GH_REPO/releases/latest"
-AUTH="Authorization: token $GITHUB_API_TOKEN"
-
-# WGET_ARGS="--content-disposition --auth-no-challenge --no-cookie"
-CURL_ARGS="-o $output -LJO#"
+AUTH="Authorization: token $GITHUB_TOKEN"
 
 # Validate token
 curl -o /dev/null -sH "$AUTH" $GH_REPO || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
@@ -58,11 +44,11 @@ id_windows=$(echo "$response" | jq --arg name "cennznet-node-win.exe" '.assets[]
 ASSET_WINDOWS="$GH_REPO/releases/assets/$id_windows"
 
 # Download asset file.
-echo "Downloading asset... to $output" >&2
-curl -o cennznet-node-mac -vLJO -H 'Accept: application/octet-stream' "$ASSET_MAC?access_token=$GITHUB_API_TOKEN"
-curl -o cennznet-node-linux -vLJO -H 'Accept: application/octet-stream' "$ASSET_LINUX?access_token=$GITHUB_API_TOKEN"
-curl -o cennznet-node-wind.exe -vLJO -H 'Accept: application/octet-stream' "$ASSET_WINDOWS?access_token=$GITHUB_API_TOKEN"
+echo "Downloading asset..." >&2
+curl -o cennznet-node-mac -vLJO -H 'Accept: application/octet-stream' "$ASSET_MAC?access_token=$GITHUB_TOKEN"
+curl -o cennznet-node-linux -vLJO -H 'Accept: application/octet-stream' "$ASSET_LINUX?access_token=$GITHUB_TOKEN"
+curl -o cennznet-node-wind.exe -vLJO -H 'Accept: application/octet-stream' "$ASSET_WINDOWS?access_token=$GITHUB_TOKEN"
 
 chmod -R 777 ./
 
-echo "$0 done." >&2
+echo "$0 finished." >&2
