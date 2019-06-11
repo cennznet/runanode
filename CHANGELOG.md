@@ -8,6 +8,13 @@
 
 ### Improvements
 
+# v0.13.5 (2019.06.12)
+
+### Improvements
+
+- Windows target is included;
+- Include Faucet deposit instruction and URL -- https://cennznet.js.org/faucet-ui/ ;
+
 # v0.13.4 (2019.05.24)
 
 ### Improvements
