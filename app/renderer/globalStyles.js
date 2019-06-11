@@ -15,6 +15,10 @@ const globalStyles = `
     background: ${colors.V800};
   }
 
+  a {
+    color: ${colors.N0};
+  }
+
   p {
     line-height: 1.25rem;
   }
