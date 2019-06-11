@@ -11,7 +11,7 @@ wget -O launcher-config-linux.yaml https://github.com/cennznet/runanode/blob/mas
 wget -O launcher-config-win.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-win.yaml
 
 
-GITHUB_TOKEN=$1
+GITHUB_TOKEN=$github_api_token
 owner=cennznet
 repo=cennznet-node-bin
 name_mac=cennznet-node-mac
