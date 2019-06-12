@@ -1,10 +1,22 @@
 #!/bin/bash
 
-set -ex
+# Check dependencies.
+set -e
+xargs=$(which xargs)
 
-rm -rf ./dists
-mkdir -p ./dists/logs
-cd ./dists
+# Validate settings.
+[ "$TRACE" ] && set -x
+set -x
+
+CONFIG=$@
+
+for line in $CONFIG; do
+  eval "$line"
+done
+
+rm -rf ./dist
+mkdir -p ./dist/logs
+cd ./dist
 
 wget -O launcher-config-mac.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-mac.yaml
 wget -O launcher-config-linux.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-linux.yaml
@@ -14,10 +26,6 @@ wget -O launcher-config-win.yaml https://github.com/cennznet/runanode/blob/maste
 GITHUB_TOKEN=$github_api_token
 owner=cennznet
 repo=cennznet-node-bin
-
-name_mac=cennznet-node-mac
-name_linux=cennznet-node-linux
-name_windows=cennznet-node-win.exe
 
 GH_API="https://api.github.com"
 GH_REPO="$GH_API/repos/$owner/$repo"
@@ -30,8 +38,6 @@ curl -o /dev/null -sH "$AUTH" $GH_REPO || { echo "Error: Invalid repo, token or 
 # Get latest cennznet assets
 response=$(curl -sH "$AUTH" $GH_LATEST_RELEASE)
 
-# Get ID of the asset based on given name.
-# eval $(echo "$response" | grep -C3 "name.:.\+$name" | grep -w id | tr : = | tr -cd '[[:alnum:]]=')
 id_mac=$(echo "$response" | jq --arg name "cennznet-node-mac" '.assets[] | select(.name == "cennznet-node-mac").id')
 [ "$id_mac" ] || { echo "Error: Failed to get asset id, response: $response" | awk 'length($0)<100' >&2; exit 1; }
 ASSET_MAC="$GH_REPO/releases/assets/$id_mac"
@@ -44,7 +50,6 @@ id_windows=$(echo "$response" | jq --arg name "cennznet-node-win.exe" '.assets[]
 [ "$id_windows" ] || { echo "Error: Failed to get asset id, response: $response" | awk 'length($0)<100' >&2; exit 1; }
 ASSET_WINDOWS="$GH_REPO/releases/assets/$id_windows"
 
-# Download asset file.
 echo "Downloading asset..." >&2
 curl -o cennznet-node-mac -vLJO -H 'Accept: application/octet-stream' "$ASSET_MAC?access_token=$GITHUB_TOKEN"
 curl -o cennznet-node-linux -vLJO -H 'Accept: application/octet-stream' "$ASSET_LINUX?access_token=$GITHUB_TOKEN"
