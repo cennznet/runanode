@@ -6,7 +6,7 @@ import branding from './branding';
 const commonConfig = {
   // Common config shared by dev and prod comes here...
   app: {
-    name: 'rUN',
+    name: 'Jasmy-Node',
     apiInitDebounceTime: 10000, // after clean local chain data, api init need more than 6s
     defaultDebounceTime: 500,
     sentryDSN: 'https://0c4aa4aa53f1494e87d532890cb59529@sentry.io/1436322',

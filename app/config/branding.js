@@ -1,5 +1,5 @@
 const branding = {
-  faqUrl: 'http://help.runanode.io/support/home',
+  faqUrl: '',
 };
 
 export default branding;

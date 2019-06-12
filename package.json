@@ -35,7 +35,7 @@
     "lint-styles": "stylelint --ignore-path .eslintignore '**/*.*(css|scss)' --syntax scss",
     "lint-styles-fix": "yarn --silent lint-styles --fix; exit 0",
     "postlint-styles-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{css,scss}'",
-    "package": "yarn clean && yarn build && electron-builder build --publish never",
+    "package": "yarn clean && yarn build && electron-builder build -m --publish never",
     "package-all": "yarn clean && yarn build && electron-builder build -mwl --publish never",
     "package-ci": "yarn clean && yarn postinstall && yarn build && electron-builder --publish always",
     "package-linux": "yarn clean && yarn build && electron-builder build -l --publish never",
