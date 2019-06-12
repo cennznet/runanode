@@ -2,9 +2,9 @@
 
 set -ex
 
-rm -rf ./dist
-mkdir -p ./dist/logs
-cd ./dist
+rm -rf ./dists
+mkdir -p ./dists/logs
+cd ./dists
 
 wget -O launcher-config-mac.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-mac.yaml
 wget -O launcher-config-linux.yaml https://github.com/cennznet/runanode/blob/master/launcher-config/launcher-config-linux.yaml
@@ -14,6 +14,7 @@ wget -O launcher-config-win.yaml https://github.com/cennznet/runanode/blob/maste
 GITHUB_TOKEN=$github_api_token
 owner=cennznet
 repo=cennznet-node-bin
+
 name_mac=cennznet-node-mac
 name_linux=cennznet-node-linux
 name_windows=cennznet-node-win.exe
