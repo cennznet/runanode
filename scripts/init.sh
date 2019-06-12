@@ -53,8 +53,8 @@ ASSET_WINDOWS="$GH_REPO/releases/assets/$id_windows"
 echo "Downloading asset..." >&2
 curl -o cennznet-node-mac -vLJO -H 'Accept: application/octet-stream' "$ASSET_MAC?access_token=$GITHUB_TOKEN"
 curl -o cennznet-node-linux -vLJO -H 'Accept: application/octet-stream' "$ASSET_LINUX?access_token=$GITHUB_TOKEN"
-curl -o cennznet-node-wind.exe -vLJO -H 'Accept: application/octet-stream' "$ASSET_WINDOWS?access_token=$GITHUB_TOKEN"
+curl -o cennznet-node-win.exe -vLJO -H 'Accept: application/octet-stream' "$ASSET_WINDOWS?access_token=$GITHUB_TOKEN"
 
-chmod -R 777 ./
+chmod +x ./cennznet-node*
 
 echo "$0 finished." >&2
