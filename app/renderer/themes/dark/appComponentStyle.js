@@ -6,10 +6,13 @@ const configComponentStyle = colors => ({
     background: '',
     color: '',
   },
-  AppSideNav: {
-    background: '',
-    color: '',
-  },
+  // AppSideNav: {
+  //   background: colors.R100,
+  //   navItemColor: colors.R300,
+  //   navItemHoverBackground: colors.R600,
+  //   navItemHoverColor: colors.R500,
+  //   navItemActiveColor: colors.R800,
+  // },
   // AppSimpleSidebar: {
   //   background: colors.N0,
   // },
@@ -17,9 +20,10 @@ const configComponentStyle = colors => ({
     background: '',
     color: '',
   },
-  AppTopBar: {
-    background: colors.N0,
-  },
+  // AppTopBar: {
+  //   background: colors.N0,
+  // },
+
   // Button: {
   //   fontSize: {
   //     sm: '14px',
@@ -76,7 +80,7 @@ const configComponentStyle = colors => ({
   //   },
   // },
   // Modal: {
-  //   backgroundColor: colors.V900,
+  //   background: colors.V900,
   //   boxShadow: `0 2px 4px 0 ${colors.N900}`,
   //   overlayBackground: 'rgba(54, 58, 61, 0.7)',
   //   color: colors.N0,

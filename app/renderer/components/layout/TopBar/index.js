@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { environment } from 'common/environment';
 import { NetworkNameMapping, chainNameMapping } from 'common/types/theNode.types';
-import themeobj, { colors } from 'theme';
+import themeObject, { colors } from 'theme';
 import logo from 'renderer/assets/img/logo-in-topbar.svg';
 import { getNetworkOptionPair, NETWORK_OPTIONS_SORTED } from 'renderer/pages/chooseNetworkPage';
 import { Select } from 'components';
@@ -157,7 +157,7 @@ const TopBar = ({
 };
 
 TopBar.defaultProps = {
-  theme: themeobj,
+  theme: themeObject,
   themeKey: 'AppTopBar',
 };
 
