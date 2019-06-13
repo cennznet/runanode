@@ -3,10 +3,21 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { environment } from 'common/environment';
-import { colors } from 'theme';
+import themeObject, { colors } from 'theme';
 import ROUTES from 'renderer/constants/routes';
 import { openExternalLink } from 'renderer/utils/utils';
-import appConfig from 'app/config';
+
+const defaultThemeStyle = p => {
+  return {
+    background: colors.V900,
+    navItemColor: colors.textMuted,
+    navItemHoverBackground: colors.V500,
+    navItemHoverColor: colors.N500,
+    navItemActiveColor: colors.N0,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const { isDevOrDebugProd } = environment;
 
@@ -16,41 +27,55 @@ const Wrapper = styled.div`
   width: 5rem;
 `;
 
-const IconDiv = styled.div`
+const ExternalLink = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 5rem;
   font-size: 1rem;
-  color: ${colors.textMuted};
+  color: ${p => computedThemeStyle(p).navItemColor};
   text-decoration: none;
 
   &.active {
-    color: ${colors.N0};
+    color: ${p => computedThemeStyle(p).navItemActiveColor};
   }
 
   &:hover:not(.active) {
-    background: ${colors.V500};
+    background: ${p => computedThemeStyle(p).navItemHoverBackground};
   }
 `;
 
-const IconLink = styled(NavLink)`
+ExternalLink.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppSideNav',
+};
+
+const CustomNavLink = ({ theme, themeKey, children, ...props }) => {
+  return <NavLink {...props}>{children}</NavLink>;
+};
+
+const IconLink = styled(CustomNavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 5rem;
   font-size: 1rem;
-  color: ${colors.textMuted};
+  color: ${p => computedThemeStyle(p).navItemColor};
   text-decoration: none;
 
   &.active {
-    color: ${colors.N0};
+    color: ${p => computedThemeStyle(p).navItemActiveColor};
   }
 
   &:hover:not(.active) {
-    background: ${colors.V500};
+    background: ${p => computedThemeStyle(p).navItemHoverBackground};
   }
 `;
+
+IconLink.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppSideNav',
+};
 
 const IconText = styled.div`
   margin-top: 0.5rem;
@@ -63,9 +88,14 @@ const IconNav = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 5rem;
-  background: ${colors.V900};
+  background: ${p => computedThemeStyle(p).background};
   box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.14);
 `;
+
+IconNav.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppSideNav',
+};
 
 const TopIcons = styled.div``;
 const BottomIcons = styled.div``;
@@ -75,10 +105,10 @@ const IconWrapper = styled.div`
 
 const FAQ_URL = 'http://help.runanode.io/support/home';
 
-const SideNav = () => {
+const SideNav = ({ theme, themeKey }) => {
   return (
     <Wrapper>
-      <IconNav>
+      <IconNav {...{ theme, themeKey }}>
         <TopIcons>
           <IconLink to={ROUTES.WALLET.ROOT}>
             <IconWrapper>
@@ -105,12 +135,12 @@ const SideNav = () => {
               <FontAwesomeIcon icon={['fab', 'dev']} />
             </IconLink>
           )}
-          <IconDiv onClick={() => openExternalLink(FAQ_URL)}>
+          <ExternalLink {...{ theme, themeKey }} onClick={() => openExternalLink(FAQ_URL)}>
             <IconWrapper>
               <FontAwesomeIcon icon="question-circle" />
               <IconText>FAQ</IconText>
             </IconWrapper>
-          </IconDiv>
+          </ExternalLink>
         </BottomIcons>
       </IconNav>
     </Wrapper>
