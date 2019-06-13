@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from 'theme';
-import logoImg from '../../assets/img/node-logo.png';
+import theme, { colors } from 'theme';
+import logo from '../../assets/img/node-logo.png';
 import packageJson from '../../../../package.json';
+
+const defaultThemeStyle = p => {
+  return {
+    background: colors.V900,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,14 +18,19 @@ const Wrapper = styled.div`
   justify-content: space-between;
   max-width: 20rem;
   padding: 5rem;
-  background: ${colors.V900};
+  background: ${p => computedThemeStyle(p).background};
 `;
 
-const Sidebar = () => (
-  <Wrapper>
-    <img alt="" src={logoImg} />
+const SimpleSidebar = p => (
+  <Wrapper {...p}>
+    <img alt="Logo" src={logo} />
     <div>Version: {packageJson.version}</div>
   </Wrapper>
 );
 
-export default Sidebar;
+SimpleSidebar.defaultProps = {
+  theme,
+  themeKey: 'AppSimpleSidebar',
+};
+
+export default SimpleSidebar;
