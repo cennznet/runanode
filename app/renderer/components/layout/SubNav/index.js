@@ -1,8 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import uuid from 'uuid/v4';
-import { colors } from 'theme';
+import themeObject, { colors } from 'theme';
 import { Scrollable } from 'components';
+
+const defaultThemeStyle = p => {
+  return {
+    background: colors.V900,
+    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.5), 4px 0 8px 0 rgba(0, 0, 0, 0.14)',
+    navItemColor: colors.textMuted,
+    navItemHoverBackground: colors.V500,
+    navItemHoverColor: colors.N500,
+    navItemActiveColor: colors.N0,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,9 +24,9 @@ const Wrapper = styled.div`
   max-width: 15rem;
   height: 100%;
   font-weight: 500;
-  background: ${colors.V900};
+  background: ${p => computedThemeStyle(p).background};
   overflow: hidden;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5), 4px 0 8px 0 rgba(0, 0, 0, 0.14);
+  box-shadow: ${p => computedThemeStyle(p).boxShadow};
 `;
 
 const Footer = styled.div`
@@ -33,5 +45,10 @@ const SubNav = ({ navItems, children, footer, ...props }) => (
     {footer && <Footer>{footer}</Footer>}
   </Wrapper>
 );
+
+SubNav.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppSubNav',
+};
 
 export default SubNav;
