@@ -17,9 +17,8 @@ const configComponentStyle = colors => ({
     background: '',
     color: '',
   },
-  AppTopbar: {
-    background: '',
-    color: '',
+  AppTopBar: {
+    background: colors.N0,
   },
   // Button: {
   //   fontSize: {
