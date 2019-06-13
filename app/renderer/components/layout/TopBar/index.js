@@ -3,13 +3,21 @@ import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import { environment } from 'common/environment';
 import { NetworkNameMapping, chainNameMapping } from 'common/types/theNode.types';
-import { colors } from 'theme';
-import logoImg from 'renderer/assets/img/centrality-logo.svg';
+import themeobj, { colors } from 'theme';
+import logo from 'renderer/assets/img/logo-in-topbar.svg';
 import { getNetworkOptionPair, NETWORK_OPTIONS_SORTED } from 'renderer/pages/chooseNetworkPage';
 import { Select } from 'components';
 import SwitchNetworkWarningModal from './TopBarWarningModal';
 import UploadGenesisFileModal from './UploadGenesisModal';
 import withContainer from './TopBarContainer';
+
+const defaultThemeStyle = p => {
+  return {
+    background: colors.V800,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const { isDevOrDebugProd } = environment;
 
@@ -19,7 +27,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 1rem;
   height: 3rem;
-  background: ${colors.V800};
+  background: ${p => computedThemeStyle(p).background};
 `;
 
 const HeaderWrapper = styled.div`
@@ -28,7 +36,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   padding: 1rem;
   height: 3rem;
-  background: ${colors.V800};
+  background: ${p => computedThemeStyle(p).background};
   flex: 1 1 auto;
 `;
 
@@ -81,14 +89,13 @@ const TopBar = ({
   blocksNew,
   blocksFinalized,
   blocksRemote,
+  theme,
+  themeKey,
   ...otherProps
 }) => {
   const {
     localNode: { chain },
-    name,
-    version,
     isSynced,
-    health,
   } = nodeSystem;
   const networkName = chain ? chainNameMapping(chain) : 'Not connected';
 
@@ -104,9 +111,9 @@ const TopBar = ({
   const syncPercentage = `${percentage}%`;
 
   return (
-    <Wrapper>
-      <SVGInline svg={logoImg} />
-      <HeaderWrapper>
+    <Wrapper {...{ theme, themeKey }}>
+      <SVGInline svg={logo} />
+      <HeaderWrapper {...{ theme, themeKey }}>
         <NetworkSectionContainer>
           <NetworkSectionWrapper>
             <Select
@@ -147,6 +154,11 @@ const TopBar = ({
       <UploadGenesisFileModal {...otherProps} />
     </Wrapper>
   );
+};
+
+TopBar.defaultProps = {
+  theme: themeobj,
+  themeKey: 'AppTopBar',
 };
 
 export default withContainer(TopBar);
