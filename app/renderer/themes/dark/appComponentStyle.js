@@ -1,4 +1,26 @@
+/**
+ *
+ */
 const configComponentStyle = colors => ({
+  AppSimpleMenu: {
+    background: '',
+    color: '',
+  },
+  AppSideNav: {
+    background: '',
+    color: '',
+  },
+  // AppSimpleSidebar: {
+  //   background: colors.N0,
+  // },
+  AppSubNav: {
+    background: '',
+    color: '',
+  },
+  AppTopbar: {
+    background: '',
+    color: '',
+  },
   // Button: {
   //   fontSize: {
   //     sm: '14px',
