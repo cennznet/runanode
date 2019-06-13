@@ -2,10 +2,6 @@
  *
  */
 const configComponentStyle = colors => ({
-  AppSimpleMenu: {
-    background: '',
-    color: '',
-  },
   // AppSideNav: {
   //   background: colors.R100,
   //   navItemColor: colors.R300,
@@ -16,14 +12,26 @@ const configComponentStyle = colors => ({
   // AppSimpleSidebar: {
   //   background: colors.N0,
   // },
-  AppSubNav: {
-    background: '',
-    color: '',
-  },
+  // AppSubNav: {
+  //   background: colors.R200,
+  //   boxShadow: '',
+  // },
+  // AppSubNavCollapsibleMenu: {
+  //   navItemColor: colors.R300,
+  //   navItemHoverBackground: colors.R600,
+  //   navItemHoverColor: colors.R500,
+  //   navItemActiveBackground: colors.Y400,
+  //   navItemActiveColor: colors.R800,
+  // },
+  // AppSubNavSimpleMenu: {
+  //   navItemColor: colors.R300,
+  //   navItemHoverBackground: colors.R600,
+  //   navItemHoverColor: colors.R500,
+  //   navItemActiveColor: colors.R800,
+  // },
   // AppTopBar: {
   //   background: colors.N0,
   // },
-
   // Button: {
   //   fontSize: {
   //     sm: '14px',
