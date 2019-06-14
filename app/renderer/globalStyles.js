@@ -12,11 +12,11 @@ const globalStyles = `
     font-size: ${theme.fontSize};
     font-family: ${theme.fontFamily};
     color: ${colors.text};
-    background: ${colors.V800};
+    background: ${colors.background};
   }
 
   a {
-    color: ${colors.N0};
+    color: ${colors.text};
   }
 
   p {

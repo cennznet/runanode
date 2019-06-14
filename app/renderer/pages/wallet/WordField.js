@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import styled from 'styled-components';
 import { Input } from 'components';
-import { colors } from 'theme';
+import themeObject, { colors } from 'theme';
 
 const Label = styled.label`
   padding-right: 0.4rem;
@@ -38,6 +38,7 @@ const WorldField = ({
         value={recomposedValue || ''}
         {...{ placeholder, name, onChange, onBlur }}
         valid={fieldTouched ? (noTickShow && !fieldError ? null : !fieldError) : null}
+        theme={themeObject}
         showValidIcon
       />
     </Wrapper>

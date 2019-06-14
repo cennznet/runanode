@@ -54,7 +54,6 @@ const NameInput = styled.input`
   color: ${colors.textMuted};
   font-size: 24px;
   padding: 0 0 0.5rem 0;
-  autofocus: trye;
   border-bottom: 2px dashed ${colors.V400};
   margin-bottom: 0.5rem;
 

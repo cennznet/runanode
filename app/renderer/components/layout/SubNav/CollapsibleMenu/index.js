@@ -61,7 +61,12 @@ const CollapsibleMenu = ({ menuList, isInsideRouter, theme, themeKey }) => {
           return (
             <AccordionItem
               key={uuid()}
-              title={AccordionItemTitle({ title, isTitleHighlight, tail })}
+              title={AccordionItemTitle({
+                title,
+                isTitleHighlight,
+                tail,
+                parentThemeStyle: computedThemeStyle({ theme, themeKey }),
+              })}
               expanded={i === 0}
             >
               <AccordionItemBody>

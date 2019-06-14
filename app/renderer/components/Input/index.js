@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import theme from 'components/defaultTheme';
@@ -7,14 +7,15 @@ import InputAddon from './lib/InputAddon';
 import InputAffix from './lib/InputAffix';
 
 const defaultThemeStyle = p => {
+  const { colors } = p.theme;
   return {
-    borderColor: p.theme.colors.V400,
+    borderColor: colors.V400,
     background: 'rgba(114,94,255,0.5)',
     readOnlyBackground: 'rgba(114,94,255,0.3)',
     readOnlyBorderColor: 'rgba(114,94,255,0.3)',
-    color: p.theme.colors.N0,
-    focusBorderColor: p.theme.colors.V500,
-    placeholderColor: p.theme.colors.V400,
+    color: colors.N0,
+    focusBorderColor: colors.V500,
+    placeholderColor: colors.V400,
     size: {
       sm: '2rem',
       md: '2.5rem',
@@ -60,9 +61,9 @@ class CustomInput extends Component {
   }
 }
 
-const Input = styled(CustomInput)``;
+CustomInput.displayName = 'Input';
 
-Input.defaultProps = {
+CustomInput.defaultProps = {
   append: null,
   placeholder: '',
   prefix: null,
@@ -77,7 +78,7 @@ Input.defaultProps = {
   valid: null,
 };
 
-Input.propTypes = {
+CustomInput.propTypes = {
   /** Append addon which is placed outside Input */
   append: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.string]),
   /** Prepend addon which is placed outside Input */
@@ -88,10 +89,16 @@ Input.propTypes = {
   /** <Input render={(props)=> <CustomInput {...props} />} /> */
   render: PropTypes.func,
   showValidIcon: PropTypes.bool,
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
   /** Suffix is placed inside Input; string enum: spinner, tick */
   suffix: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.string]),
   type: PropTypes.string,
+  theme: PropTypes.object,
+  themeKey: PropTypes.string,
+  valid: PropTypes.any,
 };
+
+const Input = styled(CustomInput)``;
 
 /** @component */
 export default Input;

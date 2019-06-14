@@ -1,26 +1,59 @@
 import React, { useState } from 'react';
-import R from 'ramda';
-import uuid from 'uuid/v4';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SubNav, CollapsibleMenu } from 'components/layout';
 import { Button } from 'components';
+import themeObject from 'theme';
 import ROUTES from 'renderer/constants/routes';
 import history from 'renderer/history';
 import { WALLET_TYPE } from 'renderer/constants/wallet';
 import AddAccountModal from './AddAccountModal';
 
-const tooltipId = uuid();
+const accountAddButtonDefaultThemeStyle = p => {
+  return {
+    outline: false,
+  };
+};
+
+const computedAccountAddButtonStyle = p =>
+  p.theme.utils.createThemeStyle(p, accountAddButtonDefaultThemeStyle);
+
+const AccountAddButton = styled(Button).attrs(p => ({
+  outline: computedAccountAddButtonStyle(p).outline,
+}))``;
+
+AccountAddButton.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppSubNavAccountAddButton',
+};
+
+const walletAddButtonDefaultThemeStyle = p => {
+  return {
+    size: 'md',
+  };
+};
+
+const computedWalletAddButtonStyle = p =>
+  p.theme.utils.createThemeStyle(p, walletAddButtonDefaultThemeStyle);
+
+const WalletAddButton = styled(Button).attrs(p => ({
+  size: computedWalletAddButtonStyle(p).size,
+}))``;
+
+WalletAddButton.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppSubNavWalletAddButton',
+};
 
 const IconPlus = () => (
   <FontAwesomeIcon icon="plus" style={{ marginLeft: '0.5rem', width: '14px', height: '14px' }} />
 );
 
 const footer = (
-  <Button onClick={() => history.push(ROUTES.WALLET.LANDING)} block>
+  <WalletAddButton variant="primary" onClick={() => history.push(ROUTES.WALLET.LANDING)} block>
     <span>Add wallet</span>
     <IconPlus />
-  </Button>
+  </WalletAddButton>
 );
 
 const AddAccountButtonWrapper = styled.div`
@@ -48,7 +81,7 @@ const WalletDetailsSubNav = ({
 
     return (
       <AddAccountButtonWrapper>
-        <Button
+        <AccountAddButton
           variant="secondary"
           size="lg"
           block
@@ -59,7 +92,7 @@ const WalletDetailsSubNav = ({
         >
           <span>Add account</span>
           <IconPlus />
-        </Button>
+        </AccountAddButton>
       </AddAccountButtonWrapper>
     );
   };

@@ -74,6 +74,7 @@ export const brandSecondary = Y400;
 
 export const primary = V300;
 export const secondary = V800;
+export const background = N0;
 export const success = G400;
 export const warning = Y400;
 export const danger = R400;
