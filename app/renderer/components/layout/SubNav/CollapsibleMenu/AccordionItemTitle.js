@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Translate } from 'react-localize-redux';
 import { ellipsis } from 'polished';
-import defaultTheme, { colors } from 'components/defaultTheme';
+import themeObject, { colors } from 'theme';
 
 const Title = styled.div`
   display: flex;
@@ -22,13 +22,9 @@ const Title = styled.div`
   }
 `;
 
-Title.defaultProps = {
-  theme: defaultTheme,
-};
-
 const TitleHeading = styled.div`
   font-weight: ${p => (p.isTitleHighlight ? 600 : 500)};
-  color: ${p => (p.isTitleHighlight ? colors.N0 : colors.textMuted)};
+  color: ${p => (p.isTitleHighlight ? colors.text : colors.textMuted)};
   ${ellipsis('180px')}
 `;
 
@@ -38,18 +34,13 @@ const TitleTail = styled.div`
   justify-content: space-between;
 `;
 
-const StatusInfo = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const defaultTail = <div className="react-sanfona-item__chevron" />;
 
-const AccordionItemTitle = ({ title, isTitleHighlight, tail }) => {
+const AccordionItemTitle = ({ title, isTitleHighlight, tail, parentThemeStyle }) => {
   const [isHovered, setHovered] = useState(false);
   return (
     <Title onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <TitleHeading {...{ title, isTitleHighlight }}>{title}</TitleHeading>
+      <TitleHeading {...{ title, isTitleHighlight, parentThemeStyle }}>{title}</TitleHeading>
       <TitleTail>{isHovered ? defaultTail : tail || defaultTail}</TitleTail>
     </Title>
   );
@@ -57,6 +48,8 @@ const AccordionItemTitle = ({ title, isTitleHighlight, tail }) => {
 
 AccordionItemTitle.defaultProps = {
   isTitleHighlight: false,
+  theme: themeObject,
+  themeKey: 'AppSubNavCollapsibleMenu',
 };
 
 export default AccordionItemTitle;

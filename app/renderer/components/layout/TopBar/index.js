@@ -54,14 +54,12 @@ const InfoWrapper = styled.div`
 
 const InfoValue = styled.div`
   height: 16px;
-  color: ${colors.N0};
   line-height: 21px;
   text-align: right;
 `;
 
 const InfoDesc = styled.div`
   height: 16px;
-  color: ${colors.textMuted};
   line-height: 21px;
   text-align: right;
 `;
@@ -116,14 +114,15 @@ const TopBar = ({
       <HeaderWrapper {...{ theme, themeKey }}>
         <NetworkSectionContainer>
           <NetworkSectionWrapper>
+            {/* AppTopBarSelect themeStyle > Select themeStyle > custom themeStyle props */}
             <Select
-              themeKey="HeaderSelect"
               themeStyle={{
                 background: colors.V800,
                 fontWeight: '600',
                 fontSize: '16px',
                 borderColor: 'transparent',
               }}
+              themeKey="AppTopBarSelect"
               value={getNetworkOptionPair(networkName)}
               onChange={selected => {
                 setIsOpenNetworkWarningModal(true);

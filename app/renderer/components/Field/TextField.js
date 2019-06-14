@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import styled from 'styled-components';
 import { Input } from 'components';
-import { colors } from 'components/defaultTheme';
+import themeObject, { colors } from 'theme';
 
 const Label = styled.label`
   margin: 0.5rem 0.5rem 0 0;
@@ -38,6 +38,7 @@ const TextField = ({
   readOnly = false,
   suffix,
   append,
+  ...props
 }) => {
   const { name, value, onChange, onBlur } = field;
   const { touched, errors } = form;
@@ -51,6 +52,7 @@ const TextField = ({
         {...{ placeholder, name, onChange, onBlur, suffix, append }}
         valid={fieldTouched && !readOnly ? (noTickShow && !fieldError ? null : !fieldError) : null}
         readOnly={readOnly || false}
+        {...props}
       />
       {fieldError && fieldTouched ? (
         <ErrorMessage>{fieldError}</ErrorMessage>
@@ -59,6 +61,10 @@ const TextField = ({
       )}
     </Wrapper>
   );
+};
+
+TextField.defaultProps = {
+  theme: themeObject,
 };
 
 export default TextField;

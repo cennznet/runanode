@@ -41,13 +41,17 @@ const CustomButton = ({
   children,
   iconBefore,
   iconAfter,
-  theme,
   variant,
   loading,
-  themeStyles,
+  theme,
+  themeKey,
+  themeStyle,
   ...restProps
 }) => (
-  <StyledButton {...restProps} {...{ iconBefore, iconAfter, loading, theme, themeStyles, variant }}>
+  <StyledButton
+    {...restProps}
+    {...{ iconBefore, iconAfter, loading, theme, themeKey, themeStyle, variant }}
+  >
     {iconBefore && <IconWrapper>{iconBefore}</IconWrapper>}
     {children}
     {(iconAfter || loading) && <IconAfter {...{ iconAfter, loading, variant, theme }} />}
@@ -67,7 +71,7 @@ Button.defaultProps = {
   loading: false,
   outline: false,
   size: 'md',
-  theme: defaultTheme,
+  // theme: defaultTheme,
   themeKey: 'Button',
   themeStyle: {},
   type: 'button',

@@ -44,7 +44,6 @@ const Tooltip = styled(ReactTooltip)`
 Tooltip.defaultProps = {
   place: 'bottom',
   effect: 'solid',
-  theme,
   themeKey: 'Tooltip',
   themeStyle: {
     minWidth: '0',
