@@ -50,10 +50,10 @@ const IconPlus = () => (
 );
 
 const footer = (
-  <WalletAddButton variant="primary" onClick={() => history.push(ROUTES.WALLET.LANDING)} block>
+  <Button variant="primary" size="lg" onClick={() => history.push(ROUTES.WALLET.LANDING)} block>
     <span>Add wallet</span>
     <IconPlus />
-  </WalletAddButton>
+  </Button>
 );
 
 const AddAccountButtonWrapper = styled.div`
