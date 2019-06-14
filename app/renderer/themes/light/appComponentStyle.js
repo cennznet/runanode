@@ -1,4 +1,4 @@
-import { lighten } from 'polished';
+import { darken, lighten } from 'polished';
 
 const configComponentStyle = colors => ({
   /**
@@ -17,12 +17,19 @@ const configComponentStyle = colors => ({
   AppSubNav: {
     background: colors.N0,
     boxShadow: 'none',
+    footerGradient: `none`,
+  },
+  AppSubNavAccountAddButton: {
+    outline: true,
+  },
+  AppSubNavWalletAddButton: {
+    size: 'lg',
   },
   AppSubNavCollapsibleMenu: {
     navItemColor: colors.textMuted,
     navItemHoverBackground: colors.primary,
     navItemHoverColor: colors.N0,
-    navItemActiveBackground: lighten(0.9, colors.primary),
+    navItemActiveBackground: lighten(0.3, colors.primary),
     navItemActiveColor: colors.primary,
   },
   AppSubNavSimpleMenu: {
@@ -56,72 +63,103 @@ const configComponentStyle = colors => ({
 
   AppWalletNavCard: {
     borderColor: colors.N300,
-    borderHoverColor: colors.primary,
+    // borderHoverColor: colors.primary,
     borderHoverWidth: '1px',
     iconColor: colors.textMuted,
-    iconHoverColor: colors.primary,
+    // iconHoverColor: colors.primary,
+  },
+
+  AppStakingProgressCard: {
+    background: colors.N0,
+    // color: colors.text,
+  },
+
+  AppStakingPreferenceCard: {
+    background: colors.N0,
+  },
+
+  AppStakingBalanceCard: {
+    iconColor: colors.primary,
   },
 
   /**
    * ================= Reusable components ==============================
    */
-  // Button: {
-  // fontSize: {
-  //     sm: theme.fontSizeSm,
-  //     md: theme.fontSize,
-  //     lg: theme.fontSizeLg,
-  //   },
-  //   size: {
-  //     sm: '1.5rem',
-  //     md: '2rem',
-  //     lg: '2.5rem',
-  //   },
-  //   color: {
-  //     primary: colors.primary,
-  //     secondary: colors.secondary,
-  //     danger: colors.danger,
-  //     success: colors.success,
-  //     warning: colors.warning,
-  //     info: colors.info,
-  //     nuetral: colors.nuetral,
-  //   },
-  //   borderColor: {
-  //     primary: colors.primary,
-  //     secondary: colors.V500,
-  //     danger: colors.danger,
-  //     success: colors.success,
-  //     warning: colors.warning,
-  //     info: colors.info,
-  //     nuetral: colors.nuetral,
-  //   },
-  //   hoverColor: {
-  //     primary: darken(0.1, colors.primary),
-  //     secondary: darken(0.1, colors.secondary),
-  //     danger: darken(0.1, colors.danger),
-  //     success: darken(0.1, colors.success),
-  //     warning: darken(0.1, colors.warning),
-  //     info: darken(0.1, colors.info),
-  //     nuetral: darken(0.1, colors.nuetral),
-  //   },
-  // hoverBorderColor: {
-  //     primary: darken(0.1, colors.primary),
-  //     secondary: darken(0.1, colors.primary),
-  //     danger: darken(0.1, colors.danger),
-  //     success: darken(0.1, colors.success),
-  //     warning: darken(0.1, colors.warning),
-  //     info: darken(0.1, colors.info),
-  //     nuetral: darken(0.1, colors.nuetral),
-  // },
-  //   contrastColor: {
-  //     primary: colors.N0,
-  //     secondary: colors.N0,
-  //     danger: colors.N0,
-  //     success: colors.N0,
-  //     warning: colors.N800,
-  //     info: colors.N0,
-  //     nuetral: colors.N0,
-  //   },
-  // },
+  Button: {
+    // fontSize: {
+    //     sm: theme.fontSizeSm,
+    //     md: theme.fontSize,
+    //     lg: theme.fontSizeLg,
+    //   },
+    //   size: {
+    //     sm: '1.5rem',
+    //     md: '2rem',
+    //     lg: '2.5rem',
+    //   },
+    background: {
+      primary: 'linear-gradient(270deg, #F7941D 0%, #F15A29 100%)',
+      // secondary: colors.secondary,
+      // danger: colors.danger,
+      // success: colors.success,
+      // warning: colors.warning,
+      // info: colors.info,
+      // nuetral: colors.nuetral,
+    },
+    //   color: {
+    //     primary: colors.primary,
+    //     secondary: colors.secondary,
+    //     danger: colors.danger,
+    //     success: colors.success,
+    //     warning: colors.warning,
+    //     info: colors.info,
+    //     nuetral: colors.nuetral,
+    //   },
+    //   borderColor: {
+    //     primary: colors.primary,
+    //     secondary: colors.secondary,
+    //     danger: colors.danger,
+    //     success: colors.success,
+    //     warning: colors.warning,
+    //     info: colors.info,
+    //     nuetral: colors.nuetral,
+    //   },
+    hoverBackground: {
+      primary: '#DD7A00',
+      // secondary: darken(0.1, colors.secondary),
+      // danger: darken(0.1, colors.danger),
+      // success: darken(0.1, colors.success),
+      // warning: darken(0.1, colors.warning),
+      // info: darken(0.1, colors.info),
+      // nuetral: darken(0.1, colors.nuetral),
+    },
+    //   hoverColor: {
+    //     primary: darken(0.1, colors.primary),
+    //     secondary: darken(0.1, colors.secondary),
+    //     danger: darken(0.1, colors.danger),
+    //     success: darken(0.1, colors.success),
+    //     warning: darken(0.1, colors.warning),
+    //     info: darken(0.1, colors.info),
+    //     nuetral: darken(0.1, colors.nuetral),
+    //   },
+    // hoverBorderColor: {
+    //     primary: darken(0.1, colors.primary),
+    //     secondary: darken(0.1, colors.primary),
+    //     danger: darken(0.1, colors.danger),
+    //     success: darken(0.1, colors.success),
+    //     warning: darken(0.1, colors.warning),
+    //     info: darken(0.1, colors.info),
+    //     nuetral: darken(0.1, colors.nuetral),
+    // },
+    //   contrastColor: {
+    //     primary: colors.N0,
+    //     secondary: colors.N0,
+    //     danger: colors.N0,
+    //     success: colors.N0,
+    //     warning: colors.N800,
+    //     info: colors.N0,
+    //     nuetral: colors.N0,
+    //   },
+  },
   // Checkbox: {
   //   color: {
   //     primary: colors.primary,
@@ -135,9 +173,9 @@ const configComponentStyle = colors => ({
     background: colors.N0,
     // readOnlyBackground: '#CCC',
     // readOnlyBorderColor: '#DDD',
-    // placeholderColor: '#AAA',
-    // color: colors.N800,
-    // focusBorderColor: colors.B500,
+    color: colors.text,
+    focusBorderColor: colors.primary,
+    placeholderColor: colors.N300,
     // size: {
     //   sm: '2rem',
     //   md: '3rem',
@@ -166,15 +204,20 @@ const configComponentStyle = colors => ({
   //     success: colors.N0,
   //     warning: colors.N800,
   //   },
-  // Radio: {
-  //   color: colors.primary,
-  //   labelColor: colors.text,
-  // },
+  Radio: {
+    color: colors.danger,
+    labelColor: colors.text,
+  },
   // Scrollable: {
   //   background: colors.V800,
   //   thumbBackground: 'rgba(255, 255, 255, 0.4)',
   //   gradientBottomBackground: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%)',
   // },
+  Scrollable: {
+    background: darken(0.9, colors.primary),
+    //   thumbBackground: 'rgba(255, 255, 255, 0.4)',
+    gradientBottomBackground: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, colors.primary 100%)',
+  },
   Select: {
     borderColor: colors.N300,
     menuBorderColor: colors.N300,
@@ -203,16 +246,16 @@ const configComponentStyle = colors => ({
   // },
   Table: {
     headerBackground: colors.N0,
-    rowOddLineBackground: 'rgba(91, 97, 235, 0.1)',
+    rowOddLineBackground: colors.N100,
     rowEvenLineBackground: colors.N0,
   },
-  // Tabs: {
-  //   activeColor: colors.text,
-  //   color: colors.textMuted,
-  //   inkBarActiveColor: colors.primary,
-  //   inkBarColor: colors.border,
-  //   tabPaneHeight: '80vh',
-  // },
+  Tabs: {
+    activeColor: colors.text,
+    color: colors.textMuted,
+    inkBarActiveColor: colors.primary,
+    inkBarColor: 'rgba(255, 255, 255, 0.3)',
+    maxHeight: '100%',
+  },
   // Toggle: {
   //   variant: {
   //     primary: colors.primary,
@@ -225,10 +268,10 @@ const configComponentStyle = colors => ({
   //   thumbCheckedBorderColor: colors.N0,
   //   thumbDisabledBackground: colors.N300,
   // },
-  // Tooltip: {
-  //   background: '#A99DFF',
-  //   color: colors.V900,
-  // },
+  Tooltip: {
+    background: colors.N700,
+    color: colors.N0,
+  },
   Toaster: {
     background: colors.N50,
   },
