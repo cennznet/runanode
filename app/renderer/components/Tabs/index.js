@@ -68,7 +68,6 @@ const Tabs = ({ children, ...props }) => (
 );
 
 Tabs.defaultProps = {
-  theme,
   themeKey: 'Tabs',
   themeStyle: {},
 };

@@ -4,7 +4,6 @@ import SVGInline from 'react-svg-inline';
 import BN from 'bn.js';
 import { Balance, BlockNumber } from '@cennznet/types';
 import R from 'ramda';
-
 import PageSpinner from 'components/PageSpinner';
 import {
   theScanAddressUrl,
@@ -13,7 +12,7 @@ import {
 } from 'common/types/theNode.types';
 import stakingTokenIcon from 'renderer/assets/icon/staking-token.svg';
 import spendingTokenIcon from 'renderer/assets/icon/centrapay.svg';
-import { colors } from 'theme';
+import themeObject, { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { Button, PageHeading, Ellipsis } from 'components';
@@ -24,17 +23,51 @@ import TheWallet from '../../api/wallets/TheWallet';
 import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
 
-const SpendingTokenIcon = styled(SVGInline).attrs({
+const defaultThemeStyle = p => {
+  return {
+    iconColor: colors.N0,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
+
+const ThemableSVGInline = ({ theme, themeKey, children, ...props }) => {
+  return <SVGInline {...props}>{children}</SVGInline>;
+};
+
+const SpendingTokenIcon = styled(ThemableSVGInline).attrs({
   svg: spendingTokenIcon,
 })`
-  width: auto;
+  svg {
+    g {
+      g {
+        stroke: ${p => computedThemeStyle(p).iconColor};
+      }
+    }
+  }
 `;
 
-const StakingTokenIcon = styled(SVGInline).attrs({
+SpendingTokenIcon.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppStakingBalanceCard',
+};
+
+const StakingTokenIcon = styled(ThemableSVGInline).attrs({
   svg: stakingTokenIcon,
 })`
-  width: auto;
+  svg {
+    g {
+      g {
+        stroke: ${p => computedThemeStyle(p).iconColor};
+      }
+    }
+  }
 `;
+
+StakingTokenIcon.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppStakingBalanceCard',
+};
 
 const UnStakeButton = styled(Button)`
   position: absolute;
@@ -76,7 +109,7 @@ const ItemNum = styled.span`
 `;
 
 const Item = styled.div`
-  background: ${colors.V900};
+  background: ${colors.background};
   border-radius: 3px;
   padding: 1rem 1rem 1rem 1rem;
   line-height: 1.5rem;
@@ -97,13 +130,13 @@ const RewardContent = styled.div`
   color: ${colors.success};
 `;
 
-const InnerSectionWrapper = styled.div`
+const StakingBalance = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem 2rem 2rem 2rem;
-  background: ${colors.V900};
+  background: ${colors.background};
   border-radius: 3px;
   width: 45%;
 `;
@@ -146,7 +179,7 @@ const InnerSectionItemNum = styled(InnerSectionItem)`
   font-size: 1.8rem;
 `;
 
-const InnerSectionItemIcon = styled(InnerSectionItem)`
+const StakingBalanceIcon = styled(InnerSectionItem)`
   height: 40px;
 `;
 
@@ -359,11 +392,11 @@ const StakingStakePage = ({
           <SectionLayoutWrapper>
             <Left>
               <SectionLayoutInnerWrapper>
-                <InnerSectionWrapper>
+                <StakingBalance>
                   <ItemTitle>Stake balance</ItemTitle>
-                  <InnerSectionItemIcon>
+                  <StakingBalanceIcon>
                     <StakingTokenIcon />
-                  </InnerSectionItemIcon>
+                  </StakingBalanceIcon>
                   <InnerSectionItem>
                     {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
                   </InnerSectionItem>
@@ -391,13 +424,13 @@ const StakingStakePage = ({
                     </Ellipsis>
                   </InnerSectionItem>
                   {/* <AnimatedInnerSectionItemDiff value={rewardValueDiff} /> */}
-                </InnerSectionWrapper>
+                </StakingBalance>
                 <SectionHDivider />
-                <InnerSectionWrapper>
+                <StakingBalance>
                   <ItemTitle>Spending balance</ItemTitle>
-                  <InnerSectionItemIcon>
+                  <StakingBalanceIcon>
                     <SpendingTokenIcon />
-                  </InnerSectionItemIcon>
+                  </StakingBalanceIcon>
                   <InnerSectionItem>
                     {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
                   </InnerSectionItem>
@@ -419,7 +452,7 @@ const StakingStakePage = ({
                     </Ellipsis>
                   </InnerSectionItem>
                   {/* <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} /> */}
-                </InnerSectionWrapper>
+                </StakingBalance>
               </SectionLayoutInnerWrapper>
             </Left>
             <Right>

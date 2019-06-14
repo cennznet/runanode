@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ROUTES from 'renderer/constants/routes';
 
 const StyledLink = styled(Link)`
-  color: ${colors.N0};
+  color: ${colors.text};
   height: 2rem;
   display: flex;
   align-items: center;
