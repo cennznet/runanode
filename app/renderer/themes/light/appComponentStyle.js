@@ -1,39 +1,75 @@
+import { lighten } from 'polished';
+
 const configComponentStyle = colors => ({
-  // AppSideNav: {
-  //   background: colors.R100,
-  //   navItemColor: colors.R300,
-  //   navItemHoverBackground: colors.R600,
-  //   navItemHoverColor: colors.R500,
-  //   navItemActiveColor: colors.R800,
-  // },
-  // AppSimpleSidebar: {
-  //   background: colors.N0,
-  // },
-  // AppSubNav: {
-  //   background: colors.R200,
-  //   boxShadow: '',
-  // },
-  // AppSubNavCollapsibleMenu: {
-  //   navItemColor: colors.R300,
-  //   navItemHoverBackground: colors.R600,
-  //   navItemHoverColor: colors.R500,
-  //   navItemActiveBackground: colors.Y400,
-  //   navItemActiveColor: colors.R800,
-  // },
-  // AppSubNavSimpleMenu: {
-  //   navItemColor: colors.R300,
-  //   navItemHoverBackground: colors.R600,
-  //   navItemHoverColor: colors.R500,
-  //   navItemActiveColor: colors.R800,
-  // },
-  // AppTopBar: {
-  //   background: colors.N0,
-  // },
+  /**
+   * ===== App layout components - TopBar, SideNav, SubNav, Menus, etc =====
+   */
+  AppSideNav: {
+    background: colors.N0,
+    navItemColor: colors.N500,
+    navItemHoverBackground: colors.primary,
+    navItemHoverColor: colors.N0,
+    navItemActiveColor: colors.primary,
+  },
+  AppSimpleSidebar: {
+    background: colors.N0,
+  },
+  AppSubNav: {
+    background: colors.N0,
+    boxShadow: 'none',
+  },
+  AppSubNavCollapsibleMenu: {
+    navItemColor: colors.textMuted,
+    navItemHoverBackground: colors.primary,
+    navItemHoverColor: colors.N0,
+    navItemActiveBackground: lighten(0.9, colors.primary),
+    navItemActiveColor: colors.primary,
+  },
+  AppSubNavSimpleMenu: {
+    navItemColor: colors.textMuted,
+    navItemHoverBackground: colors.primary,
+    navItemHoverColor: colors.N0,
+    navItemActiveColor: colors.primary,
+  },
+  AppTopBar: {
+    background: colors.N0,
+  },
+
+  AppTopBarSelect: {
+    // height: '3rem',
+    // fontSize: '14px',
+    background: colors.N0,
+    // borderColor: colors.N0,
+    focusBackground: colors.brandPrimary,
+    // focusColor: colors.N0,
+    // selectedFontWeight: 'bolder',
+    // selectedBackground: 'transparent',
+    selectedColor: colors.text,
+    menuBackground: colors.N0,
+    menuBorderColor: colors.N300,
+    separatorBackground: colors.N100,
+  },
+
+  /**
+   * ================== App specific components =========================
+   */
+
+  AppWalletNavCard: {
+    borderColor: colors.N300,
+    borderHoverColor: colors.primary,
+    borderHoverWidth: '1px',
+    iconColor: colors.textMuted,
+    iconHoverColor: colors.primary,
+  },
+
+  /**
+   * ================= Reusable components ==============================
+   */
   // Button: {
-  //   fontSize: {
-  //     sm: '14px',
-  //     md: '14px',
-  //     lg: '1rem',
+  // fontSize: {
+  //     sm: theme.fontSizeSm,
+  //     md: theme.fontSize,
+  //     lg: theme.fontSizeLg,
   //   },
   //   size: {
   //     sm: '1.5rem',
@@ -42,24 +78,48 @@ const configComponentStyle = colors => ({
   //   },
   //   color: {
   //     primary: colors.primary,
+  //     secondary: colors.secondary,
   //     danger: colors.danger,
   //     success: colors.success,
   //     warning: colors.warning,
   //     info: colors.info,
+  //     nuetral: colors.nuetral,
+  //   },
+  //   borderColor: {
+  //     primary: colors.primary,
+  //     secondary: colors.V500,
+  //     danger: colors.danger,
+  //     success: colors.success,
+  //     warning: colors.warning,
+  //     info: colors.info,
+  //     nuetral: colors.nuetral,
   //   },
   //   hoverColor: {
-  //     primary: colors.B600,
-  //     danger: colors.R600,
-  //     success: colors.G600,
-  //     warning: colors.Y600,
-  //     info: colors.B600,
+  //     primary: darken(0.1, colors.primary),
+  //     secondary: darken(0.1, colors.secondary),
+  //     danger: darken(0.1, colors.danger),
+  //     success: darken(0.1, colors.success),
+  //     warning: darken(0.1, colors.warning),
+  //     info: darken(0.1, colors.info),
+  //     nuetral: darken(0.1, colors.nuetral),
   //   },
+  // hoverBorderColor: {
+  //     primary: darken(0.1, colors.primary),
+  //     secondary: darken(0.1, colors.primary),
+  //     danger: darken(0.1, colors.danger),
+  //     success: darken(0.1, colors.success),
+  //     warning: darken(0.1, colors.warning),
+  //     info: darken(0.1, colors.info),
+  //     nuetral: darken(0.1, colors.nuetral),
+  // },
   //   contrastColor: {
   //     primary: colors.N0,
+  //     secondary: colors.N0,
   //     danger: colors.N0,
   //     success: colors.N0,
   //     warning: colors.N800,
   //     info: colors.N0,
+  //     nuetral: colors.N0,
   //   },
   // },
   // Checkbox: {
@@ -106,6 +166,15 @@ const configComponentStyle = colors => ({
   //     success: colors.N0,
   //     warning: colors.N800,
   //   },
+  // Radio: {
+  //   color: colors.primary,
+  //   labelColor: colors.text,
+  // },
+  // Scrollable: {
+  //   background: colors.V800,
+  //   thumbBackground: 'rgba(255, 255, 255, 0.4)',
+  //   gradientBottomBackground: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%)',
+  // },
   Select: {
     borderColor: colors.N300,
     menuBorderColor: colors.N300,
@@ -114,11 +183,6 @@ const configComponentStyle = colors => ({
     focusBackground: colors.brandPrimary,
     selectedColor: colors.text,
   },
-  // Scrollable: {
-  //   background: colors.V800,
-  //   thumbBackground: 'rgba(255, 255, 255, 0.4)',
-  //   gradientBottomBackground: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%)',
-  // },
   // Spinner: {
   //   color: colors.primary,
   //   size: {

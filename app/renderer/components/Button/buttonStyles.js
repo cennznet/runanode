@@ -30,7 +30,7 @@ const buttonBackground = (p, computedThemeStyle) => {
     return colors.N0;
   }
 
-  return styledProps(computedThemeStyle.color, 'variant')(p);
+  return styledProps(computedThemeStyle.background, 'variant')(p);
 };
 
 const buttonBorder = (p, computedThemeStyle) => {
@@ -60,7 +60,7 @@ const hoverBackground = (p, computedThemeStyle) => {
     return '';
   }
 
-  return styledProps(computedThemeStyle.hoverColor, 'variant')(p);
+  return styledProps(computedThemeStyle.hoverBackground, 'variant')(p);
 };
 
 const hoverColor = (p, computedThemeStyle) => {

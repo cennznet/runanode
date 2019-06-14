@@ -1,11 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
-import theme, { colors } from 'components/defaultTheme';
+import themeObject from 'components/defaultTheme';
 
-const Wrapper = styled.div``;
+const defaultThemeStyle = p => {
+  const { colors } = p.theme;
 
-const RadioInput = styled.input`
+  return {
+    color: colors.primary,
+    labelColor: colors.text,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
+
+const CustomInut = ({ theme, themeKey, themeStyle, ...p }) => {
+  return <input {...p} />;
+};
+
+const RadioInput = styled(CustomInut)`
   &:checked,
   &:not(:checked) {
     position: absolute;
@@ -19,7 +32,7 @@ const RadioInput = styled.input`
     cursor: pointer;
     line-height: 20px;
     display: inline-block;
-    color: ${colors.text};
+    color: ${p => computedThemeStyle(p).labelColor};
   }
   &:checked + label:before,
   &:not(:checked) + label:before {
@@ -29,7 +42,7 @@ const RadioInput = styled.input`
     top: 0;
     width: 16px;
     height: 16px;
-    border: 1px solid ${colors.primary};
+    border: 1px solid ${p => computedThemeStyle(p).color};
     border-radius: 100%;
   }
   &:checked + label:after,
@@ -37,12 +50,12 @@ const RadioInput = styled.input`
     content: '';
     width: 10px;
     height: 10px;
-    background: ${colors.primary};
+    background: ${p => computedThemeStyle(p).color};
     position: absolute;
     top: 4px;
     left: 4px;
     border-radius: 100%;
-    -webkit-transition: all 0.2s ease;
+    -webkit-transition: all 0.1s ease;
     transition: all 0.2s ease;
   }
   &:not(:checked) + label:after {
@@ -59,7 +72,7 @@ const RadioInput = styled.input`
 
 const RadioLabel = styled.label``;
 
-const Radio = ({ onChange, value, selected, children }) => {
+const CustomRadio = ({ onChange, value, selected, children, ...props }) => {
   const id = `radio-${uuid()}`;
   return (
     <React.Fragment>
@@ -71,17 +84,20 @@ const Radio = ({ onChange, value, selected, children }) => {
           onChange && onChange(e.target.value);
         }}
         checked={selected === value}
+        {...props}
       />
       <RadioLabel htmlFor={id}>{children}</RadioLabel>
     </React.Fragment>
   );
 };
 
-Radio.defaultProps = {
-  theme,
-  themeKey: 'Radio',
-  themeStyle: {},
-};
+const Radio = styled(CustomRadio)``;
+
+// Radio.defaultProps = {
+//   theme: themeObject,
+//   themeKey: 'Radio',
+//   themeStyle: {},
+// };
 
 Radio.displayName = 'Radio';
 

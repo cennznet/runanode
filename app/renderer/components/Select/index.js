@@ -12,7 +12,8 @@ const defaultThemeStyle = p => {
     background: 'rgba(114,94,255,0.5)', // TODO: move to colcors
     borderColor: colors.V400,
 
-    separatorBackground: colors.N100,
+    focusBackground: colors.V500,
+    focusColor: colors.N0,
     selectedFontWeight: 'bolder',
     selectedBackground: 'transparent',
     selectedColor: colors.N0,
@@ -20,8 +21,7 @@ const defaultThemeStyle = p => {
     menuBackground: colors.V800,
     menuBorderColor: colors.N100,
 
-    focusBackground: colors.V500,
-    focusColor: colors.N0,
+    separatorBackground: colors.N100,
   };
 };
 
@@ -30,7 +30,7 @@ const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeSt
 const StyledSelect = styled(ReactSelect)`
   .react-select__control {
     box-shadow: none;
-    fontsize: ${p => computedThemeStyle(p).fontSize};
+    font-size: ${p => computedThemeStyle(p).fontSize};
     height: ${p => computedThemeStyle(p).height};
     color: ${p => computedThemeStyle(p).color};
     border-color: ${p => computedThemeStyle(p).borderColor};
