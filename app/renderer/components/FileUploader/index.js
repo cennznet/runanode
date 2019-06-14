@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import Input from 'components/Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import themeObject from 'theme';
 
 const FileUploader = ({
   onDrop,
@@ -22,6 +22,7 @@ const FileUploader = ({
       <div>
         <input {...getInputProps()} />
         <Input
+          theme={themeObject}
           value={inputValue || ''}
           placeholder={placeholder || 'Please upload file'}
           onChange={() => null}

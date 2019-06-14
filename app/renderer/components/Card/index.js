@@ -1,12 +1,12 @@
 import React from 'react';
-import { Hint, Ellipsis } from 'components';
+import { Hint } from 'components';
 import styled from 'styled-components';
 import { colors } from 'theme';
 
 const CardWrapper = styled.div`
   min-height: 3rem;
   border-radius: 3px;
-  background: ${colors.V900};
+  background: ${colors.background};
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   display: flex;
   padding: 1rem;
@@ -15,7 +15,6 @@ const CardWrapper = styled.div`
 
 const CardTitle = styled.div`
   display: flex;
-  color: ${colors.textMuted};
   line-height: 1.5rem;
 `;
 

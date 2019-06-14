@@ -2,8 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/theNode.types';
-import { colors } from 'theme';
+import themeObject, { colors } from 'theme';
 import { Button } from 'components';
+
+const defaultThemeStyle = p => {
+  return {
+    background: colors.V900,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const StepDescription = styled.div`
   margin: 1.5rem 0;
@@ -15,11 +23,17 @@ const StakingPreferenceWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  background: ${colors.V900};
+  background: ${colors.background};
   border-radius: 3px;
+  color: ${colors.text};
   padding: 2rem 2rem 4rem 1rem;
   margin-top: 2rem;
 `;
+
+StakingPreferenceWrapper.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppStakingPreferenceCard',
+};
 
 const Header = styled.div`
   font-size: 1.2rem;

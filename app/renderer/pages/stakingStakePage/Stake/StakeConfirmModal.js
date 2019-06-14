@@ -16,7 +16,7 @@ const Label = styled.div`
 `;
 
 const Value = styled.div`
-  background: ${colors.V900};
+  background: ${colors.background};
   padding: 1rem;
 `;
 
@@ -48,9 +48,7 @@ const StakeConfirmModal = ({
           <Cell width={1}>
             <Field
               label="Stake"
-              value={`${stakingBalance} ${
-                PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]
-              }`}
+              value={`${stakingBalance} ${PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}`}
             />
           </Cell>
           <Cell width={1}>

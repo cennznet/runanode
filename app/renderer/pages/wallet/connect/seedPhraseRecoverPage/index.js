@@ -2,10 +2,9 @@ import React from 'react';
 import { Button, PageHeading, PageFooter, Form, Radio, Hint } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field } from 'formik';
 import WordField from 'renderer/pages/wallet/WordField';
-import { colors } from 'theme';
+import themeObject, { colors } from 'theme';
 import MNEMONIC_RULE from 'renderer/constants/mnemonic';
 import { WALLET_TYPE } from 'renderer/constants/wallet';
 import { recoverySeedPhrases } from './utils';
@@ -83,6 +82,7 @@ const seedPhraseRecoverPage = ({
               selected={recoverWalletType}
               value={WALLET_TYPE.HD}
               onChange={() => setRecoverWalletType(WALLET_TYPE.HD)}
+              theme={themeObject}
             >
               <div>HD Wallet</div>
               <ReocveryOptionExplain>

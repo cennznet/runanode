@@ -1,9 +1,8 @@
 import React from 'react';
-import { Form, Button, PageHeading, PageFooter, Input, Modal } from 'components';
+import { Form, Button, PageFooter, Input } from 'components';
 import StartOverLink from 'renderer/pages/wallet/StartOverLink';
 import styled from 'styled-components';
-import { colors } from 'theme';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import themeObject, { colors } from 'theme';
 import { Formik, Field } from 'formik';
 
 const InputTitle = styled.div`
@@ -54,6 +53,7 @@ const NameInput = ({ existingWallets, onSubmit: onSubmitFunc }) => {
                       placeholder="Please enter wallet name..."
                       value={values[field.name] || ''}
                       valid={touched[field.name] && !errors[field.name]}
+                      theme={themeObject}
                     />
                     {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}
                   </div>
