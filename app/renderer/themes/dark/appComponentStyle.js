@@ -6,34 +6,55 @@ const configComponentStyle = colors => ({
    * ===== App layout components - TopBar, SideNav, SubNav, Menus, etc =====
    */
   // AppSideNav: {
-  //   background: colors.R100,
-  //   navItemColor: colors.R300,
-  //   navItemHoverBackground: colors.R600,
-  //   navItemHoverColor: colors.R500,
-  //   navItemActiveColor: colors.R800,
+  //   background: colors.N0,
+  //   navItemColor: colors.N500,
+  //   navItemHoverBackground: colors.primary,
+  //   navItemHoverColor: colors.N0,
+  //   navItemActiveColor: colors.primary,
   // },
   // AppSimpleSidebar: {
   //   background: colors.N0,
   // },
   // AppSubNav: {
-  //   background: colors.R200,
-  //   boxShadow: '',
+  //   background: colors.N0,
+  //   boxShadow: 'none',
+  //   footerGradient: `none`,
+  // },
+  // AppSubNavAccountAddButton: {
+  //   outline: true,
+  // },
+  // AppSubNavWalletAddButton: {
+  //   size: 'lg',
   // },
   // AppSubNavCollapsibleMenu: {
-  //   navItemColor: colors.R300,
-  //   navItemHoverBackground: colors.R600,
-  //   navItemHoverColor: colors.R500,
-  //   navItemActiveBackground: colors.Y400,
-  //   navItemActiveColor: colors.R800,
+  //   navItemColor: colors.textMuted,
+  //   navItemHoverBackground: colors.primary,
+  //   navItemHoverColor: colors.N0,
+  //   navItemActiveBackground: lighten(0.3, colors.primary),
+  //   navItemActiveColor: colors.primary,
   // },
   // AppSubNavSimpleMenu: {
-  //   navItemColor: colors.R300,
-  //   navItemHoverBackground: colors.R600,
-  //   navItemHoverColor: colors.R500,
-  //   navItemActiveColor: colors.R800,
+  //   navItemColor: colors.textMuted,
+  //   navItemHoverBackground: colors.primary,
+  //   navItemHoverColor: colors.N0,
+  //   navItemActiveColor: colors.primary,
   // },
   // AppTopBar: {
   //   background: colors.N0,
+  // },
+  // AppTopBarSelect: {
+  //   // height: '3rem',
+  //   // fontSize: '14px',
+  //   background: colors.N0,
+  //   // borderColor: colors.N0,
+  //   focusBackground: colors.brandPrimary,
+  //   // focusColor: colors.N0,
+  //   // selectedFontWeight: 'bolder',
+  //   // selectedBackground: 'transparent',
+  //   selectedColor: colors.text,
+  //   menuBackground: colors.N0,
+  //   menuBorderColor: colors.N300,
+  //   separatorBackground: colors.N100,
   // },
   /**
    * ================== App specific components =========================
