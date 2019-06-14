@@ -1,9 +1,7 @@
 import React from 'react';
 import { Button, PageHeading, Modal, ModalFooter, ModalBody, Input, Form } from 'components';
 import styled from 'styled-components';
-import { colors } from 'theme';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import NameInput from 'renderer/pages/wallet/NameInput';
+import themeObject, { colors } from 'theme';
 import { Formik, Field } from 'formik';
 
 const InputTitle = styled.div`
@@ -91,6 +89,7 @@ const AddAccountModal = ({
                             placeholder="Please enter account name..."
                             value={values[field.name]}
                             valid={touched[field.name] && !errors[field.name]}
+                            theme={themeObject}
                           />
                           {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}
                         </ModalWarningWrapper>

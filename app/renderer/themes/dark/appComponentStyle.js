@@ -2,6 +2,9 @@
  *
  */
 const configComponentStyle = colors => ({
+  /**
+   * ===== App layout components - TopBar, SideNav, SubNav, Menus, etc =====
+   */
   // AppSideNav: {
   //   background: colors.R100,
   //   navItemColor: colors.R300,
@@ -32,11 +35,17 @@ const configComponentStyle = colors => ({
   // AppTopBar: {
   //   background: colors.N0,
   // },
+  /**
+   * ================== App specific components =========================
+   */
+  /**
+   * ================= Reusable components ==============================
+   */
   // Button: {
-  //   fontSize: {
-  //     sm: '14px',
-  //     md: '14px',
-  //     lg: '1rem',
+  // fontSize: {
+  //     sm: theme.fontSizeSm,
+  //     md: theme.fontSize,
+  //     lg: theme.fontSizeLg,
   //   },
   //   size: {
   //     sm: '1.5rem',
@@ -45,24 +54,48 @@ const configComponentStyle = colors => ({
   //   },
   //   color: {
   //     primary: colors.primary,
+  //     secondary: colors.secondary,
   //     danger: colors.danger,
   //     success: colors.success,
   //     warning: colors.warning,
   //     info: colors.info,
+  //     nuetral: colors.nuetral,
+  //   },
+  //   borderColor: {
+  //     primary: colors.primary,
+  //     secondary: colors.secondary,
+  //     danger: colors.danger,
+  //     success: colors.success,
+  //     warning: colors.warning,
+  //     info: colors.info,
+  //     nuetral: colors.nuetral,
   //   },
   //   hoverColor: {
-  //     primary: colors.B600,
-  //     danger: colors.R600,
-  //     success: colors.G600,
-  //     warning: colors.Y600,
-  //     info: colors.B600,
+  //     primary: darken(0.1, colors.primary),
+  //     secondary: darken(0.1, colors.secondary),
+  //     danger: darken(0.1, colors.danger),
+  //     success: darken(0.1, colors.success),
+  //     warning: darken(0.1, colors.warning),
+  //     info: darken(0.1, colors.info),
+  //     nuetral: darken(0.1, colors.nuetral),
   //   },
+  // hoverBorderColor: {
+  //     primary: darken(0.1, colors.primary),
+  //     secondary: darken(0.1, colors.primary),
+  //     danger: darken(0.1, colors.danger),
+  //     success: darken(0.1, colors.success),
+  //     warning: darken(0.1, colors.warning),
+  //     info: darken(0.1, colors.info),
+  //     nuetral: darken(0.1, colors.nuetral),
+  // },
   //   contrastColor: {
   //     primary: colors.N0,
+  //     secondary: colors.N0,
   //     danger: colors.N0,
   //     success: colors.N0,
   //     warning: colors.N800,
   //     info: colors.N0,
+  //     nuetral: colors.N0,
   //   },
   // },
   // Checkbox: {
@@ -109,10 +142,28 @@ const configComponentStyle = colors => ({
   //     success: colors.N0,
   //     warning: colors.N800,
   //   },
+  // Radio: {
+  //   color: colors.primary,
+  //   labelColor: colors.text,
+  // },
   // Scrollable: {
   //   background: colors.V800,
   //   thumbBackground: 'rgba(255, 255, 255, 0.4)',
   //   gradientBottomBackground: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%)',
+  // },
+  // Select: {
+  //  height: '3rem',
+  // fontSize: '14px',
+  // background: 'rgba(114,94,255,0.5)',
+  // borderColor: colors.V400,
+  // focusBackground: colors.V500,
+  // focusColor: colors.N0,
+  // selectedFontWeight: 'bolder',
+  // selectedBackground: 'transparent',
+  // selectedColor: colors.N0,
+  // menuBackground: colors.V800,
+  // menuBorderColor: colors.N100,
+  // separatorBackground: colors.N100,
   // },
   // Spinner: {
   //   color: colors.primary,

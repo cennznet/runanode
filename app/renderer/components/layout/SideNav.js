@@ -6,13 +6,14 @@ import { environment } from 'common/environment';
 import themeObject, { colors } from 'theme';
 import ROUTES from 'renderer/constants/routes';
 import { openExternalLink } from 'renderer/utils/utils';
+import config from 'app/config';
 
 const defaultThemeStyle = p => {
   return {
     background: colors.V900,
     navItemColor: colors.textMuted,
     navItemHoverBackground: colors.V500,
-    navItemHoverColor: colors.N500,
+    navItemHoverColor: colors.N0,
     navItemActiveColor: colors.N0,
   };
 };
@@ -42,6 +43,7 @@ const ExternalLink = styled.div`
 
   &:hover:not(.active) {
     background: ${p => computedThemeStyle(p).navItemHoverBackground};
+    color: ${p => computedThemeStyle(p).navItemHoverColor};
   }
 `;
 
@@ -69,6 +71,7 @@ const IconLink = styled(CustomNavLink)`
 
   &:hover:not(.active) {
     background: ${p => computedThemeStyle(p).navItemHoverBackground};
+    color: ${p => computedThemeStyle(p).navItemHoverColor};
   }
 `;
 
@@ -103,9 +106,8 @@ const IconWrapper = styled.div`
   text-align: center;
 `;
 
-const FAQ_URL = 'http://help.runanode.io/support/home';
-
 const SideNav = ({ theme, themeKey }) => {
+  const { faqUrl } = config.branding;
   return (
     <Wrapper>
       <IconNav {...{ theme, themeKey }}>
@@ -135,12 +137,14 @@ const SideNav = ({ theme, themeKey }) => {
               <FontAwesomeIcon icon={['fab', 'dev']} />
             </IconLink>
           )}
-          <ExternalLink {...{ theme, themeKey }} onClick={() => openExternalLink(FAQ_URL)}>
-            <IconWrapper>
-              <FontAwesomeIcon icon="question-circle" />
-              <IconText>FAQ</IconText>
-            </IconWrapper>
-          </ExternalLink>
+          {faqUrl && (
+            <ExternalLink {...{ theme, themeKey }} onClick={() => openExternalLink(faqUrl)}>
+              <IconWrapper>
+                <FontAwesomeIcon icon="question-circle" />
+                <IconText>FAQ</IconText>
+              </IconWrapper>
+            </ExternalLink>
+          )}
         </BottomIcons>
       </IconNav>
     </Wrapper>

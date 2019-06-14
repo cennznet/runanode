@@ -1,13 +1,20 @@
-import React, { useEffect } from 'react';
-import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading } from 'components';
+import React from 'react';
 import styled from 'styled-components';
-import { colors } from 'theme';
+import themeObject, { colors } from 'theme';
+
+const defaultThemeStyle = p => {
+  return {
+    background: colors.V800,
+    color: colors.text,
+  };
+};
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const StakingProgressWrapper = styled.div`
   height: 5.5rem;
   border-radius: 3px;
-  background: #020835;
+  background: ${p => computedThemeStyle(p).background};
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -40,21 +47,33 @@ const Length = styled.div`
   font-size: 16px;
 `;
 
-const StakingProgressCard = ({ eraProgress, eraLength, sessionLength, sessionProgress }) => (
-  <StakingProgressWrapper>
+const StakingProgressCard = ({
+  eraProgress,
+  eraLength,
+  sessionLength,
+  sessionProgress,
+  theme,
+  themeKey,
+}) => (
+  <StakingProgressWrapper {...{ theme, themeKey }}>
     <ProgressInfoWrapper>
-      <ProgressInfoTitle>1 Session</ProgressInfoTitle>
+      <ProgressInfoTitle>Session</ProgressInfoTitle>
       <ProgressInfoDetails>
         <Progress>{sessionProgress}</Progress> / <Length>{sessionLength} blocks</Length>
       </ProgressInfoDetails>
     </ProgressInfoWrapper>
     <ProgressInfoWrapper>
-      <ProgressInfoTitle>1 Era</ProgressInfoTitle>
+      <ProgressInfoTitle>Era</ProgressInfoTitle>
       <ProgressInfoDetails>
         <Progress>{eraProgress}</Progress> / <Length>{eraLength} blocks</Length>
       </ProgressInfoDetails>
     </ProgressInfoWrapper>
   </StakingProgressWrapper>
 );
+
+StakingProgressCard.defaultProps = {
+  theme: themeObject,
+  themeKey: 'AppStakingProgressCard',
+};
 
 export default StakingProgressCard;

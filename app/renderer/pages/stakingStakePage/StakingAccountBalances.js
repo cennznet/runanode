@@ -27,7 +27,7 @@ const BalanceDetail = styled.div`
   line-height: 1.2rem;
   padding: 1rem 0;
   display: flex;
-  color: ${p => (p.err ? colors.danger : colors.N0)};
+  color: ${p => (p.err ? colors.danger : colors.text)};
   display: flex;
   flex-direction: column;
 `;
@@ -44,7 +44,7 @@ const InsufficientGasFeeErr = styled.div`
 `;
 
 const DespositLink = styled(Link)`
-  color: ${colors.N0};
+  color: ${colors.text};
   cursor: pointer;
   text-decoration: none;
 

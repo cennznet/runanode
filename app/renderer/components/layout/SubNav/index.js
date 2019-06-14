@@ -7,10 +7,7 @@ const defaultThemeStyle = p => {
   return {
     background: colors.V900,
     boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.5), 4px 0 8px 0 rgba(0, 0, 0, 0.14)',
-    navItemColor: colors.textMuted,
-    navItemHoverBackground: colors.V500,
-    navItemHoverColor: colors.N500,
-    navItemActiveColor: colors.N0,
+    footerGradient: 'linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%)',
   };
 };
 
@@ -34,7 +31,7 @@ const Footer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, rgba(4, 12, 64, 0) 0%, #040c40 100%);
+  background: ${p => computedThemeStyle(p).footerGradient};
 `;
 
 const SubNav = ({ navItems, children, footer, ...props }) => (
@@ -42,7 +39,7 @@ const SubNav = ({ navItems, children, footer, ...props }) => (
     <Scrollable themeStyle={{ height: `${footer ? 'calc(100% - 6rem)' : '100%'}` }}>
       {children}
     </Scrollable>
-    {footer && <Footer>{footer}</Footer>}
+    {footer && <Footer {...props}>{footer}</Footer>}
   </Wrapper>
 );
 

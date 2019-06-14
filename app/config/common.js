@@ -1,6 +1,7 @@
 import { remote } from 'electron';
 import parseArgs from 'minimist';
 import { NetworkNameMapping } from 'common/types/theNode.types';
+import branding from './branding';
 
 const commonConfig = {
   // Common config shared by dev and prod comes here...
@@ -13,6 +14,7 @@ const commonConfig = {
     developmentGenesisFile: './genesis/local/local.json',
     // developmentGenesisFile: './genesis/local/intra-testnet.json',
   },
+  branding,
   net: {
     name: 'CENNZNet',
   },
