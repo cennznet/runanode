@@ -122,12 +122,17 @@ module.exports = {
       content: `styleguideHelpers/docs/introduction.md`,
     },
     {
-      name: 'Colors',
-      content: `styleguideHelpers/docs/colors.md`,
-    },
-    {
       name: 'Theming',
-      content: `styleguideHelpers/docs/theming.md`,
+      sections: [
+        {
+          name: 'Colors',
+          content: 'styleguideHelpers/docs/theming/colors.md',
+        },
+        {
+          name: 'Get started',
+          content: 'styleguideHelpers/docs/theming/get-started.md',
+        },
+      ],
     },
     {
       name: 'Core Components',
