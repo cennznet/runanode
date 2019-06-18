@@ -183,7 +183,7 @@ const configComponentStyle = colors => ({
     // },
   },
   // Modal: {
-  //   backgroundColor: colors.V900,
+  //   backgroundColor: colors.background,
   //   boxShadow: `0 2px 4px 0 ${colors.N900}`,
   //   overlayBackground: 'rgba(54, 58, 61, 0.7)',
   //   color: colors.N0,

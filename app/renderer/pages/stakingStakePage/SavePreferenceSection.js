@@ -7,7 +7,7 @@ import { Button } from 'components';
 
 const defaultThemeStyle = p => {
   return {
-    background: colors.V900,
+    background: colors.background,
   };
 };
 

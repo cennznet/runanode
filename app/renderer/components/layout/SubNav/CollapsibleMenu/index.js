@@ -4,23 +4,27 @@ import uuid from 'uuid/v4';
 import { Accordion } from 'react-sanfona';
 import { NavLink } from 'react-router-dom';
 import Ellipsis from 'components/Ellipsis';
-import themeObject, { colors } from 'theme';
+import themeObject from 'components/defaultTheme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AccordionItem from './AccordionItem';
 import AccordionItemTitle from './AccordionItemTitle';
 import AccordionItemBody from './AccordionItemBody';
 
 const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+
   return {
     navItemColor: colors.textMuted,
     navItemHoverBackground: colors.V500,
-    navItemHoverColor: colors.N500,
+    navItemHoverColor: colors.N0,
     navItemActiveBackground: 'linear-gradient(146.75deg, #1335b6 0%, #040c40 100%)',
-    navItemActiveColor: colors.N0,
+    navItemActiveColor: colors.text,
   };
 };
 
-const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
+const computedThemeStyle = p => {
+  return p.theme.utils.createThemeStyle(p, defaultThemeStyle);
+};
 
 const CustomNavLink = ({ theme, themeKey, children, ...props }) => {
   return <NavLink {...props}>{children}</NavLink>;
@@ -47,12 +51,16 @@ const NavItem = styled(CustomNavLink)`
   }
 `;
 
+NavItem.defaultProps = {
+  themeKey: 'AppSubNavCollapsibleMenu',
+};
+
 const NavItemContent = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const CollapsibleMenu = ({ menuList, isInsideRouter, theme, themeKey }) => {
+const CollapsibleMenu = ({ menuList, isInsideRouter }) => {
   return (
     <Accordion>
       {menuList &&
@@ -65,7 +73,6 @@ const CollapsibleMenu = ({ menuList, isInsideRouter, theme, themeKey }) => {
                 title,
                 isTitleHighlight,
                 tail,
-                parentThemeStyle: computedThemeStyle({ theme, themeKey }),
               })}
               expanded={i === 0}
             >
@@ -73,12 +80,7 @@ const CollapsibleMenu = ({ menuList, isInsideRouter, theme, themeKey }) => {
                 {navItems &&
                   navItems.map(navItem => {
                     return (
-                      <NavItem
-                        as={!isInsideRouter && 'div'}
-                        key={uuid()}
-                        to={navItem.link}
-                        {...{ theme, themeKey }}
-                      >
+                      <NavItem as={!isInsideRouter && 'div'} key={uuid()} to={navItem.link}>
                         <NavItemContent>
                           <Ellipsis title={navItem.label} substrLength={10}>
                             {navItem.label}
@@ -103,7 +105,6 @@ const CollapsibleMenu = ({ menuList, isInsideRouter, theme, themeKey }) => {
 
 CollapsibleMenu.defaultProps = {
   isInsideRouter: true,
-  theme: themeObject,
   themeKey: 'AppSubNavCollapsibleMenu',
 };
 
