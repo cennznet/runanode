@@ -6,7 +6,7 @@ import themeObject, { colors } from 'theme';
 
 const Label = styled.label`
   padding-right: 0.4rem;
-  color: ${colors.N200};
+  color: ${colors.textMuted};
 `;
 
 const Wrapper = styled.div`
