@@ -6,7 +6,7 @@ import themeObject, { colors } from 'theme';
 
 const Label = styled.label`
   margin: 0.5rem 0.5rem 0 0;
-  color: ${colors.N0};
+  color: ${colors.text};
   font-size: 16px;
   font-weight: 600;
   line-height: 22px;

@@ -10,7 +10,7 @@ import config from 'app/config';
 
 const defaultThemeStyle = p => {
   return {
-    background: colors.V900,
+    background: colors.background,
     navItemColor: colors.textMuted,
     navItemHoverBackground: colors.V500,
     navItemHoverColor: colors.N0,

@@ -32,7 +32,7 @@ const WrapperBg = styled.div.attrs({
   display: flex;
   height: 4rem;
   margin-bottom: 1rem;
-  background: ${colors.V900};
+  background: ${colors.background};
 `;
 
 const Icon = styled.div`
@@ -63,7 +63,7 @@ const DataSend = styled.div`
 const Label = styled.label`
   flex: 1 auto;
   margin: 0.5rem 0.5rem 0 0;
-  color: ${colors.N0};
+  color: ${colors.text};
   font-size: 16px;
   font-weight: 600;
   line-height: 1.2rem;
