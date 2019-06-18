@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Tooltip } from 'components';
+import Tooltip from 'components/Tooltip';
 import { colors } from 'theme';
 
 const Wrapper = styled.div`
@@ -33,7 +33,7 @@ Hint.defaultProps = {
     },
   },
   icon: {
-    color: colors.N0,
+    color: colors.text,
     icon: 'question-circle',
     size: 'sm',
   },

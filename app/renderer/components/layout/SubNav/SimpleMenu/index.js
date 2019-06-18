@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid/v4';
 import { NavLink } from 'react-router-dom';
-import themeObject, { colors } from 'theme';
+import themeObject from 'components/defaultTheme';
 
 const defaultThemeStyle = p => {
+  const { colors } = p.theme;
+
   return {
     navItemColor: colors.textMuted,
     navItemHoverBackground: colors.V500,
@@ -25,7 +27,9 @@ const NavItem = styled(CustomNavLink)`
   line-height: 5rem;
   padding-left: 1rem;
   font-size: 1rem;
-  color: ${p => computedThemeStyle(p).navItemColor};
+  color: ${p => {
+    return computedThemeStyle(p).navItemColor;
+  }};
   text-decoration: none;
   cursor: pointer;
 
@@ -38,17 +42,16 @@ const NavItem = styled(CustomNavLink)`
   }
 `;
 
+NavItem.defaultProps = {
+  themeKey: 'AppSubNavSimpleMenu',
+};
+
 const SimpleMenu = ({ theme, themeKey, navItems, isInsideRouter }) => {
   return (
     <div>
       {navItems &&
         navItems.map(item => (
-          <NavItem
-            key={uuid()}
-            as={!isInsideRouter && 'div'}
-            {...{ theme, themeKey }}
-            to={item.link}
-          >
+          <NavItem key={uuid()} as={!isInsideRouter && 'div'} to={item.link}>
             {item.label}
           </NavItem>
         ))}
@@ -58,7 +61,6 @@ const SimpleMenu = ({ theme, themeKey, navItems, isInsideRouter }) => {
 
 SimpleMenu.defaultProps = {
   isInsideRouter: true,
-  theme: themeObject,
   themeKey: 'AppSubNavSimpleMenu',
 };
 

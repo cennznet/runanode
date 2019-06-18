@@ -1,6 +1,6 @@
 #### Step 1: Create `theme` folder, and structure folders and files like
 
-``` bash
+```bash
 - src
   - theme
     - dark
@@ -18,7 +18,7 @@
 export const N0 = `#F0F0F0`;
 ```
 
-``` jsx static
+```jsx static
 // src/theme/dark/appComponentStyle.js
 
 /**
@@ -41,8 +41,11 @@ export default configComponentStyle;
 
 import R from 'ramda';
 
-import defaultTheme, { media as mediaQueries, colors as defaultColors, utils } from 'components/defaultTheme';
-import mediaQueries from 'components/defaultTheme/media';
+import defaultTheme, {
+  media as mediaQueries,
+  colors as defaultColors,
+  utils,
+} from 'components/defaultTheme';
 
 import * as appColors from './appColors';
 import appComponentStyle from './appComponentStyle';

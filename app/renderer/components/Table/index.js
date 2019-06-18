@@ -7,7 +7,7 @@ import theme from 'components/defaultTheme';
 const defaultThemeStyle = p => {
   const { colors } = p.theme;
   return {
-    headerBackground: colors.V900,
+    headerBackground: colors.background,
     rowOddLineBackground: 'rgba(8, 24, 127, 0.7)',
     rowEvenLineBackground: 'rgba(8, 24, 127, 0.3)',
   };

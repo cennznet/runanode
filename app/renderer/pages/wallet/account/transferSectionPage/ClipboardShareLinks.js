@@ -45,7 +45,7 @@ const Icon = styled(FontAwesomeIcon)`
 
 const defaultStyling = () => {
   return {
-    backgroundColor: colors.V900,
+    backgroundColor: colors.background,
     padding: '0.5rem',
     height: '3rem',
     lineHeight: '1.2rem',

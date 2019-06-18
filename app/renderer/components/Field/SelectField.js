@@ -2,12 +2,12 @@ import React from 'react';
 import R from 'ramda';
 import styled from 'styled-components';
 import { Select } from 'components';
-import { colors } from 'components/defaultTheme';
+import { colors } from 'theme';
 
 const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
-  color: ${colors.N0};
+  color: ${colors.text};
   font-size: 16px;
   font-weight: 600;
 `;
