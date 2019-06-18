@@ -4,6 +4,7 @@ const defaultThemeStyle = ({ theme }) => {
   const { colors } = theme;
 
   return {
+    borderWidth: '1px',
     fontSize: {
       sm: theme.fontSizeSm,
       md: theme.fontSize,
@@ -74,7 +75,7 @@ const defaultThemeStyle = ({ theme }) => {
       danger: colors.N0,
       success: colors.N0,
       warning: colors.N800,
-      info: colors.N0,
+      info: colors.N800,
       nuetral: colors.N0,
     },
   };
