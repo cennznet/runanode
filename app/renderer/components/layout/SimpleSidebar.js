@@ -6,7 +6,7 @@ import packageJson from '../../../../package.json';
 
 const defaultThemeStyle = p => {
   return {
-    background: colors.V900,
+    background: colors.background,
   };
 };
 

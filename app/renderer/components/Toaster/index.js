@@ -39,7 +39,7 @@ const defaultThemeStyle = p => {
   const { colors } = p.theme;
 
   return {
-    background: colors.V900,
+    background: colors.background,
     boxShadow:
       '0 2px 1px -1px rgba(0, 0, 0, 0.18), 0 1px 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.1)',
     color: colors.text,

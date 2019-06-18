@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SubNav, CollapsibleMenu } from 'components/layout';
 import { Button } from 'components';
-import themeObject from 'theme';
+import themeObject from 'components/defaultTheme';
 import ROUTES from 'renderer/constants/routes';
 import history from 'renderer/history';
 import { WALLET_TYPE } from 'renderer/constants/wallet';
@@ -23,7 +23,6 @@ const AccountAddButton = styled(Button).attrs(p => ({
 }))``;
 
 AccountAddButton.defaultProps = {
-  theme: themeObject,
   themeKey: 'AppSubNavAccountAddButton',
 };
 
@@ -41,7 +40,6 @@ const WalletAddButton = styled(Button).attrs(p => ({
 }))``;
 
 WalletAddButton.defaultProps = {
-  theme: themeObject,
   themeKey: 'AppSubNavWalletAddButton',
 };
 

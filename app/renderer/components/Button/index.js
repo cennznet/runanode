@@ -25,6 +25,7 @@ const IconWrapper = styled.div`
 `;
 
 const IconAfter = ({ iconAfter, loading, variant, theme }) => {
+  console.log('theme', theme);
   const icon = loading ? (
     <Spinner
       color={styledProps(defaultThemeStyle({ theme }).contrastColor, 'variant')({ variant })}
@@ -71,7 +72,7 @@ Button.defaultProps = {
   loading: false,
   outline: false,
   size: 'md',
-  // theme: defaultTheme,
+  theme: defaultTheme,
   themeKey: 'Button',
   themeStyle: {},
   type: 'button',
