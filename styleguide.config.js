@@ -57,6 +57,12 @@ module.exports = {
         border: 0,
       },
     },
+    Para: {
+      para: {
+        color: '#FFFFFF',
+        fontSize: '14px',
+      },
+    },
     Pathline: {
       pathline: {
         color: '#FFFFFF',
@@ -131,6 +137,14 @@ module.exports = {
         {
           name: 'Get started',
           content: 'styleguideHelpers/docs/theming/get-started.md',
+        },
+        {
+          name: 'How theming works',
+          content: 'styleguideHelpers/docs/theming/how-it-works.md',
+        },
+        {
+          name: 'Naming convention',
+          content: 'styleguideHelpers/docs/theming/naming-convention.md',
         },
       ],
     },
