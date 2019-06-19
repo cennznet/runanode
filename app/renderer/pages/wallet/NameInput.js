@@ -53,7 +53,6 @@ const NameInput = ({ existingWallets, onSubmit: onSubmitFunc }) => {
                       placeholder="Please enter wallet name..."
                       value={values[field.name] || ''}
                       valid={touched[field.name] && !errors[field.name]}
-                      theme={themeObject}
                     />
                     {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}
                   </div>
