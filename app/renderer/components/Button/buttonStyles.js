@@ -18,7 +18,7 @@ const buttonColor = (p, computedThemeStyle) => {
 const buttonBackground = (p, computedThemeStyle) => {
   const { colors } = p.theme;
 
-  if (p.flat) {
+  if (p.flat || p.outline) {
     return 'transparent';
   }
 
@@ -26,23 +26,25 @@ const buttonBackground = (p, computedThemeStyle) => {
     return colors.N100;
   }
 
-  if (p.outline) {
-    return colors.N0;
-  }
-
   return styledProps(computedThemeStyle.background, 'variant')(p);
 };
 
 const buttonBorder = (p, computedThemeStyle) => {
   if (p.outline && !p.disabled) {
-    return `1px solid ${styledProps(computedThemeStyle.borderColor, 'variant')(p)}`;
+    return `${computedThemeStyle.borderWidth} solid ${styledProps(
+      computedThemeStyle.borderColor,
+      'variant'
+    )(p)}`;
   }
 
-  if (p.disabled) {
+  if (p.disabled || p.flat) {
     return 0;
   }
 
-  return `1px solid ${styledProps(computedThemeStyle.borderColor, 'variant')(p)}`;
+  return `${computedThemeStyle.borderWidth} solid ${styledProps(
+    computedThemeStyle.borderColor,
+    'variant'
+  )(p)}`;
 };
 
 const hoverBackground = (p, computedThemeStyle) => {
@@ -56,10 +58,6 @@ const hoverBackground = (p, computedThemeStyle) => {
     return colors.N100;
   }
 
-  if (p.outline) {
-    return '';
-  }
-
   return styledProps(computedThemeStyle.hoverBackground, 'variant')(p);
 };
 
@@ -70,24 +68,31 @@ const hoverColor = (p, computedThemeStyle) => {
     return colors.N300;
   }
 
-  if (p.flat || p.outline) {
+  if (p.flat) {
     return styledProps(computedThemeStyle.hoverColor, 'variant')(p);
+  }
+
+  if (p.outline) {
+    return styledProps(computedThemeStyle.contrastColor, 'variant')(p);
   }
 
   return '';
 };
 
 const hoverBorderColor = (p, computedThemeStyle) => {
-  if (p.disabled) {
+  if (p.disabled || p.flat) {
     return 0;
   }
 
-  return `1px solid ${styledProps(computedThemeStyle.hoverBorderColor, 'variant')(p)}`;
+  return `${computedThemeStyle.borderWidth} solid ${styledProps(
+    computedThemeStyle.hoverBorderColor,
+    'variant'
+  )(p)}`;
 };
 
 const buttonStyles = props => {
   const computedThemeStyle = props.theme.utils.createThemeStyle(props, defaultThemeStyle);
-  const p = Object.assign({ color: 'primary', size: 'md' }, props);
+  const p = Object.assign({}, props);
 
   return `
     align-items: center;

@@ -2,55 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import styledProps from 'styled-props';
+import defaultThemeStyle from './defaultThemeStyle';
+
+const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeStyle);
 
 const ContentWrapper = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: ${p => `1px solid ${p.computedThemeStyle.borderColor}`};
-  background: ${p => p.computedThemeStyle.background};
-  border-radius: 3px;
+  border: ${p => `1px solid ${computedThemeStyle(p).borderColor}`};
+  background: ${p => computedThemeStyle(p).background};
+  border-radius: ${p => p.theme.borderRadius};
   box-sizing: border-box;
 `;
 
 ContentWrapper.defaultProps = {
-  computedThemeStyle: {
-    size: {
-      sm: '1rem',
-      md: '2rem',
-      lg: '3rem',
-    },
-  },
-  size: 'md',
+  themeKey: 'Input',
 };
 
 const PrependWrapper = styled(ContentWrapper)`
   border-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  min-width: ${p => {
-    return styledProps(p.computedThemeStyle.size, 'size')(p);
-  }};
-  height: ${p => styledProps(p.computedThemeStyle.size, 'size')(p)};
+  min-width: ${p => styledProps(computedThemeStyle(p), 'size')(p)[p.size]};
+  height: ${p => styledProps(computedThemeStyle(p), 'size')(p)[p.size]};
 `;
 
-const Prepend = ({ prepend, computedThemeStyle }) => (
-  <PrependWrapper {...{ computedThemeStyle }}>{prepend}</PrependWrapper>
-);
+const Prepend = ({ prepend, size }) => <PrependWrapper {...{ size }}>{prepend}</PrependWrapper>;
 
 const AppendWrapper = styled(ContentWrapper)`
   border-left: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  min-width: ${p => {
-    return styledProps(p.computedThemeStyle.size, 'size')(p);
-  }};
-  height: ${p => styledProps(p.computedThemeStyle.size, 'size')(p)};
+  min-width: ${p => styledProps(computedThemeStyle(p), 'size')(p)[p.size]};
+  height: ${p => styledProps(computedThemeStyle(p), 'size')(p)[p.size]};
 `;
 
-const Append = ({ append, computedThemeStyle }) => (
-  <AppendWrapper {...{ computedThemeStyle }}>{append}</AppendWrapper>
-);
+const Append = ({ append, size }) => <AppendWrapper {...{ size }}>{append}</AppendWrapper>;
 
 const AddonWrapper = styled.span`
   display: flex;
@@ -59,7 +47,7 @@ const AddonWrapper = styled.span`
 `;
 
 const InputAddon = ({ children, ...otherProps }) => {
-  const { prepend, append, computedThemeStyle } = otherProps;
+  const { prepend, append, size } = otherProps;
 
   if (!(prepend || append)) {
     return children;
@@ -67,16 +55,15 @@ const InputAddon = ({ children, ...otherProps }) => {
 
   return (
     <AddonWrapper>
-      {prepend && <Prepend {...{ prepend, computedThemeStyle }} />}
+      {prepend && <Prepend {...{ prepend, size }} />}
       {children}
-      {append && <Append {...{ append, computedThemeStyle }} />}
+      {append && <Append {...{ append, size }} />}
     </AddonWrapper>
   );
 };
 
 InputAddon.propTypes = {
   children: PropTypes.node.isRequired,
-  computedThemeStyle: PropTypes.object.isRequired,
 };
 
 export default InputAddon;
