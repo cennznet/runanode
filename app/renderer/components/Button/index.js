@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import styledProps from 'styled-props';
 import Spinner from 'components/Spinner';
-import defaultTheme from 'components/defaultTheme';
 import defaultThemeStyle from './defaultThemeStyle';
 import buttonStyles from './buttonStyles';
 
@@ -13,10 +12,6 @@ const StyledButton = styled.button`
   min-width: ${p => p.minWidth};
 `;
 
-StyledButton.defaultProps = {
-  theme: defaultTheme,
-};
-
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -24,42 +19,27 @@ const IconWrapper = styled.div`
   padding: 0 0.5rem;
 `;
 
-const IconAfter = ({ iconAfter, loading, variant, theme }) => {
-  console.log('theme', theme);
-  const icon = loading ? (
-    <Spinner
-      color={styledProps(defaultThemeStyle({ theme }).contrastColor, 'variant')({ variant })}
-      size="sm"
-    />
-  ) : (
-    iconAfter
-  );
+const ButtonSpinner = styled(Spinner).attrs(p => {
+  return {
+    color: styledProps(defaultThemeStyle({ theme: p.theme }).contrastColor, 'variant')({
+      variant: p.variant,
+    }),
+  };
+})``;
+
+const IconAfter = ({ iconAfter, loading, variant }) => {
+  const icon = loading ? <ButtonSpinner size="sm" variant={variant} /> : iconAfter;
 
   return <IconWrapper>{icon}</IconWrapper>;
 };
 
-const CustomButton = ({
-  children,
-  iconBefore,
-  iconAfter,
-  variant,
-  loading,
-  theme,
-  themeKey,
-  themeStyle,
-  ...restProps
-}) => (
-  <StyledButton
-    {...restProps}
-    {...{ iconBefore, iconAfter, loading, theme, themeKey, themeStyle, variant }}
-  >
+const Button = ({ children, iconBefore, iconAfter, variant, loading, ...restProps }) => (
+  <StyledButton {...restProps} {...{ iconBefore, iconAfter, loading, variant }}>
     {iconBefore && <IconWrapper>{iconBefore}</IconWrapper>}
     {children}
-    {(iconAfter || loading) && <IconAfter {...{ iconAfter, loading, variant, theme }} />}
+    {(iconAfter || loading) && <IconAfter {...{ iconAfter, loading, variant }} />}
   </StyledButton>
 );
-
-const Button = styled(CustomButton)``;
 
 Button.defaultProps = {
   block: false,
@@ -72,7 +52,6 @@ Button.defaultProps = {
   loading: false,
   outline: false,
   size: 'md',
-  theme: defaultTheme,
   themeKey: 'Button',
   themeStyle: {},
   type: 'button',
@@ -91,7 +70,6 @@ Button.propTypes = {
   loading: PropTypes.bool,
   outline: PropTypes.bool,
   size: PropTypes.string,
-  theme: PropTypes.object,
   themeKey: PropTypes.string,
   themeStyle: PropTypes.object,
   type: PropTypes.string,

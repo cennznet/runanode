@@ -89,7 +89,6 @@ const AddAccountModal = ({
                             placeholder="Please enter account name..."
                             value={values[field.name]}
                             valid={touched[field.name] && !errors[field.name]}
-                            theme={themeObject}
                           />
                           {errors[field.name] && <ErrorField>{errors[field.name]}</ErrorField>}
                         </ModalWarningWrapper>

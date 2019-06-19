@@ -12,9 +12,7 @@ InputCore.defaultProps = {
 
 InputCore.propTypes = {
   valid: PropTypes.bool,
-  theme: PropTypes.object.isRequired,
   themeKey: PropTypes.string.isRequired,
-  computedThemeStyle: PropTypes.object.isRequired,
 };
 
 export default InputCore;
