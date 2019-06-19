@@ -1,7 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import styledProps from 'styled-props';
 import { rgba } from 'polished';
-import theme from 'components/defaultTheme';
 
 const defaultThemeStyle = p => {
   const { colors } = p.theme;
@@ -53,7 +52,6 @@ const Spinner = styled.div`
 
 Spinner.defaultProps = {
   size: 'md',
-  theme,
   themeKey: 'Spinner',
   themeStyle: {},
 };
