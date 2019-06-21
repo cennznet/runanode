@@ -10,17 +10,7 @@ const theme = {
   fontSizeSm: '12px',
   fontSize: '14px',
   fontSizeLg: '1rem',
-  fontFamily: `
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    'Roboto',
-    'Fira Sans',
-    Oxygen-Sans,
-    'Ubuntu',
-    'Helvetica Neue',
-    sans-serif
-  `,
+  fontFamily: `-apple-system,BlinkMacSystemFont,'SegoeUI','Roboto','FiraSans',Oxygen-Sans,'Ubuntu','HelveticaNeue',sans-serif`,
   zIndex: {
     overlay: 20,
     above: 10,
