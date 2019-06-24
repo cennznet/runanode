@@ -69,7 +69,7 @@ linux:
     - 'AppImage'
     - 'zip'
     - 'deb'
-    - 'rpm'
+    # - 'rpm'
     # - 'snap'
 
 #deb:
