@@ -5,7 +5,7 @@ echo "Uploading source maps to Sentry"
 
 export SENTRY_ORG=centrality-ai
 echo "SENTRY_ORG: $SENTRY_ORG"
-export SENTRY_AUTH_TOKEN=fa4017b1975c4defb9951c7f978ef02e6251e43679a34ea193d867c24b46dc15
+export SENTRY_AUTH_TOKEN=$sentry_token
 echo "SENTRY_AUTH_TOKEN: $SENTRY_AUTH_TOKEN"
 export SENTRY_PROJECT=cenznet-node-ui
 echo "SENTRY_PROJECT: $SENTRY_PROJECT"
