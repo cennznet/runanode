@@ -21,7 +21,7 @@ extraFiles:
     filter: ['**/*']
   - from: 'dist/cennznet-node-${os}'
     to: 'dist/cennznet-node'
-  - from: 'dist/launcher-config-${os}.yaml'
+  - from: 'launcher-config/launcher-config-${os}.yaml'
     to: 'dist/launcher-config.yaml'
 
 # Mac OS configuration
