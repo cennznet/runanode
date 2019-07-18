@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import Table from 'components/Table';
 import { colors } from 'theme';
-import { Ellipsis, Scrollable } from 'components';
+import { Ellipsis, Scrollable, HintDigits } from 'components';
 
 const AssetIdIcon = ({ value }) => {
   const SVG = styled(SVGInline).attrs({
@@ -98,9 +98,9 @@ const PortfolioSection = ({ accountBalances }) => {
             accessor: ({ freeBalance }) => {
               return (
                 freeBalance && (
-                  <Ellipsis substrLength="5" maxLength="15" tailLength="5">
+                  <HintDigits ellipsisProps={{ substrLength: 5, maxLength: 15, tailLength: 5 }}>
                     {freeBalance.toString || ''}
-                  </Ellipsis>
+                  </HintDigits>
                 )
               );
             },
@@ -132,9 +132,9 @@ const PortfolioSection = ({ accountBalances }) => {
             id: 'totalBalance',
             accessor: ({ totalBalance }) =>
               totalBalance && (
-                <Ellipsis substrLength="5" maxLength="15" tailLength="5">
+                <HintDigits ellipsisProps={{ substrLength: 5, maxLength: 15, tailLength: 5 }}>
                   {totalBalance.toString || ''}
-                </Ellipsis>
+                </HintDigits>
               ),
             Cell: row => {
               return (
