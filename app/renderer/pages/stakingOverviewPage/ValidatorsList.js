@@ -2,7 +2,7 @@ import React from 'react';
 import jdenticon from 'jdenticon';
 import styled from 'styled-components';
 import SVGInline from 'react-svg-inline';
-import { Ellipsis, Table } from 'components';
+import { Ellipsis, Table, HintDigits } from 'components';
 import theme, { colors } from 'theme';
 import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/theNode.types';
 
@@ -92,9 +92,7 @@ const ValidatorsList = ({ validators, stakingStashAccountAddress }) => {
                     textAlign: 'right',
                   }}
                 >
-                  <Ellipsis substrLength={6}>
-                    {(value && value.stakingTokenBalance) || 'Error'}
-                  </Ellipsis>
+                  {value && <HintDigits>{value.stakingTokenBalance}</HintDigits>}
                 </div>
               );
             },
