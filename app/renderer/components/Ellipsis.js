@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Ellipsis = ({ maxLength = 17, substrLength = 12, tailLength = 5, children }) => {
+const Ellipsis = ({ maxLength = 17, substrLength = 12, tailLength = 5, children, ...props }) => {
   if (!children) {
     return null;
   }
@@ -10,7 +10,7 @@ const Ellipsis = ({ maxLength = 17, substrLength = 12, tailLength = 5, children 
         ' ... ' +
         children.substr(children.length - tailLength, children.length)
       : children;
-  return <span>{formattedText}</span>;
+  return <span {...props}>{formattedText}</span>;
 };
 
 export default Ellipsis;
