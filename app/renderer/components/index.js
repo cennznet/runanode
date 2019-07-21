@@ -25,6 +25,7 @@ import TosContent from 'components/TosContent';
 import Radio from 'components/Radio';
 import Toaster from 'components/Toaster';
 import Card from 'components/Card';
+import HintDigits from 'components/HintDigits';
 
 export {
   Box,
@@ -54,4 +55,5 @@ export {
   Toaster,
   Ellipsis,
   Card,
+  HintDigits,
 };
