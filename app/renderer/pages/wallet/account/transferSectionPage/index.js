@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import BN from 'bn.js';
 import * as Yup from 'yup';
 
-import { Button, Form, PageHeading, PageFooter, Select } from 'components';
+import { Button, Form, PageFooter } from 'components';
 import { PreDefinedAssetId, PreDefinedAssetIdName } from 'common/types/theNode.types';
 import SelectField from 'renderer/components/Field/SelectField';
 import TextField from 'renderer/components/Field/TextField';
@@ -37,18 +37,22 @@ const TransferSection = ({ account, onTransfer, currentWallet, transaction }) =>
   const ValidateSchema = Yup.object().shape({
     assetId: Yup.object().required('Required'),
     amount: Yup.string()
-      .matches(/^[0-9]*$/, 'Amount should a number')
+      .matches(/^[0-9]*$/, 'Please enter a number')
       .when('assetId', (assetId, passSchema) => {
-        return passSchema.test('test-name', 'Amount greater than account balance', value => {
-          const freeBalance = new BN(account.assets[assetId.value].freeBalance.toString, 10);
-          return new BN(value, 10).lte(freeBalance);
-        });
+        return passSchema.test(
+          'test-name',
+          'Please enter an amount smaller than the balance',
+          value => {
+            const freeBalance = new BN(account.assets[assetId.value].freeBalance.toString, 10);
+            return new BN(value, 10).lte(freeBalance);
+          }
+        );
       })
       .required('Required'),
     toAddress: Yup.string()
       .min(48, 'Invalid address, length must be 48')
       .max(48, 'Invalid address, length must be 48')
-      .test('test-name', "Can't send to your own address", value => {
+      .test('test-name', 'It is not allowed to make transaction within the same account', value => {
         return account.address !== value;
       })
       .required('Required'),

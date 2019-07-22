@@ -2,17 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { theScanAddressUrl } from 'common/types/theNode.types';
-import {
-  Clipboard,
-  PageHeading,
-  PageFooter,
-  Tabs,
-  TabPane,
-  Input,
-  Ellipsis,
-  Hint,
-  Tooltip,
-} from 'components';
+import { PageHeading, Tabs, TabPane, Ellipsis } from 'components';
 import theme, { colors } from 'theme';
 import useOnClickOutside from 'use-onclickoutside';
 import PortfolioSection from './PortfolioSection';
@@ -71,10 +61,6 @@ const ErrorMessage = styled.div`
 const AccountName = styled.div`
   max-width: 20rem;
 `;
-
-// white-space: nowrap;
-// overflow: hidden;
-// text-overflow: ellipsis;
 
 const Subheading = ({ account }) => {
   const url = theScanAddressUrl.rimu; // TODO should base on selected network

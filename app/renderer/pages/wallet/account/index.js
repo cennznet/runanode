@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import R from 'ramda';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading } from 'components';
+import uuid from 'uuid/v4';
 import withContainer from './container';
 import WalletDetailsSubNav from './WalletDetailsSubNav';
 import AccountDetails from './AccountDetails';
@@ -18,6 +19,7 @@ const WalletDetailsPage = ({
 }) => {
   const { walletId, accountPublicAddress } = match.params;
   const wallet = wallets && R.find(R.propEq('id', walletId))(wallets);
+
   return wallet ? (
     <MainLayout
       subNav={
@@ -30,7 +32,6 @@ const WalletDetailsPage = ({
     >
       <MainContent display="flex">
         <AccountDetails
-          key={wallet.accounts[accountPublicAddress]}
           account={wallet.accounts[accountPublicAddress]}
           accountBalances={balances[accountPublicAddress]}
           onTransfer={onTransfer}
