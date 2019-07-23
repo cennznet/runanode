@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import types from 'renderer/types';
 
 import { restartTheNetNodeChannel } from 'renderer/ipc/theNode.ipc';
-import type { TheNodeRestartOptions } from 'common/types/theNode.types';
 import ROUTES from 'renderer/constants/routes';
 import { Logger } from 'renderer/utils/logging';
 import { NetworkNameOptions } from 'common/types/theNode.types';
@@ -55,7 +54,7 @@ const mapDispatchToProps = dispatch => ({
     });
   },
   onRestartNodeClick: () => {
-    const options: TheNodeRestartOptions = {
+    const options = {
       chain: NetworkNameOptions.THENODE_RIMU,
     };
     restartTheNetNodeChannel.send(options);

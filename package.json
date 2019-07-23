@@ -2,12 +2,12 @@
   "name": "runanode",
   "version": "0.14.1",
   "description": "",
-  "homepage": "https://bitbucket.org/centralitydev/cennz-node-ui#readme",
+  "homepage": "https://github.com/cennznet/runanode",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/centralitydev/cennz-node-ui.git"
+    "url": "git@github.com:cennznet/runanode.git"
   },
-  "license": "ISC",
+  "license": "Apache 2.0",
   "author": "Centrality <developers@centrality.ai>",
   "main": "./app/main.prod.js",
   "scripts": {
@@ -50,7 +50,7 @@
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./app/main.dev.js",
     "start-renderer-dev": "cross-env NODE_ENV=development LAUNCHER_CONFIG=./launcher-config.yaml webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
     "styleguide": "styleguidist server",
-    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 jest",
+    "jest": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 jest",
     "test-all": "yarn lint && yarn flow && yarn build && yarn test && yarn cucumber",
     "test-e2e": "node -r @babel/register ./internals/scripts/CheckBuiltsExist.js && cross-env LAUNCHER_CONFIG=./launcher-config.yaml NODE_ENV=test testcafe electron:./ ./test/e2e/HomePage.e2e.js",
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuiltsExist.js && cross-env NODE_ENV=test testcafe-live electron:./ ./test/e2e/HomePage.e2e.js",
