@@ -3,7 +3,7 @@ WORKDIR /workdir
 
 COPY . ./
 
-RUN yarn install
-RUN yarn release
+RUN npm install
+RUN npm release
 
 RUN cp -rf ./release ./build
