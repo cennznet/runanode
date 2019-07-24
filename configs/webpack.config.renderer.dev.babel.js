@@ -28,7 +28,7 @@ const requiredByDLLConfig = module.parent.filename.includes('webpack.config.rend
  * Warn if the DLL is not built
  */
 if (!requiredByDLLConfig && !(fs.existsSync(dll) && fs.existsSync(manifest))) {
-  execSync('yarn build-dll');
+  execSync('npm run build-dll');
 }
 
 export default merge.smart(baseConfig, {
