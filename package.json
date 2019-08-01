@@ -1,6 +1,6 @@
 {
   "name": "runanode",
-  "version": "0.14.1",
+  "version": "0.14.0",
   "description": "",
   "homepage": "https://github.com/cennznet/runanode",
   "repository": {
@@ -40,7 +40,7 @@
     "prestart": "npm run build",
     "release": "npm run clean && npm run build && electron-builder -mwl --publish never",
     "release:mac": "npm run clean && npm run build && electron-builder -m --publish never",
-    "release:github": "npm run clean && npm run build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=github --config.publish.owner=cennznet --config.publish.repo=runanode --config.publish.private=true --config.publish.releaseType=release",
+    "release:github": "npm run clean && npm run build && electron-builder -mwl --publish always --config.compression=store --config.publish.provider=github --config.publish.owner=cennznet --config.publish.repo=runanode --config.publish.releaseType=draft",
     "release:minio": "npm run clean && npm run build && electron-builder -m --publish always --config.compression=store --config.publish.provider=s3 --config.publish.endpoint=http://localhost:9000 --config.publish.bucket=auto-update",
     "release:minio-all": "npm run clean && npm run build && electron-builder -mlw --publish always --config.compression=store --config.publish.provider=s3 --config.publish.endpoint=http://localhost:9000 --config.publish.bucket=auto-update",
     "start": "npm run build-preload && cross-env NODE_ENV=production LAUNCHER_CONFIG=./launcher-config.yaml electron ./app/main.prod.js",
