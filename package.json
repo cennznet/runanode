@@ -18,7 +18,7 @@
     "build-e2e": "cross-env E2E_BUILD=true npm run build",
     "build-main": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "build-renderer": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
-    "dev": "npm run build-preload-dev && cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 npm run start-renderer-dev",
+    "dev": "npm run build-preload-dev && node -r @babel/register ./scripts/npmDev.js",
     "clean": "rimraf ./release -s",
     "cucumber": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 LAUNCHER_CONFIG=./launcher-config.yaml cucumber-js --compiler js:@babel/register -f node_modules/cucumber-pretty --format-options '{\"snippetInterface\": \"async-await\"}' --tags 'not @skip'",
     "cucumber:rebuild": "npm run build && npm run cucumber",
@@ -60,7 +60,7 @@
       "json"
     ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/testHelper/mocks/fileMock.js",
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
     },
     "setupFiles": [
@@ -189,6 +189,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
     "chai": "^4.2.0",
     "chalk": "^2.4.1",
+    "child-process-promise": "^2.2.1",
     "child_process": "^1.0.2",
     "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
