@@ -48,6 +48,7 @@ export default (configPath: ?string): LauncherConfig => {
   const inputYaml = configPath
     ? readFileSync(configPath, 'utf8')
     : readFileSync(path.join(distPath, 'launcher-config.yaml'), 'utf8');
+
   const finalYaml = inputYaml.replace(/\${([^}]+)}/g, (a, b) => {
     if (process.env[b]) {
       return process.env[b];
@@ -85,6 +86,7 @@ export default (configPath: ?string): LauncherConfig => {
     Logger.info(`readLauncherConfig: warning var undefined: ${b}`);
     return '';
   });
+
   // $FlowFixMe
   return yamljs.parse(finalYaml);
 };
