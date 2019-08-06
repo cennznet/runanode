@@ -111,15 +111,13 @@ export default merge.smart(baseConfig, {
       disableDotRule: false,
     },
     before() {
-      if (process.env.START_HOT) {
-        spawn('npm', ['run', 'start-main-dev'], {
-          shell: true,
-          env: process.env,
-          stdio: 'inherit',
-        })
-          .on('close', code => process.exit(code))
-          .on('error', spawnError => console.error(spawnError));
-      }
+      spawn('npm', ['run', 'start-main-dev'], {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit',
+      })
+        .on('close', code => process.exit(code))
+        .on('error', spawnError => console.error(spawnError));
     },
   },
 });
