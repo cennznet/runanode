@@ -1,5 +1,4 @@
 <h1 align="center">
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
   rUN
 </h1>
 <p align="center">
@@ -43,7 +42,7 @@ Join us on [CennznetDev Slack channel][cennznet_dev_slack] or Telegram @centrali
 
 ## Disclaimer
 
-Bcoin does not guarantee you against theft or lost funds due to bugs, mishaps,
+Cennznet does not guarantee you against theft or lost funds due to bugs, mishaps,
 or your own incompetence. You and you alone are responsible for securing your
 money.
 
@@ -56,19 +55,3 @@ See LICENSE for more info.
 [contributing]: docs/CONTRIBUTING.md
 [contributors]: docs/CONTRIBUTORS.md
 [runanode.io]: https://runanode.io
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/benxgao"><img src="https://avatars1.githubusercontent.com/u/1513326?v=4" width="100px;" alt="Ben Gao"/><br /><sub><b>Ben Gao</b></sub></a><br /><a href="https://github.com/cennznet/runanode/commits?author=benxgao" title="Documentation">📖</a></td>
-  </tr>
-</table>
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
