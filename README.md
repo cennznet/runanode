@@ -27,6 +27,7 @@
 ## Get started
 
 ```bash
+brew install jq
 npm i
 npm run dev
 ```
