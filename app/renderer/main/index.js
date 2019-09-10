@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
@@ -27,4 +28,4 @@ const Main = () => (
   </Provider>
 );
 
-export default Main;
+export default hot(Main);

@@ -3,7 +3,7 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
-    main: ['@babel/polyfill', path.join(__dirname, '../src/index.js')],
+    main: ['react-hot-loader/patch', '@babel/polyfill', path.join(__dirname, '../src/index.js')],
   },
   output: {
     path: path.resolve(__dirname, '../public'),
