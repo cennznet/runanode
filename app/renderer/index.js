@@ -73,7 +73,7 @@ library.add(
 );
 
 const initializeApp = async () => {
-  const api = setupApi({dispatch: store.dispatch});
+  const api = setupApi({ dispatch: store.dispatch });
 
   await api.appApi.initApi();
   await api.appApi.initRemoteApi();
@@ -93,6 +93,7 @@ const initializeApp = async () => {
 
   const rootElement = document.getElementById('root');
   if (!rootElement) throw new Error('No #root element found.');
+
   render(
     <AppContainer>
       <Main />
@@ -113,16 +114,3 @@ document.addEventListener('click', event => {
     shell.openExternal(event.target.href);
   }
 });
-
-if (module.hot) {
-  module.hot.accept('./main/index', () => {
-    // eslint-disable-next-line global-require
-    const NextApp = require('./main').default;
-    render(
-      <AppContainer>
-        <NextApp />
-      </AppContainer>,
-      document.getElementById('root')
-    );
-  });
-}
