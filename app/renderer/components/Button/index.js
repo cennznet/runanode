@@ -34,7 +34,7 @@ const IconAfter = ({ iconAfter, loading, variant }) => {
 };
 
 const Button = ({ children, iconBefore, iconAfter, variant, loading, ...restProps }) => (
-  <StyledButton {...restProps} {...{ iconBefore, iconAfter, loading, variant }}>
+  <StyledButton loading={loading ? 1 : undefined} {...restProps} {...{ iconBefore, iconAfter, variant }}>
     {iconBefore && <IconWrapper>{iconBefore}</IconWrapper>}
     {children}
     {(iconAfter || loading) && <IconAfter {...{ iconAfter, loading, variant }} />}
