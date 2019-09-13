@@ -51,12 +51,19 @@ const HomePage = ({
   match,
 }) => {
   const [isShowResetSection, setIsShowResetSection] = useState(false);
-  setTimeout(() => {
-    const { path } = match;
-    if (path === ROUTES.ROOT) {
-      setIsShowResetSection(true);
-    }
-  }, 40000);
+
+  useEffect(() => {
+    const sectionResetTimer = setTimeout(() => {
+      const { path } = match;
+      if (path === ROUTES.ROOT) {
+        setIsShowResetSection(true);
+      }
+    }, 40000);
+
+    return function cleanup() {
+      clearTimeout(sectionResetTimer);
+    };
+  }, []);
 
   useEffect(() => {
     Logger.debug(`HomePage, hasBlockNumbers: ${hasBlockNumbers}`);
