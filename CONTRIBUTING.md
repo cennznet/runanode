@@ -2,9 +2,7 @@
 
 ## Make pull requests
 
-- Rebase `master` branch into your current working branch;
-- Squash commits into one commit before making a PR to keep a clean git history;
-- Label `please review` when PR is ready to review;
+[Checklist of creating PRs][pr_template]
 
 ## Set up development environment
 
@@ -27,3 +25,4 @@ Developers are able to navigate to a target page in development mode, without ne
 Please read through [development guide][development_guide] for more technical details
 
 [development_guide]: docs/DEVELOPMENT_GUIDE.md
+[pr_template]: docs/PULL_REQUEST_TEMPLATE.md
