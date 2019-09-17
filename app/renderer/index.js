@@ -26,7 +26,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { faDev } from '@fortawesome/free-brands-svg-icons';
-import { AppContainer } from 'react-hot-loader';
 import 'electron-cookies';
 import { getStorage, storageKeys } from 'renderer/api/utils/storage';
 import { Logger } from 'renderer/utils/logging';
@@ -95,9 +94,7 @@ const initializeApp = async () => {
   if (!rootElement) throw new Error('No #root element found.');
 
   render(
-    <AppContainer>
-      <Main />
-    </AppContainer>,
+    <Main />,
     rootElement
   );
 };
