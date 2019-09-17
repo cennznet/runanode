@@ -40,7 +40,7 @@ Please read through [Code of conduct][code_of_conduct] and [Contributing guideli
 ## Documentation
 
 - [Development guide][dev_guide]
-- [Set up local testnet in your machine][local_testnet]
+- [Set up standalone testnet][standalone_testnet]
 
 
 ## Relavant links
@@ -72,7 +72,7 @@ See LICENSE for more info.
 [code_of_conduct]: CODE_OF_CONDUCT.md
 [contributing]: CONTRIBUTING.md
 [dev_guide]: docs/DEV_GUIDE.md
-[local_testnet]: docs/LOCAL_TESTNET.md
+[standalone_testnet]: docs/STANDALONE_TESTNET.md
 [polkadot_wiki]: https://wiki.polkadot.network/en/latest/
 [product_backlog]: https://centralitydev.atlassian.net/jira/software/projects/NODE/boards/109/backlog
 [runanode.io]: https://runanode.io
