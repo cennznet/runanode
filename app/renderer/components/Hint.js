@@ -8,8 +8,8 @@ import { colors } from 'theme';
 const Wrapper = styled.div`
   margin-left: 0.5rem;
 
-  p + p {
-    margin-top: 1rem;
+  p {
+    max-width: 25rem;
   }
 `;
 
