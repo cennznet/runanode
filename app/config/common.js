@@ -31,13 +31,13 @@ const commonConfig = {
   },
   webSocket: {
     localStreamUrl: 'ws://localhost:9944',
-    // localStreamUrl: 'ws://10.9.30.55:19944',
+    // localStreamUrl: 'ws://xx.xx.xx.xx:19944',
     remoteStreamUrl: 'wss://rimu.unfrastructure.io/public/ws:9944',
     remoteStreamUrlMap: {
       rimu: 'wss://rimu.unfrastructure.io/public/ws:9944',
       kauri: 'wss://cennznet-node-1.centrality.me:9944',
       development: 'ws://localhost:19944',
-      // development: 'ws://10.9.30.55:19944', // for intra-testnet
+      // development: 'ws://xx.xx.xx.xx:19944', // for intra-testnet
     },
     latency: {
       period:
