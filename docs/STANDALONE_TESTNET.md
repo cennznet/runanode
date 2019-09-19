@@ -22,12 +22,17 @@ To ensure the testnet is starting to work, visit the telemetry to see if all val
 http://localhost:5000
 ```
 
-### 3. Connect rUNanode to standalone testnet
+### 3. Configure rUNanode
 
-- Start rUNanode software, and go to `choose network` page
-- Select `Self hosted net` option in the dropdown list
-- Upload the genesis file (`src/genesis/local/local.json`)
-- Go to the next page (Ensure `rUNanode` blockchain data folder has been cleared whenever the testnet blockchain folder is cleared)
+- Config `localStreamUrl` and `remoteStreamUrlMap/development` in `config/common.js`;
+- Run `npm run dev` to start rUNanode in development mode, or run `npm run release` to get packed rUNanode and run in production mode;
+
+### 4. Connect rUNanode to standalone testnet
+
+- After starting rUNanode software, go to `choose network` page;
+- Select `Self hosted net` option in the dropdown list;
+- Upload the genesis file (`src/genesis/local/local.json`);
+- Go to the next page (Ensure `rUNanode` blockchain data folder has been cleared whenever the testnet blockchain folder is cleared);
 
 ## Deposit tokens into rUNanode
 
@@ -74,7 +79,7 @@ rm -rf testnet-name
 
 Sometimes you may want host testnet on one machine, and multiple nodes can connect with it in an intranet:
 
-- Use `src/genesis/local/intra-testnet.json` as a  genesis file template, replace `xx.xx.xx.xx` with the ip address of your testnet hosting machine;
+- Use `src/genesis/local/intra-testnet.json` as a genesis file template, replace `xx.xx.xx.xx` with the ip address of your testnet hosting machine;
 - In `docker-compose.yml`, replace `--chain=/mnt/genesis/local/local.json` with `--chain=/mnt/genesis/local/intra-testnet.json`;
 - Follow the same steps of configuring standalone testnet in your local machine;
 
