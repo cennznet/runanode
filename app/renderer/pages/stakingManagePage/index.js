@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import { Balance, BlockNumber } from '@cennznet/types';
 import R from 'ramda';
 import PageSpinner from 'components/PageSpinner';
+import UnStakeWarningModal from 'components/UnStakeWarningModal';
 import {
   theScanAddressUrl,
   PreDefinedAssetId,
@@ -18,7 +19,6 @@ import { MainContent, MainLayout } from 'components/layout';
 import { Button, PageHeading, Ellipsis } from 'components';
 import withContainer from './container';
 import ClipboardShareLinks from '../wallet/account/transferSectionPage/ClipboardShareLinks';
-import UnStakeWarningModal from './UnStakeWarningModal';
 import TheWallet from '../../api/wallets/TheWallet';
 import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
@@ -248,8 +248,7 @@ const StakingStakePage = ({
   stakingStashWalletId,
   stakingStashAccountAddress,
   wallets,
-  onSyncWalletData,
-  wsLocalStatus,
+  onSyncWalletData
 }) => {
   if (!stakingStashAccountAddress) {
     return (

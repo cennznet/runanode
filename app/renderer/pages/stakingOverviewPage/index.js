@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
 import { PageHeading, Button } from 'components';
+import UnStakeWarningModal from 'components/UnStakeWarningModal';
 import styled from 'styled-components';
 
 import theme from 'theme';
+import R from 'ramda';
 import { PreDefinedAssetId } from 'common/types/theNode.types';
 import StakingProgressCard from './StakingProgressCard';
 import withContainer from './container';
 import ValidatorsList from './ValidatorsList';
 import WaitingList from './WaitingList';
 import useApis from './useApis';
-import useApi from './useApi';
+import TheWallet from '../../api/wallets/TheWallet';
+import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 
 const PageTitleWrapper = styled.div`
   display: flex;
@@ -38,7 +41,12 @@ const ListsWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const reoderList = (arryList, fromIndex, toIndex = 0) => {
+const UnStakeButton = styled(Button)`
+  position: absolute;
+  right: 0rem;
+`;
+
+const reorderList = (arryList, fromIndex, toIndex = 0) => {
   if (Array.isArray(arryList)) {
     arryList.splice(toIndex, 0, arryList.splice(fromIndex, 1)[0]);
     return arryList;
@@ -49,7 +57,7 @@ const reoderList = (arryList, fromIndex, toIndex = 0) => {
 const sortedListWithBalances = (accountList, premierAccount, setValueFn) => {
   if (accountList) {
     const index = accountList.indexOf(premierAccount);
-    const reoderAccountList = index === -1 ? accountList : reoderList(accountList, index);
+    const reoderAccountList = index === -1 ? accountList : reorderList(accountList, index);
     Promise.all(
       reoderAccountList.map(async account => {
         const stakingTokenBalance = await window.appApi.getGenericAssetFreeBalance(
@@ -71,7 +79,9 @@ const StakingOverviewPage = ({
   subNav,
   onClickStakeButton,
   stakingStashAccountAddress,
-  wsLocalStatus,
+  onUnStake,
+  stakingStashWalletId,
+  wallets
 }) => {
   const [eraProgress, eraLength, sessionProgress, sessionLength, validators, intentions] = useApis(
     'getEraProgress',
@@ -105,9 +115,21 @@ const StakingOverviewPage = ({
     intentionsWithBalances.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
       .length > 0;
 
+  // UnStake Modal
+  const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
+  const stakingWallet: TheWallet = wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
+  const stakingAccount: TheWalletAccount = stakingWallet && stakingWallet.accounts[stakingStashAccountAddress];
+
   return (
     <MainLayout subNav={subNav}>
       <MainContent>
+        <UnStakeButton
+          style={{ display: !stakingStashAccountAddress ? 'none' : 'block' }}
+          variant="danger"
+          onClick={() => setUnStakeWarningModalOpen(true)}
+        >
+          Unstake
+        </UnStakeButton>
         <PageHeading subHeading="Here you can view when the next era is, and how your stake is performing amongst other validators.">
           <PageTitleWrapper>
             <TextTitleWrapper>
@@ -142,6 +164,18 @@ const StakingOverviewPage = ({
           />
         </ListsWrapper>
       </MainContent>
+
+      {stakingStashAccountAddress && (
+        <UnStakeWarningModal
+          {...{
+            isUnStakeWarningModalOpen,
+            setUnStakeWarningModalOpen,
+            onUnStake,
+            stakingWallet,
+            stakingAccount,
+          }}
+        />
+      )}
     </MainLayout>
   );
 };
