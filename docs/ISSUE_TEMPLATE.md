@@ -2,11 +2,11 @@
 
 ## Goal
 
-We want to move to consistent queries/filtering of information across all apps. So when a user wants to query, we want the ability globally available on the app.
+Aliquip commodo ex aute quis eiusmod sit. Incididunt voluptate officia aliquip commodo. Pariatur mollit sint aute ipsum occaecat nulla occaecat culpa ipsum adipisicing.
 
 ## Background
 
-Currently the block query is fully split into a seperate tab. So when the user wants to query, it takes 2 clicks - first to the query tab, the typing the value and submitting for refresh.
+Sunt in consectetur eu eu laboris. Aliquip irure aliquip nostrud sint eu. In sunt voluptate id tempor fugiat ullamco. Pariatur nisi do incididunt ex reprehenderit mollit enim dolore. Aliquip irure qui eiusmod ut consequat. Esse cupidatat non dolor elit. Commodo consectetur velit ullamco qui dolor anim commodo tempor in in dolor.
 
 ## Pre-requisites
 
@@ -14,7 +14,11 @@ Requires xxxx to be done first (so the block query is not empty by default - it 
 
 ## Actions
 
-Move the query from the block query to the nav bar - ensure it is visible on all tabs. (And no overlaps with the tabs)
-Rename block query to block info
-Make sure the queries still work, for both hashes and numbers
-When done, the layout should look something along the lines of -
+Esse pariatur elit cillum quis laborum commodo enim.
+Nostrud sit proident ipsum irure qui.
+Esse amet occaecat anim aliquip.
+Ullamco incididunt et labore qui dolor pariatur qui elit culpa esse magna reprehenderit ullamco.
+
+## Expected outcome
+
+Pariatur ad voluptate est ex dolor ea fugiat quis veniam officia voluptate laboris mollit velit.
