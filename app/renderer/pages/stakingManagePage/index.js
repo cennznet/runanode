@@ -16,6 +16,7 @@ import themeObject, { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { Button, PageHeading, Ellipsis } from 'components';
+import PageHeaderWithStakingToggle from 'renderer/pages/staking/PageHeaderWithStakingToggle';
 import withContainer from './container';
 import ClipboardShareLinks from '../wallet/account/transferSectionPage/ClipboardShareLinks';
 import UnStakeWarningModal from './UnStakeWarningModal';
@@ -380,6 +381,7 @@ const StakingStakePage = ({
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
+        <PageHeaderWithStakingToggle />
         <UnStakeButton variant="danger" onClick={() => setUnStakeWarningModalOpen(true)}>
           Unstake
         </UnStakeButton>
