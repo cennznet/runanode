@@ -19,7 +19,7 @@ import { Button, PageHeading, Ellipsis } from 'components';
 import PageHeaderWithStakingToggle from 'renderer/pages/staking/PageHeaderWithStakingToggle';
 import withContainer from './container';
 import ClipboardShareLinks from '../wallet/account/transferSectionPage/ClipboardShareLinks';
-import UnStakeWarningModal from './UnStakeWarningModal';
+// import UnStakeWarningModal from './UnStakeWarningModal';
 import TheWallet from '../../api/wallets/TheWallet';
 import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
@@ -365,7 +365,7 @@ const StakingStakePage = ({
   }, []);
 
   const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
-  const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
+  // const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
 
   const AnimatedInnerSectionItemDiff = ({ value }) => {
     return <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value}</InnerSectionItemDiff>;
@@ -381,15 +381,15 @@ const StakingStakePage = ({
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
-        <PageHeaderWithStakingToggle />
-        <UnStakeButton variant="danger" onClick={() => setUnStakeWarningModalOpen(true)}>
+        <PageHeaderWithStakingToggle heading="Manage staking" subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />} {...{onUnStake, stakingAccount, stakingWallet}} />
+        {/* <UnStakeButton variant="danger" onClick={() => setUnStakeWarningModalOpen(true)}>
           Unstake
-        </UnStakeButton>
-        <PageHeading
+        </UnStakeButton> */}
+        {/* <PageHeading
           subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />}
         >
           Manage Staking
-        </PageHeading>
+        </PageHeading> */}
         <div className="content">
           <SectionLayoutWrapper>
             <Left>
@@ -489,7 +489,7 @@ const StakingStakePage = ({
           </SectionLayoutWrapper>
         </div>
       </MainContent>
-      <UnStakeWarningModal
+      {/* <UnStakeWarningModal
         {...{
           isUnStakeWarningModalOpen,
           setUnStakeWarningModalOpen,
@@ -497,7 +497,7 @@ const StakingStakePage = ({
           stakingWallet,
           stakingAccount,
         }}
-      />
+      /> */}
     </MainLayout>
   );
 };

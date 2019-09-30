@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
 import { PageHeading, Button } from 'components';
+import UnStakeWarningModal from '../UnStakeWarningModal';
 
 const PageTitleWrapper = styled.div`
   display: flex;
@@ -23,17 +24,31 @@ const NextUpHintText = styled.div`
   padding-left: 0.5rem;
 `;
 
-const StakeToggleButton = ({ isStakingStated, onClickStakeButton, buttonText, ...restProps }) => {
-  return <Button {...restProps}>{buttonText}</Button>;
+const StakeToggleButton = ({ isStakingStated, onClickStakeButton,  setUnStakeWarningModalOpen }) => {
+  return (
+    <Button
+      size="lg"
+      variant={isStakingStated ? 'danger' : 'primary'}
+      onClick={isStakingStated ? () => setUnStakeWarningModalOpen(true) : onClickStakeButton}
+    >
+      {isStakingStated ? 'Unstake' : 'Stake'}
+    </Button>
+  );
 };
 
 const PageHeaderWithStakingToggle = ({
+  heading,
   intentionsWithBalances,
   isStakingStated,
   onClickStakeButton,
+  onUnStake,
   stakingStashAccountAddress,
   subHeading,
+  stakingAccount, 
+  stakingWallet
 }) => {
+  const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
+
   const toShowNextUpHintText =
     intentionsWithBalances.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
       .length > 0;
@@ -42,17 +57,22 @@ const PageHeaderWithStakingToggle = ({
     <PageHeading subHeading={subHeading}>
       <PageTitleWrapper>
         <TextTitleWrapper>
-          <div>Staking overview</div>
+          <div>{heading}</div>
           {toShowNextUpHintText && (
             <NextUpHintText>You may join validator list at next era</NextUpHintText>
           )}
         </TextTitleWrapper>
-        <StakeToggleButton
-          size="lg"
-          buttonText={isStakingStated ? 'Unstake' : 'Stake'}
-          {...{ isStakingStated, onClickStakeButton }}
-        />
+        <StakeToggleButton {...{ isStakingStated, onClickStakeButton, setUnStakeWarningModalOpen }} />
       </PageTitleWrapper>
+      <UnStakeWarningModal
+        {...{
+          isUnStakeWarningModalOpen,
+          setUnStakeWarningModalOpen,
+          onUnStake,
+          stakingWallet,
+          stakingAccount,
+        }}
+      />
     </PageHeading>
   );
 };

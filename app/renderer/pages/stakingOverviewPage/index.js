@@ -86,6 +86,7 @@ const StakingOverviewPage = props => {
     <MainLayout subNav={subNav}>
       <MainContent>
         <PageHeaderWithStakingToggle
+          heading="Staking overview"
           {...{
             intentionsWithBalances,
             isStakingStated,
