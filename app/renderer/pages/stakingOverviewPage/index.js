@@ -1,36 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { MainContent, MainLayout } from 'components/layout';
-import { PageHeading, Button } from 'components';
 import styled from 'styled-components';
-
-import theme from 'theme';
+import PageHeaderWithStakingToggle from 'renderer/pages/staking/PageHeaderWithStakingToggle';
 import { PreDefinedAssetId } from 'common/types/theNode.types';
 import StakingProgressCard from './StakingProgressCard';
 import withContainer from './container';
 import ValidatorsList from './ValidatorsList';
 import WaitingList from './WaitingList';
 import useApis from './useApis';
-import useApi from './useApi';
-
-const PageTitleWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const TextTitleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const NextUpHintText = styled.div`
-  font-size: 10px;
-  background: ${theme.listitemHighlightGradient};
-  border-radius: 12px;
-  height: 1.2rem;
-  line-height: 1.2rem;
-  margin-left: 0.5rem;
-  padding-left: 0.5rem;
-`;
 
 const ListsWrapper = styled.div`
   margin: 2rem 0;
@@ -67,12 +44,9 @@ const sortedListWithBalances = (accountList, premierAccount, setValueFn) => {
   }
 };
 
-const StakingOverviewPage = ({
-  subNav,
-  onClickStakeButton,
-  stakingStashAccountAddress,
-  wsLocalStatus,
-}) => {
+const StakingOverviewPage = props => {
+  const { isStakingStated, subNav, onClickStakeButton, stakingStashAccountAddress } = props;
+
   const [eraProgress, eraLength, sessionProgress, sessionLength, validators, intentions] = useApis(
     'getEraProgress',
     'getEraLength',
@@ -101,30 +75,22 @@ const StakingOverviewPage = ({
     sortedListWithBalances(validators, stakingStashAccountAddress, setValidatorsWithBalances);
   }, [validators, intentions]);
 
-  const toShowNextUpHintText =
-    intentionsWithBalances.filter(waitingUser => waitingUser.address === stakingStashAccountAddress)
-      .length > 0;
+  const subHeading =
+    'Here you can view when the next era is, and how your stake is performing amongst other validators.';
 
   return (
     <MainLayout subNav={subNav}>
       <MainContent>
-        <PageHeading subHeading="Here you can view when the next era is, and how your stake is performing amongst other validators.">
-          <PageTitleWrapper>
-            <TextTitleWrapper>
-              <div>Staking overview</div>
-              {toShowNextUpHintText && (
-                <NextUpHintText>You may join validator list at next era</NextUpHintText>
-              )}
-            </TextTitleWrapper>
-            <Button
-              style={{ display: stakingStashAccountAddress ? 'none' : 'block' }}
-              size="lg"
-              onClick={() => onClickStakeButton()}
-            >
-              Stake
-            </Button>
-          </PageTitleWrapper>
-        </PageHeading>
+        <PageHeaderWithStakingToggle
+          heading="Staking overview"
+          {...{
+            intentionsWithBalances,
+            isStakingStated,
+            onClickStakeButton,
+            stakingStashAccountAddress,
+            subHeading,
+          }}
+        />
         <StakingProgressCard
           eraProgress={eraProgress}
           eraLength={eraLength}

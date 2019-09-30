@@ -29,7 +29,7 @@ const StakingStakePage = ({
   const [isChangeStakingPreferenceModalOpen, setChangeStakingPreferenceModalOpen] = useState(false);
 
   useEffect(() => {
-    if (stakingOption) {
+    if (stakingOption && stakingOption.wallet) {
       const { value: stakingAccountAddress, wallet } = stakingOption;
       const { accounts } = wallet;
 
