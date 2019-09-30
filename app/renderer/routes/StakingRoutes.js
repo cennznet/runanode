@@ -35,15 +35,25 @@ const StakingRoutes = ({ isStakingStated }) => {
     <Switch>
       <Route
         path={ROUTES.STAKING.OVERVIEW}
-        component={props => <StakingOverviewPage subNav={subNav(isStakingStated)} {...props} />}
+        component={props => (
+          <StakingOverviewPage
+            subNav={subNav(isStakingStated)}
+            {...props}
+            {...{ isStakingStated }}
+          />
+        )}
       />
       <Route
         path={ROUTES.STAKING.STAKE}
-        component={props => <StakingStakePage subNav={subNav(isStakingStated)} {...props} />}
+        component={props => (
+          <StakingStakePage subNav={subNav(isStakingStated)} {...props} {...{ isStakingStated }} />
+        )}
       />
       <Route
         path={ROUTES.STAKING.MANAGE}
-        component={props => <StakingManagePage subNav={subNav(isStakingStated)} {...props} />}
+        component={props => (
+          <StakingManagePage subNav={subNav(isStakingStated)} {...props} {...{ isStakingStated }} />
+        )}
       />
     </Switch>
   );

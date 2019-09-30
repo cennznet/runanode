@@ -23,10 +23,6 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onUnStake: payload => {
-    Logger.debug('onUnStake');
-    dispatch({ type: types.unStake.triggered, payload });
-  },
   onSyncWalletData: payload => {
     Logger.debug('onSyncWalletData');
     dispatch({ type: types.syncWalletData.requested, payload });

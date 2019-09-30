@@ -16,9 +16,9 @@ import themeObject, { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
 import { Button, PageHeading, Ellipsis } from 'components';
+import PageHeaderWithStakingToggle from 'renderer/pages/staking/PageHeaderWithStakingToggle';
 import withContainer from './container';
 import ClipboardShareLinks from '../wallet/account/transferSectionPage/ClipboardShareLinks';
-import UnStakeWarningModal from './UnStakeWarningModal';
 import TheWallet from '../../api/wallets/TheWallet';
 import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
@@ -69,11 +69,6 @@ StakingTokenIcon.defaultProps = {
   themeKey: 'AppStakingBalanceCard',
 };
 
-const UnStakeButton = styled(Button)`
-  position: absolute;
-  right: 0rem;
-`;
-
 const SectionLayoutWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -102,10 +97,6 @@ const Right = styled.div`
 const ItemTitle = styled.div`
   color: ${colors.textMuted};
   line-height: 1.8rem;
-`;
-
-const ItemNum = styled.span`
-  font-size: 1.8rem;
 `;
 
 const Item = styled.div`
@@ -202,8 +193,8 @@ const NameText = styled.span`
 
 const Subheading = ({ account, wallet }) => {
   const url = theScanAddressUrl.rimu; // TODO should base on selected network
-  const { name: walletName } = wallet;
-  const { name: accountName } = account;
+  const { name: walletName } = wallet || {};
+  const { name: accountName } = account || {};
 
   return (
     <SubheadingWrapper>
@@ -244,12 +235,11 @@ const StakingStakePage = ({
   balances,
   subNav,
   uiState,
-  onUnStake,
   stakingStashWalletId,
   stakingStashAccountAddress,
   wallets,
   onSyncWalletData,
-  wsLocalStatus,
+  isStakingStated,
 }) => {
   if (!stakingStashAccountAddress) {
     return (
@@ -281,8 +271,9 @@ const StakingStakePage = ({
   const [rewardSpendingValue, setRewardSpendingValue] = useState('0');
   const [rewardSpendingValueDiff, setRewardSpendingValueDiff] = useState('0');
 
-  const stakingWallet: TheWallet = wallets && R.find(R.propEq('id', stakingStashWalletId))(wallets);
-  const stakingAccount: TheWalletAccount = stakingWallet.accounts[stakingStashAccountAddress];
+  const stakingWallet =
+    wallets && !!wallets.length && R.find(R.propEq('id', stakingStashWalletId))(wallets);
+  const stakingAccount = stakingWallet ? stakingWallet.accounts[stakingStashAccountAddress] : '';
 
   const [intentions, validators] = useApis('getIntentions', 'getValidators');
 
@@ -330,13 +321,7 @@ const StakingStakePage = ({
                 new BN(balanceValue.toString(), 10).div(new BN(validatorNum)).toString(10)
               );
             }
-            // if(`${section}.${method}` === 'session.NewSession') {
-            //   const blockNumber: BlockNumber = defaultData;
-            // }
-            // if(`${section}.${method}` === 'staking.OfflineWarning') {
-            // }
-            // if(`${section}.${method}` === 'staking.OfflineSlash') {
-            // }
+          
             return defaultData;
           });
       }
@@ -363,13 +348,6 @@ const StakingStakePage = ({
     onSyncWalletData({ id: stakingStashWalletId, stakingWallet });
   }, []);
 
-  const intentionsIndex = intentions ? intentions.indexOf(stakingAccount.address) : -1;
-  const [isUnStakeWarningModalOpen, setUnStakeWarningModalOpen] = useState(false);
-
-  const AnimatedInnerSectionItemDiff = ({ value }) => {
-    return <InnerSectionItemDiff>{value > 0 ? '+ ' + value : value}</InnerSectionItemDiff>;
-  };
-
   const stakingTokenBalances = balances[stakingStashAccountAddress]
     ? balances[stakingStashAccountAddress][PreDefinedAssetId.stakingToken]
     : 0;
@@ -380,122 +358,12 @@ const StakingStakePage = ({
   return (
     <MainLayout subNav={subNav}>
       <MainContent display="flex">
-        <UnStakeButton variant="danger" onClick={() => setUnStakeWarningModalOpen(true)}>
-          Unstake
-        </UnStakeButton>
-        <PageHeading
+        <PageHeaderWithStakingToggle
+          heading="Manage staking"
           subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />}
-        >
-          Manage Staking
-        </PageHeading>
-        <div className="content">
-          <SectionLayoutWrapper>
-            <Left>
-              <SectionLayoutInnerWrapper>
-                <StakingBalance>
-                  <ItemTitle>Stake balance</ItemTitle>
-                  <StakingBalanceIcon>
-                    <StakingTokenIcon />
-                  </StakingBalanceIcon>
-                  <InnerSectionItem>
-                    {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]}
-                  </InnerSectionItem>
-                  <InnerSectionItemNum>
-                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
-                      {stakingTokenBalances.totalBalance
-                        ? stakingTokenBalances.totalBalance.toString
-                        : 0}
-                    </Ellipsis>
-                  </InnerSectionItemNum>
-                  <InnerSectionItem>
-                    Reserved:
-                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
-                      {stakingTokenBalances.reservedBalance
-                        ? stakingTokenBalances.reservedBalance.toString
-                        : 0}
-                    </Ellipsis>
-                  </InnerSectionItem>
-                  <InnerSectionItem>
-                    Total:
-                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
-                      {stakingTokenBalances.totalBalance
-                        ? stakingTokenBalances.totalBalance.toString
-                        : 0}
-                    </Ellipsis>
-                  </InnerSectionItem>
-                  {/* <AnimatedInnerSectionItemDiff value={rewardValueDiff} /> */}
-                </StakingBalance>
-                <SectionHDivider />
-                <StakingBalance>
-                  <ItemTitle>Spending balance</ItemTitle>
-                  <StakingBalanceIcon>
-                    <SpendingTokenIcon />
-                  </StakingBalanceIcon>
-                  <InnerSectionItem>
-                    {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]}
-                  </InnerSectionItem>
-                  <InnerSectionItemNum>
-                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
-                      {spendingTokenBalances.totalBalance.toString}
-                    </Ellipsis>
-                  </InnerSectionItemNum>
-                  <InnerSectionItem>
-                    Reserved:
-                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
-                      {spendingTokenBalances.reservedBalance.toString}
-                    </Ellipsis>
-                  </InnerSectionItem>
-                  <InnerSectionItem>
-                    Total:
-                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
-                      {spendingTokenBalances.totalBalance.toString}
-                    </Ellipsis>
-                  </InnerSectionItem>
-                  {/* <AnimatedInnerSectionItemDiff value={rewardSpendingValueDiff} /> */}
-                </StakingBalance>
-              </SectionLayoutInnerWrapper>
-            </Left>
-            <Right>
-              <Item>
-                <ItemTitle>Warning received</ItemTitle>
-                <WarningContent>{/* <ItemNum>{warningValue}</ItemNum> warning */}</WarningContent>
-              </Item>
-              <Item>
-                <ItemTitle>Punishment</ItemTitle>
-                <PunishmentContent>
-                  {/* <ItemNum>{punishmentValue}</ItemNum>
-                  {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]} */}
-                </PunishmentContent>
-              </Item>
-              <Item>
-                <ItemTitle>Reward</ItemTitle>
-                <RewardContent>
-                  {/* <ItemNum>
-                    <Ellipsis substrLength="3" maxLength="10" tailLength="3">
-                      {rewardValue}
-                    </Ellipsis>
-                  </ItemNum> */}
-                  {/* <ItemNum>{rewardValue}</ItemNum> */}
-                  {/* {PreDefinedAssetIdName[PreDefinedAssetId.stakingToken]} */}
-                </RewardContent>
-                <RewardContent>
-                  {/* <ItemNum>{rewardSpendingValue}</ItemNum> */}
-                  {/* {PreDefinedAssetIdName[PreDefinedAssetId.spendingToken]} */}
-                </RewardContent>
-              </Item>
-            </Right>
-          </SectionLayoutWrapper>
-        </div>
+          {...{ isStakingStated, stakingAccount, stakingWallet }}
+        />
       </MainContent>
-      <UnStakeWarningModal
-        {...{
-          isUnStakeWarningModalOpen,
-          setUnStakeWarningModalOpen,
-          onUnStake,
-          stakingWallet,
-          stakingAccount,
-        }}
-      />
     </MainLayout>
   );
 };
