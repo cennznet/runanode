@@ -54,6 +54,7 @@ const colors = R.mergeDeepRight(defaultColors, appColors);
 const media = mediaQueries(theme.breakPoints);
 
 const customTheme = {
+  breakPoints: ['36em', '48em', '62em', '75em'],
   colors,
   components: appComponentStyle(colors),
 };

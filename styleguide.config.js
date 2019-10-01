@@ -149,8 +149,12 @@ module.exports = {
       ],
     },
     {
-      name: 'Core Components',
+      name: 'Core components',
       components: `app/renderer/components/**/*.js`,
+    },
+    {
+      name: 'Responsive layout',
+      content: `styleguideHelpers/docs/responsive.md`,
     },
   ],
   webpackConfig,
