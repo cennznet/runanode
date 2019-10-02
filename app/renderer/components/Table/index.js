@@ -18,6 +18,7 @@ const computedThemeStyle = p => p.theme.utils.createThemeStyle(p, defaultThemeSt
 const Table = styled(ReactTable)`
   &.ReactTable {
     .rt-thead {
+      overflow:auto;
       &.-header {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
         background: ${p => computedThemeStyle(p).headerBackground};

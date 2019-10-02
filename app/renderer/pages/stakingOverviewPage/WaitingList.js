@@ -99,6 +99,9 @@ const WaitingList = ({ waitingList, stakingStashAccountAddress }) => {
             },
           },
         ]}
+        style={{
+          height: "552px" // This will make the table body to overflow and scroll, since there is not enough room
+        }}
         showPaginationBottom={false}
       />
     </ListWrapper>
