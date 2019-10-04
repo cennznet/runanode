@@ -36,12 +36,10 @@ npm run dev
 
 Please read through [Code of conduct][code_of_conduct] and [Contributing guideline][contributing] before making any pull requests
 
-
 ## Documentation
 
 - [Development guide][dev_guide]
 - [Set up standalone testnet][standalone_testnet]
-
 
 ## Relavant links
 
@@ -71,7 +69,7 @@ See LICENSE for more info.
 [cennznet_telemetry]: http://cennznet-telemetry.centrality.me/#/Rimu%20CENNZnet%200.9.20
 [code_of_conduct]: CODE_OF_CONDUCT.md
 [contributing]: CONTRIBUTING.md
-[dev_guide]: docs/DEV_GUIDE.md
+[dev_guide]: docs/DEVELOPMENT_GUIDE.md
 [standalone_testnet]: docs/STANDALONE_TESTNET.md
 [polkadot_wiki]: https://wiki.polkadot.network/en/latest/
 [product_backlog]: https://centralitydev.atlassian.net/jira/software/projects/NODE/boards/109/backlog

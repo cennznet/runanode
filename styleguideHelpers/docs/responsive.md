@@ -3,7 +3,7 @@
 source code - `defaultTheme/media.js`;
 Check `get-started` section to see how to config theme and media quaries in your application;
 
-```jsx
+```jsx static
 import { media } from 'theme';
 
 const ResponsiveComponent = styled.div`
