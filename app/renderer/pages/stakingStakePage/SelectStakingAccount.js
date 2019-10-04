@@ -39,7 +39,8 @@ const SelectStakingAccount = ({ wallets, onSelectFn, stakingOption }) => {
       const groupName = name || 'Wallet';
       const accountsKeys = Object.keys(accounts);
       const groupedAccountsOptions = accountsKeys.map(key => {
-        const optionName = accounts[key].name || key || 'Error';
+        const optionName = accounts[key].name || 'Account 1';
+
         return { label: optionName, value: key, groupName, wallet };
       });
 
