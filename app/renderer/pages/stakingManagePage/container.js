@@ -3,8 +3,8 @@ import { compose, lifecycle } from 'recompose';
 import R from 'ramda';
 
 import { Logger } from 'renderer/utils/logging';
+import { storageKeys } from 'renderer/api/utils/storage';
 import types from '../../types';
-import { storageKeys } from '../../api/utils/storage';
 
 const mapStateToProps = ({
   appStore: { uiState },
