@@ -3,6 +3,8 @@ import R from 'ramda';
 import styled from 'styled-components';
 import theme from 'theme';
 import { PageHeading, Button } from 'components';
+
+import withContainer from './container';
 import UnStakeWarningModal from '../UnStakeWarningModal';
 
 const PageTitleWrapper = styled.div`
@@ -82,4 +84,4 @@ const PageHeaderWithStakingToggle = ({
   );
 };
 
-export default PageHeaderWithStakingToggle;
+export default withContainer(PageHeaderWithStakingToggle);

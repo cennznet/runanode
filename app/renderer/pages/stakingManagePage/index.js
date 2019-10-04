@@ -2,26 +2,21 @@ import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import SVGInline from 'react-svg-inline';
 import BN from 'bn.js';
-import { Balance, BlockNumber } from '@cennznet/types';
+import { Balance } from '@cennznet/types';
 import R from 'ramda';
 import PageSpinner from 'components/PageSpinner';
-import {
-  theScanAddressUrl,
-  PreDefinedAssetId,
-  PreDefinedAssetIdName,
-} from 'common/types/theNode.types';
+import { theScanAddressUrl } from 'common/types/theNode.types';
 import stakingTokenIcon from 'renderer/assets/icon/staking-token.svg';
 import spendingTokenIcon from 'renderer/assets/icon/centrapay.svg';
 import themeObject, { colors } from 'theme';
 import { Logger } from 'renderer/utils/logging';
 import { MainContent, MainLayout } from 'components/layout';
-import { Button, PageHeading, Ellipsis } from 'components';
+import { PageHeading, Ellipsis } from 'components';
 import PageHeaderWithStakingToggle from 'renderer/pages/staking/PageHeaderWithStakingToggle';
 import withContainer from './container';
 import ClipboardShareLinks from '../wallet/account/transferSectionPage/ClipboardShareLinks';
-import TheWallet from '../../api/wallets/TheWallet';
-import TheWalletAccount from '../../api/wallets/TheWalletAccount';
 import useApis from '../stakingOverviewPage/useApis';
+import { sortedListWithBalances } from '../staking/utils';
 
 const defaultThemeStyle = p => {
   return {
@@ -264,16 +259,10 @@ const StakingStakePage = ({
     );
   }
 
-  const [warningValue, setWarningValue] = useState(0);
-  const [punishmentValue, setPunishmentValue] = useState(0);
   const [rewardValue, setRewardValue] = useState('0');
   const [rewardValueDiff, setRewardValueDiff] = useState('0');
   const [rewardSpendingValue, setRewardSpendingValue] = useState('0');
   const [rewardSpendingValueDiff, setRewardSpendingValueDiff] = useState('0');
-
-  const stakingWallet =
-    wallets && !!wallets.length && R.find(R.propEq('id', stakingStashWalletId))(wallets);
-  const stakingAccount = stakingWallet ? stakingWallet.accounts[stakingStashAccountAddress] : '';
 
   const [intentions, validators] = useApis('getIntentions', 'getValidators');
 
@@ -321,7 +310,7 @@ const StakingStakePage = ({
                 new BN(balanceValue.toString(), 10).div(new BN(validatorNum)).toString(10)
               );
             }
-          
+
             return defaultData;
           });
       }
@@ -343,17 +332,24 @@ const StakingStakePage = ({
     };
   }, []);
 
+  const stakingWallet =
+    wallets && !!wallets.length && R.find(R.propEq('id', stakingStashWalletId))(wallets);
+  const stakingAccount = stakingWallet ? stakingWallet.accounts[stakingStashAccountAddress] : '';
+
   // sync wallet data
   useEffect(() => {
     onSyncWalletData({ id: stakingStashWalletId, stakingWallet });
   }, []);
 
-  const stakingTokenBalances = balances[stakingStashAccountAddress]
-    ? balances[stakingStashAccountAddress][PreDefinedAssetId.stakingToken]
-    : 0;
-  const spendingTokenBalances = balances[stakingStashAccountAddress]
-    ? balances[stakingStashAccountAddress][PreDefinedAssetId.spendingToken]
-    : 0;
+  const [intentionsWithBalances, setIntentionsWithBalances] = useState([]);
+  useEffect(() => {
+    const sortedIntentions =
+      intentions && validators
+        ? intentions.filter(accountId => !validators.find(validatorId => validatorId === accountId))
+        : [];
+
+    sortedListWithBalances(sortedIntentions, stakingStashAccountAddress, setIntentionsWithBalances);
+  }, [validators, intentions]);
 
   return (
     <MainLayout subNav={subNav}>
@@ -361,7 +357,7 @@ const StakingStakePage = ({
         <PageHeaderWithStakingToggle
           heading="Manage staking"
           subHeading={<Subheading {...{ account: stakingAccount, wallet: stakingWallet }} />}
-          {...{ isStakingStated, stakingAccount, stakingWallet }}
+          {...{ isStakingStated, stakingAccount, stakingWallet, intentionsWithBalances }}
         />
       </MainContent>
     </MainLayout>
