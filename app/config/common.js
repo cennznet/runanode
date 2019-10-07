@@ -7,7 +7,7 @@ const commonConfig = {
   // Common config shared by dev and prod comes here...
   app: {
     name: 'rUN',
-    apiInitDebounceTime: 30000,
+    apiInitDebounceTime: 40000,
     defaultDebounceTime: 500,
     sentryDSN: 'https://0c4aa4aa53f1494e87d532890cb59529@sentry.io/1436322',
     networkOptions: [NetworkNameMapping.THENODE_RIMU, NetworkNameMapping.Development], // networkOptions[0] is the default network to be joined in, in this case, Rimu is by default to be connected.
